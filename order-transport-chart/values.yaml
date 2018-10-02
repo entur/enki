@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image: eu.gcr.io/entur-1287/order-transport
+imageTag: master-v1 # latest
+environment: dev
+runtime: gcp
+authServerUrl: "https://kc-dev.devstage.entur.io/auth"
+domain: devstage.entur.io
+isProd: false
+service:
+  name: order-transport
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 9000
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 550
+  requests:
+    cpu: 100m
+    memory: 400
+
+ingress:
+  enabled: true

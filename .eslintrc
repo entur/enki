@@ -1,0 +1,106 @@
+{
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react", "jest"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest/globals": true,
+    "es6": true
+  },
+  "globals": {
+    "Promise": true
+  },
+  "rules": {
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-bitwise": [
+      "error"
+    ],
+    "guard-for-in": [
+      "error"
+    ],
+    "no-extend-native": [
+      "error"
+    ],
+    "no-use-before-define": [
+      "error"
+    ],
+    "max-depth": [
+      "error",
+      4
+    ],
+    "no-caller": [
+      "error"
+    ],
+    "no-undef": [
+      "error"
+    ],
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-unused-vars": [
+      "error"
+    ],
+    "quotes": [
+      2,
+      "single"
+    ],
+    "eqeqeq": [
+      "error",
+      "allow-null"
+    ],
+    "no-var": [
+      "error"
+    ],
+    "no-eval": [
+      "error"
+    ],
+    "no-new": [
+      "error"
+    ],
+    "no-new-func": [
+      "error"
+    ],
+    "no-new-require": [
+      "error"
+    ],
+    "no-new-wrappers": [
+      "error"
+    ],
+    "no-console": 0,
+    "curly": [
+      "error"
+    ],
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true
+      }
+    ],
+    "object-shorthand": ["error", "always"],
+    "react/prop-types": 0,
+
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
+  }
+}

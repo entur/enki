@@ -1,0 +1,65 @@
+@mixin font-face($path) {
+  @font-face {
+    font-family: 'Nationale';
+    src: url($path + 'Nationale-Light.woff2') format('woff2'),
+      url($path + 'Nationale-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nationale';
+    src: url($path + 'Nationale-LightItalic.woff2') format('woff2'),
+      url($path + 'Nationale-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Nationale';
+    src: url($path + 'Nationale-Regular.woff2') format('woff2'),
+      url($path + 'Nationale-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nationale';
+    src: url($path + 'Nationale-Italic.woff2') format('woff2'),
+      url($path + 'Nationale-Italic.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Nationale';
+    src: url($path + 'Nationale-Medium.woff2') format('woff2'),
+      url($path + 'Nationale-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nationale';
+    src: url($path + 'Nationale-MediumItalic.woff2') format('woff2'),
+      url($path + 'Nationale-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Nationale';
+    src: url($path + 'Nationale-DemiBold.woff2') format('woff2'),
+      url($path + 'Nationale-DemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nationale';
+    src: url($path + 'Nationale-DemiBoldItalic.woff2') format('woff2'),
+      url($path + 'Nationale-DemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+  }
+}

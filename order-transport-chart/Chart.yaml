@@ -1,0 +1,14 @@
+apiVersion: v1
+name: order-transport-chart
+version: 0.0.1 # chart version
+appVersion: 1
+description: User Interface application for the Entur Order Transport.
+keywords:
+- order-transport
+- entur
+- enturas
+sources:
+- https://bitbucket.org/enturas/order-transport
+maintainers:
+- name: Sondre Bjerkerud
+  email: sondre.bjerkerud@entur.org

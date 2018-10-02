@@ -1,0 +1,29 @@
+{
+  "name": "order-transport-server",
+  "version": "0.0.1",
+  "author": "Zsolt Herpai",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "express": "^4.16.2",
+    "express-history-api-fallback": "^2.2.1",
+    "express-http-proxy": "^1.1.0",
+    "helmet": "^3.9.0",
+    "js-base64": "^2.4.3",
+    "jsonwebtoken": "^8.3.0",
+    "node-fetch": "^2.2.0",
+    "path": "^0.12.7",
+    "prom-client": "^11.1.1",
+    "request": "^2.85.0",
+    "rsa-pem-from-mod-exp": "^0.8.4",
+    "url": "^0.11.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0"
+  },
+  "prettier": {
+    "singleQuote": true
+  }
+}

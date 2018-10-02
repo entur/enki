@@ -1,0 +1,73 @@
+apiVersion: apps/v1beta1 # for versions before 1.6.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Values.service.name }}-{{ .Values.environment }}
+  labels:
+    app: {{ .Values.service.name  }}
+    environment: {{ .Values.environment }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.name  }}
+        environment: {{ .Values.environment }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: {{ .Values.service.name }}
+        image: {{ .Values.image }}:{{ .Values.imageTag }}
+        imagePullPolicy: Always
+        ports:
+          - containerPort: {{ .Values.service.internalPort }}
+        livenessProbe:
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          tcpSocket:
+            port: {{ .Values.service.internalPort }}
+        readinessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          httpGet:
+            path: /health
+            port: {{ .Values.service.internalPort }}
+        env:
+          - name: TZ
+            value: "Europe/Oslo"
+          - name: ORGANISATIONS_API_URL
+            value: "http://organisations-{{ .Values.integrationEnvironment | default .Values.environment }}"
+          - name: UTTU_API_URL
+            value: "https://api.dev.entur.io/timetable-admin/v1/flexible-lines/rut"
+          - name: ENVIRONMENT
+            value: {{ .Values.environment }}
+          - name: IMAGE_TAG
+            value: {{ .Values.imageTag }}
+          - name: AUTH_SERVER_URL
+            value: {{ .Values.authServerUrl }}
+          - name: INTERNAL_CLIENT_ID
+            valueFrom:
+            secretKeyRef:
+              name: ot-credentials
+              key: internal_client_id
+          - name: INTERNAL_CLIENT_SECRET
+            valueFrom:
+            secretKeyRef:
+              name: ot-credentials
+              key: internal_client_secret
+          - name: UPLOAD_LIMIT_MB
+            value: "{{ .Values.uploadLimitMb }}"
+          - name: GCLOUD_LOGGING
+            value: "true"
+        resources:
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}Mi
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}Mi
+      volumes:
+      - name: ot-credentials
+        secret:
+          secretName: ot-credentials
