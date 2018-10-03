@@ -1,0 +1,18 @@
+.app {
+  height: 100%;
+
+  .tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 15px;
+
+    .tab-content {
+      display: flex;
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: auto;
+      margin-bottom: 0;
+    }
+  }
+}

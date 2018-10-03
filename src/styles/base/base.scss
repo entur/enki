@@ -9,6 +9,10 @@ body {
   height: 100vh;
 }
 
+#root {
+  height: 100%;
+}
+
 h1 {
   font-size: 34px;
   font-weight: 600;
@@ -20,6 +24,7 @@ h2 {
   font-size: 28px;
   font-weight: 600;
   line-height: 36px;
+  color: $primary;
 }
 
 h3 {

@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import {Map, Marker, Polygon, Popup, TileLayer} from 'react-leaflet';
+import { Map, Marker, Polygon, Popup, TileLayer } from 'react-leaflet';
 
 import './styles.css';
 
@@ -9,27 +9,14 @@ class FlexibleStopPlaceMap extends Component {
       lat: 59.91,
       lng: -10.76
     },
-    zoom: 13,
+    zoom: 12,
     showMarker: false
   };
 
   map = createRef();
 
-  componentWillMount() {
-    this.updateDimensions();
-  }
-
   componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions.bind(this));
-    this.map.current.leafletElement.locate({ setView: true, maxZoom: 16 });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions.bind(this));
-  }
-
-  updateDimensions() {
-    this.setState({ height: window.innerHeight });
+    this.map.current.leafletElement.locate({ setView: true });
   }
 
   handleLocationFound = e => {
@@ -41,7 +28,7 @@ class FlexibleStopPlaceMap extends Component {
 
   render() {
     const { onClick, polygon } = this.props;
-    const { height, center, zoom, showMarker } = this.state;
+    const { center, zoom, showMarker } = this.state;
 
     const marker = showMarker ? (
       <Marker position={center}>
@@ -56,8 +43,7 @@ class FlexibleStopPlaceMap extends Component {
     return (
       <div className="map-container">
         <Map
-          className="map"
-          style={{ height }}
+          style={{ height: '100%' }}
           center={[center.lat, center.lng]}
           zoom={zoom}
           onClick={onClick}
@@ -69,7 +55,7 @@ class FlexibleStopPlaceMap extends Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {marker}
-          <Polygon positions={polygon}/>
+          <Polygon positions={polygon} />
         </Map>
       </div>
     );
