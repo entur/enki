@@ -4,7 +4,7 @@ import 'normalize.css';
 import { Provider } from 'react-intl-redux';
 import Keycloak from 'keycloak-js';
 
-import App from './components/App';
+import App from './scenes/App';
 import ErrorBoundary from './components/ErrorBoundary';
 import { configureStore } from './store';
 import token, { TOKEN_ID } from './http/token';
