@@ -1,2 +1,16 @@
 .line-editor {
+  .line-form {
+    width: 400px;
+    max-width: 400px;
+
+    input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .save-button-container {
+      margin-top: 20px;
+      text-align: right;
+    }
+  }
 }
