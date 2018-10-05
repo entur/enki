@@ -40,35 +40,35 @@ class LineEditor extends Component {
         <div className="line-form">
           <Label>Autoritet</Label>
           <TextField
-            type="string"
+            type="text"
             value={authority}
             onChange={e => this.onFieldChange('authority', e.target.value)}
           />
 
           <Label>Operatør</Label>
           <TextField
-            type="string"
+            type="text"
             value={operator}
             onChange={e => this.onFieldChange('operator', e.target.value)}
           />
 
           <Label>Linjenummer</Label>
           <TextField
-            type="string"
+            type="text"
             value={lineNumber}
             onChange={e => this.onFieldChange('lineNumber', e.target.value)}
           />
 
           <Label>Tidspunkter</Label>
           <TextField
-            type="string"
+            type="text"
             value={dayTypes}
             onChange={e => this.onFieldChange('dayTypes', e.target.value)}
           />
 
           <Label>Bestillingsreferanse</Label>
           <TextField
-            type="string"
+            type="text"
             value={bookingReference}
             onChange={e =>
               this.onFieldChange('bookingReference', e.target.value)

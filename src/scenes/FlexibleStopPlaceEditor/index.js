@@ -1,29 +1,37 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Button, Label, TextField } from '@entur/component-library';
 
+import FlexibleStopPlace from '../../model/FlexibleStopPlace';
+import { createFlexbileStopPlace } from '../../actions/flexibleStopPlaces';
 import FlexibleStopPlaceMap from './components/FlexibleStopPlaceMap';
 
 import './styles.css';
 
 class FlexibleStopPlaceEditor extends Component {
-  state = {
-    name: '',
-    validity: '',
-    polygon: []
-  };
+  state = { fsp: new FlexibleStopPlace() };
 
   onFieldChange(field, value) {
-    this.setState({ [field]: value });
-  }
-
-  handleMapOnClick(e) {
     this.setState(prevState => ({
-      polygon: prevState.polygon.concat([[e.latlng.lat, e.latlng.lng]])
+      fsp: prevState.fsp.withChanges({ [field]: value })
     }));
   }
 
+  handleMapOnClick(e) {
+    this.setState(({ fsp }) => ({
+      fsp: fsp.withChanges({
+        polygon: fsp.polygon.concat([[e.latlng.lat, e.latlng.lng]])
+      })
+    }));
+  }
+
+  handleOnSaveClick() {
+    this.props.dispatch(createFlexbileStopPlace(this.state.fsp));
+    this.setState({ fsp: new FlexibleStopPlace() });
+  }
+
   render() {
-    const { name, validity, polygon } = this.state;
+    const { name, validity, polygon } = this.state.fsp;
 
     return (
       <div className="flexible-stop-place-editor">
@@ -33,7 +41,7 @@ class FlexibleStopPlaceEditor extends Component {
           <div>
             <Label>Navn</Label>
             <TextField
-              type="string"
+              type="text"
               value={name}
               onChange={e => this.onFieldChange('name', e.target.value)}
             />
@@ -42,13 +50,16 @@ class FlexibleStopPlaceEditor extends Component {
           <div>
             <Label>Validity</Label>
             <TextField
-              type="string"
+              type="text"
               value={validity}
               onChange={e => this.onFieldChange('validity', e.target.value)}
             />
           </div>
 
-          <div className="save-button-container">
+          <div
+            className="save-button-container"
+            onClick={::this.handleOnSaveClick}
+          >
             <Button variant="success">Lagre</Button>
           </div>
         </div>
@@ -62,4 +73,4 @@ class FlexibleStopPlaceEditor extends Component {
   }
 }
 
-export default FlexibleStopPlaceEditor;
+export default connect()(FlexibleStopPlaceEditor);
