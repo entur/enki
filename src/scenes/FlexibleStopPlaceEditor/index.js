@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Label, TextField } from '@entur/component-library';
 
-import FlexibleStopPlace from '../../model/FlexibleStopPlace';
-import { createFlexbileStopPlace } from '../../actions/flexibleStopPlaces';
+import { FlexibleStopPlace } from '../../model';
+import { createFlexibleStopPlace } from '../../actions/flexibleStopPlaces';
 import FlexibleStopPlaceMap from './components/FlexibleStopPlaceMap';
 
 import './styles.css';
@@ -26,7 +26,7 @@ class FlexibleStopPlaceEditor extends Component {
   }
 
   handleOnSaveClick() {
-    this.props.dispatch(createFlexbileStopPlace(this.state.fsp));
+    this.props.dispatch(createFlexibleStopPlace(this.state.fsp));
     this.setState({ fsp: new FlexibleStopPlace() });
   }
 
@@ -35,32 +35,33 @@ class FlexibleStopPlaceEditor extends Component {
 
     return (
       <div className="flexible-stop-place-editor">
-        <h3>Opprett fleksibelt stoppested</h3>
-
         <div className="stop-place-form">
-          <div>
-            <Label>Navn</Label>
-            <TextField
-              type="text"
-              value={name}
-              onChange={e => this.onFieldChange('name', e.target.value)}
-            />
-          </div>
+          <h3>Opprett fleksibelt stoppested</h3>
 
-          <div>
-            <Label>Validity</Label>
-            <TextField
-              type="text"
-              value={validity}
-              onChange={e => this.onFieldChange('validity', e.target.value)}
-            />
-          </div>
+          <div className="inputs">
+            <div>
+              <Label>Navn</Label>
+              <TextField
+                type="text"
+                value={name}
+                onChange={e => this.onFieldChange('name', e.target.value)}
+              />
+            </div>
 
-          <div
-            className="save-button-container"
-            onClick={::this.handleOnSaveClick}
-          >
-            <Button variant="success">Lagre</Button>
+            <div>
+              <Label>Gyldighet</Label>
+              <TextField
+                type="text"
+                value={validity}
+                onChange={e => this.onFieldChange('validity', e.target.value)}
+              />
+            </div>
+
+            <div className="save-button-container">
+              <Button variant="success" onClick={::this.handleOnSaveClick}>
+                Lagre
+              </Button>
+            </div>
           </div>
         </div>
 

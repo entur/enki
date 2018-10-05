@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import FlexibleStopPlaceEditor from '../FlexibleStopPlaceEditor/index';
-import LineEditor from '../LineEditor';
+import FlexibleLineEditor from '../FlexibleLineEditor';
 import Tabs from '../../components/Tabs';
 import Tab from '../../components/Tabs/Tab';
 
@@ -17,21 +17,17 @@ L.Icon.Default.mergeOptions({
 
 import './styles.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="app">
-        <Tabs>
-          <Tab label="Linje">
-            <LineEditor />
-          </Tab>
-          <Tab label="Stoppested">
-            <FlexibleStopPlaceEditor />
-          </Tab>
-        </Tabs>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div className="app">
+    <Tabs>
+      <Tab label="Linje">
+        <FlexibleLineEditor />
+      </Tab>
+      <Tab label="Stoppested">
+        <FlexibleStopPlaceEditor />
+      </Tab>
+    </Tabs>
+  </div>
+);
 
 export default App;

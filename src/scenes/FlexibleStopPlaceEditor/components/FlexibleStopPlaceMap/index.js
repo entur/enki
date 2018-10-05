@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Map, Marker, Polygon, Popup, TileLayer } from 'react-leaflet';
+import { Map, Polygon, TileLayer } from 'react-leaflet';
 
 import './styles.css';
 
@@ -9,8 +9,7 @@ class FlexibleStopPlaceMap extends Component {
       lat: 59.91,
       lng: -10.76
     },
-    zoom: 12,
-    showMarker: false
+    zoom: 12
   };
 
   map = createRef();
@@ -20,43 +19,29 @@ class FlexibleStopPlaceMap extends Component {
   }
 
   handleLocationFound = e => {
-    this.setState({
-      center: e.latlng,
-      showMarker: true
-    });
+    this.setState({ center: e.latlng });
   };
 
   render() {
     const { onClick, polygon } = this.props;
-    const { center, zoom, showMarker } = this.state;
-
-    const marker = showMarker ? (
-      <Marker position={center}>
-        <Popup>
-          <span>
-            You are here: {center.lat} - {center.lng}
-          </span>
-        </Popup>
-      </Marker>
-    ) : null;
+    const { center, zoom } = this.state;
 
     return (
       <div className="map-container">
-        <Map
-          style={{ height: '100%' }}
-          center={[center.lat, center.lng]}
-          zoom={zoom}
-          onClick={onClick}
-          onLocationFound={this.handleLocationFound}
-          ref={this.map}
-        >
-          <TileLayer
-            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {marker}
-          <Polygon positions={polygon} />
-        </Map>
+          <Map
+            style={{ flex: '1' }}
+            center={[center.lat, center.lng]}
+            zoom={zoom}
+            onClick={onClick}
+            onLocationFound={this.handleLocationFound}
+            ref={this.map}
+          >
+            <TileLayer
+              attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Polygon positions={polygon} />
+          </Map>
       </div>
     );
   }
