@@ -45,7 +45,7 @@ Uses [Jest](https://facebook.github.io/jest) for unit and reducer testing.
 npm test
 ```
 
-Note: Requires a running instance of OT on [http://localhost:3000](http://localhost:3000).
+Note: Requires a running instance of OT on [http://localhost:3001](http://localhost:3001).
 
 
 ## GCloud
