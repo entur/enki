@@ -39,7 +39,7 @@ spec:
           - name: ORGANISATIONS_API_URL
             value: "http://organisations-{{ .Values.integrationEnvironment | default .Values.environment }}"
           - name: UTTU_API_URL
-            value: "https://api.dev.entur.io/timetable-admin/v1/flexible-lines/rut"
+            value: "https://api.dev.entur.io/timetable-admin/v1/flexible-lines"
           - name: ENVIRONMENT
             value: {{ .Values.environment }}
           - name: IMAGE_TAG

@@ -1,12 +1,21 @@
-import Base from './Base';
+import Versioned from './base/Versioned';
+import FlexibleArea from './FlexibleArea';
+import HailAndRideArea from './HailAndRideArea';
 
-class FlexibleStopPlace extends Base {
+class FlexibleStopPlace extends Versioned {
   constructor(data = {}) {
-    super();
+    super(data);
 
     this.name = data.name || '';
-    this.validity = data.validity || '';
-    this.polygon = data.polygon || [];
+    this.description = data.description || '';
+    this.privateCode = data.privateCode || '';
+    this.transportMode = data.transportMode || '';
+    this.flexibleArea = data.flexibleArea
+      ? new FlexibleArea(data.flexibleArea)
+      : null;
+    this.hailAndRideArea = data.hailAndRideArea
+      ? new HailAndRideArea(data.hailAndRideArea)
+      : null;
   }
 }
 
