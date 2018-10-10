@@ -3,7 +3,7 @@ import { Map, Polygon, TileLayer } from 'react-leaflet';
 
 import './styles.css';
 
-class FlexibleStopPlaceMap extends Component {
+class PolygonMap extends Component {
   state = {
     center: {
       lat: 59.91,
@@ -29,7 +29,7 @@ class FlexibleStopPlaceMap extends Component {
     return (
       <div className="map-container">
           <Map
-            style={{ flex: '1' }}
+            className="map"
             center={[center.lat, center.lng]}
             zoom={zoom}
             onClick={onClick}
@@ -47,4 +47,4 @@ class FlexibleStopPlaceMap extends Component {
   }
 }
 
-export default FlexibleStopPlaceMap;
+export default PolygonMap;

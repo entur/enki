@@ -1,0 +1,11 @@
+@import '../../../../styles/base/colors.scss';
+
+.map-container {
+  flex: 1;
+  display: flex;
+
+  .map {
+    flex: 1;
+    border: 1px solid $primary;
+  }
+}

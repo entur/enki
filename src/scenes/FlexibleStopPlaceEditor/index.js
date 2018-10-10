@@ -4,7 +4,8 @@ import { Button, Label, TextField } from '@entur/component-library';
 
 import { FlexibleStopPlace } from '../../model';
 import { createFlexibleStopPlace } from '../../actions/flexibleStopPlaces';
-import FlexibleStopPlaceMap from './components/FlexibleStopPlaceMap';
+import Listing from './components/Listing';
+import PolygonMap from './components/PolygonMap';
 
 import './styles.css';
 
@@ -35,7 +36,7 @@ class FlexibleStopPlaceEditor extends Component {
 
     return (
       <div className="flexible-stop-place-editor">
-        <div className="stop-place-form">
+        <div className="flexible-stop-place-form">
           <h3>Opprett fleksibelt stoppested</h3>
 
           <div className="inputs">
@@ -65,10 +66,9 @@ class FlexibleStopPlaceEditor extends Component {
           </div>
         </div>
 
-        <FlexibleStopPlaceMap
-          onClick={::this.handleMapOnClick}
-          polygon={polygon}
-        />
+        <Listing />
+
+        <PolygonMap onClick={::this.handleMapOnClick} polygon={polygon} />
       </div>
     );
   }

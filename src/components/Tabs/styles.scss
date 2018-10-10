@@ -13,9 +13,14 @@
       border-bottom: 2px solid $grey-10;
       cursor: pointer;
 
+      &:hover {
+        color: $primary;
+      }
+
       &.selected {
         color: $primary;
         border-bottom: 2px solid $primary;
+        cursor: initial;
       }
 
       &.disabled {

@@ -3,13 +3,13 @@
   display: flex;
   flex-direction: column;
 
-  .stop-place-form {
+  .flexible-stop-place-form {
     width: 100%;
+    margin-bottom: 20px;
 
     .inputs {
       display: flex;
       width: 100%;
-      margin-bottom: 20px;
 
       > div:nth-of-type(1),
       > div:nth-of-type(2) {
@@ -26,5 +26,10 @@
         align-items: flex-end;
       }
     }
+  }
+
+  .flexible-stop-place-listing {
+    max-height: 30%;
+    margin-bottom: 20px;
   }
 }
