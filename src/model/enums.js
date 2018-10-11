@@ -67,3 +67,13 @@ export const PURCHASE_MOMENT = Object.freeze({
   AFTER_BOARDING: 'afterBoarding',
   ON_CHECK_OUT: 'onCheckOut'
 });
+
+export const GEOMETRY_TYPE = Object.freeze({
+  POINT: 'Point',
+  LINE_STRING: 'LineString',
+  POLYGON: 'Polygon',
+  MULTI_POINT: 'MultiPoint',
+  MULTI_LINE_STRING: 'MultiLineString',
+  MULTI_POLYGON: 'MultiPolygon',
+  GEOMETRY_COLLECTION: 'GeometryCollection'
+});
