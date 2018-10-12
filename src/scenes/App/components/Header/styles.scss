@@ -1,0 +1,33 @@
+@import '../../../../styles/base/colors.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 0 15px;
+  background-color: $primary;
+
+  .logo-and-title {
+    display: flex;
+    padding-top: 6px;
+
+    img {
+      width: auto;
+      height: 23px;
+      margin-right: 10px;
+    }
+
+    div.title {
+      margin-top: -0.5px;
+      text-transform: uppercase;
+      color: #ff5959;
+      font-size: 1.4em;
+      font-weight: 500;
+    }
+  }
+
+  .provider-select {
+    border: 0;
+  }
+}

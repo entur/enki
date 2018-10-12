@@ -7,7 +7,7 @@ const correlationIdHeader = 'correlation-id';
 const authorizationHeader = 'authorization';
 
 const requireOAuth = req =>
-  /(^undefined$)|(^Bearer .+$)/gim.test(req.headers.authorization);
+  !req.headers.authorization || req.headers.authorization.startsWith('Bearer ');
 
 const requestJsonBody = (bodyContent, contentType) =>
   contentType && contentType.includes('application/json')

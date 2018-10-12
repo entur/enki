@@ -7,6 +7,6 @@ const proxy = forwardingProxy(apiUrl);
 
 console.log(`UTTU proxy forwarding to ${apiUrl}`);
 
-router.use('/uttu', proxy([OPTION, POST], () => '/graphql'));
+router.use('/uttu/providers', proxy([OPTION, POST], () => '/providers/graphql'));
 
 module.exports = router;

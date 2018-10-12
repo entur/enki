@@ -1,4 +1,4 @@
-export const getProviders = `
+export const getProvidersQuery = `
   query GetProviders {
     providers {
       name,
@@ -7,7 +7,7 @@ export const getProviders = `
   }
 `;
 
-export const getNetworks = `
+export const getNetworksQuery = `
   query GetNetworks {
     networks {
       id,
@@ -18,7 +18,7 @@ export const getNetworks = `
   }
 `;
 
-export const getFlexibleLines = `
+export const getFlexibleLinesQuery = `
   query GetFlexibleLines {
     flexibleLines {
       publicCode,
@@ -50,7 +50,7 @@ export const getFlexibleLines = `
   }
 `;
 
-export const getFlexibleStopPlaces = `
+export const getFlexibleStopPlacesQuery = `
   query GetFlexibleStopPlaces {
     flexibleStopPlaces {
       name,
