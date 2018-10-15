@@ -12,10 +12,16 @@ const initialState = {
 
 const providersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_PROVIDERS:
+    case RECEIVE_PROVIDERS: {
+      const active =
+        !state.active && action.providers.length > 0
+          ? action.providers[0].code
+          : state.active;
       return Object.assign({}, state, {
-        providers: action.providers
+        providers: action.providers,
+        active
       });
+    }
 
     case FAILED_RECEIVING_PROVIDERS:
       return Object.assign({}, state, {

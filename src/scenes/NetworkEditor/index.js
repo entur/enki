@@ -11,6 +11,7 @@ import {
 
 import { Network } from '../../model';
 import { getOrganisations } from '../../actions/organisations';
+import { saveNetwork } from '../../actions/networks';
 import Loading from '../../components/Loading';
 
 import './styles.css';
@@ -45,12 +46,18 @@ class NetworkEditor extends Component {
     this.setState({ authoritySelection });
   }
 
-  handleOnSaveClick() {}
+  handleOnSaveClick() {
+    this.props.dispatch(saveNetwork(this.state.network));
+  }
 
   render() {
     const { organisations = [] } = this.props;
     const { authoritySelection } = this.state;
     const { name, description, privateCode } = this.state.network;
+
+    const authorities = organisations.filter(org =>
+      org.types.includes('Authority')
+    );
 
     return (
       <div className="network-editor">
@@ -98,7 +105,7 @@ class NetworkEditor extends Component {
                 label={DEFAULT_AUTHORITY_LABEL}
                 value={DEFAULT_AUTHORITY_VALUE}
               />
-              {organisations.map(org => (
+              {authorities.map(org => (
                 <DropDownOptions key={org.id} label={org.name} value={org.id} />
               ))}
             </DropDown>
