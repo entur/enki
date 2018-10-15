@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Label, TextField } from '@entur/component-library';
 
-import { FlexibleStopPlace } from '../../model';
+import { FlexibleStopPlace, FlexibleArea } from '../../model';
 import { createFlexibleStopPlace } from '../../actions/flexibleStopPlaces';
 import Listing from './components/Listing';
 import PolygonMap from './components/PolygonMap';
@@ -19,11 +19,19 @@ class FlexibleStopPlaceEditor extends Component {
   }
 
   handleMapOnClick(e) {
-    this.setState(({ fsp }) => ({
-      fsp: fsp.withChanges({
-        polygon: fsp.polygon.concat([[e.latlng.lat, e.latlng.lng]])
-      })
-    }));
+    this.setState(({ fsp, fsp: { flexibleArea } }) => {
+      const newPoint = [[e.latlng.lat, e.latlng.lng]];
+      const fa = flexibleArea
+        ? flexibleArea.withChanges({
+            polygon: flexibleArea.polygon.concat([[e.latlng.lat, e.latlng.lng]])
+          })
+        : new FlexibleArea({
+            polygon: newPoint
+          });
+      return {
+        fsp: fsp.withChanges({ flexibleArea: fa })
+      };
+    });
   }
 
   handleOnSaveClick() {
@@ -32,7 +40,9 @@ class FlexibleStopPlaceEditor extends Component {
   }
 
   render() {
-    const { name, validity, polygon } = this.state.fsp;
+    const { name, validity, flexibleArea } = this.state.fsp;
+
+    const polygon = flexibleArea ? flexibleArea.polygon : [];
 
     return (
       <div className="flexible-stop-place-editor">

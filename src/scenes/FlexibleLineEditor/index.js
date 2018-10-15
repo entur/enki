@@ -13,17 +13,19 @@ import { createFlexibleLine } from '../../actions/flexibleLines';
 
 import './styles.css';
 
-const DEFAULT_STOP_PLACE_LABEL = '--- velg stoppested ---';
+const DEFAULT_STOP_PLACE_LABEL = '--- velg ---';
 const DEFAULT_STOP_PLACE_VALUE = '-1';
 
 class FlexibleLineEditor extends Component {
   state = {
-    fl: new FlexibleLine(),
+    flexibleLine: new FlexibleLine(),
     stopPlaceSelection: DEFAULT_STOP_PLACE_VALUE
   };
 
   handleFieldChange(field, value) {
-    this.setState(({ fl }) => ({ fl: fl.withChanges({ [field]: value }) }));
+    this.setState(({ flexibleLine }) => ({
+      flexibleLine: flexibleLine.withChanges({ [field]: value })
+    }));
   }
 
   handleStopPlaceSelectionChange(stopPlaceSelection) {
@@ -31,31 +33,31 @@ class FlexibleLineEditor extends Component {
       const stopPlace = this.props.flexibleStopPlaces.find(
         fsp => fsp.name === stopPlaceSelection
       );
-      this.setState(({ fl }) => ({
-        fl: fl.withChanges({ stopPlace })
+      this.setState(({ flexibleLine }) => ({
+        flexibleLine: flexibleLine.withChanges({ stopPlace })
       }));
     }
     this.setState({ stopPlaceSelection });
   }
 
   handleOnSaveClick() {
-    this.props.dispatch(createFlexibleLine(this.state.fl));
+    this.props.dispatch(createFlexibleLine(this.state.flexibleLine));
     this.setState({
-      fl: new FlexibleStopPlace(),
+      flexibleLine: new FlexibleStopPlace(),
       stopPlaceSelection: DEFAULT_STOP_PLACE_VALUE
     });
   }
 
   render() {
     const { flexibleStopPlaces } = this.props;
+    const { stopPlaceSelection } = this.state;
     const {
       authority,
       operator,
       lineNumber,
       dayTypes,
       bookingReference
-    } = this.state.fl;
-    const { stopPlaceSelection } = this.state;
+    } = this.state.flexibleLine;
 
     return (
       <div className="line-editor">

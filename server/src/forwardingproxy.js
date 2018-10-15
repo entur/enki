@@ -24,18 +24,18 @@ const objFilter = (obj, predicate) =>
 const filterSensitiveHeaders = headers =>
   objFilter(headers, k => k.toLowerCase() !== authorizationHeader);
 
-const logRequest = (type, bodyContent, request) =>
+const logRequest = (type, bodyContent, req) =>
   requestLog({
     origin: 'remote',
     type,
-    correlationId: request.headers[correlationIdHeader],
-    protocol: `HTTP/${request.httpVersion}`,
-    forwardedIpAddress: request.headers['x-forwarded-ip'],
-    method: request.method,
-    path: request.originalUrl,
-    headers: filterSensitiveHeaders(request.headers),
-    body: requestJsonBody(bodyContent, request.headers['content-type']),
-    username: usernameFromHeader(request.headers['authorization'])
+    correlationId: req.headers[correlationIdHeader],
+    protocol: `HTTP/${req.httpVersion}`,
+    forwardedIpAddress: req.headers['x-forwarded-ip'],
+    method: req.method,
+    path: req.originalUrl,
+    headers: filterSensitiveHeaders(req.headers),
+    body: requestJsonBody(bodyContent, req.headers['content-type']),
+    username: usernameFromHeader(req.headers['authorization'])
   });
 
 const droppedHeaders = [

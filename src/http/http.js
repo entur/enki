@@ -9,13 +9,15 @@ export const API_BASE =
     : process.env.API_PROXY;
 
 const http = axios.create({
-  baseURL: API_BASE,
+  baseURL: API_BASE
 });
 
 if (process.env.NODE_ENV !== 'test') {
   http.interceptors.request.use(
     config => {
-      config.headers.authorization = token.getBearer();
+      if (process.env.NODE_ENV !== 'development') {
+        config.headers.authorization = token.getBearer();
+      }
       config.headers['Correlation-ID'] = uuid.v4();
       config.headers['Cache-Control'] = 'no-cache';
       return config;

@@ -13,6 +13,8 @@ const Loading = ({
   text,
   children
 }) => {
+  console.log(className, isLoading);
+
   if (!isLoading) {
     return children;
   }

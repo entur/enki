@@ -4,7 +4,7 @@ import {
 } from '../actions/organisations';
 
 const initialState = {
-  organisations: []
+  organisations: null
 };
 
 const organisationsReducer = (state = initialState, action) => {

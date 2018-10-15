@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+import NetworkEditor from '../NetworkEditor';
 import FlexibleStopPlaceEditor from '../FlexibleStopPlaceEditor/index';
 import FlexibleLineEditor from '../FlexibleLineEditor';
 import Tabs from '../../components/Tabs';
@@ -37,6 +38,9 @@ class App extends Component {
           isLoading={!this.props.providers}
         >
           <Tabs>
+            <Tab label="Nettverk">
+              <NetworkEditor />
+            </Tab>
             <Tab label="Linje">
               <FlexibleLineEditor />
             </Tab>
