@@ -10,6 +10,7 @@ import Tabs from '../../components/Tabs';
 import Tab from '../../components/Tabs/Tab';
 import Header from './components/Header/index';
 import Loading from '../../components/Loading';
+import Notifications from '../../components/Notification';
 import { getProviders } from '../../actions/providers';
 
 import './styles.css';
@@ -49,6 +50,8 @@ class App extends Component {
             </Tab>
           </Tabs>
         </Loading>
+
+        <Notifications />
       </div>
     );
   }

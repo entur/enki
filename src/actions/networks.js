@@ -1,5 +1,9 @@
 import { UttuQuery } from '../graphql';
 import { mutateNetwork } from '../graphql/uttu/mutations';
+import {
+  showErrorNotification,
+  showSuccessNotification
+} from '../components/Notification/actions';
 
 export const CREATE_NETWORK = 'CREATE_NETWORK';
 export const UPDATE_NETWORK = 'UPDATE_NETWORK';
@@ -23,12 +27,18 @@ export const saveNetwork = network => (dispatch, getState) => {
       network.id
         ? createNetwork(updatedNetwork)
         : updateNetwork(updatedNetwork);
-      alert('Network saved successfully!');
+      dispatch(
+        showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')
+      );
       return Promise.resolve(updatedNetwork);
     })
-    .catch(ex => {
-      alert('Failed to save network.');
-      console.log(ex);
+    .catch(() => {
+      dispatch(
+        showErrorNotification(
+          'Lagre nettverk',
+          'En feil oppstod under lagringen av nettverket.'
+        )
+      );
       return Promise.reject();
     });
 };
