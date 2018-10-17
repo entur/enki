@@ -9,10 +9,10 @@ import {
   DropDownOptions
 } from '@entur/component-library';
 
-import { Network } from '../../model';
-import { getOrganisations } from '../../actions/organisations';
-import { saveNetwork } from '../../actions/networks';
-import Loading from '../../components/Loading';
+import { Network } from '../../../../model/index';
+import { getOrganisations } from '../../../../actions/organisations';
+import { saveNetwork } from '../../../../actions/networks';
+import Loading from '../../../../components/Loading/index';
 
 import './styles.css';
 

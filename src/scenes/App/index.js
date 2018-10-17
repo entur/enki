@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import NetworkEditor from '../NetworkEditor';
-import FlexibleStopPlaceEditor from '../FlexibleStopPlaceEditor/index';
-import FlexibleLineEditor from '../FlexibleLineEditor';
-import Tabs from '../../components/Tabs';
-import Tab from '../../components/Tabs/Tab';
-import Header from './components/Header/index';
-import Loading from '../../components/Loading';
 import Notifications from '../../components/Notification';
+import ScrollToTop from '../../components/ScrollToTop';
+import Loading from '../../components/Loading';
+import NavBar from './components/NavBar';
+import Routes from './Routes';
 import { getProviders } from '../../actions/providers';
 
 import './styles.css';
@@ -31,27 +30,27 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Header />
+        <Helmet defaultTitle="Bestillingstransport" />
 
-        <Loading
-          className="app-loader"
-          text="Laster inn tilbydere..."
-          isLoading={!this.props.providers}
-        >
-          <Tabs>
-            <Tab label="Nettverk">
-              <NetworkEditor />
-            </Tab>
-            <Tab label="Linje">
-              <FlexibleLineEditor />
-            </Tab>
-            <Tab label="Stoppested">
-              <FlexibleStopPlaceEditor />
-            </Tab>
-          </Tabs>
-        </Loading>
-
-        <Notifications />
+        <BrowserRouter>
+          <ScrollToTop>
+            <div>
+              <div className="navbar-and-routes">
+                <NavBar />
+                <div className="header-and-routes">
+                  <Loading
+                    className="app-loader"
+                    text="Laster inn tilbydere..."
+                    isLoading={!this.props.providers}
+                  >
+                    <Routes />
+                  </Loading>
+                </div>
+              </div>
+              <Notifications />
+            </div>
+          </ScrollToTop>
+        </BrowserRouter>
       </div>
     );
   }

@@ -1,22 +1,11 @@
+@import '../../styles/base/colors.scss';
+
 .app {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  .tabs {
-    flex-grow: 1;
+  .navbar-and-routes {
     display: flex;
-    flex-direction: column;
-    padding: 15px;
 
-    .tab-list {
-      flex-shrink: 0;
-    }
-
-    .tab-content {
-      flex-grow: 1;
-      display: flex;
-      margin-bottom: 0;
+    .header-and-routes {
+      width: 100%;
     }
   }
 

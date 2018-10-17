@@ -1,0 +1,34 @@
+@import '../../../../styles/base/colors.scss';
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  min-height: 100vh;
+  background-color: $primary;
+
+  .items {
+    background-color: $primary;
+  }
+
+  .logo-wrapper {
+    display: inline-block;
+    padding-left: 30px;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-bottom: 20px;
+
+    img.logo {
+      width: 72px;
+      height: auto;
+      margin-right: 5px;
+    }
+
+    span {
+      margin-left: -2px;
+      color: #ff5959;
+      font-size: 1.3em;
+      font-weight: 500;
+    }
+  }
+}

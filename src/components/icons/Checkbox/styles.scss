@@ -1,0 +1,15 @@
+@import '../../../styles/base/colors.scss';
+
+.checkbox-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border: 1px solid $primary;
+  border-radius: 1px;
+  background: $white;
+  svg {
+    fill: $primary;
+  }
+}

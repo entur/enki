@@ -8,8 +8,8 @@ import {
   DropDownOptions
 } from '@entur/component-library';
 
-import { FlexibleLine, FlexibleStopPlace } from '../../model';
-import { createFlexibleLine } from '../../actions/flexibleLines';
+import { FlexibleLine, FlexibleStopPlace } from '../../../../model/index';
+import { createFlexibleLine } from '../../../../actions/flexibleLines';
 
 import './styles.css';
 

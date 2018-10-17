@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Label, TextField } from '@entur/component-library';
 
-import { FlexibleStopPlace, FlexibleArea } from '../../model';
-import { createFlexibleStopPlace } from '../../actions/flexibleStopPlaces';
-import Listing from './components/Listing';
-import PolygonMap from './components/PolygonMap';
+import { FlexibleStopPlace, FlexibleArea } from '../../../../model/index';
+import { createFlexibleStopPlace } from '../../../../actions/flexibleStopPlaces';
+import Listing from './components/Listing/index';
+import PolygonMap from './components/PolygonMap/index';
 
 import './styles.css';
 

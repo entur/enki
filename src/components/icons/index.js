@@ -1,3 +1,5 @@
+export { default as Checkbox } from './Checkbox';
+export { default as Checkmark } from './Checkmark';
 export { default as CloseIcon } from './CloseIcon';
 export { default as ErrorCircle } from './ErrorCircle';
 export { default as Info } from './Info';

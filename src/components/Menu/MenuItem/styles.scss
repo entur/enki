@@ -1,0 +1,52 @@
+@import '../../../styles/base/colors.scss';
+
+.menu-item-wrapper {
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.menu-item {
+  padding: 10px;
+  width: auto;
+  font-weight: 400;
+  display: flex;
+  user-select: none;
+  cursor: pointer;
+  align-items: center;
+  height: 0;
+  min-height: 20px;
+  min-width: 140px;
+  background: $grey-30;
+  box-sizing: content-box;
+
+  &:hover {
+    background: $grey-10;
+  }
+
+  &.active {
+    background: $grey-10;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  &.space-between {
+    justify-content: space-between;
+  }
+
+  &.bold-text {
+    font-weight: 600;
+  }
+}
+
+.menu-item-nested {
+  position: absolute;
+  background: $white;
+  min-width: 100px;
+}
+
+.menu-item-more {
+  margin-left: 5px;
+}

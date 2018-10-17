@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const proxy = require('express-http-proxy');
 const url = require('url');
 const uuid = require('uuid');
@@ -62,7 +63,7 @@ const proxyConfig = (
     objFilter(headers, h => !droppedHeaders.includes(h));
 
   return {
-    filter: req => httpMethods.includes(req.method) && requireOAuth(req),
+    // filter: req => httpMethods.includes(req.method) && requireOAuth(req),
     proxyReqPathResolver,
     proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
       proxyReqOpts.headers = Object.assign(
