@@ -1,0 +1,18 @@
+@import '../../../styles/base/colors.scss';
+
+.sort-filter-arrow {
+  display: flex;
+  align-items: center;
+
+  .arrow {
+    fill: $grey;
+  }
+
+  .desc {
+    transform: rotate(180deg);
+  }
+
+  .hidden {
+    display: none;
+  }
+}

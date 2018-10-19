@@ -6,11 +6,9 @@ import { Link, withRouter, matchPath } from 'react-router-dom';
 import './styles.css';
 
 class NavBarMenuItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { active: false };
-    this.subItems = React.createRef();
-  }
+  state = { active: false };
+
+  subItems = React.createRef();
 
   componentDidMount() {
     this.evaluateActive(this.props.location);

@@ -1,0 +1,45 @@
+.networks {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+
+  a {
+    align-self: flex-start;
+    text-decoration: none;
+  }
+
+  table {
+    margin-top: 20px;
+
+    th {
+      &:nth-of-type(1) {
+        width: 50%;
+      }
+      &:nth-of-type(2),
+      &:nth-of-type(3) {
+        width: 25%;
+      }
+    }
+
+    tr:hover {
+      cursor: pointer;
+    }
+
+    .row-no-networks {
+      font-style: italic;
+      border: 0;
+    }
+
+    tr.disabled {
+      background-color: initial;
+      cursor: default;
+    }
+  }
+
+  .loader {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+}

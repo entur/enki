@@ -13,6 +13,7 @@ export const getNetworksQuery = `
       id,
       name,
       description,
+      privateCode,
       authorityRef
     }
   }

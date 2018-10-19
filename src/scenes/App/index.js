@@ -11,6 +11,7 @@ import Loading from '../../components/Loading';
 import NavBar from './components/NavBar';
 import Routes from './Routes';
 import { getProviders } from '../../actions/providers';
+import { getOrganisations } from '../../actions/organisations';
 
 import './styles.css';
 
@@ -25,9 +26,12 @@ L.Icon.Default.mergeOptions({
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(getProviders());
+    this.props.dispatch(getOrganisations());
   }
 
   render() {
+    const { providers, organisations } = this.props;
+
     return (
       <div className="app">
         <Helmet defaultTitle="Bestillingstransport" />
@@ -40,8 +44,8 @@ class App extends Component {
                 <div className="header-and-routes">
                   <Loading
                     className="app-loader"
-                    text="Laster inn tilbydere..."
-                    isLoading={!this.props.providers}
+                    text="Laster inn leverandører og organisasjoner..."
+                    isLoading={!providers || !organisations}
                   >
                     <Routes />
                   </Loading>
@@ -56,8 +60,9 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ providers }) => ({
-  providers: providers.providers
+const mapStateToProps = ({ providers, organisations }) => ({
+  providers: providers.providers,
+  organisations: organisations.organisations
 });
 
 export default connect(mapStateToProps)(App);
