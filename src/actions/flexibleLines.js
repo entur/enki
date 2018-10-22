@@ -3,15 +3,15 @@ import { getFlexibleLinesQuery } from '../graphql/uttu/queries';
 import { FlexibleLine } from '../model';
 import { showErrorNotification } from '../components/Notification/actions';
 
-export const REQUEST_LINES = 'REQUEST_LINES';
-export const RECEIVE_LINES = 'RECEIVE_LINES';
+export const REQUEST_FLEXIBLE_LINES = 'REQUEST_FLEXIBLE_LINES';
+export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
 
-const requestLines = () => ({
-  type: REQUEST_LINES
+const requestFlexibleLines = () => ({
+  type: REQUEST_FLEXIBLE_LINES
 });
 
-const receiveLines = lines => ({
-  type: RECEIVE_LINES,
+const receiveFlexibleLines = lines => ({
+  type: RECEIVE_FLEXIBLE_LINES,
   lines
 });
 
@@ -23,13 +23,13 @@ export const createFlexibleLine = fl => ({
 });
 
 export const loadFlexibleLines = () => (dispatch, getState) => {
-  dispatch(requestLines());
+  dispatch(requestFlexibleLines());
 
   const activeProvider = getState().providers.active;
   return UttuQuery(activeProvider, getFlexibleLinesQuery, {})
     .then(data => {
       const flexibleLines = data.flexibleLines.map(fl => new FlexibleLine(fl));
-      dispatch(receiveLines(flexibleLines));
+      dispatch(receiveFlexibleLines(flexibleLines));
       return Promise.resolve(flexibleLines);
     })
     .catch(() => {

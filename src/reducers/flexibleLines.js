@@ -1,11 +1,14 @@
-import { RECEIVE_LINES, REQUEST_LINES } from '../actions/flexibleLines';
+import {
+  RECEIVE_FLEXIBLE_LINES,
+  REQUEST_FLEXIBLE_LINES
+} from '../actions/flexibleLines';
 
 const flexibleLines = (lines = null, action) => {
   switch (action.type) {
-    case REQUEST_LINES:
+    case REQUEST_FLEXIBLE_LINES:
       return null;
 
-    case RECEIVE_LINES:
+    case RECEIVE_FLEXIBLE_LINES:
       return action.lines;
 
     default:

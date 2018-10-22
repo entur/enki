@@ -1,9 +1,15 @@
-import { CREATE_FLEXIBLE_STOP_PLACE } from '../actions/flexibleStopPlaces';
+import {
+  RECEIVE_FLEXIBLE_STOP_PLACES,
+  REQUEST_FLEXIBLE_STOP_PLACES
+} from '../actions/flexibleStopPlaces';
 
-const flexibleStopPlaces = (stopPlaces = [], action) => {
+const flexibleStopPlaces = (stopPlaces = null, action) => {
   switch (action.type) {
-    case CREATE_FLEXIBLE_STOP_PLACE:
-      return stopPlaces.concat(action.fsp);
+    case REQUEST_FLEXIBLE_STOP_PLACES:
+      return null;
+
+    case RECEIVE_FLEXIBLE_STOP_PLACES:
+      return action.stopPlaces;
 
     default:
       return stopPlaces;
