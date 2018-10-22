@@ -12,6 +12,7 @@ export const getNetworksQuery = `
     networks {
       id,
       name,
+      description,
       privateCode,
       authorityRef
     }

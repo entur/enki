@@ -1,9 +1,12 @@
-import { CREATE_FLEXIBLE_LINE } from '../actions/flexibleLines';
+import { RECEIVE_LINES, REQUEST_LINES } from '../actions/flexibleLines';
 
-const flexibleLines = (lines = [], action) => {
+const flexibleLines = (lines = null, action) => {
   switch (action.type) {
-    case CREATE_FLEXIBLE_LINE:
-      return lines.concat(action.fl);
+    case REQUEST_LINES:
+      return null;
+
+    case RECEIVE_LINES:
+      return action.lines;
 
     default:
       return lines;

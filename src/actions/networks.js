@@ -25,7 +25,7 @@ export const loadNetworks = () => (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   return UttuQuery(activeProvider, getNetworksQuery, {})
     .then(data => {
-      const networks = data.networks.map(d => new Network(d));
+      const networks = data.networks.map(n => new Network(n));
       dispatch(receiveNetworks(networks));
       return Promise.resolve(networks);
     })

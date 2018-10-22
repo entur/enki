@@ -34,7 +34,7 @@ class Networks extends Component {
         return networks.length > 0 ? (
           networks.map(n => (
             <TableRow key={n.id} onClick={() => this.handleOnRowClick(n.id)}>
-              <TableRowCell>{n.name}</TableRowCell>
+              <TableRowCell title={n.description}>{n.name}</TableRowCell>
               <TableRowCell>{n.privateCode}</TableRowCell>
               <TableRowCell>
                 {organisations.find(o => o.id === n.authorityRef).name}
@@ -61,7 +61,7 @@ class Networks extends Component {
       <div className="networks">
         <h2>Nettverk</h2>
 
-        <Link to={'/networks/edit'}>
+        <Link to={'/networks/create'}>
           <IconButton
             icon={<AddIcon />}
             label="Opprett nettverk"
