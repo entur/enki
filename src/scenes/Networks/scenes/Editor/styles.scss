@@ -3,27 +3,29 @@
   display: flex;
   flex-direction: column;
 
-  .network-form {
-    width: 400px;
-    max-width: 400px;
+  .network-form-container {
+    max-width: 450px;
+    min-width: 250px;
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      margin-bottom: 10px;
-    }
+    .network-form {
+      input,
+      textarea,
+      select {
+        width: 100%;
+        margin-bottom: 30px;
+      }
 
-    .save-button-container {
-      margin-top: 20px;
-      text-align: right;
+      .save-button-container {
+        margin-top: 20px;
+        text-align: right;
+      }
     }
   }
 
-  .authority-loader {
+  .loader {
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
   }
 }

@@ -12,13 +12,13 @@ import {
 } from '../../components/Table';
 import Loading from '../../components/Loading';
 import IconButton from '../../components/IconButton';
-import { getNetworks } from '../../actions/networks';
+import { loadNetworks } from '../../actions/networks';
 
 import './styles.css';
 
 class Networks extends Component {
   componentDidMount() {
-    this.props.dispatch(getNetworks());
+    this.props.dispatch(loadNetworks());
   }
 
   handleOnRowClick(id) {

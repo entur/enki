@@ -5,13 +5,10 @@ import {
   showSuccessNotification
 } from '../components/Notification/actions';
 import { Network } from '../model';
-import { getNetworksQuery } from '../graphql/uttu/queries';
+import { getNetworkByIdQuery, getNetworksQuery } from '../graphql/uttu/queries';
 
 export const REQUEST_NETWORKS = 'REQUEST_NETWORKS';
 export const RECEIVE_NETWORKS = 'RECEIVE_NETWORKS';
-
-export const CREATE_NETWORK = 'CREATE_NETWORK';
-export const UPDATE_NETWORK = 'UPDATE_NETWORK';
 
 const requestNetworks = () => ({
   type: REQUEST_NETWORKS
@@ -22,17 +19,7 @@ const receiveNetworks = networks => ({
   networks
 });
 
-const createNetwork = network => ({
-  type: CREATE_NETWORK,
-  network
-});
-
-const updateNetwork = network => ({
-  type: UPDATE_NETWORK,
-  network
-});
-
-export const getNetworks = () => (dispatch, getState) => {
+export const loadNetworks = () => (dispatch, getState) => {
   dispatch(requestNetworks());
 
   const activeProvider = getState().providers.active;
@@ -53,19 +40,29 @@ export const getNetworks = () => (dispatch, getState) => {
     });
 };
 
+export const loadNetworkById = id => (dispatch, getState) => {
+  const activeProvider = getState().providers.active;
+  return UttuQuery(activeProvider, getNetworkByIdQuery, { id })
+    .then(data => Promise.resolve(new Network(data.network)))
+    .catch(() => {
+      dispatch(
+        showErrorNotification(
+          'Redigere nettverk',
+          'Klarte ikke å laste inn nettverket for redigering.'
+        )
+      );
+      return Promise.reject();
+    });
+};
+
 export const saveNetwork = network => (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   return UttuQuery(activeProvider, mutateNetwork, { input: network })
-    .then(data => {
-      const id = data.mutateNetwork.id;
-      const updatedNetwork = network.withChanges({ id });
-      network.id
-        ? createNetwork(updatedNetwork)
-        : updateNetwork(updatedNetwork);
+    .then(() => {
       dispatch(
         showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')
       );
-      return Promise.resolve(updatedNetwork);
+      return Promise.resolve();
     })
     .catch(() => {
       dispatch(

@@ -12,6 +12,22 @@ export const getNetworksQuery = `
     networks {
       id,
       name,
+      privateCode,
+      authorityRef
+    }
+  }
+`;
+
+export const getNetworkByIdQuery = `
+  query GetNetworkById($id:ID!) {
+    network(id: $id) {
+      id,
+      version,
+      created,
+      createdBy,
+      changed,
+      changedBy,
+      name,
       description,
       privateCode,
       authorityRef
