@@ -6,16 +6,16 @@ class FlexibleStopPlace extends Versioned {
   constructor(data = {}) {
     super(data);
 
-    this.name = data.name || '';
-    this.description = data.description || '';
-    this.privateCode = data.privateCode || '';
-    this.transportMode = data.transportMode || '';
+    this.name = data.name;
+    this.description = data.description;
+    this.privateCode = data.privateCode;
+    this.transportMode = data.transportMode;
     this.flexibleArea = data.flexibleArea
       ? new FlexibleArea(data.flexibleArea)
-      : null;
+      : undefined;
     this.hailAndRideArea = data.hailAndRideArea
       ? new HailAndRideArea(data.hailAndRideArea)
-      : null;
+      : undefined;
   }
 }
 

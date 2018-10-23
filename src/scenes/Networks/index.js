@@ -33,8 +33,12 @@ class Networks extends Component {
       if (networks) {
         return networks.length > 0 ? (
           networks.map(n => (
-            <TableRow key={n.id} onClick={() => this.handleOnRowClick(n.id)}>
-              <TableRowCell title={n.description}>{n.name}</TableRowCell>
+            <TableRow
+              key={n.id}
+              onClick={() => this.handleOnRowClick(n.id)}
+              title={n.description}
+            >
+              <TableRowCell>{n.name}</TableRowCell>
               <TableRowCell>{n.privateCode}</TableRowCell>
               <TableRowCell>
                 {organisations.find(o => o.id === n.authorityRef).name}

@@ -32,8 +32,8 @@ export const loadNetworks = () => (dispatch, getState) => {
     .catch(() => {
       dispatch(
         showErrorNotification(
-          'Hente nettverk',
-          'En feil oppstod under hentingen av nettverkene.'
+          'Laste nettverk',
+          'En feil oppstod under lastingen av nettverkene.'
         )
       );
       return Promise.reject();
@@ -47,8 +47,8 @@ export const loadNetworkById = id => (dispatch, getState) => {
     .catch(() => {
       dispatch(
         showErrorNotification(
-          'Redigere nettverk',
-          'Klarte ikke å laste inn nettverket for redigering.'
+          'Laste nettverk',
+          'En feil oppstod under lastingen av nettverket.'
         )
       );
       return Promise.reject();

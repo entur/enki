@@ -15,7 +15,6 @@ import IconButton from '../../components/IconButton';
 import { loadFlexibleStopPlaces } from '../../actions/flexibleStopPlaces';
 
 import './styles.css';
-import { capitalize } from 'lodash';
 
 class StopPlaces extends Component {
   componentDidMount() {
@@ -33,11 +32,17 @@ class StopPlaces extends Component {
     const renderTableRows = () => {
       if (stopPlaces) {
         return stopPlaces.length > 0 ? (
-          stopPlaces.map(n => (
-            <TableRow key={n.id} onClick={() => this.handleOnRowClick(n.id)}>
-              <TableRowCell title={n.description}>{n.name}</TableRowCell>
-              <TableRowCell>{n.privateCode}</TableRowCell>
-              <TableRowCell>{capitalize(n.transportMode)}</TableRowCell>
+          stopPlaces.map(sp => (
+            <TableRow
+              key={sp.id}
+              onClick={() => this.handleOnRowClick(sp.id)}
+              title={sp.description}
+            >
+              <TableRowCell>{sp.name}</TableRowCell>
+              <TableRowCell>{sp.privateCode}</TableRowCell>
+              <TableRowCell>
+                {sp.flexibleArea.polygon.coordinates.length - 1}
+              </TableRowCell>
             </TableRow>
           ))
         ) : (
@@ -73,7 +78,7 @@ class StopPlaces extends Component {
         <Table>
           <TableHeaderCell label="Navn" />
           <TableHeaderCell label="Privat kode" />
-          <TableHeaderCell label="Type transport" />
+          <TableHeaderCell label="Antall punkter" />
 
           {renderTableRows()}
         </Table>

@@ -1,7 +1,14 @@
-import { getFlexibleStopPlacesQuery } from '../graphql/uttu/queries';
+import {
+  getFlexibleStopPlaceByIdQuery,
+  getFlexibleStopPlacesQuery
+} from '../graphql/uttu/queries';
 import { UttuQuery } from '../graphql';
 import { FlexibleStopPlace } from '../model';
-import { showErrorNotification } from '../components/Notification/actions';
+import {
+  showErrorNotification,
+  showSuccessNotification
+} from '../components/Notification/actions';
+import { mutateFlexibleStopPlace } from '../graphql/uttu/mutations';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
 export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
@@ -13,13 +20,6 @@ const requestFlexibleStopPlaces = () => ({
 const receiveFlexibleStopPlaces = stopPlaces => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACES,
   stopPlaces
-});
-
-export const CREATE_FLEXIBLE_STOP_PLACE = 'CREATE_FLEXIBLE_STOP_PLACE';
-
-export const createFlexibleStopPlace = fsp => ({
-  type: CREATE_FLEXIBLE_STOP_PLACE,
-  fsp
 });
 
 export const loadFlexibleStopPlaces = () => (dispatch, getState) => {
@@ -37,8 +37,50 @@ export const loadFlexibleStopPlaces = () => (dispatch, getState) => {
     .catch(() => {
       dispatch(
         showErrorNotification(
-          'Hente stoppesteder',
-          'En feil oppstod under hentingen av stoppestedene.'
+          'Laste stoppesteder',
+          'En feil oppstod under lastingen av stoppestedene.'
+        )
+      );
+      return Promise.reject();
+    });
+};
+
+export const loadFlexibleStopPlaceById = id => (dispatch, getState) => {
+  const activeProvider = getState().providers.active;
+  return UttuQuery(activeProvider, getFlexibleStopPlaceByIdQuery, { id })
+    .then(data =>
+      Promise.resolve(new FlexibleStopPlace(data.flexibleStopPlace))
+    )
+    .catch(() => {
+      dispatch(
+        showErrorNotification(
+          'Laste stoppested',
+          'En feil oppstod under lastingen av stoppestedet.'
+        )
+      );
+      return Promise.reject();
+    });
+};
+
+export const saveFlexibleStopPlace = flexibleStopPlace => (
+  dispatch,
+  getState
+) => {
+  const activeProvider = getState().providers.active;
+  return UttuQuery(activeProvider, mutateFlexibleStopPlace, {
+    input: flexibleStopPlace
+  })
+    .then(() => {
+      dispatch(
+        showSuccessNotification('Lagre stoppested', 'Stoppestedet ble lagret.')
+      );
+      return Promise.resolve();
+    })
+    .catch(() => {
+      dispatch(
+        showErrorNotification(
+          'Lagre stoppested',
+          'En feil oppstod under lagringen av stoppestedet.'
         )
       );
       return Promise.reject();

@@ -1,84 +1,126 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Label, TextField } from '@entur/component-library';
+import { Button, Label, TextField, TextArea } from '@entur/component-library';
 
 import { FlexibleStopPlace, FlexibleArea } from '../../../../model/index';
-import { createFlexibleStopPlace } from '../../../../actions/flexibleStopPlaces';
-import Listing from './components/Listing/index';
+import { VEHICLE_MODE } from '../../../../model/enums';
+import OverlayLoader from '../../../../components/OverlayLoader';
+import Loading from '../../../../components/Loading';
 import PolygonMap from './components/PolygonMap/index';
+import {
+  loadFlexibleStopPlaceById,
+  saveFlexibleStopPlace
+} from '../../../../actions/flexibleStopPlaces';
 
 import './styles.css';
 
 class FlexibleStopPlaceEditor extends Component {
-  state = { fsp: new FlexibleStopPlace() };
+  state = {
+    flexibleStopPlace: null,
+    isSaving: false
+  };
 
-  onFieldChange(field, value) {
+  componentDidMount() {
+    const { dispatch, match, history } = this.props;
+    if (match.params.id) {
+      dispatch(loadFlexibleStopPlaceById(match.params.id))
+        .then(flexibleStopPlace => this.setState({ flexibleStopPlace }))
+        .catch(() => history.push('/stop-places'));
+    } else {
+      this.setState({
+        flexibleStopPlace: new FlexibleStopPlace({
+          transportMode: VEHICLE_MODE.BUS
+        })
+      });
+    }
+  }
+
+  handleFieldChange(field, value) {
     this.setState(prevState => ({
-      fsp: prevState.fsp.withChanges({ [field]: value })
+      flexibleStopPlace: prevState.flexibleStopPlace.withChanges({
+        [field]: value
+      })
     }));
   }
 
   handleMapOnClick(e) {
-    this.setState(({ fsp, fsp: { flexibleArea } }) => {
-      const newPoint = [[e.latlng.lat, e.latlng.lng]];
-      const fa = flexibleArea
-        ? flexibleArea.withChanges({
-            polygon: flexibleArea.polygon.concat([[e.latlng.lat, e.latlng.lng]])
-          })
-        : new FlexibleArea({
-            polygon: newPoint
-          });
-      return {
-        fsp: fsp.withChanges({ flexibleArea: fa })
-      };
-    });
+    this.setState(
+      ({ flexibleStopPlace, flexibleStopPlace: { flexibleArea } }) => ({
+        flexibleStopPlace: flexibleStopPlace.withChanges({
+          flexibleArea: (flexibleArea || new FlexibleArea()).addCoordinate([
+            e.latlng.lat,
+            e.latlng.lng
+          ])
+        })
+      })
+    );
   }
 
   handleOnSaveClick() {
-    this.props.dispatch(createFlexibleStopPlace(this.state.fsp));
-    this.setState({ fsp: new FlexibleStopPlace() });
+    const { dispatch, history } = this.props;
+    this.setState({ isSaving: true });
+    dispatch(saveFlexibleStopPlace(this.state.flexibleStopPlace))
+      .then(() => history.push('/stop-places'))
+      .finally(() => this.setState({ isSaving: false }));
   }
 
   render() {
-    const { name, validity, flexibleArea } = this.state.fsp;
+    const { isSaving, flexibleStopPlace } = this.state;
 
-    const polygon = flexibleArea ? flexibleArea.polygon : [];
+    const polygonCoordinates =
+      flexibleStopPlace && flexibleStopPlace.flexibleArea
+        ? flexibleStopPlace.flexibleArea.polygon.coordinates
+        : [];
 
     return (
-      <div className="flexible-stop-place-editor">
-        <div className="flexible-stop-place-form">
-          <h3>Opprett fleksibelt stoppested</h3>
+      <div className="stop-place-editor">
+        <h3>Opprett stoppested</h3>
 
-          <div className="inputs">
-            <div>
-              <Label>Navn</Label>
-              <TextField
-                type="text"
-                value={name}
-                onChange={e => this.onFieldChange('name', e.target.value)}
+        {flexibleStopPlace ? (
+          <OverlayLoader isLoading={isSaving} text="Lagrer stoppested...">
+            <div className="stop-place-form-container">
+              <div className="stop-place-form">
+                <Label>Navn</Label>
+                <TextField
+                  type="text"
+                  value={flexibleStopPlace.name}
+                  onChange={e => this.handleFieldChange('name', e.target.value)}
+                />
+
+                <Label>Beskrivelse</Label>
+                <TextArea
+                  type="text"
+                  value={flexibleStopPlace.description}
+                  onChange={e =>
+                    this.handleFieldChange('description', e.target.value)
+                  }
+                />
+
+                <Label>Privat kode</Label>
+                <TextField
+                  type="text"
+                  value={flexibleStopPlace.privateCode}
+                  onChange={e =>
+                    this.handleFieldChange('privateCode', e.target.value)
+                  }
+                />
+
+                <div className="save-button-container">
+                  <Button variant="success" onClick={::this.handleOnSaveClick}>
+                    Lagre
+                  </Button>
+                </div>
+              </div>
+
+              <PolygonMap
+                onClick={::this.handleMapOnClick}
+                polygon={polygonCoordinates}
               />
             </div>
-
-            <div>
-              <Label>Gyldighet</Label>
-              <TextField
-                type="text"
-                value={validity}
-                onChange={e => this.onFieldChange('validity', e.target.value)}
-              />
-            </div>
-
-            <div className="save-button-container">
-              <Button variant="success" onClick={::this.handleOnSaveClick}>
-                Lagre
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <Listing />
-
-        <PolygonMap onClick={::this.handleMapOnClick} polygon={polygon} />
+          </OverlayLoader>
+        ) : (
+          <Loading text="Laster inn stoppestedet..." />
+        )}
       </div>
     );
   }

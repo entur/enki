@@ -71,8 +71,33 @@ export const getFlexibleLinesQuery = `
 export const getFlexibleStopPlacesQuery = `
   query GetFlexibleStopPlaces {
     flexibleStopPlaces {
+      id,
       name,
       description,
+      privateCode,
+      transportMode,
+      flexibleArea {
+        polygon {
+          coordinates
+        }
+      }
+    }
+  }
+`;
+
+export const getFlexibleStopPlaceByIdQuery = `
+  query GetFlexibleStopPlaceById($id:ID!) {
+    flexibleStopPlace(id: $id) {
+      id,
+      version,
+      created,
+      createdBy,
+      changed,
+      changedBy,
+      name,
+      description,
+      privateCode,
+      transportMode,
       flexibleArea {
         polygon {
           type,
