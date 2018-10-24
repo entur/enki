@@ -65,6 +65,7 @@ class FlexibleStopPlaceEditor extends Component {
   }
 
   render() {
+    const { match } = this.props;
     const { isSaving, flexibleStopPlace } = this.state;
 
     const polygonCoordinates =
@@ -74,7 +75,7 @@ class FlexibleStopPlaceEditor extends Component {
 
     return (
       <div className="stop-place-editor">
-        <h3>Opprett stoppested</h3>
+        <h2>{match.params.id ? 'Rediger' : 'Opprett'} stoppested</h2>
 
         {flexibleStopPlace ? (
           <OverlayLoader isLoading={isSaving} text="Lagrer stoppested...">
