@@ -3,6 +3,12 @@
   display: flex;
   flex-direction: column;
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .network-form {
     max-width: 450px;
     min-width: 250px;

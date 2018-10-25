@@ -13,9 +13,15 @@ import {
 
 import { Network } from '../../../../model/index';
 import { ORGANISATION_TYPE } from '../../../../model/enums';
-import { loadNetworkById, saveNetwork } from '../../../../actions/networks';
+import {
+  deleteNetworkById,
+  loadNetworkById,
+  saveNetwork
+} from '../../../../actions/networks';
+import { loadFlexibleLines } from '../../../../actions/flexibleLines';
 import OverlayLoader from '../../../../components/OverlayLoader';
 import Loading from '../../../../components/Loading';
+import ConfirmDialog from '../../../../components/ConfirmDialog';
 
 import './styles.css';
 
@@ -26,12 +32,15 @@ class NetworkEditor extends Component {
   state = {
     network: null,
     authoritySelection: DEFAULT_SELECT_VALUE,
-    isSaving: false
+    isSaving: false,
+    isDeleteDialogOpen: false,
+    isDeleting: false
   };
 
   componentDidMount() {
     const { dispatch, match, history } = this.props;
     if (match.params.id) {
+      dispatch(loadFlexibleLines());
       dispatch(loadNetworkById(match.params.id))
         .then(network =>
           this.setState({
@@ -68,20 +77,67 @@ class NetworkEditor extends Component {
       .finally(() => this.setState({ isSaving: false }));
   }
 
+  setDeleteDialogOpen(open) {
+    this.setState({ isDeleteDialogOpen: open });
+  }
+
+  handleDeleteNetwork() {
+    const { dispatch, history } = this.props;
+    this.setState({ isDeleting: true });
+    dispatch(deleteNetworkById(this.state.network.id))
+      .then(() => history.push('/networks'))
+      .finally(() =>
+        this.setState({
+          isDeleteDialogOpen: false,
+          isDeleting: false
+        })
+      );
+  }
+
   render() {
-    const { authoritySelection, isSaving, network } = this.state;
-    const { match } = this.props;
+    const {
+      network,
+      authoritySelection,
+      isSaving,
+      isDeleteDialogOpen,
+      isDeleting
+    } = this.state;
+    const { match, lines } = this.props;
 
     const authorities = this.props.organisations.filter(org =>
       org.types.includes(ORGANISATION_TYPE.AUTHORITY)
     );
 
+    const isDeleteDisabled =
+      !lines || !network || !!lines.find(l => l.networkRef === network.id);
+
+    console.log(isDeleteDisabled, !!lines, !!network);
+
     return (
       <div className="network-editor">
-        <h2>{match.params.id ? 'Rediger' : 'Opprett'} nettverk</h2>
+        <div className="header">
+          <h2>{match.params.id ? 'Rediger' : 'Opprett'} nettverk</h2>
+          {match.params.id && (
+            <Button
+              variant="negative"
+              onClick={() => this.setDeleteDialogOpen(true)}
+              disabled={isDeleteDisabled}
+              title={
+                isDeleteDisabled
+                  ? 'For å slette dette nettverket må først nettverkets tilhørende linjer slettes.'
+                  : ''
+              }
+            >
+              Slett
+            </Button>
+          )}
+        </div>
 
-        {network ? (
-          <OverlayLoader isLoading={isSaving} text="Lagrer nettverk...">
+        {network && lines ? (
+          <OverlayLoader
+            isLoading={isSaving || isDeleting}
+            text={(isSaving ? 'Lagrer' : 'Sletter') + ' nettverket...'}
+          >
             <div className="network-form">
               <Label>Navn</Label>
               <TextField
@@ -129,20 +185,55 @@ class NetworkEditor extends Component {
               </DropDown>
 
               <div className="save-button-container">
-                <Button variant="success" onClick={::this.handleOnSaveClick}>
+                <Button
+                  variant="success"
+                  onClick={() => this.setDeleteDialogOpen(true)}
+                >
                   Lagre
                 </Button>
               </div>
             </div>
           </OverlayLoader>
         ) : (
-          <Loading text="Laster inn nettverket..." />
+          <Loading
+            text={`Laster inn ${!network ? 'nettverket' : 'avhengigheter'}...`}
+          />
         )}
+
+        <ConfirmDialog
+          isOpen={isDeleteDialogOpen}
+          title="Slette nettverk"
+          message="Er du sikker på at du ønsker å slette dette nettverket?"
+          buttons={[
+            <Button
+              key={2}
+              onClick={() => this.setDeleteDialogOpen(false)}
+              variant="secondary"
+              width="md"
+              className="action-button"
+            >
+              Nei
+            </Button>,
+            <Button
+              key={1}
+              onClick={::this.handleDeleteNetwork}
+              variant="success"
+              width="md"
+              className="action-button"
+            >
+              Ja
+            </Button>
+          ]}
+          onClose={() => this.setDeleteDialogOpen(false)}
+        />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ organisations }) => ({ organisations });
+const mapStateToProps = ({ organisations, flexibleLines }) => ({
+  organisations,
+  lines: flexibleLines
+});
 
 export default compose(withRouter, connect(mapStateToProps))(NetworkEditor);

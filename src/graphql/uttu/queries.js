@@ -43,7 +43,10 @@ export const getFlexibleLinesQuery = `
       name,
       description,
       privateCode,
-      operatorRef
+      operatorRef,
+      network {
+        id
+      }
     }
   }
 `;

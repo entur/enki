@@ -1,5 +1,5 @@
 import { UttuQuery } from '../graphql';
-import { networkMutation } from '../graphql/uttu/mutations';
+import {deleteNetwork, networkMutation} from '../graphql/uttu/mutations';
 import {
   showErrorNotification,
   showSuccessNotification
@@ -69,6 +69,26 @@ export const saveNetwork = network => (dispatch, getState) => {
         showErrorNotification(
           'Lagre nettverk',
           'En feil oppstod under lagringen av nettverket.'
+        )
+      );
+      return Promise.reject();
+    });
+};
+
+export const deleteNetworkById = id => (dispatch, getState) => {
+  const activeProvider = getState().providers.active;
+  return UttuQuery(activeProvider, deleteNetwork, { id })
+    .then(() => {
+      dispatch(
+        showSuccessNotification('Slette nettverk', 'Nettverket ble slettet.')
+      );
+      return Promise.resolve();
+    })
+    .catch(() => {
+      dispatch(
+        showErrorNotification(
+          'Slette nettverk',
+          'En feil oppstod under slettingen av nettverket.'
         )
       );
       return Promise.reject();

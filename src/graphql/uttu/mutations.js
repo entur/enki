@@ -6,7 +6,7 @@ export const networkMutation = `
 
 export const deleteNetwork = `
   mutation DeleteNetwork($id: ID!) {
-    deleteNetwork(id: $id)
+    deleteNetwork(id: $id) { id }
   }
 `;
 
@@ -18,7 +18,7 @@ export const flexibleLineMutation = `
 
 export const deleteFlexibleLine = `
   mutation DeleteFlexibleLine($id: ID!) {
-    deleteFlexibleLine(id: $id)
+    deleteFlexibleLine(id: $id) { id }
   }
 `;
 
@@ -30,6 +30,6 @@ export const flexibleStopPlaceMutation = `
 
 export const deleteFlexibleStopPlace = `
   mutation DeleteFlexibleLine($id: ID!) {
-    deleteFlexibleLine(id: $id)
+    deleteFlexibleLine(id: $id) { id }
   }
 `;
