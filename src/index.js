@@ -7,7 +7,7 @@ import Keycloak from 'keycloak-js';
 import App from './scenes/App';
 import ErrorBoundary from './components/ErrorBoundary';
 import { configureStore } from './store';
-import token, { TOKEN_ID } from './http/token';
+import token from './http/token';
 import { isAdmin } from './helpers/tokenParser';
 import { API_BASE } from './http/http';
 
@@ -15,9 +15,7 @@ import './styles/index.css';
 
 const renderIndex = userInfo => {
   const root = document.getElementById('root');
-  const { store, Raven } = configureStore(userInfo, {
-    active: localStorage.getItem(TOKEN_ID + '::activeId')
-  });
+  const { store, Raven } = configureStore(userInfo);
 
   ReactDOM.render(
     <ErrorBoundary Raven={Raven}>

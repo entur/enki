@@ -10,18 +10,26 @@ class StopPointInJourneyPattern extends Versioned {
 
     this.flexibleStopPlace = data.flexibleStopPlace
       ? new FlexibleStopPlace(data.flexibleStopPlace)
-      : null;
-    this.flexibleStopPlaceRef = data.flexibleStopPlaceRef || '';
-    this.quayRef = data.quayRef || '';
+      : undefined;
+    this.flexibleStopPlaceRef =
+      data.flexibleStopPlaceRef ||
+      (data.flexibleStopPlace ? data.flexibleStopPlace.id : undefined);
+    this.quayRef = data.quayRef;
     this.bookingArrangement = data.bookingArrangement
       ? new BookingArrangement(data.bookingArrangement)
-      : null;
+      : undefined;
     this.destinationDisplay = data.destinationDisplay
       ? new DestinationDisplay(data.destinationDisplay)
-      : null;
-    this.forBoarding = data.forBoarding || '';
-    this.forAlighting = data.forAlighting || '';
+      : undefined;
+    this.forBoarding = data.forBoarding;
+    this.forAlighting = data.forAlighting;
     this.notices = (data.notices || []).map(n => new Notice(n));
+  }
+
+  toPayload() {
+    let payload = this.withChanges();
+    delete payload.flexibleStopPlace;
+    return payload;
   }
 }
 

@@ -8,7 +8,7 @@ import {
   showErrorNotification,
   showSuccessNotification
 } from '../components/Notification/actions';
-import { mutateFlexibleStopPlace } from '../graphql/uttu/mutations';
+import { flexibleStopPlaceMutation } from '../graphql/uttu/mutations';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
 export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
@@ -67,7 +67,7 @@ export const saveFlexibleStopPlace = flexibleStopPlace => (
   getState
 ) => {
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, mutateFlexibleStopPlace, {
+  return UttuQuery(activeProvider, flexibleStopPlaceMutation, {
     input: flexibleStopPlace
   })
     .then(() => {

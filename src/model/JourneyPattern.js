@@ -7,10 +7,10 @@ class JourneyPattern extends Versioned {
   constructor(data = {}) {
     super(data);
 
-    this.name = data.name || '';
-    this.description = data.description || '';
-    this.privateCode = data.privateCode || '';
-    this.directionType = data.directionType || '';
+    this.name = data.name;
+    this.description = data.description;
+    this.privateCode = data.privateCode;
+    this.directionType = data.directionType;
     this.pointsInSequence = (data.pointsInSequence || []).map(
       p => new StopPointInJourneyPattern(p)
     );
@@ -18,6 +18,12 @@ class JourneyPattern extends Versioned {
       sj => new ServiceJourney(sj)
     );
     this.notices = (data.notices || []).map(n => new Notice(n));
+  }
+
+  toPayload() {
+    return this.withChanges({
+      pointsInSequence: this.pointsInSequence.map(pis => pis.toPayload())
+    });
   }
 }
 

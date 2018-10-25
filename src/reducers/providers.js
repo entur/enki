@@ -24,9 +24,7 @@ const providersReducer = (state = initialState, action) => {
     }
 
     case FAILED_RECEIVING_PROVIDERS:
-      return Object.assign({}, state, {
-        failure: true
-      });
+      return Object.assign({}, state, { failure: true });
 
     case SET_ACTIVE_PROVIDER:
       return Object.assign({}, state, {

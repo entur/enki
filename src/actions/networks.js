@@ -1,5 +1,5 @@
 import { UttuQuery } from '../graphql';
-import { mutateNetwork } from '../graphql/uttu/mutations';
+import { networkMutation } from '../graphql/uttu/mutations';
 import {
   showErrorNotification,
   showSuccessNotification
@@ -57,7 +57,7 @@ export const loadNetworkById = id => (dispatch, getState) => {
 
 export const saveNetwork = network => (dispatch, getState) => {
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, mutateNetwork, { input: network })
+  return UttuQuery(activeProvider, networkMutation, { input: network })
     .then(() => {
       dispatch(
         showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')

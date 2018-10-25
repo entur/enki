@@ -27,7 +27,7 @@ class Lines extends Component {
   }
 
   render() {
-    const { lines } = this.props;
+    const { organisations, lines } = this.props;
 
     const renderTableRows = () => {
       if (lines) {
@@ -36,7 +36,9 @@ class Lines extends Component {
             <TableRow key={n.id} onClick={() => this.handleOnRowClick(n.id)}>
               <TableRowCell title={n.description}>{n.name}</TableRowCell>
               <TableRowCell>{n.privateCode}</TableRowCell>
-              <TableRowCell>{n.publicCode}</TableRowCell>
+              <TableRowCell>
+                {organisations.find(o => o.id === n.operatorRef).name}
+              </TableRowCell>
             </TableRow>
           ))
         ) : (
@@ -70,7 +72,7 @@ class Lines extends Component {
         <Table>
           <TableHeaderCell label="Navn" />
           <TableHeaderCell label="Privat kode" />
-          <TableHeaderCell label="Offentlig kode" />
+          <TableHeaderCell label="Operatør" />
 
           {renderTableRows()}
         </Table>
@@ -79,6 +81,9 @@ class Lines extends Component {
   }
 }
 
-const mapStateToProps = ({ flexibleLines }) => ({ lines: flexibleLines });
+const mapStateToProps = ({ organisations, flexibleLines }) => ({
+  organisations,
+  lines: flexibleLines
+});
 
 export default compose(withRouter, connect(mapStateToProps))(Lines);

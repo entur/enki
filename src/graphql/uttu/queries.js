@@ -39,28 +39,42 @@ export const getNetworkByIdQuery = `
 export const getFlexibleLinesQuery = `
   query GetFlexibleLines {
     flexibleLines {
+      id,
+      name,
+      description,
+      privateCode,
+      operatorRef
+    }
+  }
+`;
+
+export const getFlexibleLineByIdQuery = `
+  query GetFlexibleLineById($id:ID!) {
+    flexibleLine(id: $id) {
+      id,
+      version,
+      created,
+      createdBy,
+      changed,
+      changedBy,
+      name,
+      description,
+      privateCode,
       publicCode,
-      network { id },
+      transportMode,
+      transportSubmode,
+      flexibleLineType,
       operatorRef,
+      network {
+        id
+      },
       journeyPatterns {
         pointsInSequence {
-          flexibleStopPlace { id },
-          destinationDisplay { frontText }
-        },
-        serviceJourneys {
-          passingTimes {
-            latestArrivalTime,
-            earliestDepartureTime
+          flexibleStopPlace {
+            id
           },
-          dayTypes {
-            dayTypeAssignments {
-              isAvailable,
-              date,
-              operatingPeriod {
-                fromDate,
-                toDate
-              }
-            }
+          destinationDisplay {
+            frontText
           }
         }
       }
@@ -75,7 +89,6 @@ export const getFlexibleStopPlacesQuery = `
       name,
       description,
       privateCode,
-      transportMode,
       flexibleArea {
         polygon {
           coordinates
@@ -97,7 +110,6 @@ export const getFlexibleStopPlaceByIdQuery = `
       name,
       description,
       privateCode,
-      transportMode,
       flexibleArea {
         polygon {
           type,

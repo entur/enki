@@ -44,7 +44,7 @@ class App extends Component {
                 <div className="header-and-routes">
                   <Loading
                     className="app-loader"
-                    text="Laster inn leverandører og organisasjoner..."
+                    text="Laster inn dataleverandører og organisasjoner..."
                     isLoading={!providers || !organisations}
                   >
                     <Routes />
@@ -62,7 +62,7 @@ class App extends Component {
 
 const mapStateToProps = ({ providers, organisations }) => ({
   providers: providers.providers,
-  organisations: organisations.organisations
+  organisations
 });
 
 export default connect(mapStateToProps)(App);

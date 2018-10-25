@@ -1,4 +1,4 @@
-export const mutateNetwork = `
+export const networkMutation = `
   mutation MutateNetwork($input: NetworkInput!) {
     mutateNetwork(input: $input) { id }
   }
@@ -10,7 +10,7 @@ export const deleteNetwork = `
   }
 `;
 
-export const mutateFlexibleLine = `
+export const flexibleLineMutation = `
   mutation MutateFlexibleLine($input: FlexibleLineInput!) {
     mutateFlexibleLine(input: $input) { id }
   }
@@ -22,7 +22,7 @@ export const deleteFlexibleLine = `
   }
 `;
 
-export const mutateFlexibleStopPlace = `
+export const flexibleStopPlaceMutation = `
   mutation MutateFlexibleStopPlace($input: FlexibleStopPlaceInput!) {
     mutateFlexibleStopPlace(input: $input) { id }
   }

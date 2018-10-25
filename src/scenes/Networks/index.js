@@ -86,7 +86,7 @@ class Networks extends Component {
 }
 
 const mapStateToProps = ({ organisations, networks }) => ({
-  organisations: organisations.organisations,
+  organisations,
   networks
 });
 

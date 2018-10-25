@@ -3,22 +3,20 @@
   display: flex;
   flex-direction: column;
 
-  .network-form-container {
+  .network-form {
     max-width: 450px;
     min-width: 250px;
 
-    .network-form {
-      input,
-      textarea,
-      select {
-        width: 100%;
-        margin-bottom: 30px;
-      }
+    input,
+    textarea,
+    select {
+      width: 100%;
+      margin-bottom: 30px;
+    }
 
-      .save-button-container {
-        margin-top: 20px;
-        text-align: right;
-      }
+    .save-button-container {
+      margin-top: 20px;
+      text-align: right;
     }
   }
 

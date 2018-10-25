@@ -12,21 +12,20 @@ import {
 } from '@entur/component-library';
 
 import { Network } from '../../../../model/index';
+import { ORGANISATION_TYPE } from '../../../../model/enums';
 import { loadNetworkById, saveNetwork } from '../../../../actions/networks';
 import OverlayLoader from '../../../../components/OverlayLoader';
 import Loading from '../../../../components/Loading';
 
 import './styles.css';
 
-const ORGANISATION_TYPE_AUTHORITY = 'Authority';
-
-const DEFAULT_AUTHORITY_LABEL = '--- velg ---';
-const DEFAULT_AUTHORITY_VALUE = '-1';
+const DEFAULT_SELECT_LABEL = '--- velg ---';
+const DEFAULT_SELECT_VALUE = '-1';
 
 class NetworkEditor extends Component {
   state = {
     network: null,
-    authoritySelection: DEFAULT_AUTHORITY_VALUE,
+    authoritySelection: DEFAULT_SELECT_VALUE,
     isSaving: false
   };
 
@@ -54,9 +53,7 @@ class NetworkEditor extends Component {
 
   handleAuthoritySelectionChange(authoritySelection) {
     const authorityRef =
-      authoritySelection !== DEFAULT_AUTHORITY_VALUE
-        ? authoritySelection
-        : null;
+      authoritySelection !== DEFAULT_SELECT_VALUE ? authoritySelection : null;
     this.setState(({ network }) => ({
       network: network.withChanges({ authorityRef })
     }));
@@ -76,7 +73,7 @@ class NetworkEditor extends Component {
     const { match } = this.props;
 
     const authorities = this.props.organisations.filter(org =>
-      org.types.includes(ORGANISATION_TYPE_AUTHORITY)
+      org.types.includes(ORGANISATION_TYPE.AUTHORITY)
     );
 
     return (
@@ -84,62 +81,60 @@ class NetworkEditor extends Component {
         <h2>{match.params.id ? 'Rediger' : 'Opprett'} nettverk</h2>
 
         {network ? (
-          <div className="network-form-container">
-            <OverlayLoader isLoading={isSaving} text="Lagrer nettverk...">
-              <div className="network-form">
-                <Label>Navn</Label>
-                <TextField
-                  type="text"
-                  value={network.name}
-                  onChange={e => this.handleFieldChange('name', e.target.value)}
-                />
+          <OverlayLoader isLoading={isSaving} text="Lagrer nettverk...">
+            <div className="network-form">
+              <Label>Navn</Label>
+              <TextField
+                type="text"
+                value={network.name}
+                onChange={e => this.handleFieldChange('name', e.target.value)}
+              />
 
-                <Label>Beskrivelse</Label>
-                <TextArea
-                  type="text"
-                  value={network.description}
-                  onChange={e =>
-                    this.handleFieldChange('description', e.target.value)
-                  }
-                />
+              <Label>Beskrivelse</Label>
+              <TextArea
+                type="text"
+                value={network.description}
+                onChange={e =>
+                  this.handleFieldChange('description', e.target.value)
+                }
+              />
 
-                <Label>Privat kode</Label>
-                <TextField
-                  type="text"
-                  value={network.privateCode}
-                  onChange={e =>
-                    this.handleFieldChange('privateCode', e.target.value)
-                  }
-                />
+              <Label>Privat kode</Label>
+              <TextField
+                type="text"
+                value={network.privateCode}
+                onChange={e =>
+                  this.handleFieldChange('privateCode', e.target.value)
+                }
+              />
 
-                <Label>Autoritet</Label>
-                <DropDown
-                  value={authoritySelection}
-                  onChange={e =>
-                    this.handleAuthoritySelectionChange(e.target.value)
-                  }
-                >
+              <Label>Autoritet</Label>
+              <DropDown
+                value={authoritySelection}
+                onChange={e =>
+                  this.handleAuthoritySelectionChange(e.target.value)
+                }
+              >
+                <DropDownOptions
+                  label={DEFAULT_SELECT_LABEL}
+                  value={DEFAULT_SELECT_VALUE}
+                />
+                {authorities.map(org => (
                   <DropDownOptions
-                    label={DEFAULT_AUTHORITY_LABEL}
-                    value={DEFAULT_AUTHORITY_VALUE}
+                    key={org.id}
+                    label={org.name}
+                    value={org.id}
                   />
-                  {authorities.map(org => (
-                    <DropDownOptions
-                      key={org.id}
-                      label={org.name}
-                      value={org.id}
-                    />
-                  ))}
-                </DropDown>
+                ))}
+              </DropDown>
 
-                <div className="save-button-container">
-                  <Button variant="success" onClick={::this.handleOnSaveClick}>
-                    Lagre
-                  </Button>
-                </div>
+              <div className="save-button-container">
+                <Button variant="success" onClick={::this.handleOnSaveClick}>
+                  Lagre
+                </Button>
               </div>
-            </OverlayLoader>
-          </div>
+            </div>
+          </OverlayLoader>
         ) : (
           <Loading text="Laster inn nettverket..." />
         )}
@@ -148,8 +143,6 @@ class NetworkEditor extends Component {
   }
 }
 
-const mapStateToProps = ({ organisations }) => ({
-  organisations: organisations.organisations
-});
+const mapStateToProps = ({ organisations }) => ({ organisations });
 
 export default compose(withRouter, connect(mapStateToProps))(NetworkEditor);

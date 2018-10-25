@@ -1,23 +1,9 @@
-import {
-  RECEIVE_ORGANISATIONS,
-  SET_ACTIVE_ORGANISATION
-} from '../actions/organisations';
+import { RECEIVE_ORGANISATIONS } from '../actions/organisations';
 
-const initialState = {
-  organisations: null
-};
-
-const organisationsReducer = (state = initialState, action) => {
+const organisationsReducer = (state = null, action) => {
   switch (action.type) {
     case RECEIVE_ORGANISATIONS:
-      return Object.assign({}, state, {
-        organisations: action.organisations
-      });
-
-    case SET_ACTIVE_ORGANISATION:
-      return Object.assign({}, state, {
-        active: action.organisation
-      });
+      return action.organisations;
 
     default:
       return state;

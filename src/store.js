@@ -34,21 +34,19 @@ const getMiddlewares = () => {
   return middlewares;
 };
 
-export const configureStore = (user, organisations) => {
+export const configureStore = user => {
   const combinedReducers = combineReducers({
     ...reducers,
     intl
   });
   loadLocaleData();
   const { locale, messages } = geti18n();
-  organisations.active = user.organisationId;
 
   const initialState = {
     intl: {
       locale,
       messages
     },
-    organisations,
     user
   };
 
