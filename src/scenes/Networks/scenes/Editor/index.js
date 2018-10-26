@@ -32,6 +32,7 @@ class NetworkEditor extends Component {
   state = {
     network: null,
     authoritySelection: DEFAULT_SELECT_VALUE,
+
     isSaving: false,
     isDeleteDialogOpen: false,
     isDeleting: false
@@ -81,17 +82,15 @@ class NetworkEditor extends Component {
     this.setState({ isDeleteDialogOpen: open });
   }
 
-  handleDeleteNetwork() {
+  handleDelete() {
     const { dispatch, history } = this.props;
-    this.setState({ isDeleting: true });
+    this.setState({
+      isDeleteDialogOpen: false,
+      isDeleting: true
+    });
     dispatch(deleteNetworkById(this.state.network.id))
       .then(() => history.push('/networks'))
-      .finally(() =>
-        this.setState({
-          isDeleteDialogOpen: false,
-          isDeleting: false
-        })
-      );
+      .finally(() => this.setState({ isDeleting: false }));
   }
 
   render() {
@@ -109,9 +108,10 @@ class NetworkEditor extends Component {
     );
 
     const isDeleteDisabled =
-      !lines || !network || !!lines.find(l => l.networkRef === network.id);
-
-    console.log(isDeleteDisabled, !!lines, !!network);
+      !lines ||
+      !network ||
+      !!lines.find(l => l.networkRef === network.id) ||
+      isDeleting;
 
     return (
       <div className="network-editor">
@@ -216,7 +216,7 @@ class NetworkEditor extends Component {
             </Button>,
             <Button
               key={1}
-              onClick={::this.handleDeleteNetwork}
+              onClick={::this.handleDelete}
               variant="success"
               width="md"
               className="action-button"

@@ -8,7 +8,10 @@ import {
   showErrorNotification,
   showSuccessNotification
 } from '../components/Notification/actions';
-import { flexibleLineMutation } from '../graphql/uttu/mutations';
+import {
+  deleteFlexibleLine,
+  flexibleLineMutation
+} from '../graphql/uttu/mutations';
 
 export const REQUEST_FLEXIBLE_LINES = 'REQUEST_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
@@ -72,6 +75,24 @@ export const saveFlexibleLine = flexibleLine => (dispatch, getState) => {
         showErrorNotification(
           'Lagre linje',
           'En feil oppstod under lagringen av linjen.'
+        )
+      );
+      return Promise.reject();
+    });
+};
+
+export const deleteFlexibleLineById = id => (dispatch, getState) => {
+  const activeProvider = getState().providers.active;
+  return UttuQuery(activeProvider, deleteFlexibleLine, { id })
+    .then(() => {
+      dispatch(showSuccessNotification('Slette linje', 'Linjen ble slettet.'));
+      return Promise.resolve();
+    })
+    .catch(() => {
+      dispatch(
+        showErrorNotification(
+          'Slette linje',
+          'En feil oppstod under slettingen av linjen.'
         )
       );
       return Promise.reject();

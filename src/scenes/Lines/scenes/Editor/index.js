@@ -22,6 +22,7 @@ import {
   VEHICLE_SUBMODE
 } from '../../../../model/enums';
 import {
+  deleteFlexibleLineById,
   loadFlexibleLineById,
   saveFlexibleLine
 } from '../../../../actions/flexibleLines';
@@ -29,6 +30,7 @@ import { loadNetworks } from '../../../../actions/networks';
 import { loadFlexibleStopPlaces } from '../../../../actions/flexibleStopPlaces';
 import Loading from '../../../../components/Loading';
 import OverlayLoader from '../../../../components/OverlayLoader';
+import ConfirmDialog from '../../../../components/ConfirmDialog';
 
 import './styles.css';
 
@@ -41,7 +43,10 @@ class FlexibleLineEditor extends Component {
     operatorSelection: DEFAULT_SELECT_VALUE,
     networkSelection: DEFAULT_SELECT_VALUE,
     stopPlaceSelection: DEFAULT_SELECT_VALUE,
-    isSaving: false
+
+    isSaving: false,
+    isDeleteDialogOpen: false,
+    isDeleting: false
   };
 
   componentDidMount() {
@@ -132,6 +137,21 @@ class FlexibleLineEditor extends Component {
       .finally(() => this.setState({ isSaving: false }));
   }
 
+  setDeleteDialogOpen(open) {
+    this.setState({ isDeleteDialogOpen: open });
+  }
+
+  handleDelete() {
+    const { dispatch, history } = this.props;
+    this.setState({
+      isDeleteDialogOpen: false,
+      isDeleting: true
+    });
+    dispatch(deleteFlexibleLineById(this.state.flexibleLine.id))
+      .then(() => history.push('/lines'))
+      .finally(() => this.setState({ isDeleting: false }));
+  }
+
   render() {
     const { match, organisations, networks, flexibleStopPlaces } = this.props;
     const {
@@ -139,7 +159,9 @@ class FlexibleLineEditor extends Component {
       operatorSelection,
       networkSelection,
       stopPlaceSelection,
-      isSaving
+      isSaving,
+      isDeleteDialogOpen,
+      isDeleting
     } = this.state;
 
     const operators = organisations.filter(org =>
@@ -151,10 +173,24 @@ class FlexibleLineEditor extends Component {
 
     return (
       <div className="line-editor">
-        <h2>{match.params.id ? 'Rediger' : 'Opprett'} linje</h2>
+        <div className="header">
+          <h2>{match.params.id ? 'Rediger' : 'Opprett'} linje</h2>
+          {match.params.id && (
+            <Button
+              variant="negative"
+              onClick={() => this.setDeleteDialogOpen(true)}
+              disabled={isDeleting}
+            >
+              Slett
+            </Button>
+          )}
+        </div>
 
         {!isLoadingLine && !isLoadingDependencies ? (
-          <OverlayLoader isLoading={isSaving} text="Lagrer linje...">
+          <OverlayLoader
+            isLoading={isSaving || isDeleting}
+            text={(isSaving ? 'Lagrer' : 'Sletter') + ' linjen...'}
+          >
             <div className="line-form">
               <Label>Navn</Label>
               <TextField
@@ -256,6 +292,33 @@ class FlexibleLineEditor extends Component {
             }...`}
           />
         )}
+
+        <ConfirmDialog
+          isOpen={isDeleteDialogOpen}
+          title="Slette linje"
+          message="Er du sikker på at du ønsker å slette denne linjen?"
+          buttons={[
+            <Button
+              key={2}
+              onClick={() => this.setDeleteDialogOpen(false)}
+              variant="secondary"
+              width="md"
+              className="action-button"
+            >
+              Nei
+            </Button>,
+            <Button
+              key={1}
+              onClick={::this.handleDelete}
+              variant="success"
+              width="md"
+              className="action-button"
+            >
+              Ja
+            </Button>
+          ]}
+          onClose={() => this.setDeleteDialogOpen(false)}
+        />
       </div>
     );
   }
