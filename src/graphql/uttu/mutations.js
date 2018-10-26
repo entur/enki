@@ -29,7 +29,7 @@ export const flexibleStopPlaceMutation = `
 `;
 
 export const deleteFlexibleStopPlace = `
-  mutation DeleteFlexibleLine($id: ID!) {
-    deleteFlexibleLine(id: $id) { id }
+  mutation DeleteFlexibleStopPlace($id: ID!) {
+    deleteFlexibleStopPlace(id: $id) { id }
   }
 `;

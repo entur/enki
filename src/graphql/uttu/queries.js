@@ -46,6 +46,13 @@ export const getFlexibleLinesQuery = `
       operatorRef,
       network {
         id
+      },
+      journeyPatterns {
+        pointsInSequence {
+          flexibleStopPlace {
+            id
+          }
+        }
       }
     }
   }

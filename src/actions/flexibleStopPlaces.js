@@ -8,7 +8,10 @@ import {
   showErrorNotification,
   showSuccessNotification
 } from '../components/Notification/actions';
-import { flexibleStopPlaceMutation } from '../graphql/uttu/mutations';
+import {
+  deleteFlexibleStopPlace,
+  flexibleStopPlaceMutation
+} from '../graphql/uttu/mutations';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
 export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
@@ -81,6 +84,29 @@ export const saveFlexibleStopPlace = flexibleStopPlace => (
         showErrorNotification(
           'Lagre stoppested',
           'En feil oppstod under lagringen av stoppestedet.'
+        )
+      );
+      return Promise.reject();
+    });
+};
+
+export const deleteFlexibleStopPlaceById = id => (dispatch, getState) => {
+  const activeProvider = getState().providers.active;
+  return UttuQuery(activeProvider, deleteFlexibleStopPlace, { id })
+    .then(() => {
+      dispatch(
+        showSuccessNotification(
+          'Slette stoppested',
+          'Stoppestedet ble slettet.'
+        )
+      );
+      return Promise.resolve();
+    })
+    .catch(() => {
+      dispatch(
+        showErrorNotification(
+          'Slette stoppested',
+          'En feil oppstod under slettingen av stoppestedet.'
         )
       );
       return Promise.reject();

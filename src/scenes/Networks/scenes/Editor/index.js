@@ -94,6 +94,7 @@ class NetworkEditor extends Component {
   }
 
   render() {
+    const { match, lines } = this.props;
     const {
       network,
       authoritySelection,
@@ -101,15 +102,14 @@ class NetworkEditor extends Component {
       isDeleteDialogOpen,
       isDeleting
     } = this.state;
-    const { match, lines } = this.props;
 
     const authorities = this.props.organisations.filter(org =>
       org.types.includes(ORGANISATION_TYPE.AUTHORITY)
     );
 
     const isDeleteDisabled =
-      !lines ||
       !network ||
+      !lines ||
       !!lines.find(l => l.networkRef === network.id) ||
       isDeleting;
 
