@@ -1,0 +1,14 @@
+.booking-editor {
+  input:not(.entur-radio-checkbox__input),
+  textarea,
+  select,
+  .entur-expandable,
+  .entur-radio-checkbox-group {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  #note {
+    margin-bottom: 0;
+  }
+}

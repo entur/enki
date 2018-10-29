@@ -6,7 +6,10 @@ import {
   TextField,
   TextArea,
   DropDown,
-  DropDownOptions
+  DropDownOptions,
+  Expandable,
+  ExpandableHeader,
+  ExpandableContent
 } from '@entur/component-library';
 
 import {
@@ -31,6 +34,7 @@ import { loadFlexibleStopPlaces } from '../../../../actions/flexibleStopPlaces';
 import Loading from '../../../../components/Loading';
 import OverlayLoader from '../../../../components/OverlayLoader';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
+import BookingEditor from './components/BookingEditor';
 
 import './styles.css';
 
@@ -171,6 +175,9 @@ class FlexibleLineEditor extends Component {
     const isLoadingLine = !flexibleLine;
     const isLoadingDependencies = !networks || !flexibleStopPlaces;
 
+    const isDeleteDisabled =
+      isLoadingLine || isLoadingDependencies || isDeleting;
+
     return (
       <div className="line-editor">
         <div className="header">
@@ -179,7 +186,7 @@ class FlexibleLineEditor extends Component {
             <Button
               variant="negative"
               onClick={() => this.setDeleteDialogOpen(true)}
-              disabled={isDeleting}
+              disabled={isDeleteDisabled}
             >
               Slett
             </Button>
@@ -277,6 +284,18 @@ class FlexibleLineEditor extends Component {
                   />
                 ))}
               </DropDown>
+
+              <Expandable>
+                <ExpandableHeader>Bestillingsinformasjon</ExpandableHeader>
+                <ExpandableContent>
+                  <BookingEditor
+                    booking={flexibleLine.bookingArrangement}
+                    onChange={b =>
+                      this.handleFieldChange('bookingArrangement', b)
+                    }
+                  />
+                </ExpandableContent>
+              </Expandable>
 
               <div className="save-button-container">
                 <Button variant="success" onClick={::this.handleOnSaveClick}>

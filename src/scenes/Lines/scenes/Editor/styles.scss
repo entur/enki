@@ -1,3 +1,5 @@
+@import '../../../../styles/base/colors.scss';
+
 .line-editor {
   flex: 1;
   display: flex;
@@ -13,11 +15,17 @@
     width: 400px;
     max-width: 400px;
 
-    input,
+    input:not(.entur-radio-checkbox__input),
     textarea,
-    select {
+    select,
+    .entur-expandable {
       width: 100%;
       margin-bottom: 30px;
+    }
+
+    .entur-expandable-content {
+      padding: 5px;
+      border: 1px solid $grey-10;
     }
 
     .save-button-container {

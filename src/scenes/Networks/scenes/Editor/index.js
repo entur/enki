@@ -40,8 +40,10 @@ class NetworkEditor extends Component {
 
   componentDidMount() {
     const { dispatch, match, history } = this.props;
+
+    dispatch(loadFlexibleLines());
+
     if (match.params.id) {
-      dispatch(loadFlexibleLines());
       dispatch(loadNetworkById(match.params.id))
         .then(network =>
           this.setState({

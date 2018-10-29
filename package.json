@@ -4,7 +4,7 @@
   "author": "Sondre Bjerkerud",
   "private": true,
   "dependencies": {
-    "@entur/component-library": "0.2.9",
+    "@entur/component-library": "^0.2.13",
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "chalk": "1.1.3",

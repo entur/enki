@@ -75,6 +75,21 @@ export const getFlexibleLineByIdQuery = `
       transportSubmode,
       flexibleLineType,
       operatorRef,
+      bookingArrangement {
+        bookingContact {
+          contactPerson,
+          phone,
+          email,
+          url,
+          furtherDetails
+        },
+        bookingNote,
+        bookingMethods,
+        bookingAccess,
+        bookWhen,
+        latestBookingTime,
+        minimumBookingPeriod
+      },
       network {
         id
       },
