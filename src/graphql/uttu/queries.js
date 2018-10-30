@@ -135,6 +135,7 @@ export const getFlexibleStopPlaceByIdQuery = `
       name,
       description,
       privateCode,
+      transportMode,
       flexibleArea {
         polygon {
           type,

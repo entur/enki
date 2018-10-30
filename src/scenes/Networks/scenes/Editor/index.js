@@ -189,7 +189,7 @@ class NetworkEditor extends Component {
               <div className="save-button-container">
                 <Button
                   variant="success"
-                  onClick={() => this.setDeleteDialogOpen(true)}
+                  onClick={::this.handleOnSaveClick}
                 >
                   Lagre
                 </Button>
