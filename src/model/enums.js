@@ -90,3 +90,10 @@ export const GEOMETRY_TYPE = Object.freeze({
   MULTI_POLYGON: 'MultiPolygon',
   GEOMETRY_COLLECTION: 'GeometryCollection'
 });
+
+export const DIRECTION_TYPE = Object.freeze({
+  INBOUND: 'inbound',
+  OUTBOUND: 'outbound',
+  CLOCKWISE: 'clockwise',
+  ANTICLOCKWISE: 'anticlockwise'
+});

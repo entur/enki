@@ -7,8 +7,11 @@ const receiveOrganisations = organisations => ({
   organisations
 });
 
-export const getOrganisations = () => dispatch => {
-  return http.get('/organisations').then(response => {
+export const getOrganisations = types => dispatch => {
+  let typesQuery = types
+    ? '?types' + (Array.isArray(types) ? types.join(',') : types)
+    : '';
+  return http.get(`/organisations${typesQuery}`).then(response => {
     dispatch(receiveOrganisations(response.data));
     return Promise.resolve(response.data);
   });

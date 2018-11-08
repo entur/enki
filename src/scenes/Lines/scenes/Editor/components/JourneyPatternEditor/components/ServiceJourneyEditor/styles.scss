@@ -1,0 +1,16 @@
+@import '../../../../../../../../styles/base/colors.scss';
+
+.service-journey-editor {
+  input:not(.entur-radio-checkbox__input),
+  textarea,
+  select,
+  .entur-expandable {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .entur-expandable-content {
+    padding: 5px;
+    border: 1px solid $grey-10;
+  }
+}

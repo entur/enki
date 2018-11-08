@@ -2,6 +2,7 @@ import Versioned from './base/Versioned';
 import StopPointInJourneyPattern from './StopPointInJourneyPattern';
 import ServiceJourney from './ServiceJourney';
 import Notice from './Notice';
+import { replaceElement } from '../helpers/arrays';
 
 class JourneyPattern extends Versioned {
   constructor(data = {}) {
@@ -18,6 +19,27 @@ class JourneyPattern extends Versioned {
       sj => new ServiceJourney(sj)
     );
     this.notices = (data.notices || []).map(n => new Notice(n));
+  }
+
+  addServiceJourney(serviceJourney) {
+    return this.withChanges({
+      serviceJourneys: this.serviceJourneys.concat(serviceJourney)
+    });
+  }
+
+  updateServiceJourney(index, serviceJourney) {
+    const serviceJourneys = replaceElement(
+      this.serviceJourneys,
+      index,
+      serviceJourney
+    );
+    return this.withChanges({ serviceJourneys });
+  }
+
+  removeServiceJourney(index) {
+    return this.withChanges({
+      serviceJourneys: this.serviceJourneys.slice().splice(index, 1)
+    });
   }
 
   toPayload() {

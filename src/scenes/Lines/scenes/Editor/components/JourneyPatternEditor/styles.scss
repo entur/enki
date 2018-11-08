@@ -1,0 +1,13 @@
+.journey-pattern-editor {
+  input:not(.entur-radio-checkbox__input),
+  textarea,
+  select {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .add-service-journey-button-container {
+    margin-top: 10px;
+    text-align: right;
+  }
+}

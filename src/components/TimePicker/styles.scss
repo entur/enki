@@ -1,0 +1,23 @@
+.time-picker {
+  width: 90px;
+
+  input {
+    width: 90px;
+  }
+
+  .text-wrapper {
+    width: 90px;
+  }
+
+  &.with-seconds {
+    width: 115px;
+
+    input {
+      width: 115px;
+    }
+
+    .text-wrapper {
+      width: 115px;
+    }
+  }
+}

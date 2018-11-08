@@ -1,0 +1,24 @@
+table.journey-patterns-table {
+  th {
+    &:nth-of-type(1) {
+      width: 89%;
+    }
+    &:nth-of-type(2) {
+      width: 11%;
+    }
+  }
+
+  tr:hover {
+    cursor: pointer;
+  }
+
+  .row-no-lines {
+    font-style: italic;
+    border: 0;
+  }
+
+  tr.disabled:hover {
+    background-color: initial;
+    cursor: default;
+  }
+}

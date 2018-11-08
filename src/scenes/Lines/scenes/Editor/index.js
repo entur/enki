@@ -12,12 +12,7 @@ import {
   ExpandableContent
 } from '@entur/component-library';
 
-import {
-  DestinationDisplay,
-  FlexibleLine,
-  JourneyPattern,
-  StopPointInJourneyPattern
-} from '../../../../model/index';
+import { FlexibleLine, JourneyPattern } from '../../../../model';
 import {
   ORGANISATION_TYPE,
   FLEXIBLE_LINE_TYPE,
@@ -34,7 +29,10 @@ import { loadFlexibleStopPlaces } from '../../../../actions/flexibleStopPlaces';
 import Loading from '../../../../components/Loading';
 import OverlayLoader from '../../../../components/OverlayLoader';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
-import BookingEditor from './components/BookingEditor';
+import BookingArrangementEditor from './components/BookingArrangementEditor';
+import JourneyPatternsTable from './components/JourneyPatternsTable';
+import Dialog from '../../../../components/Dialog';
+import JourneyPatternEditor from './components/JourneyPatternEditor';
 
 import './styles.css';
 
@@ -46,8 +44,8 @@ class FlexibleLineEditor extends Component {
     flexibleLine: null,
     operatorSelection: DEFAULT_SELECT_VALUE,
     networkSelection: DEFAULT_SELECT_VALUE,
-    stopPlaceSelection: DEFAULT_SELECT_VALUE,
-
+    journeyPatternInDialog: null,
+    journeyPatternIndexInDialog: -1,
     isSaving: false,
     isDeleteDialogOpen: false,
     isDeleting: false
@@ -65,12 +63,7 @@ class FlexibleLineEditor extends Component {
           this.setState({
             flexibleLine,
             operatorSelection: flexibleLine.operatorRef,
-            networkSelection: flexibleLine.networkRef,
-            stopPlaceSelection:
-              flexibleLine.journeyPatterns.length > 0
-                ? flexibleLine.journeyPatterns[0].pointsInSequence[0]
-                    .flexibleStopPlaceRef
-                : DEFAULT_SELECT_VALUE
+            networkSelection: flexibleLine.networkRef
           })
         )
         .catch(() => history.push('/lines'));
@@ -85,9 +78,18 @@ class FlexibleLineEditor extends Component {
     }
   }
 
-  handleFieldChange(field, value) {
+  handleFieldChange(field, value, multi = false) {
+    const { flexibleLine } = this.state;
+
+    let newValue = value;
+    if (multi) {
+      newValue = flexibleLine[field].includes(value)
+        ? flexibleLine[field].filter(v => v !== value)
+        : flexibleLine[field].concat(value);
+    }
+
     this.setState(({ flexibleLine }) => ({
-      flexibleLine: flexibleLine.withChanges({ [field]: value })
+      flexibleLine: flexibleLine.withChanges({ [field]: newValue })
     }));
   }
 
@@ -115,22 +117,53 @@ class FlexibleLineEditor extends Component {
     });
   }
 
-  handleStopPlaceSelectionChange(stopPlaceSelection) {
-    let journeyPatterns = [];
-    if (stopPlaceSelection !== DEFAULT_SELECT_VALUE) {
-      const stopPoint = new StopPointInJourneyPattern({
-        flexibleStopPlaceRef: stopPlaceSelection,
-        destinationDisplay: new DestinationDisplay({ frontText: 'Destination' })
-      });
-      const journeyPattern = new JourneyPattern({
-        pointsInSequence: [stopPoint, stopPoint]
-      });
-      journeyPatterns.push(journeyPattern);
-    }
+  addJourneyPattern(journeyPattern) {
     this.setState(({ flexibleLine }) => ({
-      flexibleLine: flexibleLine.withChanges({ journeyPatterns }),
-      stopPlaceSelection
+      flexibleLine: flexibleLine.addJourneyPattern(journeyPattern)
     }));
+  }
+
+  updateJourneyPattern(index, journeyPattern) {
+    this.setState(({ flexibleLine }) => ({
+      flexibleLine: flexibleLine.updateJourneyPattern(index, journeyPattern)
+    }));
+  }
+
+  openDialogForJourneyPattern(index) {
+    this.setState(({ flexibleLine }) => ({
+      journeyPatternIndexInDialog: index,
+      journeyPatternInDialog: flexibleLine.journeyPatterns[index]
+    }));
+  }
+
+  deleteJourneyPattern(index) {
+    this.setState(({ flexibleLine }) => ({
+      flexibleLine: flexibleLine.removeJourneyPattern(index)
+    }));
+  }
+
+  openDialogForNewJourneyPattern() {
+    this.setState({ journeyPatternInDialog: new JourneyPattern() });
+  }
+
+  closeJourneyPatternDialog() {
+    this.setState({ journeyPatternInDialog: null });
+  }
+
+  handleOnJourneyPatternDialogOkClick() {
+    const { journeyPatternInDialog, journeyPatternIndexInDialog } = this.state;
+    if (journeyPatternIndexInDialog === -1) {
+      this.addJourneyPattern(journeyPatternInDialog);
+    } else {
+      this.updateJourneyPattern(
+        journeyPatternIndexInDialog,
+        journeyPatternInDialog
+      );
+    }
+    this.setState({
+      journeyPatternInDialog: null,
+      journeyPatternIndexInDialog: -1
+    });
   }
 
   handleOnSaveClick() {
@@ -157,12 +190,13 @@ class FlexibleLineEditor extends Component {
   }
 
   render() {
-    const { match, organisations, networks, flexibleStopPlaces } = this.props;
+    const { match, organisations, networks } = this.props;
     const {
       flexibleLine,
       operatorSelection,
       networkSelection,
-      stopPlaceSelection,
+      journeyPatternInDialog,
+      journeyPatternIndexInDialog,
       isSaving,
       isDeleteDialogOpen,
       isDeleting
@@ -173,7 +207,7 @@ class FlexibleLineEditor extends Component {
     );
 
     const isLoadingLine = !flexibleLine;
-    const isLoadingDependencies = !networks || !flexibleStopPlaces;
+    const isLoadingDependencies = !networks;
 
     const isDeleteDisabled =
       isLoadingLine || isLoadingDependencies || isDeleting;
@@ -265,37 +299,30 @@ class FlexibleLineEditor extends Component {
                 ))}
               </DropDown>
 
-              <Label>Stoppested</Label>
-              <DropDown
-                value={stopPlaceSelection}
-                onChange={e =>
-                  this.handleStopPlaceSelectionChange(e.target.value)
-                }
-              >
-                <DropDownOptions
-                  label={DEFAULT_SELECT_LABEL}
-                  value={DEFAULT_SELECT_VALUE}
-                />
-                {flexibleStopPlaces.map(fsp => (
-                  <DropDownOptions
-                    key={fsp.name}
-                    label={fsp.name}
-                    value={fsp.id}
-                  />
-                ))}
-              </DropDown>
-
               <Expandable>
                 <ExpandableHeader>Bestillingsinformasjon</ExpandableHeader>
                 <ExpandableContent>
-                  <BookingEditor
-                    booking={flexibleLine.bookingArrangement}
+                  <BookingArrangementEditor
+                    bookingArrangement={flexibleLine.bookingArrangement}
                     onChange={b =>
                       this.handleFieldChange('bookingArrangement', b)
                     }
                   />
                 </ExpandableContent>
               </Expandable>
+
+              <Label>Journey Patterns</Label>
+              <JourneyPatternsTable
+                journeyPatterns={flexibleLine.journeyPatterns}
+                onRowClick={::this.openDialogForJourneyPattern}
+                onDeleteClick={::this.deleteJourneyPattern}
+              />
+
+              <div className="add-journey-pattern-button-container">
+                <Button onClick={::this.openDialogForNewJourneyPattern}>
+                  Legg til journey pattern
+                </Button>
+              </div>
 
               <div className="save-button-container">
                 <Button variant="success" onClick={::this.handleOnSaveClick}>
@@ -306,9 +333,36 @@ class FlexibleLineEditor extends Component {
           </OverlayLoader>
         ) : (
           <Loading
-            text={`Laster inn ${
-              isLoadingLine ? 'linje' : 'nettverk og stoppesteder'
-            }...`}
+            text={`Laster inn ${isLoadingLine ? 'linje' : 'nettverk'}...`}
+          />
+        )}
+
+        {journeyPatternInDialog !== null && (
+          <Dialog
+            className="journey-pattern-dialog"
+            isOpen={true}
+            title={
+              (journeyPatternIndexInDialog === -1 ? 'Opprett' : 'Endre') +
+              ' Journey Pattern'
+            }
+            content={
+              <JourneyPatternEditor
+                journeyPattern={journeyPatternInDialog}
+                onChange={journeyPatternInDialog =>
+                  this.setState({ journeyPatternInDialog })
+                }
+              />
+            }
+            buttons={[
+              <Button
+                key="ok"
+                variant="success"
+                onClick={::this.handleOnJourneyPatternDialogOkClick}
+              >
+                OK
+              </Button>
+            ]}
+            onClose={::this.closeJourneyPatternDialog}
           />
         )}
 
@@ -343,10 +397,9 @@ class FlexibleLineEditor extends Component {
   }
 }
 
-const mapStateToProps = ({ organisations, networks, flexibleStopPlaces }) => ({
+const mapStateToProps = ({ organisations, networks }) => ({
   organisations,
-  networks,
-  flexibleStopPlaces
+  networks
 });
 
 export default connect(mapStateToProps)(FlexibleLineEditor);

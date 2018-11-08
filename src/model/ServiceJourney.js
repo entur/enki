@@ -8,11 +8,11 @@ class ServiceJourney extends Versioned {
   constructor(data = {}) {
     super(data);
 
-    this.name = data.name || '';
-    this.description = data.description || '';
-    this.privateCode = data.privateCode || '';
-    this.publicCode = data.publicCode || '';
-    this.operatorRef = data.operatorRef || '';
+    this.name = data.name;
+    this.description = data.description;
+    this.privateCode = data.privateCode;
+    this.publicCode = data.publicCode;
+    this.operatorRef = data.operatorRef;
     this.bookingArrangement = data.bookingArrangement
       ? new BookingArrangement(data.bookingArrangement)
       : null;

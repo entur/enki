@@ -3,6 +3,7 @@ import Network from './Network';
 import BookingArrangement from './BookingArrangement';
 import JourneyPattern from './JourneyPattern';
 import Notice from './Notice';
+import { replaceElement } from '../helpers/arrays';
 
 class FlexibleLine extends Versioned {
   constructor(data = {}) {
@@ -28,10 +29,32 @@ class FlexibleLine extends Versioned {
     this.notices = (data.notices || []).map(n => new Notice(n));
   }
 
+  addJourneyPattern(journeyPattern) {
+    return this.withChanges({
+      journeyPatterns: this.journeyPatterns.concat(journeyPattern)
+    });
+  }
+
+  updateJourneyPattern(index, journeyPattern) {
+    const journeyPatterns = replaceElement(
+      this.journeyPatterns,
+      index,
+      journeyPattern
+    );
+    return this.withChanges({ journeyPatterns });
+  }
+
+  removeJourneyPattern(index) {
+    const copy = this.journeyPatterns.slice();
+    copy.splice(index, 1);
+    return this.withChanges({ journeyPatterns: copy });
+  }
+
   toPayload() {
     let payload = this.withChanges({
       journeyPatterns: this.journeyPatterns.map(jp => jp.toPayload())
     });
+    // The network property is only present when loading.
     delete payload.network;
     return payload;
   }

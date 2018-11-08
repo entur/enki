@@ -23,33 +23,35 @@ import './styles.css';
 const DEFAULT_SELECT_LABEL = '';
 const DEFAULT_SELECT_VALUE = undefined;
 
-class BookingEditor extends Component {
+class BookingArrangementEditor extends Component {
   handleFieldChange(field, value, multi = false) {
-    const { booking, onChange } = this.props;
+    const { bookingArrangement, onChange } = this.props;
 
     let newValue = value;
     if (multi) {
-      if (booking) {
-        newValue = booking[field].includes(value)
-          ? booking[field].filter(v => v !== value)
-          : booking[field].concat(value);
+      if (bookingArrangement) {
+        newValue = bookingArrangement[field].includes(value)
+          ? bookingArrangement[field].filter(v => v !== value)
+          : bookingArrangement[field].concat(value);
       } else {
         newValue = [value];
       }
     }
 
-    const newBooking = booking
-      ? booking.withChanges({ [field]: newValue })
+    const newBooking = bookingArrangement
+      ? bookingArrangement.withChanges({ [field]: newValue })
       : new BookingArrangement({ [field]: newValue });
 
     onChange(newBooking.isEmpty() ? undefined : newBooking);
   }
 
   handleContactFieldChange(field, value) {
-    const { booking } = this.props;
+    const { bookingArrangement } = this.props;
     let newContact;
-    if (booking && booking.bookingContact) {
-      newContact = booking.bookingContact.withChanges({ [field]: value });
+    if (bookingArrangement && bookingArrangement.bookingContact) {
+      newContact = bookingArrangement.bookingContact.withChanges({
+        [field]: value
+      });
     } else {
       newContact = new Contact({ [field]: value });
     }
@@ -60,20 +62,20 @@ class BookingEditor extends Component {
   }
 
   render() {
-    const { booking } = this.props;
+    const { bookingArrangement: ba } = this.props;
 
-    const contact = booking ? booking.bookingContact : undefined;
+    const contact = ba ? ba.bookingContact : undefined;
     const contactPerson = contact ? contact.contactPerson : undefined;
     const phone = contact ? contact.phone : undefined;
     const email = contact ? contact.email : undefined;
     const url = contact ? contact.url : undefined;
     const furtherDetails = contact ? contact.furtherDetails : undefined;
 
-    const bookingMethods = booking ? booking.bookingMethods : undefined;
-    const bookWhen = booking ? booking.bookWhen : undefined;
-    const buyWhen = booking ? booking.buyWhen : undefined;
-    const bookingAccess = booking ? booking.bookingAccess : undefined;
-    const bookingNote = booking ? booking.bookingNote : undefined;
+    const bookingMethods = ba ? ba.bookingMethods : undefined;
+    const bookWhen = ba ? ba.bookWhen : undefined;
+    const buyWhen = ba ? ba.buyWhen : undefined;
+    const bookingAccess = ba ? ba.bookingAccess : undefined;
+    const bookingNote = ba ? ba.bookingNote : undefined;
 
     return (
       <div className="booking-editor">
@@ -190,8 +192,8 @@ class BookingEditor extends Component {
   }
 }
 
-BookingEditor.propTypes = {
-  booking: PropTypes.instanceOf(BookingArrangement).isRequired
+BookingArrangementEditor.propTypes = {
+  bookingArrangement: PropTypes.instanceOf(BookingArrangement).isRequired
 };
 
-export default BookingEditor;
+export default BookingArrangementEditor;

@@ -6,6 +6,7 @@ export { default as BackArrow } from './arrows/BackArrow';
 export { default as TailedArrowDown } from './arrows/TailedArrowDown';
 export { default as Checkbox } from './Checkbox';
 export { default as Checkmark } from './Checkmark';
+export { default as Close } from './Close';
 export { default as CloseIcon } from './CloseIcon';
 export { default as ErrorCircle } from './ErrorCircle';
 export { default as Filter } from './Filter';
