@@ -37,9 +37,9 @@ class JourneyPattern extends Versioned {
   }
 
   removeServiceJourney(index) {
-    return this.withChanges({
-      serviceJourneys: this.serviceJourneys.slice().splice(index, 1)
-    });
+    const copy = this.serviceJourneys.slice();
+    copy.splice(index, 1);
+    return this.withChanges({ serviceJourneys: copy });
   }
 
   toPayload() {

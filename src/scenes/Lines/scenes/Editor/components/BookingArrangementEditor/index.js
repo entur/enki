@@ -120,6 +120,7 @@ class BookingArrangementEditor extends Component {
 
         <Label>Hvordan bestille</Label>
         <CheckboxGroup
+          id="bookingMethods"
           onChange={e =>
             this.handleFieldChange('bookingMethods', e.target.value, true)
           }
@@ -150,6 +151,7 @@ class BookingArrangementEditor extends Component {
 
         <Label>Betalingstidspunkt</Label>
         <CheckboxGroup
+          id="buyWhen"
           onChange={e =>
             this.handleFieldChange('buyWhen', e.target.value, true)
           }

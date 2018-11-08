@@ -1,10 +1,17 @@
 table.journey-patterns-table {
   th {
     &:nth-of-type(1) {
-      width: 89%;
+      width: 36%;
     }
-    &:nth-of-type(2) {
-      width: 11%;
+    &:nth-of-type(2),
+    &:nth-of-type(3) {
+      width: 17%;
+    }
+    &:nth-of-type(4) {
+      width: 25%;
+    }
+    &:nth-of-type(5) {
+      width: 5%;
     }
   }
 

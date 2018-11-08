@@ -4,7 +4,7 @@ class DestinationDisplay extends Versioned {
   constructor(data = {}) {
     super(data);
 
-    this.frontText = data.frontText || '';
+    this.frontText = data.frontText;
   }
 }
 

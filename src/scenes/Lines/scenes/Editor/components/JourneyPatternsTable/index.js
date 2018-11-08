@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Button, DeleteIcon } from '@entur/component-library';
 
 import {
-  Table, TableHeaderCell,
+  Table,
+  TableHeaderCell,
   TableRow,
   TableRowCell
 } from '../../../../../../components/Table';
@@ -31,10 +32,17 @@ class JourneyPatternsTable extends Component {
     const tableRows =
       journeyPatterns.length > 0 ? (
         journeyPatterns.map((jp, i) => (
-          <TableRow key={i} onClick={() => onRowClick(i)}>
-            <TableRowCell title={jp.description}>
+          <TableRow
+            key={i}
+            title={jp.description}
+            onClick={() => onRowClick(i)}
+          >
+            <TableRowCell>
               {jp.name ? jp.name : '- Nytt journey pattern -'}
             </TableRowCell>
+            <TableRowCell>{jp.directionType || ''}</TableRowCell>
+            <TableRowCell>{jp.pointsInSequence.length}</TableRowCell>
+            <TableRowCell>{jp.serviceJourneys.length}</TableRowCell>
             <TableRowCell>
               <div
                 onClick={e => {
@@ -56,7 +64,10 @@ class JourneyPatternsTable extends Component {
     return (
       <div>
         <Table className="journey-patterns-table">
-          <TableHeaderCell label="Navn"/>
+          <TableHeaderCell label="Navn" />
+          <TableHeaderCell label="Retning" />
+          <TableHeaderCell label="Stoppesteder" />
+          <TableHeaderCell label="Service Journeys" />
           {tableRows}
         </Table>
 

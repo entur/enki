@@ -9,40 +9,32 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .buttons button:last-of-type {
+      margin-left: 30px;
+    }
   }
 
-  .line-form {
-    width: 400px;
-    max-width: 400px;
+  .general-tab,
+  .booking-tab {
+    width: 500px;
+    max-width: 500px;
 
     input:not(.entur-radio-checkbox__input),
     textarea,
-    select,
-    .entur-expandable {
+    select {
       width: 100%;
       margin-bottom: 30px;
-    }
-
-    .entur-expandable-content {
-      padding: 5px;
-      border: 1px solid $grey-10;
     }
 
     .add-journey-pattern-button-container {
       margin-top: 10px;
       text-align: right;
     }
-
-    .save-button-container {
-      margin-top: 20px;
-      text-align: right;
-    }
   }
 
-  .loader {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .save-button-container {
+    margin-top: 20px;
+    text-align: right;
   }
 }

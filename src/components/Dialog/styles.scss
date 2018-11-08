@@ -5,8 +5,9 @@
   right: auto;
   bottom: auto;
   left: 50%;
+  height: 85%;
   min-height: 10rem;
-  max-height: 90%;
+  max-height: 85%;
   width: 50%;
   min-width: 20rem;
   max-width: 60rem;
@@ -46,7 +47,7 @@
     }
   }
 
-  .buttons {
+  .dialog-buttons {
     padding-top: 20px;
     text-align: right;
 

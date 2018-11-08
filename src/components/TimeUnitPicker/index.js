@@ -73,59 +73,61 @@ class TimeUnitPicker extends React.Component {
 
         {open && (
           <div className={containerClassNames} ref={div => (this.picker = div)}>
-            {showYears && (
-              <Picker
-                label="År"
-                value={years}
-                onChange={value => onUnitChange('years', value)}
-                nrOfOptions={10}
-              />
-            )}
+            <div className="pickers">
+              {showYears && (
+                <Picker
+                  label="År"
+                  value={years}
+                  onChange={value => onUnitChange('years', value)}
+                  nrOfOptions={10}
+                />
+              )}
 
-            {showMonths && (
-              <Picker
-                label="Måneder"
-                value={months}
-                onChange={value => onUnitChange('months', value)}
-                nrOfOptions={12}
-              />
-            )}
+              {showMonths && (
+                <Picker
+                  label="Måneder"
+                  value={months}
+                  onChange={value => onUnitChange('months', value)}
+                  nrOfOptions={12}
+                />
+              )}
 
-            {showDays && (
-              <Picker
-                label="Dager"
-                value={days}
-                onChange={value => onUnitChange('days', value)}
-                nrOfOptions={31}
-              />
-            )}
+              {showDays && (
+                <Picker
+                  label="Dager"
+                  value={days}
+                  onChange={value => onUnitChange('days', value)}
+                  nrOfOptions={31}
+                />
+              )}
 
-            {showHours && (
-              <Picker
-                label="Timer"
-                value={hours}
-                onChange={value => onUnitChange('hours', value)}
-                nrOfOptions={24}
-              />
-            )}
+              {showHours && (
+                <Picker
+                  label="TT"
+                  value={hours}
+                  onChange={value => onUnitChange('hours', value)}
+                  nrOfOptions={24}
+                />
+              )}
 
-            {showMinutes && (
-              <Picker
-                label="Minutter"
-                value={minutes}
-                onChange={value => onUnitChange('minutes', value)}
-                nrOfOptions={60}
-              />
-            )}
+              {showMinutes && (
+                <Picker
+                  label="MM"
+                  value={minutes}
+                  onChange={value => onUnitChange('minutes', value)}
+                  nrOfOptions={60}
+                />
+              )}
 
-            {showSeconds && (
-              <Picker
-                label="Sekunder"
-                value={seconds}
-                onChange={value => onUnitChange('seconds', value)}
-                nrOfOptions={60}
-              />
-            )}
+              {showSeconds && (
+                <Picker
+                  label="SS"
+                  value={seconds}
+                  onChange={value => onUnitChange('seconds', value)}
+                  nrOfOptions={60}
+                />
+              )}
+            </div>
 
             <div className="buttons">
               <Button

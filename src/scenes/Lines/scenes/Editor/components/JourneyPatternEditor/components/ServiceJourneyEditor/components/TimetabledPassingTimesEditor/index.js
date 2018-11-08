@@ -52,7 +52,7 @@ class TimetabledPassingTimesEditor extends Component {
       <TimePicker
         time={tpt && tpt[field] ? tpt[field] : null}
         onChange={t => this.handleFieldChange(index, field, t)}
-        position="above"
+        position="below"
       />
     );
   }

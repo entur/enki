@@ -7,9 +7,9 @@ import {
   TextArea,
   DropDown,
   DropDownOptions,
-  Expandable,
-  ExpandableHeader,
-  ExpandableContent
+  Button,
+  Tabs,
+  Tab
 } from '@entur/component-library';
 
 import {
@@ -25,8 +25,17 @@ import './styles.css';
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
+const TABS = Object.freeze({
+  GENERAL: 'general',
+  BOOKING: 'booking',
+  PASSING_TIMES: 'passingTimes'
+});
+
 class ServiceJourneyEditor extends Component {
-  state = { operatorSelection: DEFAULT_SELECT_VALUE };
+  state = {
+    operatorSelection: DEFAULT_SELECT_VALUE,
+    activeTab: TABS.GENERAL
+  };
 
   componentDidMount() {
     this.setState({ operatorSelection: this.props.serviceJourney.operatorRef });
@@ -64,9 +73,11 @@ class ServiceJourneyEditor extends Component {
         bookingArrangement,
         passingTimes
       },
-      stopPoints
+      stopPoints,
+      onSave,
+      isEditMode
     } = this.props;
-    const { operatorSelection } = this.state;
+    const { operatorSelection, activeTab } = this.state;
 
     const operators = organisations.filter(org =>
       org.types.includes(ORGANISATION_TYPE.OPERATOR)
@@ -74,64 +85,85 @@ class ServiceJourneyEditor extends Component {
 
     return (
       <div className="service-journey-editor">
-        <Label>Navn</Label>
-        <TextField
-          type="text"
-          value={name}
-          onChange={e => this.handleFieldChange('name', e.target.value)}
-        />
+        <div className="header">
+          <h2>{isEditMode ? 'Rediger' : 'Opprett'} Service Journey</h2>
 
-        <Label>Beskrivelse</Label>
-        <TextArea
-          type="text"
-          value={description}
-          onChange={e => this.handleFieldChange('description', e.target.value)}
-        />
+          <div className="header-buttons">
+            <Button variant="success" onClick={onSave}>
+              Lagre
+            </Button>
+          </div>
+        </div>
 
-        <Label>Privat kode</Label>
-        <TextField
-          type="text"
-          value={privateCode}
-          onChange={e => this.handleFieldChange('privateCode', e.target.value)}
-        />
-
-        <Label>Offentlig kode</Label>
-        <TextField
-          type="text"
-          value={publicCode}
-          onChange={e => this.handleFieldChange('publicCode', e.target.value)}
-        />
-
-        <Label>Operatør</Label>
-        <DropDown
-          value={operatorSelection}
-          onChange={e => this.handleOperatorSelectionChange(e.target.value)}
+        <Tabs
+          selected={activeTab}
+          onChange={activeTab => this.setState({ activeTab })}
         >
-          <DropDownOptions
-            label={DEFAULT_SELECT_LABEL}
-            value={DEFAULT_SELECT_VALUE}
-          />
-          {operators.map(o => (
-            <DropDownOptions key={o.name} label={o.name} value={o.id} />
-          ))}
-        </DropDown>
+          <Tab value={TABS.GENERAL} label="Generelt">
+            <Label>Navn</Label>
+            <TextField
+              type="text"
+              value={name}
+              onChange={e => this.handleFieldChange('name', e.target.value)}
+            />
 
-        <Expandable>
-          <ExpandableHeader>Bestillingsinformasjon</ExpandableHeader>
-          <ExpandableContent>
+            <Label>Beskrivelse</Label>
+            <TextArea
+              type="text"
+              value={description}
+              onChange={e =>
+                this.handleFieldChange('description', e.target.value)
+              }
+            />
+
+            <Label>Privat kode</Label>
+            <TextField
+              type="text"
+              value={privateCode}
+              onChange={e =>
+                this.handleFieldChange('privateCode', e.target.value)
+              }
+            />
+
+            <Label>Offentlig kode</Label>
+            <TextField
+              type="text"
+              value={publicCode}
+              onChange={e =>
+                this.handleFieldChange('publicCode', e.target.value)
+              }
+            />
+
+            <Label>Operatør</Label>
+            <DropDown
+              value={operatorSelection}
+              onChange={e => this.handleOperatorSelectionChange(e.target.value)}
+            >
+              <DropDownOptions
+                label={DEFAULT_SELECT_LABEL}
+                value={DEFAULT_SELECT_VALUE}
+              />
+              {operators.map(o => (
+                <DropDownOptions key={o.name} label={o.name} value={o.id} />
+              ))}
+            </DropDown>
+          </Tab>
+
+          <Tab value={TABS.BOOKING} label="Bestilling">
             <BookingArrangementEditor
               bookingArrangement={bookingArrangement}
               onChange={b => this.handleFieldChange('bookingArrangement', b)}
             />
-          </ExpandableContent>
-        </Expandable>
+          </Tab>
 
-        <Label>Passeringstider</Label>
-        <TimetabledPassingTimesEditor
-          timetabledPassingTimes={passingTimes}
-          stopPoints={stopPoints}
-          onChange={pts => this.handleFieldChange('passingTimes', pts)}
-        />
+          <Tab value={TABS.PASSING_TIMES} label="Passeringstider">
+            <TimetabledPassingTimesEditor
+              timetabledPassingTimes={passingTimes}
+              stopPoints={stopPoints}
+              onChange={pts => this.handleFieldChange('passingTimes', pts)}
+            />
+          </Tab>
+        </Tabs>
       </div>
     );
   }
@@ -141,7 +173,9 @@ ServiceJourneyEditor.propTypes = {
   serviceJourney: PropTypes.instanceOf(ServiceJourney).isRequired,
   stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPointInJourneyPattern))
     .isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool
 };
 
 const mapStateToProps = ({ organisations }) => ({ organisations });

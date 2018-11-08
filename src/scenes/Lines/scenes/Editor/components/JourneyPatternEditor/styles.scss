@@ -6,8 +6,13 @@
     margin-bottom: 30px;
   }
 
-  .add-service-journey-button-container {
-    margin-top: 10px;
-    text-align: right;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-buttons button:last-of-type {
+      margin-left: 30px;
+    }
   }
 }

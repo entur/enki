@@ -7,9 +7,9 @@ import {
   TextArea,
   DropDown,
   DropDownOptions,
-  Expandable,
-  ExpandableHeader,
-  ExpandableContent
+  Tabs,
+  Tab,
+  AddIcon
 } from '@entur/component-library';
 
 import { FlexibleLine, JourneyPattern } from '../../../../model';
@@ -33,17 +33,25 @@ import BookingArrangementEditor from './components/BookingArrangementEditor';
 import JourneyPatternsTable from './components/JourneyPatternsTable';
 import Dialog from '../../../../components/Dialog';
 import JourneyPatternEditor from './components/JourneyPatternEditor';
+import IconButton from '../../../../components/IconButton';
 
 import './styles.css';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
+const TABS = Object.freeze({
+  GENERAL: 'general',
+  BOOKING: 'booking',
+  JOURNEY_PATTERNS: 'journeyPatterns'
+});
+
 class FlexibleLineEditor extends Component {
   state = {
     flexibleLine: null,
     operatorSelection: DEFAULT_SELECT_VALUE,
     networkSelection: DEFAULT_SELECT_VALUE,
+    activeTab: TABS.GENERAL,
     journeyPatternInDialog: null,
     journeyPatternIndexInDialog: -1,
     isSaving: false,
@@ -147,10 +155,13 @@ class FlexibleLineEditor extends Component {
   }
 
   closeJourneyPatternDialog() {
-    this.setState({ journeyPatternInDialog: null });
+    this.setState({
+      journeyPatternInDialog: null,
+      journeyPatternIndexInDialog: -1
+    });
   }
 
-  handleOnJourneyPatternDialogOkClick() {
+  handleOnJourneyPatternDialogSaveClick() {
     const { journeyPatternInDialog, journeyPatternIndexInDialog } = this.state;
     if (journeyPatternIndexInDialog === -1) {
       this.addJourneyPattern(journeyPatternInDialog);
@@ -190,11 +201,12 @@ class FlexibleLineEditor extends Component {
   }
 
   render() {
-    const { match, organisations, networks } = this.props;
+    const { match, organisations, networks, flexibleStopPlaces } = this.props;
     const {
       flexibleLine,
       operatorSelection,
       networkSelection,
+      activeTab,
       journeyPatternInDialog,
       journeyPatternIndexInDialog,
       isSaving,
@@ -207,7 +219,7 @@ class FlexibleLineEditor extends Component {
     );
 
     const isLoadingLine = !flexibleLine;
-    const isLoadingDependencies = !networks;
+    const isLoadingDependencies = !networks || !flexibleStopPlaces;
 
     const isDeleteDisabled =
       isLoadingLine || isLoadingDependencies || isDeleting;
@@ -216,15 +228,22 @@ class FlexibleLineEditor extends Component {
       <div className="line-editor">
         <div className="header">
           <h2>{match.params.id ? 'Rediger' : 'Opprett'} linje</h2>
-          {match.params.id && (
-            <Button
-              variant="negative"
-              onClick={() => this.setDeleteDialogOpen(true)}
-              disabled={isDeleteDisabled}
-            >
-              Slett
+
+          <div className="buttons">
+            <Button variant="success" onClick={::this.handleOnSaveClick}>
+              Lagre
             </Button>
-          )}
+
+            {match.params.id && (
+              <Button
+                variant="negative"
+                onClick={() => this.setDeleteDialogOpen(true)}
+                disabled={isDeleteDisabled}
+              >
+                Slett
+              </Button>
+            )}
+          </div>
         </div>
 
         {!isLoadingLine && !isLoadingDependencies ? (
@@ -232,108 +251,116 @@ class FlexibleLineEditor extends Component {
             isLoading={isSaving || isDeleting}
             text={(isSaving ? 'Lagrer' : 'Sletter') + ' linjen...'}
           >
-            <div className="line-form">
-              <Label>Navn</Label>
-              <TextField
-                type="text"
-                value={flexibleLine.name}
-                onChange={e => this.handleFieldChange('name', e.target.value)}
-              />
-
-              <Label>Beskrivelse</Label>
-              <TextArea
-                type="text"
-                value={flexibleLine.description}
-                onChange={e =>
-                  this.handleFieldChange('description', e.target.value)
-                }
-              />
-
-              <Label>Privat kode</Label>
-              <TextField
-                type="text"
-                value={flexibleLine.privateCode}
-                onChange={e =>
-                  this.handleFieldChange('privateCode', e.target.value)
-                }
-              />
-
-              <Label>Offentlig kode</Label>
-              <TextField
-                type="text"
-                value={flexibleLine.publicCode}
-                onChange={e =>
-                  this.handleFieldChange('publicCode', e.target.value)
-                }
-              />
-
-              <Label>Operatør</Label>
-              <DropDown
-                value={operatorSelection}
-                onChange={e =>
-                  this.handleOperatorSelectionChange(e.target.value)
-                }
+            <Tabs
+              selected={activeTab}
+              onChange={activeTab => this.setState({ activeTab })}
+            >
+              <Tab
+                value={TABS.GENERAL}
+                label="Generelt"
+                className="general-tab"
               >
-                <DropDownOptions
-                  label={DEFAULT_SELECT_LABEL}
-                  value={DEFAULT_SELECT_VALUE}
+                <Label>Navn</Label>
+                <TextField
+                  type="text"
+                  value={flexibleLine.name}
+                  onChange={e => this.handleFieldChange('name', e.target.value)}
                 />
-                {operators.map(o => (
-                  <DropDownOptions key={o.name} label={o.name} value={o.id} />
-                ))}
-              </DropDown>
 
-              <Label>Nettverk</Label>
-              <DropDown
-                value={networkSelection}
-                onChange={e =>
-                  this.handleNetworkSelectionChange(e.target.value)
-                }
-              >
-                <DropDownOptions
-                  label={DEFAULT_SELECT_LABEL}
-                  value={DEFAULT_SELECT_VALUE}
+                <Label>Beskrivelse</Label>
+                <TextArea
+                  type="text"
+                  value={flexibleLine.description}
+                  onChange={e =>
+                    this.handleFieldChange('description', e.target.value)
+                  }
                 />
-                {networks.map(n => (
-                  <DropDownOptions key={n.name} label={n.name} value={n.id} />
-                ))}
-              </DropDown>
 
-              <Expandable>
-                <ExpandableHeader>Bestillingsinformasjon</ExpandableHeader>
-                <ExpandableContent>
-                  <BookingArrangementEditor
-                    bookingArrangement={flexibleLine.bookingArrangement}
-                    onChange={b =>
-                      this.handleFieldChange('bookingArrangement', b)
-                    }
+                <Label>Privat kode</Label>
+                <TextField
+                  type="text"
+                  value={flexibleLine.privateCode}
+                  onChange={e =>
+                    this.handleFieldChange('privateCode', e.target.value)
+                  }
+                />
+
+                <Label>Offentlig kode</Label>
+                <TextField
+                  type="text"
+                  value={flexibleLine.publicCode}
+                  onChange={e =>
+                    this.handleFieldChange('publicCode', e.target.value)
+                  }
+                />
+
+                <Label>Operatør</Label>
+                <DropDown
+                  value={operatorSelection}
+                  onChange={e =>
+                    this.handleOperatorSelectionChange(e.target.value)
+                  }
+                >
+                  <DropDownOptions
+                    label={DEFAULT_SELECT_LABEL}
+                    value={DEFAULT_SELECT_VALUE}
                   />
-                </ExpandableContent>
-              </Expandable>
+                  {operators.map(o => (
+                    <DropDownOptions key={o.name} label={o.name} value={o.id} />
+                  ))}
+                </DropDown>
 
-              <Label>Journey Patterns</Label>
-              <JourneyPatternsTable
-                journeyPatterns={flexibleLine.journeyPatterns}
-                onRowClick={::this.openDialogForJourneyPattern}
-                onDeleteClick={::this.deleteJourneyPattern}
-              />
+                <Label>Nettverk</Label>
+                <DropDown
+                  value={networkSelection}
+                  onChange={e =>
+                    this.handleNetworkSelectionChange(e.target.value)
+                  }
+                >
+                  <DropDownOptions
+                    label={DEFAULT_SELECT_LABEL}
+                    value={DEFAULT_SELECT_VALUE}
+                  />
+                  {networks.map(n => (
+                    <DropDownOptions key={n.name} label={n.name} value={n.id} />
+                  ))}
+                </DropDown>
+              </Tab>
 
-              <div className="add-journey-pattern-button-container">
-                <Button onClick={::this.openDialogForNewJourneyPattern}>
-                  Legg til journey pattern
-                </Button>
-              </div>
+              <Tab
+                value={TABS.BOOKING}
+                label="Bestilling"
+                className="booking-tab"
+              >
+                <BookingArrangementEditor
+                  bookingArrangement={flexibleLine.bookingArrangement}
+                  onChange={b =>
+                    this.handleFieldChange('bookingArrangement', b)
+                  }
+                />
+              </Tab>
 
-              <div className="save-button-container">
-                <Button variant="success" onClick={::this.handleOnSaveClick}>
-                  Lagre
-                </Button>
-              </div>
-            </div>
+              <Tab value={TABS.JOURNEY_PATTERNS} label="Journey Patterns">
+                <IconButton
+                  icon={<AddIcon />}
+                  label="Legg til journey pattern"
+                  labelPosition="right"
+                  onClick={::this.openDialogForNewJourneyPattern}
+                />
+
+                <JourneyPatternsTable
+                  journeyPatterns={flexibleLine.journeyPatterns}
+                  onRowClick={::this.openDialogForJourneyPattern}
+                  onDeleteClick={::this.deleteJourneyPattern}
+                />
+              </Tab>
+            </Tabs>
           </OverlayLoader>
         ) : (
           <Loading
-            text={`Laster inn ${isLoadingLine ? 'linje' : 'nettverk'}...`}
+            text={`Laster inn ${
+              isLoadingLine ? 'linje' : 'nettverk og stoppesteder'
+            }...`}
           />
         )}
 
@@ -341,27 +368,16 @@ class FlexibleLineEditor extends Component {
           <Dialog
             className="journey-pattern-dialog"
             isOpen={true}
-            title={
-              (journeyPatternIndexInDialog === -1 ? 'Opprett' : 'Endre') +
-              ' Journey Pattern'
-            }
             content={
               <JourneyPatternEditor
                 journeyPattern={journeyPatternInDialog}
                 onChange={journeyPatternInDialog =>
                   this.setState({ journeyPatternInDialog })
                 }
+                isEditMode={journeyPatternIndexInDialog !== -1}
+                onSave={::this.handleOnJourneyPatternDialogSaveClick}
               />
             }
-            buttons={[
-              <Button
-                key="ok"
-                variant="success"
-                onClick={::this.handleOnJourneyPatternDialogOkClick}
-              >
-                OK
-              </Button>
-            ]}
             onClose={::this.closeJourneyPatternDialog}
           />
         )}
@@ -397,9 +413,10 @@ class FlexibleLineEditor extends Component {
   }
 }
 
-const mapStateToProps = ({ organisations, networks }) => ({
+const mapStateToProps = ({ organisations, networks, flexibleStopPlaces }) => ({
   organisations,
-  networks
+  networks,
+  flexibleStopPlaces
 });
 
 export default connect(mapStateToProps)(FlexibleLineEditor);

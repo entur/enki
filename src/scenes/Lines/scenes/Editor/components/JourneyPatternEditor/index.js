@@ -7,7 +7,10 @@ import {
   TextField,
   TextArea,
   DropDown,
-  DropDownOptions
+  DropDownOptions,
+  Tabs,
+  Tab,
+  AddIcon
 } from '@entur/component-library';
 
 import {
@@ -20,16 +23,24 @@ import ServiceJourneysTable from './components/ServiceJourneysTable';
 import Dialog from '../../../../../../components/Dialog';
 import ServiceJourneyEditor from './components/ServiceJourneyEditor';
 import { DIRECTION_TYPE } from '../../../../../../model/enums';
+import IconButton from '../../../../../../components/IconButton';
 
 import './styles.css';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
+const TABS = Object.freeze({
+  GENERAL: 'general',
+  STOP_PLACES: 'stopPlaces',
+  SERVICE_JOURNEYS: 'serviceJourneys'
+});
+
 class JourneyPatternEditor extends Component {
   state = {
     stopPlaceSelection: DEFAULT_SELECT_VALUE,
     directionSelection: DEFAULT_SELECT_VALUE,
+    activeTab: TABS.GENERAL,
     serviceJourneyInDialog: null,
     serviceJourneyIndexInDialog: -1
   };
@@ -112,10 +123,13 @@ class JourneyPatternEditor extends Component {
   }
 
   closeServiceJourneyDialog() {
-    this.setState({ serviceJourneyInDialog: null });
+    this.setState({
+      serviceJourneyInDialog: null,
+      serviceJourneyIndexInDialog: -1
+    });
   }
 
-  handleOnServiceJourneyDialogOkClick() {
+  handleOnServiceJourneyDialogSaveClick() {
     const { serviceJourneyInDialog, serviceJourneyIndexInDialog } = this.state;
     if (serviceJourneyIndexInDialog === -1) {
       this.addServiceJourney(serviceJourneyInDialog);
@@ -132,85 +146,120 @@ class JourneyPatternEditor extends Component {
   }
 
   render() {
-    const { flexibleStopPlaces, journeyPattern } = this.props;
+    const {
+      flexibleStopPlaces,
+      journeyPattern,
+      isEditMode,
+      onSave
+    } = this.props;
     const {
       stopPlaceSelection,
       directionSelection,
+      activeTab,
       serviceJourneyInDialog,
       serviceJourneyIndexInDialog
     } = this.state;
 
     return (
       <div className="journey-pattern-editor">
-        <Label>Navn</Label>
-        <TextField
-          type="text"
-          value={journeyPattern.name}
-          onChange={e => this.handleFieldChange('name', e.target.value)}
-        />
+        <div className="header">
+          <h2>{isEditMode ? 'Rediger' : 'Opprett'} Journey Pattern</h2>
 
-        <Label>Beskrivelse</Label>
-        <TextArea
-          type="text"
-          value={journeyPattern.description}
-          onChange={e => this.handleFieldChange('description', e.target.value)}
-        />
-
-        <Label>Privat kode</Label>
-        <TextField
-          type="text"
-          value={journeyPattern.privateCode}
-          onChange={e => this.handleFieldChange('privateCode', e.target.value)}
-        />
-
-        <Label>Retning</Label>
-        <DropDown
-          value={directionSelection}
-          onChange={e => this.handleDirectionSelectionChange(e.target.value)}
-        >
-          <DropDownOptions
-            label={DEFAULT_SELECT_LABEL}
-            value={DEFAULT_SELECT_VALUE}
-          />
-          {Object.values(DIRECTION_TYPE).map(dt => (
-            <DropDownOptions key={dt} label={dt} value={dt} />
-          ))}
-        </DropDown>
-
-        <Label>Stoppested</Label>
-        <DropDown
-          value={stopPlaceSelection}
-          onChange={e => this.handleStopPlaceSelectionChange(e.target.value)}
-        >
-          <DropDownOptions
-            label={DEFAULT_SELECT_LABEL}
-            value={DEFAULT_SELECT_VALUE}
-          />
-          {flexibleStopPlaces.map(fsp => (
-            <DropDownOptions key={fsp.name} label={fsp.name} value={fsp.id} />
-          ))}
-        </DropDown>
-
-        <Label>Service Journeys</Label>
-        <ServiceJourneysTable
-          serviceJourneys={journeyPattern.serviceJourneys}
-          onRowClick={::this.openDialogForServiceJourney}
-          onDeleteClick={::this.deleteServiceJourney}
-        />
-
-        <div className="add-service-journey-button-container">
-          <Button onClick={::this.openDialogForNewServiceJourney}>
-            Legg til service journey
-          </Button>
+          <div className="header-buttons">
+            <Button variant="success" onClick={onSave}>
+              Lagre
+            </Button>
+          </div>
         </div>
+
+        <Tabs
+          selected={activeTab}
+          onChange={activeTab => this.setState({ activeTab })}
+        >
+          <Tab value={TABS.GENERAL} label="Generelt">
+            <Label>Navn</Label>
+            <TextField
+              type="text"
+              value={journeyPattern.name}
+              onChange={e => this.handleFieldChange('name', e.target.value)}
+            />
+
+            <Label>Beskrivelse</Label>
+            <TextArea
+              type="text"
+              value={journeyPattern.description}
+              onChange={e =>
+                this.handleFieldChange('description', e.target.value)
+              }
+            />
+
+            <Label>Privat kode</Label>
+            <TextField
+              type="text"
+              value={journeyPattern.privateCode}
+              onChange={e =>
+                this.handleFieldChange('privateCode', e.target.value)
+              }
+            />
+          </Tab>
+
+          <Tab value={TABS.STOP_PLACES} label="Stoppesteder">
+            <Label>Retning</Label>
+            <DropDown
+              value={directionSelection}
+              onChange={e =>
+                this.handleDirectionSelectionChange(e.target.value)
+              }
+            >
+              <DropDownOptions
+                label={DEFAULT_SELECT_LABEL}
+                value={DEFAULT_SELECT_VALUE}
+              />
+              {Object.values(DIRECTION_TYPE).map(dt => (
+                <DropDownOptions key={dt} label={dt} value={dt} />
+              ))}
+            </DropDown>
+
+            <Label>Stoppested</Label>
+            <DropDown
+              value={stopPlaceSelection}
+              onChange={e =>
+                this.handleStopPlaceSelectionChange(e.target.value)
+              }
+            >
+              <DropDownOptions
+                label={DEFAULT_SELECT_LABEL}
+                value={DEFAULT_SELECT_VALUE}
+              />
+              {flexibleStopPlaces.map(fsp => (
+                <DropDownOptions
+                  key={fsp.name}
+                  label={fsp.name}
+                  value={fsp.id}
+                />
+              ))}
+            </DropDown>
+          </Tab>
+
+          <Tab value={TABS.SERVICE_JOURNEYS} label="Service Journeys">
+            <IconButton
+              icon={<AddIcon />}
+              label="Legg til service journey"
+              labelPosition="right"
+              onClick={::this.openDialogForNewServiceJourney}
+            />
+
+            <ServiceJourneysTable
+              serviceJourneys={journeyPattern.serviceJourneys}
+              onRowClick={::this.openDialogForServiceJourney}
+              onDeleteClick={::this.deleteServiceJourney}
+            />
+          </Tab>
+        </Tabs>
 
         {serviceJourneyInDialog !== null && (
           <Dialog
             isOpen={true}
-            title={
-              (serviceJourneyIndexInDialog === -1 ? 'Opprett' : 'Endre') +
-              ' Service Journey'
-            }
             content={
               <ServiceJourneyEditor
                 serviceJourney={serviceJourneyInDialog}
@@ -218,17 +267,10 @@ class JourneyPatternEditor extends Component {
                 onChange={serviceJourneyInDialog =>
                   this.setState({ serviceJourneyInDialog })
                 }
+                onSave={::this.handleOnServiceJourneyDialogSaveClick}
+                isEditMode={serviceJourneyIndexInDialog !== -1}
               />
             }
-            buttons={[
-              <Button
-                key="ok"
-                variant="success"
-                onClick={::this.handleOnServiceJourneyDialogOkClick}
-              >
-                OK
-              </Button>
-            ]}
             onClose={::this.closeServiceJourneyDialog}
           />
         )}
@@ -239,7 +281,9 @@ class JourneyPatternEditor extends Component {
 
 JourneyPatternEditor.defaultProps = {
   journeyPattern: PropTypes.instanceOf(JourneyPattern).isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool
 };
 
 const mapStateToProps = ({ flexibleStopPlaces }) => ({ flexibleStopPlaces });

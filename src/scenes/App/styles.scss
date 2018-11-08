@@ -18,10 +18,14 @@
     }
   }
 
-  .app-loader {
+  .entur-tab-headers-list {
+    margin-bottom: 40px;
+  }
+
+  .loader {
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
   }
 }

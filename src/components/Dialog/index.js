@@ -1,5 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import cx from 'classnames';
 
@@ -23,18 +23,18 @@ const Dialog = ({ isOpen, title, content, buttons, className, onClose }) => (
     <div className="close" onClick={onClose}>
       <Close className="close-icon" />
     </div>
-    <div className="title">{title}</div>
+    {title && <div className="title">{title}</div>}
     <div className="content">{content}</div>
-    <div className="buttons">{buttons}</div>
+    {buttons && <div className="dialog-buttons">{buttons}</div>}
   </Modal>
 );
 
 Dialog.propTypes = {
-  content: propTypes.node.isRequired,
-  onClose: propTypes.func.isRequired,
-  isOpen: propTypes.bool,
-  title: propTypes.string,
-  buttons: propTypes.array
+  content: PropTypes.node.isRequired,
+  onClose: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool,
+  title: PropTypes.string,
+  buttons: PropTypes.array
 };
 
 export default Dialog;
