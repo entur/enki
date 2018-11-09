@@ -1,5 +1,5 @@
 import Versioned from './base/Versioned';
-import StopPointInJourneyPattern from './StopPointInJourneyPattern';
+import StopPoint from './StopPoint';
 import ServiceJourney from './ServiceJourney';
 import Notice from './Notice';
 import { replaceElement } from '../helpers/arrays';
@@ -13,7 +13,7 @@ class JourneyPattern extends Versioned {
     this.privateCode = data.privateCode;
     this.directionType = data.directionType;
     this.pointsInSequence = (data.pointsInSequence || []).map(
-      p => new StopPointInJourneyPattern(p)
+      p => new StopPoint(p)
     );
     this.serviceJourneys = (data.serviceJourneys || []).map(
       sj => new ServiceJourney(sj)

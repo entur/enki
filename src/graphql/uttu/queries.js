@@ -75,35 +75,73 @@ export const getFlexibleLineByIdQuery = `
       transportSubmode,
       flexibleLineType,
       operatorRef,
-      bookingArrangement {
-        bookingContact {
-          contactPerson,
-          phone,
-          email,
-          url,
-          furtherDetails
-        },
-        bookingNote,
-        bookingMethods,
-        bookingAccess,
-        bookWhen,
-        latestBookingTime,
-        minimumBookingPeriod
-      },
+      bookingArrangement { ...bookingArrangementFields },
       network {
         id
       },
       journeyPatterns {
+        name,
+        description,
+        privateCode,
         pointsInSequence {
           flexibleStopPlace {
             id
           },
+          quayRef,
+          bookingArrangement { ...bookingArrangementFields },
           destinationDisplay {
             frontText
+          },
+          forBoarding,
+          forAlighting
+        },
+        serviceJourneys {
+          name,
+          description,
+          privateCode,
+          publicCode,
+          operatorRef,
+          bookingArrangement { ...bookingArrangementFields },
+          passingTimes {
+            arrivalTime,
+            arrivalDayOffset,
+            departureTime,
+            departureDayOffset,
+            latestArrivalTime,
+            latestArrivalDayOffset,
+            earliestDepartureTime,
+            earliestDepartureDayOffset
+          },
+          dayTypes {
+            daysOfWeek,
+            dayTypeAssignments {
+              isAvailable,
+              date,
+              operatingPeriod {
+                fromDate,
+                toDate
+              }
+            }
           }
         }
       }
     }
+  }
+  
+  fragment bookingArrangementFields on BookingArrangement {
+    bookingContact {
+      contactPerson,
+      phone,
+      email,
+      url,
+      furtherDetails
+    },
+    bookingNote,
+    bookingMethods,
+    bookingAccess,
+    bookWhen,
+    latestBookingTime,
+    minimumBookingPeriod
   }
 `;
 

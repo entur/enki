@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { DropDown, DropDownOptions } from '@entur/component-library';
 
 import {
-  StopPointInJourneyPattern,
+  StopPoint,
   TimetabledPassingTime
 } from '../../../../../../../../../../model';
 import { replaceElement } from '../../../../../../../../../../helpers/arrays';
@@ -22,7 +22,7 @@ class TimetabledPassingTimesEditor extends Component {
         newTpts.push(new TimetabledPassingTime());
       }
       onChange(newTpts);
-    } else if(stopPoints.length < timetabledPassingTimes.length) {
+    } else if (stopPoints.length < timetabledPassingTimes.length) {
       const newTpts = timetabledPassingTimes.slice();
       newTpts.splice(stopPoints.length);
       onChange(newTpts);
@@ -169,8 +169,7 @@ TimetabledPassingTimesEditor.propTypes = {
   timetabledPassingTimes: PropTypes.arrayOf(
     PropTypes.instanceOf(TimetabledPassingTime)
   ).isRequired,
-  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPointInJourneyPattern))
-    .isRequired,
+  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
   onChange: PropTypes.func.isRequired
 };
 

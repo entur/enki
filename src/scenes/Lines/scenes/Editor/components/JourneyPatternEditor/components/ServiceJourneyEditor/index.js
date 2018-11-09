@@ -12,10 +12,7 @@ import {
   Tab
 } from '@entur/component-library';
 
-import {
-  ServiceJourney,
-  StopPointInJourneyPattern
-} from '../../../../../../../../model';
+import { ServiceJourney, StopPoint } from '../../../../../../../../model';
 import BookingArrangementEditor from '../../../BookingArrangementEditor';
 import TimetabledPassingTimesEditor from './components/TimetabledPassingTimesEditor';
 import { ORGANISATION_TYPE } from '../../../../../../../../model/enums';
@@ -27,8 +24,9 @@ const DEFAULT_SELECT_VALUE = '-1';
 
 const TABS = Object.freeze({
   GENERAL: 'general',
-  BOOKING: 'booking',
-  PASSING_TIMES: 'passingTimes'
+  AVAILABILITY: 'availability',
+  PASSING_TIMES: 'passingTimes',
+  BOOKING: 'booking'
 });
 
 class ServiceJourneyEditor extends Component {
@@ -149,10 +147,11 @@ class ServiceJourneyEditor extends Component {
             </DropDown>
           </Tab>
 
-          <Tab value={TABS.BOOKING} label="Bestilling">
-            <BookingArrangementEditor
-              bookingArrangement={bookingArrangement}
-              onChange={b => this.handleFieldChange('bookingArrangement', b)}
+          <Tab value={TABS.AVAILABILITY} label="Tilgjengelighet">
+            <TimetabledPassingTimesEditor
+              timetabledPassingTimes={passingTimes}
+              stopPoints={stopPoints}
+              onChange={pts => this.handleFieldChange('passingTimes', pts)}
             />
           </Tab>
 
@@ -163,6 +162,13 @@ class ServiceJourneyEditor extends Component {
               onChange={pts => this.handleFieldChange('passingTimes', pts)}
             />
           </Tab>
+
+          <Tab value={TABS.BOOKING} label="Bestilling">
+            <BookingArrangementEditor
+              bookingArrangement={bookingArrangement}
+              onChange={b => this.handleFieldChange('bookingArrangement', b)}
+            />
+          </Tab>
         </Tabs>
       </div>
     );
@@ -171,8 +177,7 @@ class ServiceJourneyEditor extends Component {
 
 ServiceJourneyEditor.propTypes = {
   serviceJourney: PropTypes.instanceOf(ServiceJourney).isRequired,
-  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPointInJourneyPattern))
-    .isRequired,
+  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool

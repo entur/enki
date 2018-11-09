@@ -4,7 +4,7 @@ import DestinationDisplay from './DestinationDisplay';
 import BookingArrangement from './BookingArrangement';
 import Notice from './Notice';
 
-class StopPointInJourneyPattern extends Versioned {
+class StopPoint extends Versioned {
   constructor(data = {}) {
     super(data);
 
@@ -33,4 +33,4 @@ class StopPointInJourneyPattern extends Versioned {
   }
 }
 
-export default StopPointInJourneyPattern;
+export default StopPoint;
