@@ -37,7 +37,7 @@ class NavBarMenuItem extends Component {
   }
 
   render() {
-    const { label, path, Icon, disabled, children } = this.props;
+    const { label, path, Icon, disabled, children, className } = this.props;
     const { active } = this.state;
 
     const content = (
@@ -51,7 +51,12 @@ class NavBarMenuItem extends Component {
       </div>
     );
 
-    const classNames = cx('nav-bar-menu-item', { active }, { disabled });
+    const classNames = cx(
+      'nav-bar-menu-item',
+      { active },
+      { disabled },
+      className
+    );
 
     const fullPathedChildren = React.Children.map(
       children,
@@ -79,7 +84,8 @@ NavBarMenuItem.propTypes = {
   label: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   currentPath: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  className: PropTypes.string
 };
 
 export default withRouter(NavBarMenuItem);

@@ -1,0 +1,30 @@
+.export-viewer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .export-view {
+    .value {
+      margin-bottom: 20px;
+    }
+
+    .messages {
+      .message {
+        display: flex;
+        align-items: center;
+
+        .icon {
+          display: flex;
+          align-items: center;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

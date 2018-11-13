@@ -97,3 +97,15 @@ export const DIRECTION_TYPE = Object.freeze({
   CLOCKWISE: 'clockwise',
   ANTICLOCKWISE: 'anticlockwise'
 });
+
+export const EXPORT_STATUS = Object.freeze({
+  IN_PROGRESS: 'in_progress',
+  FAILED: 'failed',
+  SUCCESS: 'success'
+});
+
+export const SEVERITY = Object.freeze({
+  INFO: 'info',
+  WARN: 'warn',
+  ERROR: 'error'
+});

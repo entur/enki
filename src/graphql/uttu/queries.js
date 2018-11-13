@@ -183,3 +183,45 @@ export const getFlexibleStopPlaceByIdQuery = `
     }
   }
 `;
+
+export const getExportsQuery = `
+  query GetExports($historicDays:Long) {
+    exports(historicDays: $historicDays) {
+      id,
+      version,
+      created,
+      createdBy,
+      changed,
+      changedBy,
+      name,
+      exportStatus,
+      fromDate,
+      toDate,
+      dryRun,
+      downloadUrl
+    }
+  }
+`;
+
+export const getExportByIdQuery = `
+  query GetExportById($id:ID!) {
+    export(id: $id) {
+      id,
+      version,
+      created,
+      createdBy,
+      changed,
+      changedBy,
+      name,
+      exportStatus,
+      fromDate,
+      toDate,
+      dryRun,
+      downloadUrl,
+      messages {
+        severity,
+        message
+      }
+    }
+  }
+`;

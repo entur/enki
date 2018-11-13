@@ -7,6 +7,9 @@ import LinesOverview from '../Lines';
 import LinesEditor from '../Lines/scenes/Editor';
 import StopPlacesOverview from '../StopPlaces';
 import StopPlacesEditor from '../StopPlaces/scenes/Editor';
+import ExportsOverview from '../Exports';
+import ExportsEditor from '../Exports/scenes/Editor';
+import ExportsViewer from '../Exports/scenes/Viewer';
 
 const Routes = () => (
   <div className="routes">
@@ -21,6 +24,9 @@ const Routes = () => (
       <Route exact path="/stop-places" component={StopPlacesOverview} />
       <Route exact path="/stop-places/create" component={StopPlacesEditor} />
       <Route exact path="/stop-places/edit/:id" component={StopPlacesEditor} />
+      <Route exact path="/exports" component={ExportsOverview} />
+      <Route exact path="/exports/create" component={ExportsEditor} />
+      <Route exact path="/exports/view/:id" component={ExportsViewer} />
     </Switch>
   </div>
 );

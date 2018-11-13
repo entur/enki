@@ -33,3 +33,9 @@ export const deleteFlexibleStopPlace = `
     deleteFlexibleStopPlace(id: $id) { id }
   }
 `;
+
+export const exportMutation = `
+  mutation MutateExport($input: ExportInput!) {
+    export(input: $input) { id }
+  }
+`;

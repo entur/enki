@@ -35,6 +35,12 @@ const NavBar = () => (
         label="Stoppesteder"
         path="/stop-places"
       />
+      <NavBarMenuItem
+        className="exports"
+        key="exports"
+        label="Eksporter"
+        path="/exports"
+      />
     </div>
   </div>
 );

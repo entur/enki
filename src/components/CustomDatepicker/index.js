@@ -10,7 +10,8 @@ import './styles.css';
 
 class CustomDatepicker extends Component {
   handleDateChange(date) {
-    this.props.onChange(moment(date).format());
+    const { onChange, showTimeSelect } = this.props;
+    onChange(moment(date).format(showTimeSelect ? '' : 'YYYY-MM-DD'));
   }
 
   render() {
@@ -35,7 +36,7 @@ class CustomDatepicker extends Component {
           showYearDropdown
           shouldCloseOnSelect
           timeFormat="HH:mm"
-          dateFormat="DD/MM/YYYY"
+          dateFormat="DD.MM.YYYY"
           className="custom-datepicker"
           calendarClassName="custom-datepicker-calendar"
         />
