@@ -8,9 +8,9 @@ import {
   TableHeaderCell,
   TableRow,
   TableRowCell
-} from '../../../../../../../../components/Table/index';
-import { StopPoint } from '../../../../../../../../model/index';
-import ConfirmDialog from '../../../../../../../../components/ConfirmDialog/index';
+} from '../../../../../../../../../../components/Table';
+import { StopPoint } from '../../../../../../../../../../model';
+import ConfirmDialog from '../../../../../../../../../../components/ConfirmDialog';
 
 import './styles.css';
 

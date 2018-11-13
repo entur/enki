@@ -6,10 +6,8 @@ import IconButton from '../../../../../../../../components/IconButton';
 import { StopPoint } from '../../../../../../../../model';
 import { replaceElement } from '../../../../../../../../helpers/arrays';
 import Dialog from '../../../../../../../../components/Dialog';
-import StopPointsTable from '../StopPointsTable';
+import StopPointsTable from './components/StopPointsTable';
 import StopPointEditor from './components/StopPointEditor';
-
-import './styles.css';
 
 class StopPointsEditor extends Component {
   state = {

@@ -76,3 +76,19 @@ small {
 .positive {
   color: $dark-mint;
 }
+
+table {
+  tr:hover {
+    cursor: pointer;
+  }
+
+  tr.row-no-lines {
+    font-style: italic;
+    border: 0;
+  }
+
+  tr.disabled:hover {
+    background-color: initial;
+    cursor: default;
+  }
+}

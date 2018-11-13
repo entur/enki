@@ -1,0 +1,15 @@
+.weekday-picker {
+  .checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+
+    .content-checkbox {
+      margin-right: 7px;
+      margin-bottom: 7px;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}

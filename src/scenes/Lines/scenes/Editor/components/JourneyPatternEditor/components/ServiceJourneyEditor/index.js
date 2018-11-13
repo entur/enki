@@ -15,6 +15,7 @@ import {
 import { ServiceJourney, StopPoint } from '../../../../../../../../model';
 import BookingArrangementEditor from '../../../BookingArrangementEditor';
 import TimetabledPassingTimesEditor from './components/TimetabledPassingTimesEditor';
+import DayTypesEditor from './components/DayTypesEditor';
 import { ORGANISATION_TYPE } from '../../../../../../../../model/enums';
 
 import './styles.css';
@@ -69,7 +70,8 @@ class ServiceJourneyEditor extends Component {
         privateCode,
         publicCode,
         bookingArrangement,
-        passingTimes
+        passingTimes,
+        dayTypes
       },
       stopPoints,
       onSave,
@@ -148,10 +150,9 @@ class ServiceJourneyEditor extends Component {
           </Tab>
 
           <Tab value={TABS.AVAILABILITY} label="Tilgjengelighet">
-            <TimetabledPassingTimesEditor
-              timetabledPassingTimes={passingTimes}
-              stopPoints={stopPoints}
-              onChange={pts => this.handleFieldChange('passingTimes', pts)}
+            <DayTypesEditor
+              dayTypes={dayTypes}
+              onChange={pts => this.handleFieldChange('dayTypes', pts)}
             />
           </Tab>
 

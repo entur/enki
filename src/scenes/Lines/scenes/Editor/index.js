@@ -327,19 +327,6 @@ class FlexibleLineEditor extends Component {
                 </DropDown>
               </Tab>
 
-              <Tab
-                value={TABS.BOOKING}
-                label="Bestilling"
-                className="booking-tab"
-              >
-                <BookingArrangementEditor
-                  bookingArrangement={flexibleLine.bookingArrangement}
-                  onChange={b =>
-                    this.handleFieldChange('bookingArrangement', b)
-                  }
-                />
-              </Tab>
-
               <Tab value={TABS.JOURNEY_PATTERNS} label="Journey Patterns">
                 <IconButton
                   icon={<AddIcon />}
@@ -352,6 +339,19 @@ class FlexibleLineEditor extends Component {
                   journeyPatterns={flexibleLine.journeyPatterns}
                   onRowClick={::this.openDialogForJourneyPattern}
                   onDeleteClick={::this.deleteJourneyPattern}
+                />
+              </Tab>
+
+              <Tab
+                value={TABS.BOOKING}
+                label="Bestilling"
+                className="booking-tab"
+              >
+                <BookingArrangementEditor
+                  bookingArrangement={flexibleLine.bookingArrangement}
+                  onChange={b =>
+                    this.handleFieldChange('bookingArrangement', b)
+                  }
                 />
               </Tab>
             </Tabs>

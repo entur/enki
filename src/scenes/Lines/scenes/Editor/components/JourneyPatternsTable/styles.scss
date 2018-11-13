@@ -1,31 +1,15 @@
-table.journey-patterns-table {
-  th {
-    &:nth-of-type(1) {
-      width: 36%;
-    }
-    &:nth-of-type(2),
-    &:nth-of-type(3) {
-      width: 17%;
-    }
-    &:nth-of-type(4) {
-      width: 25%;
-    }
-    &:nth-of-type(5) {
-      width: 5%;
-    }
+table.journey-patterns-table th {
+  &:nth-of-type(1) {
+    width: 36%;
   }
-
-  tr:hover {
-    cursor: pointer;
+  &:nth-of-type(2),
+  &:nth-of-type(3) {
+    width: 17%;
   }
-
-  .row-no-lines {
-    font-style: italic;
-    border: 0;
+  &:nth-of-type(4) {
+    width: 25%;
   }
-
-  tr.disabled:hover {
-    background-color: initial;
-    cursor: default;
+  &:nth-of-type(5) {
+    width: 5%;
   }
 }

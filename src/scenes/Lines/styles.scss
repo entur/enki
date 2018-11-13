@@ -20,19 +20,5 @@
         width: 25%;
       }
     }
-
-    tr:hover {
-      cursor: pointer;
-    }
-
-    .row-no-lines {
-      font-style: italic;
-      border: 0;
-    }
-
-    tr.disabled {
-      background-color: initial;
-      cursor: default;
-    }
   }
 }
