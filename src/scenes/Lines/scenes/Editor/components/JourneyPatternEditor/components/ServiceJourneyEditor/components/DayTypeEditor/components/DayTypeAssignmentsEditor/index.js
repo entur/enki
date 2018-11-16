@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/component-library';
 
-import { DayTypeAssignment } from '../../../../../../../../../../../../../../model';
-import DayTypeAssignmentEditor from './components/DayTypeAssignmentEditor';
-import { replaceElement } from '../../../../../../../../../../../../../../helpers/arrays';
-import IconButton from '../../../../../../../../../../../../../../components/IconButton';
+import { DayTypeAssignment } from '../../../../../../../../../../../../model/index';
+import DayTypeAssignmentEditor from './components/DayTypeAssignmentEditor/index';
+import { replaceElement } from '../../../../../../../../../../../../helpers/arrays';
+import IconButton from '../../../../../../../../../../../../components/IconButton/index';
 
 import './styles.css';
 
@@ -34,7 +34,7 @@ class DayTypeAssignmentsEditor extends Component {
       <div className="day-type-assignments-editor">
         <IconButton
           icon={<AddIcon />}
-          label="Legg til tidspunkt"
+          label="Legg til dato"
           labelPosition="right"
           onClick={::this.addNewDayTypeAssignment}
         />
@@ -49,7 +49,7 @@ class DayTypeAssignmentsEditor extends Component {
             />
           ))
         ) : (
-          <div className="no-day-types">Ingen tidspunkter er definert.</div>
+          <div className="no-day-types">Ingen datoer er definert.</div>
         )}
       </div>
     );

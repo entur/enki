@@ -20,8 +20,8 @@ import {
 
 import './styles.css';
 
-const DEFAULT_SELECT_LABEL = '';
-const DEFAULT_SELECT_VALUE = undefined;
+const DEFAULT_SELECT_LABEL = '--- velg ---';
+const DEFAULT_SELECT_VALUE = '-1';
 
 class BookingArrangementEditor extends Component {
   handleFieldChange(field, value, multi = false) {

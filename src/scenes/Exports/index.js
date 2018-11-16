@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import moment from 'moment';
 import { AddIcon } from '@entur/component-library';
 
 import {
@@ -13,6 +14,8 @@ import {
 import Loading from '../../components/Loading';
 import IconButton from '../../components/IconButton';
 import { loadExports } from '../../actions/exports';
+import ExportViewer from './scenes/Viewer';
+import { EXPORT_STATUS } from '../../model/enums';
 
 import './styles.css';
 
@@ -22,8 +25,7 @@ class Exports extends Component {
   }
 
   handleOnRowClick(id) {
-    const { history } = this.props;
-    history.push(`/exports/view/${id}`);
+    this.props.history.push(`/exports/view/${id}`);
   }
 
   render() {
@@ -35,20 +37,32 @@ class Exports extends Component {
           exports.map(e => (
             <TableRow key={e.id} onClick={() => this.handleOnRowClick(e.id)}>
               <TableRowCell>{e.name}</TableRowCell>
+              <TableRowCell>
+                {ExportViewer.getIconForStatus(e.exportStatus)}
+              </TableRowCell>
+              <TableRowCell>
+                {e.exportStatus === EXPORT_STATUS.SUCCESS && (
+                  <a href={e.downloadUrl}>Last ned</a>
+                )}
+              </TableRowCell>
               <TableRowCell>{e.dryRun ? 'Ja' : 'Nei'}</TableRowCell>
-              <TableRowCell>{e.fromDate}</TableRowCell>
-              <TableRowCell>{e.toDate}</TableRowCell>
+              <TableRowCell>
+                {moment(e.fromDate).format('DD.MM.YYYY')}
+              </TableRowCell>
+              <TableRowCell>
+                {moment(e.toDate).format('DD.MM.YYYY')}
+              </TableRowCell>
             </TableRow>
           ))
         ) : (
           <TableRow className="row-no-exports disabled">
-            <TableRowCell colSpan={4}>Ingen eksporter ble funnet.</TableRowCell>
+            <TableRowCell colSpan={5}>Ingen eksporter ble funnet.</TableRowCell>
           </TableRow>
         );
       } else {
         return (
           <TableRow className="disabled">
-            <TableRowCell colSpan={4}>
+            <TableRowCell colSpan={5}>
               <Loading text="Laster inn eksporter..." />
             </TableRowCell>
           </TableRow>
@@ -70,6 +84,8 @@ class Exports extends Component {
 
         <Table>
           <TableHeaderCell label="Navn" />
+          <TableHeaderCell label="Status" />
+          <TableHeaderCell label="Last ned" />
           <TableHeaderCell label="Tørrkjøring" />
           <TableHeaderCell label="Fra dato" />
           <TableHeaderCell label="Til dato" />

@@ -113,14 +113,6 @@ class TimetabledPassingTimesEditor extends Component {
           <div className="times">
             <div className="time-n-day">
               <div className="time">
-                {this.getTimePicker(tpt, i, 'departureTime')}
-              </div>
-              <div className="day">
-                {this.getDayOffsetDropDown(tpt, i, 'departureDayOffset')}
-              </div>
-            </div>
-            <div className="time-n-day">
-              <div className="time">
                 {this.getTimePicker(tpt, i, 'earliestDepartureTime')}
               </div>
               <div className="day">
@@ -129,6 +121,14 @@ class TimetabledPassingTimesEditor extends Component {
                   i,
                   'earliestDepartureDayOffset'
                 )}
+              </div>
+            </div>
+            <div className="time-n-day">
+              <div className="time">
+                {this.getTimePicker(tpt, i, 'departureTime')}
+              </div>
+              <div className="day">
+                {this.getDayOffsetDropDown(tpt, i, 'departureDayOffset')}
               </div>
             </div>
           </div>
@@ -153,8 +153,8 @@ class TimetabledPassingTimesEditor extends Component {
             <div className="collection">
               <div className="upper">Avgang</div>
               <div className="lowers">
-                <div>Normalt</div>
                 <div>Tidligst</div>
+                <div>Normalt</div>
               </div>
             </div>
           </div>

@@ -3,11 +3,17 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { Label, ExclamationIcon, ErrorIcon } from '@entur/component-library';
+import {
+  Label,
+  SuccessIcon,
+  ExclamationIcon,
+  ErrorIcon
+} from '@entur/component-library';
 
 import { loadExportById, saveExport } from '../../../../actions/exports';
 import Loading from '../../../../components/Loading';
 import { EXPORT_STATUS, SEVERITY } from '../../../../model/enums';
+import { API_BASE } from '../../../../http/http';
 
 import './styles.css';
 
@@ -35,15 +41,30 @@ class ExportsViewer extends Component {
       .finally(() => this.setState({ isSaving: false }));
   }
 
+  static getIconForStatus(status) {
+    switch (status) {
+      case EXPORT_STATUS.SUCCESS:
+        return <SuccessIcon color="rgba(44,255,0,1)" />;
+      case EXPORT_STATUS.FAILED:
+        return <ErrorIcon color="rgba(255,0,0,1)" />;
+      case EXPORT_STATUS.IN_PROGRESS:
+        return <ExclamationIcon color="rgba(231,231,98,1)" />;
+    }
+  }
+
   static getIconForSeverity(severity) {
     switch (severity) {
       case SEVERITY.INFO:
-        return <ExclamationIcon color="#000000" />;
+        return <ExclamationIcon color="rgba(203,203,188,1)" />;
       case SEVERITY.WARN:
         return <ErrorIcon color="rgba(255,234,0,1)" />;
       case SEVERITY.ERROR:
         return <ErrorIcon color="rgba(255,0,0,1)" />;
     }
+  }
+
+  static getDownloadUrl(relativeUrl) {
+    return API_BASE + '/uttu/' + relativeUrl;
   }
 
   render() {
@@ -74,28 +95,39 @@ class ExportsViewer extends Component {
             <div className="value">{theExport.dryRun ? 'Ja' : 'Nei'}</div>
 
             <Label>Status</Label>
-            <div className="value">{theExport.exportStatus}</div>
+            <div className="value status">
+              <div className="icon">
+                {ExportsViewer.getIconForStatus(theExport.exportStatus)}
+              </div>
+              <div>{theExport.exportStatus}</div>
+            </div>
 
             {theExport.exportStatus === EXPORT_STATUS.SUCCESS && (
               <Fragment>
-                <Label>URL for nedlasting</Label>
+                <Label>Last ned eksporterte filer</Label>
                 <div className="value">
-                  <a href={theExport.downloadUrl}>{theExport.downloadUrl}</a>
+                  <a href={ExportsViewer.getDownloadUrl(theExport.downloadUrl)}>
+                    Last ned
+                  </a>
                 </div>
               </Fragment>
             )}
 
-            <Label>Meldinger</Label>
-            <div className="value messages">
-              {theExport.messages.map((m, i) => (
-                <div key={i} className="message">
-                  <div className="icon">
-                    {ExportsViewer.getIconForSeverity(m.severity)}
-                  </div>
-                  <div>{m.message}</div>
+            {theExport.messages.length > 0 && (
+              <Fragment>
+                <Label>Meldinger</Label>
+                <div className="value messages">
+                  {theExport.messages.map((m, i) => (
+                    <div key={i} className="message">
+                      <div className="icon">
+                        {ExportsViewer.getIconForSeverity(m.severity)}
+                      </div>
+                      <div>{m.message}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </Fragment>
+            )}
           </div>
         ) : (
           <Loading text="Laster inn eksport..." />

@@ -15,7 +15,7 @@ import {
 import { ServiceJourney, StopPoint } from '../../../../../../../../model';
 import BookingArrangementEditor from '../../../BookingArrangementEditor';
 import TimetabledPassingTimesEditor from './components/TimetabledPassingTimesEditor';
-import DayTypesEditor from './components/DayTypesEditor';
+import DayTypeEditor from './components/DayTypeEditor';
 import { ORGANISATION_TYPE } from '../../../../../../../../model/enums';
 
 import './styles.css';
@@ -150,9 +150,9 @@ class ServiceJourneyEditor extends Component {
           </Tab>
 
           <Tab value={TABS.AVAILABILITY} label="Tilgjengelighet">
-            <DayTypesEditor
-              dayTypes={dayTypes}
-              onChange={pts => this.handleFieldChange('dayTypes', pts)}
+            <DayTypeEditor
+              dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
+              onChange={dt => this.handleFieldChange('dayTypes', [dt])}
             />
           </Tab>
 

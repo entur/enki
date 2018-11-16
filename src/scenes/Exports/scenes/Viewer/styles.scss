@@ -14,16 +14,15 @@
       margin-bottom: 20px;
     }
 
-    .messages {
-      .message {
+    .status,
+    .message {
+      display: flex;
+      align-items: center;
+
+      .icon {
         display: flex;
         align-items: center;
-
-        .icon {
-          display: flex;
-          align-items: center;
-          margin-right: 10px;
-        }
+        margin-right: 10px;
       }
     }
   }
