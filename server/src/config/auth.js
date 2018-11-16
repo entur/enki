@@ -1,5 +1,5 @@
-const authURL = process.env.AUTH_SERVER_URL || 'https://kc-dev.devstage.entur.io/auth';
-const openIDConnectUrl = authURL + '/realms/partner/protocol/openid-connect/token';
+const authURL = process.env.AUTH_SERVER_URL || 'https://www-test.entur.org/auth';
+const openIDConnectUrl = authURL + '/realms/rutebanken/protocol/openid-connect/token';
 
 module.exports = {
   authURL,

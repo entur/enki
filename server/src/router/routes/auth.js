@@ -3,10 +3,10 @@ const authURL = require('../../config/auth').authURL;
 
 router.get('/keycloak.json', (req, res) =>
   res.json({
-    realm: 'partner',
+    realm: 'rutebanken',
     'auth-server-url': authURL,
     'ssl-required': 'external',
-    resource: 'order-transport',
+    resource: 'flexible-transport-frontend',
     'public-client': true
   })
 );

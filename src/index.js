@@ -48,7 +48,6 @@ const initAuth = () => {
         familyName: kc.idTokenParsed.family_name,
         givenName: kc.idTokenParsed.given_name,
         email: kc.idTokenParsed.email,
-        organisationId: kc.idTokenParsed.organisationID.toString(),
         username: kc.idTokenParsed.preferred_username,
         isAdmin: isAdmin(kc.tokenParsed)
       };
@@ -59,16 +58,4 @@ const initAuth = () => {
   });
 };
 
-if (process.env.NODE_ENV === 'development') {
-  const userInfo = {
-    familyName: 'Nordmann',
-    givenName: 'Ola',
-    email: 'ola.nordmann@entur.org',
-    organisationId: '1',
-    username: 'ola.nordmann',
-    isAdmin: true
-  };
-  renderIndex(userInfo);
-} else {
-  initAuth();
-}
+initAuth();
