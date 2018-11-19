@@ -10,13 +10,13 @@ import {
   Checkbox
 } from '@entur/component-library';
 
-import { BookingArrangement, Contact } from '../../../../../../model';
+import { BookingArrangement, Contact } from '../../../../../model';
 import {
   BOOKING_ACCESS,
   BOOKING_METHOD,
   PURCHASE_MOMENT,
   PURCHASE_WHEN
-} from '../../../../../../model/enums';
+} from '../../../../../model/enums';
 
 import './styles.css';
 

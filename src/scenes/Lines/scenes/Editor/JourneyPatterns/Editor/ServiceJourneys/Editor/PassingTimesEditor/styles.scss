@@ -1,6 +1,6 @@
-@import '../../../../../../../../../../styles/base/colors.scss';
+@import '../../../../../../../../../styles/base/colors.css';
 
-.timetabled-passing-times-editor {
+.passing-times-editor {
   border: 1px solid $primary;
 
   .headers {
@@ -86,12 +86,12 @@
           width: 50%;
 
           .time {
-            width: 70%;
+            width: 75%;
             border-right: 1px solid $grey-10;
           }
 
           .day {
-            width: 30%;
+            width: 25%;
           }
 
           &:first-of-type {
@@ -104,6 +104,7 @@
 
   input,
   select {
+    width: 100% !important;
     margin-bottom: 0 !important;
     padding-left: 3px;
     padding-right: 3px;

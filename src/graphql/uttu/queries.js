@@ -80,10 +80,12 @@ export const getFlexibleLineByIdQuery = `
         id
       },
       journeyPatterns {
+        id,
         name,
         description,
         privateCode,
         pointsInSequence {
+          id,
           flexibleStopPlace {
             id
           },
@@ -96,6 +98,7 @@ export const getFlexibleLineByIdQuery = `
           forAlighting
         },
         serviceJourneys {
+          id,
           name,
           description,
           privateCode,
@@ -103,6 +106,7 @@ export const getFlexibleLineByIdQuery = `
           operatorRef,
           bookingArrangement { ...bookingArrangementFields },
           passingTimes {
+            id,
             arrivalTime,
             arrivalDayOffset,
             departureTime,
@@ -113,6 +117,7 @@ export const getFlexibleLineByIdQuery = `
             earliestDepartureDayOffset
           },
           dayTypes {
+            id,
             daysOfWeek,
             dayTypeAssignments {
               isAvailable,

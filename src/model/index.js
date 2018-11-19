@@ -18,4 +18,4 @@ export { default as OperatingPeriod } from './OperatingPeriod';
 export { default as Provider } from './Provider';
 export { default as ServiceJourney } from './ServiceJourney';
 export { default as StopPoint } from './StopPoint';
-export { default as TimetabledPassingTime } from './TimetabledPassingTime';
+export { default as PassingTime } from './PassingTime';

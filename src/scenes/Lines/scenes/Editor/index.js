@@ -8,11 +8,10 @@ import {
   DropDown,
   DropDownOptions,
   Tabs,
-  Tab,
-  AddIcon
+  Tab
 } from '@entur/component-library';
 
-import { FlexibleLine, JourneyPattern } from '../../../../model';
+import { FlexibleLine } from '../../../../model';
 import {
   ORGANISATION_TYPE,
   FLEXIBLE_LINE_TYPE,
@@ -29,11 +28,8 @@ import { loadFlexibleStopPlaces } from '../../../../actions/flexibleStopPlaces';
 import Loading from '../../../../components/Loading';
 import OverlayLoader from '../../../../components/OverlayLoader';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
-import BookingArrangementEditor from './components/BookingArrangementEditor';
-import JourneyPatternsTable from './components/JourneyPatternsTable';
-import Dialog from '../../../../components/Dialog';
-import JourneyPatternEditor from './components/JourneyPatternEditor';
-import IconButton from '../../../../components/IconButton';
+import BookingArrangementEditor from './BookingArrangementEditor';
+import JourneyPatternsEditor from './JourneyPatterns';
 
 import './styles.css';
 
@@ -137,46 +133,6 @@ class FlexibleLineEditor extends Component {
     }));
   }
 
-  openDialogForJourneyPattern(index) {
-    this.setState(({ flexibleLine }) => ({
-      journeyPatternIndexInDialog: index,
-      journeyPatternInDialog: flexibleLine.journeyPatterns[index]
-    }));
-  }
-
-  deleteJourneyPattern(index) {
-    this.setState(({ flexibleLine }) => ({
-      flexibleLine: flexibleLine.removeJourneyPattern(index)
-    }));
-  }
-
-  openDialogForNewJourneyPattern() {
-    this.setState({ journeyPatternInDialog: new JourneyPattern() });
-  }
-
-  closeJourneyPatternDialog() {
-    this.setState({
-      journeyPatternInDialog: null,
-      journeyPatternIndexInDialog: -1
-    });
-  }
-
-  handleOnJourneyPatternDialogSaveClick() {
-    const { journeyPatternInDialog, journeyPatternIndexInDialog } = this.state;
-    if (journeyPatternIndexInDialog === -1) {
-      this.addJourneyPattern(journeyPatternInDialog);
-    } else {
-      this.updateJourneyPattern(
-        journeyPatternIndexInDialog,
-        journeyPatternInDialog
-      );
-    }
-    this.setState({
-      journeyPatternInDialog: null,
-      journeyPatternIndexInDialog: -1
-    });
-  }
-
   handleOnSaveClick() {
     const { dispatch, history } = this.props;
     this.setState({ isSaving: true });
@@ -207,8 +163,6 @@ class FlexibleLineEditor extends Component {
       operatorSelection,
       networkSelection,
       activeTab,
-      journeyPatternInDialog,
-      journeyPatternIndexInDialog,
       isSaving,
       isDeleteDialogOpen,
       isDeleting
@@ -328,17 +282,11 @@ class FlexibleLineEditor extends Component {
               </Tab>
 
               <Tab value={TABS.JOURNEY_PATTERNS} label="Journey Patterns">
-                <IconButton
-                  icon={<AddIcon />}
-                  label="Legg til journey pattern"
-                  labelPosition="right"
-                  onClick={::this.openDialogForNewJourneyPattern}
-                />
-
-                <JourneyPatternsTable
+                <JourneyPatternsEditor
                   journeyPatterns={flexibleLine.journeyPatterns}
-                  onRowClick={::this.openDialogForJourneyPattern}
-                  onDeleteClick={::this.deleteJourneyPattern}
+                  onChange={jps =>
+                    this.handleFieldChange('journeyPatterns', jps)
+                  }
                 />
               </Tab>
 
@@ -361,24 +309,6 @@ class FlexibleLineEditor extends Component {
             text={`Laster inn ${
               isLoadingLine ? 'linje' : 'nettverk og stoppesteder'
             }...`}
-          />
-        )}
-
-        {journeyPatternInDialog !== null && (
-          <Dialog
-            className="journey-pattern-dialog"
-            isOpen={true}
-            content={
-              <JourneyPatternEditor
-                journeyPattern={journeyPatternInDialog}
-                onChange={journeyPatternInDialog =>
-                  this.setState({ journeyPatternInDialog })
-                }
-                isEditMode={journeyPatternIndexInDialog !== -1}
-                onSave={::this.handleOnJourneyPatternDialogSaveClick}
-              />
-            }
-            onClose={::this.closeJourneyPatternDialog}
           />
         )}
 

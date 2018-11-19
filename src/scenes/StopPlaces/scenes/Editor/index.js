@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, Label, TextField, TextArea } from '@entur/component-library';
 
-import { FlexibleStopPlace, FlexibleArea } from '../../../../model/index';
+import { FlexibleStopPlace, FlexibleArea } from '../../../../model';
 import { VEHICLE_MODE } from '../../../../model/enums';
 import {
   deleteFlexibleStopPlaceById,
@@ -15,7 +15,7 @@ import { loadFlexibleLines } from '../../../../actions/flexibleLines';
 import OverlayLoader from '../../../../components/OverlayLoader';
 import Loading from '../../../../components/Loading';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
-import PolygonMap from './components/PolygonMap/index';
+import PolygonMap from './components/PolygonMap';
 
 import './styles.css';
 
@@ -118,20 +118,22 @@ class FlexibleStopPlaceEditor extends Component {
       <div className="stop-place-editor">
         <div className="header">
           <h2>{match.params.id ? 'Rediger' : 'Opprett'} stoppested</h2>
-          {match.params.id && (
-            <Button
-              variant="negative"
-              onClick={() => this.setDeleteDialogOpen(true)}
-              disabled={isDeleteDisabled}
-              title={
-                isDeleteDisabled
-                  ? 'For å slette dette stoppestedet må først alle brukende linjer slettes.'
-                  : ''
-              }
-            >
-              Slett
+
+          <div className="buttons">
+            <Button variant="success" onClick={::this.handleOnSaveClick}>
+              Lagre
             </Button>
-          )}
+
+            {match.params.id && (
+              <Button
+                variant="negative"
+                onClick={() => this.setDeleteDialogOpen(true)}
+                disabled={isDeleteDisabled}
+              >
+                Slett
+              </Button>
+            )}
+          </div>
         </div>
 
         {flexibleStopPlace ? (
@@ -165,12 +167,6 @@ class FlexibleStopPlaceEditor extends Component {
                     this.handleFieldChange('privateCode', e.target.value)
                   }
                 />
-
-                <div className="save-button-container">
-                  <Button variant="success" onClick={::this.handleOnSaveClick}>
-                    Lagre
-                  </Button>
-                </div>
               </div>
 
               <PolygonMap

@@ -5,41 +5,41 @@ import { DropDown, DropDownOptions } from '@entur/component-library';
 
 import {
   StopPoint,
-  TimetabledPassingTime
-} from '../../../../../../../../../../model';
-import { replaceElement } from '../../../../../../../../../../helpers/arrays';
-import TimePicker from '../../../../../../../../../../components/TimePicker';
+  PassingTime
+} from '../../../../../../../../../model';
+import { replaceElement } from '../../../../../../../../../helpers/arrays';
+import TimePicker from '../../../../../../../../../components/TimePicker';
 
 import './styles.css';
 
-class TimetabledPassingTimesEditor extends Component {
+class PassingTimesEditor extends Component {
   componentDidMount() {
-    const { timetabledPassingTimes, stopPoints, onChange } = this.props;
-    if (timetabledPassingTimes.length < stopPoints.length) {
-      const count = stopPoints.length - timetabledPassingTimes.length;
-      const newTpts = timetabledPassingTimes.slice();
+    const { passingTimes, stopPoints, onChange } = this.props;
+    if (passingTimes.length < stopPoints.length) {
+      const count = stopPoints.length - passingTimes.length;
+      const newPts = passingTimes.slice();
       for (let i = count; i > 0; i--) {
-        newTpts.push(new TimetabledPassingTime());
+        newPts.push(new PassingTime());
       }
-      onChange(newTpts);
-    } else if (stopPoints.length < timetabledPassingTimes.length) {
-      const newTpts = timetabledPassingTimes.slice();
-      newTpts.splice(stopPoints.length);
-      onChange(newTpts);
+      onChange(newPts);
+    } else if (stopPoints.length < passingTimes.length) {
+      const newPts = passingTimes.slice();
+      newPts.splice(stopPoints.length);
+      onChange(newPts);
     }
   }
 
   handleFieldChange(index, field, value) {
-    const { timetabledPassingTimes, onChange } = this.props;
+    const { passingTimes, onChange } = this.props;
 
-    const newTpt = timetabledPassingTimes[index]
-      ? timetabledPassingTimes[index].withChanges({
+    const newPt = passingTimes[index]
+      ? passingTimes[index].withChanges({
           [field]: value
         })
-      : new TimetabledPassingTime({ [field]: value });
-    const newTpts = replaceElement(timetabledPassingTimes, index, newTpt);
+      : new PassingTime({ [field]: value });
+    const newPts = replaceElement(passingTimes, index, newPt);
 
-    onChange(newTpts);
+    onChange(newPts);
   }
 
   handleDayOffsetChange(index, field, value) {
@@ -47,41 +47,33 @@ class TimetabledPassingTimesEditor extends Component {
     this.handleFieldChange(index, field, value !== 0 ? value : undefined);
   }
 
-  getTimePicker(tpt, index, field) {
-    return (
-      <TimePicker
-        time={tpt && tpt[field] ? tpt[field] : null}
-        onChange={t => this.handleFieldChange(index, field, t)}
-        position="below"
-      />
-    );
-  }
+  getTimePicker = (tpt, index, field) => (
+    <TimePicker
+      time={tpt && tpt[field] ? tpt[field] : null}
+      onChange={t => this.handleFieldChange(index, field, t)}
+      position="below"
+    />
+  );
 
-  getDayOffsetDropDown(tpt, index, field) {
-    return (
-      <DropDown
-        value={tpt && tpt[field] ? tpt[field].toString() : '0'}
-        onChange={e => this.handleDayOffsetChange(index, field, e.target.value)}
-      >
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
-          <DropDownOptions key={i} label={'+' + i} value={i} />
-        ))}
-      </DropDown>
-    );
-  }
+  getDayOffsetDropDown = (tpt, index, field) => (
+    <DropDown
+      value={tpt && tpt[field] ? tpt[field].toString() : '0'}
+      onChange={e => this.handleDayOffsetChange(index, field, e.target.value)}
+    >
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
+        <DropDownOptions key={i} label={'+' + i} value={i} />
+      ))}
+    </DropDown>
+  );
 
   render() {
-    const {
-      flexibleStopPlaces,
-      timetabledPassingTimes,
-      stopPoints
-    } = this.props;
+    const { flexibleStopPlaces, passingTimes, stopPoints } = this.props;
 
     const passingTimeEditors = stopPoints.map((sp, i) => {
       const stopPlaceName = flexibleStopPlaces.find(
         fsp => fsp.id === sp.flexibleStopPlaceRef
       ).name;
-      const tpt = timetabledPassingTimes[i];
+      const tpt = passingTimes[i];
 
       return (
         <div key={i} className="passing-time-editor">
@@ -137,7 +129,7 @@ class TimetabledPassingTimesEditor extends Component {
     });
 
     return (
-      <div className="timetabled-passing-times-editor">
+      <div className="passing-times-editor">
         <div className="headers">
           <div className="number">#</div>
           <div className="stop-place">Stoppested</div>
@@ -165,14 +157,12 @@ class TimetabledPassingTimesEditor extends Component {
   }
 }
 
-TimetabledPassingTimesEditor.propTypes = {
-  timetabledPassingTimes: PropTypes.arrayOf(
-    PropTypes.instanceOf(TimetabledPassingTime)
-  ).isRequired,
+PassingTimesEditor.propTypes = {
+  passingTimes: PropTypes.arrayOf(PropTypes.instanceOf(PassingTime)).isRequired,
   stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
   onChange: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ flexibleStopPlaces }) => ({ flexibleStopPlaces });
 
-export default connect(mapStateToProps)(TimetabledPassingTimesEditor);
+export default connect(mapStateToProps)(PassingTimesEditor);

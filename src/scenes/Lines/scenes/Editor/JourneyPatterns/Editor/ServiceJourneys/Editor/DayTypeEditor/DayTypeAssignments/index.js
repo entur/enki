@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/component-library';
 
-import { DayTypeAssignment } from '../../../../../../../../../../../../model/index';
-import DayTypeAssignmentEditor from './components/DayTypeAssignmentEditor/index';
-import { replaceElement } from '../../../../../../../../../../../../helpers/arrays';
-import IconButton from '../../../../../../../../../../../../components/IconButton/index';
+import { DayTypeAssignment } from '../../../../../../../../../../model';
+import DayTypeAssignmentEditor from './Editor';
+import {
+  removeElementByIndex,
+  replaceElement
+} from '../../../../../../../../../../helpers/arrays';
+import IconButton from '../../../../../../../../../../components/IconButton';
 
 import './styles.css';
 
@@ -22,9 +25,7 @@ class DayTypeAssignmentsEditor extends Component {
 
   deleteDayTypeAssignment(index) {
     const { dayTypeAssignments, onChange } = this.props;
-    const copy = dayTypeAssignments.slice();
-    copy.splice(index, 1);
-    onChange(copy);
+    onChange(removeElementByIndex(dayTypeAssignments, index));
   }
 
   render() {

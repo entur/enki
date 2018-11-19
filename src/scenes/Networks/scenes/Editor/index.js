@@ -11,7 +11,7 @@ import {
   DropDownOptions
 } from '@entur/component-library';
 
-import { Network } from '../../../../model/index';
+import { Network } from '../../../../model';
 import { ORGANISATION_TYPE } from '../../../../model/enums';
 import {
   deleteNetworkById,
@@ -119,20 +119,22 @@ class NetworkEditor extends Component {
       <div className="network-editor">
         <div className="header">
           <h2>{match.params.id ? 'Rediger' : 'Opprett'} nettverk</h2>
-          {match.params.id && (
-            <Button
-              variant="negative"
-              onClick={() => this.setDeleteDialogOpen(true)}
-              disabled={isDeleteDisabled}
-              title={
-                isDeleteDisabled
-                  ? 'For å slette dette nettverket må først nettverkets tilhørende linjer slettes.'
-                  : ''
-              }
-            >
-              Slett
+
+          <div className="buttons">
+            <Button variant="success" onClick={::this.handleOnSaveClick}>
+              Lagre
             </Button>
-          )}
+
+            {match.params.id && (
+              <Button
+                variant="negative"
+                onClick={() => this.setDeleteDialogOpen(true)}
+                disabled={isDeleteDisabled}
+              >
+                Slett
+              </Button>
+            )}
+          </div>
         </div>
 
         {network && lines ? (
@@ -185,15 +187,6 @@ class NetworkEditor extends Component {
                   />
                 ))}
               </DropDown>
-
-              <div className="save-button-container">
-                <Button
-                  variant="success"
-                  onClick={::this.handleOnSaveClick}
-                >
-                  Lagre
-                </Button>
-              </div>
             </div>
           </OverlayLoader>
         ) : (

@@ -12,11 +12,8 @@ import {
   Tab
 } from '@entur/component-library';
 
-import {
-  DestinationDisplay,
-  StopPoint
-} from '../../../../../../../../../../model';
-import BookingArrangementEditor from '../../../../../BookingArrangementEditor';
+import { DestinationDisplay, StopPoint } from '../../../../../../../../model';
+import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 
 import './styles.css';
 
@@ -83,7 +80,7 @@ class StopPointEditor extends Component {
           selected={activeTab}
           onChange={activeTab => this.setState({ activeTab })}
         >
-          <Tab value={TABS.GENERAL} label="Generelt">
+          <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
             <Label>Stoppested</Label>
             <DropDown
               value={stopPlaceSelection}
@@ -134,7 +131,7 @@ class StopPointEditor extends Component {
               }
             />
           </Tab>
-          <Tab value={TABS.BOOKING} label="Bestilling">
+          <Tab value={TABS.BOOKING} label="Bestilling" className="booking-tab">
             <BookingArrangementEditor
               bookingArrangement={stopPoint.bookingArrangement}
               onChange={b => this.handleFieldChange('bookingArrangement', b)}

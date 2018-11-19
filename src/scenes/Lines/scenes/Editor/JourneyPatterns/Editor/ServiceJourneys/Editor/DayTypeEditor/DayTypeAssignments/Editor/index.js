@@ -8,25 +8,25 @@ import {
   DeleteIcon
 } from '@entur/component-library';
 
-import { DayTypeAssignment } from '../../../../../../../../../../../../../../model/index';
-import CustomDatepicker from '../../../../../../../../../../../../../../components/CustomDatepicker/index';
-import OperatingPeriod from '../../../../../../../../../../../../../../model/OperatingPeriod';
+import { DayTypeAssignment } from '../../../../../../../../../../../model';
+import CustomDatepicker from '../../../../../../../../../../../components/CustomDatepicker';
+import OperatingPeriod from '../../../../../../../../../../../model/OperatingPeriod';
 
 import './styles.css';
 
 class DayTypeAssignmentEditor extends Component {
   state = { useDateRange: this.props.dayTypeAssignment.operatingPeriod };
 
+  handleFieldChange(field, value) {
+    const { dayTypeAssignment, onChange } = this.props;
+    onChange(dayTypeAssignment.withChanges({ [field]: value }));
+  }
+
   handleDateRangeChange() {
     if (this.state.useDateRange) {
       this.handleFieldChange('operatingPeriod', undefined);
     }
     this.setState(s => ({ useDateRange: !s.useDateRange }));
-  }
-
-  handleFieldChange(field, value) {
-    const { dayTypeAssignment, onChange } = this.props;
-    onChange(dayTypeAssignment.withChanges({ [field]: value }));
   }
 
   handleOperatingPeriodFieldChange(field, value) {

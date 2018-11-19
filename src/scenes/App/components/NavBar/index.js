@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import UserPreference from './UserPreference/index';
+import UserPreference from './UserPreference';
 import NavBarMenuItem from './NavBarMenuItem';
 
 import logo from '../../../../static/img/logo.png';

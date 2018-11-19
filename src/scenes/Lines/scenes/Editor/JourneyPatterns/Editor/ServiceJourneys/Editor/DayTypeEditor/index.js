@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Label } from '@entur/component-library';
 
-import { DayType } from '../../../../../../../../../../model';
-import DayTypeAssignmentsEditor from './components/DayTypeAssignmentsEditor';
-import WeekdayPicker from '../../../../../../../../../../components/WeekdayPicker';
-import { DAY_OF_WEEK } from '../../../../../../../../../../model/enums';
+import { DayType } from '../../../../../../../../../model';
+import DayTypeAssignmentsEditor from './DayTypeAssignments';
+import WeekdayPicker from '../../../../../../../../../components/WeekdayPicker';
+import { DAY_OF_WEEK } from '../../../../../../../../../model/enums';
 
 import './styles.css';
 

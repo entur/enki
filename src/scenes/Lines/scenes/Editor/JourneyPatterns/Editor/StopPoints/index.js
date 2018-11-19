@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/component-library';
 
-import IconButton from '../../../../../../../../components/IconButton';
-import { StopPoint } from '../../../../../../../../model';
-import { replaceElement } from '../../../../../../../../helpers/arrays';
-import Dialog from '../../../../../../../../components/Dialog';
-import StopPointsTable from './components/StopPointsTable';
-import StopPointEditor from './components/StopPointEditor';
+import IconButton from '../../../../../../../components/IconButton';
+import { StopPoint } from '../../../../../../../model';
+import { replaceElement } from '../../../../../../../helpers/arrays';
+import Dialog from '../../../../../../../components/Dialog';
+import StopPointsTable from './Table';
+import StopPointEditor from './Editor';
+
+const TEMP_INDEX = -1;
 
 class StopPointsEditor extends Component {
   state = {
     stopPointInDialog: null,
-    stopPointIndexInDialog: -1
+    stopPointIndexInDialog: TEMP_INDEX
   };
 
   updateStopPoint(index, stopPlace) {
@@ -41,21 +43,21 @@ class StopPointsEditor extends Component {
   closeStopPointDialog() {
     this.setState({
       stopPointInDialog: null,
-      stopPointIndexInDialog: -1
+      stopPointIndexInDialog: TEMP_INDEX
     });
   }
 
   handleOnStopPointDialogSaveClick() {
     const { stopPoints, onChange } = this.props;
     const { stopPointInDialog, stopPointIndexInDialog } = this.state;
-    if (stopPointIndexInDialog === -1) {
+    if (stopPointIndexInDialog === TEMP_INDEX) {
       onChange(stopPoints.concat(stopPointInDialog));
     } else {
       this.updateStopPoint(stopPointIndexInDialog, stopPointInDialog);
     }
     this.setState({
       stopPointInDialog: null,
-      stopPointIndexInDialog: -1
+      stopPointIndexInDialog: TEMP_INDEX
     });
   }
 
@@ -88,7 +90,7 @@ class StopPointsEditor extends Component {
                   this.setState({ stopPointInDialog })
                 }
                 onSave={::this.handleOnStopPointDialogSaveClick}
-                isEditMode={stopPointIndexInDialog !== -1}
+                isEditMode={stopPointIndexInDialog !== TEMP_INDEX}
               />
             }
             onClose={::this.closeStopPointDialog}

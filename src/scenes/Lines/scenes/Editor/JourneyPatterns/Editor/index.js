@@ -8,17 +8,13 @@ import {
   DropDown,
   DropDownOptions,
   Tabs,
-  Tab,
-  AddIcon
+  Tab
 } from '@entur/component-library';
 
-import { JourneyPattern, ServiceJourney } from '../../../../../../model';
-import ServiceJourneysTable from './components/ServiceJourneysTable';
-import Dialog from '../../../../../../components/Dialog';
+import { JourneyPattern } from '../../../../../../model';
 import { DIRECTION_TYPE } from '../../../../../../model/enums';
-import IconButton from '../../../../../../components/IconButton';
-import ServiceJourneyEditor from './components/ServiceJourneyEditor';
-import StopPointsEditor from './components/StopPointsEditor';
+import StopPointsEditor from './StopPoints';
+import ServiceJourneysEditor from './ServiceJourneys';
 
 import './styles.css';
 
@@ -35,9 +31,7 @@ class JourneyPatternEditor extends Component {
   state = {
     stopPlaceSelection: DEFAULT_SELECT_VALUE,
     directionSelection: DEFAULT_SELECT_VALUE,
-    activeTab: TABS.GENERAL,
-    serviceJourneyInDialog: null,
-    serviceJourneyIndexInDialog: -1
+    activeTab: TABS.GENERAL
   };
 
   componentDidMount() {
@@ -51,17 +45,9 @@ class JourneyPatternEditor extends Component {
     });
   }
 
-  handleFieldChange(field, value, multi = false) {
+  handleFieldChange(field, value) {
     const { journeyPattern, onChange } = this.props;
-
-    let newValue = value;
-    if (multi) {
-      newValue = journeyPattern[field].includes(value)
-        ? journeyPattern[field].filter(v => v !== value)
-        : journeyPattern[field].concat(value);
-    }
-
-    onChange(journeyPattern.withChanges({ [field]: newValue }));
+    onChange(journeyPattern.withChanges({ [field]: value }));
   }
 
   handleDirectionSelectionChange(directionSelection) {
@@ -74,67 +60,9 @@ class JourneyPatternEditor extends Component {
     this.setState({ directionSelection });
   }
 
-  addServiceJourney(index, serviceJourney) {
-    const { journeyPattern, onChange } = this.props;
-    onChange(journeyPattern.addServiceJourney(index, serviceJourney));
-  }
-
-  updateServiceJourney(index, serviceJourney) {
-    const { journeyPattern, onChange } = this.props;
-    onChange(journeyPattern.updateServiceJourney(index, serviceJourney));
-  }
-
-  deleteServiceJourney(index) {
-    const { journeyPattern, onChange } = this.props;
-    onChange(journeyPattern.removeServiceJourney(index));
-  }
-
-  updateJourneyPattern(journeyPattern) {
-    this.props.onChange(journeyPattern);
-  }
-
-  openDialogForServiceJourney(index) {
-    this.setState({
-      serviceJourneyIndexInDialog: index,
-      serviceJourneyInDialog: this.props.journeyPattern.serviceJourneys[index]
-    });
-  }
-
-  openDialogForNewServiceJourney() {
-    this.setState({ serviceJourneyInDialog: new ServiceJourney() });
-  }
-
-  closeServiceJourneyDialog() {
-    this.setState({
-      serviceJourneyInDialog: null,
-      serviceJourneyIndexInDialog: -1
-    });
-  }
-
-  handleOnServiceJourneyDialogSaveClick() {
-    const { serviceJourneyInDialog, serviceJourneyIndexInDialog } = this.state;
-    if (serviceJourneyIndexInDialog === -1) {
-      this.addServiceJourney(serviceJourneyInDialog);
-    } else {
-      this.updateServiceJourney(
-        serviceJourneyIndexInDialog,
-        serviceJourneyInDialog
-      );
-    }
-    this.setState({
-      serviceJourneyInDialog: null,
-      serviceJourneyIndexInDialog: -1
-    });
-  }
-
   render() {
     const { journeyPattern, isEditMode, onSave } = this.props;
-    const {
-      directionSelection,
-      activeTab,
-      serviceJourneyInDialog,
-      serviceJourneyIndexInDialog
-    } = this.state;
+    const { directionSelection, activeTab } = this.state;
 
     return (
       <div className="journey-pattern-editor">
@@ -152,7 +80,7 @@ class JourneyPatternEditor extends Component {
           selected={activeTab}
           onChange={activeTab => this.setState({ activeTab })}
         >
-          <Tab value={TABS.GENERAL} label="Generelt">
+          <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
             <Label>Navn</Label>
             <TextField
               type="text"
@@ -203,38 +131,13 @@ class JourneyPatternEditor extends Component {
           </Tab>
 
           <Tab value={TABS.SERVICE_JOURNEYS} label="Service Journeys">
-            <IconButton
-              icon={<AddIcon />}
-              label="Legg til service journey"
-              labelPosition="right"
-              onClick={::this.openDialogForNewServiceJourney}
-            />
-
-            <ServiceJourneysTable
+            <ServiceJourneysEditor
               serviceJourneys={journeyPattern.serviceJourneys}
-              onRowClick={::this.openDialogForServiceJourney}
-              onDeleteClick={::this.deleteServiceJourney}
+              stopPoints={journeyPattern.pointsInSequence}
+              onChange={sjs => this.handleFieldChange('serviceJourneys', sjs)}
             />
           </Tab>
         </Tabs>
-
-        {serviceJourneyInDialog !== null && (
-          <Dialog
-            isOpen={true}
-            content={
-              <ServiceJourneyEditor
-                serviceJourney={serviceJourneyInDialog}
-                stopPoints={journeyPattern.pointsInSequence}
-                onChange={serviceJourneyInDialog =>
-                  this.setState({ serviceJourneyInDialog })
-                }
-                onSave={::this.handleOnServiceJourneyDialogSaveClick}
-                isEditMode={serviceJourneyIndexInDialog !== -1}
-              />
-            }
-            onClose={::this.closeServiceJourneyDialog}
-          />
-        )}
       </div>
     );
   }

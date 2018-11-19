@@ -1,7 +1,7 @@
 import Versioned from './base/Versioned';
 import Notice from './Notice';
 
-class TimetabledPassingTime extends Versioned {
+class PassingTime extends Versioned {
   constructor(data = {}) {
     super(data);
 
@@ -20,4 +20,4 @@ class TimetabledPassingTime extends Versioned {
   }
 }
 
-export default TimetabledPassingTime;
+export default PassingTime;

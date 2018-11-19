@@ -13,9 +13,9 @@ import {
 } from '@entur/component-library';
 
 import { ServiceJourney, StopPoint } from '../../../../../../../../model';
-import BookingArrangementEditor from '../../../BookingArrangementEditor';
-import TimetabledPassingTimesEditor from './components/TimetabledPassingTimesEditor';
-import DayTypeEditor from './components/DayTypeEditor';
+import BookingArrangementEditor from '../../../../BookingArrangementEditor';
+import PassingTimesEditor from './PassingTimesEditor';
+import DayTypeEditor from './DayTypeEditor';
 import { ORGANISATION_TYPE } from '../../../../../../../../model/enums';
 
 import './styles.css';
@@ -99,7 +99,7 @@ class ServiceJourneyEditor extends Component {
           selected={activeTab}
           onChange={activeTab => this.setState({ activeTab })}
         >
-          <Tab value={TABS.GENERAL} label="Generelt">
+          <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
             <Label>Navn</Label>
             <TextField
               type="text"
@@ -157,14 +157,14 @@ class ServiceJourneyEditor extends Component {
           </Tab>
 
           <Tab value={TABS.PASSING_TIMES} label="Passeringstider">
-            <TimetabledPassingTimesEditor
-              timetabledPassingTimes={passingTimes}
+            <PassingTimesEditor
+              passingTimes={passingTimes}
               stopPoints={stopPoints}
               onChange={pts => this.handleFieldChange('passingTimes', pts)}
             />
           </Tab>
 
-          <Tab value={TABS.BOOKING} label="Bestilling">
+          <Tab value={TABS.BOOKING} label="Bestilling" className="booking-tab">
             <BookingArrangementEditor
               bookingArrangement={bookingArrangement}
               onChange={b => this.handleFieldChange('bookingArrangement', b)}
