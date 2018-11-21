@@ -56,13 +56,13 @@ class Exports extends Component {
           ))
         ) : (
           <TableRow className="row-no-exports disabled">
-            <TableRowCell colSpan={5}>Ingen eksporter ble funnet.</TableRowCell>
+            <TableRowCell colSpan={6}>Ingen eksporter ble funnet.</TableRowCell>
           </TableRow>
         );
       } else {
         return (
           <TableRow className="disabled">
-            <TableRowCell colSpan={5}>
+            <TableRowCell colSpan={6}>
               <Loading text="Laster inn eksporter..." />
             </TableRowCell>
           </TableRow>
