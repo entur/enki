@@ -135,9 +135,7 @@
       "web.jsx",
       "jsx",
       "node"
-    ],
-    "globalSetup": "<rootDir>/scripts/testSetup.js",
-    "globalTeardown": "<rootDir>/scripts/testTeardown.js"
+    ]
   },
   "babel": {
     "presets": [
