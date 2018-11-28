@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 
-const configureApp = require('./server-config');
+const { configureApp } = require('./server-config');
 const { appLog, infoLevel } = require('./log');
 const port = process.env.APP_PORT || 3001;
 const contentRoot = path.resolve(process.env.CONTENT_BASE || '../../build');
