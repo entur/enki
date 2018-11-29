@@ -8,7 +8,7 @@ const { appLog, errorLevel } = require('./log');
 const contentRoot = path.resolve(process.env.CONTENT_BASE || '../../build');
 const { withMetrix } = require('./metrix');
 
-const publicUrl = process.env.PUBLIC_URL;
+const publicUrl = '/admin/flexible-transport';
 
 const configureApp = app =>
   withSecurity(withMetrix(app))
