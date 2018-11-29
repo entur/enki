@@ -36,7 +36,7 @@ class App extends Component {
       <div className="app">
         <Helmet defaultTitle="Bestillingstransport" />
 
-        <BrowserRouter>
+        <BrowserRouter basename="/admin/flexible-transport">
           <ScrollToTop>
             <div>
               <div className="navbar-and-routes">

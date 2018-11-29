@@ -74,7 +74,7 @@ class Exports extends Component {
       <div className="exports">
         <h2>Eksporter</h2>
 
-        <Link to="/exports/create">
+        <Link to={`${process.env.PUBLIC_URL}/exports/create`}>
           <IconButton
             icon={<AddIcon />}
             label="Opprett eksport"

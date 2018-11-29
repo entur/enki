@@ -10,9 +10,13 @@ import './styles.css';
 
 const NavBar = () => (
   <div className="navbar">
-    <Link to="/" className="link">
+    <Link to={`${process.env.PUBLIC_URL}/`} className="link">
       <div className="logo-wrapper">
-        <img className="logo" src={logo} alt="Logo for Entur Bestillingstransport" />
+        <img
+          className="logo"
+          src={logo}
+          alt="Logo for Entur Bestillingstransport"
+        />
         <span>BESTILLINGSTRANSPORT</span>
       </div>
     </Link>
@@ -20,16 +24,8 @@ const NavBar = () => (
     <UserPreference />
 
     <div className="items">
-      <NavBarMenuItem
-        key="networks"
-        label="Nettverk"
-        path="/networks"
-      />
-      <NavBarMenuItem
-        key="lines"
-        label="Linjer"
-        path="/lines"
-      />
+      <NavBarMenuItem key="networks" label="Nettverk" path="/networks" />
+      <NavBarMenuItem key="lines" label="Linjer" path="/lines" />
       <NavBarMenuItem
         key="stop-places"
         label="Stoppesteder"
