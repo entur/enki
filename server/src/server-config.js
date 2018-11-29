@@ -22,7 +22,7 @@ const configureApp = app =>
       })
     )
     .use(compression())
-    .use(publicUrl + '/', express.static(contentRoot))
+    .use(publicUrl + '/static', express.static(contentRoot))
     .use(publicUrl + '/' + endpointBase, createRouter())
     .use(fallback('index.html', { root: contentRoot }))
     .use((err, req, res, next) => {
