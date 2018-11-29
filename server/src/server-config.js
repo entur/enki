@@ -24,7 +24,7 @@ const configureApp = app =>
     .use(compression())
     .use(express.static(contentRoot))
     .use('/' + endpointBase, createRouter())
-    .use(fallback('index.html', { root: contentRoot }))
+    // .use(fallback('index.html', { root: contentRoot }))
     .use((err, req, res, next) => {
       appLog(errorLevel, `Request to ${req.url} failed: ${err.stack}`);
       next(err);
