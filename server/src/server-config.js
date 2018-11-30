@@ -2,15 +2,15 @@ const fallback = require('express-history-api-fallback');
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
+
 const { withSecurity } = require('./security-middleware');
 const { createRouter, endpointBase } = require('./router/');
 const { appLog, errorLevel } = require('./log');
-const contentRoot = path.resolve(process.env.CONTENT_BASE || '../../build');
 const { withMetrix } = require('./metrix');
 
-// const publicUrl = '/admin/flexible-transport';
+const contentRoot = path.resolve(process.env.CONTENT_BASE || '../../build');
 
-const configureApp = (app, mountpath = '') => {
+const configureApp = (app, mountpath = '') =>
   app.use(
     mountpath,
     withSecurity(withMetrix(express.Router()))
@@ -23,7 +23,7 @@ const configureApp = (app, mountpath = '') => {
         res.json({
           name: 'order-transport',
           environment: process.env.ENVIRONMENT,
-          version: process.env.IMAGE_TAG ? process.env.IMAGE_TAG : 'N/A',
+          version: process.env.IMAGE_TAG || 'N/A',
           buildDate: process.env.BUILD_DATE
         })
       )
@@ -44,6 +44,5 @@ const configureApp = (app, mountpath = '') => {
         });
       })
   );
-};
 
 module.exports = { configureApp };
