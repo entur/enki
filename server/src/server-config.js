@@ -14,10 +14,6 @@ const configureApp = (app, mountpath = '') =>
   app.use(
     mountpath,
     withSecurity(withMetrix(express.Router()))
-      .use((req, res, next) => {
-        console.log('Request to: ' + req.originalUrl);
-        next();
-      })
       .get('/health', (req, res) => res.json({ status: 'UP' }))
       .get('/info', (req, res) =>
         res.json({
