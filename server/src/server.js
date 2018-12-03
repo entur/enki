@@ -5,7 +5,7 @@ const { configureApp } = require('./server-config');
 const { appLog, infoLevel } = require('./log');
 
 const port = process.env.APP_PORT || 3001;
-const mountPath = process.env.PUBLIC_URL || '/admin/flexible-transport';
+const mountPath = process.env.PUBLIC_URL || '';
 const contentRoot = path.resolve(process.env.CONTENT_BASE || '../../build');
 
 const app = configureApp(express(), mountPath);
