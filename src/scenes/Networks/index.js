@@ -65,7 +65,7 @@ class Networks extends Component {
       <div className="networks">
         <h2>Nettverk</h2>
 
-        <Link to={`${process.env.PUBLIC_URL}/networks/create`}>
+        <Link to="/networks/create">
           <IconButton
             icon={<AddIcon />}
             label="Opprett nettverk"

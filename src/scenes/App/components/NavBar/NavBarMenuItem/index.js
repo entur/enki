@@ -68,11 +68,7 @@ class NavBarMenuItem extends Component {
       <Fragment>
         <div className={classNames}>
           <div className="border">
-            {!disabled ? (
-              <Link to={`${process.env.PUBLIC_URL}${path}`}>{content}</Link>
-            ) : (
-              content
-            )}
+            {!disabled ? <Link to={path}>{content}</Link> : content}
           </div>
         </div>
 

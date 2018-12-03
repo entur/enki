@@ -61,7 +61,7 @@ class Lines extends Component {
       <div className="lines">
         <h2>Linjer</h2>
 
-        <Link to={`${process.env.PUBLIC_URL}/lines/create`}>
+        <Link to="/lines/create">
           <IconButton
             icon={<AddIcon />}
             label="Opprett linje"

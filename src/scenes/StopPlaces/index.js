@@ -67,7 +67,7 @@ class StopPlaces extends Component {
       <div className="stop-places">
         <h2>Stoppesteder</h2>
 
-        <Link to={`${process.env.PUBLIC_URL}/stop-places/create`}>
+        <Link to="/stop-places/create">
           <IconButton
             icon={<AddIcon />}
             label="Opprett stoppested"

@@ -10,7 +10,7 @@ import './styles.css';
 
 const NavBar = () => (
   <div className="navbar">
-    <Link to={`${process.env.PUBLIC_URL}/`} className="link">
+    <Link to="/" className="link">
       <div className="logo-wrapper">
         <img
           className="logo"
