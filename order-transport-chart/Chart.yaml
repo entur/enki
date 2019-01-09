@@ -8,7 +8,7 @@ keywords:
 - entur
 - enturas
 sources:
-- https://bitbucket.org/enturas/order-transport
+- https://github.com/entur/flexible-transport
 maintainers:
 - name: Sondre Bjerkerud
   email: sondre.bjerkerud@entur.org
