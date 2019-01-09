@@ -4,7 +4,7 @@ image: eu.gcr.io/entur-1287/order-transport
 imageTag: master-v1 # latest
 environment: dev
 runtime: gcp
-authServerUrl: "https://www-test.entur.org/auth"
+authServerUrl: "https://kc-dev.devstage.entur.io/auth"
 domain: devstage.entur.io
 isProd: false
 service:
