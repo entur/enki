@@ -27,7 +27,7 @@ npm run start-devenv
 
 OT uses [Keycloak](http://www.keycloak.org/) to authenticate users.
 
-### Technical details
+### Technical details 
 
 User is redirected to Keycloak auth endpoint, and redirected back to OT on success.
 The redirect payload contains a signed JWT, refresh token and idToken.
