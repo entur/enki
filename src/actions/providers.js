@@ -25,8 +25,9 @@ export const getProviders = () => dispatch => {
       dispatch(receiveProviders(providers));
       return Promise.resolve();
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(failedReceivingProviders);
+      console.log(e);
       return Promise.reject();
     });
 };

@@ -32,11 +32,14 @@ class App extends Component {
   render() {
     const { providers, organisations } = this.props;
 
+    const basename =
+      process.env.node_env === 'production' ? '/admin/flexible-transport' : '';
+
     return (
       <div className="app">
         <Helmet defaultTitle="Bestillingstransport" />
 
-        <BrowserRouter basename="/admin/flexible-transport">
+        <BrowserRouter basename={basename}>
           <ScrollToTop>
             <div>
               <div className="navbar-and-routes">

@@ -195,7 +195,7 @@ class BookingArrangementEditor extends Component {
 }
 
 BookingArrangementEditor.propTypes = {
-  bookingArrangement: PropTypes.instanceOf(BookingArrangement).isRequired
+  bookingArrangement: PropTypes.instanceOf(BookingArrangement)
 };
 
 export default BookingArrangementEditor;

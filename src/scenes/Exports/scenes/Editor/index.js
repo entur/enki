@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 import { Button, Label, TextField, Checkbox } from '@entur/component-library';
 
 import { Export } from '../../../../model';
@@ -26,7 +27,10 @@ class ExportsEditor extends Component {
         .then(theExport => this.setState({ theExport }))
         .catch(() => history.push('/exports'));
     } else {
-      this.setState({ theExport: new Export() });
+      const today = moment().format('YYYY-MM-DD');
+      this.setState({
+        theExport: new Export({ fromDate: today, toDate: today })
+      });
     }
   }
 

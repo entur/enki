@@ -35,13 +35,14 @@ export const loadFlexibleLines = () => (dispatch, getState) => {
       dispatch(receiveFlexibleLines(flexibleLines));
       return Promise.resolve(flexibleLines);
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Laste linjer',
           'En feil oppstod under lastingen av linjene.'
         )
       );
+      console.log(e);
       return Promise.reject();
     });
 };
@@ -50,13 +51,14 @@ export const loadFlexibleLineById = id => (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   return UttuQuery(activeProvider, getFlexibleLineByIdQuery, { id })
     .then(data => Promise.resolve(new FlexibleLine(data.flexibleLine)))
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Laste linje',
           'En feil oppstod under lastingen av linjen.'
         )
       );
+      console.log(e);
       return Promise.reject();
     });
 };
@@ -70,13 +72,14 @@ export const saveFlexibleLine = flexibleLine => (dispatch, getState) => {
       dispatch(showSuccessNotification('Lagre linje', 'Linjen ble lagret.'));
       return Promise.resolve();
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Lagre linje',
           'En feil oppstod under lagringen av linjen.'
         )
       );
+      console.log(e);
       return Promise.reject();
     });
 };
@@ -88,13 +91,14 @@ export const deleteFlexibleLineById = id => (dispatch, getState) => {
       dispatch(showSuccessNotification('Slette linje', 'Linjen ble slettet.'));
       return Promise.resolve();
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Slette linje',
           'En feil oppstod under slettingen av linjen.'
         )
       );
+      console.log(e);
       return Promise.reject();
     });
 };

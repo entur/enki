@@ -29,13 +29,14 @@ export const loadNetworks = () => (dispatch, getState) => {
       dispatch(receiveNetworks(networks));
       return Promise.resolve(networks);
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Laste nettverk',
           'En feil oppstod under lastingen av nettverkene.'
         )
       );
+      console.log(e);
       return Promise.reject();
     });
 };
@@ -44,13 +45,14 @@ export const loadNetworkById = id => (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   return UttuQuery(activeProvider, getNetworkByIdQuery, { id })
     .then(data => Promise.resolve(new Network(data.network)))
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Laste nettverk',
           'En feil oppstod under lastingen av nettverket.'
         )
       );
+      console.log(e);
       return Promise.reject();
     });
 };
@@ -64,13 +66,14 @@ export const saveNetwork = network => (dispatch, getState) => {
       );
       return Promise.resolve();
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Lagre nettverk',
           'En feil oppstod under lagringen av nettverket.'
         )
       );
+      console.log(e);
       return Promise.reject();
     });
 };
@@ -84,13 +87,14 @@ export const deleteNetworkById = id => (dispatch, getState) => {
       );
       return Promise.resolve();
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Slette nettverk',
           'En feil oppstod under slettingen av nettverket.'
         )
       );
+      console.log(e);
       return Promise.reject();
     });
 };

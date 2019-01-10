@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment/moment';
 import { AddIcon } from '@entur/component-library';
 
 import { DayTypeAssignment } from '../../../../../../../../../../model';
@@ -20,7 +21,11 @@ class DayTypeAssignmentsEditor extends Component {
 
   addNewDayTypeAssignment() {
     const { dayTypeAssignments, onChange } = this.props;
-    onChange(dayTypeAssignments.concat(new DayTypeAssignment()));
+    const today = moment().format('YYYY-MM-DD');
+    onChange(dayTypeAssignments.concat(new DayTypeAssignment({
+      fromDate: today,
+      toDate: today
+    })));
   }
 
   deleteDayTypeAssignment(index) {
