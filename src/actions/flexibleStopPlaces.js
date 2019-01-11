@@ -12,6 +12,7 @@ import {
   deleteFlexibleStopPlace,
   flexibleStopPlaceMutation
 } from '../graphql/uttu/mutations';
+import { getUttuError } from '../helpers/uttu';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
 export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
@@ -37,14 +38,13 @@ export const loadFlexibleStopPlaces = () => (dispatch, getState) => {
       dispatch(receiveFlexibleStopPlaces(flexibleStopPlaces));
       return Promise.resolve(flexibleStopPlaces);
     })
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Laste stoppesteder',
           'En feil oppstod under lastingen av stoppestedene.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -55,14 +55,13 @@ export const loadFlexibleStopPlaceById = id => (dispatch, getState) => {
     .then(data =>
       Promise.resolve(new FlexibleStopPlace(data.flexibleStopPlace))
     )
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Laste stoppested',
           'En feil oppstod under lastingen av stoppestedet.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -85,10 +84,9 @@ export const saveFlexibleStopPlace = flexibleStopPlace => (
       dispatch(
         showErrorNotification(
           'Lagre stoppested',
-          'En feil oppstod under lagringen av stoppestedet.'
+          `En feil oppstod under lagringen av stoppestedet: ${getUttuError(e)}`
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -105,14 +103,13 @@ export const deleteFlexibleStopPlaceById = id => (dispatch, getState) => {
       );
       return Promise.resolve();
     })
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Slette stoppested',
           'En feil oppstod under slettingen av stoppestedet.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };

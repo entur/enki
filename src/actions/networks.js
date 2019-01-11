@@ -6,6 +6,7 @@ import {
   showErrorNotification,
   showSuccessNotification
 } from '../components/Notification/actions';
+import { getUttuError } from '../helpers/uttu';
 
 export const REQUEST_NETWORKS = 'REQUEST_NETWORKS';
 export const RECEIVE_NETWORKS = 'RECEIVE_NETWORKS';
@@ -29,14 +30,13 @@ export const loadNetworks = () => (dispatch, getState) => {
       dispatch(receiveNetworks(networks));
       return Promise.resolve(networks);
     })
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Laste nettverk',
           'En feil oppstod under lastingen av nettverkene.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -45,14 +45,13 @@ export const loadNetworkById = id => (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   return UttuQuery(activeProvider, getNetworkByIdQuery, { id })
     .then(data => Promise.resolve(new Network(data.network)))
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Laste nettverk',
           'En feil oppstod under lastingen av nettverket.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -70,10 +69,9 @@ export const saveNetwork = network => (dispatch, getState) => {
       dispatch(
         showErrorNotification(
           'Lagre nettverk',
-          'En feil oppstod under lagringen av nettverket.'
+          `En feil oppstod under lagringen av nettverket: ${getUttuError(e)}`
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -87,14 +85,13 @@ export const deleteNetworkById = id => (dispatch, getState) => {
       );
       return Promise.resolve();
     })
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Slette nettverk',
           'En feil oppstod under slettingen av nettverket.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };

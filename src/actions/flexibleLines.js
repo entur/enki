@@ -12,6 +12,7 @@ import {
   deleteFlexibleLine,
   flexibleLineMutation
 } from '../graphql/uttu/mutations';
+import { getUttuError } from '../helpers/uttu';
 
 export const REQUEST_FLEXIBLE_LINES = 'REQUEST_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
@@ -35,14 +36,13 @@ export const loadFlexibleLines = () => (dispatch, getState) => {
       dispatch(receiveFlexibleLines(flexibleLines));
       return Promise.resolve(flexibleLines);
     })
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Laste linjer',
           'En feil oppstod under lastingen av linjene.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -51,14 +51,13 @@ export const loadFlexibleLineById = id => (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   return UttuQuery(activeProvider, getFlexibleLineByIdQuery, { id })
     .then(data => Promise.resolve(new FlexibleLine(data.flexibleLine)))
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Laste linje',
           'En feil oppstod under lastingen av linjen.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -76,10 +75,9 @@ export const saveFlexibleLine = flexibleLine => (dispatch, getState) => {
       dispatch(
         showErrorNotification(
           'Lagre linje',
-          'En feil oppstod under lagringen av linjen.'
+          `En feil oppstod under lagringen av linjen: ${getUttuError(e)}`
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -95,10 +93,9 @@ export const deleteFlexibleLineById = id => (dispatch, getState) => {
       dispatch(
         showErrorNotification(
           'Slette linje',
-          'En feil oppstod under slettingen av linjen.'
+          `En feil oppstod under slettingen av linjen: ${getUttuError(e)}`
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };

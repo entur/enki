@@ -6,6 +6,7 @@ import {
   showErrorNotification,
   showSuccessNotification
 } from '../components/Notification/actions';
+import { getUttuError } from '../helpers/uttu';
 
 export const REQUEST_EXPORTS = 'REQUEST_EXPORTS';
 export const RECEIVE_EXPORTS = 'RECEIVE_EXPORTS';
@@ -29,14 +30,13 @@ export const loadExports = () => (dispatch, getState) => {
       dispatch(receiveExports(exports));
       return Promise.resolve(exports);
     })
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Laste eksporter',
           'En feil oppstod under lastingen av eksportene.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -45,14 +45,13 @@ export const loadExportById = id => (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   return UttuQuery(activeProvider, getExportByIdQuery, { id })
     .then(data => Promise.resolve(new Export(data.export)))
-    .catch(e => {
+    .catch(() => {
       dispatch(
         showErrorNotification(
           'Laste eksport',
           'En feil oppstod under lastingen av eksporten.'
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
@@ -72,10 +71,9 @@ export const saveExport = theExport => (dispatch, getState) => {
       dispatch(
         showErrorNotification(
           'Lagre eksport',
-          'En feil oppstod under lagringen av eksporten.'
+          `En feil oppstod under lagringen av eksporten: ${getUttuError(e)}`
         )
       );
-      console.log(e);
       return Promise.reject();
     });
 };
