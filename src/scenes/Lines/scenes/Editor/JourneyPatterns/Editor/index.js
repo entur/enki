@@ -81,7 +81,7 @@ class JourneyPatternEditor extends Component {
           onChange={activeTab => this.setState({ activeTab })}
         >
           <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
-            <Label>Navn</Label>
+            <Label>* Navn</Label>
             <TextField
               type="text"
               value={journeyPattern.name}

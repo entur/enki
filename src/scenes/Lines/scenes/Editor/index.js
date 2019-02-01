@@ -214,7 +214,11 @@ class FlexibleLineEditor extends Component {
                 label="Generelt"
                 className="general-tab"
               >
-                <FormGroup className="form-section" inputId="name" title="Navn">
+                <FormGroup
+                  className="form-section"
+                  inputId="name"
+                  title="* Navn"
+                >
                   <TextField
                     type="text"
                     value={flexibleLine.name}
@@ -255,7 +259,7 @@ class FlexibleLineEditor extends Component {
                 <FormGroup
                   className="form-section"
                   inputId="publicCode"
-                  title="Offentlig kode"
+                  title="* Offentlig kode"
                 >
                   <TextField
                     type="text"
@@ -294,7 +298,7 @@ class FlexibleLineEditor extends Component {
                 <FormGroup
                   className="form-section"
                   inputId="network"
-                  title="Nettverk"
+                  title="* Nettverk"
                 >
                   <DropDown
                     value={networkSelection}

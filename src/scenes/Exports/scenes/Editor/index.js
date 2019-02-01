@@ -67,20 +67,20 @@ class ExportsEditor extends Component {
         {theExport ? (
           <OverlayLoader isLoading={isSaving} text="Lagrer eksporten...">
             <div className="export-form">
-              <Label>Navn</Label>
+              <Label>* Navn</Label>
               <TextField
                 type="text"
                 value={theExport.name}
                 onChange={e => this.handleFieldChange('name', e.target.value)}
               />
 
-              <Label>Fra dato</Label>
+              <Label>* Fra dato</Label>
               <CustomDatepicker
                 startDate={theExport.fromDate}
                 onChange={date => this.handleFieldChange('fromDate', date)}
               />
 
-              <Label>Til dato</Label>
+              <Label>* Til dato</Label>
               <CustomDatepicker
                 startDate={theExport.toDate}
                 onChange={date => this.handleFieldChange('toDate', date)}

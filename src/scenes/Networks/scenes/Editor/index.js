@@ -143,7 +143,7 @@ class NetworkEditor extends Component {
             text={(isSaving ? 'Lagrer' : 'Sletter') + ' nettverket...'}
           >
             <div className="network-form">
-              <Label>Navn</Label>
+              <Label>* Navn</Label>
               <TextField
                 type="text"
                 value={network.name}
@@ -168,7 +168,7 @@ class NetworkEditor extends Component {
                 }
               />
 
-              <Label>Autoritet</Label>
+              <Label>* Autoritet</Label>
               <DropDown
                 value={authoritySelection}
                 onChange={e =>

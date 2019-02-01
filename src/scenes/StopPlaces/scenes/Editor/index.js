@@ -143,7 +143,7 @@ class FlexibleStopPlaceEditor extends Component {
           >
             <div className="stop-place-form-container">
               <div className="stop-place-form">
-                <Label>Navn</Label>
+                <Label>* Navn</Label>
                 <TextField
                   type="text"
                   value={flexibleStopPlace.name}
