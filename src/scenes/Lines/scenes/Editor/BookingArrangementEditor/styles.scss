@@ -1,14 +1,18 @@
 .booking-editor {
-  input:not(.entur-radio-checkbox__input),
-  textarea,
-  select,
-  .entur-expandable,
-  .entur-radio-checkbox-group {
-    width: 100%;
-    margin-bottom: 30px;
+  .booking-limit-radio {
+    margin-bottom: 5px;
   }
 
-  #note {
-    margin-bottom: 0;
+  .latest-time-picker {
+    margin-left: 25px;
+    margin-bottom: 10px;
+
+    input {
+      margin-bottom: 0;
+    }
+  }
+
+  .mimimum-booking-period-picker {
+    margin-left: 25px;
   }
 }

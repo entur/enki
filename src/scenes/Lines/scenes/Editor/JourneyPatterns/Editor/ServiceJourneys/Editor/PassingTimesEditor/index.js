@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { DropDown, DropDownOptions } from '@entur/component-library';
 
-import {
-  StopPoint,
-  PassingTime
-} from '../../../../../../../../../model';
+import { StopPoint, PassingTime } from '../../../../../../../../../model';
 import { replaceElement } from '../../../../../../../../../helpers/arrays';
 import TimePicker from '../../../../../../../../../components/TimePicker';
 

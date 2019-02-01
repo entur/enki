@@ -102,8 +102,8 @@
     }
   }
 
-  input,
-  select {
+  .time input,
+  .day select {
     width: 100% !important;
     margin-bottom: 0 !important;
     padding-left: 3px;
@@ -111,7 +111,7 @@
     text-align: center;
   }
 
-  select {
+  .day select {
     background-image: none;
   }
 

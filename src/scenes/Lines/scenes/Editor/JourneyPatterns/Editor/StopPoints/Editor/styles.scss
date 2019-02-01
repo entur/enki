@@ -5,14 +5,14 @@
     width: 500px;
     max-width: 500px;
 
-    input:not(.entur-radio-checkbox__input),
+    input:not(.entur-just-radio-checkbox),
     textarea,
     select {
       width: 100%;
       margin-bottom: 30px;
     }
 
-    input.entur-radio-checkbox__input {
+    input.entur-just-radio-checkbox {
       margin-bottom: 30px;
     }
   }
@@ -21,7 +21,7 @@
     width: 500px;
     max-width: 500px;
 
-    input:not(.entur-radio-checkbox__input),
+    input:not(.entur-just-radio-checkbox),
     textarea,
     select {
       width: 100%;

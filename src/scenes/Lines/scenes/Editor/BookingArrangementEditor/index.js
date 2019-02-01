@@ -7,7 +7,9 @@ import {
   DropDown,
   DropDownOptions,
   CheckboxGroup,
-  Checkbox
+  Checkbox,
+  Radio,
+  FormGroup
 } from '@entur/component-library';
 
 import { BookingArrangement, Contact } from '../../../../../model';
@@ -17,13 +19,22 @@ import {
   PURCHASE_MOMENT,
   PURCHASE_WHEN
 } from '../../../../../model/enums';
+import CustomDatepicker from '../../../../../components/CustomDatepicker';
+import DurationPicker from '../../../../../components/DurationPicker';
 
 import './styles.css';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
+const BOOKING_LIMIT_TYPE = Object.freeze({
+  TIME: 'time',
+  PERIOD: 'period'
+});
+
 class BookingArrangementEditor extends Component {
+  state = { bookingLimitType: BOOKING_LIMIT_TYPE.TIME };
+
   handleFieldChange(field, value, multi = false) {
     const { bookingArrangement, onChange } = this.props;
 
@@ -61,8 +72,22 @@ class BookingArrangementEditor extends Component {
     );
   }
 
+  handleBookingLimitChange(bookingLimitType) {
+    const { bookingArrangement, onChange } = this.props;
+    if (bookingArrangement) {
+      onChange(
+        bookingArrangement.withChanges({
+          minimumBookingPeriod: undefined,
+          latestBookingTime: undefined
+        })
+      );
+    }
+    this.setState({ bookingLimitType });
+  }
+
   render() {
     const { bookingArrangement: ba } = this.props;
+    const { bookingLimitType } = this.state;
 
     const contact = ba ? ba.bookingContact : undefined;
     const contactPerson = contact ? contact.contactPerson : undefined;
@@ -75,120 +100,203 @@ class BookingArrangementEditor extends Component {
     const bookWhen = ba ? ba.bookWhen : undefined;
     const buyWhen = ba ? ba.buyWhen : undefined;
     const bookingAccess = ba ? ba.bookingAccess : undefined;
+    const latestBookingTime =
+      ba && ba.latestBookingTime ? ba.latestBookingTime : null;
+    const minimumBookingPeriod = ba ? ba.minimumBookingPeriod : null;
     const bookingNote = ba ? ba.bookingNote : undefined;
 
     return (
       <div className="booking-editor">
-        <Label>Kontaktperson</Label>
-        <TextField
-          type="text"
-          value={contactPerson}
-          onChange={e =>
-            this.handleContactFieldChange('contactPerson', e.target.value)
-          }
-        />
-
-        <Label>Telefon</Label>
-        <TextField
-          type="text"
-          value={phone}
-          onChange={e => this.handleContactFieldChange('phone', e.target.value)}
-        />
-
-        <Label>E-post</Label>
-        <TextField
-          type="text"
-          value={email}
-          onChange={e => this.handleContactFieldChange('email', e.target.value)}
-        />
-
-        <Label>URL</Label>
-        <TextField
-          type="text"
-          value={url}
-          onChange={e => this.handleContactFieldChange('url', e.target.value)}
-        />
-
-        <Label>Detaljer</Label>
-        <TextField
-          type="text"
-          value={furtherDetails}
-          onChange={e =>
-            this.handleContactFieldChange('furtherDetails', e.target.value)
-          }
-        />
-
-        <Label>Hvordan bestille</Label>
-        <CheckboxGroup
-          id="bookingMethods"
-          onChange={e =>
-            this.handleFieldChange('bookingMethods', e.target.value, true)
-          }
+        <FormGroup
+          className="form-section"
+          inputId="name"
+          title="Kontaktperson"
         >
-          {Object.values(BOOKING_METHOD).map(v => (
-            <Checkbox
-              key={v}
-              label={v}
-              value={v}
-              checked={bookingMethods && bookingMethods.includes(v)}
-            />
-          ))}
-        </CheckboxGroup>
-
-        <Label>Bestillingstidspunkt</Label>
-        <DropDown
-          value={bookWhen}
-          onChange={e => this.handleFieldChange('bookWhen', e.target.value)}
-        >
-          <DropDownOptions
-            label={DEFAULT_SELECT_LABEL}
-            value={DEFAULT_SELECT_VALUE}
+          <TextField
+            type="text"
+            value={contactPerson}
+            onChange={e =>
+              this.handleContactFieldChange('contactPerson', e.target.value)
+            }
           />
-          {Object.values(PURCHASE_WHEN).map(v => (
-            <DropDownOptions key={v} label={v} value={v} />
-          ))}
-        </DropDown>
+        </FormGroup>
 
-        <Label>Betalingstidspunkt</Label>
-        <CheckboxGroup
-          id="buyWhen"
-          onChange={e =>
-            this.handleFieldChange('buyWhen', e.target.value, true)
-          }
-        >
-          {Object.values(PURCHASE_MOMENT).map(v => (
-            <Checkbox
-              key={v}
-              label={v}
-              value={v}
-              checked={buyWhen && buyWhen.includes(v)}
-            />
-          ))}
-        </CheckboxGroup>
-
-        <Label>Tilgang</Label>
-        <DropDown
-          value={bookingAccess}
-          onChange={e =>
-            this.handleFieldChange('bookingAccess', e.target.value)
-          }
-        >
-          <DropDownOptions
-            label={DEFAULT_SELECT_LABEL}
-            value={DEFAULT_SELECT_VALUE}
+        <FormGroup className="form-section" inputId="phone" title="Telefon">
+          <TextField
+            type="text"
+            value={phone}
+            onChange={e =>
+              this.handleContactFieldChange('phone', e.target.value)
+            }
           />
-          {Object.values(BOOKING_ACCESS).map(v => (
-            <DropDownOptions key={v} label={v} value={v} />
-          ))}
-        </DropDown>
+        </FormGroup>
 
-        <Label>Merknad</Label>
-        <TextArea
-          id="note"
-          type="text"
-          value={bookingNote}
-          onChange={e => this.handleFieldChange('bookingNote', e.target.value)}
-        />
+        <FormGroup className="form-section" inputId="email" title="E-post">
+          <TextField
+            type="text"
+            value={email}
+            onChange={e =>
+              this.handleContactFieldChange('email', e.target.value)
+            }
+          />
+        </FormGroup>
+
+        <FormGroup className="form-section" inputId="urlFormGroup" title="URL">
+          <TextField
+            type="text"
+            value={url}
+            onChange={e => this.handleContactFieldChange('url', e.target.value)}
+          />
+        </FormGroup>
+
+        <FormGroup className="form-section" inputId="details" title="Detaljer">
+          <TextField
+            type="text"
+            value={furtherDetails}
+            onChange={e =>
+              this.handleContactFieldChange('furtherDetails', e.target.value)
+            }
+          />
+        </FormGroup>
+
+        <FormGroup
+          className="form-section"
+          inputId="bookingMethods"
+          title="Hvordan bestille"
+        >
+          <CheckboxGroup
+            id="bookingMethods"
+            onChange={e =>
+              this.handleFieldChange('bookingMethods', e.target.value, true)
+            }
+          >
+            {Object.values(BOOKING_METHOD).map(v => (
+              <Checkbox
+                key={v}
+                label={v}
+                value={v}
+                checked={bookingMethods && bookingMethods.includes(v)}
+              />
+            ))}
+          </CheckboxGroup>
+        </FormGroup>
+
+        <FormGroup
+          className="form-section"
+          inputId="bookWhen"
+          title="Bestillingstidspunkt"
+        >
+          <DropDown
+            value={bookWhen}
+            onChange={e => this.handleFieldChange('bookWhen', e.target.value)}
+          >
+            <DropDownOptions
+              label={DEFAULT_SELECT_LABEL}
+              value={DEFAULT_SELECT_VALUE}
+            />
+            {Object.values(PURCHASE_WHEN).map(v => (
+              <DropDownOptions key={v} label={v} value={v} />
+            ))}
+          </DropDown>
+        </FormGroup>
+
+        <FormGroup
+          className="form-section"
+          inputId="buyWhen"
+          title="Betalingstidspunkt"
+        >
+          <CheckboxGroup
+            id="buyWhen"
+            onChange={e =>
+              this.handleFieldChange('buyWhen', e.target.value, true)
+            }
+          >
+            {Object.values(PURCHASE_MOMENT).map(v => (
+              <Checkbox
+                key={v}
+                label={v}
+                value={v}
+                checked={buyWhen && buyWhen.includes(v)}
+              />
+            ))}
+          </CheckboxGroup>
+        </FormGroup>
+
+        <FormGroup
+          className="form-section"
+          inputId="bookingAccess"
+          title="Tilgang"
+        >
+          <DropDown
+            value={bookingAccess}
+            onChange={e =>
+              this.handleFieldChange('bookingAccess', e.target.value)
+            }
+          >
+            <DropDownOptions
+              label={DEFAULT_SELECT_LABEL}
+              value={DEFAULT_SELECT_VALUE}
+            />
+            {Object.values(BOOKING_ACCESS).map(v => (
+              <DropDownOptions key={v} label={v} value={v} />
+            ))}
+          </DropDown>
+        </FormGroup>
+
+        <div className="form-section">
+          <Label>Bestillingsgrense</Label>
+
+          <Radio
+            className="booking-limit-radio"
+            label="Tidspunkt"
+            value={BOOKING_LIMIT_TYPE.TIME}
+            checked={bookingLimitType === BOOKING_LIMIT_TYPE.TIME}
+            onChange={() =>
+              this.handleBookingLimitChange(BOOKING_LIMIT_TYPE.TIME)
+            }
+          />
+          <CustomDatepicker
+            className="latest-time-picker"
+            startDate={latestBookingTime}
+            onChange={date => this.handleFieldChange('latestBookingTime', date)}
+            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
+          />
+
+          <Radio
+            className="booking-limit-radio"
+            label="Periode"
+            value={BOOKING_LIMIT_TYPE.TIME}
+            checked={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
+            onChange={() =>
+              this.handleBookingLimitChange(BOOKING_LIMIT_TYPE.PERIOD)
+            }
+          />
+          <DurationPicker
+            className="mimimum-booking-period-picker"
+            duration={minimumBookingPeriod}
+            resetOnZero
+            onChange={period =>
+              this.handleFieldChange('minimumBookingPeriod', period)
+            }
+            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
+            position="above"
+          />
+        </div>
+
+        <FormGroup
+          className="form-section"
+          inputId="bookingNote"
+          title="Merknad"
+        >
+          <TextArea
+            id="note"
+            type="text"
+            value={bookingNote}
+            onChange={e =>
+              this.handleFieldChange('bookingNote', e.target.value)
+            }
+          />
+        </FormGroup>
       </div>
     );
   }

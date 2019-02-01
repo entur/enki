@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Button,
-  Label,
   TextField,
   TextArea,
   DropDown,
   DropDownOptions,
   Tabs,
-  Tab
+  Tab,
+  FormGroup
 } from '@entur/component-library';
 
 import { FlexibleLine } from '../../../../model';
@@ -214,71 +214,107 @@ class FlexibleLineEditor extends Component {
                 label="Generelt"
                 className="general-tab"
               >
-                <Label>Navn</Label>
-                <TextField
-                  type="text"
-                  value={flexibleLine.name}
-                  onChange={e => this.handleFieldChange('name', e.target.value)}
-                />
-
-                <Label>Beskrivelse</Label>
-                <TextArea
-                  type="text"
-                  value={flexibleLine.description}
-                  onChange={e =>
-                    this.handleFieldChange('description', e.target.value)
-                  }
-                />
-
-                <Label>Privat kode</Label>
-                <TextField
-                  type="text"
-                  value={flexibleLine.privateCode}
-                  onChange={e =>
-                    this.handleFieldChange('privateCode', e.target.value)
-                  }
-                />
-
-                <Label>Offentlig kode</Label>
-                <TextField
-                  type="text"
-                  value={flexibleLine.publicCode}
-                  onChange={e =>
-                    this.handleFieldChange('publicCode', e.target.value)
-                  }
-                />
-
-                <Label>Operatør</Label>
-                <DropDown
-                  value={operatorSelection}
-                  onChange={e =>
-                    this.handleOperatorSelectionChange(e.target.value)
-                  }
-                >
-                  <DropDownOptions
-                    label={DEFAULT_SELECT_LABEL}
-                    value={DEFAULT_SELECT_VALUE}
+                <FormGroup className="form-section" inputId="name" title="Navn">
+                  <TextField
+                    type="text"
+                    value={flexibleLine.name}
+                    onChange={e =>
+                      this.handleFieldChange('name', e.target.value)
+                    }
                   />
-                  {operators.map(o => (
-                    <DropDownOptions key={o.name} label={o.name} value={o.id} />
-                  ))}
-                </DropDown>
+                </FormGroup>
 
-                <Label>Nettverk</Label>
-                <DropDown
-                  value={networkSelection}
-                  onChange={e =>
-                    this.handleNetworkSelectionChange(e.target.value)
-                  }
+                <FormGroup
+                  className="form-section"
+                  inputId="description"
+                  title="Beskrivelse"
                 >
-                  <DropDownOptions
-                    label={DEFAULT_SELECT_LABEL}
-                    value={DEFAULT_SELECT_VALUE}
+                  <TextArea
+                    type="text"
+                    value={flexibleLine.description}
+                    onChange={e =>
+                      this.handleFieldChange('description', e.target.value)
+                    }
                   />
-                  {networks.map(n => (
-                    <DropDownOptions key={n.name} label={n.name} value={n.id} />
-                  ))}
-                </DropDown>
+                </FormGroup>
+
+                <FormGroup
+                  className="form-section"
+                  inputId="privateCode"
+                  title="Privat kode"
+                >
+                  <TextField
+                    type="text"
+                    value={flexibleLine.privateCode}
+                    onChange={e =>
+                      this.handleFieldChange('privateCode', e.target.value)
+                    }
+                  />
+                </FormGroup>
+
+                <FormGroup
+                  className="form-section"
+                  inputId="publicCode"
+                  title="Offentlig kode"
+                >
+                  <TextField
+                    type="text"
+                    value={flexibleLine.publicCode}
+                    onChange={e =>
+                      this.handleFieldChange('publicCode', e.target.value)
+                    }
+                  />
+                </FormGroup>
+
+                <FormGroup
+                  className="form-section"
+                  inputId="operator"
+                  title="Operatør"
+                >
+                  <DropDown
+                    value={operatorSelection}
+                    onChange={e =>
+                      this.handleOperatorSelectionChange(e.target.value)
+                    }
+                  >
+                    <DropDownOptions
+                      label={DEFAULT_SELECT_LABEL}
+                      value={DEFAULT_SELECT_VALUE}
+                    />
+                    {operators.map(o => (
+                      <DropDownOptions
+                        key={o.name}
+                        label={o.name}
+                        value={o.id}
+                      />
+                    ))}
+                  </DropDown>
+                </FormGroup>
+
+                <FormGroup
+                  className="form-section"
+                  inputId="network"
+                  title="Nettverk"
+                >
+                  <DropDown
+                    value={networkSelection}
+                    onChange={e =>
+                      this.handleNetworkSelectionChange(e.target.value)
+                    }
+                  >
+                    <DropDownOptions
+                      label={DEFAULT_SELECT_LABEL}
+                      value={DEFAULT_SELECT_VALUE}
+                    />
+                    {networks.map(n => (
+                      <DropDownOptions
+                        key={n.name}
+                        label={n.name}
+                        value={n.id}
+                      />
+                    ))}
+                  </DropDown>
+                </FormGroup>
               </Tab>
 
               <Tab value={TABS.JOURNEY_PATTERNS} label="Journey Patterns">

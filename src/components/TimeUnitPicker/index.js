@@ -24,6 +24,10 @@ class TimeUnitPicker extends React.Component {
   }
 
   handleClick(e) {
+    if (this.props.disabled) {
+      return;
+    }
+
     if (e.button === 0) {
       if (this.trigger && this.trigger.contains(e.target)) {
         this.showPickers(!this.state.open);
@@ -103,7 +107,7 @@ class TimeUnitPicker extends React.Component {
 
               {showHours && (
                 <Picker
-                  label="TT"
+                  label="Timer"
                   value={hours}
                   onChange={value => onUnitChange('hours', value)}
                   nrOfOptions={24}
@@ -112,7 +116,7 @@ class TimeUnitPicker extends React.Component {
 
               {showMinutes && (
                 <Picker
-                  label="MM"
+                  label="Minutter"
                   value={minutes}
                   onChange={value => onUnitChange('minutes', value)}
                   nrOfOptions={60}
@@ -121,7 +125,7 @@ class TimeUnitPicker extends React.Component {
 
               {showSeconds && (
                 <Picker
-                  label="SS"
+                  label="Sekunder"
                   value={seconds}
                   onChange={value => onUnitChange('seconds', value)}
                   nrOfOptions={60}
@@ -130,15 +134,17 @@ class TimeUnitPicker extends React.Component {
             </div>
 
             <div className="buttons">
-              <Button
-                variant="negative"
-                onClick={() => {
-                  onReset();
-                  this.showPickers(false);
-                }}
-              >
-                Nullstill
-              </Button>
+              {onReset && (
+                <Button
+                  variant="negative"
+                  onClick={() => {
+                    onReset();
+                    this.showPickers(false);
+                  }}
+                >
+                  Nullstill
+                </Button>
+              )}
 
               <Button variant="success" onClick={() => this.showPickers(false)}>
                 Ferdig
@@ -169,6 +175,7 @@ TimeUnitPicker.propTypes = {
   showSeconds: PropTypes.bool,
   textValue: PropTypes.string,
   position: PropTypes.oneOf(['above', 'below']),
+  disabled: PropTypes.bool,
   className: PropTypes.string
 };
 
@@ -200,7 +207,7 @@ const Picker = ({ label, value, onChange, nrOfOptions }) => {
 
   return (
     <div className="picker">
-      <FormGroup title={label}>
+      <FormGroup inputId="TimeUnitPicker" title={label}>
         <DropDown
           value={value.toString()}
           onChange={e => onChange(e.target.value)}

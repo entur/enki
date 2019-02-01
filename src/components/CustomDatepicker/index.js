@@ -11,7 +11,10 @@ import './styles.css';
 class CustomDatepicker extends Component {
   handleDateChange(date) {
     const { onChange, showTimeSelect } = this.props;
-    onChange(moment(date).format(showTimeSelect ? '' : 'YYYY-MM-DD'));
+    const newDate = date
+      ? moment(date).format(showTimeSelect ? '' : 'YYYY-MM-DD')
+      : undefined;
+    onChange(newDate);
   }
 
   render() {
@@ -20,10 +23,11 @@ class CustomDatepicker extends Component {
       showTimePicker,
       timeIntervals,
       label,
+      disabled,
       className
     } = this.props;
     const classNames = cx('datepicker', className);
-    const selectedDate = moment(startDate);
+    const selectedDate = startDate !== null ? moment(startDate) : null;
     return (
       <div className={classNames}>
         {label && <Label>{label}</Label>}
@@ -39,6 +43,7 @@ class CustomDatepicker extends Component {
           dateFormat="DD.MM.YYYY"
           className="custom-datepicker"
           calendarClassName="custom-datepicker-calendar"
+          disabled={disabled}
         />
       </div>
     );
@@ -46,11 +51,12 @@ class CustomDatepicker extends Component {
 }
 
 CustomDatepicker.propTypes = {
-  startDate: propTypes.string.isRequired,
   onChange: propTypes.func.isRequired,
+  startDate: propTypes.string,
   label: propTypes.string,
   showTimePicker: propTypes.bool,
-  timeIntervals: propTypes.number
+  timeIntervals: propTypes.number,
+  disabled: propTypes.bool
 };
 CustomDatepicker.defaultProps = {
   timeIntervals: 15

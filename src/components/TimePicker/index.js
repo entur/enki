@@ -5,8 +5,6 @@ import cx from 'classnames';
 
 import TimeUnitPicker from '../TimeUnitPicker';
 
-import './styles.css';
-
 class TimePicker extends React.Component {
   handleOnUnitChange(field, value) {
     const time = moment(
