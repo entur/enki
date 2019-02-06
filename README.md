@@ -75,3 +75,7 @@ Parameters:
 * version: docker image tag
 * mode: value **reinstall** may be used to remove-reinstall the app (involves downtime), otherwise leave this parameter blank.
 
+### Owners
+Øystein Strand - frontend
+Sondre Bjerkerud - frontend
+Erlend Nilsen - backend Uttu
