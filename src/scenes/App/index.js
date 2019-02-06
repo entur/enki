@@ -12,6 +12,8 @@ import NavBar from './components/NavBar';
 import Routes from './Routes';
 import { getProviders } from '../../actions/providers';
 import { getOrganisations } from '../../actions/organisations';
+import { withI18n } from '../../hocs/withI18n';
+import * as R from 'ramda';
 
 import './styles.css';
 
@@ -30,14 +32,14 @@ class App extends Component {
   }
 
   render() {
-    const { providers, organisations } = this.props;
+    const { providers, organisations, i18n } = this.props;
 
     const basename =
       process.env.NODE_ENV === 'production' ? '/admin/flexible-transport' : '';
 
     return (
       <div className="app">
-        <Helmet defaultTitle="Bestillingstransport" />
+        <Helmet defaultTitle={i18n('title')} />
 
         <BrowserRouter basename={basename}>
           <ScrollToTop>
@@ -68,4 +70,6 @@ const mapStateToProps = ({ providers, organisations }) => ({
   organisations
 });
 
-export default connect(mapStateToProps)(App);
+const hoc = R.compose(withI18n, connect(mapStateToProps));
+
+export default hoc(App);
