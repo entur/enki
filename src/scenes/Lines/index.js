@@ -13,8 +13,8 @@ import {
 import Loading from '../../components/Loading';
 import IconButton from '../../components/IconButton';
 import { loadFlexibleLines } from '../../actions/flexibleLines';
-
 import './styles.css';
+import * as R from 'ramda';
 
 class Lines extends Component {
   componentDidMount() {
@@ -37,7 +37,7 @@ class Lines extends Component {
               <TableRowCell title={n.description}>{n.name}</TableRowCell>
               <TableRowCell>{n.privateCode}</TableRowCell>
               <TableRowCell>
-                {organisations.find(o => o.id === n.operatorRef).name}
+                {R.prop('name', organisations.find(o => o.id === n.operatorRef))}
               </TableRowCell>
             </TableRow>
           ))
