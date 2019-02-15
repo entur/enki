@@ -1,3 +1,10 @@
 {
-  "title": "Flexible transport"
+  "title": "Flexible transport",
+  "error.flexibleStopPlaceRefAndQuayRef.bothValues": "Choose between stop place and platform, not both.",
+  "error.flexibleStopPlaceRefAndQuayRef.noValues": "Please select a stop or a platform",
+  "error.quayRef.invalid": "Invalid platform ID",
+  "label.frontText": "Front text",
+  "label.forBoarding": "For boarding",
+  "label.forAlighting": "For alighting",
+  "label.quayRef": "Platform ID (from NSR)"
 }

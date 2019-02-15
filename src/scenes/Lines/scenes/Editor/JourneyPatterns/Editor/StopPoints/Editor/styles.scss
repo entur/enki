@@ -42,4 +42,14 @@
       margin-left: 30px;
     }
   }
+
+  ul.errors {
+    list-style-type: none;
+    padding: 0;
+    margin: -1.5em 0 1em 0;
+    color: $dark-coral;
+  }
+  .input-error {
+    border: solid 1px $dark-coral;
+  }
 }

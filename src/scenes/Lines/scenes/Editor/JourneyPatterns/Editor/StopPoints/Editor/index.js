@@ -1,58 +1,51 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  Label,
-  TextField,
-  Checkbox,
-  DropDown,
-  DropDownOptions,
-  Button,
-  Tabs,
-  Tab
-} from '@entur/component-library';
-
-import { DestinationDisplay, StopPoint } from '../../../../../../../../model';
+import {Tab, Tabs} from '@entur/component-library';
+import {DestinationDisplay, StopPoint} from '../../../../../../../../model';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
-
+import Header from './Header';
 import './styles.css';
-
-const DEFAULT_SELECT_LABEL = '--- velg ---';
-const DEFAULT_SELECT_VALUE = '-1';
-
-const TABS = Object.freeze({
-  GENERAL: 'general',
-  BOOKING: 'booking'
-});
+import searchForQuay from './searchForQuay';
+import debounce from './debounce';
+import {hasValue} from './helpers';
+import {DEFAULT_SELECT_VALUE, TABS} from './constants';
+import Form from './Form';
+import validateForm from './validateForm';
 
 class StopPointEditor extends Component {
   state = {
     stopPlaceSelection: DEFAULT_SELECT_VALUE,
-    activeTab: TABS.GENERAL
+    activeTab: TABS.GENERAL,
+    errors: { quayRef: [], flexibleStopPlaceRefAndQuayRef: [] },
+    quaySearch: {}
   };
 
   componentDidMount() {
+    if (!this.props.stopPoint) {
+      return;
+    }
     this.setState({
       stopPlaceSelection: this.props.stopPoint.flexibleStopPlaceRef
     });
   }
 
-  handleFieldChange(field, value) {
+  handleFieldChange = (field, value) => {
     const { stopPoint, onChange } = this.props;
     onChange(stopPoint.withChanges({ [field]: value }));
   }
 
-  handleStopPlaceSelectionChange(stopPlaceSelection) {
+  handleStopPlaceSelectionChange = (stopPlaceSelection) => {
     this.handleFieldChange(
       'flexibleStopPlaceRef',
       stopPlaceSelection !== DEFAULT_SELECT_VALUE
         ? stopPlaceSelection
-        : undefined
+        : null
     );
     this.setState({ stopPlaceSelection });
   }
 
-  handleFrontTextChange(frontText) {
+  handleFrontTextChange = (frontText) => {
     const { stopPoint } = this.props;
     const destinationDisplay = stopPoint.destinationDisplay
       ? stopPoint.destinationDisplay.withChanges({ frontText })
@@ -60,75 +53,52 @@ class StopPointEditor extends Component {
     this.handleFieldChange('destinationDisplay', destinationDisplay);
   }
 
+  onSave = async () => {
+    let [valid, errors] = await validateForm(this.props.stopPoint);
+
+    this.setState( {errors}, () => {
+      if (valid) {
+        this.props.onSave();
+      }
+    });
+  }
+
+  debouncedSearchForQuay = debounce(async () => {
+    let quayRef = this.props.stopPoint.quayRef;
+    if (hasValue(quayRef)) {
+      let quaySearch = await searchForQuay(quayRef);
+      this.setState({ quaySearch });
+    } else {
+      this.setState({ quaySearch: {} });
+    }
+  }, 1000);
+
   render() {
-    const { flexibleStopPlaces, stopPoint, isEditMode, onSave } = this.props;
-    const { stopPlaceSelection, activeTab } = this.state;
+    const { flexibleStopPlaces, stopPoint, isEditMode } = this.props;
+    const { stopPlaceSelection, activeTab, quaySearch, errors } = this.state;
+
+    if (!stopPoint) {
+      return null;
+    }
 
     return (
       <div className="stop-point-editor">
-        <div className="header">
-          <h2>{isEditMode ? 'Rediger' : 'Opprett'} Stoppepunkt</h2>
-
-          <div className="header-buttons">
-            <Button variant="success" onClick={onSave}>
-              Lagre
-            </Button>
-          </div>
-        </div>
-
+        <Header isEditMode={isEditMode} onSave={this.onSave} />
         <Tabs
           selected={activeTab}
           onChange={activeTab => this.setState({ activeTab })}
         >
           <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
-            <Label>Stoppested</Label>
-            <DropDown
-              value={stopPlaceSelection}
-              onChange={e =>
-                this.handleStopPlaceSelectionChange(e.target.value)
-              }
-            >
-              <DropDownOptions
-                label={DEFAULT_SELECT_LABEL}
-                value={DEFAULT_SELECT_VALUE}
-              />
-              {flexibleStopPlaces.map(fsp => (
-                <DropDownOptions
-                  key={fsp.name}
-                  label={fsp.name}
-                  value={fsp.id}
-                />
-              ))}
-            </DropDown>
-
-            <Label>Fronttekst</Label>
-            <TextField
-              type="text"
-              value={
-                stopPoint.destinationDisplay &&
-                stopPoint.destinationDisplay.frontText
-                  ? stopPoint.destinationDisplay.frontText
-                  : ''
-              }
-              onChange={e => this.handleFrontTextChange(e.target.value)}
-            />
-
-            <Label>For påstigning</Label>
-            <Checkbox
-              value={'1'}
-              checked={stopPoint.forBoarding === true}
-              onChange={e =>
-                this.handleFieldChange('forBoarding', e.target.checked)
-              }
-            />
-
-            <Label>For avstigning</Label>
-            <Checkbox
-              value={'1'}
-              checked={stopPoint.forAlighting === true}
-              onChange={e =>
-                this.handleFieldChange('forAlighting', e.target.checked)
-              }
+            <Form
+              flexibleStopPlaces={flexibleStopPlaces}
+              stopPlaceSelection={stopPlaceSelection}
+              quaySearch={quaySearch}
+              errors={errors}
+              handleStopPlaceSelectionChange={this.handleStopPlaceSelectionChange}
+              handleFieldChange={this.handleFieldChange}
+              debouncedSearchForQuay={this.debouncedSearchForQuay}
+              handleFrontTextChange={this.handleFrontTextChange}
+              stopPoint={stopPoint}
             />
           </Tab>
           <Tab value={TABS.BOOKING} label="Bestilling" className="booking-tab">
