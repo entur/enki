@@ -1,3 +1,11 @@
 {
-
+  "title": "Bestillingstransport",
+  "error.flexibleStopPlaceRefAndQuayRef.bothValues": "Velg enten stoppested eller plattform, ikke begge.",
+  "error.flexibleStopPlaceRefAndQuayRef.noValues": "Du må velge enten stoppested eller plattform",
+  "error.quayRef.invalid": "Ugyldig plattform-ID",
+  "label.frontText": "Fronttekst",
+  "label.forBoarding": "For påstigning",
+  "label.forAlighting": "For avstigning",
+  "label.quayRef": "Plattform-ID (fra NSR)",
+  "error.flexibleLine.networkRef.empty": "Du må velge et nettverk"
 }

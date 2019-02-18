@@ -47,6 +47,15 @@ npm test
 
 Note: Requires a running instance of OT on [http://localhost:3001](http://localhost:3001).
 
+### Teste med GraphiQL
+```brew cask install graphiql```
+
+POST https://api.dev.entur.io/timetable-admin/v1/flexible-lines/nsb/graphql
+Bytt ut nsb med ønsket provider.
+
+Header Authorization Bearer \<token>
+
+Token finner du i chrome network log.
 
 ## GCloud
 ###Prerequisites to be made locally(one time setup)
@@ -75,3 +84,6 @@ Parameters:
 * version: docker image tag
 * mode: value **reinstall** may be used to remove-reinstall the app (involves downtime), otherwise leave this parameter blank.
 
+### Owners
+Sondre Bjerkerud - frontend
+Erlend Nilsen - backend Uttu

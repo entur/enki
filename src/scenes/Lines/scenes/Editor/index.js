@@ -30,11 +30,10 @@ import OverlayLoader from '../../../../components/OverlayLoader';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import BookingArrangementEditor from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
-
+import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL} from './constants';
+import validateForm from './validateForm';
 import './styles.css';
-
-const DEFAULT_SELECT_LABEL = '--- velg ---';
-const DEFAULT_SELECT_VALUE = '-1';
+import Errors from './Errors';
 
 const TABS = Object.freeze({
   GENERAL: 'general',
@@ -52,7 +51,10 @@ class FlexibleLineEditor extends Component {
     journeyPatternIndexInDialog: -1,
     isSaving: false,
     isDeleteDialogOpen: false,
-    isDeleting: false
+    isDeleting: false,
+    errors: {
+      networkRef: []
+    }
   };
 
   componentDidMount() {
@@ -135,10 +137,17 @@ class FlexibleLineEditor extends Component {
 
   handleOnSaveClick() {
     const { dispatch, history } = this.props;
-    this.setState({ isSaving: true });
-    dispatch(saveFlexibleLine(this.state.flexibleLine))
-      .then(() => history.push('/lines'))
-      .finally(() => this.setState({ isSaving: false }));
+
+    let [valid, errors] = validateForm(this.state.flexibleLine);
+
+    this.setState({ errors });
+
+    if (valid) {
+      this.setState({ isSaving: true });
+      dispatch(saveFlexibleLine(this.state.flexibleLine))
+        .then(() => history.push('/lines'))
+        .finally(() => this.setState({ isSaving: false }));
+    }
   }
 
   setDeleteDialogOpen(open) {
@@ -305,6 +314,7 @@ class FlexibleLineEditor extends Component {
                     onChange={e =>
                       this.handleNetworkSelectionChange(e.target.value)
                     }
+                    className={this.state.errors.networkRef.length > 0 && 'input-error'}
                   >
                     <DropDownOptions
                       label={DEFAULT_SELECT_LABEL}
@@ -319,6 +329,7 @@ class FlexibleLineEditor extends Component {
                     ))}
                   </DropDown>
                 </FormGroup>
+                <Errors errors={this.state.errors.networkRef} />
               </Tab>
 
               <Tab value={TABS.JOURNEY_PATTERNS} label="Journey Patterns">
