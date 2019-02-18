@@ -1,4 +1,4 @@
-import {hasValue, objectValues} from './helpers';
+import {hasValue, objectValues} from '../../../../helpers';
 import searchForQuay from './searchForQuay';
 
 export default async function (stopPoint) {

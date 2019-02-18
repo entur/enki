@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import Errors from './Errors';
+import Errors from '../../../../Errors';
 import {Checkbox, Label, TextField} from '@entur/component-library';
-import {hasValue} from './helpers';
+import {hasValue} from '../../../../helpers';
 import {withI18n} from '../../../../../../../../hocs/withI18n';
 import StopPlaceSelection from './StopPlaceSelection';
 import QuaySearchResults from './QuaySearchResults';
