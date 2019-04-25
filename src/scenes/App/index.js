@@ -34,8 +34,7 @@ class App extends Component {
   render() {
     const { providers, organisations, i18n } = this.props;
 
-    const basename =
-      process.env.NODE_ENV === 'production' ? '/admin/flexible-transport' : '';
+    const basename = '';
 
     return (
       <div className="app">
