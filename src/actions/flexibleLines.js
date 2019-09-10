@@ -36,11 +36,11 @@ export const loadFlexibleLines = () => (dispatch, getState) => {
       dispatch(receiveFlexibleLines(flexibleLines));
       return Promise.resolve(flexibleLines);
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Laste linjer',
-          'En feil oppstod under lastingen av linjene.'
+          `En feil oppstod under lastingen av linjene: ${getUttuError(e)}`
         )
       );
       return Promise.reject();
@@ -51,11 +51,11 @@ export const loadFlexibleLineById = id => (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   return UttuQuery(activeProvider, getFlexibleLineByIdQuery, { id })
     .then(data => Promise.resolve(new FlexibleLine(data.flexibleLine)))
-    .catch(() => {
+    .catch(e => {
       dispatch(
         showErrorNotification(
           'Laste linje',
-          'En feil oppstod under lastingen av linjen.'
+          `En feil oppstod under lastingen av linjen: ${getUttuError(e)}`
         )
       );
       return Promise.reject();
