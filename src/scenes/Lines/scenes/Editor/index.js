@@ -193,7 +193,7 @@ class FlexibleLineEditor extends Component {
           <h2>{match.params.id ? 'Rediger' : 'Opprett'} linje</h2>
 
           <div className="buttons">
-            <Button variant="success" onClick={::this.handleOnSaveClick}>
+            <Button variant="success" onClick={this.handleOnSaveClick.bind(this)}>
               Lagre
             </Button>
 
@@ -379,7 +379,7 @@ class FlexibleLineEditor extends Component {
             </Button>,
             <Button
               key={1}
-              onClick={::this.handleDelete}
+              onClick={this.handleDelete.bind(this)}
               variant="success"
               width="md"
               className="action-button"

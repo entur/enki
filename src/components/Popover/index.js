@@ -3,11 +3,11 @@ import propTypes from 'prop-types';
 
 class Popover extends React.Component {
   componentDidMount() {
-    document.addEventListener('mousedown', ::this.handleClickOutside);
+    document.addEventListener('mousedown', this.handleClickOutside.bind(this));
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', ::this.handleClickOutside);
+    document.removeEventListener('mousedown', this.handleClickOutside.bind(this));
   }
 
   handleClickOutside(e) {
@@ -31,7 +31,7 @@ class Popover extends React.Component {
     }
 
     return (
-      <div style={style} className={className} ref={::this.setWrapperRef}>
+      <div style={style} className={className} ref={this.setWrapperRef.bind(this)}>
         {children}
       </div>
     );

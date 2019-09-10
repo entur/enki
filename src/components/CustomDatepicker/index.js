@@ -33,7 +33,7 @@ class CustomDatepicker extends Component {
         {label && <Label>{label}</Label>}
         <DatePicker
           selected={selectedDate}
-          onChange={::this.handleDateChange}
+          onChange={this.handleDateChange.bind(this)}
           onChangeRaw={e => this.handleDateChange(e.target.value)}
           showTimeSelect={showTimePicker}
           timeIntervals={timeIntervals}

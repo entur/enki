@@ -38,8 +38,8 @@ class Notification extends Component {
     return (
       <NotificationStack
         notifications={notifications}
-        onDismiss={::this.handleOnDismiss}
-        onRequestClose={::this.handleOnRequestClose}
+        onDismiss={this.handleOnDismiss.bind(this)}
+        onRequestClose={this.handleOnRequestClose.bind(this)}
       />
     );
   }

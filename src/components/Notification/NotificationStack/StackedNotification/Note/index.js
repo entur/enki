@@ -72,7 +72,7 @@ class Note extends Component {
     return (
       <div className={wrapperClassNames} style={notificationStyle}>
         <div className="notification-close">
-          <CloseIcon onClick={::this.onRequestClose} />
+          <CloseIcon onClick={this.onRequestClose.bind(this)} />
         </div>
         <div className="notification-bar-wrapper">
           <div className="notification-bar-title">

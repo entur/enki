@@ -63,7 +63,7 @@ class DayTypeAssignmentEditor extends Component {
             id="use-date-range-switch"
             label="Bruk fra og til dato"
             checked={useDateRange}
-            onChange={::this.handleDateRangeChange}
+            onChange={this.handleDateRangeChange.bind(this)}
           />
 
           {!useDateRange && (

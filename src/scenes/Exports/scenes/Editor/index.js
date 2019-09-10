@@ -58,7 +58,7 @@ class ExportsEditor extends Component {
           <h2>{match.params.id ? 'Vis' : 'Opprett'} eksport</h2>
 
           <div className="buttons">
-            <Button variant="success" onClick={::this.handleOnSaveClick}>
+            <Button variant="success" onClick={this.handleOnSaveClick.bind(this)}>
               Lagre
             </Button>
           </div>

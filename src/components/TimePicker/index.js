@@ -43,8 +43,8 @@ class TimePicker extends React.Component {
 
     return (
       <TimeUnitPicker
-        onUnitChange={::this.handleOnUnitChange}
-        onReset={::this.handleReset}
+        onUnitChange={this.handleOnUnitChange.bind(this)}
+        onReset={this.handleReset.bind(this)}
         label={label}
         hours={hours}
         minutes={minutes}

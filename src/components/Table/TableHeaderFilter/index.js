@@ -176,11 +176,11 @@ class TableHeaderFilter extends React.Component {
     const showFilterIcon = fieldHasFilters(this.props.filterConfig);
 
     return (
-      <div onBlur={::this.handleCollapse} tabIndex={0}>
+      <div onBlur={this.handleCollapse.bind(this)} tabIndex={0}>
         <div className="sort-filter-arrow">
           {showFilterIcon && <Filter />}
           <TailedArrowDown className={arrowClassNames} />
-          <ArrowDown height={14} onMouseDown={::this.handleExpand} />
+          <ArrowDown height={14} onMouseDown={this.handleExpand.bind(this)} />
         </div>
         {filterSortMenu}
       </div>

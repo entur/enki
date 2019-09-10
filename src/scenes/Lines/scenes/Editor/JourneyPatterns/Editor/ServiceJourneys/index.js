@@ -75,13 +75,13 @@ class ServiceJourneysEditor extends Component {
           icon={<AddIcon />}
           label="Legg til service journey"
           labelPosition="right"
-          onClick={::this.openDialogForNewServiceJourney}
+          onClick={this.openDialogForNewServiceJourney.bind(this)}
         />
 
         <ServiceJourneysTable
           serviceJourneys={serviceJourneys}
-          onRowClick={::this.openDialogForServiceJourney}
-          onDeleteClick={::this.deleteServiceJourney}
+          onRowClick={this.openDialogForServiceJourney.bind(this)}
+          onDeleteClick={this.deleteServiceJourney.bind(this)}
         />
 
         {serviceJourneyInDialog !== null && (
@@ -94,11 +94,11 @@ class ServiceJourneysEditor extends Component {
                 onChange={serviceJourneyInDialog =>
                   this.setState({ serviceJourneyInDialog })
                 }
-                onSave={::this.handleOnServiceJourneyDialogSaveClick}
+                onSave={this.handleOnServiceJourneyDialogSaveClick.bind(this)}
                 isEditMode={serviceJourneyIndexInDialog !== TEMP_INDEX}
               />
             }
-            onClose={::this.closeServiceJourneyDialog}
+            onClose={this.closeServiceJourneyDialog.bind(this)}
           />
         )}
       </div>

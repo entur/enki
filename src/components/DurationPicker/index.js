@@ -91,8 +91,8 @@ class DurationPicker extends React.Component {
 
     return (
       <TimeUnitPicker
-        onUnitChange={::this.handleOnUnitChange}
-        onReset={!resetOnZero ? ::this.handleReset : undefined}
+        onUnitChange={this.handleOnUnitChange.bind(this)}
+        onReset={!resetOnZero ? this.handleReset.bind(this) : undefined}
         label={label}
         years={years}
         months={months}
