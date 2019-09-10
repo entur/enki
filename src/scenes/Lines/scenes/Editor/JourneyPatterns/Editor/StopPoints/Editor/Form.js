@@ -39,7 +39,7 @@ export default withI18n(function Form ({
         value={stopPoint.quayRef || ''}
         onChange={e => {
           let value = e.target.value;
-          handleFieldChange('quayRef', hasValue(value) && value || null);
+          handleFieldChange('quayRef', hasValue(value) ? value : null);
           debouncedSearchForQuay();
         }
         }
