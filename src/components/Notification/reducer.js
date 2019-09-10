@@ -23,8 +23,9 @@ const notificationReducer = (state = initialState, action) => {
         type: action.payload.type,
         key: createUuid()
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default notificationReducer;

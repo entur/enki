@@ -49,6 +49,8 @@ class ExportsViewer extends Component {
         return <ErrorIcon color="rgba(255,0,0,1)" />;
       case EXPORT_STATUS.IN_PROGRESS:
         return <ExclamationIcon color="rgba(231,231,98,1)" />;
+      default:
+        return null;
     }
   }
 
@@ -60,6 +62,8 @@ class ExportsViewer extends Component {
         return <ErrorIcon color="rgba(255,234,0,1)" />;
       case SEVERITY.ERROR:
         return <ErrorIcon color="rgba(255,0,0,1)" />;
+      default:
+        return null;
     }
   }
 
