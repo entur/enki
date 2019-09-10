@@ -23,6 +23,12 @@ npm install
 npm run start-devenv
 ```
 
+To develop together with a local instance of uttu on port 11701, add the following to your env:
+
+```
+UTTU_API_URL=http://localhost:11701/services/flexible-lines
+```
+
 ## Authentication
 
 OT uses [Keycloak](http://www.keycloak.org/) to authenticate users.
