@@ -71,13 +71,13 @@ class StopPointsEditor extends Component {
           icon={<AddIcon />}
           label="Legg til stoppepunkt"
           labelPosition="right"
-          onClick={::this.openDialogForNewStopPoint}
+          onClick={this.openDialogForNewStopPoint.bind(this)}
         />
 
         <StopPointsTable
           stopPoints={stopPoints}
-          onRowClick={::this.openDialogForStopPoint}
-          onDeleteClick={::this.deleteStopPlace}
+          onRowClick={this.openDialogForStopPoint.bind(this)}
+          onDeleteClick={this.deleteStopPlace.bind(this)}
         />
 
         {stopPointInDialog !== null && (
@@ -89,11 +89,11 @@ class StopPointsEditor extends Component {
                 onChange={stopPointInDialog =>
                   this.setState({ stopPointInDialog })
                 }
-                onSave={::this.handleOnStopPointDialogSaveClick}
+                onSave={this.handleOnStopPointDialogSaveClick.bind(this)}
                 isEditMode={stopPointIndexInDialog !== TEMP_INDEX}
               />
             }
-            onClose={::this.closeStopPointDialog}
+            onClose={this.closeStopPointDialog.bind(this)}
           />
         )}
       </div>

@@ -42,7 +42,7 @@ class DayTypeAssignmentsEditor extends Component {
           icon={<AddIcon />}
           label="Legg til dato"
           labelPosition="right"
-          onClick={::this.addNewDayTypeAssignment}
+          onClick={this.addNewDayTypeAssignment.bind(this)}
         />
 
         {dayTypeAssignments.length > 0 ? (

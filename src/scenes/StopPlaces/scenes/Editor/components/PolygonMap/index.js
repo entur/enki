@@ -50,14 +50,14 @@ class PolygonMap extends Component {
           zoom={zoom}
           bounds={bounds}
           onClick={onClick}
-          onLocationFound={::this.handleLocationFound}
+          onLocationFound={this.handleLocationFound.bind(this)}
           ref={this.map}
         >
           <TileLayer
             attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Polygon ref={::this.setPolygonRef} positions={polygon} />
+          <Polygon ref={this.setPolygonRef.bind(this)} positions={polygon} />
         </Map>
       </div>
     );

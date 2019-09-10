@@ -88,7 +88,7 @@ class StopPointsTable extends Component {
             </Button>,
             <Button
               key={1}
-              onClick={::this.doDelete}
+              onClick={this.doDelete.bind(this)}
               variant="success"
               width="md"
               className="action-button"

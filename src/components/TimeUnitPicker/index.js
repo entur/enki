@@ -16,11 +16,11 @@ class TimeUnitPicker extends React.Component {
   state = { open: false };
 
   componentDidMount() {
-    document.addEventListener('mousedown', ::this.handleClick);
+    document.addEventListener('mousedown', this.handleClick.bind(this));
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', ::this.handleClick);
+    document.removeEventListener('mousedown', this.handleClick.bind(this));
   }
 
   handleClick(e) {

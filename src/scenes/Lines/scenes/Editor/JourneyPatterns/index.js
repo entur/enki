@@ -75,13 +75,13 @@ class JourneyPatternsEditor extends Component {
           icon={<AddIcon />}
           label="Legg til journey pattern"
           labelPosition="right"
-          onClick={::this.openDialogForNewJourneyPattern}
+          onClick={this.openDialogForNewJourneyPattern.bind(this)}
         />
 
         <JourneyPatternsTable
           journeyPatterns={journeyPatterns}
-          onRowClick={::this.openDialogForJourneyPattern}
-          onDeleteClick={::this.deleteJourneyPattern}
+          onRowClick={this.openDialogForJourneyPattern.bind(this)}
+          onDeleteClick={this.deleteJourneyPattern.bind(this)}
         />
 
         {journeyPatternInDialog !== null && (
@@ -94,11 +94,11 @@ class JourneyPatternsEditor extends Component {
                 onChange={journeyPatternInDialog =>
                   this.setState({ journeyPatternInDialog })
                 }
-                onSave={::this.handleOnJourneyPatternDialogSaveClick}
+                onSave={this.handleOnJourneyPatternDialogSaveClick.bind(this)}
                 isEditMode={journeyPatternIndexInDialog !== TEMP_INDEX}
               />
             }
-            onClose={::this.closeJourneyPatternDialog}
+            onClose={this.closeJourneyPatternDialog.bind(this)}
           />
         )}
       </div>

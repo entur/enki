@@ -120,7 +120,7 @@ class FlexibleStopPlaceEditor extends Component {
           <h2>{match.params.id ? 'Rediger' : 'Opprett'} stoppested</h2>
 
           <div className="buttons">
-            <Button variant="success" onClick={::this.handleOnSaveClick}>
+            <Button variant="success" onClick={this.handleOnSaveClick.bind(this)}>
               Lagre
             </Button>
 
@@ -170,7 +170,7 @@ class FlexibleStopPlaceEditor extends Component {
               </div>
 
               <PolygonMap
-                onClick={::this.handleMapOnClick}
+                onClick={this.handleMapOnClick.bind(this)}
                 polygon={polygonCoordinates}
               />
             </div>
@@ -199,7 +199,7 @@ class FlexibleStopPlaceEditor extends Component {
             </Button>,
             <Button
               key={1}
-              onClick={::this.handleDelete}
+              onClick={this.handleDelete.bind(this)}
               variant="success"
               width="md"
               className="action-button"

@@ -24,7 +24,7 @@ class MenuItem extends React.Component {
     const hasMenuItems = menuItems && menuItems.length > 0;
     const showSubItems = hasMenuItems && active;
 
-    const handleOnClick = hasMenuItems ? ::this.toggleActive : onClick;
+    const handleOnClick = hasMenuItems ? this.toggleActive.bind(this) : onClick;
 
     const menuItemClasses = cx('menu-item', {
       active,
