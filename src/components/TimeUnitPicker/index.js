@@ -15,12 +15,18 @@ import './styles.css';
 class TimeUnitPicker extends React.Component {
   state = { open: false };
 
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClick.bind(this));
+    document.addEventListener('mousedown', this.handleClick);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClick.bind(this));
+    document.removeEventListener('mousedown', this.handleClick);
   }
 
   handleClick(e) {
