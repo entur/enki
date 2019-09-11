@@ -28,7 +28,7 @@ class Tabs extends Component {
         tabs.push(
           <div
             key={i}
-            onClick={() => !disabled && this.handleOnChangeTab.bind(this)(i)}
+            onClick={() => !disabled && this.handleOnChangeTab(i)}
             className={className}
           >
             <div>{child.props.label}</div>
