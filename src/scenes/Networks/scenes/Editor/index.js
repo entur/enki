@@ -72,7 +72,8 @@ const NetworkEditor = ({ dispatch, match, history, lines, network: currentNetwor
   };
 
   const authorities = organisations.filter(org =>
-    org.types.includes(ORGANISATION_TYPE.AUTHORITY)
+    org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
+    org.references.netexAuthorityId
   );
 
   const isDeleteDisabled =
