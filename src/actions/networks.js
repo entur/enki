@@ -68,6 +68,7 @@ export const loadNetworks = () => async (dispatch, getState) => {
         `En feil oppstod under lastingen av nettverkene: ${getUttuError(e)}`
       )
     );
+    throw e;
   }
 };
 
@@ -84,6 +85,7 @@ export const loadNetworkById = id => async (dispatch, getState) => {
         `En feil oppstod under lastingen av nettverket: ${getUttuError(e)}`
       )
     );
+    throw e;
   }
 };
 
@@ -104,6 +106,7 @@ export const saveNetwork = network => async (dispatch, getState) => {
         `En feil oppstod under lagringen av nettverket: ${getUttuError(e)}`
       )
     );
+    throw e;
   }
 };
 
@@ -124,5 +127,6 @@ export const deleteNetworkById = id => async (dispatch, getState) => {
         `En feil oppstod under slettingen av nettverket: ${getUttuError(e)}`
       )
     );
+    throw e;
   }
 };

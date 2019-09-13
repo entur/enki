@@ -38,7 +38,8 @@ const NetworkEditor = ({ dispatch, match, history, lines, network: currentNetwor
   useEffect(() => {
     dispatch(loadFlexibleLines());
     if (match.params.id) {
-      dispatch(loadNetworkById(match.params.id));
+      dispatch(loadNetworkById(match.params.id))
+        .catch(() => history.push('/networks'));
     }
   }, []);
 
