@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
   Button,
@@ -28,20 +27,40 @@ import './styles.css';
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
-const NetworkEditor = ({ dispatch, match, history, lines, network: currentNetwork, organisations }) => {
+const NetworkEditor = ({ match, history }) => {
+  const { lines, network: currentNetwork, organisations } = useSelector(({ organisations, flexibleLines, networks }) => ({
+    network: match.params.id ? networks ? networks.find(n => n.id === match.params.id) : null : new Network(),
+    organisations,
+    lines: flexibleLines
+  }));
+
   const [authoritySelection, setAuthoritySelection] = useState(DEFAULT_SELECT_VALUE);
   const [isSaving, setSaving] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
   const [network, setNetwork] = useState(currentNetwork);
 
+  const dispatch = useDispatch();
+
+  const dispatchLoadFlexibleLines = useCallback(
+    () => dispatch(loadFlexibleLines()),
+    [dispatch]
+  );
+
+  const dispatchLoadNetwork = useCallback(
+    () => {
+      if (match.params.id) {
+        dispatch(loadNetworkById(match.params.id))
+          .catch(() => history.push('/networks'));
+      }
+    },
+    [dispatch, match.params.id, history]
+  );
+
   useEffect(() => {
-    dispatch(loadFlexibleLines());
-    if (match.params.id) {
-      dispatch(loadNetworkById(match.params.id))
-        .catch(() => history.push('/networks'));
-    }
-  }, []);
+    dispatchLoadFlexibleLines();
+    dispatchLoadNetwork();
+  }, [dispatchLoadFlexibleLines, dispatchLoadNetwork]);
 
   useEffect(() => {
     setAuthoritySelection(currentNetwork ? currentNetwork.authorityRef : DEFAULT_SELECT_VALUE);
@@ -201,10 +220,4 @@ const NetworkEditor = ({ dispatch, match, history, lines, network: currentNetwor
   );
 }
 
-const mapStateToProps = ({ organisations, flexibleLines, networks }, ownProps) => ({
-  network: ownProps.match.params.id ? networks ? networks.find(n => n.id === ownProps.match.params.id) : null : new Network(),
-  organisations,
-  lines: flexibleLines
-});
-
-export default compose(withRouter, connect(mapStateToProps))(NetworkEditor);
+export default withRouter(NetworkEditor);

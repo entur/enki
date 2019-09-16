@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
   Tabs,
@@ -29,6 +29,7 @@ import { DEFAULT_SELECT_VALUE } from './constants';
 import validateForm from './validateForm';
 import './styles.css';
 import General from './General';
+import { withRouter } from 'react-router-dom';
 
 const TABS = Object.freeze({
   GENERAL: 'general',
@@ -36,7 +37,23 @@ const TABS = Object.freeze({
   JOURNEY_PATTERNS: 'journeyPatterns'
 });
 
-const FlexibleLineEditor = ({ dispatch, match, history, organisations, networks, flexibleStopPlaces, flexibleLine: currentFlexibleLine }) => {
+const FlexibleLineEditor = ({ match, history }) => {
+  const {
+    organisations,
+    networks,
+    flexibleStopPlaces,
+    flexibleLine: currentFlexibleLine
+  } = useSelector(({ organisations, networks, flexibleStopPlaces, flexibleLines }) => ({
+    organisations,
+    networks,
+    flexibleStopPlaces,
+    flexibleLine: match.params.id ? flexibleLines ? flexibleLines.find(l => l.id === match.params.id) : null : new FlexibleLine({
+      transportMode: VEHICLE_MODE.BUS,
+      transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
+      flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
+    })
+  }));
+
   const [flexibleLine, setFlexibleLine] = useState(null);
   const [operatorSelection, setOperatorSelection] = useState(DEFAULT_SELECT_VALUE);
   const [networkSelection, setNetworkSelection] = useState(DEFAULT_SELECT_VALUE);
@@ -48,14 +65,33 @@ const FlexibleLineEditor = ({ dispatch, match, history, organisations, networks,
     networkRef: []
   });
 
+  const dispatch = useDispatch();
+
+  const dispatchLoadNetworks = useCallback(
+    () => dispatch(loadNetworks()),
+    [dispatch]
+  );
+
+  const dispatchLoadFlexibleStopPlaces = useCallback(
+    () => dispatch(loadFlexibleStopPlaces()),
+    [dispatch]
+  )
+
+  const dispatchLoadFlexibleLineById = useCallback(
+    () => {
+      if (match.params.id) {
+        dispatch(loadFlexibleLineById(match.params.id))
+          .catch(() => history.push('/lines'));
+      }
+    },
+    [dispatch, match.params.id, history]
+  )
+
   useEffect(() => {
-    dispatch(loadNetworks());
-    dispatch(loadFlexibleStopPlaces());
-    if (match.params.id) {
-      dispatch(loadFlexibleLineById(match.params.id))
-        .catch(() => history.push('/lines'));
-    }
-  }, []);
+    dispatchLoadNetworks();
+    dispatchLoadFlexibleStopPlaces();
+    dispatchLoadFlexibleLineById();
+  }, [dispatchLoadNetworks, dispatchLoadFlexibleStopPlaces, dispatchLoadFlexibleLineById]);
 
   useEffect(() => {
     setOperatorSelection(currentFlexibleLine ? currentFlexibleLine.operatorRef : DEFAULT_SELECT_VALUE);
@@ -233,15 +269,4 @@ const FlexibleLineEditor = ({ dispatch, match, history, organisations, networks,
   );
 }
 
-const mapStateToProps = ({ organisations, networks, flexibleStopPlaces, flexibleLines }, ownProps) => ({
-  organisations,
-  networks,
-  flexibleStopPlaces,
-  flexibleLine: ownProps.match.params.id ? flexibleLines ? flexibleLines.find(l => l.id === ownProps.match.params.id) : null : new FlexibleLine({
-    transportMode: VEHICLE_MODE.BUS,
-    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
-    flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
-  })
-});
-
-export default connect(mapStateToProps)(FlexibleLineEditor);
+export default withRouter(FlexibleLineEditor);
