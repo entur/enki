@@ -1,31 +1,25 @@
-# Bestillingstransport / Order Transport
+# Bestillingstransport / Flexible transport (FT)
+
+~Note: This project was previously called Order-transport (OT).~
 
 ## Development
-### Checking out on Windows
-The paths are longish which may be trouble for windows devs. Both windows and git need some tweaks:
 
-#### regedit
-HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem
-LongPathsEnabled -> 1
-
-#### gpedit.msc
-Local Computer Policy -> Computer Configuration -> Administrative Templates -> System -> Filesystem
-Enable Win32 long paths
-
-#### git
-git config --global core.longpaths true
-
-### Running
-To run OT for development, simply do:
+To run FT for development, simply do:
 
 ```
 npm install
 npm run start-devenv
 ```
 
+To run together with a local instance of uttu on port 11701, add the following to your env:
+
+```
+UTTU_API_URL=http://localhost:11701/services/flexible-lines
+```
+
 ## Authentication
 
-OT uses [Keycloak](http://www.keycloak.org/) to authenticate users.
+FT uses [Keycloak](http://www.keycloak.org/) to authenticate users.
 
 ### Technical details
 
@@ -44,8 +38,6 @@ Uses [Jest](https://facebook.github.io/jest) for unit and reducer testing.
 ```
 npm test
 ```
-
-Note: Requires a running instance of OT on [http://localhost:3001](http://localhost:3001).
 
 ### Teste med GraphiQL
 ```brew cask install graphiql```
@@ -83,7 +75,3 @@ Parameters:
 * env: dev/staging/prod
 * version: docker image tag
 * mode: value **reinstall** may be used to remove-reinstall the app (involves downtime), otherwise leave this parameter blank.
-
-### Owners
-Sondre Bjerkerud - frontend
-Erlend Nilsen - backend Uttu

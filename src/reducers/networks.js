@@ -1,12 +1,12 @@
-import { RECEIVE_NETWORKS, REQUEST_NETWORKS } from '../actions/networks';
+import { RECEIVE_NETWORKS, RECEIVE_NETWORK } from '../actions/networks';
 
 const networksReducer = (networks = null, action) => {
   switch (action.type) {
-    case REQUEST_NETWORKS:
-      return null;
-
     case RECEIVE_NETWORKS:
       return action.networks;
+
+    case RECEIVE_NETWORK:
+      return networks ? networks.map((n) => n.id === action.network.id ? action.network : n) : [action.network];
 
     default:
       return networks;
