@@ -26,7 +26,7 @@ const Networks = ({ history }) => {
 
   useEffect(() => {
     dispatch(loadNetworks());
-  }, [dispatch, loadNetworks, activeProvider]);
+  }, [dispatch, activeProvider]);
 
   const handleOnRowClick = useCallback((id) => {
     history.push(`/networks/edit/${id}`);
