@@ -30,8 +30,8 @@ const DEFAULT_SELECT_VALUE = '-1';
 
 const selectNetwork = createSelector(
   state => state.networks,
-  (_, match) => match,
-  (networks, match) => match.params.id ? networks ? networks.find(n => n.id === match.params.id) : null : new Network()
+  (_, match) => match.params.id,
+  (networks, id) => id ? networks ? networks.find(n => n.id === id) : null : new Network()
 )
 
 const NetworkEditor = ({ match, history }) => {
