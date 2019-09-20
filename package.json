@@ -39,6 +39,7 @@
     "redux-logger": "^3.0.6",
     "redux-raven-middleware": "^1.2.0",
     "redux-thunk": "^2.2.0",
+    "reselect": "^4.0.0",
     "uuid": "^3.1.0"
   },
   "devDependencies": {

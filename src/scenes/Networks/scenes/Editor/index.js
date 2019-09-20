@@ -23,16 +23,22 @@ import Loading from '../../../../components/Loading';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 
 import './styles.css';
+import { createSelector } from 'reselect';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
+const selectNetwork = createSelector(
+  state => state.networks,
+  (_, match) => match.params.id,
+  (networks, id) => id ? networks ? networks.find(n => n.id === id) : null : new Network()
+)
+
 const NetworkEditor = ({ match, history }) => {
-  const { lines, network: currentNetwork, organisations } = useSelector(({ organisations, flexibleLines, networks }) => ({
-    network: match.params.id ? networks ? networks.find(n => n.id === match.params.id) : null : new Network(),
-    organisations,
-    lines: flexibleLines
-  }));
+  const organisations = useSelector(({ organisations }) => organisations);
+  const lines = useSelector(({ flexibleLines }) => flexibleLines);
+  const currentNetwork = useSelector(state =>
+    selectNetwork(state, match));
 
   const [authoritySelection, setAuthoritySelection] = useState(DEFAULT_SELECT_VALUE);
   const [isSaving, setSaving] = useState(false);
