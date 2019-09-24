@@ -5,8 +5,8 @@ import propTypes from 'prop-types';
 import cx from 'classnames';
 import { Label } from '@entur/component-library';
 
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import './styles.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 class CustomDatepicker extends Component {
   handleDateChange(date) {
