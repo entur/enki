@@ -98,6 +98,8 @@ const NetworkEditor = ({ match, history }) => {
       .then(() => history.push('/networks'));
   };
 
+  console.log('RECEIVE_ORG', { organisations, activeProvider});
+
   const authorities = organisations.filter(org =>
     org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
     org.references.netexAuthorityId &&
