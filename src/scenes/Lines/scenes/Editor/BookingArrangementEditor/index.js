@@ -19,7 +19,6 @@ import {
   PURCHASE_MOMENT,
   PURCHASE_WHEN
 } from '../../../../../model/enums';
-import CustomDatepicker from '../../../../../components/CustomDatepicker';
 import DurationPicker from '../../../../../components/DurationPicker';
 
 import './styles.css';
