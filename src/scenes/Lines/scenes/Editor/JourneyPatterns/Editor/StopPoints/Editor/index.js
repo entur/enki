@@ -17,7 +17,7 @@ class StopPointEditor extends Component {
   state = {
     stopPlaceSelection: DEFAULT_SELECT_VALUE,
     activeTab: TABS.GENERAL,
-    errors: { quayRef: [], flexibleStopPlaceRefAndQuayRef: [] },
+    errors: { quayRef: [], flexibleStopPlaceRefAndQuayRef: [], frontText: [] },
     quaySearch: {}
   };
 

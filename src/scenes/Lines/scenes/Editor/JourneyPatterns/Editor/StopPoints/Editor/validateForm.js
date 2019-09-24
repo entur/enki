@@ -2,8 +2,8 @@ import {hasValue, objectValues} from '../../../../helpers';
 import searchForQuay from './searchForQuay';
 
 export default async function (stopPoint) {
-  let errors = { quayRef: [], flexibleStopPlaceRefAndQuayRef: [] };
-  let { quayRef, flexibleStopPlaceRef } = stopPoint;
+  let errors = { quayRef: [], flexibleStopPlaceRefAndQuayRef: [], frontText: [] };
+  let { quayRef, flexibleStopPlaceRef, destinationDisplay } = stopPoint;
 
   if (!flexibleStopPlaceRef && !hasValue(quayRef)) {
     errors.flexibleStopPlaceRefAndQuayRef.push('error.flexibleStopPlaceRefAndQuayRef.noValues');
@@ -14,6 +14,8 @@ export default async function (stopPoint) {
     if (!quaySearch.quay.id) {
       errors.quayRef.push('error.quayRef.invalid');
     }
+  } else if (!hasValue(destinationDisplay) || !hasValue(destinationDisplay.frontText)) {
+    errors.frontText.push('error.frontText.noValue');
   }
   return [objectValues(errors).length === 0, errors];
 }
