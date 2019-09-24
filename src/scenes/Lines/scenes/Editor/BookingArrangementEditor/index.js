@@ -255,10 +255,11 @@ class BookingArrangementEditor extends Component {
               this.handleBookingLimitChange(BOOKING_LIMIT_TYPE.TIME)
             }
           />
-          <CustomDatepicker
+          <TextField
+            type="time"
             className="latest-time-picker"
-            startDate={latestBookingTime}
-            onChange={date => this.handleFieldChange('latestBookingTime', date)}
+            value={latestBookingTime}
+            onChange={e => this.handleFieldChange('latestBookingTime', e.target.value)}
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
           />
 
