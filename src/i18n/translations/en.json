@@ -3,6 +3,7 @@
   "error.flexibleStopPlaceRefAndQuayRef.bothValues": "Choose between stop place and platform, not both.",
   "error.flexibleStopPlaceRefAndQuayRef.noValues": "Please select a stop or a platform",
   "error.quayRef.invalid": "Invalid platform ID",
+  "error.frontText.noValue": "Front text is required",
   "label.frontText": "Front text",
   "label.forBoarding": "For boarding",
   "label.forAlighting": "For alighting",

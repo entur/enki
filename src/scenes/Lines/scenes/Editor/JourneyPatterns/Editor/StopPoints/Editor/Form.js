@@ -7,21 +7,22 @@ import StopPlaceSelection from './StopPlaceSelection';
 import QuaySearchResults from './QuaySearchResults';
 
 export default withI18n(function Form ({
-    flexibleStopPlaces,
-    i18n,
-    stopPlaceSelection,
-    quaySearch,
-    errors,
-   handleStopPlaceSelectionChange,
-                                         handleFieldChange,
-                                         debouncedSearchForQuay,
-                                         handleFrontTextChange,
+  flexibleStopPlaces,
+  i18n,
+  stopPlaceSelection,
+  quaySearch,
+  errors,
+  handleStopPlaceSelectionChange,
+  handleFieldChange,
+  debouncedSearchForQuay,
+  handleFrontTextChange,
   stopPoint
-  }) {
+}) {
   let frontTextValue = stopPoint.destinationDisplay &&
-  stopPoint.destinationDisplay.frontText
-    ? stopPoint.destinationDisplay.frontText
-    : '';
+    stopPoint.destinationDisplay.frontText
+      ? stopPoint.destinationDisplay.frontText
+      : '';
+
   return (
     <Fragment>
       <Errors errors={errors.flexibleStopPlaceRefAndQuayRef} />
@@ -50,12 +51,15 @@ export default withI18n(function Form ({
 
       <Errors errors={errors.quayRef} />
 
-      <Label>{i18n('label.frontText')}</Label>
+      <Label>* {i18n('label.frontText')}</Label>
       <TextField
         type="text"
         value={frontTextValue}
         onChange={e => handleFrontTextChange(e.target.value)}
+        className={errors.frontText.length > 0 && 'input-error'}
       />
+
+      <Errors errors={errors.frontText} />
 
       <div style={{marginBottom: '1em'}}>
         <Checkbox
