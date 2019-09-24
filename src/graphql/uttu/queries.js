@@ -2,7 +2,10 @@ export const getProvidersQuery = `
   query GetProviders {
     providers {
       name,
-      code
+      code,
+      codespace {
+        xmlns
+      }
     }
   }
 `;

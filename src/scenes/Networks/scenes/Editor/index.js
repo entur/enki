@@ -35,6 +35,7 @@ const selectNetwork = createSelector(
 )
 
 const NetworkEditor = ({ match, history }) => {
+  const activeProvider = useSelector(({ providers }) => providers.providers.find(p => p.code = providers.active));
   const organisations = useSelector(({ organisations }) => organisations);
   const lines = useSelector(({ flexibleLines }) => flexibleLines);
   const currentNetwork = useSelector(state =>
@@ -97,9 +98,12 @@ const NetworkEditor = ({ match, history }) => {
       .then(() => history.push('/networks'));
   };
 
+  console.log('RECEIVE_ORG', { organisations, activeProvider});
+
   const authorities = organisations.filter(org =>
     org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
-    org.references.netexAuthorityId
+    org.references.netexAuthorityId &&
+    org.references.codeSpace === activeProvider.codespace.xmlns
   );
 
   const isDeleteDisabled =
@@ -176,10 +180,6 @@ const NetworkEditor = ({ match, history }) => {
                 handleAuthoritySelectionChange(e.target.value)
               }
             >
-              <DropDownOptions
-                label={DEFAULT_SELECT_LABEL}
-                value={DEFAULT_SELECT_VALUE}
-              />
               {authorities.map(org => (
                 <DropDownOptions
                   key={org.id}
