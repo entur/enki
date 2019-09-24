@@ -180,6 +180,9 @@ const NetworkEditor = ({ match, history }) => {
                 handleAuthoritySelectionChange(e.target.value)
               }
             >
+              <DropDownOptions
+                label={DEFAULT_SELECT_LABEL}
+                value={DEFAULT_SELECT_VALUE} />
               {authorities.map(org => (
                 <DropDownOptions
                   key={org.id}
