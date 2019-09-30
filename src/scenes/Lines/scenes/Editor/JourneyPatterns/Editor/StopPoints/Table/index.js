@@ -40,8 +40,9 @@ class StopPointsTable extends Component {
                 ? flexibleStopPlaces.find(
                     fsp => fsp.id === sp.flexibleStopPlaceRef
                   ).name
-                : '- Nytt stoppepunkt -'}
+                : sp.quayRef ? sp.quayRef : '- Nytt stoppepunkt -'}
             </TableRowCell>
+            <TableRowCell>{sp.destinationDisplay.frontText}</TableRowCell>
             <TableRowCell>{sp.forBoarding ? 'Ja' : 'Nei'}</TableRowCell>
             <TableRowCell>{sp.forAlighting ? 'Ja' : 'Nei'}</TableRowCell>
             <TableRowCell>
@@ -67,6 +68,7 @@ class StopPointsTable extends Component {
         <Table className="stop-points-table">
           <TableHeaderCell label="#" />
           <TableHeaderCell label="Navn" />
+          <TableHeaderCell label="Front text" />
           <TableHeaderCell label="Påstigning" />
           <TableHeaderCell label="Avstigning" />
           {tableRows}
