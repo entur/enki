@@ -30,6 +30,7 @@ import validateForm from './validateForm';
 import './styles.css';
 import General from './General';
 import { withRouter } from 'react-router-dom';
+import { createSelector } from 'reselect';
 
 const TABS = Object.freeze({
   GENERAL: 'general',
@@ -37,22 +38,21 @@ const TABS = Object.freeze({
   JOURNEY_PATTERNS: 'journeyPatterns'
 });
 
+const selectFlexibleLine = createSelector(
+  state => state.flexibleLines,
+  (_, match) => match,
+  (flexibleLines, match) => match.params.id ? flexibleLines ? flexibleLines.find(l => l.id === match.params.id) : null : new FlexibleLine({
+    transportMode: VEHICLE_MODE.BUS,
+    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
+    flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
+  })
+);
+
 const FlexibleLineEditor = ({ match, history }) => {
-  const {
-    organisations,
-    networks,
-    flexibleStopPlaces,
-    flexibleLine: currentFlexibleLine
-  } = useSelector(({ organisations, networks, flexibleStopPlaces, flexibleLines }) => ({
-    organisations,
-    networks,
-    flexibleStopPlaces,
-    flexibleLine: match.params.id ? flexibleLines ? flexibleLines.find(l => l.id === match.params.id) : null : new FlexibleLine({
-      transportMode: VEHICLE_MODE.BUS,
-      transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
-      flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
-    })
-  }));
+  const organisations = useSelector(({ organisations }) => organisations);
+  const networks = useSelector(({ networks }) => networks);
+  const flexibleStopPlaces = useSelector(({ flexibleStopPlaces }) => flexibleStopPlaces);
+  const currentFlexibleLine = useSelector(state => selectFlexibleLine(state, match));
 
   const [flexibleLine, setFlexibleLine] = useState(null);
   const [operatorSelection, setOperatorSelection] = useState(DEFAULT_SELECT_VALUE);
