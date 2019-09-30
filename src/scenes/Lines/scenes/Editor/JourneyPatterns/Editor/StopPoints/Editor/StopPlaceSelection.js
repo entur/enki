@@ -11,7 +11,7 @@ export default function StopPlaceSelection ({ stopPlaceSelection, flexibleStopPl
         onChange={e =>
           handleStopPlaceSelectionChange(e.target.value)
         }
-        className={flexibleStopPlaceRefAndQuayRefErrors.length > 0 && 'input-error'}
+        className={flexibleStopPlaceRefAndQuayRefErrors.length > 0 ? 'input-error' : ''}
       >
         <DropDownOptions
           label={DEFAULT_SELECT_LABEL}

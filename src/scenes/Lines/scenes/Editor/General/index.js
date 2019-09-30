@@ -103,7 +103,7 @@ export default ({ flexibleLine, networks, operators, errors, networkSelection, o
           onChange={e =>
             handleNetworkSelectionChange(e.target.value)
           }
-          className={errors.networkRef.length > 0 && 'input-error'}
+          className={errors.networkRef.length > 0 ? 'input-error' : ''}
         >
           <DropDownOptions
             label={DEFAULT_SELECT_LABEL}

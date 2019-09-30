@@ -44,7 +44,7 @@ export default withI18n(function Form ({
           debouncedSearchForQuay();
         }
         }
-        className={(errors.quayRef.length > 0 || errors.flexibleStopPlaceRefAndQuayRef.length > 0) && 'input-error'}
+        className={(errors.quayRef.length > 0 || errors.flexibleStopPlaceRefAndQuayRef.length > 0) ? 'input-error' : ''}
       />
 
       <QuaySearchResults quaySearch={quaySearch}/>
@@ -56,7 +56,7 @@ export default withI18n(function Form ({
         type="text"
         value={frontTextValue}
         onChange={e => handleFrontTextChange(e.target.value)}
-        className={errors.frontText.length > 0 && 'input-error'}
+        className={errors.frontText.length > 0 ? 'input-error' : ''}
       />
 
       <Errors errors={errors.frontText} />
