@@ -14,7 +14,7 @@ export default async function (stopPoint) {
     if (!quaySearch.quay.id) {
       errors.quayRef.push('error.quayRef.invalid');
     }
-  } else if (!hasValue(destinationDisplay) || !hasValue(destinationDisplay.frontText)) {
+  } else if (!destinationDisplay || !hasValue(destinationDisplay.frontText)) {
     errors.frontText.push('error.frontText.noValue');
   }
   return [objectValues(errors).length === 0, errors];
