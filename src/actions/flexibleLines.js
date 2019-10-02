@@ -12,7 +12,9 @@ import {
   deleteFlexibleLine,
   flexibleLineMutation
 } from '../graphql/uttu/mutations';
-import { getUttuError } from '../helpers/uttu';
+import { getUttuError, getInternationalizedUttuError } from '../helpers/uttu';
+import { getIntl } from '../i18n';
+import messages from './flexibleLines.messages';
 
 export const REQUEST_FLEXIBLE_LINES = 'REQUEST_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
@@ -73,24 +75,28 @@ export const loadFlexibleLineById = id => async (dispatch, getState) => {
   }
 };
 
-export const saveFlexibleLine = flexibleLine => (dispatch, getState) => {
+export const saveFlexibleLine = flexibleLine => async (dispatch, getState) => {
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, flexibleLineMutation, {
-    input: flexibleLine.toPayload()
-  })
-    .then(() => {
-      dispatch(showSuccessNotification('Lagre linje', 'Linjen ble lagret.'));
-      return Promise.resolve();
-    })
-    .catch(e => {
-      dispatch(
-        showErrorNotification(
-          'Lagre linje',
-          `En feil oppstod under lagringen av linjen: ${getUttuError(e)}`
-        )
-      );
-      return Promise.reject();
+  const intl = getIntl(getState());
+  try {
+    await UttuQuery(activeProvider, flexibleLineMutation, {
+      input: flexibleLine.toPayload()
     });
+    dispatch(showSuccessNotification(
+      intl.formatMessage(messages.saveLineSuccessHeader),
+      intl.formatMessage(messages.saveLineSuccessMessage)
+    ));
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.saveLineErrorHeader),
+        intl.formatMessage(messages.saveLineErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };
 
 export const deleteFlexibleLineById = id => (dispatch, getState) => {
