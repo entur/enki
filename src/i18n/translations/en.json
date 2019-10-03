@@ -1,11 +1,19 @@
 {
-  "title": "Flexible transport",
-  "error.flexibleStopPlaceRefAndQuayRef.bothValues": "Choose between stop place and platform, not both.",
-  "error.flexibleStopPlaceRefAndQuayRef.noValues": "Please select a stop or a platform",
-  "error.quayRef.invalid": "Invalid platform ID",
-  "error.frontText.noValue": "Front text is required",
-  "label.frontText": "Front text",
-  "label.forBoarding": "For boarding",
-  "label.forAlighting": "For alighting",
-  "label.quayRef": "Platform ID (from NSR)"
+	"actions.flexibleLines.saveLineErrorHeader": "",
+	"actions.flexibleLines.saveLineErrorMessage": "",
+	"actions.flexibleLines.saveLineSuccessHeader": "",
+	"actions.flexibleLines.saveLineSuccessMessage": "",
+	"error.flexibleLine.networkRef.empty": "",
+	"error.flexibleStopPlaceRefAndQuayRef.bothValues": "Choose between stop place and platform, not both.",
+	"error.flexibleStopPlaceRefAndQuayRef.noValues": "Please select a stop or a platform",
+	"error.fronText.noValue": "",
+	"error.frontText.noValue": "Front text is required",
+	"error.quayRef.invalid": "Invalid platform ID",
+	"helpers.uttu.uttuError.ORGANISATION_NOT_VALID_OPERATOR": "Invalid operator",
+	"helpers.uttu.uttuError.UNKNOWN": "",
+	"label.forAlighting": "For alighting",
+	"label.forBoarding": "For boarding",
+	"label.frontText": "Front text",
+	"label.quayRef": "Platform ID (from NSR)",
+	"title": "Flexible transport"
 }

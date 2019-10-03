@@ -23,5 +23,8 @@ server/yarn.lock
 # css
 src/**/*.css
 
+# compiled i18n
+src/i18n/build
+
 #SASS
 *.css.map
