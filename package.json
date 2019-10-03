@@ -59,14 +59,12 @@
   "scripts": {
     "start-js": "react-scripts start",
     "build-js": "react-scripts build",
-    "build-messages": "cross-env node scripts/group-messages.js",
-    "watch-messages": "watch -p './src/i18n/translations/**.json' -c 'npm run build-messages'",
     "test": "react-scripts test --env=jsdom",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start": "npm-run-all -p build-messages watch-messages watch-css start-js",
+    "start": "npm-run-all -p watch-css start-js",
     "start-devenv": "cross-env npm run start",
-    "build": "npm-run-all build-css build-messages build-js",
+    "build": "npm-run-all build-css build-js",
     "eslint": "eslint src/**/*.js"
   },
   "prettier": {
