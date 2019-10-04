@@ -1,4 +1,12 @@
 {
+	"actions.flexibleLines.deleteLineErrorHeader": "Slette linje",
+	"actions.flexibleLines.deleteLineErrorMessage": "En feil oppstod under slettingen av linjen: {details}",
+	"actions.flexibleLines.deleteLineSuccessHeader": "Slette linje",
+	"actions.flexibleLines.deleteLineSuccessMessage": "Linjen ble slettet",
+	"actions.flexibleLines.loadLineByIdErrorHeader": "Laste linje",
+	"actions.flexibleLines.loadLineByIdErrorMessage": "En feil oppstod under lastingen av linjen: {details}",
+	"actions.flexibleLines.loadLinesErrorHeader": "Laste linjer",
+	"actions.flexibleLines.loadLinesErrorMessage": "En feil oppstod under lastingen av linjene: {details}",
 	"actions.flexibleLines.saveLineErrorHeader": "Lagre linje",
 	"actions.flexibleLines.saveLineErrorMessage": "En feil oppstod under lagringen av linjen: {details}",
 	"actions.flexibleLines.saveLineSuccessHeader": "Lagre linje",

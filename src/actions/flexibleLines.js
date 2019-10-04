@@ -12,7 +12,7 @@ import {
   deleteFlexibleLine,
   flexibleLineMutation
 } from '../graphql/uttu/mutations';
-import { getUttuError, getInternationalizedUttuError } from '../helpers/uttu';
+import { getInternationalizedUttuError } from '../helpers/uttu';
 import { getIntl } from '../i18n';
 import messages from './flexibleLines.messages';
 
@@ -48,10 +48,13 @@ export const loadFlexibleLines = () => async (dispatch, getState) => {
     const flexibleLines = data.flexibleLines.map(fl => new FlexibleLine(fl));
     dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
   } catch (e) {
+    const intl = getIntl(getState());
     dispatch(
       showErrorNotification(
-        'Laste linjer',
-        `En feil oppstod under lastingen av linjene: ${getUttuError(e)}`
+        intl.formatMessage(messages.loadLinesErrorHeader),
+        intl.formatMessage(messages.loadLinesErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
       )
     );
     throw e;
@@ -65,10 +68,13 @@ export const loadFlexibleLineById = id => async (dispatch, getState) => {
     const data = await UttuQuery(getState().providers.active, getFlexibleLineByIdQuery, { id });
     dispatch(receiveFlexibleLineActionCreator(new FlexibleLine(data.flexibleLine)));
   } catch (e) {
+    const intl = getIntl(getState());
     dispatch(
       showErrorNotification(
-        'Laste linje',
-        `En feil oppstod under lastingen av linjen: ${getUttuError(e)}`
+        intl.formatMessage(messages.loadLineByIdErrorHeader),
+        intl.formatMessage(messages.loadLineByIdErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
       )
     );
     throw e;
@@ -99,20 +105,27 @@ export const saveFlexibleLine = flexibleLine => async (dispatch, getState) => {
   }
 };
 
-export const deleteFlexibleLineById = id => (dispatch, getState) => {
+export const deleteFlexibleLineById = id => async (dispatch, getState) => {
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, deleteFlexibleLine, { id })
-    .then(() => {
-      dispatch(showSuccessNotification('Slette linje', 'Linjen ble slettet.'));
-      return Promise.resolve();
-    })
-    .catch(e => {
-      dispatch(
-        showErrorNotification(
-          'Slette linje',
-          `En feil oppstod under slettingen av linjen: ${getUttuError(e)}`
-        )
-      );
-      return Promise.reject();
-    });
+  const intl = getIntl(getState());
+
+  try {
+    await UttuQuery(activeProvider, deleteFlexibleLine, { id });
+    dispatch(
+      showSuccessNotification(
+        intl.formatMessage(messages.deleteLineSuccessHeader),
+        intl.formatMessage(messages.deleteLineSuccessMessage)
+      )
+    );
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.deleteLineErrorHeader),
+        intl.formatMessage(messages.deleteLineErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };
