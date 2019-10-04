@@ -7,7 +7,7 @@ import reducers from './reducers';
 import { geti18n, loadLocaleData, getIntl } from './i18n/';
 import { normalizeAllUrls } from './helpers/url';
 
-const SENTRY_DSN = 'https://dda45de330974c688d22b1101de1f5b7@sentry.io/1290599';
+const SENTRY_DSN = 'https://cc3cacbc67234cc7bfe1cf391010414b@sentry.io/1769954';
 
 const getMiddlewares = () => {
   const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
