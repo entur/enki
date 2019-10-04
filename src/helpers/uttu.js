@@ -1,5 +1,9 @@
+import Raven from 'raven-js';
 import messages from './uttu.messages';
+
 export const getUttuError = e => {
+  Raven.captureException(e);
+
   return e.response &&
     e.response.errors &&
     e.response.errors.length > 0 &&
@@ -20,6 +24,8 @@ export const getInternationalizedUttuError = (intl, e) => {
     if (validErrorCodes.includes(e.response.errors[0].extensions.code)) {
       errorCode = e.response.errors[0].extensions.code;
     }
+  } else {
+    Raven.captureException(e);
   }
 
   return intl.formatMessage(
