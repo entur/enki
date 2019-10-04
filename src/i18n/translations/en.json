@@ -1,4 +1,12 @@
 {
+	"actions.flexibleLines.deleteLineErrorHeader": "Delete line",
+	"actions.flexibleLines.deleteLineErrorMessage": "An error occured while deleting the line: {details}",
+	"actions.flexibleLines.deleteLineSuccessHeader": "Delete line",
+	"actions.flexibleLines.deleteLineSuccessMessage": "The line was deleted",
+	"actions.flexibleLines.loadLineByIdErrorHeader": "Load line",
+	"actions.flexibleLines.loadLineByIdErrorMessage": "An error occurred while loading the line: {details}",
+	"actions.flexibleLines.loadLinesErrorHeader": "Load lines",
+	"actions.flexibleLines.loadLinesErrorMessage": "An error occurred while loading lines: {details}",
 	"actions.flexibleLines.saveLineErrorHeader": "Save line",
 	"actions.flexibleLines.saveLineErrorMessage": "An error occurred while saving the line: {details}",
 	"actions.flexibleLines.saveLineSuccessHeader": "Save line",
