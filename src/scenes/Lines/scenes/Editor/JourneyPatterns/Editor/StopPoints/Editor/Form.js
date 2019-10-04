@@ -1,14 +1,15 @@
 import React, { Fragment } from 'react';
+import {injectIntl} from 'react-intl';
 import Errors from '../../../../Errors';
 import {Checkbox, Label, TextField} from '@entur/component-library';
 import {hasValue} from '../../../../helpers';
-import {withI18n} from '../../../../../../../../hocs/withI18n';
 import StopPlaceSelection from './StopPlaceSelection';
 import QuaySearchResults from './QuaySearchResults';
+import messages from './Form.messages';
 
-export default withI18n(function Form ({
+const Form = ({
   flexibleStopPlaces,
-  i18n,
+  intl: {formatMessage},
   stopPlaceSelection,
   quaySearch,
   errors,
@@ -17,7 +18,7 @@ export default withI18n(function Form ({
   debouncedSearchForQuay,
   handleFrontTextChange,
   stopPoint
-}) {
+}) => {
   let frontTextValue = stopPoint.destinationDisplay &&
     stopPoint.destinationDisplay.frontText
       ? stopPoint.destinationDisplay.frontText
@@ -34,7 +35,7 @@ export default withI18n(function Form ({
         handleStopPlaceSelectionChange={handleStopPlaceSelectionChange}
       />
 
-      <Label>{i18n('label.quayRef')}</Label>
+      <Label>{formatMessage(messages.labelQuayRef)}</Label>
       <TextField
         type="text"
         value={stopPoint.quayRef || ''}
@@ -51,7 +52,7 @@ export default withI18n(function Form ({
 
       <Errors errors={errors.quayRef} />
 
-      <Label>* {i18n('label.frontText')}</Label>
+      <Label>* {formatMessage(messages.labelFrontText)}</Label>
       <TextField
         type="text"
         value={frontTextValue}
@@ -68,7 +69,7 @@ export default withI18n(function Form ({
           onChange={e =>
             handleFieldChange('forBoarding', e.target.checked)
           }
-          label={i18n('label.forBoarding')}
+          label={formatMessage(messages.labelForBoarding)}
         />
       </div>
 
@@ -78,8 +79,10 @@ export default withI18n(function Form ({
         onChange={e =>
           handleFieldChange('forAlighting', e.target.checked)
         }
-        label={i18n('label.forAlighting')}
+        label={formatMessage(messages.labelForAlighting)}
       />
     </Fragment>
   );
-});
+};
+
+export default injectIntl(Form);

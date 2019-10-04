@@ -28,7 +28,7 @@ const getLocale = () => {
   return defaultLocale;
 };
 
-export const getMessages = locale => require('./build/' + locale);
+export const getMessages = locale => require('./translations/' + locale);
 
 /* Basic support for i18n based on default browser language */
 export const geti18n = () => {

@@ -1,12 +1,18 @@
 {
-  "title": "Bestillingstransport",
-  "error.flexibleStopPlaceRefAndQuayRef.bothValues": "Velg enten stoppested eller plattform, ikke begge.",
-  "error.flexibleStopPlaceRefAndQuayRef.noValues": "Du må velge enten stoppested eller plattform",
-  "error.quayRef.invalid": "Ugyldig plattform-ID",
-  "error.fronText.noValue": "Du må oppgi fronttekst",
-  "label.frontText": "Fronttekst",
-  "label.forBoarding": "For påstigning",
-  "label.forAlighting": "For avstigning",
-  "label.quayRef": "Plattform-ID (fra NSR)",
-  "error.flexibleLine.networkRef.empty": "Du må velge et nettverk"
+	"actions.flexibleLines.saveLineErrorHeader": "Lagre linje",
+	"actions.flexibleLines.saveLineErrorMessage": "En feil oppstod under lagringen av linjen: {details}",
+	"actions.flexibleLines.saveLineSuccessHeader": "Lagre linje",
+	"actions.flexibleLines.saveLineSuccessMessage": "Linjen ble lagret",
+	"app.title": "Bestillingstransport",
+	"helpers.uttu.uttuError.ORGANISATION_NOT_VALID_OPERATOR": "Ugyldig operatør",
+	"helpers.uttu.uttuError.UNKNOWN": "Ukjent feil",
+	"lines.journeyPatterns.stopPoints.form.label.forAlighting": "For avstigning",
+	"lines.journeyPatterns.stopPoints.form.label.forBoarding": "For påstigning",
+	"lines.journeyPatterns.stopPoints.form.label.frontText": "Fronttekst",
+	"lines.journeyPatterns.stopPoints.form.label.quayRef": "Plattform-ID (fra NSR)",
+	"lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.bothValues": "Velg enten stoppested eller plattform, ikke begge.",
+	"lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.noValues": "Du må velge enten stoppested eller plattform",
+	"lines.journeyPatterns.stopPoints.validateForm.error.frontText.noValue": "Du må oppgi fronttekst",
+	"lines.journeyPatterns.stopPoints.validateForm.error.quayRef.invalid": "Ugyldig plattform-ID",
+	"lines.validateForm.error.flexibleLine.networkRef.empty": "Du må velge et nettverk"
 }

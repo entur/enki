@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import * as R from 'ramda';
+import { injectIntl } from 'react-intl';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -12,10 +14,10 @@ import NavBar from './components/NavBar';
 import Routes from './Routes';
 import { getProviders } from '../../actions/providers';
 import { getOrganisations } from '../../actions/organisations';
-import { withI18n } from '../../hocs/withI18n';
-import * as R from 'ramda';
 
 import './styles.css';
+
+import messages from './index.messages';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -32,13 +34,13 @@ class App extends Component {
   }
 
   render() {
-    const { providers, organisations, i18n } = this.props;
+    const { providers, organisations, intl: {formatMessage} } = this.props;
 
     const basename = '';
 
     return (
       <div className="app">
-        <Helmet defaultTitle={i18n('title')} />
+        <Helmet defaultTitle={formatMessage(messages.title)} />
 
         <BrowserRouter basename={basename}>
           <ScrollToTop>
@@ -69,6 +71,6 @@ const mapStateToProps = ({ providers, organisations }) => ({
   organisations
 });
 
-const hoc = R.compose(withI18n, connect(mapStateToProps));
+const hoc = R.compose(injectIntl, connect(mapStateToProps));
 
 export default hoc(App);

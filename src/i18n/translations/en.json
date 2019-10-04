@@ -1,11 +1,18 @@
 {
-  "title": "Flexible transport",
-  "error.flexibleStopPlaceRefAndQuayRef.bothValues": "Choose between stop place and platform, not both.",
-  "error.flexibleStopPlaceRefAndQuayRef.noValues": "Please select a stop or a platform",
-  "error.quayRef.invalid": "Invalid platform ID",
-  "error.frontText.noValue": "Front text is required",
-  "label.frontText": "Front text",
-  "label.forBoarding": "For boarding",
-  "label.forAlighting": "For alighting",
-  "label.quayRef": "Platform ID (from NSR)"
+	"actions.flexibleLines.saveLineErrorHeader": "Save line",
+	"actions.flexibleLines.saveLineErrorMessage": "An error occurred while saving the line: {details}",
+	"actions.flexibleLines.saveLineSuccessHeader": "Save line",
+	"actions.flexibleLines.saveLineSuccessMessage": "Line was saved",
+	"app.title": "Flexible transport",
+	"helpers.uttu.uttuError.ORGANISATION_NOT_VALID_OPERATOR": "Invalid operator",
+	"helpers.uttu.uttuError.UNKNOWN": "Unknown error",
+	"lines.journeyPatterns.stopPoints.form.label.forAlighting": "For alighting",
+	"lines.journeyPatterns.stopPoints.form.label.forBoarding": "For boarding",
+	"lines.journeyPatterns.stopPoints.form.label.frontText": "Front Text",
+	"lines.journeyPatterns.stopPoints.form.label.quayRef": "Platform ID (from NSR)",
+	"lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.bothValues": "Choose either stop place or platform, not both.",
+	"lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.noValues": "You must choose either a stop place or a platform",
+	"lines.journeyPatterns.stopPoints.validateForm.error.frontText.noValue": "You must enter a front text",
+	"lines.journeyPatterns.stopPoints.validateForm.error.quayRef.invalid": "Invalid platform ID",
+	"lines.validateForm.error.flexibleLine.networkRef.empty": "You must select a network"
 }
