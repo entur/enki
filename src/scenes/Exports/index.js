@@ -17,12 +17,12 @@ import { EXPORT_STATUS } from '../../model/enums';
 
 import './styles.css';
 import { getIconForStatus } from './scenes/icons';
-import { getIntl } from '../../i18n';
+import { selectIntl } from '../../i18n';
 import messages from './exports.messages';
 
 const Exports = ({ history }) => {
   const exports = useSelector(({exports}) => exports);
-  const {formatMessage} = useSelector(state => getIntl(state));
+  const {formatMessage} = useSelector(selectIntl);
   const dispatch = useDispatch();
 
   useEffect(() => {
