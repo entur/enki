@@ -4,14 +4,14 @@
       width: 5%;
     }
     &:nth-of-type(2) {
-      width: 58%;
+      width: 50%;
     }
-    &:nth-of-type(3),
-    &:nth-of-type(4) {
-      width: 15%;
+    &:nth-of-type(3) {
+      width: 10%;
     }
+    &:nth-of-type(4),
     &:nth-of-type(5) {
-      width: 7%;
+      width: 15%;
     }
   }
 
