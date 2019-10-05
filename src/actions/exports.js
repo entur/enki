@@ -6,74 +6,99 @@ import {
   showErrorNotification,
   showSuccessNotification
 } from '../components/Notification/actions';
-import { getUttuError } from '../helpers/uttu';
+import { getInternationalizedUttuError } from '../helpers/uttu';
+import { getIntl } from '../i18n';
+import messages from './exports.messages';
 
 export const REQUEST_EXPORTS = 'REQUEST_EXPORTS';
 export const RECEIVE_EXPORTS = 'RECEIVE_EXPORTS';
 
-const requestExports = () => ({
+export const REQUEST_EXPORT = 'REQUEST_EXPORT';
+export const RECEIVE_EXPORT = 'RECEIVE_EXPORT';
+
+export const SAVE_EXPORT = 'SAVE_EXPORT';
+export const SAVED_EXPORT = 'SAVED_EXPORT';
+
+const requestExportsActionCreator = () => ({
   type: REQUEST_EXPORTS
 });
 
-const receiveExports = exports => ({
+const receiveExportsActionCreator = exports => ({
   type: RECEIVE_EXPORTS,
   exports
 });
 
-export const loadExports = () => (dispatch, getState) => {
-  dispatch(requestExports());
+const receiveExportActionCreator = receivedExport => ({
+  type: RECEIVE_EXPORT,
+  export: receivedExport
+});
+
+export const loadExports = () => async (dispatch, getState) => {
+  dispatch(requestExportsActionCreator());
 
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, getExportsQuery, { historicDays: 30 })
-    .then(data => {
-      const exports = data.exports.map(e => new Export(e));
-      dispatch(receiveExports(exports));
-      return Promise.resolve(exports);
-    })
-    .catch(() => {
-      dispatch(
-        showErrorNotification(
-          'Laste eksporter',
-          'En feil oppstod under lastingen av eksportene.'
-        )
-      );
-      return Promise.reject();
-    });
+  const intl = getIntl(getState());
+
+  try {
+    const data = await UttuQuery(activeProvider, getExportsQuery, { historicDays: 30 });
+    const exports = data.exports.map(e => new Export(e));
+    dispatch(receiveExportsActionCreator(exports));
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.loadExportsErrorHeader),
+        intl.formatMessage(messages.loadExportsErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };
 
-export const loadExportById = id => (dispatch, getState) => {
+export const loadExportById = id => async (dispatch, getState) => {
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, getExportByIdQuery, { id })
-    .then(data => Promise.resolve(new Export(data.export)))
-    .catch(() => {
-      dispatch(
-        showErrorNotification(
-          'Laste eksport',
-          'En feil oppstod under lastingen av eksporten.'
-        )
-      );
-      return Promise.reject();
-    });
+  const intl = getIntl(getState());
+
+  try {
+    const data = await UttuQuery(activeProvider, getExportByIdQuery, { id });
+    dispatch(receiveExportActionCreator(new Export(data.export)));
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.loadExportByIdErrorHeader),
+        intl.formatMessage(messages.loadExportByIdErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };
 
-export const saveExport = theExport => (dispatch, getState) => {
+export const saveExport = theExport => async (dispatch, getState) => {
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, exportMutation, {
-    input: theExport.toPayload()
-  })
-    .then(() => {
-      dispatch(
-        showSuccessNotification('Lagre eksport', 'Eksporten ble lagret.')
-      );
-      return Promise.resolve();
-    })
-    .catch(e => {
-      dispatch(
-        showErrorNotification(
-          'Lagre eksport',
-          `En feil oppstod under lagringen av eksporten: ${getUttuError(e)}`
-        )
-      );
-      return Promise.reject();
+  const intl = getIntl(getState());
+
+  try {
+    await UttuQuery(activeProvider, exportMutation, {
+      input: theExport.toPayload()
     });
+    dispatch(
+      showSuccessNotification(
+        intl.formatMessage(messages.saveExportSuccessHeader),
+        intl.formatMessage(messages.saveExportSuccessMessage)
+      )
+    );
+  } catch(e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.saveExportErrorHeader),
+        intl.formatMessage(messages.saveExportErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };

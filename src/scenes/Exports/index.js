@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { AddIcon } from '@entur/component-library';
@@ -14,89 +13,89 @@ import {
 import Loading from '../../components/Loading';
 import IconButton from '../../components/IconButton';
 import { loadExports } from '../../actions/exports';
-import ExportViewer from './scenes/Viewer';
 import { EXPORT_STATUS } from '../../model/enums';
 
 import './styles.css';
+import { getIconForStatus } from './scenes/icons';
+import { getIntl } from '../../i18n';
+import messages from './exports.messages';
 
-class Exports extends Component {
-  componentDidMount() {
-    this.props.dispatch(loadExports());
+const Exports = ({ history }) => {
+  const exports = useSelector(({exports}) => exports);
+  const {formatMessage} = useSelector(state => getIntl(state));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadExports());
+  }, []);
+
+  const handleOnRowClick = id => {
+    history.push(`/exports/view/${id}`);
   }
 
-  handleOnRowClick(id) {
-    this.props.history.push(`/exports/view/${id}`);
-  }
-
-  render() {
-    const { exports } = this.props;
-
-    const renderTableRows = () => {
-      if (exports) {
-        return exports.length > 0 ? (
-          exports.map(e => (
-            <TableRow key={e.id} onClick={() => this.handleOnRowClick(e.id)}>
-              <TableRowCell>{e.name}</TableRowCell>
-              <TableRowCell>
-                {ExportViewer.getIconForStatus(e.exportStatus)}
-              </TableRowCell>
-              <TableRowCell>
-                {e.exportStatus === EXPORT_STATUS.SUCCESS && (
-                  <a href={e.downloadUrl}>Last ned</a>
-                )}
-              </TableRowCell>
-              <TableRowCell>{e.dryRun ? 'Ja' : 'Nei'}</TableRowCell>
-              <TableRowCell>
-                {moment(e.fromDate).format('DD.MM.YYYY')}
-              </TableRowCell>
-              <TableRowCell>
-                {moment(e.toDate).format('DD.MM.YYYY')}
-              </TableRowCell>
-            </TableRow>
-          ))
-        ) : (
-          <TableRow className="row-no-exports disabled">
-            <TableRowCell colSpan={6}>Ingen eksporter ble funnet.</TableRowCell>
-          </TableRow>
-        );
-      } else {
-        return (
-          <TableRow className="disabled">
-            <TableRowCell colSpan={6}>
-              <Loading text="Laster inn eksporter..." />
+  const renderTableRows = () => {
+    if (exports) {
+      return exports.length > 0 ? (
+        exports.map(e => (
+          <TableRow key={e.id} onClick={() => handleOnRowClick(e.id)}>
+            <TableRowCell>{e.name}</TableRowCell>
+            <TableRowCell>
+              {getIconForStatus(e.exportStatus)}
+            </TableRowCell>
+            <TableRowCell>
+              {e.exportStatus === EXPORT_STATUS.SUCCESS && (
+                <a href={e.downloadUrl}>{formatMessage(messages.downloadLinkText)}</a>
+              )}
+            </TableRowCell>
+            <TableRowCell>{e.dryRun ? formatMessage(messages.dryRunYes) : formatMessage(messages.dryRunNo)}</TableRowCell>
+            <TableRowCell>
+              {moment(e.fromDate).format('DD.MM.YYYY')}
+            </TableRowCell>
+            <TableRowCell>
+              {moment(e.toDate).format('DD.MM.YYYY')}
             </TableRowCell>
           </TableRow>
-        );
-      }
-    };
+        ))
+      ) : (
+        <TableRow className="row-no-exports disabled">
+          <TableRowCell colSpan={6}>{formatMessage(messages.noExportsFoundText)}</TableRowCell>
+        </TableRow>
+      );
+    } else {
+      return (
+        <TableRow className="disabled">
+          <TableRowCell colSpan={6}>
+            <Loading text={formatMessage(messages.loadingExportsText)} />
+          </TableRowCell>
+        </TableRow>
+      );
+    }
+  };
 
-    return (
-      <div className="exports">
-        <h2>Eksporter</h2>
+  return (
+    <div className="exports">
+      <h2>{formatMessage(messages.header)}</h2>
 
-        <Link to="/exports/create">
-          <IconButton
-            icon={<AddIcon />}
-            label="Opprett eksport"
-            labelPosition="right"
-          />
-        </Link>
+      <Link to="/exports/create">
+        <IconButton
+          icon={<AddIcon />}
+          label={formatMessage(messages.createExportButtonLabel)}
+          labelPosition="right"
+        />
+      </Link>
 
-        <Table>
-          <TableHeaderCell label="Navn" />
-          <TableHeaderCell label="Status" />
-          <TableHeaderCell label="Last ned" />
-          <TableHeaderCell label="Tørrkjøring" />
-          <TableHeaderCell label="Fra dato" />
-          <TableHeaderCell label="Til dato" />
+      <Table>
+        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelName)} />
+        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelStatus)} />
+        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelDownload)} />
+        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelDryrun)} />
+        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelFromDate)} />
+        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelToDate)} />
 
-          {renderTableRows()}
-        </Table>
-      </div>
-    );
-  }
+        {renderTableRows()}
+      </Table>
+    </div>
+  );
 }
 
-const mapStateToProps = ({ exports }) => ({ exports });
-
-export default compose(withRouter, connect(mapStateToProps))(Exports);
+export default withRouter(Exports);

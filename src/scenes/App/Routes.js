@@ -8,7 +8,7 @@ import LinesEditor from '../Lines/scenes/Editor';
 import StopPlacesOverview from '../StopPlaces';
 import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import ExportsOverview from '../Exports';
-import ExportsEditor from '../Exports/scenes/Editor';
+import ExportsEditor from '../Exports/scenes/Creator';
 import ExportsViewer from '../Exports/scenes/Viewer';
 
 const Routes = () => (
