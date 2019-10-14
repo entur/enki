@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { AddIcon } from '@entur/component-library';
-
+import { FormattedDate } from 'react-intl';
 import {
   Table,
   TableHeaderCell,
@@ -49,10 +49,10 @@ const Exports = ({ history }) => {
             </TableRowCell>
             <TableRowCell>{e.dryRun ? formatMessage(messages.dryRunYes) : formatMessage(messages.dryRunNo)}</TableRowCell>
             <TableRowCell>
-              {moment(e.fromDate).format('DD.MM.YYYY')}
+              <FormattedDate value={moment(e.fromDate)} />
             </TableRowCell>
             <TableRowCell>
-              {moment(e.toDate).format('DD.MM.YYYY')}
+              <FormattedDate value={moment(e.toDate)} />
             </TableRowCell>
           </TableRow>
         ))
