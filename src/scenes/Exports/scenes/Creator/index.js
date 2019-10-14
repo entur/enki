@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { Button, Label, TextField, Checkbox } from '@entur/component-library';
@@ -8,8 +8,11 @@ import { Export } from '../../../../model';
 import { saveExport } from '../../../../actions/exports';
 import OverlayLoader from '../../../../components/OverlayLoader';
 import CustomDatepicker from '../../../../components/CustomDatepicker';
+import { selectIntl } from '../../../../i18n';
 
 import './styles.css';
+import messages from './creator.messages';
+
 
 const newExport = () => {
   const today = moment().format('YYYY-MM-DD');
@@ -17,6 +20,7 @@ const newExport = () => {
 }
 
 const ExportsCreator = ({ history }) => {
+  const {formatMessage} = useSelector(selectIntl);
   const [isSaving, setSaving] = useState(false);
   const [theExport, setTheExport] = useState(newExport());
 
@@ -35,37 +39,37 @@ const ExportsCreator = ({ history }) => {
   return (
     <div className="export-editor">
       <div className="header">
-        <h2>Opprett eksport</h2>
+        <h2>{formatMessage(messages.header)}</h2>
 
         <div className="buttons">
           <Button variant="success" onClick={handleOnSaveClick}>
-            Lagre
+            {formatMessage(messages.saveButtonLabelText)}
           </Button>
         </div>
       </div>
 
-      <OverlayLoader isLoading={isSaving} text="Lagrer eksporten...">
+      <OverlayLoader isLoading={isSaving} text={formatMessage(messages.savingOverlayLoaderText)}>
         <div className="export-form">
-          <Label>* Navn</Label>
+          <Label>{formatMessage(messages.nameFormLabel)}</Label>
           <TextField
             type="text"
             value={theExport.name}
             onChange={e => handleFieldChange('name', e.target.value)}
           />
 
-          <Label>* Fra dato</Label>
+          <Label>{formatMessage(messages.fromDateFormLabel)}</Label>
           <CustomDatepicker
             startDate={theExport.fromDate}
             onChange={date => handleFieldChange('fromDate', date)}
           />
 
-          <Label>* Til dato</Label>
+          <Label>{formatMessage(messages.toDateFormLabel)}</Label>
           <CustomDatepicker
             startDate={theExport.toDate}
             onChange={date => handleFieldChange('toDate', date)}
           />
 
-          <Label>Tørrkjøring</Label>
+          <Label>{formatMessage(messages.dryRunFormLabel)}</Label>
           <Checkbox
             value="1"
             checked={theExport.dryRun === true}
