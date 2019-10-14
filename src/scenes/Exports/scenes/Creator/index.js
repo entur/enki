@@ -25,7 +25,7 @@ const ExportsCreator = ({ history }) => {
   const handleOnSaveClick = () => {
     setSaving(true);
     dispatch(saveExport(theExport))
-      .then(() => history.push('/exports'));
+      .finally(() => history.push('/exports'))
   };
 
   const handleFieldChange = (field, value) => {
