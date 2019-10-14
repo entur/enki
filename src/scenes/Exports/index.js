@@ -27,7 +27,7 @@ const Exports = ({ history }) => {
 
   useEffect(() => {
     dispatch(loadExports());
-  }, []);
+  }, [dispatch]);
 
   const handleOnRowClick = id => {
     history.push(`/exports/view/${id}`);
