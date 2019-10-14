@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { FormattedDate } from 'react-intl';
 import moment from 'moment';
 import { Label } from '@entur/component-library';
 
@@ -13,6 +14,9 @@ import './styles.css';
 import { createSelector } from 'reselect';
 import { getIconForStatus, getIconForSeverity } from '../icons';
 
+import messages, {exportStatuses, exportMessages} from './viewer.messages';
+import { selectIntl } from '../../../../i18n';
+
 const selectExport = createSelector(
   state => state.exports,
   (_, match) => match.params.id,
@@ -24,6 +28,8 @@ const getDownloadUrl = (relativeUrl) => {
 }
 
 const ExportsViewer = ({ match, history }) => {
+  const {formatMessage} = useSelector(selectIntl);
+
   const currentExport = useSelector(state =>
     selectExport(state, match));
 
@@ -54,41 +60,41 @@ const ExportsViewer = ({ match, history }) => {
   return (
     <div className="export-viewer">
       <div className="header">
-        <h2>Vis eksport</h2>
+        <h2>{formatMessage(messages.header)}</h2>
       </div>
 
       {theExport ? (
         <div className="export-view">
-          <Label>Navn</Label>
+          <Label>{formatMessage(messages.nameLabel)}</Label>
           <div className="value">{theExport.name}</div>
 
-          <Label>Fra dato</Label>
+          <Label>{formatMessage(messages.fromDateLabel)}</Label>
           <div className="value">
-            {moment(theExport.fromDate).format('DD.MM.YYYY')}
+            <FormattedDate value={moment(theExport.fromDate)} />
           </div>
 
-          <Label>Til dato</Label>
+          <Label>{formatMessage(messages.toDateLabel)}</Label>
           <div className="value">
-            {moment(theExport.toDate).format('DD.MM.YYYY')}
+            <FormattedDate value={moment(theExport.toDate)} />
           </div>
 
-          <Label>Tørrkjøring</Label>
-          <div className="value">{theExport.dryRun ? 'Ja' : 'Nei'}</div>
+          <Label>{formatMessage(messages.dryRunLabel)}</Label>
+          <div className="value">{theExport.dryRun ? formatMessage(messages.dryRunYes) : formatMessage(messages.dryRunNo)}</div>
 
-          <Label>Status</Label>
+          <Label>{formatMessage(messages.statusLabel)}</Label>
           <div className="value status">
             <div className="icon">
               {getIconForStatus(theExport.exportStatus)}
             </div>
-            <div>{theExport.exportStatus}</div>
+            <div>{formatMessage(exportStatuses[theExport.exportStatus])}</div>
           </div>
 
           {theExport.exportStatus === EXPORT_STATUS.SUCCESS && (
             <Fragment>
-              <Label>Last ned eksporterte filer</Label>
+              <Label>{formatMessage(messages.downloadLabel)}</Label>
               <div className="value">
                 <a href={getDownloadUrl(theExport.downloadUrl)}>
-                  Last ned
+                  {formatMessage(messages.downloadLinkText)}
                 </a>
               </div>
             </Fragment>
@@ -96,14 +102,14 @@ const ExportsViewer = ({ match, history }) => {
 
           {theExport.messages.length > 0 && (
             <Fragment>
-              <Label>Meldinger</Label>
+              <Label>{formatMessage(messages.messagesLabel)}</Label>
               <div className="value messages">
                 {theExport.messages.map((m, i) => (
                   <div key={i} className="message">
                     <div className="icon">
                       {getIconForSeverity(m.severity)}
                     </div>
-                    <div>{m.message}</div>
+                    <div>{Object.keys(exportMessages).includes(m.message) ? formatMessage(exportMessages[m.message]) : m.message}</div>
                   </div>
                 ))}
               </div>
@@ -111,7 +117,7 @@ const ExportsViewer = ({ match, history }) => {
           )}
         </div>
       ) : (
-        <Loading text="Laster inn eksport..." />
+        <Loading text={formatMessage(messages.loadingText)} />
       )}
     </div>
   );
