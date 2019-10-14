@@ -10,7 +10,8 @@ export const getUttuError = e => {
 
 const validErrorCodes = [
   'UNKNOWN',
-  'ORGANISATION_NOT_VALID_OPERATOR'
+  'ORGANISATION_NOT_VALID_OPERATOR',
+  'FROM_DATE_AFTER_TO_DATE'
 ];
 
 export const getInternationalizedUttuError = (intl, e) => {

@@ -1,4 +1,5 @@
 import { addLocaleData, IntlProvider } from 'react-intl';
+import { createSelector } from 'reselect';
 
 export const defaultLocale = 'nb';
 export const SUPPORTED_LOCALES = ['nb', 'en'];
@@ -61,3 +62,8 @@ export const getIntl = ({ intl: { locale, messages } }) => {
   }
   return cachedIntl;
 };
+
+export const selectIntl = createSelector(
+  state => state.intl,
+  intl => getIntl({ intl })
+);
