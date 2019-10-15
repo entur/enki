@@ -67,9 +67,18 @@ class PassingTimesEditor extends Component {
     const { flexibleStopPlaces, passingTimes, stopPoints } = this.props;
 
     const passingTimeEditors = stopPoints.map((sp, i) => {
-      const stopPlaceName = flexibleStopPlaces.find(
+      let stopPlaceName;
+
+      const stopPlace = flexibleStopPlaces.find(
         fsp => fsp.id === sp.flexibleStopPlaceRef
-      ).name;
+      );
+
+      if (stopPlace) {
+        stopPlaceName = stopPlace.name;
+      } else {
+        stopPlaceName = sp.quayRef;
+      }
+
       const tpt = passingTimes[i];
 
       return (
