@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import {injectIntl} from 'react-intl';
-import Errors from '../../../../Errors';
+import Errors from '../../../../../../../../components/Errors';
 import {Checkbox, Label, TextField} from '@entur/component-library';
-import {hasValue} from '../../../../helpers';
+import {hasValue} from '../../../../../../../../helpers/forms';
 import StopPlaceSelection from './StopPlaceSelection';
 import QuaySearchResults from './QuaySearchResults';
 import messages from './Form.messages';
