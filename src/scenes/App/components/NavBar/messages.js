@@ -1,10 +1,6 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  rootLinkText: {
-    id: 'app.navBar.rootLinkText',
-    defaultMessage: 'Bestillingstransport'
-  },
   rootLinkLogoAltText: {
     id: 'app.navBar.rootLinkLogoAltText',
     defaultMessage: 'Logo for Entur Bestillingstransport'
