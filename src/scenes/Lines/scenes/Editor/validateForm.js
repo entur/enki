@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { DEFAULT_SELECT_VALUE } from './constants';
-import { objectValues } from './helpers';
+import { objectValues } from '../../../../helpers/forms';
 
 import messages from './validateForm.messages';
 

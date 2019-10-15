@@ -1,5 +1,6 @@
 import React from 'react';
 import {injectIntl} from 'react-intl';
+import './styles.css';
 
 export default injectIntl(function ({intl, errors}) {
   if (errors.length === 0) {

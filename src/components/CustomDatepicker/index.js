@@ -24,9 +24,11 @@ class CustomDatepicker extends Component {
       timeIntervals,
       label,
       disabled,
-      className
+      className,
+      datePickerClassName
     } = this.props;
     const classNames = cx('datepicker', className);
+    const datePickerClassNames = cx('custom-datepicker', datePickerClassName)
     const selectedDate = startDate !== null ? moment(startDate) : null;
     return (
       <div className={classNames}>
@@ -41,7 +43,7 @@ class CustomDatepicker extends Component {
           shouldCloseOnSelect
           timeFormat="HH:mm"
           dateFormat="DD.MM.YYYY"
-          className="custom-datepicker"
+          className={datePickerClassNames}
           calendarClassName="custom-datepicker-calendar"
           disabled={disabled}
         />

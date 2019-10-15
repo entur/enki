@@ -7,7 +7,7 @@ import {
   FormGroup
 } from '@entur/component-library';
 import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL} from '../constants';
-import Errors from '../Errors';
+import Errors from '../../../../../components/Errors';
 
 export default ({ flexibleLine, networks, operators, errors, networkSelection, operatorSelection, handleFieldChange, handleNetworkSelectionChange, handleOperatorSelectionChange }) => {
   return (

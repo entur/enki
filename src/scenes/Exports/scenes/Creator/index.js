@@ -9,10 +9,11 @@ import { saveExport } from '../../../../actions/exports';
 import OverlayLoader from '../../../../components/OverlayLoader';
 import CustomDatepicker from '../../../../components/CustomDatepicker';
 import { selectIntl } from '../../../../i18n';
+import Errors from '../../../../components/Errors';
 
 import './styles.css';
 import messages from './creator.messages';
-
+import validateForm from './validateForm';
 
 const newExport = () => {
   const today = moment().format('YYYY-MM-DD');
@@ -23,13 +24,22 @@ const ExportsCreator = ({ history }) => {
   const {formatMessage} = useSelector(selectIntl);
   const [isSaving, setSaving] = useState(false);
   const [theExport, setTheExport] = useState(newExport());
+  const [errors, setErrors] = useState({
+    name: [],
+    fromDateToDate: []
+  });
 
   const dispatch = useDispatch();
 
   const handleOnSaveClick = () => {
-    setSaving(true);
-    dispatch(saveExport(theExport))
-      .finally(() => history.push('/exports'))
+    let [valid, errors] = validateForm(theExport);
+    if (!valid) {
+      setErrors(errors);
+    } else {
+      setSaving(true);
+      dispatch(saveExport(theExport))
+        .finally(() => history.push('/exports'))
+    }
   };
 
   const handleFieldChange = (field, value) => {
@@ -55,19 +65,26 @@ const ExportsCreator = ({ history }) => {
             type="text"
             value={theExport.name}
             onChange={e => handleFieldChange('name', e.target.value)}
+            className={errors.name.length ? 'input-error' : ''}
           />
+
+          <Errors errors={errors.name} />
 
           <Label>{formatMessage(messages.fromDateFormLabel)}</Label>
           <CustomDatepicker
             startDate={theExport.fromDate}
             onChange={date => handleFieldChange('fromDate', date)}
+            datePickerClassName={errors.fromDateToDate.length ? 'input-error' : ''}
           />
 
           <Label>{formatMessage(messages.toDateFormLabel)}</Label>
           <CustomDatepicker
             startDate={theExport.toDate}
             onChange={date => handleFieldChange('toDate', date)}
+            datePickerClassName={errors.fromDateToDate.length ? 'input-error' : ''}
           />
+
+          <Errors errors={errors.fromDateToDate} />
 
           <Label>{formatMessage(messages.dryRunFormLabel)}</Label>
           <Checkbox

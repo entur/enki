@@ -8,7 +8,7 @@ import Header from './Header';
 import './styles.css';
 import searchForQuay from './searchForQuay';
 import debounce from './debounce';
-import {hasValue} from '../../../../helpers';
+import {hasValue} from '../../../../../../../../helpers/forms';
 import {DEFAULT_SELECT_VALUE, TABS} from './constants';
 import Form from './Form';
 import validateForm from './validateForm';
