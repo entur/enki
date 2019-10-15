@@ -17,7 +17,7 @@ import { getOrganisations } from '../../actions/organisations';
 
 import './styles.css';
 
-import messages from './index.messages';
+import messages from './messages';
 
 delete L.Icon.Default.prototype._getIconUrl;
 

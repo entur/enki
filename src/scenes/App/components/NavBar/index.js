@@ -9,6 +9,7 @@ import logo from '../../../../static/img/logo.png';
 import './styles.css';
 import { selectIntl } from '../../../../i18n';
 import messages from './messages';
+import appMessages from '../../messages';
 
 const NavBar = () => {
   const {formatMessage} = useSelector(selectIntl);
@@ -21,7 +22,7 @@ const NavBar = () => {
             src={logo}
             alt={formatMessage(messages.rootLinkLogoAltText)}
           />
-          <span>{formatMessage(messages.rootLinkText)}</span>
+          <span>{formatMessage(appMessages.title)}</span>
         </div>
       </Link>
 
