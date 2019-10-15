@@ -1,44 +1,55 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import {useSelector} from 'react-redux';
 import UserPreference from './UserPreference';
 import NavBarMenuItem from './NavBarMenuItem';
 
 import logo from '../../../../static/img/logo.png';
 
 import './styles.css';
+import { selectIntl } from '../../../../i18n';
+import messages from './messages';
 
-const NavBar = () => (
-  <div className="navbar">
-    <Link to="/" className="link">
-      <div className="logo-wrapper">
-        <img
-          className="logo"
-          src={logo}
-          alt="Logo for Entur Bestillingstransport"
+const NavBar = () => {
+  const {formatMessage} = useSelector(selectIntl);
+  return (
+    <div className="navbar">
+      <Link to="/" className="link">
+        <div className="logo-wrapper">
+          <img
+            className="logo"
+            src={logo}
+            alt={formatMessage(messages.rootLinkLogoAltText)}
+          />
+          <span>{formatMessage(messages.rootLinkText)}</span>
+        </div>
+      </Link>
+
+      <UserPreference />
+
+      <div className="items">
+        <NavBarMenuItem
+          key="networks"
+          label={formatMessage(messages.networksMenuItemLabel)}
+          path="/networks" />
+        <NavBarMenuItem
+          key="lines"
+          label={formatMessage(messages.linesMenuItemLabel)}
+          path="/lines" />
+        <NavBarMenuItem
+          key="stop-places"
+          label={formatMessage(messages.stopPlacesMenuItemLabel)}
+          path="/stop-places"
         />
-        <span>BESTILLINGSTRANSPORT</span>
+        <NavBarMenuItem
+          className="exports"
+          key="exports"
+          label={formatMessage(messages.exportsMenuItemLabel)}
+          path="/exports"
+        />
       </div>
-    </Link>
-
-    <UserPreference />
-
-    <div className="items">
-      <NavBarMenuItem key="networks" label="Nettverk" path="/networks" />
-      <NavBarMenuItem key="lines" label="Linjer" path="/lines" />
-      <NavBarMenuItem
-        key="stop-places"
-        label="Stoppesteder"
-        path="/stop-places"
-      />
-      <NavBarMenuItem
-        className="exports"
-        key="exports"
-        label="Eksporter"
-        path="/exports"
-      />
     </div>
-  </div>
-);
+  );
+}
 
 export default NavBar;
