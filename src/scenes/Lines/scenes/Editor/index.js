@@ -107,7 +107,8 @@ const FlexibleLineEditor = ({ match, history }) => {
     if (valid) {
       setSaving(true);
       dispatch(saveFlexibleLine(flexibleLine))
-        .then(() => history.push('/lines'));
+        .then(() => history.push('/lines'))
+        .finally(() => setSaving(false));
     }
   };
 

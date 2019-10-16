@@ -77,7 +77,8 @@ const NetworkEditor = ({ match, history }) => {
   const handleOnSaveClick = () => {
     setSaving(true);
     dispatch(saveNetwork(network))
-      .then(() => history.push('/networks'));
+      .then(() => history.push('/networks'))
+      .finally(() => setSaving(false));
   };
 
   const handleFieldChange = (field, value) => {
