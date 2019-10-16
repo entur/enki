@@ -77,5 +77,12 @@
 	"lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.noValues": "Du må velge enten stoppested eller plattform",
 	"lines.journeyPatterns.stopPoints.validateForm.error.frontText.noValue": "Du må oppgi fronttekst",
 	"lines.journeyPatterns.stopPoints.validateForm.error.quayRef.invalid": "Ugyldig plattform-ID",
-	"lines.validateForm.error.flexibleLine.networkRef.empty": "Du må velge et nettverk"
+	"lines.validateForm.error.flexibleLine.networkRef.empty": "Du må velge et nettverk",
+	"stopPlaces.createStopPlaceLinkIconLabelText": "Opprett stoppested",
+	"stopPlaces.header": "Stoppesteder",
+	"stopPlaces.loadingStopPlacesText": "Laster inn stoppesteder...",
+	"stopPlaces.nameTableHeaderLabelText": "Navn",
+	"stopPlaces.noStopPlacesFoundText": "Ingen stoppesteder ble funnet.",
+	"stopPlaces.numberOfPointsTableHeaderLabelText": "Antall punkter",
+	"stopPlaces.privateCodeTableHeaderLabelText": "Privat kode"
 }

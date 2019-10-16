@@ -77,5 +77,12 @@
 	"lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.noValues": "You must choose either a stop place or a platform",
 	"lines.journeyPatterns.stopPoints.validateForm.error.frontText.noValue": "You must enter a front text",
 	"lines.journeyPatterns.stopPoints.validateForm.error.quayRef.invalid": "Invalid platform ID",
-	"lines.validateForm.error.flexibleLine.networkRef.empty": "You must select a network"
+	"lines.validateForm.error.flexibleLine.networkRef.empty": "You must select a network",
+	"stopPlaces.createStopPlaceLinkIconLabelText": "Create stop place",
+	"stopPlaces.header": "Stop places",
+	"stopPlaces.loadingStopPlacesText": "Loading stop places...",
+	"stopPlaces.nameTableHeaderLabelText": "Name",
+	"stopPlaces.noStopPlacesFoundText": "No stop places found.",
+	"stopPlaces.numberOfPointsTableHeaderLabelText": "Number of points",
+	"stopPlaces.privateCodeTableHeaderLabelText": "Private code"
 }
