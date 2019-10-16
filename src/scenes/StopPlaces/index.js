@@ -23,7 +23,7 @@ const StopPlaces = ({ history }) => {
 
   useEffect(() => {
     dispatch(loadFlexibleStopPlaces());
-  }, [])
+  }, [dispatch])
 
   const handleOnRowClick = useCallback((id) => {
     history.push(`/stop-places/edit/${id}`);
