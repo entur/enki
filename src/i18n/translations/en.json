@@ -19,6 +19,8 @@
 	"actions.flexibleLines.saveLineErrorMessage": "An error occurred while saving the line: {details}",
 	"actions.flexibleLines.saveLineSuccessHeader": "Save line",
 	"actions.flexibleLines.saveLineSuccessMessage": "Line was saved",
+	"actions.flexibleStopPlaces.loadStopPlacesErrorHeader": "Load stop places",
+	"actions.flexibleStopPlaces.loadStopPlacesErrorMessage": "An error occurred while loading stop places: {details}",
 	"app.navBar.exportsMenuItemLabel": "Exports",
 	"app.navBar.linesMenuItemLabel": "Flexible lines",
 	"app.navBar.networksMenuItemLabel": "Networks",

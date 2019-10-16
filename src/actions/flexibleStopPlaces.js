@@ -12,7 +12,9 @@ import {
   deleteFlexibleStopPlace,
   flexibleStopPlaceMutation
 } from '../graphql/uttu/mutations';
-import { getUttuError } from '../helpers/uttu';
+import { getUttuError, getInternationalizedUttuError } from '../helpers/uttu';
+import { getIntl } from '../i18n';
+import messages from './flexibleStopPlaces.messages';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
 export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
@@ -26,27 +28,29 @@ const receiveFlexibleStopPlaces = stopPlaces => ({
   stopPlaces
 });
 
-export const loadFlexibleStopPlaces = () => (dispatch, getState) => {
+export const loadFlexibleStopPlaces = () => async (dispatch, getState) => {
   dispatch(requestFlexibleStopPlaces());
 
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, getFlexibleStopPlacesQuery, {})
-    .then(data => {
-      const flexibleStopPlaces = data.flexibleStopPlaces.map(
-        fsp => new FlexibleStopPlace(fsp)
-      );
-      dispatch(receiveFlexibleStopPlaces(flexibleStopPlaces));
-      return Promise.resolve(flexibleStopPlaces);
-    })
-    .catch(e => {
-      dispatch(
-        showErrorNotification(
-          'Laste stoppesteder',
-        `En feil oppstod under lastingen av stoppestedene: ${getUttuError(e)}`
-        )
-      );
-      return Promise.reject();
-    });
+  const intl = getIntl(getState());
+
+  try {
+    const data = await UttuQuery(activeProvider, getFlexibleStopPlacesQuery, {});
+    const flexibleStopPlaces = data.flexibleStopPlaces.map(
+      fsp => new FlexibleStopPlace(fsp)
+    );
+    dispatch(receiveFlexibleStopPlaces(flexibleStopPlaces));
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.loadStopPlacesErrorHeader),
+        intl.formatMessage(messages.loadStopPlacesErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };
 
 export const loadFlexibleStopPlaceById = id => (dispatch, getState) => {

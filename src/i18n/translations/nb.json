@@ -19,6 +19,8 @@
 	"actions.flexibleLines.saveLineErrorMessage": "En feil oppstod under lagringen av linjen: {details}",
 	"actions.flexibleLines.saveLineSuccessHeader": "Lagre linje",
 	"actions.flexibleLines.saveLineSuccessMessage": "Linjen ble lagret",
+	"actions.flexibleStopPlaces.loadStopPlacesErrorHeader": "Laste stoppesteder",
+	"actions.flexibleStopPlaces.loadStopPlacesErrorMessage": "En feil oppstod under lastingen av stoppestedene: {details}",
 	"app.navBar.exportsMenuItemLabel": "Eksporter",
 	"app.navBar.linesMenuItemLabel": "Linjer",
 	"app.navBar.networksMenuItemLabel": "Nettverk",
