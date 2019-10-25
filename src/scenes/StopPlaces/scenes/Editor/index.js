@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, Label, TextField, TextArea } from '@entur/component-library';
 
@@ -18,204 +17,189 @@ import ConfirmDialog from '../../../../components/ConfirmDialog';
 import PolygonMap from './components/PolygonMap';
 
 import './styles.css';
+import { createSelector } from 'reselect';
 
-class FlexibleStopPlaceEditor extends Component {
-  state = {
-    flexibleStopPlace: null,
+const selectFlexibleStopPlace = createSelector(
+  state => state.flexibleStopPlaces,
+  (_, match) => match.params.id,
+  (flexibleStopPlaces, id) => id ? flexibleStopPlaces ? flexibleStopPlaces.find(sp => sp.id === id) : null : new FlexibleStopPlace({
+    transportMode: VEHICLE_MODE.BUS
+  })
+)
 
-    isSaving: false,
-    isDeleteDialogOpen: false,
-    isDeleting: false
-  };
+const FlexibleStopPlaceEditor = ({ match, history }) => {
 
-  componentDidMount() {
-    const { dispatch, match, history } = this.props;
-    if (match.params.id) {
-      dispatch(loadFlexibleLines());
-      dispatch(loadFlexibleStopPlaceById(match.params.id))
-        .then(flexibleStopPlace => this.setState({ flexibleStopPlace }))
-        .catch(() => history.push('/stop-places'));
-    } else {
-      this.setState({
-        flexibleStopPlace: new FlexibleStopPlace({
-          transportMode: VEHICLE_MODE.BUS
-        })
-      });
-    }
-  }
+  const lines = useSelector(({ flexibleLines }) => flexibleLines);
+  const currentFlexibleStopPlace = useSelector(state =>
+    selectFlexibleStopPlace(state, match));
 
-  handleFieldChange(field, value) {
-    this.setState(prevState => ({
-      flexibleStopPlace: prevState.flexibleStopPlace.withChanges({
-        [field]: value
-      })
-    }));
-  }
+  const [flexibleStopPlace, setFlexibleStopPlace] = useState(currentFlexibleStopPlace);
+  const [isSaving, setSaving] = useState(false);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
 
-  handleMapOnClick(e) {
-    this.setState(
-      ({ flexibleStopPlace, flexibleStopPlace: { flexibleArea } }) => ({
-        flexibleStopPlace: flexibleStopPlace.withChanges({
-          flexibleArea: (flexibleArea || new FlexibleArea()).addCoordinate([
-            e.latlng.lat,
-            e.latlng.lng
-          ])
-        })
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadFlexibleLines())
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(loadFlexibleStopPlaceById(match.params.id))
+      .catch(() => history.push('/networks'));
+  }, [dispatch, match.params.id, history]);
+
+  useEffect(() => {
+    setFlexibleStopPlace(currentFlexibleStopPlace);
+  }, [currentFlexibleStopPlace])
+
+  const handleOnSaveClick = useCallback(() => {
+    setSaving(true);
+    dispatch(saveFlexibleStopPlace(flexibleStopPlace))
+      .then(() => history.push('/stop-places'))
+      .finally(() => setSaving(false));
+  }, [dispatch, history, flexibleStopPlace]);
+
+  const handleDelete = useCallback(() => {
+    setDeleteDialogOpen(false);
+    setDeleting(true);
+    dispatch(deleteFlexibleStopPlaceById(flexibleStopPlace.id))
+      .then(() => history.push('/stop-places'))
+      .finally(() => setDeleting(false));
+  }, [dispatch, history, flexibleStopPlace]);
+
+  const handleFieldChange = useCallback((field, value) => {
+    setFlexibleStopPlace(flexibleStopPlace.withChanges({
+      [field]: value
+    }))
+  }, [flexibleStopPlace]);
+
+  const handleMapOnClick = useCallback((e) => {
+    const flexibleArea = flexibleStopPlace.flexibleArea;
+    setFlexibleStopPlace(
+      flexibleStopPlace.withChanges({
+        flexibleArea: (flexibleArea || new FlexibleArea()).addCoordinate([
+          e.latlng.lat,
+          e.latlng.lng
+        ])
       })
     );
-  }
+  }, [flexibleStopPlace]);
 
-  handleOnSaveClick() {
-    const { dispatch, history } = this.props;
-    this.setState({ isSaving: true });
-    dispatch(saveFlexibleStopPlace(this.state.flexibleStopPlace))
-      .then(() => history.push('/stop-places'))
-      .finally(() => this.setState({ isSaving: false }));
-  }
+  const polygonCoordinates =
+  flexibleStopPlace && flexibleStopPlace.flexibleArea
+    ? flexibleStopPlace.flexibleArea.polygon.coordinates
+    : [];
 
-  setDeleteDialogOpen(open) {
-    this.setState({ isDeleteDialogOpen: open });
-  }
+  const isDeleteDisabled =
+    !flexibleStopPlace ||
+    !lines ||
+    !!lines
+      .filter(l => l.journeyPatterns.length > 0)
+      .find(
+        l =>
+          l.journeyPatterns[0].pointsInSequence[0].flexibleStopPlaceRef ===
+          flexibleStopPlace.id
+      ) ||
+    isDeleting;
 
-  handleDelete() {
-    const { dispatch, history } = this.props;
-    this.setState({
-      isDeleteDialogOpen: false,
-      isDeleting: true
-    });
-    dispatch(deleteFlexibleStopPlaceById(this.state.flexibleStopPlace.id))
-      .then(() => history.push('/stop-places'))
-      .finally(() => this.setState({ isDeleting: false }));
-  }
+  return (
+    <div className="stop-place-editor">
+      <div className="header">
+        <h2>{match.params.id ? 'Rediger' : 'Opprett'} stoppested</h2>
 
-  render() {
-    const { match, lines } = this.props;
-    const {
-      flexibleStopPlace,
-      isSaving,
-      isDeleteDialogOpen,
-      isDeleting
-    } = this.state;
+        <div className="buttons">
+          <Button variant="success" onClick={handleOnSaveClick}>
+            Lagre
+          </Button>
 
-    const polygonCoordinates =
-      flexibleStopPlace && flexibleStopPlace.flexibleArea
-        ? flexibleStopPlace.flexibleArea.polygon.coordinates
-        : [];
-
-    const isDeleteDisabled =
-      !flexibleStopPlace ||
-      !lines ||
-      !!lines
-        .filter(l => l.journeyPatterns.length > 0)
-        .find(
-          l =>
-            l.journeyPatterns[0].pointsInSequence[0].flexibleStopPlaceRef ===
-            flexibleStopPlace.id
-        ) ||
-      isDeleting;
-
-    return (
-      <div className="stop-place-editor">
-        <div className="header">
-          <h2>{match.params.id ? 'Rediger' : 'Opprett'} stoppested</h2>
-
-          <div className="buttons">
-            <Button variant="success" onClick={this.handleOnSaveClick.bind(this)}>
-              Lagre
+          {match.params.id && (
+            <Button
+              variant="negative"
+              onClick={() => setDeleteDialogOpen(true)}
+              disabled={isDeleteDisabled}
+            >
+              Slett
             </Button>
-
-            {match.params.id && (
-              <Button
-                variant="negative"
-                onClick={() => this.setDeleteDialogOpen(true)}
-                disabled={isDeleteDisabled}
-              >
-                Slett
-              </Button>
-            )}
-          </div>
+          )}
         </div>
+      </div>
 
-        {flexibleStopPlace ? (
-          <OverlayLoader
-            isLoading={isSaving || isDeleting}
-            text={(isSaving ? 'Lagrer' : 'Sletter') + ' stoppestedet...'}
-          >
-            <div className="stop-place-form-container">
-              <div className="stop-place-form">
-                <Label>* Navn</Label>
-                <TextField
-                  type="text"
-                  value={flexibleStopPlace.name}
-                  onChange={e => this.handleFieldChange('name', e.target.value)}
-                />
+      {flexibleStopPlace ? (
+        <OverlayLoader
+          isLoading={isSaving || isDeleting}
+          text={(isSaving ? 'Lagrer' : 'Sletter') + ' stoppestedet...'}
+        >
+          <div className="stop-place-form-container">
+            <div className="stop-place-form">
+              <Label>* Navn</Label>
+              <TextField
+                type="text"
+                value={flexibleStopPlace.name}
+                onChange={e => handleFieldChange('name', e.target.value)}
+              />
 
-                <Label>Beskrivelse</Label>
-                <TextArea
-                  type="text"
-                  value={flexibleStopPlace.description}
-                  onChange={e =>
-                    this.handleFieldChange('description', e.target.value)
-                  }
-                />
+              <Label>Beskrivelse</Label>
+              <TextArea
+                type="text"
+                value={flexibleStopPlace.description}
+                onChange={e =>
+                  handleFieldChange('description', e.target.value)
+                }
+              />
 
-                <Label>Privat kode</Label>
-                <TextField
-                  type="text"
-                  value={flexibleStopPlace.privateCode}
-                  onChange={e =>
-                    this.handleFieldChange('privateCode', e.target.value)
-                  }
-                />
-              </div>
-
-              <PolygonMap
-                onClick={this.handleMapOnClick.bind(this)}
-                polygon={polygonCoordinates}
+              <Label>Privat kode</Label>
+              <TextField
+                type="text"
+                value={flexibleStopPlace.privateCode}
+                onChange={e =>
+                  handleFieldChange('privateCode', e.target.value)
+                }
               />
             </div>
-          </OverlayLoader>
-        ) : (
-          <Loading
-            text={`Laster inn ${
-              !flexibleStopPlace ? 'stoppestedet' : 'avhengigheter'
-            }...`}
-          />
-        )}
 
-        <ConfirmDialog
-          isOpen={isDeleteDialogOpen}
-          title="Slette stoppested"
-          message="Er du sikker på at du ønsker å slette dette stoppestedet?"
-          buttons={[
-            <Button
-              key={2}
-              onClick={() => this.setDeleteDialogOpen(false)}
-              variant="secondary"
-              width="md"
-              className="action-button"
-            >
-              Nei
-            </Button>,
-            <Button
-              key={1}
-              onClick={this.handleDelete.bind(this)}
-              variant="success"
-              width="md"
-              className="action-button"
-            >
-              Ja
-            </Button>
-          ]}
-          onClose={() => this.setDeleteDialogOpen(false)}
+            <PolygonMap
+              onClick={handleMapOnClick}
+              polygon={polygonCoordinates}
+            />
+          </div>
+        </OverlayLoader>
+      ) : (
+        <Loading
+          text={`Laster inn ${
+            !flexibleStopPlace ? 'stoppestedet' : 'avhengigheter'
+          }...`}
         />
-      </div>
-    );
-  }
+      )}
+
+      <ConfirmDialog
+        isOpen={isDeleteDialogOpen}
+        title="Slette stoppested"
+        message="Er du sikker på at du ønsker å slette dette stoppestedet?"
+        buttons={[
+          <Button
+            key={2}
+            onClick={() => setDeleteDialogOpen(false)}
+            variant="secondary"
+            width="md"
+            className="action-button"
+          >
+            Nei
+          </Button>,
+          <Button
+            key={1}
+            onClick={handleDelete}
+            variant="success"
+            width="md"
+            className="action-button"
+          >
+            Ja
+          </Button>
+        ]}
+        onClose={() => setDeleteDialogOpen(false)}
+      />
+    </div>
+  );
 }
 
-const mapStateToProps = ({ flexibleLines }) => ({ lines: flexibleLines });
-
-export default compose(withRouter, connect(mapStateToProps))(
-  FlexibleStopPlaceEditor
-);
+export default withRouter(FlexibleStopPlaceEditor);

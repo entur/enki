@@ -12,5 +12,9 @@ export default defineMessages({
   FROM_DATE_AFTER_TO_DATE: {
     id: 'helpers.uttu.uttuError.FROM_DATE_AFTER_TO_DATE',
     defaultMessage: 'Fra dato kan ikke være etter til dato'
+  },
+  ENTITY_IS_REFERENCED: {
+    id: 'helpers.uttu.uttuError.ENTITY_IS_REFERENCED',
+    defaultMessage: 'Entity cannot be deleted because {noOfLines, number} other {noOfLines, plural, one {entity has a reference} other {entities have references}} to it.'
   }
 });
