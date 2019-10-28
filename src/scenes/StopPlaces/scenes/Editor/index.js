@@ -45,8 +45,10 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(loadFlexibleStopPlaceById(match.params.id))
-      .catch(() => history.push('/networks'));
+    if (match.params.id) {
+      dispatch(loadFlexibleStopPlaceById(match.params.id))
+        .catch(() => history.push('/networks'));
+    }
   }, [dispatch, match.params.id, history]);
 
   useEffect(() => {
