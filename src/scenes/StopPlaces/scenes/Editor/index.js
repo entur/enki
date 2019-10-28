@@ -107,6 +107,8 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
       ) ||
     isDeleting;
 
+  const isSaveDisabled = !(!!flexibleStopPlace && !!flexibleStopPlace.name);
+
   return (
     <div className="stop-place-editor">
       <div className="header">
@@ -118,7 +120,11 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
         </h2>
 
         <div className="buttons">
-          <Button variant="success" onClick={handleOnSaveClick}>
+          <Button
+            variant="success"
+            onClick={handleOnSaveClick}
+            disabled={isSaveDisabled}
+          >
             {formatMessage(messages.saveButtonText)}
           </Button>
 
