@@ -18,6 +18,8 @@ import PolygonMap from './components/PolygonMap';
 
 import './styles.css';
 import { createSelector } from 'reselect';
+import messages from './messages';
+import { selectIntl } from '../../../../i18n';
 
 const selectFlexibleStopPlace = createSelector(
   state => state.flexibleStopPlaces,
@@ -28,7 +30,7 @@ const selectFlexibleStopPlace = createSelector(
 )
 
 const FlexibleStopPlaceEditor = ({ match, history }) => {
-
+  const {formatMessage} = useSelector(selectIntl);
   const lines = useSelector(({ flexibleLines }) => flexibleLines);
   const currentFlexibleStopPlace = useSelector(state =>
     selectFlexibleStopPlace(state, match));
@@ -108,11 +110,16 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   return (
     <div className="stop-place-editor">
       <div className="header">
-        <h2>{match.params.id ? 'Rediger' : 'Opprett'} stoppested</h2>
+        <h2>
+          {match.params.id ?
+            formatMessage(messages.editHeader) :
+            formatMessage(messages.createHeader)
+          }
+        </h2>
 
         <div className="buttons">
           <Button variant="success" onClick={handleOnSaveClick}>
-            Lagre
+            {formatMessage(messages.saveButtonText)}
           </Button>
 
           {match.params.id && (
@@ -121,7 +128,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
               onClick={() => setDeleteDialogOpen(true)}
               disabled={isDeleteDisabled}
             >
-              Slett
+              {formatMessage(messages.deleteButtonText)}
             </Button>
           )}
         </div>
@@ -130,18 +137,22 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
       {flexibleStopPlace ? (
         <OverlayLoader
           isLoading={isSaving || isDeleting}
-          text={(isSaving ? 'Lagrer' : 'Sletter') + ' stoppestedet...'}
+          text={
+            isSaving ?
+            formatMessage(messages.savingOverlayLoaderText) :
+            formatMessage(messages.deletingOverlayLoaderText)
+          }
         >
           <div className="stop-place-form-container">
             <div className="stop-place-form">
-              <Label>* Navn</Label>
+              <Label>{formatMessage(messages.nameFormLabelText)}</Label>
               <TextField
                 type="text"
                 value={flexibleStopPlace.name}
                 onChange={e => handleFieldChange('name', e.target.value)}
               />
 
-              <Label>Beskrivelse</Label>
+              <Label>{formatMessage(messages.descriptionFormLabelText)}</Label>
               <TextArea
                 type="text"
                 value={flexibleStopPlace.description}
@@ -150,7 +161,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
                 }
               />
 
-              <Label>Privat kode</Label>
+              <Label>{formatMessage(messages.privateCodeFormLabelText)}</Label>
               <TextField
                 type="text"
                 value={flexibleStopPlace.privateCode}
@@ -168,16 +179,18 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
         </OverlayLoader>
       ) : (
         <Loading
-          text={`Laster inn ${
-            !flexibleStopPlace ? 'stoppestedet' : 'avhengigheter'
-          }...`}
+          text={
+            flexibleStopPlace ?
+            formatMessage(messages.loadingStopPlaceText) :
+            formatMessage(messages.loadingDependenciesText)
+          }
         />
       )}
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title="Slette stoppested"
-        message="Er du sikker på at du ønsker å slette dette stoppestedet?"
+        title={formatMessage(messages.deleteStopPlaceDialogTitle)}
+        message={formatMessage(messages.deleteStopPlaceDialogMessage)}
         buttons={[
           <Button
             key={2}
@@ -186,7 +199,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
             width="md"
             className="action-button"
           >
-            Nei
+            {formatMessage(messages.deleteStopPlaceDialogCancelButtonText)}
           </Button>,
           <Button
             key={1}
@@ -195,7 +208,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
             width="md"
             className="action-button"
           >
-            Ja
+            {formatMessage(messages.deleteStopPlaceDialogConfirmButtonText)}
           </Button>
         ]}
         onClose={() => setDeleteDialogOpen(false)}

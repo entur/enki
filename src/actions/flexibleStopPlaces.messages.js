@@ -31,7 +31,7 @@ export default defineMessages({
   },
   saveStopPlaceErrorMessage: {
     id: 'actions.flexibleStopPlaces.saveStopPlaceErrorMessage',
-    defaultMessage: 'En feil oppstod under lagringen av stoppested: {details)'
+    defaultMessage: 'En feil oppstod under lagringen av stoppested: {details}'
   },
   deleteStopPlaceSuccessHeader: {
     id: 'actions.flexibleStopPlaces.deleteStopPlaceSuccessHeader',
