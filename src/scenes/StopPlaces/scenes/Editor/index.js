@@ -20,6 +20,8 @@ import './styles.css';
 import { createSelector } from 'reselect';
 import messages from './messages';
 import { selectIntl } from '../../../../i18n';
+import validateForm from './validateForm';
+import Errors from '../../../../components/Errors';
 
 const selectFlexibleStopPlace = createSelector(
   state => state.flexibleStopPlaces,
@@ -39,6 +41,10 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   const [isSaving, setSaving] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
+  const [errors, setErrors] = useState({
+    name: [],
+    flexibleArea: []
+  });
 
   const dispatch = useDispatch();
 
@@ -58,10 +64,16 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   }, [currentFlexibleStopPlace])
 
   const handleOnSaveClick = useCallback(() => {
-    setSaving(true);
-    dispatch(saveFlexibleStopPlace(flexibleStopPlace))
-      .then(() => history.push('/stop-places'))
-      .finally(() => setSaving(false));
+    let [isValid, errors] = validateForm(flexibleStopPlace);
+    if (!isValid) {
+      setErrors(errors);
+    } else {
+      setSaving(true);
+      dispatch(saveFlexibleStopPlace(flexibleStopPlace))
+        .then(() => history.push('/stop-places'))
+        .finally(() => setSaving(false));
+    }
+
   }, [dispatch, history, flexibleStopPlace]);
 
   const handleDelete = useCallback(() => {
@@ -107,8 +119,6 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
       ) ||
     isDeleting;
 
-  const isSaveDisabled = !(!!flexibleStopPlace && !!flexibleStopPlace.name);
-
   return (
     <div className="stop-place-editor">
       <div className="header">
@@ -123,7 +133,6 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
           <Button
             variant="success"
             onClick={handleOnSaveClick}
-            disabled={isSaveDisabled}
           >
             {formatMessage(messages.saveButtonText)}
           </Button>
@@ -151,6 +160,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
         >
           <div className="stop-place-form-container">
             <div className="stop-place-form">
+              <Errors errors={errors.name} />
               <Label>{formatMessage(messages.nameFormLabelText)}</Label>
               <TextField
                 type="text"
@@ -177,10 +187,13 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
               />
             </div>
 
-            <PolygonMap
-              onClick={handleMapOnClick}
-              polygon={polygonCoordinates}
-            />
+            <div className="stop-place-flexible-area">
+              <Errors errors={errors.flexibleArea} />
+              <PolygonMap
+                onClick={handleMapOnClick}
+                polygon={polygonCoordinates}
+              />
+            </div>
           </div>
         </OverlayLoader>
       ) : (

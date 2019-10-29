@@ -107,6 +107,8 @@
 	"stopPlaces.editor.privateCodeFormLabelText": "Private code",
 	"stopPlaces.editor.saveButtonText": "Save",
 	"stopPlaces.editor.savingOverlayLoaderText": "Saving stop place...",
+	"stopPlaces.editor.validateForm.errorFlexibleAreaNotEnoughPolygons": "You must add more map points",
+	"stopPlaces.editor.validateForm.errorNameEmpty": "You must enter a name",
 	"stopPlaces.header": "Stop places",
 	"stopPlaces.loadingStopPlacesText": "Loading stop places...",
 	"stopPlaces.nameTableHeaderLabelText": "Name",

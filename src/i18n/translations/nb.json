@@ -107,6 +107,8 @@
 	"stopPlaces.editor.privateCodeFormLabelText": "Privat kode",
 	"stopPlaces.editor.saveButtonText": "Lagre",
 	"stopPlaces.editor.savingOverlayLoaderText": "Lagrer stoppestedet...",
+	"stopPlaces.editor.validateForm.errorFlexibleAreaNotEnoughPolygons": "Du må legge til flere punkter i kartet",
+	"stopPlaces.editor.validateForm.errorNameEmpty": "Du må gi stoppestedet et navn",
 	"stopPlaces.header": "Stoppesteder",
 	"stopPlaces.loadingStopPlacesText": "Laster inn stoppesteder...",
 	"stopPlaces.nameTableHeaderLabelText": "Navn",
