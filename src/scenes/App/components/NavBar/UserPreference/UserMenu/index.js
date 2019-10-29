@@ -12,7 +12,7 @@ import messages from './messages';
 
 import './styles.css';
 
-const UserMenu = ({}) => {
+const UserMenu = () => {
   const [open, setOpen] = useState(false);
 
   const {
