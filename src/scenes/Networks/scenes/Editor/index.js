@@ -77,7 +77,8 @@ const NetworkEditor = ({ match, history }) => {
   const handleOnSaveClick = () => {
     setSaving(true);
     dispatch(saveNetwork(network))
-      .then(() => history.push('/networks'));
+      .then(() => history.push('/networks'))
+      .finally(() => setSaving(false));
   };
 
   const handleFieldChange = (field, value) => {
@@ -97,8 +98,6 @@ const NetworkEditor = ({ match, history }) => {
     dispatch(deleteNetworkById(network.id))
       .then(() => history.push('/networks'));
   };
-
-  console.log('RECEIVE_ORG', { organisations, activeProvider});
 
   const authorities = organisations.filter(org =>
     org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&

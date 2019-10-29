@@ -12,104 +12,129 @@ import {
   deleteFlexibleStopPlace,
   flexibleStopPlaceMutation
 } from '../graphql/uttu/mutations';
-import { getUttuError } from '../helpers/uttu';
+import { getInternationalizedUttuError } from '../helpers/uttu';
+import { getIntl } from '../i18n';
+import messages from './flexibleStopPlaces.messages';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
 export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
+export const REQUEST_FLEXIBLE_STOP_PLACE = 'REQUEST_FLEXIBLE_STOP_PLACE';
+export const RECEIVE_FLEXIBLE_STOP_PLACE = 'RECEIVE_FLEXIBLE_STOP_PLACE';
 
-const requestFlexibleStopPlaces = () => ({
+const requestFlexibleStopPlacesActionCreator = () => ({
   type: REQUEST_FLEXIBLE_STOP_PLACES
 });
 
-const receiveFlexibleStopPlaces = stopPlaces => ({
+const receiveFlexibleStopPlacesActionCreator = stopPlaces => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACES,
   stopPlaces
 });
 
-export const loadFlexibleStopPlaces = () => (dispatch, getState) => {
-  dispatch(requestFlexibleStopPlaces());
+const requestFlexibleStopPlaceActionCreator = () => ({
+  type: REQUEST_FLEXIBLE_STOP_PLACE
+});
+
+const receiveFlexibleStopPlaceActionCreator = stopPlace => ({
+  type: RECEIVE_FLEXIBLE_STOP_PLACE,
+  stopPlace
+});
+
+export const loadFlexibleStopPlaces = () => async (dispatch, getState) => {
+  dispatch(requestFlexibleStopPlacesActionCreator());
 
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, getFlexibleStopPlacesQuery, {})
-    .then(data => {
-      const flexibleStopPlaces = data.flexibleStopPlaces.map(
-        fsp => new FlexibleStopPlace(fsp)
-      );
-      dispatch(receiveFlexibleStopPlaces(flexibleStopPlaces));
-      return Promise.resolve(flexibleStopPlaces);
-    })
-    .catch(e => {
-      dispatch(
-        showErrorNotification(
-          'Laste stoppesteder',
-        `En feil oppstod under lastingen av stoppestedene: ${getUttuError(e)}`
-        )
-      );
-      return Promise.reject();
-    });
+  const intl = getIntl(getState());
+
+  try {
+    const data = await UttuQuery(activeProvider, getFlexibleStopPlacesQuery, {});
+    const flexibleStopPlaces = data.flexibleStopPlaces.map(
+      fsp => new FlexibleStopPlace(fsp)
+    );
+    dispatch(receiveFlexibleStopPlacesActionCreator(flexibleStopPlaces));
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.loadStopPlacesErrorHeader),
+        intl.formatMessage(messages.loadStopPlacesErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };
 
-export const loadFlexibleStopPlaceById = id => (dispatch, getState) => {
+export const loadFlexibleStopPlaceById = id => async (dispatch, getState) => {
+  dispatch(requestFlexibleStopPlaceActionCreator());
+
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, getFlexibleStopPlaceByIdQuery, { id })
-    .then(data =>
-      Promise.resolve(new FlexibleStopPlace(data.flexibleStopPlace))
-    )
-    .catch(e => {
-      dispatch(
-        showErrorNotification(
-          'Laste stoppested',
-          `En feil oppstod under lastingen av stoppestedet: ${getUttuError(e)}`
-        )
-      );
-      return Promise.reject();
-    });
+  const intl = getIntl(getState());
+
+  try {
+    const data = await UttuQuery(activeProvider, getFlexibleStopPlaceByIdQuery, { id });
+    dispatch(receiveFlexibleStopPlaceActionCreator(
+      new FlexibleStopPlace(data.flexibleStopPlace)
+    ));
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.loadStopPlaceErrorHeader),
+        intl.formatMessage(messages.loadStopPlaceErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };
 
-export const saveFlexibleStopPlace = flexibleStopPlace => (
-  dispatch,
-  getState
-) => {
+export const saveFlexibleStopPlace = flexibleStopPlace => async (dispatch, getState) => {
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, flexibleStopPlaceMutation, {
-    input: flexibleStopPlace
-  })
-    .then(() => {
-      dispatch(
-        showSuccessNotification('Lagre stoppested', 'Stoppestedet ble lagret.')
-      );
-      return Promise.resolve();
-    })
-    .catch(e => {
-      dispatch(
-        showErrorNotification(
-          'Lagre stoppested',
-          `En feil oppstod under lagringen av stoppestedet: ${getUttuError(e)}`
-        )
-      );
-      return Promise.reject();
+  const intl = getIntl(getState());
+
+  try {
+    await UttuQuery(activeProvider, flexibleStopPlaceMutation, {
+      input: flexibleStopPlace
     });
+    dispatch(
+      showSuccessNotification(
+        intl.formatMessage(messages.saveStopPlaceSuccessHeader),
+        intl.formatMessage(messages.saveStopPlaceSuccessMessage)
+      )
+    );
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.saveStopPlaceErrorHeader),
+        intl.formatMessage(messages.saveStopPlaceErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };
 
-export const deleteFlexibleStopPlaceById = id => (dispatch, getState) => {
+export const deleteFlexibleStopPlaceById = id => async (dispatch, getState) => {
   const activeProvider = getState().providers.active;
-  return UttuQuery(activeProvider, deleteFlexibleStopPlace, { id })
-    .then(() => {
-      dispatch(
-        showSuccessNotification(
-          'Slette stoppested',
-          'Stoppestedet ble slettet.'
-        )
-      );
-      return Promise.resolve();
-    })
-    .catch(e => {
-      dispatch(
-        showErrorNotification(
-          'Slette stoppested',
-          `En feil oppstod under slettingen av stoppestedet: ${getUttuError(e)}`
-        )
-      );
-      return Promise.reject();
-    });
+  const intl = getIntl(getState());
+  try {
+    await UttuQuery(activeProvider, deleteFlexibleStopPlace, { id });
+    dispatch(
+      showSuccessNotification(
+        intl.formatMessage(messages.deleteStopPlaceSuccessHeader),
+        intl.formatMessage(messages.deleteStopPlaceSuccessMessage)
+      )
+    );
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage(messages.deleteStopPlaceErrorHeader),
+        intl.formatMessage(messages.deleteStopPlaceErrorMessage, {
+          details: getInternationalizedUttuError(intl, e)
+        })
+      )
+    );
+    throw e;
+  }
 };

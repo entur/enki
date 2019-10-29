@@ -38,7 +38,8 @@ const ExportsCreator = ({ history }) => {
     } else {
       setSaving(true);
       dispatch(saveExport(theExport))
-        .finally(() => history.push('/exports'))
+        .then(() => history.push('/exports'))
+        .finally(() => setSaving(false));
     }
   };
 
