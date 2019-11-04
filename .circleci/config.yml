@@ -61,6 +61,7 @@ jobs:
     steps:
     - checkout
     - restore-cache: *restore-dependency-cache
+    - run: *build
     - run: *test
   build:
     docker:
