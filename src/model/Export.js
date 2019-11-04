@@ -28,17 +28,23 @@ class Export extends Versioned {
   async download(event) {
     if (event) {
       event.stopPropagation();
-      const {data} = await http.get(
-        `/uttu/${this.downloadUrl}`,
-        {
-          responseType: 'blob',
-          headers: {
-            'Authorization': token.getBearer()
-          }
-        }
-      );
+      try {
+        // feature detection
+        const isFileSaverSupported = !!new Blob;
 
-      saveAs(data, `${this.id.replace(':', '-')}-${this.created}.zip`);
+        const {data} = await http.get(
+          `/uttu/${this.downloadUrl}`,
+          {
+            responseType: 'blob',
+            headers: {
+              'Authorization': token.getBearer()
+            }
+          }
+        );
+
+        saveAs(data, `${this.id.replace(':', '-')}-${this.created}.zip`);
+    } catch (e) {}
+      alert('Sorry, your browser is not supported for downloads.')
     }
   }
 }
