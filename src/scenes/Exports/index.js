@@ -19,6 +19,7 @@ import './styles.css';
 import { getIconForStatus } from './scenes/icons';
 import { selectIntl } from '../../i18n';
 import messages from './exports.messages';
+import { Button } from '@entur/component-library/lib/components/button';
 
 const Exports = ({ history }) => {
   const exports = useSelector(({exports}) => exports);
@@ -44,7 +45,12 @@ const Exports = ({ history }) => {
             </TableRowCell>
             <TableRowCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
-                <a onClick={event => e.download(event)}>{formatMessage(messages.downloadLinkText)}</a>
+                <Button onClick={(event) => {
+                  event.stopPropagation();
+                  e.download();
+                }}>
+                  {formatMessage(messages.downloadLinkText)}
+                </Button>
               )}
             </TableRowCell>
             <TableRowCell>{e.dryRun ? formatMessage(messages.dryRunYes) : formatMessage(messages.dryRunNo)}</TableRowCell>

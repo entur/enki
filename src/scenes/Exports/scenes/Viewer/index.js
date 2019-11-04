@@ -3,12 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { FormattedDate } from 'react-intl';
 import moment from 'moment';
-import { Label } from '@entur/component-library';
+import { Label, Button } from '@entur/component-library';
 
 import { loadExportById } from '../../../../actions/exports';
 import Loading from '../../../../components/Loading';
 import { EXPORT_STATUS } from '../../../../model/enums';
-import { API_BASE } from '../../../../http/http';
 
 import './styles.css';
 import { createSelector } from 'reselect';
@@ -89,9 +88,12 @@ const ExportsViewer = ({ match, history }) => {
             <Fragment>
               <Label>{formatMessage(messages.downloadLabel)}</Label>
               <div className="value download">
-                <a onClick={event => theExport.download(event)}>
+                <Button onClick={event => {
+                  event.stopPropagation();
+                  theExport.download();
+                }}>
                   {formatMessage(messages.downloadLinkText)}
-                </a>
+                </Button>
               </div>
             </Fragment>
           )}
