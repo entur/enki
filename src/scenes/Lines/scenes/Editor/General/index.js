@@ -8,6 +8,7 @@ import {
 } from '@entur/component-library';
 import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL} from '../constants';
 import Errors from '../../../../../components/Errors';
+import { FLEXIBLE_LINE_TYPE } from '../../../../../model/enums';
 
 export default ({ flexibleLine, networks, operators, errors, networkSelection, operatorSelection, handleFieldChange, handleNetworkSelectionChange, handleOperatorSelectionChange }) => {
   return (
@@ -119,6 +120,31 @@ export default ({ flexibleLine, networks, operators, errors, networkSelection, o
         </DropDown>
       </FormGroup>
       <Errors errors={errors.networkRef} />
+
+      <FormGroup
+        className="form-section"
+        inputId="flexibleLineType"
+        title="* Flexible line type"
+      >
+        <DropDown
+          value={flexibleLine.flexibleLineType}
+          onChange={e =>
+            handleFieldChange('flexibleLineType', e.target.value)
+          }
+        >
+          <DropDownOptions
+            label={DEFAULT_SELECT_LABEL}
+            value={DEFAULT_SELECT_VALUE}
+          />
+          {Object.values(FLEXIBLE_LINE_TYPE).map(type => (
+            <DropDownOptions
+              key={type}
+              label={type}
+              value={type}
+            />
+          ))}
+        </DropDown>
+      </FormGroup>
     </Fragment>
   );
 }
