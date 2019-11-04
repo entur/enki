@@ -85,6 +85,7 @@ class StopPointsEditor extends Component {
             isOpen={true}
             content={
               <StopPointEditor
+                isFirst={stopPoints.length === 0 || stopPointIndexInDialog === 0}
                 stopPoint={stopPointInDialog}
                 onChange={stopPointInDialog =>
                   this.setState({ stopPointInDialog })

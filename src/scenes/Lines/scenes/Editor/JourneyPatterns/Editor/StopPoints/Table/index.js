@@ -42,7 +42,7 @@ class StopPointsTable extends Component {
                   ).name
                 : sp.quayRef ? sp.quayRef : '- Nytt stoppepunkt -'}
             </TableRowCell>
-            <TableRowCell>{sp.destinationDisplay.frontText}</TableRowCell>
+            <TableRowCell>{sp.destinationDisplay ? sp.destinationDisplay.frontText : ''}</TableRowCell>
             <TableRowCell>{sp.forBoarding ? 'Ja' : 'Nei'}</TableRowCell>
             <TableRowCell>{sp.forAlighting ? 'Ja' : 'Nei'}</TableRowCell>
             <TableRowCell>

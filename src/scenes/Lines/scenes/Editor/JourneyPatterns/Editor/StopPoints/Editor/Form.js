@@ -17,7 +17,8 @@ const Form = ({
   handleFieldChange,
   debouncedSearchForQuay,
   handleFrontTextChange,
-  stopPoint
+  stopPoint,
+  frontTextRequired
 }) => {
   let frontTextValue = stopPoint.destinationDisplay &&
     stopPoint.destinationDisplay.frontText
@@ -52,7 +53,7 @@ const Form = ({
 
       <Errors errors={errors.quayRef} />
 
-      <Label>* {formatMessage(messages.labelFrontText)}</Label>
+      <Label>{frontTextRequired && '* '}{formatMessage(messages.labelFrontText)}</Label>
       <TextField
         type="text"
         value={frontTextValue}
