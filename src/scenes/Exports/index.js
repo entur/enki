@@ -44,7 +44,7 @@ const Exports = ({ history }) => {
             </TableRowCell>
             <TableRowCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
-                <a href={e.downloadUrl}>{formatMessage(messages.downloadLinkText)}</a>
+                <a onClick={event => e.download(event)}>{formatMessage(messages.downloadLinkText)}</a>
               )}
             </TableRowCell>
             <TableRowCell>{e.dryRun ? formatMessage(messages.dryRunYes) : formatMessage(messages.dryRunNo)}</TableRowCell>
