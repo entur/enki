@@ -23,10 +23,6 @@ const selectExport = createSelector(
   (theExports, id) => theExports ? theExports.find(e => e.id === id) : null
 )
 
-const getDownloadUrl = (relativeUrl) => {
-  return API_BASE + '/uttu/' + relativeUrl;
-}
-
 const ExportsViewer = ({ match, history }) => {
   const {formatMessage} = useSelector(selectIntl);
 
@@ -92,8 +88,8 @@ const ExportsViewer = ({ match, history }) => {
           {theExport.exportStatus === EXPORT_STATUS.SUCCESS && (
             <Fragment>
               <Label>{formatMessage(messages.downloadLabel)}</Label>
-              <div className="value">
-                <a href={getDownloadUrl(theExport.downloadUrl)}>
+              <div className="value download">
+                <a onClick={event => theExport.download(event)}>
                   {formatMessage(messages.downloadLinkText)}
                 </a>
               </div>

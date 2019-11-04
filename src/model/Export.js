@@ -1,5 +1,8 @@
 import Versioned from './base/Versioned';
 import Message from './Message';
+import http from '../http/http';
+import { saveAs } from 'file-saver';
+import token from '../http/token';
 
 class Export extends Versioned {
   constructor(data = {}) {
@@ -20,6 +23,29 @@ class Export extends Versioned {
     delete payload.downloadUrl;
     delete payload.messages;
     return payload;
+  }
+
+  async download(event) {
+    if (event) {
+      event.stopPropagation();
+      try {
+        // feature detection
+        const isFileSaverSupported = !!new Blob;
+
+        const {data} = await http.get(
+          `/uttu/${this.downloadUrl}`,
+          {
+            responseType: 'blob',
+            headers: {
+              'Authorization': token.getBearer()
+            }
+          }
+        );
+
+        saveAs(data, `${this.id.replace(':', '-')}-${this.created}.zip`);
+    } catch (e) {}
+      alert('Sorry, your browser is not supported for downloads.')
+    }
   }
 }
 
