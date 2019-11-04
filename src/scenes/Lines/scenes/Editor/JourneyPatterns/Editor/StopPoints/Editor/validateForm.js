@@ -2,7 +2,7 @@ import {hasValue, objectValues} from '../../../../../../../../helpers/forms';
 import searchForQuay from './searchForQuay';
 import messages from './validateForm.messages';
 
-export default async function (stopPoint) {
+export default async function (stopPoint, stopPointIndex) {
   let errors = { quayRef: [], flexibleStopPlaceRefAndQuayRef: [], frontText: [] };
   let { quayRef, flexibleStopPlaceRef, destinationDisplay } = stopPoint;
 
@@ -15,7 +15,7 @@ export default async function (stopPoint) {
     if (!quaySearch.quay.id) {
       errors.quayRef.push(messages.errorQuayRefInvalid);
     }
-  } else if (!destinationDisplay || !hasValue(destinationDisplay.frontText)) {
+  } else if (stopPointIndex === 0 && (!destinationDisplay || !hasValue(destinationDisplay.frontText))) {
     errors.frontText.push(messages.errorFrontTextNoValue);
   }
   return [objectValues(errors).length === 0, errors];

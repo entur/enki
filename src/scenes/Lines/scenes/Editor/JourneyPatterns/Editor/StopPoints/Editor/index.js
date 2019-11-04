@@ -54,7 +54,7 @@ class StopPointEditor extends Component {
   }
 
   onSave = async () => {
-    let [valid, errors] = await validateForm(this.props.stopPoint);
+    let [valid, errors] = await validateForm(this.props.stopPoint, this.props.stopPointIndex);
 
     this.setState( {errors}, () => {
       if (valid) {
@@ -74,7 +74,7 @@ class StopPointEditor extends Component {
   }, 1000);
 
   render() {
-    const { flexibleStopPlaces, stopPoint, isEditMode } = this.props;
+    const { flexibleStopPlaces, stopPoint, isEditMode, isFirst } = this.props;
     const { stopPlaceSelection, activeTab, quaySearch, errors } = this.state;
 
     if (!stopPoint) {
@@ -90,6 +90,7 @@ class StopPointEditor extends Component {
         >
           <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
             <Form
+              frontTextRequired={isFirst}
               flexibleStopPlaces={flexibleStopPlaces}
               stopPlaceSelection={stopPlaceSelection}
               quaySearch={quaySearch}
@@ -114,6 +115,7 @@ class StopPointEditor extends Component {
 }
 
 StopPointEditor.propTypes = {
+  isFirst: PropTypes.bool.isRequired,
   stopPoint: PropTypes.instanceOf(StopPoint).isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
