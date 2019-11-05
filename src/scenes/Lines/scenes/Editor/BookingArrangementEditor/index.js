@@ -4,16 +4,12 @@ import {
   TextArea,
   DropDown,
   DropDownOptions,
-  CheckboxGroup,
-  Checkbox,
   FormGroup
 } from '@entur/component-library';
 
 import { BookingArrangement, Contact } from '../../../../../model';
 import {
-  BOOKING_ACCESS,
-  PURCHASE_MOMENT,
-  PURCHASE_WHEN
+  BOOKING_ACCESS
 } from '../../../../../model/enums';
 
 import './styles.css';
@@ -21,7 +17,7 @@ import ContactFields from './contactFields';
 import BookingLimitFields from './bookingLimitFields';
 import BookingMethodSelection from './bookingMethodSelection';
 import BookingTimeSelection from './bookingTimeSelection';
-
+import PaymentTimeSelection from './paymentTimeSelection';
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
@@ -106,27 +102,10 @@ class BookingArrangementEditor extends Component {
           handleFieldChange={this.handleFieldChange.bind(this)}
         />
 
-        <FormGroup
-          className="form-section"
-          inputId="buyWhen"
-          title="Betalingstidspunkt"
-        >
-          <CheckboxGroup
-            id="buyWhen"
-            onChange={e =>
-              this.handleFieldChange('buyWhen', e.target.value, true)
-            }
-          >
-            {Object.values(PURCHASE_MOMENT).map(v => (
-              <Checkbox
-                key={v}
-                label={v}
-                value={v}
-                checked={buyWhen && buyWhen.includes(v)}
-              />
-            ))}
-          </CheckboxGroup>
-        </FormGroup>
+        <PaymentTimeSelection
+          buyWhen={ba ? ba.buyWhen : undefined}
+          handleFieldChange={this.handleFieldChange.bind(this)}
+        />
 
         <FormGroup
           className="form-section"
