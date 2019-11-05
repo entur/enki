@@ -12,7 +12,6 @@ import {
 import { BookingArrangement, Contact } from '../../../../../model';
 import {
   BOOKING_ACCESS,
-  BOOKING_METHOD,
   PURCHASE_MOMENT,
   PURCHASE_WHEN
 } from '../../../../../model/enums';
@@ -20,6 +19,7 @@ import {
 import './styles.css';
 import ContactFields from './contactFields';
 import BookingLimitFields from './bookingLimitFields';
+import BookingMethodSelection from './bookingMethodSelection';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
@@ -90,27 +90,10 @@ class BookingArrangementEditor extends Component {
           handleContactFieldChange={this.handleContactFieldChange.bind(this)}
         />
 
-        <FormGroup
-          className="form-section"
-          inputId="bookingMethods"
-          title="Hvordan bestille"
-        >
-          <CheckboxGroup
-            id="bookingMethods"
-            onChange={e =>
-              this.handleFieldChange('bookingMethods', e.target.value, true)
-            }
-          >
-            {Object.values(BOOKING_METHOD).map(v => (
-              <Checkbox
-                key={v}
-                label={v}
-                value={v}
-                checked={bookingMethods && bookingMethods.includes(v)}
-              />
-            ))}
-          </CheckboxGroup>
-        </FormGroup>
+        <BookingMethodSelection
+          bookingMethods={bookingMethods}
+          handleFieldChange={this.handleFieldChange.bind(this)}
+        />
 
         <FormGroup
           className="form-section"
@@ -132,7 +115,7 @@ class BookingArrangementEditor extends Component {
         </FormGroup>
 
         <BookingLimitFields
-          latestBookingTime={ba && ba.latestBookingTime ? ba.latestBookingTime : null}
+          latestBookingTime={ba ? ba.latestBookingTime : null}
           minimumBookingPeriod={ba ? ba.minimumBookingPeriod : null}
           resetBookingLimit={this.resetBookingLimit.bind(this)}
           handleFieldChange={this.handleFieldChange.bind(this)}
