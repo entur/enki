@@ -22,6 +22,7 @@ import {
 import DurationPicker from '../../../../../components/DurationPicker';
 
 import './styles.css';
+import ContactFields from './contactFields';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
@@ -88,13 +89,6 @@ class BookingArrangementEditor extends Component {
     const { bookingArrangement: ba } = this.props;
     const { bookingLimitType } = this.state;
 
-    const contact = ba ? ba.bookingContact : undefined;
-    const contactPerson = contact ? contact.contactPerson : undefined;
-    const phone = contact ? contact.phone : undefined;
-    const email = contact ? contact.email : undefined;
-    const url = contact ? contact.url : undefined;
-    const furtherDetails = contact ? contact.furtherDetails : undefined;
-
     const bookingMethods = ba ? ba.bookingMethods : undefined;
     const bookWhen = ba ? ba.bookWhen : undefined;
     const buyWhen = ba ? ba.buyWhen : undefined;
@@ -106,57 +100,10 @@ class BookingArrangementEditor extends Component {
 
     return (
       <div className="booking-editor">
-        <FormGroup
-          className="form-section"
-          inputId="name"
-          title="Kontaktperson"
-        >
-          <TextField
-            type="text"
-            value={contactPerson}
-            onChange={e =>
-              this.handleContactFieldChange('contactPerson', e.target.value)
-            }
-          />
-        </FormGroup>
-
-        <FormGroup className="form-section" inputId="phone" title="Telefon">
-          <TextField
-            type="text"
-            value={phone}
-            onChange={e =>
-              this.handleContactFieldChange('phone', e.target.value)
-            }
-          />
-        </FormGroup>
-
-        <FormGroup className="form-section" inputId="email" title="E-post">
-          <TextField
-            type="text"
-            value={email}
-            onChange={e =>
-              this.handleContactFieldChange('email', e.target.value)
-            }
-          />
-        </FormGroup>
-
-        <FormGroup className="form-section" inputId="urlFormGroup" title="URL">
-          <TextField
-            type="text"
-            value={url}
-            onChange={e => this.handleContactFieldChange('url', e.target.value)}
-          />
-        </FormGroup>
-
-        <FormGroup className="form-section" inputId="details" title="Detaljer">
-          <TextField
-            type="text"
-            value={furtherDetails}
-            onChange={e =>
-              this.handleContactFieldChange('furtherDetails', e.target.value)
-            }
-          />
-        </FormGroup>
+        <ContactFields
+          contact={ba ? ba.bookingContact : undefined}
+          handleContactFieldChange={this.handleContactFieldChange.bind(this)}
+        />
 
         <FormGroup
           className="form-section"
@@ -183,7 +130,7 @@ class BookingArrangementEditor extends Component {
         <FormGroup
           className="form-section"
           inputId="bookWhen"
-          title="Bestillingstidspunkt"
+          title="Kan bestilles"
         >
           <DropDown
             value={bookWhen}
@@ -198,6 +145,47 @@ class BookingArrangementEditor extends Component {
             ))}
           </DropDown>
         </FormGroup>
+
+        <div className="form-section">
+          <Label>Bestilles innen</Label>
+
+          <Radio
+            className="booking-limit-radio"
+            label="Seneste tidspunkt"
+            value={BOOKING_LIMIT_TYPE.TIME}
+            checked={bookingLimitType === BOOKING_LIMIT_TYPE.TIME}
+            onChange={() =>
+              this.handleBookingLimitChange(BOOKING_LIMIT_TYPE.TIME)
+            }
+          />
+          <TextField
+            type="time"
+            className="latest-time-picker"
+            value={latestBookingTime}
+            onChange={e => this.handleFieldChange('latestBookingTime', e.target.value)}
+            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
+          />
+
+          <Radio
+            className="booking-limit-radio"
+            label="Seneste tid før avgang"
+            value={BOOKING_LIMIT_TYPE.TIME}
+            checked={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
+            onChange={() =>
+              this.handleBookingLimitChange(BOOKING_LIMIT_TYPE.PERIOD)
+            }
+          />
+          <DurationPicker
+            className="mimimum-booking-period-picker"
+            duration={minimumBookingPeriod}
+            resetOnZero
+            onChange={period =>
+              this.handleFieldChange('minimumBookingPeriod', period)
+            }
+            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
+            position="above"
+          />
+        </div>
 
         <FormGroup
           className="form-section"
@@ -241,47 +229,6 @@ class BookingArrangementEditor extends Component {
             ))}
           </DropDown>
         </FormGroup>
-
-        <div className="form-section">
-          <Label>Bestillingsgrense</Label>
-
-          <Radio
-            className="booking-limit-radio"
-            label="Tidspunkt"
-            value={BOOKING_LIMIT_TYPE.TIME}
-            checked={bookingLimitType === BOOKING_LIMIT_TYPE.TIME}
-            onChange={() =>
-              this.handleBookingLimitChange(BOOKING_LIMIT_TYPE.TIME)
-            }
-          />
-          <TextField
-            type="time"
-            className="latest-time-picker"
-            value={latestBookingTime}
-            onChange={e => this.handleFieldChange('latestBookingTime', e.target.value)}
-            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-          />
-
-          <Radio
-            className="booking-limit-radio"
-            label="Periode"
-            value={BOOKING_LIMIT_TYPE.TIME}
-            checked={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
-            onChange={() =>
-              this.handleBookingLimitChange(BOOKING_LIMIT_TYPE.PERIOD)
-            }
-          />
-          <DurationPicker
-            className="mimimum-booking-period-picker"
-            duration={minimumBookingPeriod}
-            resetOnZero
-            onChange={period =>
-              this.handleFieldChange('minimumBookingPeriod', period)
-            }
-            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
-            position="above"
-          />
-        </div>
 
         <FormGroup
           className="form-section"
