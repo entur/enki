@@ -1,4 +1,7 @@
 import {defineMessages} from 'react-intl';
+import {
+  BOOKING_METHOD,
+} from '../../../../../model/enums';
 
 export default defineMessages({
   title: {
@@ -8,24 +11,24 @@ export default defineMessages({
 });
 
 export const bookingMethodMessages = defineMessages({
-  callDriver: {
-    id: 'lines.editor.bookingArrangementEditor.bookingMethodSelection.callDriver',
+  [BOOKING_METHOD.CALL_DRIVER]: {
+    id: `lines.editor.bookingArrangementEditor.bookingMethodSelection.bookingMethod.${BOOKING_METHOD.CALL_DRIVER}`,
     defaultMessage: 'Ring fører'
   },
-  callOffice: {
-    id: 'lines.editor.bookingArrangementEditor.bookingMethodSelection.callOffice',
+  [BOOKING_METHOD.CALL_OFFICE]: {
+    id: `lines.editor.bookingArrangementEditor.bookingMethodSelection.bookingMethod.${BOOKING_METHOD.CALL_OFFICE}`,
     defaultMessage: 'Ring kundeservice'
   },
-  online: {
-    id: 'lines.editor.bookingArrangementEditor.bookingMethodSelection.online',
+  [BOOKING_METHOD.ONLINE]: {
+    id: `lines.editor.bookingArrangementEditor.bookingMethodSelection.bookingMethod.${BOOKING_METHOD.ONLINE}`,
     defaultMessage: 'På nett'
   },
-  phoneAtStop: {
-    id: 'lines.editor.bookingArrangementEditor.bookingMethodSelection.phoneAtStop',
+  [BOOKING_METHOD.PHONE_AT_STOP]: {
+    id: `lines.editor.bookingArrangementEditor.bookingMethodSelection.bookingMethod.${BOOKING_METHOD.PHONE_AT_STOP}`,
     defaultMessage: 'Telefon på stoppested'
   },
-  text: {
-    id: 'lines.editor.bookingArrangementEditor.bookingMethodSelection.text',
+  [BOOKING_METHOD.TEXT]: {
+    id: `lines.editor.bookingArrangementEditor.bookingMethodSelection.bookingMethod.${BOOKING_METHOD.TEXT}`,
     defaultMessage: 'SMS'
   }
 });

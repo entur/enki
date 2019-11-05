@@ -20,6 +20,7 @@ import './styles.css';
 import ContactFields from './contactFields';
 import BookingLimitFields from './bookingLimitFields';
 import BookingMethodSelection from './bookingMethodSelection';
+import BookingTimeSelection from './bookingTimeSelection';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
@@ -77,8 +78,6 @@ class BookingArrangementEditor extends Component {
   render() {
     const { bookingArrangement: ba } = this.props;
 
-    const bookingMethods = ba ? ba.bookingMethods : undefined;
-    const bookWhen = ba ? ba.bookWhen : undefined;
     const buyWhen = ba ? ba.buyWhen : undefined;
     const bookingAccess = ba ? ba.bookingAccess : undefined;
     const bookingNote = ba ? ba.bookingNote : undefined;
@@ -91,28 +90,14 @@ class BookingArrangementEditor extends Component {
         />
 
         <BookingMethodSelection
-          bookingMethods={bookingMethods}
+          bookingMethods={ba ? ba.bookingMethods : undefined}
           handleFieldChange={this.handleFieldChange.bind(this)}
         />
 
-        <FormGroup
-          className="form-section"
-          inputId="bookWhen"
-          title="Kan bestilles"
-        >
-          <DropDown
-            value={bookWhen}
-            onChange={e => this.handleFieldChange('bookWhen', e.target.value)}
-          >
-            <DropDownOptions
-              label={DEFAULT_SELECT_LABEL}
-              value={DEFAULT_SELECT_VALUE}
-            />
-            {Object.values(PURCHASE_WHEN).map(v => (
-              <DropDownOptions key={v} label={v} value={v} />
-            ))}
-          </DropDown>
-        </FormGroup>
+        <BookingTimeSelection
+          bookWhen={ba ? ba.bookWhen : undefined}
+          handleFieldChange={this.handleFieldChange.bind(this)}
+        />
 
         <BookingLimitFields
           latestBookingTime={ba ? ba.latestBookingTime : null}
