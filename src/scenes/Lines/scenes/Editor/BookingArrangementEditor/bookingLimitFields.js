@@ -20,8 +20,9 @@ export default (props) => {
   const {
     latestBookingTime,
     minimumBookingPeriod,
-    resetBookingLimit,
-    handleFieldChange
+    onLatestBookingTimeChange,
+    onMinimumBookingPeriodChange,
+    resetBookingLimit
   } = props;
 
   const [bookingLimitType, setBookingLimitType] = useState(
@@ -42,15 +43,13 @@ export default (props) => {
         label={formatMessage(messages.bookingLimitTypeTimeRadioButtonLabel)}
         value={BOOKING_LIMIT_TYPE.TIME}
         checked={bookingLimitType === BOOKING_LIMIT_TYPE.TIME}
-        onChange={() =>
-          handleBookingLimitChange(BOOKING_LIMIT_TYPE.TIME)
-        }
+        onChange={() => handleBookingLimitChange(BOOKING_LIMIT_TYPE.TIME)}
       />
       <TextField
         type="time"
         className="latest-time-picker"
         value={latestBookingTime}
-        onChange={e => handleFieldChange('latestBookingTime', e.target.value)}
+        onChange={e => onLatestBookingTimeChange(e.target.value)}
         disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
       />
 
@@ -59,18 +58,14 @@ export default (props) => {
         label={formatMessage(messages.bookingLimitTypePeriodRadioButtonLabel)}
         value={BOOKING_LIMIT_TYPE.PERIOD}
         checked={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
-        onChange={() =>
-          handleBookingLimitChange(BOOKING_LIMIT_TYPE.PERIOD)
-        }
+        onChange={() => handleBookingLimitChange(BOOKING_LIMIT_TYPE.PERIOD)}
       />
 
       <DurationPicker
         className="mimimum-booking-period-picker"
         duration={minimumBookingPeriod}
         resetOnZero
-        onChange={period =>
-          handleFieldChange('minimumBookingPeriod', period)
-        }
+        onChange={period => onMinimumBookingPeriodChange(period)}
         disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
         position="above"
         showYears={false}

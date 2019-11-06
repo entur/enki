@@ -61,6 +61,16 @@ const BookingArrangementEditor = props => {
     }
   }, [bookingArrangement, onChange]);
 
+  const contactFieldChangeHandlerFactory = fieldName => {
+    return newValue =>
+      handleContactFieldChange(fieldName, newValue);
+  }
+
+  const fieldChangeHandlerFactory = (fieldName, multiple = false) => {
+    return newValue =>
+      handleFieldChange(fieldName, newValue, multiple);
+  }
+
   const {
     bookingContact,
     bookingMethods,
@@ -76,39 +86,45 @@ const BookingArrangementEditor = props => {
     <div className="booking-editor">
       <ContactFields
         contact={bookingContact}
+        onContactPersonChange={contactFieldChangeHandlerFactory('contactPerson')}
+        onPhoneChange={contactFieldChangeHandlerFactory('phone')}
+        onEmailChange={contactFieldChangeHandlerFactory('email')}
+        onUrlChange={contactFieldChangeHandlerFactory('url')}
+        onDetailsChange={contactFieldChangeHandlerFactory('furtherDetails')}
         handleContactFieldChange={handleContactFieldChange}
       />
 
       <BookingMethodSelection
         bookingMethods={bookingMethods}
-        handleFieldChange={handleFieldChange}
+        onChange={fieldChangeHandlerFactory('bookingMethods', true)}
       />
 
       <BookingTimeSelection
         bookWhen={bookWhen}
-        handleFieldChange={handleFieldChange}
+        onChange={fieldChangeHandlerFactory('bookWhen')}
       />
 
       <BookingLimitFields
         latestBookingTime={latestBookingTime}
         minimumBookingPeriod={minimumBookingPeriod}
+        onLatestBookingTimeChange={fieldChangeHandlerFactory('latestBookingTime')}
+        onMinimumBookingPeriodChange={fieldChangeHandlerFactory('minimumBookingPeriod')}
         resetBookingLimit={resetBookingLimit}
-        handleFieldChange={handleFieldChange}
       />
 
       <PaymentTimeSelection
         buyWhen={buyWhen}
-        handleFieldChange={handleFieldChange}
+        onChange={fieldChangeHandlerFactory('buyWhen', true)}
       />
 
       <BookingAccessSelection
         bookingAccess={bookingAccess}
-        handleFieldChange={handleFieldChange}
+        onChange={fieldChangeHandlerFactory('bookingAccess')}
       />
 
       <BookingNoteField
         bookingNote={bookingNote}
-        handleFieldChange={handleFieldChange}
+        onChange={fieldChangeHandlerFactory('bookingNote')}
       />
     </div>
   );

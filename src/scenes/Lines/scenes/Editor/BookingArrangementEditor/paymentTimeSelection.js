@@ -11,7 +11,7 @@ import {
 import {selectIntl} from '../../../../../i18n';
 import messages, {paymentTimeMessages} from './paymentTimeSelection.messages';
 
-export default ({ buyWhen, handleFieldChange }) => {
+export default ({ buyWhen, onChange }) => {
   const {formatMessage} = useSelector(selectIntl);
   return (
     <FormGroup
@@ -21,9 +21,7 @@ export default ({ buyWhen, handleFieldChange }) => {
     >
       <CheckboxGroup
         id="buyWhen"
-        onChange={e =>
-          handleFieldChange('buyWhen', e.target.value, true)
-        }
+        onChange={e => onChange(e.target.value)}
       >
         {Object.values(PURCHASE_MOMENT).map(v => (
           <Checkbox

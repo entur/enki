@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {
   TextField,
@@ -6,8 +7,9 @@ import {
 } from '@entur/component-library';
 import {selectIntl} from '../../../../../i18n';
 import messages from './contactFields.messages';
+import { Contact } from '../../../../../model';
 
-export default (props) => {
+const ContactFields = props => {
   const {formatMessage} = useSelector(selectIntl);
   const {
     contact: {
@@ -17,7 +19,11 @@ export default (props) => {
       url,
       furtherDetails,
     } = {},
-    handleContactFieldChange
+    onContactPersonChange,
+    onPhoneChange,
+    onEmailChange,
+    onUrlChange,
+    onDetailsChange
   } = props;
 
   return (
@@ -31,7 +37,7 @@ export default (props) => {
           type="text"
           value={contactPerson}
           onChange={e =>
-            handleContactFieldChange('contactPerson', e.target.value)
+            onContactPersonChange(e.target.value)
           }
         />
       </FormGroup>
@@ -45,7 +51,7 @@ export default (props) => {
           type="text"
           value={phone}
           onChange={e =>
-            handleContactFieldChange('phone', e.target.value)
+            onPhoneChange(e.target.value)
           }
         />
       </FormGroup>
@@ -59,7 +65,7 @@ export default (props) => {
           type="text"
           value={email}
           onChange={e =>
-            handleContactFieldChange('email', e.target.value)
+            onEmailChange(e.target.value)
           }
         />
       </FormGroup>
@@ -72,7 +78,7 @@ export default (props) => {
         <TextField
           type="text"
           value={url}
-          onChange={e => handleContactFieldChange('url', e.target.value)}
+          onChange={e => onUrlChange(e.target.value)}
         />
       </FormGroup>
 
@@ -85,10 +91,21 @@ export default (props) => {
           type="text"
           value={furtherDetails}
           onChange={e =>
-            handleContactFieldChange('furtherDetails', e.target.value)
+            onDetailsChange(e.target.value)
           }
         />
       </FormGroup>
     </Fragment>
   );
 }
+
+ContactFields.propTypes = {
+  onContactPersonChange: PropTypes.func.isRequired,
+  onPhoneChange: PropTypes.func.isRequired,
+  onEmailChange: PropTypes.func.isRequired,
+  onUrlChange: PropTypes.func.isRequired,
+  onDetailsChange: PropTypes.func.isRequired,
+  contact: PropTypes.instanceOf(Contact)
+}
+
+export default ContactFields;

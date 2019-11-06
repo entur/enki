@@ -7,7 +7,7 @@ import {
 import {selectIntl} from '../../../../../i18n';
 import messages from './bookingNoteField.messages';
 
-export default ({ bookingNote, handleFieldChange }) => {
+export default ({ bookingNote, onChange }) => {
   const {formatMessage} = useSelector(selectIntl);
   return (
     <FormGroup
@@ -19,9 +19,7 @@ export default ({ bookingNote, handleFieldChange }) => {
         id="note"
         type="text"
         value={bookingNote}
-        onChange={e =>
-          handleFieldChange('bookingNote', e.target.value)
-        }
+        onChange={e => onChange(e.target.value)}
       />
     </FormGroup>
   );

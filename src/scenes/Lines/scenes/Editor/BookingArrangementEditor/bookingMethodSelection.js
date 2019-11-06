@@ -11,7 +11,7 @@ import {
 import {selectIntl} from '../../../../../i18n';
 import messages, {bookingMethodMessages} from './bookingMethodSelection.messages';
 
-export default ({ bookingMethods, handleFieldChange }) => {
+export default ({ bookingMethods, onChange }) => {
   const {formatMessage} = useSelector(selectIntl);
 
   return (
@@ -23,7 +23,7 @@ export default ({ bookingMethods, handleFieldChange }) => {
       <CheckboxGroup
         id="bookingMethods"
         onChange={e =>
-          handleFieldChange('bookingMethods', e.target.value, true)
+          onChange(e.target.value)
         }
       >
         {Object.values(BOOKING_METHOD).map(v => (

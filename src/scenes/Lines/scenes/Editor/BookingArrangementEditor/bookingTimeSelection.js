@@ -12,7 +12,7 @@ import {selectIntl} from '../../../../../i18n';
 import messages, {bookingTimeMessages} from './bookingTimeSelection.messages';
 import { DEFAULT_SELECT_LABEL, DEFAULT_SELECT_VALUE } from './constants';
 
-export default ({ bookWhen, handleFieldChange }) => {
+export default ({ bookWhen, onChange }) => {
   const {formatMessage} = useSelector(selectIntl);
 
   return (
@@ -23,7 +23,7 @@ export default ({ bookWhen, handleFieldChange }) => {
     >
       <DropDown
         value={bookWhen}
-        onChange={e => handleFieldChange('bookWhen', e.target.value)}
+        onChange={e => onChange(e.target.value)}
       >
         <DropDownOptions
           label={DEFAULT_SELECT_LABEL}

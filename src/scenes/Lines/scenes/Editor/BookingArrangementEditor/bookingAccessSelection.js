@@ -15,7 +15,7 @@ import {
 import {selectIntl} from '../../../../../i18n';
 import messages, {bookingAccessMessages} from './bookingAccessSelection.messages';
 
-export default ({ bookingAccess, handleFieldChange }) => {
+export default ({ bookingAccess, onChange }) => {
   const {formatMessage} = useSelector(selectIntl);
   return (
     <FormGroup
@@ -26,7 +26,7 @@ export default ({ bookingAccess, handleFieldChange }) => {
       <DropDown
         value={bookingAccess}
         onChange={e =>
-          handleFieldChange('bookingAccess', e.target.value)
+          onChange(e.target.value)
         }
       >
         <DropDownOptions
