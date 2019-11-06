@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  TextArea,
-  DropDown,
-  DropDownOptions,
-  FormGroup
-} from '@entur/component-library';
 
 import { BookingArrangement, Contact } from '../../../../../model';
-import {
-  BOOKING_ACCESS
-} from '../../../../../model/enums';
 
 import './styles.css';
 import ContactFields from './contactFields';
@@ -18,8 +9,8 @@ import BookingLimitFields from './bookingLimitFields';
 import BookingMethodSelection from './bookingMethodSelection';
 import BookingTimeSelection from './bookingTimeSelection';
 import PaymentTimeSelection from './paymentTimeSelection';
-const DEFAULT_SELECT_LABEL = '--- velg ---';
-const DEFAULT_SELECT_VALUE = '-1';
+import BookingAccessSelection from './bookingAccessSelection';
+import BookingNoteField from './bookingNoteField';
 
 class BookingArrangementEditor extends Component {
   handleFieldChange(field, value, multi = false) {
@@ -72,76 +63,58 @@ class BookingArrangementEditor extends Component {
   }
 
   render() {
-    const { bookingArrangement: ba } = this.props;
-
-    const buyWhen = ba ? ba.buyWhen : undefined;
-    const bookingAccess = ba ? ba.bookingAccess : undefined;
-    const bookingNote = ba ? ba.bookingNote : undefined;
+    const {
+      bookingArrangement: {
+        bookingContact,
+        bookingMethods,
+        bookWhen,
+        latestBookingTime = null,
+        minimumBookingPeriod = null,
+        buyWhen,
+        bookingAccess,
+        bookingNote
+      } = {}
+    } = this.props;
 
     return (
       <div className="booking-editor">
         <ContactFields
-          contact={ba ? ba.bookingContact : undefined}
+          contact={bookingContact}
           handleContactFieldChange={this.handleContactFieldChange.bind(this)}
         />
 
         <BookingMethodSelection
-          bookingMethods={ba ? ba.bookingMethods : undefined}
+          bookingMethods={bookingMethods}
           handleFieldChange={this.handleFieldChange.bind(this)}
         />
 
         <BookingTimeSelection
-          bookWhen={ba ? ba.bookWhen : undefined}
+          bookWhen={bookWhen}
           handleFieldChange={this.handleFieldChange.bind(this)}
         />
 
         <BookingLimitFields
-          latestBookingTime={ba ? ba.latestBookingTime : null}
-          minimumBookingPeriod={ba ? ba.minimumBookingPeriod : null}
+          latestBookingTime={latestBookingTime}
+          minimumBookingPeriod={minimumBookingPeriod}
           resetBookingLimit={this.resetBookingLimit.bind(this)}
           handleFieldChange={this.handleFieldChange.bind(this)}
         />
 
         <PaymentTimeSelection
-          buyWhen={ba ? ba.buyWhen : undefined}
+          buyWhen={buyWhen}
           handleFieldChange={this.handleFieldChange.bind(this)}
         />
 
-        <FormGroup
-          className="form-section"
-          inputId="bookingAccess"
-          title="Tilgang"
-        >
-          <DropDown
-            value={bookingAccess}
-            onChange={e =>
-              this.handleFieldChange('bookingAccess', e.target.value)
-            }
-          >
-            <DropDownOptions
-              label={DEFAULT_SELECT_LABEL}
-              value={DEFAULT_SELECT_VALUE}
-            />
-            {Object.values(BOOKING_ACCESS).map(v => (
-              <DropDownOptions key={v} label={v} value={v} />
-            ))}
-          </DropDown>
-        </FormGroup>
+        <BookingAccessSelection
+          bookingAccess={bookingAccess}
+          handleFieldChange={this.handleFieldChange.bind(this)}
+        />
 
-        <FormGroup
-          className="form-section"
-          inputId="bookingNote"
-          title="Merknad"
-        >
-          <TextArea
-            id="note"
-            type="text"
-            value={bookingNote}
-            onChange={e =>
-              this.handleFieldChange('bookingNote', e.target.value)
-            }
-          />
-        </FormGroup>
+        <BookingNoteField
+          bookingNote={bookingNote}
+          handleFieldChange={this.handleFieldChange.bind(this)}
+        />
+
       </div>
     );
   }
