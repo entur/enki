@@ -1,42 +1,22 @@
-import React, { Component } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Label,
-  TextField,
-  TextArea,
-  DropDown,
-  DropDownOptions,
-  CheckboxGroup,
-  Checkbox,
-  Radio,
-  FormGroup
-} from '@entur/component-library';
-
 import { BookingArrangement, Contact } from '../../../../../model';
-import {
-  BOOKING_ACCESS,
-  BOOKING_METHOD,
-  PURCHASE_MOMENT,
-  PURCHASE_WHEN
-} from '../../../../../model/enums';
-import DurationPicker from '../../../../../components/DurationPicker';
-
+import ContactFields from './contactFields';
+import BookingLimitFields from './bookingLimitFields';
+import BookingMethodSelection from './bookingMethodSelection';
+import BookingTimeSelection from './bookingTimeSelection';
+import PaymentTimeSelection from './paymentTimeSelection';
+import BookingAccessSelection from './bookingAccessSelection';
+import BookingNoteField from './bookingNoteField';
 import './styles.css';
 
-const DEFAULT_SELECT_LABEL = '--- velg ---';
-const DEFAULT_SELECT_VALUE = '-1';
+const BookingArrangementEditor = props => {
+  const {
+    bookingArrangement = {},
+    onChange
+  } = props;
 
-const BOOKING_LIMIT_TYPE = Object.freeze({
-  TIME: 'time',
-  PERIOD: 'period'
-});
-
-class BookingArrangementEditor extends Component {
-  state = { bookingLimitType: BOOKING_LIMIT_TYPE.TIME };
-
-  handleFieldChange(field, value, multi = false) {
-    const { bookingArrangement, onChange } = this.props;
-
+  const handleFieldChange = useCallback((field, value, multi = false) => {
     let newValue = value;
     if (multi) {
       if (bookingArrangement) {
@@ -53,10 +33,9 @@ class BookingArrangementEditor extends Component {
       : new BookingArrangement({ [field]: newValue });
 
     onChange(newBooking.isEmpty() ? undefined : newBooking);
-  }
+  }, [bookingArrangement, onChange]);
 
-  handleContactFieldChange(field, value) {
-    const { bookingArrangement } = this.props;
+  const handleContactFieldChange = useCallback((field, value) => {
     let newContact;
     if (bookingArrangement && bookingArrangement.bookingContact) {
       newContact = bookingArrangement.bookingContact.withChanges({
@@ -65,14 +44,13 @@ class BookingArrangementEditor extends Component {
     } else {
       newContact = new Contact({ [field]: value });
     }
-    this.handleFieldChange(
+    handleFieldChange(
       'bookingContact',
       newContact.isEmpty() ? undefined : newContact
     );
-  }
+  }, [bookingArrangement, handleFieldChange]);
 
-  handleBookingLimitChange(bookingLimitType) {
-    const { bookingArrangement, onChange } = this.props;
+  const resetBookingLimit = useCallback(() => {
     if (bookingArrangement) {
       onChange(
         bookingArrangement.withChanges({
@@ -81,228 +59,79 @@ class BookingArrangementEditor extends Component {
         })
       );
     }
-    this.setState({ bookingLimitType });
+  }, [bookingArrangement, onChange]);
+
+  const contactFieldChangeHandlerFactory = fieldName => {
+    return newValue =>
+      handleContactFieldChange(fieldName, newValue);
   }
 
-  render() {
-    const { bookingArrangement: ba } = this.props;
-    const { bookingLimitType } = this.state;
-
-    const contact = ba ? ba.bookingContact : undefined;
-    const contactPerson = contact ? contact.contactPerson : undefined;
-    const phone = contact ? contact.phone : undefined;
-    const email = contact ? contact.email : undefined;
-    const url = contact ? contact.url : undefined;
-    const furtherDetails = contact ? contact.furtherDetails : undefined;
-
-    const bookingMethods = ba ? ba.bookingMethods : undefined;
-    const bookWhen = ba ? ba.bookWhen : undefined;
-    const buyWhen = ba ? ba.buyWhen : undefined;
-    const bookingAccess = ba ? ba.bookingAccess : undefined;
-    const latestBookingTime =
-      ba && ba.latestBookingTime ? ba.latestBookingTime : null;
-    const minimumBookingPeriod = ba ? ba.minimumBookingPeriod : null;
-    const bookingNote = ba ? ba.bookingNote : undefined;
-
-    return (
-      <div className="booking-editor">
-        <FormGroup
-          className="form-section"
-          inputId="name"
-          title="Kontaktperson"
-        >
-          <TextField
-            type="text"
-            value={contactPerson}
-            onChange={e =>
-              this.handleContactFieldChange('contactPerson', e.target.value)
-            }
-          />
-        </FormGroup>
-
-        <FormGroup className="form-section" inputId="phone" title="Telefon">
-          <TextField
-            type="text"
-            value={phone}
-            onChange={e =>
-              this.handleContactFieldChange('phone', e.target.value)
-            }
-          />
-        </FormGroup>
-
-        <FormGroup className="form-section" inputId="email" title="E-post">
-          <TextField
-            type="text"
-            value={email}
-            onChange={e =>
-              this.handleContactFieldChange('email', e.target.value)
-            }
-          />
-        </FormGroup>
-
-        <FormGroup className="form-section" inputId="urlFormGroup" title="URL">
-          <TextField
-            type="text"
-            value={url}
-            onChange={e => this.handleContactFieldChange('url', e.target.value)}
-          />
-        </FormGroup>
-
-        <FormGroup className="form-section" inputId="details" title="Detaljer">
-          <TextField
-            type="text"
-            value={furtherDetails}
-            onChange={e =>
-              this.handleContactFieldChange('furtherDetails', e.target.value)
-            }
-          />
-        </FormGroup>
-
-        <FormGroup
-          className="form-section"
-          inputId="bookingMethods"
-          title="Hvordan bestille"
-        >
-          <CheckboxGroup
-            id="bookingMethods"
-            onChange={e =>
-              this.handleFieldChange('bookingMethods', e.target.value, true)
-            }
-          >
-            {Object.values(BOOKING_METHOD).map(v => (
-              <Checkbox
-                key={v}
-                label={v}
-                value={v}
-                checked={bookingMethods && bookingMethods.includes(v)}
-              />
-            ))}
-          </CheckboxGroup>
-        </FormGroup>
-
-        <FormGroup
-          className="form-section"
-          inputId="bookWhen"
-          title="Bestillingstidspunkt"
-        >
-          <DropDown
-            value={bookWhen}
-            onChange={e => this.handleFieldChange('bookWhen', e.target.value)}
-          >
-            <DropDownOptions
-              label={DEFAULT_SELECT_LABEL}
-              value={DEFAULT_SELECT_VALUE}
-            />
-            {Object.values(PURCHASE_WHEN).map(v => (
-              <DropDownOptions key={v} label={v} value={v} />
-            ))}
-          </DropDown>
-        </FormGroup>
-
-        <FormGroup
-          className="form-section"
-          inputId="buyWhen"
-          title="Betalingstidspunkt"
-        >
-          <CheckboxGroup
-            id="buyWhen"
-            onChange={e =>
-              this.handleFieldChange('buyWhen', e.target.value, true)
-            }
-          >
-            {Object.values(PURCHASE_MOMENT).map(v => (
-              <Checkbox
-                key={v}
-                label={v}
-                value={v}
-                checked={buyWhen && buyWhen.includes(v)}
-              />
-            ))}
-          </CheckboxGroup>
-        </FormGroup>
-
-        <FormGroup
-          className="form-section"
-          inputId="bookingAccess"
-          title="Tilgang"
-        >
-          <DropDown
-            value={bookingAccess}
-            onChange={e =>
-              this.handleFieldChange('bookingAccess', e.target.value)
-            }
-          >
-            <DropDownOptions
-              label={DEFAULT_SELECT_LABEL}
-              value={DEFAULT_SELECT_VALUE}
-            />
-            {Object.values(BOOKING_ACCESS).map(v => (
-              <DropDownOptions key={v} label={v} value={v} />
-            ))}
-          </DropDown>
-        </FormGroup>
-
-        <div className="form-section">
-          <Label>Bestillingsgrense</Label>
-
-          <Radio
-            className="booking-limit-radio"
-            label="Tidspunkt"
-            value={BOOKING_LIMIT_TYPE.TIME}
-            checked={bookingLimitType === BOOKING_LIMIT_TYPE.TIME}
-            onChange={() =>
-              this.handleBookingLimitChange(BOOKING_LIMIT_TYPE.TIME)
-            }
-          />
-          <TextField
-            type="time"
-            className="latest-time-picker"
-            value={latestBookingTime}
-            onChange={e => this.handleFieldChange('latestBookingTime', e.target.value)}
-            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-          />
-
-          <Radio
-            className="booking-limit-radio"
-            label="Periode"
-            value={BOOKING_LIMIT_TYPE.TIME}
-            checked={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
-            onChange={() =>
-              this.handleBookingLimitChange(BOOKING_LIMIT_TYPE.PERIOD)
-            }
-          />
-          <DurationPicker
-            className="mimimum-booking-period-picker"
-            duration={minimumBookingPeriod}
-            resetOnZero
-            onChange={period =>
-              this.handleFieldChange('minimumBookingPeriod', period)
-            }
-            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
-            position="above"
-          />
-        </div>
-
-        <FormGroup
-          className="form-section"
-          inputId="bookingNote"
-          title="Merknad"
-        >
-          <TextArea
-            id="note"
-            type="text"
-            value={bookingNote}
-            onChange={e =>
-              this.handleFieldChange('bookingNote', e.target.value)
-            }
-          />
-        </FormGroup>
-      </div>
-    );
+  const fieldChangeHandlerFactory = (fieldName, multiple = false) => {
+    return newValue =>
+      handleFieldChange(fieldName, newValue, multiple);
   }
+
+  const {
+    bookingContact,
+    bookingMethods,
+    bookWhen,
+    latestBookingTime = null,
+    minimumBookingPeriod = null,
+    buyWhen,
+    bookingAccess,
+    bookingNote
+  } = bookingArrangement;
+
+  return (
+    <div className="booking-editor">
+      <ContactFields
+        contact={bookingContact}
+        onContactPersonChange={contactFieldChangeHandlerFactory('contactPerson')}
+        onPhoneChange={contactFieldChangeHandlerFactory('phone')}
+        onEmailChange={contactFieldChangeHandlerFactory('email')}
+        onUrlChange={contactFieldChangeHandlerFactory('url')}
+        onDetailsChange={contactFieldChangeHandlerFactory('furtherDetails')}
+        handleContactFieldChange={handleContactFieldChange}
+      />
+
+      <BookingMethodSelection
+        bookingMethods={bookingMethods}
+        onChange={fieldChangeHandlerFactory('bookingMethods', true)}
+      />
+
+      <BookingTimeSelection
+        bookWhen={bookWhen}
+        onChange={fieldChangeHandlerFactory('bookWhen')}
+      />
+
+      <BookingLimitFields
+        latestBookingTime={latestBookingTime}
+        minimumBookingPeriod={minimumBookingPeriod}
+        onLatestBookingTimeChange={fieldChangeHandlerFactory('latestBookingTime')}
+        onMinimumBookingPeriodChange={fieldChangeHandlerFactory('minimumBookingPeriod')}
+        resetBookingLimit={resetBookingLimit}
+      />
+
+      <PaymentTimeSelection
+        buyWhen={buyWhen}
+        onChange={fieldChangeHandlerFactory('buyWhen', true)}
+      />
+
+      <BookingAccessSelection
+        bookingAccess={bookingAccess}
+        onChange={fieldChangeHandlerFactory('bookingAccess')}
+      />
+
+      <BookingNoteField
+        bookingNote={bookingNote}
+        onChange={fieldChangeHandlerFactory('bookingNote')}
+      />
+    </div>
+  );
 }
 
 BookingArrangementEditor.propTypes = {
+  onChange: PropTypes.func.isRequired,
   bookingArrangement: PropTypes.instanceOf(BookingArrangement)
 };
 
