@@ -12,15 +12,15 @@ export default defineMessages({
 
 export const bookingAccessMessages = defineMessages({
   [BOOKING_ACCESS.PUBLIC]: {
-    id: `lines.editor.bookingArrangementEditor.bookingAccessSelection.bookingAccess.${BOOKING_ACCESS.PUBLIC}`,
+    id: `lines.editor.bookingArrangementEditor.bookingAccessSelection.bookingAccess.public`,
     defaultMessage: 'Åpen'
   },
   [BOOKING_ACCESS.AUTHORISED_PUBLIC]: {
-    id: `lines.editor.bookingArrangementEditor.bookingAccessSelection.bookingAccess.${BOOKING_ACCESS.AUTHORISED_PUBLIC}`,
+    id: `lines.editor.bookingArrangementEditor.bookingAccessSelection.bookingAccess.authorisedPublic`,
     defaultMessage: 'Forhåndsgodkjent'
   },
   [BOOKING_ACCESS.STAFF]: {
-    id: `lines.editor.bookingArrangementEditor.bookingAccessSelection.bookingAccess.${BOOKING_ACCESS.STAFF}`,
+    id: `lines.editor.bookingArrangementEditor.bookingAccessSelection.bookingAccess.staff`,
     defaultMessage: 'Ansatte'
   },
 });
