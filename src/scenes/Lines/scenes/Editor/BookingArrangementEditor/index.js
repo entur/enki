@@ -13,20 +13,11 @@ import './styles.css';
 const BookingArrangementEditor = props => {
   const { bookingArrangement = {}, onChange } = props;
 
-  const handleFieldChange = useCallback(
+  const onFieldChange = useCallback(
     (field, value, multi = false) => {
-      let newValue = value;
-      if (multi) {
-        if (bookingArrangement) {
-          newValue = bookingArrangement[field].includes(value)
-            ? bookingArrangement[field].filter(v => v !== value)
-            : bookingArrangement[field].concat(value);
-        } else {
-          newValue = [value];
-        }
-      }
-
-      const newBooking = bookingArrangement.withChanges({ [field]: newValue });
+      const newBooking = bookingArrangement
+        ? bookingArrangement.withFieldChange(field, value, multi)
+        : new BookingArrangement({ [field]: value });
 
       onChange(newBooking.isEmpty() ? undefined : newBooking);
     },
@@ -35,20 +26,17 @@ const BookingArrangementEditor = props => {
 
   const handleContactFieldChange = useCallback(
     (field, value) => {
-      let newContact;
-      if (bookingArrangement && bookingArrangement.bookingContact) {
-        newContact = bookingArrangement.bookingContact.withChanges({
-          [field]: value
-        });
-      } else {
-        newContact = new Contact({ [field]: value });
-      }
-      handleFieldChange(
+      const newContact =
+        bookingArrangement && bookingArrangement.bookingContact
+          ? bookingArrangement.bookingContact.withFieldChange(field, value)
+          : new Contact({ [field]: value });
+
+      onFieldChange(
         'bookingContact',
         newContact.isEmpty() ? undefined : newContact
       );
     },
-    [bookingArrangement, handleFieldChange]
+    [bookingArrangement, onFieldChange]
   );
 
   const resetBookingLimit = useCallback(() => {
@@ -67,7 +55,7 @@ const BookingArrangementEditor = props => {
   };
 
   const fieldChangeHandlerFactory = (fieldName, multiple = false) => {
-    return newValue => handleFieldChange(fieldName, newValue, multiple);
+    return newValue => onFieldChange(fieldName, newValue, multiple);
   };
 
   const {
@@ -133,12 +121,6 @@ const BookingArrangementEditor = props => {
       />
     </div>
   );
-};
-
-BookingArrangementEditor.defaultProps = {
-  bookingArrangement: new BookingArrangement({
-    bookingContact: new Contact()
-  })
 };
 
 BookingArrangementEditor.propTypes = {

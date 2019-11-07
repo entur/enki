@@ -84,14 +84,14 @@ const NetworkEditor = ({ match, history }) => {
       .finally(() => setSaving(false));
   };
 
-  const handleFieldChange = (field, value) => {
-    setNetwork(network.withChanges({ [field]: value }));
+  const onFieldChange = (field, value) => {
+    setNetwork(network.withFieldChange(field, value));
   };
 
   const handleAuthoritySelectionChange = authoritySelection => {
     const authorityRef =
       authoritySelection !== DEFAULT_SELECT_VALUE ? authoritySelection : null;
-    setNetwork(network.withChanges({ authorityRef }));
+    setNetwork(network.withFieldChange('authorityRef', authorityRef));
     setAuthoritySelection(authoritySelection);
   };
 
@@ -154,21 +154,21 @@ const NetworkEditor = ({ match, history }) => {
             <TextField
               type="text"
               value={network.name}
-              onChange={e => handleFieldChange('name', e.target.value)}
+              onChange={e => onFieldChange('name', e.target.value)}
             />
 
             <Label>Beskrivelse</Label>
             <TextArea
               type="text"
               value={network.description}
-              onChange={e => handleFieldChange('description', e.target.value)}
+              onChange={e => onFieldChange('description', e.target.value)}
             />
 
             <Label>Privat kode</Label>
             <TextField
               type="text"
               value={network.privateCode}
-              onChange={e => handleFieldChange('privateCode', e.target.value)}
+              onChange={e => onFieldChange('privateCode', e.target.value)}
             />
 
             <Label>* Autoritet</Label>

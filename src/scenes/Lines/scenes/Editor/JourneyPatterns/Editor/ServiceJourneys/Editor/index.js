@@ -40,21 +40,13 @@ class ServiceJourneyEditor extends Component {
     this.setState({ operatorSelection: this.props.serviceJourney.operatorRef });
   }
 
-  handleFieldChange(field, value, multi = false) {
+  onFieldChange(field, value, multi = false) {
     const { serviceJourney, onChange } = this.props;
-
-    let newValue = value;
-    if (multi) {
-      newValue = serviceJourney[field].includes(value)
-        ? serviceJourney[field].filter(v => v !== value)
-        : serviceJourney[field].concat(value);
-    }
-
-    onChange(serviceJourney.withChanges({ [field]: newValue }));
+    onChange(serviceJourney.withFieldChange(field, value, multi));
   }
 
   handleOperatorSelectionChange(operatorSelection) {
-    this.handleFieldChange(
+    this.onFieldChange(
       'operatorRef',
       operatorSelection !== DEFAULT_SELECT_VALUE ? operatorSelection : undefined
     );
@@ -104,34 +96,28 @@ class ServiceJourneyEditor extends Component {
             <TextField
               type="text"
               value={name}
-              onChange={e => this.handleFieldChange('name', e.target.value)}
+              onChange={e => this.onFieldChange('name', e.target.value)}
             />
 
             <Label>Beskrivelse</Label>
             <TextArea
               type="text"
               value={description}
-              onChange={e =>
-                this.handleFieldChange('description', e.target.value)
-              }
+              onChange={e => this.onFieldChange('description', e.target.value)}
             />
 
             <Label>Privat kode</Label>
             <TextField
               type="text"
               value={privateCode}
-              onChange={e =>
-                this.handleFieldChange('privateCode', e.target.value)
-              }
+              onChange={e => this.onFieldChange('privateCode', e.target.value)}
             />
 
             <Label>Offentlig kode</Label>
             <TextField
               type="text"
               value={publicCode}
-              onChange={e =>
-                this.handleFieldChange('publicCode', e.target.value)
-              }
+              onChange={e => this.onFieldChange('publicCode', e.target.value)}
             />
 
             <Label>Operatør</Label>
@@ -152,7 +138,7 @@ class ServiceJourneyEditor extends Component {
           <Tab value={TABS.AVAILABILITY} label="Tilgjengelighet">
             <DayTypeEditor
               dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
-              onChange={dt => this.handleFieldChange('dayTypes', [dt])}
+              onChange={dt => this.onFieldChange('dayTypes', [dt])}
             />
           </Tab>
 
@@ -160,14 +146,14 @@ class ServiceJourneyEditor extends Component {
             <PassingTimesEditor
               passingTimes={passingTimes}
               stopPoints={stopPoints}
-              onChange={pts => this.handleFieldChange('passingTimes', pts)}
+              onChange={pts => this.onFieldChange('passingTimes', pts)}
             />
           </Tab>
 
           <Tab value={TABS.BOOKING} label="Bestilling" className="booking-tab">
             <BookingArrangementEditor
               bookingArrangement={bookingArrangement || undefined}
-              onChange={b => this.handleFieldChange('bookingArrangement', b)}
+              onChange={b => this.onFieldChange('bookingArrangement', b)}
             />
           </Tab>
         </Tabs>

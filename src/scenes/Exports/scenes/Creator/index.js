@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
@@ -43,9 +43,12 @@ const ExportsCreator = ({ history }) => {
     }
   };
 
-  const handleFieldChange = (field, value) => {
-    setTheExport(theExport.withChanges({ [field]: value }));
-  };
+  const onFieldChange = useCallback(
+    (field, value) => {
+      setTheExport(theExport.withFieldChange(field, value));
+    },
+    [theExport]
+  );
 
   return (
     <div className="export-editor">
@@ -68,7 +71,7 @@ const ExportsCreator = ({ history }) => {
           <TextField
             type="text"
             value={theExport.name}
-            onChange={e => handleFieldChange('name', e.target.value)}
+            onChange={e => onFieldChange('name', e.target.value)}
             className={errors.name.length ? 'input-error' : ''}
           />
 
@@ -77,7 +80,7 @@ const ExportsCreator = ({ history }) => {
           <Label>{formatMessage(messages.fromDateFormLabel)}</Label>
           <CustomDatepicker
             startDate={theExport.fromDate}
-            onChange={date => handleFieldChange('fromDate', date)}
+            onChange={date => onFieldChange('fromDate', date)}
             datePickerClassName={
               errors.fromDateToDate.length ? 'input-error' : ''
             }
@@ -86,7 +89,7 @@ const ExportsCreator = ({ history }) => {
           <Label>{formatMessage(messages.toDateFormLabel)}</Label>
           <CustomDatepicker
             startDate={theExport.toDate}
-            onChange={date => handleFieldChange('toDate', date)}
+            onChange={date => onFieldChange('toDate', date)}
             datePickerClassName={
               errors.fromDateToDate.length ? 'input-error' : ''
             }
@@ -98,7 +101,7 @@ const ExportsCreator = ({ history }) => {
           <Checkbox
             value="1"
             checked={theExport.dryRun === true}
-            onChange={e => handleFieldChange('dryRun', e.target.checked)}
+            onChange={e => onFieldChange('dryRun', e.target.checked)}
           />
         </div>
       </OverlayLoader>

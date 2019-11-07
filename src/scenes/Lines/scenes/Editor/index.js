@@ -130,38 +130,31 @@ const FlexibleLineEditor = ({ match, history }) => {
     }
   };
 
-  const handleFieldChange = (field, value, multi = false) => {
-    let newValue = value;
-
-    if (multi) {
-      newValue = flexibleLine[field].includes(value)
-        ? flexibleLine[field].filter(v => v !== value)
-        : flexibleLine[field].concat(value);
-    }
-
-    setFlexibleLine(flexibleLine.withChanges({ [field]: newValue }));
-  };
+  const onFieldChange = useCallback(
+    (field, value, multi = false) => {
+      setFlexibleLine(flexibleLine.withFieldChange(field, value, multi));
+    },
+    [flexibleLine]
+  );
 
   const handleOperatorSelectionChange = operatorSelection => {
     setFlexibleLine(
-      flexibleLine.withChanges({
-        operatorRef:
-          operatorSelection !== DEFAULT_SELECT_VALUE
-            ? operatorSelection
-            : undefined
-      })
+      flexibleLine.withFieldChange(
+        'operatorRef',
+        operatorSelection !== DEFAULT_SELECT_VALUE
+          ? operatorSelection
+          : undefined
+      )
     );
     setOperatorSelection(operatorSelection);
   };
 
   const handleNetworkSelectionChange = networkSelection => {
     setFlexibleLine(
-      flexibleLine.withChanges({
-        networkRef:
-          networkSelection !== DEFAULT_SELECT_VALUE
-            ? networkSelection
-            : undefined
-      })
+      flexibleLine.withFieldChange(
+        'networkRef',
+        networkSelection !== DEFAULT_SELECT_VALUE ? networkSelection : undefined
+      )
     );
     setNetworkSelection(networkSelection);
   };
@@ -222,7 +215,7 @@ const FlexibleLineEditor = ({ match, history }) => {
                 errors={errors}
                 networkSelection={networkSelection}
                 operatorSelection={operatorSelection}
-                handleFieldChange={handleFieldChange}
+                handleFieldChange={onFieldChange}
                 handleNetworkSelectionChange={handleNetworkSelectionChange}
                 handleOperatorSelectionChange={handleOperatorSelectionChange}
               />
@@ -231,7 +224,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             <Tab value={TABS.JOURNEY_PATTERNS} label="Journey Patterns">
               <JourneyPatternsEditor
                 journeyPatterns={flexibleLine.journeyPatterns}
-                onChange={jps => handleFieldChange('journeyPatterns', jps)}
+                onChange={jps => onFieldChange('journeyPatterns', jps)}
               />
             </Tab>
 
@@ -242,7 +235,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             >
               <BookingArrangementEditor
                 bookingArrangement={flexibleLine.bookingArrangement}
-                onChange={b => handleFieldChange('bookingArrangement', b)}
+                onChange={b => onFieldChange('bookingArrangement', b)}
               />
             </Tab>
           </Tabs>

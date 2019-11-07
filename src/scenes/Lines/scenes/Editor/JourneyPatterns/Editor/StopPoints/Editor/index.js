@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Tab, Tabs } from '@entur/component-library';
 import { DestinationDisplay, StopPoint } from 'model';
+import { hasValue } from 'helpers/forms';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import Header from './Header';
 import './styles.css';
 import searchForQuay from './searchForQuay';
 import debounce from './debounce';
-import { hasValue } from 'helpers/forms';
 import { DEFAULT_SELECT_VALUE, TABS } from './constants';
 import Form from './Form';
 import validateForm from './validateForm';
@@ -30,13 +30,13 @@ class StopPointEditor extends Component {
     });
   }
 
-  handleFieldChange = (field, value) => {
+  onFieldChange = (field, value) => {
     const { stopPoint, onChange } = this.props;
-    onChange(stopPoint.withChanges({ [field]: value }));
+    onChange(stopPoint.withFieldChange(field, value));
   };
 
   handleStopPlaceSelectionChange = stopPlaceSelection => {
-    this.handleFieldChange(
+    this.onFieldChange(
       'flexibleStopPlaceRef',
       stopPlaceSelection !== DEFAULT_SELECT_VALUE ? stopPlaceSelection : null
     );
@@ -46,9 +46,9 @@ class StopPointEditor extends Component {
   handleFrontTextChange = frontText => {
     const { stopPoint } = this.props;
     const destinationDisplay = stopPoint.destinationDisplay
-      ? stopPoint.destinationDisplay.withChanges({ frontText })
+      ? stopPoint.destinationDisplay.withFieldChange('frontText', frontText)
       : new DestinationDisplay({ frontText });
-    this.handleFieldChange('destinationDisplay', destinationDisplay);
+    this.onFieldChange('destinationDisplay', destinationDisplay);
   };
 
   onSave = async () => {
@@ -99,7 +99,7 @@ class StopPointEditor extends Component {
               handleStopPlaceSelectionChange={
                 this.handleStopPlaceSelectionChange
               }
-              handleFieldChange={this.handleFieldChange}
+              handleFieldChange={this.onFieldChange}
               debouncedSearchForQuay={this.debouncedSearchForQuay}
               handleFrontTextChange={this.handleFrontTextChange}
               stopPoint={stopPoint}
@@ -108,7 +108,7 @@ class StopPointEditor extends Component {
           <Tab value={TABS.BOOKING} label="Bestilling" className="booking-tab">
             <BookingArrangementEditor
               bookingArrangement={stopPoint.bookingArrangement}
-              onChange={b => this.handleFieldChange('bookingArrangement', b)}
+              onChange={b => this.onFieldChange('bookingArrangement', b)}
             />
           </Tab>
         </Tabs>
