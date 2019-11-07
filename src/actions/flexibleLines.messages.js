@@ -48,5 +48,5 @@ export default defineMessages({
   deleteLineErrorMessage: {
     id: 'actions.flexibleLines.deleteLineErrorMessage',
     defaultMessage: 'En feil oppstod under slettingen av linjen: {details}'
-  },
+  }
 });

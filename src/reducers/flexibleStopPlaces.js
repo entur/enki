@@ -17,7 +17,11 @@ const flexibleStopPlaces = (stopPlaces = null, action) => {
       return action.stopPlaces;
 
     case RECEIVE_FLEXIBLE_STOP_PLACE:
-      return stopPlaces ? stopPlaces.map((sp) => sp.id === action.stopPlace.id ? action.stopPlace : sp) : [action.stopPlace];
+      return stopPlaces
+        ? stopPlaces.map(sp =>
+            sp.id === action.stopPlace.id ? action.stopPlace : sp
+          )
+        : [action.stopPlace];
 
     default:
       return stopPlaces;

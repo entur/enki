@@ -5,7 +5,7 @@ export default defineMessages({
     id: 'actions.exports.loadExportsErrorHeader',
     defaultMessage: 'Laste eksporter'
   },
-  loadExportsErrorMessage: {
+  loadExportsErrorMessage: {
     id: 'actions.exports.loadExportsErrorMessage',
     defaultMessage: 'En feil oppstod under lastingen av eksportene: {details}'
   },
@@ -25,7 +25,7 @@ export default defineMessages({
     id: 'actions.exports.saveExportSuccessMessage',
     defaultMessage: 'Eksporten ble lagret.'
   },
-  saveExportErrorHeader: {
+  saveExportErrorHeader: {
     id: 'actions.exports.saveExportErrorHeader',
     defaultMessage: 'Lagre eksport'
   },

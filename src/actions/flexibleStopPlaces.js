@@ -46,7 +46,11 @@ export const loadFlexibleStopPlaces = () => async (dispatch, getState) => {
   const intl = getIntl(getState());
 
   try {
-    const data = await UttuQuery(activeProvider, getFlexibleStopPlacesQuery, {});
+    const data = await UttuQuery(
+      activeProvider,
+      getFlexibleStopPlacesQuery,
+      {}
+    );
     const flexibleStopPlaces = data.flexibleStopPlaces.map(
       fsp => new FlexibleStopPlace(fsp)
     );
@@ -71,10 +75,16 @@ export const loadFlexibleStopPlaceById = id => async (dispatch, getState) => {
   const intl = getIntl(getState());
 
   try {
-    const data = await UttuQuery(activeProvider, getFlexibleStopPlaceByIdQuery, { id });
-    dispatch(receiveFlexibleStopPlaceActionCreator(
-      new FlexibleStopPlace(data.flexibleStopPlace)
-    ));
+    const data = await UttuQuery(
+      activeProvider,
+      getFlexibleStopPlaceByIdQuery,
+      { id }
+    );
+    dispatch(
+      receiveFlexibleStopPlaceActionCreator(
+        new FlexibleStopPlace(data.flexibleStopPlace)
+      )
+    );
   } catch (e) {
     dispatch(
       showErrorNotification(
@@ -88,7 +98,10 @@ export const loadFlexibleStopPlaceById = id => async (dispatch, getState) => {
   }
 };
 
-export const saveFlexibleStopPlace = flexibleStopPlace => async (dispatch, getState) => {
+export const saveFlexibleStopPlace = flexibleStopPlace => async (
+  dispatch,
+  getState
+) => {
   const activeProvider = getState().providers.active;
   const intl = getIntl(getState());
 

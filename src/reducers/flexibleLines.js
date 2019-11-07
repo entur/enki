@@ -9,7 +9,9 @@ const flexibleLines = (lines = null, action) => {
       return action.lines;
 
     case RECEIVE_FLEXIBLE_LINE:
-        return lines ? lines.map((l) => l.id === action.line.id ? action.line : l) : [action.line];
+      return lines
+        ? lines.map(l => (l.id === action.line.id ? action.line : l))
+        : [action.line];
 
     default:
       return lines;

@@ -19,15 +19,17 @@ export const getInternationalizedUttuError = (intl, e) => {
   const DEFAULT_ERROR_CODE = 'UNKNOWN';
   let errorCode = DEFAULT_ERROR_CODE;
   let metadata = {};
-  if (e.response && e.response.errors && e.response.errors.length > 0 && e.response.errors[0].extensions) {
+  if (
+    e.response &&
+    e.response.errors &&
+    e.response.errors.length > 0 &&
+    e.response.errors[0].extensions
+  ) {
     if (validErrorCodes.includes(e.response.errors[0].extensions.code)) {
       errorCode = e.response.errors[0].extensions.code;
       metadata = e.response.errors[0].extensions.metadata || {};
     }
   }
 
-  return intl.formatMessage(
-    messages[errorCode],
-    metadata
-  );
-}
+  return intl.formatMessage(messages[errorCode], metadata);
+};

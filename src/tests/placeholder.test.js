@@ -1,3 +1,3 @@
 describe('Placeholder', () => {
-  test('something', () => {
-  });});
+  test('something', () => {});
+});

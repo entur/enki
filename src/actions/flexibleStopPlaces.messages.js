@@ -7,7 +7,8 @@ export default defineMessages({
   },
   loadStopPlacesErrorMessage: {
     id: 'actions.flexibleStopPlaces.loadStopPlacesErrorMessage',
-    defaultMessage: 'En feil oppstod under lastingen av stoppestedene: {details}'
+    defaultMessage:
+      'En feil oppstod under lastingen av stoppestedene: {details}'
   },
   loadStopPlaceErrorHeader: {
     id: 'actions.flexibleStopPlaces.loadStopPlaceErrorHeader',
@@ -47,6 +48,7 @@ export default defineMessages({
   },
   deleteStopPlaceErrorMessage: {
     id: 'actions.flexibleStopPlaces.deleteStopPlaceErrorMessage',
-    defaultMessage: 'En feil oppstod under slettingen av stoppestedet: {details}'
-  },
+    defaultMessage:
+      'En feil oppstod under slettingen av stoppestedet: {details}'
+  }
 });

@@ -42,7 +42,7 @@ export const geti18n = () => {
 };
 
 /* React-intl requires additional locale-data for languages (except 'en', included) for formatting rules,
-* these are kept in memory */
+ * these are kept in memory */
 export const loadLocaleData = () => {
   SUPPORTED_LOCALES.filter(locale => locale !== 'en').forEach(locale => {
     const localeData = require('react-intl/locale-data/' + locale);

@@ -29,21 +29,18 @@ class Export extends Versioned {
     try {
       // feature detection
       // eslint-disable-next-line
-      const isFileSaverSupported = !!new Blob;
+      const isFileSaverSupported = !!new Blob();
 
-      const {data} = await http.get(
-        `/uttu/${this.downloadUrl}`,
-        {
-          responseType: 'blob',
-          headers: {
-            'Authorization': token.getBearer()
-          }
+      const { data } = await http.get(`/uttu/${this.downloadUrl}`, {
+        responseType: 'blob',
+        headers: {
+          Authorization: token.getBearer()
         }
-      );
+      });
 
       saveAs(data, `${this.id.replace(':', '-')}-${this.created}.zip`);
     } catch (e) {
-      alert('Sorry, your browser is not supported for downloads.')
+      alert('Sorry, your browser is not supported for downloads.');
     }
   }
 }

@@ -40,14 +40,16 @@ export const loadExports = () => async (dispatch, getState) => {
   const intl = getIntl(getState());
 
   try {
-    const data = await UttuQuery(activeProvider, getExportsQuery, { historicDays: 30 });
+    const data = await UttuQuery(activeProvider, getExportsQuery, {
+      historicDays: 30
+    });
     const exports = data.exports.map(e => new Export(e));
     dispatch(receiveExportsActionCreator(exports));
   } catch (e) {
     dispatch(
       showErrorNotification(
         intl.formatMessage(messages.loadExportsErrorHeader),
-        intl.formatMessage(messages.loadExportsErrorMessage, {
+        intl.formatMessage(messages.loadExportsErrorMessage, {
           details: getInternationalizedUttuError(intl, e)
         })
       )
@@ -90,7 +92,7 @@ export const saveExport = theExport => async (dispatch, getState) => {
         intl.formatMessage(messages.saveExportSuccessMessage)
       )
     );
-  } catch(e) {
+  } catch (e) {
     dispatch(
       showErrorNotification(
         intl.formatMessage(messages.saveExportErrorHeader),

@@ -44,7 +44,11 @@ export const loadFlexibleLines = () => async (dispatch, getState) => {
   dispatch(requestFlexibleLinesActionCreator());
 
   try {
-    const data = await UttuQuery(getState().providers.active, getFlexibleLinesQuery, {});
+    const data = await UttuQuery(
+      getState().providers.active,
+      getFlexibleLinesQuery,
+      {}
+    );
     const flexibleLines = data.flexibleLines.map(fl => new FlexibleLine(fl));
     dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
   } catch (e) {
@@ -65,8 +69,14 @@ export const loadFlexibleLineById = id => async (dispatch, getState) => {
   dispatch(requestFlexibleLineActionCreator());
 
   try {
-    const data = await UttuQuery(getState().providers.active, getFlexibleLineByIdQuery, { id });
-    dispatch(receiveFlexibleLineActionCreator(new FlexibleLine(data.flexibleLine)));
+    const data = await UttuQuery(
+      getState().providers.active,
+      getFlexibleLineByIdQuery,
+      { id }
+    );
+    dispatch(
+      receiveFlexibleLineActionCreator(new FlexibleLine(data.flexibleLine))
+    );
   } catch (e) {
     const intl = getIntl(getState());
     dispatch(
@@ -88,10 +98,12 @@ export const saveFlexibleLine = flexibleLine => async (dispatch, getState) => {
     await UttuQuery(activeProvider, flexibleLineMutation, {
       input: flexibleLine.toPayload()
     });
-    dispatch(showSuccessNotification(
-      intl.formatMessage(messages.saveLineSuccessHeader),
-      intl.formatMessage(messages.saveLineSuccessMessage)
-    ));
+    dispatch(
+      showSuccessNotification(
+        intl.formatMessage(messages.saveLineSuccessHeader),
+        intl.formatMessage(messages.saveLineSuccessMessage)
+      )
+    );
   } catch (e) {
     dispatch(
       showErrorNotification(

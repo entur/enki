@@ -15,6 +15,7 @@ export default defineMessages({
   },
   ENTITY_IS_REFERENCED: {
     id: 'helpers.uttu.uttuError.ENTITY_IS_REFERENCED',
-    defaultMessage: 'Entity cannot be deleted because {noOfLines, number} other {noOfLines, plural, one {entity has a reference} other {entities have references}} to it.'
+    defaultMessage:
+      'Entity cannot be deleted because {noOfLines, number} other {noOfLines, plural, one {entity has a reference} other {entities have references}} to it.'
   }
 });
