@@ -26,9 +26,7 @@ const BookingArrangementEditor = props => {
         }
       }
 
-      const newBooking = bookingArrangement
-        ? bookingArrangement.withChanges({ [field]: newValue })
-        : new BookingArrangement({ [field]: newValue });
+      const newBooking = bookingArrangement.withChanges({ [field]: newValue });
 
       onChange(newBooking.isEmpty() ? undefined : newBooking);
     },
@@ -135,6 +133,12 @@ const BookingArrangementEditor = props => {
       />
     </div>
   );
+};
+
+BookingArrangementEditor.defaultProps = {
+  bookingArrangement: new BookingArrangement({
+    bookingContact: new Contact()
+  })
 };
 
 BookingArrangementEditor.propTypes = {
