@@ -166,7 +166,7 @@ class ServiceJourneyEditor extends Component {
 
           <Tab value={TABS.BOOKING} label="Bestilling" className="booking-tab">
             <BookingArrangementEditor
-              bookingArrangement={bookingArrangement}
+              bookingArrangement={bookingArrangement || undefined}
               onChange={b => this.handleFieldChange('bookingArrangement', b)}
             />
           </Tab>

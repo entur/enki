@@ -11,44 +11,47 @@ import BookingNoteField from './bookingNoteField';
 import './styles.css';
 
 const BookingArrangementEditor = props => {
-  const {
-    bookingArrangement = {},
-    onChange
-  } = props;
+  const { bookingArrangement = {}, onChange } = props;
 
-  const handleFieldChange = useCallback((field, value, multi = false) => {
-    let newValue = value;
-    if (multi) {
-      if (bookingArrangement) {
-        newValue = bookingArrangement[field].includes(value)
-          ? bookingArrangement[field].filter(v => v !== value)
-          : bookingArrangement[field].concat(value);
-      } else {
-        newValue = [value];
+  const handleFieldChange = useCallback(
+    (field, value, multi = false) => {
+      let newValue = value;
+      if (multi) {
+        if (bookingArrangement) {
+          newValue = bookingArrangement[field].includes(value)
+            ? bookingArrangement[field].filter(v => v !== value)
+            : bookingArrangement[field].concat(value);
+        } else {
+          newValue = [value];
+        }
       }
-    }
 
-    const newBooking = bookingArrangement
-      ? bookingArrangement.withChanges({ [field]: newValue })
-      : new BookingArrangement({ [field]: newValue });
+      const newBooking = bookingArrangement
+        ? bookingArrangement.withChanges({ [field]: newValue })
+        : new BookingArrangement({ [field]: newValue });
 
-    onChange(newBooking.isEmpty() ? undefined : newBooking);
-  }, [bookingArrangement, onChange]);
+      onChange(newBooking.isEmpty() ? undefined : newBooking);
+    },
+    [bookingArrangement, onChange]
+  );
 
-  const handleContactFieldChange = useCallback((field, value) => {
-    let newContact;
-    if (bookingArrangement && bookingArrangement.bookingContact) {
-      newContact = bookingArrangement.bookingContact.withChanges({
-        [field]: value
-      });
-    } else {
-      newContact = new Contact({ [field]: value });
-    }
-    handleFieldChange(
-      'bookingContact',
-      newContact.isEmpty() ? undefined : newContact
-    );
-  }, [bookingArrangement, handleFieldChange]);
+  const handleContactFieldChange = useCallback(
+    (field, value) => {
+      let newContact;
+      if (bookingArrangement && bookingArrangement.bookingContact) {
+        newContact = bookingArrangement.bookingContact.withChanges({
+          [field]: value
+        });
+      } else {
+        newContact = new Contact({ [field]: value });
+      }
+      handleFieldChange(
+        'bookingContact',
+        newContact.isEmpty() ? undefined : newContact
+      );
+    },
+    [bookingArrangement, handleFieldChange]
+  );
 
   const resetBookingLimit = useCallback(() => {
     if (bookingArrangement) {
@@ -62,14 +65,12 @@ const BookingArrangementEditor = props => {
   }, [bookingArrangement, onChange]);
 
   const contactFieldChangeHandlerFactory = fieldName => {
-    return newValue =>
-      handleContactFieldChange(fieldName, newValue);
-  }
+    return newValue => handleContactFieldChange(fieldName, newValue);
+  };
 
   const fieldChangeHandlerFactory = (fieldName, multiple = false) => {
-    return newValue =>
-      handleFieldChange(fieldName, newValue, multiple);
-  }
+    return newValue => handleFieldChange(fieldName, newValue, multiple);
+  };
 
   const {
     bookingContact,
@@ -86,7 +87,9 @@ const BookingArrangementEditor = props => {
     <div className="booking-editor">
       <ContactFields
         contact={bookingContact}
-        onContactPersonChange={contactFieldChangeHandlerFactory('contactPerson')}
+        onContactPersonChange={contactFieldChangeHandlerFactory(
+          'contactPerson'
+        )}
         onPhoneChange={contactFieldChangeHandlerFactory('phone')}
         onEmailChange={contactFieldChangeHandlerFactory('email')}
         onUrlChange={contactFieldChangeHandlerFactory('url')}
@@ -107,8 +110,12 @@ const BookingArrangementEditor = props => {
       <BookingLimitFields
         latestBookingTime={latestBookingTime}
         minimumBookingPeriod={minimumBookingPeriod}
-        onLatestBookingTimeChange={fieldChangeHandlerFactory('latestBookingTime')}
-        onMinimumBookingPeriodChange={fieldChangeHandlerFactory('minimumBookingPeriod')}
+        onLatestBookingTimeChange={fieldChangeHandlerFactory(
+          'latestBookingTime'
+        )}
+        onMinimumBookingPeriodChange={fieldChangeHandlerFactory(
+          'minimumBookingPeriod'
+        )}
         resetBookingLimit={resetBookingLimit}
       />
 
@@ -128,7 +135,7 @@ const BookingArrangementEditor = props => {
       />
     </div>
   );
-}
+};
 
 BookingArrangementEditor.propTypes = {
   onChange: PropTypes.func.isRequired,
