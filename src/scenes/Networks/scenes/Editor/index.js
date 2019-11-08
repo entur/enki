@@ -24,6 +24,7 @@ import ConfirmDialog from '../../../../components/ConfirmDialog';
 
 import './styles.css';
 import { createSelector } from 'reselect';
+import selectActiveProvider from '../../../../selectors/selectActiveProvider';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
@@ -31,17 +32,19 @@ const DEFAULT_SELECT_VALUE = '-1';
 const selectNetwork = createSelector(
   state => state.networks,
   (_, match) => match.params.id,
-  (networks, id) => id ? networks ? networks.find(n => n.id === id) : null : new Network()
-)
+  (networks, id) =>
+    id ? (networks ? networks.find(n => n.id === id) : null) : new Network()
+);
 
 const NetworkEditor = ({ match, history }) => {
-  const activeProvider = useSelector(({ providers }) => providers.providers.find(p => p.code = providers.active));
+  const activeProvider = useSelector(selectActiveProvider());
   const organisations = useSelector(({ organisations }) => organisations);
   const lines = useSelector(({ flexibleLines }) => flexibleLines);
-  const currentNetwork = useSelector(state =>
-    selectNetwork(state, match));
+  const currentNetwork = useSelector(state => selectNetwork(state, match));
 
-  const [authoritySelection, setAuthoritySelection] = useState(DEFAULT_SELECT_VALUE);
+  const [authoritySelection, setAuthoritySelection] = useState(
+    DEFAULT_SELECT_VALUE
+  );
   const [isSaving, setSaving] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
@@ -54,15 +57,13 @@ const NetworkEditor = ({ match, history }) => {
     [dispatch]
   );
 
-  const dispatchLoadNetwork = useCallback(
-    () => {
-      if (match.params.id) {
-        dispatch(loadNetworkById(match.params.id))
-          .catch(() => history.push('/networks'));
-      }
-    },
-    [dispatch, match.params.id, history]
-  );
+  const dispatchLoadNetwork = useCallback(() => {
+    if (match.params.id) {
+      dispatch(loadNetworkById(match.params.id)).catch(() =>
+        history.push('/networks')
+      );
+    }
+  }, [dispatch, match.params.id, history]);
 
   useEffect(() => {
     dispatchLoadFlexibleLines();
@@ -70,7 +71,9 @@ const NetworkEditor = ({ match, history }) => {
   }, [dispatchLoadFlexibleLines, dispatchLoadNetwork]);
 
   useEffect(() => {
-    setAuthoritySelection(currentNetwork ? currentNetwork.authorityRef : DEFAULT_SELECT_VALUE);
+    setAuthoritySelection(
+      currentNetwork ? currentNetwork.authorityRef : DEFAULT_SELECT_VALUE
+    );
     setNetwork(currentNetwork);
   }, [currentNetwork]);
 
@@ -85,24 +88,26 @@ const NetworkEditor = ({ match, history }) => {
     setNetwork(network.withChanges({ [field]: value }));
   };
 
-  const handleAuthoritySelectionChange = (authoritySelection) => {
+  const handleAuthoritySelectionChange = authoritySelection => {
     const authorityRef =
       authoritySelection !== DEFAULT_SELECT_VALUE ? authoritySelection : null;
-    setNetwork(network.withChanges({ authorityRef}));
+    setNetwork(network.withChanges({ authorityRef }));
     setAuthoritySelection(authoritySelection);
   };
 
   const handleDelete = () => {
     setDeleteDialogOpen(false);
     setDeleting(true);
-    dispatch(deleteNetworkById(network.id))
-      .then(() => history.push('/networks'));
+    dispatch(deleteNetworkById(network.id)).then(() =>
+      history.push('/networks')
+    );
   };
 
-  const authorities = organisations.filter(org =>
-    org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
-    org.references.netexAuthorityId &&
-    org.references.codeSpace === activeProvider.codespace.xmlns
+  const authorities = organisations.filter(
+    org =>
+      org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
+      org.references.netexAuthorityId &&
+      org.references.codeSpace === activeProvider.codespace.xmlns
   );
 
   const isDeleteDisabled =
@@ -111,10 +116,7 @@ const NetworkEditor = ({ match, history }) => {
     !!lines.find(l => l.networkRef === network.id) ||
     isDeleting;
 
-  const isSaveDisabled =
-    !network ||
-    !network.name ||
-    !network.authorityRef;
+  const isSaveDisabled = !network || !network.name || !network.authorityRef;
 
   return (
     <div className="network-editor">
@@ -125,7 +127,8 @@ const NetworkEditor = ({ match, history }) => {
           <Button
             variant="success"
             onClick={handleOnSaveClick}
-            disabled={isSaveDisabled}>
+            disabled={isSaveDisabled}
+          >
             Lagre
           </Button>
 
@@ -158,36 +161,27 @@ const NetworkEditor = ({ match, history }) => {
             <TextArea
               type="text"
               value={network.description}
-              onChange={e =>
-                handleFieldChange('description', e.target.value)
-              }
+              onChange={e => handleFieldChange('description', e.target.value)}
             />
 
             <Label>Privat kode</Label>
             <TextField
               type="text"
               value={network.privateCode}
-              onChange={e =>
-                handleFieldChange('privateCode', e.target.value)
-              }
+              onChange={e => handleFieldChange('privateCode', e.target.value)}
             />
 
             <Label>* Autoritet</Label>
             <DropDown
               value={authoritySelection}
-              onChange={e =>
-                handleAuthoritySelectionChange(e.target.value)
-              }
+              onChange={e => handleAuthoritySelectionChange(e.target.value)}
             >
               <DropDownOptions
                 label={DEFAULT_SELECT_LABEL}
-                value={DEFAULT_SELECT_VALUE} />
+                value={DEFAULT_SELECT_VALUE}
+              />
               {authorities.map(org => (
-                <DropDownOptions
-                  key={org.id}
-                  label={org.name}
-                  value={org.id}
-                />
+                <DropDownOptions key={org.id} label={org.name} value={org.id} />
               ))}
             </DropDown>
           </div>
@@ -226,6 +220,6 @@ const NetworkEditor = ({ match, history }) => {
       />
     </div>
   );
-}
+};
 
 export default withRouter(NetworkEditor);
