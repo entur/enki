@@ -11,13 +11,17 @@ export const getUttuError = e => {
 const validErrorCodes = [
   'UNKNOWN',
   'ORGANISATION_NOT_VALID_OPERATOR',
+  'MISSING_OPERATOR',
   'FROM_DATE_AFTER_TO_DATE',
-  'ENTITY_IS_REFERENCED'
+  'ENTITY_IS_REFERENCED',
+  'MINIMUM_POINTS_IN_SEQUENCE',
+  'CONSTRAINT_VIOLATION'
 ];
 
 export const getInternationalizedUttuError = (intl, e) => {
   const DEFAULT_ERROR_CODE = 'UNKNOWN';
   let errorCode = DEFAULT_ERROR_CODE;
+  let subCode = null;
   let metadata = {};
   if (
     e.response &&
@@ -27,9 +31,12 @@ export const getInternationalizedUttuError = (intl, e) => {
   ) {
     if (validErrorCodes.includes(e.response.errors[0].extensions.code)) {
       errorCode = e.response.errors[0].extensions.code;
+      subCode = e.response.errors[0].extensions.subCode;
       metadata = e.response.errors[0].extensions.metadata || {};
     }
   }
 
-  return intl.formatMessage(messages[errorCode], metadata);
+  const messageCode = subCode ? `${errorCode}_${subCode}` : errorCode;
+
+  return intl.formatMessage(messages[messageCode], metadata);
 };
