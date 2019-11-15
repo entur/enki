@@ -5,7 +5,7 @@ import { FormattedDate } from 'react-intl';
 import moment from 'moment';
 import { Label, Button } from '@entur/component-library';
 
-import { loadExportById } from '../../../../actions/exports';
+import { loadExportById } from 'actions/exports';
 import Loading from 'components/Loading';
 import { EXPORT_STATUS } from 'model/enums';
 

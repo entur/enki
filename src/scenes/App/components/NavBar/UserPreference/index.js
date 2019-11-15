@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { DropDown, DropDownOptions } from '@entur/component-library';
 
 import UserMenu from './UserMenu/';
-import { setActiveProvider } from '../../../../../actions/providers';
+import { setActiveProvider } from 'actions/providers';
 
 import './styles.css';
 
@@ -45,4 +45,7 @@ const mapStateToProps = ({ providers }) => ({
   activeProvider: providers.active
 });
 
-export default compose(withRouter, connect(mapStateToProps))(UserPreference);
+export default compose(
+  withRouter,
+  connect(mapStateToProps)
+)(UserPreference);

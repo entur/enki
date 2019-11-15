@@ -2,7 +2,7 @@ import {
   RECEIVE_PROVIDERS,
   FAILED_RECEIVING_PROVIDERS,
   SET_ACTIVE_PROVIDER
-} from '../actions/providers';
+} from 'actions/providers';
 
 const initialState = {
   providers: null,

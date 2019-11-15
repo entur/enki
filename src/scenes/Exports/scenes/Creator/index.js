@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Button, Label, TextField, Checkbox } from '@entur/component-library';
 
 import { Export } from 'model';
-import { saveExport } from '../../../../actions/exports';
+import { saveExport } from 'actions/exports';
 import OverlayLoader from 'components/OverlayLoader';
 import CustomDatepicker from 'components/CustomDatepicker';
 import { selectIntl } from 'i18n';

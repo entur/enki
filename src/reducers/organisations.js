@@ -1,4 +1,4 @@
-import { RECEIVE_ORGANISATIONS } from '../actions/organisations';
+import { RECEIVE_ORGANISATIONS } from 'actions/organisations';
 
 const organisationsReducer = (state = null, action) => {
   switch (action.type) {

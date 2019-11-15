@@ -9,8 +9,8 @@ import {
   deleteFlexibleStopPlaceById,
   loadFlexibleStopPlaceById,
   saveFlexibleStopPlace
-} from '../../../../actions/flexibleStopPlaces';
-import { loadFlexibleLines } from '../../../../actions/flexibleLines';
+} from 'actions/flexibleStopPlaces';
+import { loadFlexibleLines } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';

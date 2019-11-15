@@ -12,8 +12,8 @@ import ScrollToTop from 'components/ScrollToTop';
 import Loading from 'components/Loading';
 import NavBar from './components/NavBar';
 import Routes from './Routes';
-import { getProviders } from '../../actions/providers';
-import { getOrganisations } from '../../actions/organisations';
+import { getProviders } from 'actions/providers';
+import { getOrganisations } from 'actions/organisations';
 
 import './styles.css';
 

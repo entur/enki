@@ -2,7 +2,7 @@ import {
   REQUEST_EXPORTS,
   RECEIVE_EXPORTS,
   RECEIVE_EXPORT
-} from '../actions/exports';
+} from 'actions/exports';
 
 const exportsReducer = (exports = null, action) => {
   switch (action.type) {

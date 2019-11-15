@@ -11,7 +11,7 @@ import {
 } from 'components/Table';
 import Loading from 'components/Loading';
 import IconButton from 'components/IconButton';
-import { loadNetworks } from '../../actions/networks';
+import { loadNetworks } from 'actions/networks';
 
 import './styles.css';
 

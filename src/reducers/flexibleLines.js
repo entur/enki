@@ -1,7 +1,7 @@
 import {
   RECEIVE_FLEXIBLE_LINES,
   RECEIVE_FLEXIBLE_LINE
-} from '../actions/flexibleLines';
+} from 'actions/flexibleLines';
 
 const flexibleLines = (lines = null, action) => {
   switch (action.type) {

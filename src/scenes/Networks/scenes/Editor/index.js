@@ -16,8 +16,8 @@ import {
   deleteNetworkById,
   loadNetworkById,
   saveNetwork
-} from '../../../../actions/networks';
-import { loadFlexibleLines } from '../../../../actions/flexibleLines';
+} from 'actions/networks';
+import { loadFlexibleLines } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';

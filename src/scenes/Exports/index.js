@@ -12,7 +12,7 @@ import {
 } from 'components/Table';
 import Loading from 'components/Loading';
 import IconButton from 'components/IconButton';
-import { loadExports } from '../../actions/exports';
+import { loadExports } from 'actions/exports';
 import { EXPORT_STATUS } from 'model/enums';
 
 import './styles.css';
