@@ -7,34 +7,33 @@ import {
   SlideSwitch,
   DeleteIcon
 } from '@entur/component-library';
-
 import { DayTypeAssignment } from 'model';
 import CustomDatepicker from 'components/CustomDatepicker';
 import OperatingPeriod from 'model/OperatingPeriod';
-
 import './styles.css';
 
 class DayTypeAssignmentEditor extends Component {
   state = { useDateRange: this.props.dayTypeAssignment.operatingPeriod };
 
-  handleFieldChange(field, value) {
+  onFieldChange(field, value) {
     const { dayTypeAssignment, onChange } = this.props;
-    onChange(dayTypeAssignment.withChanges({ [field]: value }));
+    onChange(dayTypeAssignment.withFieldChange(field, value));
   }
 
   handleDateRangeChange() {
     if (this.state.useDateRange) {
-      this.handleFieldChange('operatingPeriod', undefined);
+      this.onFieldChange('operatingPeriod', undefined);
     }
     this.setState(s => ({ useDateRange: !s.useDateRange }));
   }
 
   handleOperatingPeriodFieldChange(field, value) {
-    const { dayTypeAssignment, onChange } = this.props;
+    const { dayTypeAssignment } = this.props;
     const operatingPeriod = dayTypeAssignment.operatingPeriod
-      ? dayTypeAssignment.operatingPeriod.withChanges({ [field]: value })
+      ? dayTypeAssignment.operatingPeriod.withFieldChange(field, value)
       : new OperatingPeriod({ [field]: value });
-    onChange(dayTypeAssignment.withChanges({ operatingPeriod }));
+
+    this.onFieldChange('operatingPeriod', operatingPeriod);
   }
 
   render() {
@@ -52,9 +51,7 @@ class DayTypeAssignmentEditor extends Component {
           <Checkbox
             value="1"
             checked={isAvailable === true}
-            onChange={e =>
-              this.handleFieldChange('isAvailable', e.target.checked)
-            }
+            onChange={e => this.onFieldChange('isAvailable', e.target.checked)}
           />
         </div>
 
@@ -71,7 +68,7 @@ class DayTypeAssignmentEditor extends Component {
               <Label>Dato</Label>
               <CustomDatepicker
                 startDate={date}
-                onChange={date => this.handleFieldChange('date', date)}
+                onChange={date => this.onFieldChange('date', date)}
               />
             </div>
           )}
@@ -114,8 +111,7 @@ class DayTypeAssignmentEditor extends Component {
 }
 
 DayTypeAssignmentEditor.propTypes = {
-  dayTypeAssignment: PropTypes.arrayOf(PropTypes.instanceOf(DayTypeAssignment))
-    .isRequired,
+  dayTypeAssignment: PropTypes.instanceOf(DayTypeAssignment).isRequired,
   onChange: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
 };

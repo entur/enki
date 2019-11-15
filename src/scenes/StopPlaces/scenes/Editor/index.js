@@ -14,8 +14,8 @@ import { loadFlexibleLines } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';
-import PolygonMap from './components/PolygonMap';
 
+import PolygonMap from './components/PolygonMap';
 import './styles.css';
 import { createSelector } from 'reselect';
 import messages from './messages';
@@ -92,13 +92,9 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
       .finally(() => setDeleting(false));
   }, [dispatch, history, flexibleStopPlace]);
 
-  const handleFieldChange = useCallback(
+  const onFieldChange = useCallback(
     (field, value) => {
-      setFlexibleStopPlace(
-        flexibleStopPlace.withChanges({
-          [field]: value
-        })
-      );
+      setFlexibleStopPlace(flexibleStopPlace.withFieldChange(field, value));
     },
     [flexibleStopPlace]
   );
@@ -106,16 +102,16 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   const handleMapOnClick = useCallback(
     e => {
       const flexibleArea = flexibleStopPlace.flexibleArea;
-      setFlexibleStopPlace(
-        flexibleStopPlace.withChanges({
-          flexibleArea: (flexibleArea || new FlexibleArea()).addCoordinate([
-            e.latlng.lat,
-            e.latlng.lng
-          ])
-        })
+      onFieldChange(
+        flexibleStopPlace,
+        'flexibleArea',
+        (flexibleArea || new FlexibleArea()).addCoordinate([
+          e.latlng.lat,
+          e.latlng.lng
+        ])
       );
     },
-    [flexibleStopPlace]
+    [flexibleStopPlace, onFieldChange]
   );
 
   const polygonCoordinates =
@@ -177,21 +173,21 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
               <TextField
                 type="text"
                 value={flexibleStopPlace.name}
-                onChange={e => handleFieldChange('name', e.target.value)}
+                onChange={e => onFieldChange('name', e.target.value)}
               />
 
               <Label>{formatMessage(messages.descriptionFormLabelText)}</Label>
               <TextArea
                 type="text"
                 value={flexibleStopPlace.description}
-                onChange={e => handleFieldChange('description', e.target.value)}
+                onChange={e => onFieldChange('description', e.target.value)}
               />
 
               <Label>{formatMessage(messages.privateCodeFormLabelText)}</Label>
               <TextField
                 type="text"
                 value={flexibleStopPlace.privateCode}
-                onChange={e => handleFieldChange('privateCode', e.target.value)}
+                onChange={e => onFieldChange('privateCode', e.target.value)}
               />
             </div>
 

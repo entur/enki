@@ -26,11 +26,11 @@ const boolArrayToDaysOfWeek = arr =>
     .map(obj => obj.dow);
 
 class DayTypeEditor extends Component {
-  handleFieldChange(field, value) {
+  onFieldChange(field, value) {
     const { dayType, onChange } = this.props;
 
     const newDayType = dayType
-      ? dayType.withChanges({ [field]: value })
+      ? dayType.withFieldChange(field, value)
       : new DayType({ [field]: value });
 
     onChange(newDayType.isEmpty() ? undefined : newDayType);
@@ -48,14 +48,14 @@ class DayTypeEditor extends Component {
         <WeekdayPicker
           days={daysOfWeekToBoolArray(daysOfWeek)}
           onDaysChange={arr =>
-            this.handleFieldChange('daysOfWeek', boolArrayToDaysOfWeek(arr))
+            this.onFieldChange('daysOfWeek', boolArrayToDaysOfWeek(arr))
           }
         />
 
         <Label>Datoer</Label>
         <DayTypeAssignmentsEditor
           dayTypeAssignments={dayTypeAssignments}
-          onChange={dtas => this.handleFieldChange('dayTypeAssignments', dtas)}
+          onChange={dtas => this.onFieldChange('dayTypeAssignments', dtas)}
         />
       </div>
     );

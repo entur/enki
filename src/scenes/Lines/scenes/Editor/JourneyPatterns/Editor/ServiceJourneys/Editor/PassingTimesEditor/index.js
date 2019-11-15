@@ -26,13 +26,10 @@ class PassingTimesEditor extends Component {
     }
   }
 
-  handleFieldChange(index, field, value) {
+  onFieldChange(index, field, value) {
     const { passingTimes, onChange } = this.props;
-
     const newPt = passingTimes[index]
-      ? passingTimes[index].withChanges({
-          [field]: value
-        })
+      ? passingTimes[index].withFieldChange(field, value)
       : new PassingTime({ [field]: value });
     const newPts = replaceElement(passingTimes, index, newPt);
 
@@ -41,13 +38,13 @@ class PassingTimesEditor extends Component {
 
   handleDayOffsetChange(index, field, value) {
     value = parseInt(value);
-    this.handleFieldChange(index, field, value !== 0 ? value : undefined);
+    this.onFieldChange(index, field, value !== 0 ? value : undefined);
   }
 
   getTimePicker = (tpt, index, field) => (
     <TimePicker
       time={tpt && tpt[field] ? tpt[field] : null}
-      onChange={t => this.handleFieldChange(index, field, t)}
+      onChange={t => this.onFieldChange(index, field, t)}
       position="below"
     />
   );

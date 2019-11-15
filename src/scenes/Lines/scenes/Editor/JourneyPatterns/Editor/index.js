@@ -45,13 +45,13 @@ class JourneyPatternEditor extends Component {
     });
   }
 
-  handleFieldChange(field, value) {
+  onFieldChange(field, value) {
     const { journeyPattern, onChange } = this.props;
-    onChange(journeyPattern.withChanges({ [field]: value }));
+    onChange(journeyPattern.withFieldChange(field, value));
   }
 
   handleDirectionSelectionChange(directionSelection) {
-    this.handleFieldChange(
+    this.onFieldChange(
       'directionType',
       directionSelection !== DEFAULT_SELECT_VALUE
         ? directionSelection
@@ -85,25 +85,21 @@ class JourneyPatternEditor extends Component {
             <TextField
               type="text"
               value={journeyPattern.name}
-              onChange={e => this.handleFieldChange('name', e.target.value)}
+              onChange={e => this.onFieldChange('name', e.target.value)}
             />
 
             <Label>Beskrivelse</Label>
             <TextArea
               type="text"
               value={journeyPattern.description}
-              onChange={e =>
-                this.handleFieldChange('description', e.target.value)
-              }
+              onChange={e => this.onFieldChange('description', e.target.value)}
             />
 
             <Label>Privat kode</Label>
             <TextField
               type="text"
               value={journeyPattern.privateCode}
-              onChange={e =>
-                this.handleFieldChange('privateCode', e.target.value)
-              }
+              onChange={e => this.onFieldChange('privateCode', e.target.value)}
             />
 
             <Label>Retning</Label>
@@ -126,7 +122,7 @@ class JourneyPatternEditor extends Component {
           <Tab value={TABS.STOP_POINTS} label="Stoppepunkter">
             <StopPointsEditor
               stopPoints={journeyPattern.pointsInSequence}
-              onChange={pis => this.handleFieldChange('pointsInSequence', pis)}
+              onChange={pis => this.onFieldChange('pointsInSequence', pis)}
             />
           </Tab>
 
@@ -134,7 +130,7 @@ class JourneyPatternEditor extends Component {
             <ServiceJourneysEditor
               serviceJourneys={journeyPattern.serviceJourneys}
               stopPoints={journeyPattern.pointsInSequence}
-              onChange={sjs => this.handleFieldChange('serviceJourneys', sjs)}
+              onChange={sjs => this.onFieldChange('serviceJourneys', sjs)}
             />
           </Tab>
         </Tabs>
