@@ -1,13 +1,13 @@
-import { UttuQuery } from '../graphql';
-import { exportMutation } from '../graphql/uttu/mutations';
-import { getExportByIdQuery, getExportsQuery } from '../graphql/uttu/queries';
-import { Export } from '../model';
+import { UttuQuery } from 'graphql';
+import { exportMutation } from 'graphql/uttu/mutations';
+import { getExportByIdQuery, getExportsQuery } from 'graphql/uttu/queries';
+import { Export } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
-} from '../components/Notification/actions';
-import { getInternationalizedUttuError } from '../helpers/uttu';
-import { getIntl } from '../i18n';
+} from 'components/Notification/actions';
+import { getInternationalizedUttuError } from 'helpers/uttu';
+import { getIntl } from 'i18n';
 import messages from './exports.messages';
 
 export const REQUEST_EXPORTS = 'REQUEST_EXPORTS';

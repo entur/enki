@@ -1,18 +1,14 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {
-  CheckboxGroup,
-  Checkbox,
-  FormGroup
-} from '@entur/component-library';
-import {
-  BOOKING_METHOD,
-} from '../../../../../model/enums';
-import {selectIntl} from '../../../../../i18n';
-import messages, {bookingMethodMessages} from './bookingMethodSelection.messages';
+import { useSelector } from 'react-redux';
+import { CheckboxGroup, Checkbox, FormGroup } from '@entur/component-library';
+import { BOOKING_METHOD } from 'model/enums';
+import { selectIntl } from 'i18n';
+import messages, {
+  bookingMethodMessages
+} from './bookingMethodSelection.messages';
 
 export default ({ bookingMethods, onChange }) => {
-  const {formatMessage} = useSelector(selectIntl);
+  const { formatMessage } = useSelector(selectIntl);
 
   return (
     <FormGroup
@@ -22,9 +18,7 @@ export default ({ bookingMethods, onChange }) => {
     >
       <CheckboxGroup
         id="bookingMethods"
-        onChange={e =>
-          onChange(e.target.value)
-        }
+        onChange={e => onChange(e.target.value)}
       >
         {Object.values(BOOKING_METHOD).map(v => (
           <Checkbox
@@ -37,4 +31,4 @@ export default ({ bookingMethods, onChange }) => {
       </CheckboxGroup>
     </FormGroup>
   );
-}
+};

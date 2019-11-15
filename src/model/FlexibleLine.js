@@ -3,7 +3,7 @@ import Network from './Network';
 import BookingArrangement from './BookingArrangement';
 import JourneyPattern from './JourneyPattern';
 import Notice from './Notice';
-import { replaceElement } from '../helpers/arrays';
+import { replaceElement } from 'helpers/arrays';
 
 class FlexibleLine extends Versioned {
   constructor(data = {}) {

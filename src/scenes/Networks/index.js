@@ -8,19 +8,21 @@ import {
   TableHeaderCell,
   TableRow,
   TableRowCell
-} from '../../components/Table';
-import Loading from '../../components/Loading';
-import IconButton from '../../components/IconButton';
+} from 'components/Table';
+import Loading from 'components/Loading';
+import IconButton from 'components/IconButton';
 import { loadNetworks } from '../../actions/networks';
 
 import './styles.css';
 
 const Networks = ({ history }) => {
-  const { activeProvider, organisations, networks } = useSelector(({ providers, organisations, networks }) => ({
-    activeProvider: providers.active,
-    organisations,
-    networks
-  }));
+  const { activeProvider, organisations, networks } = useSelector(
+    ({ providers, organisations, networks }) => ({
+      activeProvider: providers.active,
+      organisations,
+      networks
+    })
+  );
 
   const dispatch = useDispatch();
 
@@ -28,9 +30,12 @@ const Networks = ({ history }) => {
     dispatch(loadNetworks());
   }, [dispatch, activeProvider]);
 
-  const handleOnRowClick = useCallback((id) => {
-    history.push(`/networks/edit/${id}`);
-  }, [history]);
+  const handleOnRowClick = useCallback(
+    id => {
+      history.push(`/networks/edit/${id}`);
+    },
+    [history]
+  );
 
   const renderTableRows = () => {
     if (networks) {
@@ -85,6 +90,6 @@ const Networks = ({ history }) => {
       </Table>
     </div>
   );
-}
+};
 
 export default withRouter(Networks);

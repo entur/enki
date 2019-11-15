@@ -1,4 +1,4 @@
-import http from '../http/http';
+import http from 'http/http';
 
 export const RECEIVE_ORGANISATIONS = 'RECEIVE_ORGANISATIONS';
 

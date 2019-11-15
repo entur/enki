@@ -5,11 +5,11 @@ import { Provider } from 'react-intl-redux';
 import Keycloak from 'keycloak-js';
 
 import App from './scenes/App';
-import ErrorBoundary from './components/ErrorBoundary';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { configureStore } from './store';
-import token from './http/token';
-import { isAdmin } from './helpers/tokenParser';
-import { API_BASE } from './http/http';
+import token from 'http/token';
+import { isAdmin } from 'helpers/tokenParser';
+import { API_BASE } from 'http/http';
 
 import './styles/index.css';
 

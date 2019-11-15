@@ -8,9 +8,9 @@ import {
   TableHeaderCell,
   TableRow,
   TableRowCell
-} from '../../../../../../../../components/Table';
-import { StopPoint } from '../../../../../../../../model';
-import ConfirmDialog from '../../../../../../../../components/ConfirmDialog';
+} from 'components/Table';
+import { StopPoint } from 'model';
+import ConfirmDialog from 'components/ConfirmDialog';
 
 import './styles.css';
 
@@ -40,9 +40,13 @@ class StopPointsTable extends Component {
                 ? flexibleStopPlaces.find(
                     fsp => fsp.id === sp.flexibleStopPlaceRef
                   ).name
-                : sp.quayRef ? sp.quayRef : '- Nytt stoppepunkt -'}
+                : sp.quayRef
+                ? sp.quayRef
+                : '- Nytt stoppepunkt -'}
             </TableRowCell>
-            <TableRowCell>{sp.destinationDisplay ? sp.destinationDisplay.frontText : ''}</TableRowCell>
+            <TableRowCell>
+              {sp.destinationDisplay ? sp.destinationDisplay.frontText : ''}
+            </TableRowCell>
             <TableRowCell>{sp.forBoarding ? 'Ja' : 'Nei'}</TableRowCell>
             <TableRowCell>{sp.forAlighting ? 'Ja' : 'Nei'}</TableRowCell>
             <TableRowCell>

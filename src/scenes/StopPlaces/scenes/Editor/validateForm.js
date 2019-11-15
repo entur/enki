@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { objectValues } from '../../../../helpers/forms';
+import { objectValues } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 
@@ -17,7 +17,7 @@ function validateFlexibleArea(flexibleArea) {
   return [];
 }
 
-export default function (stopPlace) {
+export default function(stopPlace) {
   let errors = {
     name: validateName(stopPlace.name),
     flexibleArea: validateFlexibleArea(stopPlace.flexibleArea)

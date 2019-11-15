@@ -1,7 +1,5 @@
-import {defineMessages} from 'react-intl';
-import {
-  PURCHASE_WHEN
-} from '../../../../../model/enums';
+import { defineMessages } from 'react-intl';
+import { PURCHASE_WHEN } from 'model/enums';
 
 export default defineMessages({
   title: {
@@ -26,5 +24,5 @@ export const bookingTimeMessages = defineMessages({
   [PURCHASE_WHEN.ADVANCE_AND_DAY_OF_TRAVEL]: {
     id: `lines.editor.bookingArrangementEditor.bookingTimeSelection.purchaseWhen.advanceAndDayOfTravel`,
     defaultMessage: 'Frem til og med samme dag'
-  },
+  }
 });

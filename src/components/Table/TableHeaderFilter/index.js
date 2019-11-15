@@ -12,16 +12,12 @@ import {
   Checkbox,
   RadioButton
 } from '../../icons';
-import {
-  getSortDirectionValues,
-  SORT_DIRECTION,
-  TYPES
-} from '../../../helpers/sorting';
+import { getSortDirectionValues, SORT_DIRECTION, TYPES } from 'helpers/sorting';
 import {
   sortConfigProps,
   filterConfigProps
 } from '../TableHeaderCell/headerPropTypes';
-import { fieldHasFilters } from '../../../helpers/filters';
+import { fieldHasFilters } from 'helpers/filters';
 
 import './styles.css';
 import '../../Menu/styles/sort-filter-menu.css';

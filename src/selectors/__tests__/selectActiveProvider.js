@@ -1,5 +1,5 @@
 import selectActiveProvider from '../selectActiveProvider';
-import { Provider } from '../../model';
+import { Provider } from 'model';
 
 test('selectActiveProvider works', () => {
   const selector = selectActiveProvider();

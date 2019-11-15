@@ -1,19 +1,19 @@
 import {
   getFlexibleStopPlaceByIdQuery,
   getFlexibleStopPlacesQuery
-} from '../graphql/uttu/queries';
-import { UttuQuery } from '../graphql';
-import { FlexibleStopPlace } from '../model';
+} from 'graphql/uttu/queries';
+import { UttuQuery } from 'graphql';
+import { FlexibleStopPlace } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
-} from '../components/Notification/actions';
+} from 'components/Notification/actions';
 import {
   deleteFlexibleStopPlace,
   flexibleStopPlaceMutation
-} from '../graphql/uttu/mutations';
-import { getInternationalizedUttuError } from '../helpers/uttu';
-import { getIntl } from '../i18n';
+} from 'graphql/uttu/mutations';
+import { getInternationalizedUttuError } from 'helpers/uttu';
+import { getIntl } from 'i18n';
 import messages from './flexibleStopPlaces.messages';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';

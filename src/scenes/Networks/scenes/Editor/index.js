@@ -10,21 +10,21 @@ import {
   DropDownOptions
 } from '@entur/component-library';
 
-import { Network } from '../../../../model';
-import { ORGANISATION_TYPE } from '../../../../model/enums';
+import { Network } from 'model';
+import { ORGANISATION_TYPE } from 'model/enums';
 import {
   deleteNetworkById,
   loadNetworkById,
   saveNetwork
 } from '../../../../actions/networks';
 import { loadFlexibleLines } from '../../../../actions/flexibleLines';
-import OverlayLoader from '../../../../components/OverlayLoader';
-import Loading from '../../../../components/Loading';
-import ConfirmDialog from '../../../../components/ConfirmDialog';
+import OverlayLoader from 'components/OverlayLoader';
+import Loading from 'components/Loading';
+import ConfirmDialog from 'components/ConfirmDialog';
 
 import './styles.css';
 import { createSelector } from 'reselect';
-import selectActiveProvider from '../../../../selectors/selectActiveProvider';
+import selectActiveProvider from 'selectors/selectActiveProvider';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';

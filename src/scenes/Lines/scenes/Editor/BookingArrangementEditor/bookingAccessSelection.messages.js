@@ -1,7 +1,5 @@
-import {defineMessages} from 'react-intl';
-import {
-  BOOKING_ACCESS
-} from '../../../../../model/enums';
+import { defineMessages } from 'react-intl';
+import { BOOKING_ACCESS } from 'model/enums';
 
 export default defineMessages({
   title: {
@@ -22,5 +20,5 @@ export const bookingAccessMessages = defineMessages({
   [BOOKING_ACCESS.STAFF]: {
     id: `lines.editor.bookingArrangementEditor.bookingAccessSelection.bookingAccess.staff`,
     defaultMessage: 'Ansatte'
-  },
+  }
 });

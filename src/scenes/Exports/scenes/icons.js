@@ -6,9 +6,9 @@ import {
   ErrorIcon
 } from '@entur/component-library';
 
-import { EXPORT_STATUS, SEVERITY } from '../../../model/enums';
+import { EXPORT_STATUS, SEVERITY } from 'model/enums';
 
-export const getIconForStatus = (status) => {
+export const getIconForStatus = status => {
   switch (status) {
     case EXPORT_STATUS.SUCCESS:
       return <SuccessIcon color="rgba(44,255,0,1)" />;
@@ -19,9 +19,9 @@ export const getIconForStatus = (status) => {
     default:
       return null;
   }
-}
+};
 
-export const getIconForSeverity = (severity) => {
+export const getIconForSeverity = severity => {
   switch (severity) {
     case SEVERITY.INFO:
       return <ExclamationIcon color="rgba(203,203,188,1)" />;
@@ -32,4 +32,4 @@ export const getIconForSeverity = (severity) => {
     default:
       return null;
   }
-}
+};

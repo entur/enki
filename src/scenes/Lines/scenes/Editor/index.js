@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Button,
-  Tabs,
-  Tab,
-} from '@entur/component-library';
+import { Button, Tabs, Tab } from '@entur/component-library';
 
-import { FlexibleLine } from '../../../../model';
+import { FlexibleLine } from 'model';
 import {
   ORGANISATION_TYPE,
   FLEXIBLE_LINE_TYPE,
   VEHICLE_MODE,
   VEHICLE_SUBMODE
-} from '../../../../model/enums';
+} from 'model/enums';
 import {
   deleteFlexibleLineById,
   loadFlexibleLineById,
@@ -20,9 +16,9 @@ import {
 } from '../../../../actions/flexibleLines';
 import { loadNetworks } from '../../../../actions/networks';
 import { loadFlexibleStopPlaces } from '../../../../actions/flexibleStopPlaces';
-import Loading from '../../../../components/Loading';
-import OverlayLoader from '../../../../components/OverlayLoader';
-import ConfirmDialog from '../../../../components/ConfirmDialog';
+import Loading from 'components/Loading';
+import OverlayLoader from 'components/OverlayLoader';
+import ConfirmDialog from 'components/ConfirmDialog';
 import BookingArrangementEditor from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
 import { DEFAULT_SELECT_VALUE } from './constants';
@@ -41,22 +37,35 @@ const TABS = Object.freeze({
 const selectFlexibleLine = createSelector(
   state => state.flexibleLines,
   (_, match) => match,
-  (flexibleLines, match) => match.params.id ? flexibleLines ? flexibleLines.find(l => l.id === match.params.id) : null : new FlexibleLine({
-    transportMode: VEHICLE_MODE.BUS,
-    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
-    flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
-  })
+  (flexibleLines, match) =>
+    match.params.id
+      ? flexibleLines
+        ? flexibleLines.find(l => l.id === match.params.id)
+        : null
+      : new FlexibleLine({
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
+          flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
+        })
 );
 
 const FlexibleLineEditor = ({ match, history }) => {
   const organisations = useSelector(({ organisations }) => organisations);
   const networks = useSelector(({ networks }) => networks);
-  const flexibleStopPlaces = useSelector(({ flexibleStopPlaces }) => flexibleStopPlaces);
-  const currentFlexibleLine = useSelector(state => selectFlexibleLine(state, match));
+  const flexibleStopPlaces = useSelector(
+    ({ flexibleStopPlaces }) => flexibleStopPlaces
+  );
+  const currentFlexibleLine = useSelector(state =>
+    selectFlexibleLine(state, match)
+  );
 
   const [flexibleLine, setFlexibleLine] = useState(null);
-  const [operatorSelection, setOperatorSelection] = useState(DEFAULT_SELECT_VALUE);
-  const [networkSelection, setNetworkSelection] = useState(DEFAULT_SELECT_VALUE);
+  const [operatorSelection, setOperatorSelection] = useState(
+    DEFAULT_SELECT_VALUE
+  );
+  const [networkSelection, setNetworkSelection] = useState(
+    DEFAULT_SELECT_VALUE
+  );
   const [activeTab, setActiveTab] = useState(TABS.GENERAL);
   const [isSaving, setSaving] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -67,35 +76,44 @@ const FlexibleLineEditor = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const dispatchLoadNetworks = useCallback(
-    () => dispatch(loadNetworks()),
-    [dispatch]
-  );
+  const dispatchLoadNetworks = useCallback(() => dispatch(loadNetworks()), [
+    dispatch
+  ]);
 
   const dispatchLoadFlexibleStopPlaces = useCallback(
     () => dispatch(loadFlexibleStopPlaces()),
     [dispatch]
-  )
+  );
 
-  const dispatchLoadFlexibleLineById = useCallback(
-    () => {
-      if (match.params.id) {
-        dispatch(loadFlexibleLineById(match.params.id))
-          .catch(() => history.push('/lines'));
-      }
-    },
-    [dispatch, match.params.id, history]
-  )
+  const dispatchLoadFlexibleLineById = useCallback(() => {
+    if (match.params.id) {
+      dispatch(loadFlexibleLineById(match.params.id)).catch(() =>
+        history.push('/lines')
+      );
+    }
+  }, [dispatch, match.params.id, history]);
 
   useEffect(() => {
     dispatchLoadNetworks();
     dispatchLoadFlexibleStopPlaces();
     dispatchLoadFlexibleLineById();
-  }, [dispatchLoadNetworks, dispatchLoadFlexibleStopPlaces, dispatchLoadFlexibleLineById]);
+  }, [
+    dispatchLoadNetworks,
+    dispatchLoadFlexibleStopPlaces,
+    dispatchLoadFlexibleLineById
+  ]);
 
   useEffect(() => {
-    setOperatorSelection(currentFlexibleLine ? currentFlexibleLine.operatorRef : DEFAULT_SELECT_VALUE);
-    setNetworkSelection(currentFlexibleLine ? currentFlexibleLine.networkRef : DEFAULT_SELECT_VALUE);
+    setOperatorSelection(
+      currentFlexibleLine
+        ? currentFlexibleLine.operatorRef
+        : DEFAULT_SELECT_VALUE
+    );
+    setNetworkSelection(
+      currentFlexibleLine
+        ? currentFlexibleLine.networkRef
+        : DEFAULT_SELECT_VALUE
+    );
     setFlexibleLine(currentFlexibleLine);
   }, [currentFlexibleLine]);
 
@@ -124,31 +142,36 @@ const FlexibleLineEditor = ({ match, history }) => {
     setFlexibleLine(flexibleLine.withChanges({ [field]: newValue }));
   };
 
-  const handleOperatorSelectionChange = (operatorSelection) => {
-    setFlexibleLine(flexibleLine.withChanges({
-      operatorRef:
-        operatorSelection !== DEFAULT_SELECT_VALUE
-          ? operatorSelection
-          : undefined
-    }));
+  const handleOperatorSelectionChange = operatorSelection => {
+    setFlexibleLine(
+      flexibleLine.withChanges({
+        operatorRef:
+          operatorSelection !== DEFAULT_SELECT_VALUE
+            ? operatorSelection
+            : undefined
+      })
+    );
     setOperatorSelection(operatorSelection);
   };
 
-  const handleNetworkSelectionChange = (networkSelection) => {
-    setFlexibleLine(flexibleLine.withChanges({
-      networkRef:
-        networkSelection !== DEFAULT_SELECT_VALUE
-          ? networkSelection
-          : undefined
-    }));
+  const handleNetworkSelectionChange = networkSelection => {
+    setFlexibleLine(
+      flexibleLine.withChanges({
+        networkRef:
+          networkSelection !== DEFAULT_SELECT_VALUE
+            ? networkSelection
+            : undefined
+      })
+    );
     setNetworkSelection(networkSelection);
   };
 
   const handleDelete = () => {
     setDeleteDialogOpen(false);
     setDeleting(true);
-    dispatch(deleteFlexibleLineById(flexibleLine.id))
-      .then(() => history.push('/lines'));
+    dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() =>
+      history.push('/lines')
+    );
   };
 
   const operators = organisations.filter(org =>
@@ -158,8 +181,7 @@ const FlexibleLineEditor = ({ match, history }) => {
   const isLoadingLine = !flexibleLine;
   const isLoadingDependencies = !networks || !flexibleStopPlaces;
 
-  const isDeleteDisabled =
-    isLoadingLine || isLoadingDependencies || isDeleting;
+  const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
 
   return (
     <div className="line-editor">
@@ -192,11 +214,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             selected={activeTab}
             onChange={activeTab => setActiveTab(activeTab)}
           >
-            <Tab
-              value={TABS.GENERAL}
-              label="Generelt"
-              className="general-tab"
-            >
+            <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
               <General
                 flexibleLine={flexibleLine}
                 networks={networks}
@@ -206,15 +224,14 @@ const FlexibleLineEditor = ({ match, history }) => {
                 operatorSelection={operatorSelection}
                 handleFieldChange={handleFieldChange}
                 handleNetworkSelectionChange={handleNetworkSelectionChange}
-                handleOperatorSelectionChange={handleOperatorSelectionChange} />
+                handleOperatorSelectionChange={handleOperatorSelectionChange}
+              />
             </Tab>
 
             <Tab value={TABS.JOURNEY_PATTERNS} label="Journey Patterns">
               <JourneyPatternsEditor
                 journeyPatterns={flexibleLine.journeyPatterns}
-                onChange={jps =>
-                  handleFieldChange('journeyPatterns', jps)
-                }
+                onChange={jps => handleFieldChange('journeyPatterns', jps)}
               />
             </Tab>
 
@@ -225,9 +242,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             >
               <BookingArrangementEditor
                 bookingArrangement={flexibleLine.bookingArrangement}
-                onChange={b =>
-                  handleFieldChange('bookingArrangement', b)
-                }
+                onChange={b => handleFieldChange('bookingArrangement', b)}
               />
             </Tab>
           </Tabs>
@@ -268,6 +283,6 @@ const FlexibleLineEditor = ({ match, history }) => {
       />
     </div>
   );
-}
+};
 
 export default withRouter(FlexibleLineEditor);

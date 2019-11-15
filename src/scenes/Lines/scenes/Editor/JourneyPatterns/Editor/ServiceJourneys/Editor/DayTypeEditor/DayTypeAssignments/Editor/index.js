@@ -8,9 +8,9 @@ import {
   DeleteIcon
 } from '@entur/component-library';
 
-import { DayTypeAssignment } from '../../../../../../../../../../../model';
-import CustomDatepicker from '../../../../../../../../../../../components/CustomDatepicker';
-import OperatingPeriod from '../../../../../../../../../../../model/OperatingPeriod';
+import { DayTypeAssignment } from 'model';
+import CustomDatepicker from 'components/CustomDatepicker';
+import OperatingPeriod from 'model/OperatingPeriod';
 
 import './styles.css';
 

@@ -12,11 +12,11 @@ import {
   Tab
 } from '@entur/component-library';
 
-import { ServiceJourney, StopPoint } from '../../../../../../../../model';
+import { ServiceJourney, StopPoint } from 'model';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
-import { ORGANISATION_TYPE } from '../../../../../../../../model/enums';
+import { ORGANISATION_TYPE } from 'model/enums';
 
 import './styles.css';
 

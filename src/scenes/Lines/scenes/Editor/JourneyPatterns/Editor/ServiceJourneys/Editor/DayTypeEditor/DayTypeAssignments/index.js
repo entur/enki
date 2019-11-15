@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import moment from 'moment/moment';
 import { AddIcon } from '@entur/component-library';
 
-import { DayTypeAssignment } from '../../../../../../../../../../model';
+import { DayTypeAssignment } from 'model';
 import DayTypeAssignmentEditor from './Editor';
-import {
-  removeElementByIndex,
-  replaceElement
-} from '../../../../../../../../../../helpers/arrays';
-import IconButton from '../../../../../../../../../../components/IconButton';
+import { removeElementByIndex, replaceElement } from 'helpers/arrays';
+import IconButton from 'components/IconButton';
 
 import './styles.css';
 
@@ -22,10 +19,14 @@ class DayTypeAssignmentsEditor extends Component {
   addNewDayTypeAssignment() {
     const { dayTypeAssignments, onChange } = this.props;
     const today = moment().format('YYYY-MM-DD');
-    onChange(dayTypeAssignments.concat(new DayTypeAssignment({
-      fromDate: today,
-      toDate: today
-    })));
+    onChange(
+      dayTypeAssignments.concat(
+        new DayTypeAssignment({
+          fromDate: today,
+          toDate: today
+        })
+      )
+    );
   }
 
   deleteDayTypeAssignment(index) {

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/component-library';
 
-import IconButton from '../../../../../../../components/IconButton';
-import { StopPoint } from '../../../../../../../model';
-import { replaceElement } from '../../../../../../../helpers/arrays';
-import Dialog from '../../../../../../../components/Dialog';
+import IconButton from 'components/IconButton';
+import { StopPoint } from 'model';
+import { replaceElement } from 'helpers/arrays';
+import Dialog from 'components/Dialog';
 import StopPointsTable from './Table';
 import StopPointEditor from './Editor';
 
@@ -85,7 +85,9 @@ class StopPointsEditor extends Component {
             isOpen={true}
             content={
               <StopPointEditor
-                isFirst={stopPoints.length === 0 || stopPointIndexInDialog === 0}
+                isFirst={
+                  stopPoints.length === 0 || stopPointIndexInDialog === 0
+                }
                 stopPoint={stopPointInDialog}
                 onChange={stopPointInDialog =>
                   this.setState({ stopPointInDialog })

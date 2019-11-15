@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/component-library';
 
-import IconButton from '../../../../../components/IconButton';
-import { JourneyPattern } from '../../../../../model';
-import {
-  removeElementByIndex,
-  replaceElement
-} from '../../../../../helpers/arrays';
-import Dialog from '../../../../../components/Dialog';
+import IconButton from 'components/IconButton';
+import { JourneyPattern } from 'model';
+import { removeElementByIndex, replaceElement } from 'helpers/arrays';
+import Dialog from 'components/Dialog';
 import JourneyPatternsTable from './Table';
 import JourneyPatternEditor from './Editor';
 
