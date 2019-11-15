@@ -13,9 +13,9 @@ import {
   deleteFlexibleLineById,
   loadFlexibleLineById,
   saveFlexibleLine
-} from '../../../../actions/flexibleLines';
-import { loadNetworks } from '../../../../actions/networks';
-import { loadFlexibleStopPlaces } from '../../../../actions/flexibleStopPlaces';
+} from 'actions/flexibleLines';
+import { loadNetworks } from 'actions/networks';
+import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import ConfirmDialog from 'components/ConfirmDialog';

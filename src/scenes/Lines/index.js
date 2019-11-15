@@ -12,7 +12,7 @@ import {
 } from 'components/Table';
 import Loading from 'components/Loading';
 import IconButton from 'components/IconButton';
-import { loadFlexibleLines } from '../../actions/flexibleLines';
+import { loadFlexibleLines } from 'actions/flexibleLines';
 import './styles.css';
 import * as R from 'ramda';
 

@@ -1,4 +1,4 @@
-import { RECEIVE_NETWORKS, RECEIVE_NETWORK } from '../actions/networks';
+import { RECEIVE_NETWORKS, RECEIVE_NETWORK } from 'actions/networks';
 
 const networksReducer = (networks = null, action) => {
   switch (action.type) {

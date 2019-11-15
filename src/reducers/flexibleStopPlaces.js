@@ -3,7 +3,7 @@ import {
   REQUEST_FLEXIBLE_STOP_PLACES,
   REQUEST_FLEXIBLE_STOP_PLACE,
   RECEIVE_FLEXIBLE_STOP_PLACE
-} from '../actions/flexibleStopPlaces';
+} from 'actions/flexibleStopPlaces';
 
 const flexibleStopPlaces = (stopPlaces = null, action) => {
   switch (action.type) {
