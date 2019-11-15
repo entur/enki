@@ -1,4 +1,4 @@
-import { copyObj } from '../../helpers/objects';
+import { copyObj } from 'helpers/objects';
 
 class Base {
   withChanges(args) {

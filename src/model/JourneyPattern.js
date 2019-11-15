@@ -2,7 +2,7 @@ import Versioned from './base/Versioned';
 import StopPoint from './StopPoint';
 import ServiceJourney from './ServiceJourney';
 import Notice from './Notice';
-import { replaceElement } from '../helpers/arrays';
+import { replaceElement } from 'helpers/arrays';
 
 class JourneyPattern extends Versioned {
   constructor(data = {}) {

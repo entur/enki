@@ -1,19 +1,19 @@
-import { UttuQuery } from '../graphql';
+import { UttuQuery } from 'graphql';
 import {
   getFlexibleLineByIdQuery,
   getFlexibleLinesQuery
-} from '../graphql/uttu/queries';
-import { FlexibleLine } from '../model';
+} from 'graphql/uttu/queries';
+import { FlexibleLine } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
-} from '../components/Notification/actions';
+} from 'components/Notification/actions';
 import {
   deleteFlexibleLine,
   flexibleLineMutation
-} from '../graphql/uttu/mutations';
-import { getInternationalizedUttuError } from '../helpers/uttu';
-import { getIntl } from '../i18n';
+} from 'graphql/uttu/mutations';
+import { getInternationalizedUttuError } from 'helpers/uttu';
+import { getIntl } from 'i18n';
 import messages from './flexibleLines.messages';
 
 export const REQUEST_FLEXIBLE_LINES = 'REQUEST_FLEXIBLE_LINES';

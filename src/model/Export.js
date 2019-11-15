@@ -1,8 +1,8 @@
 import Versioned from './base/Versioned';
 import Message from './Message';
-import http from '../http/http';
+import http from 'http/http';
 import { saveAs } from 'file-saver';
-import token from '../http/token';
+import token from 'http/token';
 
 class Export extends Versioned {
   constructor(data = {}) {

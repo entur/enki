@@ -3,41 +3,49 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, Label, TextField, TextArea } from '@entur/component-library';
 
-import { FlexibleStopPlace, FlexibleArea } from '../../../../model';
-import { VEHICLE_MODE } from '../../../../model/enums';
+import { FlexibleStopPlace, FlexibleArea } from 'model';
+import { VEHICLE_MODE } from 'model/enums';
 import {
   deleteFlexibleStopPlaceById,
   loadFlexibleStopPlaceById,
   saveFlexibleStopPlace
 } from '../../../../actions/flexibleStopPlaces';
 import { loadFlexibleLines } from '../../../../actions/flexibleLines';
-import OverlayLoader from '../../../../components/OverlayLoader';
-import Loading from '../../../../components/Loading';
-import ConfirmDialog from '../../../../components/ConfirmDialog';
+import OverlayLoader from 'components/OverlayLoader';
+import Loading from 'components/Loading';
+import ConfirmDialog from 'components/ConfirmDialog';
 import PolygonMap from './components/PolygonMap';
 
 import './styles.css';
 import { createSelector } from 'reselect';
 import messages from './messages';
-import { selectIntl } from '../../../../i18n';
+import { selectIntl } from 'i18n';
 import validateForm from './validateForm';
-import Errors from '../../../../components/Errors';
+import Errors from 'components/Errors';
 
 const selectFlexibleStopPlace = createSelector(
   state => state.flexibleStopPlaces,
   (_, match) => match.params.id,
-  (flexibleStopPlaces, id) => id ? flexibleStopPlaces ? flexibleStopPlaces.find(sp => sp.id === id) : null : new FlexibleStopPlace({
-    transportMode: VEHICLE_MODE.BUS
-  })
-)
+  (flexibleStopPlaces, id) =>
+    id
+      ? flexibleStopPlaces
+        ? flexibleStopPlaces.find(sp => sp.id === id)
+        : null
+      : new FlexibleStopPlace({
+          transportMode: VEHICLE_MODE.BUS
+        })
+);
 
 const FlexibleStopPlaceEditor = ({ match, history }) => {
-  const {formatMessage} = useSelector(selectIntl);
+  const { formatMessage } = useSelector(selectIntl);
   const lines = useSelector(({ flexibleLines }) => flexibleLines);
   const currentFlexibleStopPlace = useSelector(state =>
-    selectFlexibleStopPlace(state, match));
+    selectFlexibleStopPlace(state, match)
+  );
 
-  const [flexibleStopPlace, setFlexibleStopPlace] = useState(currentFlexibleStopPlace);
+  const [flexibleStopPlace, setFlexibleStopPlace] = useState(
+    currentFlexibleStopPlace
+  );
   const [isSaving, setSaving] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
@@ -49,19 +57,20 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadFlexibleLines())
+    dispatch(loadFlexibleLines());
   }, [dispatch]);
 
   useEffect(() => {
     if (match.params.id) {
-      dispatch(loadFlexibleStopPlaceById(match.params.id))
-        .catch(() => history.push('/networks'));
+      dispatch(loadFlexibleStopPlaceById(match.params.id)).catch(() =>
+        history.push('/networks')
+      );
     }
   }, [dispatch, match.params.id, history]);
 
   useEffect(() => {
     setFlexibleStopPlace(currentFlexibleStopPlace);
-  }, [currentFlexibleStopPlace])
+  }, [currentFlexibleStopPlace]);
 
   const handleOnSaveClick = useCallback(() => {
     let [isValid, errors] = validateForm(flexibleStopPlace);
@@ -73,7 +82,6 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
         .then(() => history.push('/stop-places'))
         .finally(() => setSaving(false));
     }
-
   }, [dispatch, history, flexibleStopPlace]);
 
   const handleDelete = useCallback(() => {
@@ -84,28 +92,36 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
       .finally(() => setDeleting(false));
   }, [dispatch, history, flexibleStopPlace]);
 
-  const handleFieldChange = useCallback((field, value) => {
-    setFlexibleStopPlace(flexibleStopPlace.withChanges({
-      [field]: value
-    }))
-  }, [flexibleStopPlace]);
+  const handleFieldChange = useCallback(
+    (field, value) => {
+      setFlexibleStopPlace(
+        flexibleStopPlace.withChanges({
+          [field]: value
+        })
+      );
+    },
+    [flexibleStopPlace]
+  );
 
-  const handleMapOnClick = useCallback((e) => {
-    const flexibleArea = flexibleStopPlace.flexibleArea;
-    setFlexibleStopPlace(
-      flexibleStopPlace.withChanges({
-        flexibleArea: (flexibleArea || new FlexibleArea()).addCoordinate([
-          e.latlng.lat,
-          e.latlng.lng
-        ])
-      })
-    );
-  }, [flexibleStopPlace]);
+  const handleMapOnClick = useCallback(
+    e => {
+      const flexibleArea = flexibleStopPlace.flexibleArea;
+      setFlexibleStopPlace(
+        flexibleStopPlace.withChanges({
+          flexibleArea: (flexibleArea || new FlexibleArea()).addCoordinate([
+            e.latlng.lat,
+            e.latlng.lng
+          ])
+        })
+      );
+    },
+    [flexibleStopPlace]
+  );
 
   const polygonCoordinates =
-  flexibleStopPlace && flexibleStopPlace.flexibleArea
-    ? flexibleStopPlace.flexibleArea.polygon.coordinates
-    : [];
+    flexibleStopPlace && flexibleStopPlace.flexibleArea
+      ? flexibleStopPlace.flexibleArea.polygon.coordinates
+      : [];
 
   const isDeleteDisabled =
     !flexibleStopPlace ||
@@ -123,17 +139,13 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
     <div className="stop-place-editor">
       <div className="header">
         <h2>
-          {match.params.id ?
-            formatMessage(messages.editHeader) :
-            formatMessage(messages.createHeader)
-          }
+          {match.params.id
+            ? formatMessage(messages.editHeader)
+            : formatMessage(messages.createHeader)}
         </h2>
 
         <div className="buttons">
-          <Button
-            variant="success"
-            onClick={handleOnSaveClick}
-          >
+          <Button variant="success" onClick={handleOnSaveClick}>
             {formatMessage(messages.saveButtonText)}
           </Button>
 
@@ -153,9 +165,9 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
         <OverlayLoader
           isLoading={isSaving || isDeleting}
           text={
-            isSaving ?
-            formatMessage(messages.savingOverlayLoaderText) :
-            formatMessage(messages.deletingOverlayLoaderText)
+            isSaving
+              ? formatMessage(messages.savingOverlayLoaderText)
+              : formatMessage(messages.deletingOverlayLoaderText)
           }
         >
           <div className="stop-place-form-container">
@@ -172,18 +184,14 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
               <TextArea
                 type="text"
                 value={flexibleStopPlace.description}
-                onChange={e =>
-                  handleFieldChange('description', e.target.value)
-                }
+                onChange={e => handleFieldChange('description', e.target.value)}
               />
 
               <Label>{formatMessage(messages.privateCodeFormLabelText)}</Label>
               <TextField
                 type="text"
                 value={flexibleStopPlace.privateCode}
-                onChange={e =>
-                  handleFieldChange('privateCode', e.target.value)
-                }
+                onChange={e => handleFieldChange('privateCode', e.target.value)}
               />
             </div>
 
@@ -199,9 +207,9 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
       ) : (
         <Loading
           text={
-            flexibleStopPlace ?
-            formatMessage(messages.loadingStopPlaceText) :
-            formatMessage(messages.loadingDependenciesText)
+            flexibleStopPlace
+              ? formatMessage(messages.loadingStopPlaceText)
+              : formatMessage(messages.loadingDependenciesText)
           }
         />
       )}
@@ -234,6 +242,6 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
       />
     </div>
   );
-}
+};
 
 export default withRouter(FlexibleStopPlaceEditor);

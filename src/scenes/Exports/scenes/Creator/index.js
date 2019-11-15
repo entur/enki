@@ -4,12 +4,12 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { Button, Label, TextField, Checkbox } from '@entur/component-library';
 
-import { Export } from '../../../../model';
+import { Export } from 'model';
 import { saveExport } from '../../../../actions/exports';
-import OverlayLoader from '../../../../components/OverlayLoader';
-import CustomDatepicker from '../../../../components/CustomDatepicker';
-import { selectIntl } from '../../../../i18n';
-import Errors from '../../../../components/Errors';
+import OverlayLoader from 'components/OverlayLoader';
+import CustomDatepicker from 'components/CustomDatepicker';
+import { selectIntl } from 'i18n';
+import Errors from 'components/Errors';
 
 import './styles.css';
 import messages from './creator.messages';
@@ -17,11 +17,11 @@ import validateForm from './validateForm';
 
 const newExport = () => {
   const today = moment().format('YYYY-MM-DD');
-  return new Export({ fromDate: today, toDate: today })
-}
+  return new Export({ fromDate: today, toDate: today });
+};
 
 const ExportsCreator = ({ history }) => {
-  const {formatMessage} = useSelector(selectIntl);
+  const { formatMessage } = useSelector(selectIntl);
   const [isSaving, setSaving] = useState(false);
   const [theExport, setTheExport] = useState(newExport());
   const [errors, setErrors] = useState({
@@ -59,7 +59,10 @@ const ExportsCreator = ({ history }) => {
         </div>
       </div>
 
-      <OverlayLoader isLoading={isSaving} text={formatMessage(messages.savingOverlayLoaderText)}>
+      <OverlayLoader
+        isLoading={isSaving}
+        text={formatMessage(messages.savingOverlayLoaderText)}
+      >
         <div className="export-form">
           <Label>{formatMessage(messages.nameFormLabel)}</Label>
           <TextField
@@ -75,14 +78,18 @@ const ExportsCreator = ({ history }) => {
           <CustomDatepicker
             startDate={theExport.fromDate}
             onChange={date => handleFieldChange('fromDate', date)}
-            datePickerClassName={errors.fromDateToDate.length ? 'input-error' : ''}
+            datePickerClassName={
+              errors.fromDateToDate.length ? 'input-error' : ''
+            }
           />
 
           <Label>{formatMessage(messages.toDateFormLabel)}</Label>
           <CustomDatepicker
             startDate={theExport.toDate}
             onChange={date => handleFieldChange('toDate', date)}
-            datePickerClassName={errors.fromDateToDate.length ? 'input-error' : ''}
+            datePickerClassName={
+              errors.fromDateToDate.length ? 'input-error' : ''
+            }
           />
 
           <Errors errors={errors.fromDateToDate} />
@@ -91,14 +98,12 @@ const ExportsCreator = ({ history }) => {
           <Checkbox
             value="1"
             checked={theExport.dryRun === true}
-            onChange={e =>
-              handleFieldChange('dryRun', e.target.checked)
-            }
+            onChange={e => handleFieldChange('dryRun', e.target.checked)}
           />
         </div>
       </OverlayLoader>
     </div>
   );
-}
+};
 
 export default withRouter(ExportsCreator);

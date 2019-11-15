@@ -8,26 +8,31 @@ import {
   TableHeaderCell,
   TableRow,
   TableRowCell
-} from '../../components/Table';
-import Loading from '../../components/Loading';
-import IconButton from '../../components/IconButton';
+} from 'components/Table';
+import Loading from 'components/Loading';
+import IconButton from 'components/IconButton';
 import { loadFlexibleStopPlaces } from '../../actions/flexibleStopPlaces';
-import {selectIntl} from '../../i18n';
+import { selectIntl } from 'i18n';
 import './styles.css';
 import messages from './messages';
 
 const StopPlaces = ({ history }) => {
-  const stopPlaces = useSelector(({ flexibleStopPlaces }) => flexibleStopPlaces);
-  const {formatMessage} = useSelector(selectIntl);
+  const stopPlaces = useSelector(
+    ({ flexibleStopPlaces }) => flexibleStopPlaces
+  );
+  const { formatMessage } = useSelector(selectIntl);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadFlexibleStopPlaces());
-  }, [dispatch])
+  }, [dispatch]);
 
-  const handleOnRowClick = useCallback((id) => {
-    history.push(`/stop-places/edit/${id}`);
-  }, [history])
+  const handleOnRowClick = useCallback(
+    id => {
+      history.push(`/stop-places/edit/${id}`);
+    },
+    [history]
+  );
 
   const renderTableRows = () => {
     if (stopPlaces) {
@@ -76,14 +81,20 @@ const StopPlaces = ({ history }) => {
       </Link>
 
       <Table>
-        <TableHeaderCell label={formatMessage(messages.nameTableHeaderLabelText)} />
-        <TableHeaderCell label={formatMessage(messages.privateCodeTableHeaderLabelText)} />
-        <TableHeaderCell label={formatMessage(messages.numberOfPointsTableHeaderLabelText)} />
+        <TableHeaderCell
+          label={formatMessage(messages.nameTableHeaderLabelText)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.privateCodeTableHeaderLabelText)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.numberOfPointsTableHeaderLabelText)}
+        />
 
         {renderTableRows()}
       </Table>
     </div>
   );
-}
+};
 
 export default withRouter(StopPlaces);

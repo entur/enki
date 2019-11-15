@@ -1,7 +1,5 @@
-import {defineMessages} from 'react-intl';
-import {
-  BOOKING_METHOD,
-} from '../../../../../model/enums';
+import { defineMessages } from 'react-intl';
+import { BOOKING_METHOD } from 'model/enums';
 
 export default defineMessages({
   title: {

@@ -1,12 +1,8 @@
-import React, {useState, useCallback} from 'react';
-import {useSelector} from 'react-redux';
-import {
-  Label,
-  TextField,
-  Radio,
-} from '@entur/component-library';
-import DurationPicker from '../../../../../components/DurationPicker';
-import {selectIntl} from '../../../../../i18n';
+import React, { useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import { Label, TextField, Radio } from '@entur/component-library';
+import DurationPicker from 'components/DurationPicker';
+import { selectIntl } from 'i18n';
 import messages from './bookingLimitFields.messages';
 
 const BOOKING_LIMIT_TYPE = Object.freeze({
@@ -14,8 +10,8 @@ const BOOKING_LIMIT_TYPE = Object.freeze({
   PERIOD: 'period'
 });
 
-export default (props) => {
-  const {formatMessage} = useSelector(selectIntl);
+export default props => {
+  const { formatMessage } = useSelector(selectIntl);
 
   const {
     latestBookingTime,
@@ -29,10 +25,13 @@ export default (props) => {
     latestBookingTime ? BOOKING_LIMIT_TYPE.TIME : BOOKING_LIMIT_TYPE.PERIOD
   );
 
-  const handleBookingLimitChange = useCallback(type => {
-    setBookingLimitType(type);
-    resetBookingLimit();
-  }, [resetBookingLimit]);
+  const handleBookingLimitChange = useCallback(
+    type => {
+      setBookingLimitType(type);
+      resetBookingLimit();
+    },
+    [resetBookingLimit]
+  );
 
   return (
     <div className="form-section">
@@ -73,4 +72,4 @@ export default (props) => {
       />
     </div>
   );
-}
+};

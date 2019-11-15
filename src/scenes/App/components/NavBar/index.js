@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import UserPreference from './UserPreference';
 import NavBarMenuItem from './NavBarMenuItem';
 
 import logo from '../../../../static/img/logo.png';
 
 import './styles.css';
-import { selectIntl } from '../../../../i18n';
+import { selectIntl } from 'i18n';
 import messages from './messages';
 import appMessages from '../../messages';
 
 const NavBar = () => {
-  const {formatMessage} = useSelector(selectIntl);
+  const { formatMessage } = useSelector(selectIntl);
   return (
     <div className="navbar">
       <Link to="/" className="link">
@@ -32,11 +32,13 @@ const NavBar = () => {
         <NavBarMenuItem
           key="networks"
           label={formatMessage(messages.networksMenuItemLabel)}
-          path="/networks" />
+          path="/networks"
+        />
         <NavBarMenuItem
           key="lines"
           label={formatMessage(messages.linesMenuItemLabel)}
-          path="/lines" />
+          path="/lines"
+        />
         <NavBarMenuItem
           key="stop-places"
           label={formatMessage(messages.stopPlacesMenuItemLabel)}
@@ -51,6 +53,6 @@ const NavBar = () => {
       </div>
     </div>
   );
-}
+};
 
 export default NavBar;

@@ -6,43 +6,40 @@ import moment from 'moment';
 import { Label, Button } from '@entur/component-library';
 
 import { loadExportById } from '../../../../actions/exports';
-import Loading from '../../../../components/Loading';
-import { EXPORT_STATUS } from '../../../../model/enums';
+import Loading from 'components/Loading';
+import { EXPORT_STATUS } from 'model/enums';
 
 import './styles.css';
 import { createSelector } from 'reselect';
 import { getIconForStatus, getIconForSeverity } from '../icons';
 
-import messages, {exportStatuses, exportMessages} from './viewer.messages';
-import { selectIntl } from '../../../../i18n';
+import messages, { exportStatuses, exportMessages } from './viewer.messages';
+import { selectIntl } from 'i18n';
 
 const selectExport = createSelector(
   state => state.exports,
   (_, match) => match.params.id,
-  (theExports, id) => theExports ? theExports.find(e => e.id === id) : null
-)
+  (theExports, id) => (theExports ? theExports.find(e => e.id === id) : null)
+);
 
 const ExportsViewer = ({ match, history }) => {
-  const {formatMessage} = useSelector(selectIntl);
+  const { formatMessage } = useSelector(selectIntl);
 
-  const currentExport = useSelector(state =>
-    selectExport(state, match));
+  const currentExport = useSelector(state => selectExport(state, match));
 
   const [theExport, setTheExport] = useState(currentExport);
 
   const dispatch = useDispatch();
 
-  const dispatchLoadExport = useCallback(
-    () => {
-      if (match.params.id) {
-        dispatch(loadExportById(match.params.id))
-          .catch(() => history.push('/exports'));
-      } else {
-        history.push('/exports');
-      }
-    },
-    [dispatch, match.params.id, history]
-  );
+  const dispatchLoadExport = useCallback(() => {
+    if (match.params.id) {
+      dispatch(loadExportById(match.params.id)).catch(() =>
+        history.push('/exports')
+      );
+    } else {
+      history.push('/exports');
+    }
+  }, [dispatch, match.params.id, history]);
 
   useEffect(() => {
     dispatchLoadExport();
@@ -74,7 +71,11 @@ const ExportsViewer = ({ match, history }) => {
           </div>
 
           <Label>{formatMessage(messages.dryRunLabel)}</Label>
-          <div className="value">{theExport.dryRun ? formatMessage(messages.dryRunYes) : formatMessage(messages.dryRunNo)}</div>
+          <div className="value">
+            {theExport.dryRun
+              ? formatMessage(messages.dryRunYes)
+              : formatMessage(messages.dryRunNo)}
+          </div>
 
           <Label>{formatMessage(messages.statusLabel)}</Label>
           <div className="value status">
@@ -88,10 +89,12 @@ const ExportsViewer = ({ match, history }) => {
             <Fragment>
               <Label>{formatMessage(messages.downloadLabel)}</Label>
               <div className="value download">
-                <Button onClick={event => {
-                  event.stopPropagation();
-                  theExport.download();
-                }}>
+                <Button
+                  onClick={event => {
+                    event.stopPropagation();
+                    theExport.download();
+                  }}
+                >
                   {formatMessage(messages.downloadLinkText)}
                 </Button>
               </div>
@@ -104,10 +107,12 @@ const ExportsViewer = ({ match, history }) => {
               <div className="value messages">
                 {theExport.messages.map((m, i) => (
                   <div key={i} className="message">
-                    <div className="icon">
-                      {getIconForSeverity(m.severity)}
+                    <div className="icon">{getIconForSeverity(m.severity)}</div>
+                    <div>
+                      {Object.keys(exportMessages).includes(m.message)
+                        ? formatMessage(exportMessages[m.message])
+                        : m.message}
                     </div>
-                    <div>{Object.keys(exportMessages).includes(m.message) ? formatMessage(exportMessages[m.message]) : m.message}</div>
                   </div>
                 ))}
               </div>
@@ -119,6 +124,6 @@ const ExportsViewer = ({ match, history }) => {
       )}
     </div>
   );
-}
+};
 
 export default withRouter(ExportsViewer);

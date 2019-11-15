@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { getSortDirectionValues, getTypes } from '../../../helpers/sorting';
+import { getSortDirectionValues, getTypes } from 'helpers/sorting';
 
 export const sortConfigProps = PropTypes.shape({
   type: PropTypes.oneOf(getTypes()),

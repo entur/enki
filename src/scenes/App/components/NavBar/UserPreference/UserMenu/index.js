@@ -1,13 +1,13 @@
-import React, {useState, useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateIntl } from 'react-intl-redux';
 import { UserIcon, ArrowIcon } from '@entur/component-library';
 
-import Menu from '../../../../../../components/Menu';
-import MenuItem from '../../../../../../components/Menu/MenuItem';
-import Popover from '../../../../../../components/Popover';
-import { Checkbox } from '../../../../../../components/icons';
-import { getMessages, LOCALE_KEY, selectIntl } from '../../../../../../i18n';
+import Menu from 'components/Menu';
+import MenuItem from 'components/Menu/MenuItem';
+import Popover from 'components/Popover';
+import { Checkbox } from 'components/icons';
+import { getMessages, LOCALE_KEY, selectIntl } from 'i18n';
 import messages from './messages';
 
 import './styles.css';
@@ -15,21 +15,20 @@ import './styles.css';
 const UserMenu = () => {
   const [open, setOpen] = useState(false);
 
-  const {
-    familyName,
-    givenName,
-    logoutUrl
-  } = useSelector(({user}) => user);
-  const locale = useSelector(({intl}) => intl.locale);
-  const {formatMessage} = useSelector(selectIntl);
+  const { familyName, givenName, logoutUrl } = useSelector(({ user }) => user);
+  const locale = useSelector(({ intl }) => intl.locale);
+  const { formatMessage } = useSelector(selectIntl);
 
   const dispatch = useDispatch();
 
-  const handleChangeLocale = useCallback((locale) => {
-    const messages = getMessages(locale);
-    dispatch(updateIntl({ locale, messages }));
-    localStorage.setItem(LOCALE_KEY, locale);
-  }, [dispatch]);
+  const handleChangeLocale = useCallback(
+    locale => {
+      const messages = getMessages(locale);
+      dispatch(updateIntl({ locale, messages }));
+      localStorage.setItem(LOCALE_KEY, locale);
+    },
+    [dispatch]
+  );
 
   return (
     <div className="user-menu" onClick={() => setOpen(true)}>
@@ -76,8 +75,6 @@ const UserMenu = () => {
       </Popover>
     </div>
   );
-}
-
-
+};
 
 export default UserMenu;

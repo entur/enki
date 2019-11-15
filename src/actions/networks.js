@@ -1,12 +1,12 @@
-import { UttuQuery } from '../graphql';
-import { deleteNetwork, networkMutation } from '../graphql/uttu/mutations';
-import { getNetworkByIdQuery, getNetworksQuery } from '../graphql/uttu/queries';
-import { Network } from '../model';
+import { UttuQuery } from 'graphql';
+import { deleteNetwork, networkMutation } from 'graphql/uttu/mutations';
+import { getNetworkByIdQuery, getNetworksQuery } from 'graphql/uttu/queries';
+import { Network } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
-} from '../components/Notification/actions';
-import { getUttuError } from '../helpers/uttu';
+} from 'components/Notification/actions';
+import { getUttuError } from 'helpers/uttu';
 
 export const REQUEST_NETWORKS = 'REQUEST_NETWORKS';
 export const RECEIVE_NETWORKS = 'RECEIVE_NETWORKS';

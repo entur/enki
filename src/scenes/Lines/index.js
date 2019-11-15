@@ -9,9 +9,9 @@ import {
   TableHeaderCell,
   TableRow,
   TableRowCell
-} from '../../components/Table';
-import Loading from '../../components/Loading';
-import IconButton from '../../components/IconButton';
+} from 'components/Table';
+import Loading from 'components/Loading';
+import IconButton from 'components/IconButton';
 import { loadFlexibleLines } from '../../actions/flexibleLines';
 import './styles.css';
 import * as R from 'ramda';
@@ -37,7 +37,10 @@ class Lines extends Component {
               <TableRowCell title={n.description}>{n.name}</TableRowCell>
               <TableRowCell>{n.privateCode}</TableRowCell>
               <TableRowCell>
-                {R.prop('name', organisations.find(o => o.id === n.operatorRef))}
+                {R.prop(
+                  'name',
+                  organisations.find(o => o.id === n.operatorRef)
+                )}
               </TableRowCell>
             </TableRow>
           ))
@@ -86,4 +89,7 @@ const mapStateToProps = ({ organisations, flexibleLines }) => ({
   lines: flexibleLines
 });
 
-export default compose(withRouter, connect(mapStateToProps))(Lines);
+export default compose(
+  withRouter,
+  connect(mapStateToProps)
+)(Lines);

@@ -1,14 +1,11 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {
-  TextArea,
-  FormGroup
-} from '@entur/component-library';
-import {selectIntl} from '../../../../../i18n';
+import { useSelector } from 'react-redux';
+import { TextArea, FormGroup } from '@entur/component-library';
+import { selectIntl } from 'i18n';
 import messages from './bookingNoteField.messages';
 
 export default ({ bookingNote, onChange }) => {
-  const {formatMessage} = useSelector(selectIntl);
+  const { formatMessage } = useSelector(selectIntl);
   return (
     <FormGroup
       className="form-section"
@@ -23,4 +20,4 @@ export default ({ bookingNote, onChange }) => {
       />
     </FormGroup>
   );
-}
+};

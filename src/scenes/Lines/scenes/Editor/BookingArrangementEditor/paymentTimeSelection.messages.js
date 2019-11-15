@@ -1,7 +1,5 @@
-import {defineMessages} from 'react-intl';
-import {
-  PURCHASE_MOMENT,
-} from '../../../../../model/enums';
+import { defineMessages } from 'react-intl';
+import { PURCHASE_MOMENT } from 'model/enums';
 
 export default defineMessages({
   title: {
@@ -26,5 +24,5 @@ export const paymentTimeMessages = defineMessages({
   [PURCHASE_MOMENT.ON_CHECK_OUT]: {
     id: `lines.editor.bookingArrangementEditor.paymentSelection.purchaseMoment.onCheckOut`,
     defaultMessage: 'Ved utsjekk'
-  },
+  }
 });

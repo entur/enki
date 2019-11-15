@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Tab, Tabs} from '@entur/component-library';
-import {DestinationDisplay, StopPoint} from '../../../../../../../../model';
+import { Tab, Tabs } from '@entur/component-library';
+import { DestinationDisplay, StopPoint } from 'model';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import Header from './Header';
 import './styles.css';
 import searchForQuay from './searchForQuay';
 import debounce from './debounce';
-import {hasValue} from '../../../../../../../../helpers/forms';
-import {DEFAULT_SELECT_VALUE, TABS} from './constants';
+import { hasValue } from 'helpers/forms';
+import { DEFAULT_SELECT_VALUE, TABS } from './constants';
 import Form from './Form';
 import validateForm from './validateForm';
 
@@ -33,35 +33,36 @@ class StopPointEditor extends Component {
   handleFieldChange = (field, value) => {
     const { stopPoint, onChange } = this.props;
     onChange(stopPoint.withChanges({ [field]: value }));
-  }
+  };
 
-  handleStopPlaceSelectionChange = (stopPlaceSelection) => {
+  handleStopPlaceSelectionChange = stopPlaceSelection => {
     this.handleFieldChange(
       'flexibleStopPlaceRef',
-      stopPlaceSelection !== DEFAULT_SELECT_VALUE
-        ? stopPlaceSelection
-        : null
+      stopPlaceSelection !== DEFAULT_SELECT_VALUE ? stopPlaceSelection : null
     );
     this.setState({ stopPlaceSelection });
-  }
+  };
 
-  handleFrontTextChange = (frontText) => {
+  handleFrontTextChange = frontText => {
     const { stopPoint } = this.props;
     const destinationDisplay = stopPoint.destinationDisplay
       ? stopPoint.destinationDisplay.withChanges({ frontText })
       : new DestinationDisplay({ frontText });
     this.handleFieldChange('destinationDisplay', destinationDisplay);
-  }
+  };
 
   onSave = async () => {
-    let [valid, errors] = await validateForm(this.props.stopPoint, this.props.stopPointIndex);
+    let [valid, errors] = await validateForm(
+      this.props.stopPoint,
+      this.props.stopPointIndex
+    );
 
-    this.setState( {errors}, () => {
+    this.setState({ errors }, () => {
       if (valid) {
         this.props.onSave();
       }
     });
-  }
+  };
 
   debouncedSearchForQuay = debounce(async () => {
     let quayRef = this.props.stopPoint.quayRef;
@@ -95,7 +96,9 @@ class StopPointEditor extends Component {
               stopPlaceSelection={stopPlaceSelection}
               quaySearch={quaySearch}
               errors={errors}
-              handleStopPlaceSelectionChange={this.handleStopPlaceSelectionChange}
+              handleStopPlaceSelectionChange={
+                this.handleStopPlaceSelectionChange
+              }
               handleFieldChange={this.handleFieldChange}
               debouncedSearchForQuay={this.debouncedSearchForQuay}
               handleFrontTextChange={this.handleFrontTextChange}

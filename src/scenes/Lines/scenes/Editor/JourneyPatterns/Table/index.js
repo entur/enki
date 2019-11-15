@@ -7,9 +7,9 @@ import {
   TableHeaderCell,
   TableRow,
   TableRowCell
-} from '../../../../../../components/Table';
-import { JourneyPattern } from '../../../../../../model';
-import ConfirmDialog from '../../../../../../components/ConfirmDialog';
+} from 'components/Table';
+import { JourneyPattern } from 'model';
+import ConfirmDialog from 'components/ConfirmDialog';
 
 import './styles.css';
 

@@ -1,5 +1,5 @@
 import { SHOW_NOTIFICATION } from './actions';
-import { createUuid } from '../../helpers/generators';
+import { createUuid } from 'helpers/generators';
 
 const initialState = {
   notification: null

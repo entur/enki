@@ -6,24 +6,28 @@ import {
   DropDownOptions,
   FormGroup
 } from '@entur/component-library';
-import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL} from '../constants';
-import Errors from '../../../../../components/Errors';
-import { FLEXIBLE_LINE_TYPE } from '../../../../../model/enums';
+import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL } from '../constants';
+import Errors from 'components/Errors';
+import { FLEXIBLE_LINE_TYPE } from 'model/enums';
 
-export default ({ flexibleLine, networks, operators, errors, networkSelection, operatorSelection, handleFieldChange, handleNetworkSelectionChange, handleOperatorSelectionChange }) => {
+export default ({
+  flexibleLine,
+  networks,
+  operators,
+  errors,
+  networkSelection,
+  operatorSelection,
+  handleFieldChange,
+  handleNetworkSelectionChange,
+  handleOperatorSelectionChange
+}) => {
   return (
     <Fragment>
-      <FormGroup
-        className="form-section"
-        inputId="name"
-        title="* Navn"
-      >
+      <FormGroup className="form-section" inputId="name" title="* Navn">
         <TextField
           type="text"
           value={flexibleLine.name}
-          onChange={e =>
-            handleFieldChange('name', e.target.value)
-          }
+          onChange={e => handleFieldChange('name', e.target.value)}
         />
       </FormGroup>
 
@@ -35,9 +39,7 @@ export default ({ flexibleLine, networks, operators, errors, networkSelection, o
         <TextArea
           type="text"
           value={flexibleLine.description}
-          onChange={e =>
-            handleFieldChange('description', e.target.value)
-          }
+          onChange={e => handleFieldChange('description', e.target.value)}
         />
       </FormGroup>
 
@@ -49,9 +51,7 @@ export default ({ flexibleLine, networks, operators, errors, networkSelection, o
         <TextField
           type="text"
           value={flexibleLine.privateCode}
-          onChange={e =>
-            handleFieldChange('privateCode', e.target.value)
-          }
+          onChange={e => handleFieldChange('privateCode', e.target.value)}
         />
       </FormGroup>
 
@@ -63,47 +63,29 @@ export default ({ flexibleLine, networks, operators, errors, networkSelection, o
         <TextField
           type="text"
           value={flexibleLine.publicCode}
-          onChange={e =>
-            handleFieldChange('publicCode', e.target.value)
-          }
+          onChange={e => handleFieldChange('publicCode', e.target.value)}
         />
       </FormGroup>
 
-      <FormGroup
-        className="form-section"
-        inputId="operator"
-        title="Operatør"
-      >
+      <FormGroup className="form-section" inputId="operator" title="Operatør">
         <DropDown
           value={operatorSelection}
-          onChange={e =>
-            handleOperatorSelectionChange(e.target.value)
-          }
+          onChange={e => handleOperatorSelectionChange(e.target.value)}
         >
           <DropDownOptions
             label={DEFAULT_SELECT_LABEL}
             value={DEFAULT_SELECT_VALUE}
           />
           {operators.map(o => (
-            <DropDownOptions
-              key={o.name}
-              label={o.name}
-              value={o.id}
-            />
+            <DropDownOptions key={o.name} label={o.name} value={o.id} />
           ))}
         </DropDown>
       </FormGroup>
 
-      <FormGroup
-        className="form-section"
-        inputId="network"
-        title="* Nettverk"
-      >
+      <FormGroup className="form-section" inputId="network" title="* Nettverk">
         <DropDown
           value={networkSelection}
-          onChange={e =>
-            handleNetworkSelectionChange(e.target.value)
-          }
+          onChange={e => handleNetworkSelectionChange(e.target.value)}
           className={errors.networkRef.length > 0 ? 'input-error' : ''}
         >
           <DropDownOptions
@@ -111,11 +93,7 @@ export default ({ flexibleLine, networks, operators, errors, networkSelection, o
             value={DEFAULT_SELECT_VALUE}
           />
           {networks.map(n => (
-            <DropDownOptions
-              key={n.name}
-              label={n.name}
-              value={n.id}
-            />
+            <DropDownOptions key={n.name} label={n.name} value={n.id} />
           ))}
         </DropDown>
       </FormGroup>
@@ -128,23 +106,17 @@ export default ({ flexibleLine, networks, operators, errors, networkSelection, o
       >
         <DropDown
           value={flexibleLine.flexibleLineType}
-          onChange={e =>
-            handleFieldChange('flexibleLineType', e.target.value)
-          }
+          onChange={e => handleFieldChange('flexibleLineType', e.target.value)}
         >
           <DropDownOptions
             label={DEFAULT_SELECT_LABEL}
             value={DEFAULT_SELECT_VALUE}
           />
           {Object.values(FLEXIBLE_LINE_TYPE).map(type => (
-            <DropDownOptions
-              key={type}
-              label={type}
-              value={type}
-            />
+            <DropDownOptions key={type} label={type} value={type} />
           ))}
         </DropDown>
       </FormGroup>
     </Fragment>
   );
-}
+};

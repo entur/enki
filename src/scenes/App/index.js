@@ -7,9 +7,9 @@ import { injectIntl } from 'react-intl';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import Notifications from '../../components/Notification';
-import ScrollToTop from '../../components/ScrollToTop';
-import Loading from '../../components/Loading';
+import Notifications from 'components/Notification';
+import ScrollToTop from 'components/ScrollToTop';
+import Loading from 'components/Loading';
 import NavBar from './components/NavBar';
 import Routes from './Routes';
 import { getProviders } from '../../actions/providers';
@@ -34,7 +34,11 @@ class App extends Component {
   }
 
   render() {
-    const { providers, organisations, intl: {formatMessage} } = this.props;
+    const {
+      providers,
+      organisations,
+      intl: { formatMessage }
+    } = this.props;
 
     const basename = '';
 
@@ -71,6 +75,9 @@ const mapStateToProps = ({ providers, organisations }) => ({
   organisations
 });
 
-const hoc = R.compose(injectIntl, connect(mapStateToProps));
+const hoc = R.compose(
+  injectIntl,
+  connect(mapStateToProps)
+);
 
 export default hoc(App);

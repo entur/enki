@@ -9,21 +9,21 @@ import {
   TableHeaderCell,
   TableRow,
   TableRowCell
-} from '../../components/Table';
-import Loading from '../../components/Loading';
-import IconButton from '../../components/IconButton';
+} from 'components/Table';
+import Loading from 'components/Loading';
+import IconButton from 'components/IconButton';
 import { loadExports } from '../../actions/exports';
-import { EXPORT_STATUS } from '../../model/enums';
+import { EXPORT_STATUS } from 'model/enums';
 
 import './styles.css';
 import { getIconForStatus } from './scenes/icons';
-import { selectIntl } from '../../i18n';
+import { selectIntl } from 'i18n';
 import messages from './exports.messages';
 import { Button } from '@entur/component-library/lib/components/button';
 
 const Exports = ({ history }) => {
-  const exports = useSelector(({exports}) => exports);
-  const {formatMessage} = useSelector(selectIntl);
+  const exports = useSelector(({ exports }) => exports);
+  const { formatMessage } = useSelector(selectIntl);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Exports = ({ history }) => {
 
   const handleOnRowClick = id => {
     history.push(`/exports/view/${id}`);
-  }
+  };
 
   const renderTableRows = () => {
     if (exports) {
@@ -40,20 +40,24 @@ const Exports = ({ history }) => {
         exports.map(e => (
           <TableRow key={e.id} onClick={() => handleOnRowClick(e.id)}>
             <TableRowCell>{e.name}</TableRowCell>
-            <TableRowCell>
-              {getIconForStatus(e.exportStatus)}
-            </TableRowCell>
+            <TableRowCell>{getIconForStatus(e.exportStatus)}</TableRowCell>
             <TableRowCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
-                <Button onClick={(event) => {
-                  event.stopPropagation();
-                  e.download();
-                }}>
+                <Button
+                  onClick={event => {
+                    event.stopPropagation();
+                    e.download();
+                  }}
+                >
                   {formatMessage(messages.downloadLinkText)}
                 </Button>
               )}
             </TableRowCell>
-            <TableRowCell>{e.dryRun ? formatMessage(messages.dryRunYes) : formatMessage(messages.dryRunNo)}</TableRowCell>
+            <TableRowCell>
+              {e.dryRun
+                ? formatMessage(messages.dryRunYes)
+                : formatMessage(messages.dryRunNo)}
+            </TableRowCell>
             <TableRowCell>
               <FormattedDate value={moment(e.fromDate)} />
             </TableRowCell>
@@ -64,7 +68,9 @@ const Exports = ({ history }) => {
         ))
       ) : (
         <TableRow className="row-no-exports disabled">
-          <TableRowCell colSpan={6}>{formatMessage(messages.noExportsFoundText)}</TableRowCell>
+          <TableRowCell colSpan={6}>
+            {formatMessage(messages.noExportsFoundText)}
+          </TableRowCell>
         </TableRow>
       );
     } else {
@@ -92,16 +98,26 @@ const Exports = ({ history }) => {
 
       <Table>
         <TableHeaderCell label={formatMessage(messages.tableHeaderLabelName)} />
-        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelStatus)} />
-        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelDownload)} />
-        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelDryrun)} />
-        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelFromDate)} />
-        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelToDate)} />
+        <TableHeaderCell
+          label={formatMessage(messages.tableHeaderLabelStatus)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.tableHeaderLabelDownload)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.tableHeaderLabelDryrun)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.tableHeaderLabelFromDate)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.tableHeaderLabelToDate)}
+        />
 
         {renderTableRows()}
       </Table>
     </div>
   );
-}
+};
 
 export default withRouter(Exports);

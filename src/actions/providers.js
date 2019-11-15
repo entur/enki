@@ -1,6 +1,6 @@
-import { UttuQuery } from '../graphql';
-import { getProvidersQuery } from '../graphql/uttu/queries';
-import Provider from '../model/Provider';
+import { UttuQuery } from 'graphql';
+import { getProvidersQuery } from 'graphql/uttu/queries';
+import Provider from 'model/Provider';
 
 export const RECEIVE_PROVIDERS = 'RECEIVE_PROVIDERS';
 export const FAILED_RECEIVING_PROVIDERS = 'FAILED_RECEIVING_PROVIDERS';

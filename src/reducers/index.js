@@ -1,4 +1,4 @@
-import notification from '../components/Notification/reducer';
+import notification from 'components/Notification/reducer';
 import user from './user';
 import organisations from './organisations';
 import providers from './providers';

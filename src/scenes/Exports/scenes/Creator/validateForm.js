@@ -1,11 +1,11 @@
 import * as R from 'ramda';
-import { objectValues } from '../../../../helpers/forms';
+import { objectValues } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 import moment from 'moment';
 
 function validateName(name) {
-  if (R.isNil(name)|| R.isEmpty(name)) {
+  if (R.isNil(name) || R.isEmpty(name)) {
     return [messages.errorExportNameIsEmpty];
   }
   return [];
@@ -25,10 +25,10 @@ function validateFromDateToDate(fromDate, toDate) {
   return errors;
 }
 
-export default function (theExport) {
+export default function(theExport) {
   let errors = {
     name: validateName(theExport.name),
-    fromDateToDate: validateFromDateToDate(theExport.fromDate, theExport.toDate),
+    fromDateToDate: validateFromDateToDate(theExport.fromDate, theExport.toDate)
   };
   return [objectValues(errors).length === 0, errors];
 }

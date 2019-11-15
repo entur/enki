@@ -3,9 +3,9 @@ import thunk from 'redux-thunk';
 import { intlReducer as intl } from 'react-intl-redux';
 import Raven from 'raven-js';
 
-import reducers from './reducers';
-import { geti18n, loadLocaleData, getIntl } from './i18n/';
-import { normalizeAllUrls } from './helpers/url';
+import reducers from 'reducers';
+import { geti18n, loadLocaleData, getIntl } from 'i18n/';
+import { normalizeAllUrls } from 'helpers/url';
 
 const SENTRY_DSN = 'https://cc3cacbc67234cc7bfe1cf391010414b@sentry.io/1769954';
 

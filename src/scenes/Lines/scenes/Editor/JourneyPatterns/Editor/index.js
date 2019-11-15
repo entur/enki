@@ -11,8 +11,8 @@ import {
   Tab
 } from '@entur/component-library';
 
-import { JourneyPattern } from '../../../../../../model';
-import { DIRECTION_TYPE } from '../../../../../../model/enums';
+import { JourneyPattern } from 'model';
+import { DIRECTION_TYPE } from 'model/enums';
 import StopPointsEditor from './StopPoints';
 import ServiceJourneysEditor from './ServiceJourneys';
 
