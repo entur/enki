@@ -12,10 +12,12 @@ import {
 import Loading from 'components/Loading';
 import IconButton from 'components/IconButton';
 import { loadNetworks } from 'actions/networks';
-
+import { selectIntl } from 'i18n';
+import messages from './messages';
 import './styles.css';
 
 const Networks = ({ history }) => {
+  const { formatMessage } = useSelector(selectIntl);
   const { activeProvider, organisations, networks } = useSelector(
     ({ providers, organisations, networks }) => ({
       activeProvider: providers.active,
@@ -55,14 +57,16 @@ const Networks = ({ history }) => {
         ))
       ) : (
         <TableRow className="row-no-networks disabled">
-          <TableRowCell colSpan={3}>Ingen nettverk ble funnet.</TableRowCell>
+          <TableRowCell colSpan={3}>
+            {formatMessage(messages.noNetworksFoundText)}
+          </TableRowCell>
         </TableRow>
       );
     } else {
       return (
         <TableRow className="disabled">
           <TableRowCell colSpan={3}>
-            <Loading text="Laster inn nettverk..." />
+            <Loading text={formatMessage(messages.loadingNetworksText)} />
           </TableRowCell>
         </TableRow>
       );
@@ -71,20 +75,24 @@ const Networks = ({ history }) => {
 
   return (
     <div className="networks">
-      <h2>Nettverk</h2>
+      <h2>{formatMessage(messages.headerText)}</h2>
 
       <Link to="/networks/create">
         <IconButton
           icon={<AddIcon />}
-          label="Opprett nettverk"
+          label={formatMessage(messages.createNetworkIconButtonLabel)}
           labelPosition="right"
         />
       </Link>
 
       <Table>
-        <TableHeaderCell label="Navn" />
-        <TableHeaderCell label="Privat kode" />
-        <TableHeaderCell label="Autoritet" />
+        <TableHeaderCell label={formatMessage(messages.nameTableHeaderLabel)} />
+        <TableHeaderCell
+          label={formatMessage(messages.privateCodeTableHeaderLabel)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.authorityTableHeaderLabel)}
+        />
 
         {renderTableRows()}
       </Table>
