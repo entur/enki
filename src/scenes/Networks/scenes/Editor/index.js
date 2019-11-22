@@ -25,6 +25,8 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import './styles.css';
 import { createSelector } from 'reselect';
 import selectActiveProvider from 'selectors/selectActiveProvider';
+import { selectIntl } from 'i18n';
+import messages from './messages';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
@@ -37,6 +39,7 @@ const selectNetwork = createSelector(
 );
 
 const NetworkEditor = ({ match, history }) => {
+  const { formatMessage } = useSelector(selectIntl);
   const activeProvider = useSelector(selectActiveProvider());
   const organisations = useSelector(({ organisations }) => organisations);
   const lines = useSelector(({ flexibleLines }) => flexibleLines);
@@ -121,7 +124,11 @@ const NetworkEditor = ({ match, history }) => {
   return (
     <div className="network-editor">
       <div className="header">
-        <h2>{match.params.id ? 'Rediger' : 'Opprett'} nettverk</h2>
+        <h2>
+          {match.params.id
+            ? formatMessage(messages.editNetworkHeaderText)
+            : formatMessage(messages.createNetworkHeaderText)}
+        </h2>
 
         <div className="buttons">
           <Button
@@ -129,7 +136,7 @@ const NetworkEditor = ({ match, history }) => {
             onClick={handleOnSaveClick}
             disabled={isSaveDisabled}
           >
-            Lagre
+            {formatMessage(messages.saveButtonText)}
           </Button>
 
           {match.params.id && (
@@ -138,7 +145,7 @@ const NetworkEditor = ({ match, history }) => {
               onClick={() => setDeleteDialogOpen(true)}
               disabled={isDeleteDisabled}
             >
-              Slett
+              {formatMessage(messages.deleteButtonText)}
             </Button>
           )}
         </div>
@@ -147,31 +154,35 @@ const NetworkEditor = ({ match, history }) => {
       {network && lines ? (
         <OverlayLoader
           isLoading={isSaving || isDeleting}
-          text={(isSaving ? 'Lagrer' : 'Sletter') + ' nettverket...'}
+          text={
+            isSaving
+              ? formatMessage(messages.savingNetworkLoadingText)
+              : formatMessage(messages.deletingNetworkLoadingText)
+          }
         >
           <div className="network-form">
-            <Label>* Navn</Label>
+            <Label>{formatMessage(messages.nameLabelText)}</Label>
             <TextField
               type="text"
               value={network.name}
               onChange={e => onFieldChange('name', e.target.value)}
             />
 
-            <Label>Beskrivelse</Label>
+            <Label>{formatMessage(messages.descriptionLabelText)}</Label>
             <TextArea
               type="text"
               value={network.description}
               onChange={e => onFieldChange('description', e.target.value)}
             />
 
-            <Label>Privat kode</Label>
+            <Label>{formatMessage(messages.privateCodeLabelText)}</Label>
             <TextField
               type="text"
               value={network.privateCode}
               onChange={e => onFieldChange('privateCode', e.target.value)}
             />
 
-            <Label>* Autoritet</Label>
+            <Label>{formatMessage(messages.authorityLabelText)}</Label>
             <DropDown
               value={authoritySelection}
               onChange={e => handleAuthoritySelectionChange(e.target.value)}
@@ -188,14 +199,18 @@ const NetworkEditor = ({ match, history }) => {
         </OverlayLoader>
       ) : (
         <Loading
-          text={`Laster inn ${!network ? 'nettverket' : 'avhengigheter'}...`}
+          text={
+            !network
+              ? formatMessage(messages.loadingNetworkText)
+              : formatMessage(messages.loadingDependenciesText)
+          }
         />
       )}
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title="Slette nettverk"
-        message="Er du sikker på at du ønsker å slette dette nettverket?"
+        title={formatMessage(messages.deleteNetworkConfirmDialogTitle)}
+        message={formatMessage(messages.deleteNetworkConfirmDialogMessage)}
         buttons={[
           <Button
             key={2}
@@ -204,7 +219,7 @@ const NetworkEditor = ({ match, history }) => {
             width="md"
             className="action-button"
           >
-            Nei
+            {formatMessage(messages.deleteNetworkConfirmDialogCancelText)}
           </Button>,
           <Button
             key={1}
@@ -213,7 +228,7 @@ const NetworkEditor = ({ match, history }) => {
             width="md"
             className="action-button"
           >
-            Ja
+            {formatMessage(messages.deleteNetworkConfirmDialogConfirmText)}
           </Button>
         ]}
         onClose={() => setDeleteDialogOpen(false)}
