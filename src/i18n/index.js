@@ -1,4 +1,6 @@
 import { addLocaleData, IntlProvider } from 'react-intl';
+import nbLocaleData from 'react-intl/locale-data/nb';
+import 'moment/locale/nb';
 import { createSelector } from 'reselect';
 
 export const defaultLocale = 'nb';
@@ -44,12 +46,7 @@ export const geti18n = () => {
 /* React-intl requires additional locale-data for languages (except 'en', included) for formatting rules,
  * these are kept in memory */
 export const loadLocaleData = () => {
-  SUPPORTED_LOCALES.filter(locale => locale !== 'en').forEach(locale => {
-    const localeData = require('react-intl/locale-data/' + locale);
-    addLocaleData(localeData);
-    // used for moment -- all locales are by default filtered out of bundle in webpack config
-    require('moment/locale/' + locale);
-  });
+  addLocaleData(nbLocaleData);
 };
 
 let cachedIntl = null;

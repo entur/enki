@@ -42,6 +42,7 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^4.0.0",
     "snyk": "^1.239.3",
+    "source-map-explorer": "^2.1.1",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
@@ -73,7 +74,8 @@
     "eslint": "eslint src/**/*.js",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
-    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
+    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "prettier": {
     "singleQuote": true
