@@ -27,6 +27,8 @@ import './styles.css';
 import General from './General';
 import { withRouter } from 'react-router-dom';
 import { createSelector } from 'reselect';
+import { selectIntl } from 'i18n';
+import messages from './messages';
 
 const TABS = Object.freeze({
   GENERAL: 'general',
@@ -50,6 +52,7 @@ const selectFlexibleLine = createSelector(
 );
 
 const FlexibleLineEditor = ({ match, history }) => {
+  const { formatMessage } = useSelector(selectIntl);
   const organisations = useSelector(({ organisations }) => organisations);
   const networks = useSelector(({ networks }) => networks);
   const flexibleStopPlaces = useSelector(
@@ -179,11 +182,15 @@ const FlexibleLineEditor = ({ match, history }) => {
   return (
     <div className="line-editor">
       <div className="header">
-        <h2>{match.params.id ? 'Rediger' : 'Opprett'} linje</h2>
+        <h2>
+          {match.params.id
+            ? formatMessage(messages.editLineHeader)
+            : formatMessage(messages.createLineHeader)}
+        </h2>
 
         <div className="buttons">
           <Button variant="success" onClick={handleOnSaveClick}>
-            Lagre
+            {formatMessage(messages.saveButtonText)}
           </Button>
 
           {match.params.id && (
@@ -192,7 +199,7 @@ const FlexibleLineEditor = ({ match, history }) => {
               onClick={() => setDeleteDialogOpen(true)}
               disabled={isDeleteDisabled}
             >
-              Slett
+              {formatMessage(messages.deleteButtonText)}
             </Button>
           )}
         </div>
@@ -201,13 +208,21 @@ const FlexibleLineEditor = ({ match, history }) => {
       {!isLoadingLine && !isLoadingDependencies ? (
         <OverlayLoader
           isLoading={isSaving || isDeleting}
-          text={(isSaving ? 'Lagrer' : 'Sletter') + ' linjen...'}
+          text={
+            isSaving
+              ? formatMessage(messages.saveLineLoadingText)
+              : formatMessage(messages.deleteLineLoadingText)
+          }
         >
           <Tabs
             selected={activeTab}
             onChange={activeTab => setActiveTab(activeTab)}
           >
-            <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
+            <Tab
+              value={TABS.GENERAL}
+              label={formatMessage(messages.generalTabLabel)}
+              className="general-tab"
+            >
               <General
                 flexibleLine={flexibleLine}
                 networks={networks}
@@ -221,7 +236,10 @@ const FlexibleLineEditor = ({ match, history }) => {
               />
             </Tab>
 
-            <Tab value={TABS.JOURNEY_PATTERNS} label="Journey Patterns">
+            <Tab
+              value={TABS.JOURNEY_PATTERNS}
+              label={formatMessage(messages.journeyPatternsTabLabel)}
+            >
               <JourneyPatternsEditor
                 journeyPatterns={flexibleLine.journeyPatterns}
                 onChange={jps => onFieldChange('journeyPatterns', jps)}
@@ -230,7 +248,7 @@ const FlexibleLineEditor = ({ match, history }) => {
 
             <Tab
               value={TABS.BOOKING}
-              label="Bestilling"
+              label={formatMessage(messages.bookingTabLabel)}
               className="booking-tab"
             >
               <BookingArrangementEditor
@@ -242,16 +260,18 @@ const FlexibleLineEditor = ({ match, history }) => {
         </OverlayLoader>
       ) : (
         <Loading
-          text={`Laster inn ${
-            isLoadingLine ? 'linje' : 'nettverk og stoppesteder'
-          }...`}
+          text={
+            isLoadingLine
+              ? formatMessage(messages.loadingLineText)
+              : formatMessage(messages.loadingNetworkAndStopsText)
+          }
         />
       )}
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title="Slette linje"
-        message="Er du sikker på at du ønsker å slette denne linjen?"
+        title={formatMessage(messages.deleteConfirmationDialogTitle)}
+        message={formatMessage(messages.deleteConfirmationDialogMessage)}
         buttons={[
           <Button
             key={2}
@@ -260,7 +280,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             width="md"
             className="action-button"
           >
-            Nei
+            {formatMessage(messages.deleteConfirmationDialogCancelButtonText)}
           </Button>,
           <Button
             key={1}
@@ -269,7 +289,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             width="md"
             className="action-button"
           >
-            Ja
+            {formatMessage(messages.deleteConfirmationDialogConfirmButtonText)}
           </Button>
         ]}
         onClose={() => setDeleteDialogOpen(false)}
