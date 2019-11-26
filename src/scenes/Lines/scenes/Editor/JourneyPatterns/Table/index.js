@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, DeleteIcon } from '@entur/component-library';
 
@@ -12,95 +13,105 @@ import { JourneyPattern } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
 
 import './styles.css';
+import { selectIntl } from 'i18n';
+import messages from './messages';
 
-class JourneyPatternsTable extends Component {
-  state = { removeDialogOpenFor: null };
+const JourneyPatternsTable = ({
+  journeyPatterns,
+  onRowClick,
+  onDeleteClick
+}) => {
+  const { formatMessage } = useSelector(selectIntl);
+  const [removeDialogOpenFor, setRemoveDialogOpenFor] = useState(null);
 
-  showDeleteDialogFor(jp) {
-    this.setState({ removeDialogOpenFor: jp });
-  }
+  const showDeleteDialogFor = journeyPattern => {
+    setRemoveDialogOpenFor(journeyPattern);
+  };
 
-  doDelete() {
-    this.props.onDeleteClick(this.state.removeDialogOpenFor);
-    this.showDeleteDialogFor(null);
-  }
+  const doDelete = () => {
+    onDeleteClick(removeDialogOpenFor);
+    showDeleteDialogFor(null);
+  };
 
-  render() {
-    const { journeyPatterns, onRowClick } = this.props;
-    const { removeDialogOpenFor } = this.state;
-
-    const tableRows =
-      journeyPatterns.length > 0 ? (
-        journeyPatterns.map((jp, i) => (
-          <TableRow
-            key={i}
-            title={jp.description}
-            onClick={() => onRowClick(i)}
-          >
-            <TableRowCell>
-              {jp.name ? jp.name : '- Nytt journey pattern -'}
-            </TableRowCell>
-            <TableRowCell>{jp.directionType || ''}</TableRowCell>
-            <TableRowCell>{jp.pointsInSequence.length}</TableRowCell>
-            <TableRowCell>{jp.serviceJourneys.length}</TableRowCell>
-            <TableRowCell>
-              <div
-                onClick={e => {
-                  this.showDeleteDialogFor(i);
-                  e.stopPropagation();
-                }}
-              >
-                <DeleteIcon />
-              </div>
-            </TableRowCell>
-          </TableRow>
-        ))
-      ) : (
-        <TableRow className="row-no-lines disabled">
-          <TableRowCell colSpan={3}>Ingen journey patterns.</TableRowCell>
+  const tableRows =
+    journeyPatterns.length > 0 ? (
+      journeyPatterns.map((jp, i) => (
+        <TableRow key={i} title={jp.description} onClick={() => onRowClick(i)}>
+          <TableRowCell>
+            {jp.name
+              ? jp.name
+              : formatMessage(messages.newJourneyPatternDefaultText)}
+          </TableRowCell>
+          <TableRowCell>{jp.directionType || ''}</TableRowCell>
+          <TableRowCell>{jp.pointsInSequence.length}</TableRowCell>
+          <TableRowCell>{jp.serviceJourneys.length}</TableRowCell>
+          <TableRowCell>
+            <div
+              onClick={e => {
+                showDeleteDialogFor(i);
+                e.stopPropagation();
+              }}
+            >
+              <DeleteIcon />
+            </div>
+          </TableRowCell>
         </TableRow>
-      );
-
-    return (
-      <div>
-        <Table className="journey-patterns-table">
-          <TableHeaderCell label="Navn" />
-          <TableHeaderCell label="Retning" />
-          <TableHeaderCell label="Stoppesteder" />
-          <TableHeaderCell label="Service Journeys" />
-          {tableRows}
-        </Table>
-
-        <ConfirmDialog
-          isOpen={removeDialogOpenFor !== null}
-          title="Slette journey pattern"
-          message="Er du sikker på at du ønsker å slette dette journey patternet?"
-          buttons={[
-            <Button
-              key={2}
-              onClick={() => this.showDeleteDialogFor(null)}
-              variant="secondary"
-              width="md"
-              className="action-button"
-            >
-              Nei
-            </Button>,
-            <Button
-              key={1}
-              onClick={this.doDelete.bind(this)}
-              variant="success"
-              width="md"
-              className="action-button"
-            >
-              Ja
-            </Button>
-          ]}
-          onClose={() => this.showDeleteDialogFor(null)}
-        />
-      </div>
+      ))
+    ) : (
+      <TableRow className="row-no-lines disabled">
+        <TableRowCell colSpan={3}>
+          {formatMessage(messages.noJourneyPatternsText)}
+        </TableRowCell>
+      </TableRow>
     );
-  }
-}
+
+  return (
+    <div>
+      <Table className="journey-patterns-table">
+        <TableHeaderCell
+          label={formatMessage(messages.nameTableHeaderCellLabel)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.directionTableHeaderCellLabel)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.stopPlacesTableHeaderCellLabel)}
+        />
+        <TableHeaderCell
+          label={formatMessage(messages.serviceJourneysTableHeaderCellLabel)}
+        />
+        {tableRows}
+      </Table>
+
+      <ConfirmDialog
+        isOpen={removeDialogOpenFor !== null}
+        title={formatMessage(messages.deleteConfirmDialogTitle)}
+        message={formatMessage(messages.deleteConfirmDialogMessage)}
+        buttons={[
+          <Button
+            key={2}
+            onClick={() => showDeleteDialogFor(null)}
+            variant="secondary"
+            width="md"
+            className="action-button"
+          >
+            {formatMessage(messages.deleteConfirmDialogCancelButtonText)}
+          </Button>,
+          <Button
+            key={1}
+            onClick={doDelete}
+            variant="success"
+            width="md"
+            className="action-button"
+          >
+            {formatMessage(messages.deleteConfirmDialogConfirmButtonText)}
+          </Button>
+        ]}
+        onClose={() => showDeleteDialogFor(null)}
+      />
+    </div>
+  );
+};
 
 JourneyPatternsTable.propTypes = {
   journeyPatterns: PropTypes.arrayOf(PropTypes.instanceOf(JourneyPattern))
