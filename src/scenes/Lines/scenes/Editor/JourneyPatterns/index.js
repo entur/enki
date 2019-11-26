@@ -1,111 +1,93 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/component-library';
 
 import IconButton from 'components/IconButton';
-import { JourneyPattern } from 'model';
+import { JourneyPattern, StopPoint } from 'model';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import Dialog from 'components/Dialog';
 import JourneyPatternsTable from './Table';
 import JourneyPatternEditor from './Editor';
+import { selectIntl } from 'i18n';
+import messages from './messages';
 
 const TEMP_INDEX = -1;
 
-class JourneyPatternsEditor extends Component {
-  state = {
-    journeyPatternInDialog: null,
-    journeyPatternIndexInDialog: TEMP_INDEX
+const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
+  const { formatMessage } = useSelector(selectIntl);
+  const [journeyPattern, setJourneyPattern] = useState(null);
+  const [journeyPatternIndex, setJourneyPatternIndex] = useState(TEMP_INDEX);
+
+  const deleteJourneyPattern = index => {
+    onChange(removeElementByIndex(journeyPatterns, index));
   };
 
-  updateServiceJourney(index, journeyPattern) {
-    const { journeyPatterns, onChange } = this.props;
-    onChange(replaceElement(journeyPatterns, index, journeyPattern));
-  }
+  const openDialogForNewJourneyPattern = () => {
+    setJourneyPattern(new JourneyPattern());
+  };
 
-  deleteJourneyPattern(index) {
-    const { journeyPatterns, onChange } = this.props;
-    onChange(removeElementByIndex(journeyPatterns, index));
-  }
+  const openDialogForJourneyPattern = index => {
+    setJourneyPattern(journeyPatterns[index]);
+    setJourneyPatternIndex(index);
+  };
 
-  openDialogForNewJourneyPattern() {
-    this.setState({ journeyPatternInDialog: new JourneyPattern() });
-  }
+  const closeJourneyPatternDialog = () => {
+    setJourneyPattern(null);
+    setJourneyPatternIndex(TEMP_INDEX);
+  };
 
-  openDialogForJourneyPattern(index) {
-    this.setState({
-      journeyPatternInDialog: this.props.journeyPatterns[index],
-      journeyPatternIndexInDialog: index
-    });
-  }
-
-  closeJourneyPatternDialog() {
-    this.setState({
-      journeyPatternInDialog: null,
-      journeyPatternIndexInDialog: TEMP_INDEX
-    });
-  }
-
-  handleOnJourneyPatternDialogSaveClick() {
-    const { journeyPatterns, onChange } = this.props;
-    const { journeyPatternInDialog, journeyPatternIndexInDialog } = this.state;
-    if (journeyPatternIndexInDialog === TEMP_INDEX) {
-      onChange(journeyPatterns.concat(journeyPatternInDialog));
+  const handleOnJourneyPatternDialogSaveClick = () => {
+    if (journeyPatternIndex === TEMP_INDEX) {
+      onChange(journeyPatterns.concat(journeyPattern));
     } else {
-      this.updateServiceJourney(
-        journeyPatternIndexInDialog,
-        journeyPatternInDialog
+      onChange(
+        replaceElement(journeyPatterns, journeyPatternIndex, journeyPattern)
       );
     }
-    this.setState({
-      journeyPatternInDialog: null,
-      journeyPatternIndexInDialog: TEMP_INDEX
-    });
-  }
 
-  render() {
-    const { journeyPatterns, stopPoints } = this.props;
-    const { journeyPatternInDialog, journeyPatternIndexInDialog } = this.state;
+    setJourneyPattern(null);
+    setJourneyPatternIndex(TEMP_INDEX);
+  };
 
-    return (
-      <div className="journey-patterns-editor">
-        <IconButton
-          icon={<AddIcon />}
-          label="Legg til journey pattern"
-          labelPosition="right"
-          onClick={this.openDialogForNewJourneyPattern.bind(this)}
+  return (
+    <div className="journey-patterns-editor">
+      <IconButton
+        icon={<AddIcon />}
+        label={formatMessage(messages.addJourneyPatternIconButtonLabel)}
+        labelPosition="right"
+        onClick={openDialogForNewJourneyPattern}
+      />
+
+      <JourneyPatternsTable
+        journeyPatterns={journeyPatterns}
+        onRowClick={openDialogForJourneyPattern}
+        onDeleteClick={deleteJourneyPattern}
+      />
+
+      {journeyPattern !== null && (
+        <Dialog
+          isOpen={true}
+          content={
+            <JourneyPatternEditor
+              journeyPattern={journeyPattern}
+              stopPoints={stopPoints}
+              onChange={setJourneyPattern}
+              onSave={handleOnJourneyPatternDialogSaveClick}
+              isEditMode={journeyPatternIndex !== TEMP_INDEX}
+            />
+          }
+          onClose={closeJourneyPatternDialog}
         />
-
-        <JourneyPatternsTable
-          journeyPatterns={journeyPatterns}
-          onRowClick={this.openDialogForJourneyPattern.bind(this)}
-          onDeleteClick={this.deleteJourneyPattern.bind(this)}
-        />
-
-        {journeyPatternInDialog !== null && (
-          <Dialog
-            isOpen={true}
-            content={
-              <JourneyPatternEditor
-                journeyPattern={journeyPatternInDialog}
-                stopPoints={stopPoints}
-                onChange={journeyPatternInDialog =>
-                  this.setState({ journeyPatternInDialog })
-                }
-                onSave={this.handleOnJourneyPatternDialogSaveClick.bind(this)}
-                isEditMode={journeyPatternIndexInDialog !== TEMP_INDEX}
-              />
-            }
-            onClose={this.closeJourneyPatternDialog.bind(this)}
-          />
-        )}
-      </div>
-    );
-  }
-}
+      )}
+    </div>
+  );
+};
 
 JourneyPatternsEditor.propTypes = {
   journeyPatterns: PropTypes.arrayOf(PropTypes.instanceOf(JourneyPattern))
     .isRequired,
+  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)),
   onChange: PropTypes.func.isRequired
 };
 
