@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import {
   TextField,
   TextArea,
@@ -9,6 +10,8 @@ import {
 import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL } from '../constants';
 import Errors from 'components/Errors';
 import { FLEXIBLE_LINE_TYPE } from 'model/enums';
+import { selectIntl } from 'i18n';
+import messages from './messages';
 
 export default ({
   flexibleLine,
@@ -21,9 +24,14 @@ export default ({
   handleNetworkSelectionChange,
   handleOperatorSelectionChange
 }) => {
+  const { formatMessage } = useSelector(selectIntl);
   return (
     <Fragment>
-      <FormGroup className="form-section" inputId="name" title="* Navn">
+      <FormGroup
+        className="form-section"
+        inputId="name"
+        title={formatMessage(messages.nameFormGroupTitle)}
+      >
         <TextField
           type="text"
           value={flexibleLine.name}
@@ -34,7 +42,7 @@ export default ({
       <FormGroup
         className="form-section"
         inputId="description"
-        title="Beskrivelse"
+        title={formatMessage(messages.descriptionFormGroupTitle)}
       >
         <TextArea
           type="text"
@@ -46,7 +54,7 @@ export default ({
       <FormGroup
         className="form-section"
         inputId="privateCode"
-        title="Privat kode"
+        title={formatMessage(messages.privateCodeFormGroupTitle)}
       >
         <TextField
           type="text"
@@ -58,7 +66,7 @@ export default ({
       <FormGroup
         className="form-section"
         inputId="publicCode"
-        title="* Offentlig kode"
+        title={formatMessage(messages.publicCodeFormGroupTitle)}
       >
         <TextField
           type="text"
@@ -67,7 +75,11 @@ export default ({
         />
       </FormGroup>
 
-      <FormGroup className="form-section" inputId="operator" title="Operatør">
+      <FormGroup
+        className="form-section"
+        inputId="operator"
+        title={formatMessage(messages.operatorFormGroupTitle)}
+      >
         <DropDown
           value={operatorSelection}
           onChange={e => handleOperatorSelectionChange(e.target.value)}
@@ -82,7 +94,11 @@ export default ({
         </DropDown>
       </FormGroup>
 
-      <FormGroup className="form-section" inputId="network" title="* Nettverk">
+      <FormGroup
+        className="form-section"
+        inputId="network"
+        title={formatMessage(messages.networkFormGroupTitle)}
+      >
         <DropDown
           value={networkSelection}
           onChange={e => handleNetworkSelectionChange(e.target.value)}
@@ -102,7 +118,7 @@ export default ({
       <FormGroup
         className="form-section"
         inputId="flexibleLineType"
-        title="* Flexible line type"
+        title={formatMessage(messages.typeFormGroupTitle)}
       >
         <DropDown
           value={flexibleLine.flexibleLineType}
