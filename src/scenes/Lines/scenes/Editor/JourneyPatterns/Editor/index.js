@@ -1,25 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Label,
-  TextField,
-  TextArea,
-  DropDown,
-  DropDownOptions,
-  Tabs,
-  Tab
-} from '@entur/component-library';
+import { Button, Tabs, Tab } from '@entur/component-library';
 
 import { JourneyPattern } from 'model';
-import { DIRECTION_TYPE } from 'model/enums';
 import StopPointsEditor from './StopPoints';
 import ServiceJourneysEditor from './ServiceJourneys';
 
 import './styles.css';
+import General from './General';
 
-const DEFAULT_SELECT_LABEL = '--- velg ---';
-const DEFAULT_SELECT_VALUE = '-1';
+import { DEFAULT_SELECT_VALUE } from '../../constants';
 
 const TABS = Object.freeze({
   GENERAL: 'general',
@@ -81,42 +71,14 @@ class JourneyPatternEditor extends Component {
           onChange={activeTab => this.setState({ activeTab })}
         >
           <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
-            <Label>* Navn</Label>
-            <TextField
-              type="text"
-              value={journeyPattern.name}
-              onChange={e => this.onFieldChange('name', e.target.value)}
+            <General
+              journeyPattern={journeyPattern}
+              directionSelection={directionSelection}
+              onFieldChange={this.onFieldChange.bind(this)}
+              handleDirectionSelectionChange={this.handleDirectionSelectionChange.bind(
+                this
+              )}
             />
-
-            <Label>Beskrivelse</Label>
-            <TextArea
-              type="text"
-              value={journeyPattern.description}
-              onChange={e => this.onFieldChange('description', e.target.value)}
-            />
-
-            <Label>Privat kode</Label>
-            <TextField
-              type="text"
-              value={journeyPattern.privateCode}
-              onChange={e => this.onFieldChange('privateCode', e.target.value)}
-            />
-
-            <Label>Retning</Label>
-            <DropDown
-              value={directionSelection}
-              onChange={e =>
-                this.handleDirectionSelectionChange(e.target.value)
-              }
-            >
-              <DropDownOptions
-                label={DEFAULT_SELECT_LABEL}
-                value={DEFAULT_SELECT_VALUE}
-              />
-              {Object.values(DIRECTION_TYPE).map(dt => (
-                <DropDownOptions key={dt} label={dt} value={dt} />
-              ))}
-            </DropDown>
           </Tab>
 
           <Tab value={TABS.STOP_POINTS} label="Stoppepunkter">
