@@ -2,6 +2,12 @@ import Base from './base/Base';
 import Contact from './Contact';
 
 class BookingArrangement extends Base {
+  static createInstance() {
+    return new BookingArrangement({
+      bookingContact: new Contact()
+    });
+  }
+
   constructor(data = {}) {
     super();
 

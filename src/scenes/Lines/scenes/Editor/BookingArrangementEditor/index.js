@@ -11,14 +11,18 @@ import BookingNoteField from './bookingNoteField';
 import './styles.css';
 
 const BookingArrangementEditor = props => {
-  const { bookingArrangement = {}, onChange } = props;
+  const {
+    bookingArrangement = BookingArrangement.createInstance(),
+    onChange
+  } = props;
 
   const onFieldChange = useCallback(
     (field, value, multi = false) => {
-      const newBooking = bookingArrangement
-        ? bookingArrangement.withFieldChange(field, value, multi)
-        : new BookingArrangement({ [field]: value });
-
+      const newBooking = bookingArrangement.withFieldChange(
+        field,
+        value,
+        multi
+      );
       onChange(newBooking.isEmpty() ? undefined : newBooking);
     },
     [bookingArrangement, onChange]
@@ -26,10 +30,10 @@ const BookingArrangementEditor = props => {
 
   const handleContactFieldChange = useCallback(
     (field, value) => {
-      const newContact =
-        bookingArrangement && bookingArrangement.bookingContact
-          ? bookingArrangement.bookingContact.withFieldChange(field, value)
-          : new Contact({ [field]: value });
+      const newContact = bookingArrangement.bookingContact.withFieldChange(
+        field,
+        value
+      );
 
       onFieldChange(
         'bookingContact',
