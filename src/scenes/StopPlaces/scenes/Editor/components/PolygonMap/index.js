@@ -7,7 +7,7 @@ class PolygonMap extends Component {
   state = {
     center: {
       lat: 59.91,
-      lng: -10.76
+      lng: 10.76
     },
     bounds: undefined,
     zoom: 12
@@ -23,7 +23,7 @@ class PolygonMap extends Component {
       }
     }
 
-    if(element != null) {
+    if (element != null) {
       this.polygonRefLoaded = true;
     }
   }
@@ -54,7 +54,7 @@ class PolygonMap extends Component {
           ref={this.map}
         >
           <TileLayer
-            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <Polygon ref={this.setPolygonRef.bind(this)} positions={polygon} />
