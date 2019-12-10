@@ -103,7 +103,6 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
     e => {
       const flexibleArea = flexibleStopPlace.flexibleArea;
       onFieldChange(
-        flexibleStopPlace,
         'flexibleArea',
         (flexibleArea || new FlexibleArea()).addCoordinate([
           e.latlng.lat,
