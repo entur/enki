@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { BookingArrangement, Contact } from 'model';
+import { BookingArrangement } from 'model';
 import ContactFields from './contactFields';
 import BookingLimitFields from './bookingLimitFields';
 import BookingMethodSelection from './bookingMethodSelection';
