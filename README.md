@@ -2,6 +2,8 @@
 
 ~Note: This project was previously called Order-transport (OT).~
 
+[![CircleCI](https://circleci.com/gh/entur/flexible-transport.svg?style=svg)](https://circleci.com/gh/entur/flexible-transport)
+
 ## Development
 
 To run FT for development, simply do:
