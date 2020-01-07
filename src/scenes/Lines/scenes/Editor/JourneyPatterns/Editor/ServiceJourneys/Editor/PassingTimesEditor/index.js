@@ -140,16 +140,16 @@ class PassingTimesEditor extends Component {
             <div className="collection">
               <div className="upper">Avgang</div>
               <div className="lowers">
+                <div>Tidligst</div>
                 <div>Normalt</div>
-                <div>Senest</div>
               </div>
             </div>
 
             <div className="collection">
               <div className="upper">Ankomst</div>
               <div className="lowers">
-                <div>Tidligst</div>
                 <div>Normalt</div>
+                <div>Senest</div>
               </div>
             </div>
           </div>
