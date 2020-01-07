@@ -89,25 +89,6 @@ class PassingTimesEditor extends Component {
           <div className="times">
             <div className="time-n-day">
               <div className="time">
-                {this.getTimePicker(tpt, i, 'arrivalTime')}
-              </div>
-              <div className="day">
-                {this.getDayOffsetDropDown(tpt, i, 'arrivalDayOffset')}
-              </div>
-            </div>
-            <div className="time-n-day">
-              <div className="time">
-                {this.getTimePicker(tpt, i, 'latestArrivalTime')}
-              </div>
-              <div className="day">
-                {this.getDayOffsetDropDown(tpt, i, 'latestArrivalDayOffset')}
-              </div>
-            </div>
-          </div>
-
-          <div className="times">
-            <div className="time-n-day">
-              <div className="time">
                 {this.getTimePicker(tpt, i, 'earliestDepartureTime')}
               </div>
               <div className="day">
@@ -127,6 +108,25 @@ class PassingTimesEditor extends Component {
               </div>
             </div>
           </div>
+
+          <div className="times">
+            <div className="time-n-day">
+              <div className="time">
+                {this.getTimePicker(tpt, i, 'arrivalTime')}
+              </div>
+              <div className="day">
+                {this.getDayOffsetDropDown(tpt, i, 'arrivalDayOffset')}
+              </div>
+            </div>
+            <div className="time-n-day">
+              <div className="time">
+                {this.getTimePicker(tpt, i, 'latestArrivalTime')}
+              </div>
+              <div className="day">
+                {this.getDayOffsetDropDown(tpt, i, 'latestArrivalDayOffset')}
+              </div>
+            </div>
+          </div>
         </div>
       );
     });
@@ -138,7 +138,7 @@ class PassingTimesEditor extends Component {
           <div className="stop-place">Stoppested</div>
           <div className="table-headers">
             <div className="collection">
-              <div className="upper">Ankomst</div>
+              <div className="upper">Avgang</div>
               <div className="lowers">
                 <div>Normalt</div>
                 <div>Senest</div>
@@ -146,7 +146,7 @@ class PassingTimesEditor extends Component {
             </div>
 
             <div className="collection">
-              <div className="upper">Avgang</div>
+              <div className="upper">Ankomst</div>
               <div className="lowers">
                 <div>Tidligst</div>
                 <div>Normalt</div>

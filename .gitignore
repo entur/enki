@@ -12,6 +12,7 @@
 
 # misc
 .idea
+.tern-port
 .DS_Store
 
 npm-debug.log*
