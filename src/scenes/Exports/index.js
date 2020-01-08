@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { AddIcon } from '@entur/component-library';
+import { AddIcon } from '@entur/icons';
 import { FormattedDate } from 'react-intl';
 import {
   Table,
@@ -19,7 +19,8 @@ import './styles.css';
 import { getIconForStatus } from './scenes/icons';
 import { selectIntl } from 'i18n';
 import messages from './exports.messages';
-import { Button } from '@entur/component-library/lib/components/button';
+import { PrimaryButton } from '@entur/button';
+import '@entur/button/dist/styles.css';
 
 const Exports = ({ history }) => {
   const exports = useSelector(({ exports }) => exports);
@@ -43,14 +44,14 @@ const Exports = ({ history }) => {
             <TableRowCell>{getIconForStatus(e.exportStatus)}</TableRowCell>
             <TableRowCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
-                <Button
+                <PrimaryButton
                   onClick={event => {
                     event.stopPropagation();
                     e.download();
                   }}
                 >
                   {formatMessage(messages.downloadLinkText)}
-                </Button>
+                </PrimaryButton>
               )}
             </TableRowCell>
             <TableRowCell>

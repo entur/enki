@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { AddIcon } from '@entur/component-library';
+import { AddIcon } from '@entur/icons';
 
 import IconButton from 'components/IconButton';
 import { JourneyPattern, StopPoint } from 'model';
