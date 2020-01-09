@@ -77,7 +77,7 @@
     "build": "npm-run-all build-css build-js",
     "eslint": "eslint 'src/**/*.js'",
     "snyk-protect": "snyk protect",
-    "prepare": "echo hei",
+    "prepare": "npm run snyk-protect",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
