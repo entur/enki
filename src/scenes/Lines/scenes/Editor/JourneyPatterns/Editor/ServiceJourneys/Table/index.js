@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, DeleteIcon } from '@entur/component-library';
+import { Button } from '@entur/component-library';
+import { DeleteIcon } from '@entur/icons';
 
 import {
   Table,

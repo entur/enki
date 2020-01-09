@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import Modal from 'react-modal';
 import cx from 'classnames';
 
-import { CloseIcon } from '@entur/component-library';
+import { CloseIcon } from '@entur/icons';
 
 import './styles.css';
 
@@ -38,7 +38,7 @@ const ConfirmDialog = ({
       className={classNames}
     >
       <div className="close" onClick={onClose}>
-        <CloseIcon color="#fff" />
+          <CloseIcon />
       </div>
       <div className="title">{title}</div>
       <div className="message">{message}</div>

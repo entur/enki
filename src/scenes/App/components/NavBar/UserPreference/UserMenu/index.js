@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateIntl } from 'react-intl-redux';
-import { UserIcon, ArrowIcon } from '@entur/component-library';
+import { RightArrowIcon, UserIcon } from '@entur/icons';
 
 import Menu from 'components/Menu';
 import MenuItem from 'components/Menu/MenuItem';
@@ -36,7 +36,7 @@ const UserMenu = () => {
         <UserIcon color="#ffffff" />
       </div>
       <div className="name">{givenName + ' ' + familyName}</div>
-      <ArrowIcon className="arrow-icon" color="#eee" />
+      <RightArrowIcon className="arrow-icon" />
 
       <Popover open={open} onRequestClose={() => setOpen(false)}>
         <Menu className="popover">
