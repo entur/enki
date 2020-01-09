@@ -45,9 +45,14 @@ brew cask install graphiql
 ```
 
 POST https://api.dev.entur.io/timetable-admin/v1/flexible-lines/nsb/graphql
-Bytt ut nsb med ønsket provider.
+Bytt ut NSB med ønsket provider.
 
-Header Authorization Bearer \<token>
+HTTP-header:
+```json
+{
+    "Authorization": "Bearer <token>"
+}
+```
 
 Token finner du i chrome network log.
 
