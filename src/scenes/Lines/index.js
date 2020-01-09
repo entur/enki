@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { AddIcon } from '@entur/component-library';
+import { AddIcon } from '@entur/icons';
 
 import {
   Table,
@@ -22,7 +22,7 @@ const selectLines = createSelector(
   ({ organisations, flexibleLines }) =>
     flexibleLines &&
     flexibleLines.map(line => ({
-      operatorName: organisations.find(o => o.id === line.operatorRef).name,
+      operatorName: organisations.find(o => o.id === line.operatorRef)?.name,
       ...line
     }))
 );

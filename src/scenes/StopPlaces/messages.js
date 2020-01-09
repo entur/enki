@@ -13,7 +13,7 @@ export default defineMessages({
     id: 'stopPlaces.nameTableHeaderLabelText',
     defaultMessage: 'Navn'
   },
-  privateCodeTableHeaderLabelText: {
+  privateCodeTableHeaderLabelText: {
     id: 'stopPlaces.privateCodeTableHeaderLabelText',
     defaultMessage: 'Privat kode'
   },

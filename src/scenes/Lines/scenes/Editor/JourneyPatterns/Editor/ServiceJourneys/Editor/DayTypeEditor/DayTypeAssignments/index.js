@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment/moment';
-import { AddIcon } from '@entur/component-library';
+import { AddIcon } from '@entur/icons';
 
 import { DayTypeAssignment } from 'model';
 import DayTypeAssignmentEditor from './Editor';

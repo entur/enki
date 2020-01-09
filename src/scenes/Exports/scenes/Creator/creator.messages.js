@@ -25,7 +25,7 @@ export default defineMessages({
     id: 'exports.creator.toDateFormLabel',
     defaultMessage: '* Til dato'
   },
-  dryRunFormLabel: {
+  dryRunFormLabel: {
     id: 'exports.creator.dryRunFormLabel',
     defaultMessage: 'Tørrkjøring'
   }

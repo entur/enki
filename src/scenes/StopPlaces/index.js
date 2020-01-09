@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { AddIcon } from '@entur/component-library';
+import { AddIcon } from '@entur/icons';
 
 import {
   Table,

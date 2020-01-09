@@ -8,10 +8,13 @@ class Notification extends Component {
     notifications: []
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.notification !== null) {
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.notification !== null &&
+      this.props.notification !== prevProps.notification
+    ) {
       this.setState({
-        notifications: [...this.state.notifications, nextProps.notification]
+        notifications: [...this.state.notifications, this.props.notification]
       });
     }
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { ArrowIcon } from '@entur/component-library';
+import { RightArrowIcon } from '@entur/icons';
 
 import './styles.css';
 
@@ -60,7 +60,7 @@ class MenuItem extends React.Component {
         >
           <div>{children}</div>
           {hasMenuItems && (
-            <div className="menu-item-more">{<ArrowIcon color="#000" />}</div>
+            <div className="menu-item-more">{<RightArrowIcon color="#000" />}</div>
           )}
         </div>
         {showSubItems && (

@@ -1,3 +1,0 @@
-describe('Placeholder', () => {
-  test('something', () => {});
-});
