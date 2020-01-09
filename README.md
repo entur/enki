@@ -1,8 +1,6 @@
-# Bestillingstransport / Flexible transport (FT)
+# Bestillingstransport / Flexible transport (FT) [![CircleCI](https://circleci.com/gh/entur/flexible-transport.svg?style=svg)](https://circleci.com/gh/entur/flexible-transport)
 
 ~Note: This project was previously called Order-transport (OT).~
-
-[![CircleCI](https://circleci.com/gh/entur/flexible-transport.svg?style=svg)](https://circleci.com/gh/entur/flexible-transport)
 
 ## Development
 
