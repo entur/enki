@@ -7,7 +7,10 @@ class Popover extends React.Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside.bind(this));
+    document.removeEventListener(
+      'mousedown',
+      this.handleClickOutside.bind(this)
+    );
   }
 
   handleClickOutside(e) {
@@ -31,7 +34,11 @@ class Popover extends React.Component {
     }
 
     return (
-      <div style={style} className={className} ref={this.setWrapperRef.bind(this)}>
+      <div
+        style={style}
+        className={className}
+        ref={this.setWrapperRef.bind(this)}
+      >
         {children}
       </div>
     );

@@ -51,7 +51,6 @@ export default defineMessages({
   }
 });
 
-
 export const exportStatuses = defineMessages({
   inProgress: {
     id: 'exports.viewer.exportStatuses.inProgress',
@@ -72,4 +71,4 @@ export const exportMessages = defineMessages({
     id: 'exports.viewer.exportMessages.NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE',
     defaultMessage: 'Ingen gyldig linjer i datagrunnlaget'
   }
-})
+});

@@ -60,7 +60,9 @@ class MenuItem extends React.Component {
         >
           <div>{children}</div>
           {hasMenuItems && (
-            <div className="menu-item-more">{<RightArrowIcon color="#000" />}</div>
+            <div className="menu-item-more">
+              {<RightArrowIcon color="#000" />}
+            </div>
           )}
         </div>
         {showSubItems && (

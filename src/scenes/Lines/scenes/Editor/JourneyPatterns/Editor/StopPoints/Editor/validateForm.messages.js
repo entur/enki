@@ -2,11 +2,13 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   errorFlexibleStopPlaceRefAndQuayRefNoValues: {
-    id: 'lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.noValues',
+    id:
+      'lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.noValues',
     defaultMessage: 'Du må velge enten stoppested eller plattform'
   },
   errorFlexibleStopPlaceRefAndQuayRefBothValues: {
-    id: 'lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.bothValues',
+    id:
+      'lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.bothValues',
     defaultMessage: 'Velg enten stoppested eller plattform, ikke begge.'
   },
   errorQuayRefInvalid: {
