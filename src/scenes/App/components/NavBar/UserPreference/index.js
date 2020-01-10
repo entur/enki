@@ -2,11 +2,14 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { DropDown, DropDownOptions } from '@entur/component-library';
+import { Dropdown } from '@entur/dropdown';
+import { Contrast } from '@entur/layout';
 
 import UserMenu from './UserMenu/';
 import { setActiveProvider } from 'actions/providers';
-
+import '@entur/dropdown/dist/styles.css';
+import '@entur/layout/dist/styles.css';
+import '@entur/form/dist/styles.css';
 import './styles.css';
 
 class UserPreference extends React.Component {
@@ -19,21 +22,27 @@ class UserPreference extends React.Component {
   render() {
     const { providers, activeProvider } = this.props;
 
+    const items = providers
+      ? providers.map(p => ({
+          value: p.code,
+          label: p.name
+        }))
+      : [];
+
     return (
       <div className="user-preference">
         <UserMenu />
-
         {providers && (
-          <DropDown
-            className="provider-select"
-            value={activeProvider || ''}
-            onChange={e => this.handleActiveProviderChange(e.target.value)}
-            variant="midnight"
-          >
-            {providers.map(p => (
-              <DropDownOptions key={p.code} label={p.name} value={p.code} />
-            ))}
-          </DropDown>
+          <Contrast>
+            <div className="provider-wrapper">
+              <Dropdown
+                items={items}
+                label="Velg dataleverandør"
+                value={activeProvider || ''}
+                onChange={e => this.handleActiveProviderChange(e.value)}
+              />
+            </div>
+          </Contrast>
         )}
       </div>
     );
@@ -45,7 +54,4 @@ const mapStateToProps = ({ providers }) => ({
   activeProvider: providers.active
 });
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(UserPreference);
+export default compose(withRouter, connect(mapStateToProps))(UserPreference);
