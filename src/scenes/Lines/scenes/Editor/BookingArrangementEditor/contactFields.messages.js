@@ -1,8 +1,9 @@
-import {defineMessages} from 'react-intl';
+import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   contactPersonTitle: {
-    id: 'lines.editor.bookingArrangementEditor.contactFields.contactPersonTitle',
+    id:
+      'lines.editor.bookingArrangementEditor.contactFields.contactPersonTitle',
     defaultMessage: 'Kontaktperson'
   },
   phoneTitle: {
@@ -18,7 +19,8 @@ export default defineMessages({
     defaultMessage: 'URL'
   },
   furtherDetailsTitle: {
-    id: 'lines.editor.bookingArrangementEditor.contactFields.furtherDetailsTitle',
+    id:
+      'lines.editor.bookingArrangementEditor.contactFields.furtherDetailsTitle',
     defaultMessage: 'Detaljer'
   }
 });

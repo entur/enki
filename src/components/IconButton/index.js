@@ -14,12 +14,11 @@ const IconButton = ({
   ...buttonProps
 }) => (
   <div className={cx('icon-button-wrapper', className)}>
-    {label &&
-      labelPosition === 'left' && (
-        <span className="label left" onClick={onClick}>
-          {label}
-        </span>
-      )}
+    {label && labelPosition === 'left' && (
+      <span className="label left" onClick={onClick}>
+        {label}
+      </span>
+    )}
     <button
       className="icon-button"
       disabled={disabled}
@@ -28,12 +27,11 @@ const IconButton = ({
     >
       {icon}
     </button>
-    {label &&
-      labelPosition === 'right' && (
-        <span className="label right" onClick={onClick}>
-          {label}
-        </span>
-      )}
+    {label && labelPosition === 'right' && (
+      <span className="label right" onClick={onClick}>
+        {label}
+      </span>
+    )}
   </div>
 );
 

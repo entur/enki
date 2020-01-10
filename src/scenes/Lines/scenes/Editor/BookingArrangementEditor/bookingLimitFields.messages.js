@@ -1,4 +1,4 @@
-import {defineMessages} from 'react-intl';
+import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   headerLabel: {
@@ -6,11 +6,13 @@ export default defineMessages({
     defaultMessage: 'Bestilles innen'
   },
   bookingLimitTypeTimeRadioButtonLabel: {
-    id: 'lines.editor.bookingArrangementEditor.bookingLimitFields.bookingLimitTypeTimeRadioButtonLabel',
+    id:
+      'lines.editor.bookingArrangementEditor.bookingLimitFields.bookingLimitTypeTimeRadioButtonLabel',
     defaultMessage: 'Seneste tidspunkt'
   },
   bookingLimitTypePeriodRadioButtonLabel: {
-    id: 'lines.editor.bookingArrangementEditor.bookingLimitFields.bookingLimitTypePeriodRadioButtonLabel',
+    id:
+      'lines.editor.bookingArrangementEditor.bookingLimitFields.bookingLimitTypePeriodRadioButtonLabel',
     defaultMessage: 'Seneste tid før avgang'
-  },
+  }
 });

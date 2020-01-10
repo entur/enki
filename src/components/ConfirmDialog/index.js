@@ -38,7 +38,7 @@ const ConfirmDialog = ({
       className={classNames}
     >
       <div className="close" onClick={onClose}>
-          <CloseIcon />
+        <CloseIcon />
       </div>
       <div className="title">{title}</div>
       <div className="message">{message}</div>

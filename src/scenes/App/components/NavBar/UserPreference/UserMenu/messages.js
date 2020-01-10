@@ -1,9 +1,9 @@
-import {defineMessages} from 'react-intl';
+import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   menuItemTextNorwegian: {
     id: 'app.navBar.userPreference.userMenu.menuItemTextNorwegian',
-    defaultMessage: 'Norsk',
+    defaultMessage: 'Norsk'
   },
   menuItemTextEnglish: {
     id: 'app.navBar.userPreference.userMenu.menuItemTextEnglish',

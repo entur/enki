@@ -45,7 +45,4 @@ const mapStateToProps = ({ providers }) => ({
   activeProvider: providers.active
 });
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(UserPreference);
+export default compose(withRouter, connect(mapStateToProps))(UserPreference);

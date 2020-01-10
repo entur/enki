@@ -43,7 +43,8 @@ export default async function search(quayRef) {
   };
 
   const data = await request(endpoint, query, variables);
-  let foundQuay = 'not-found', foundStopPlace = 'not-found';
+  let foundQuay = 'not-found',
+    foundStopPlace = 'not-found';
   data.stopPlace.forEach(stop => {
     (stop.quays || []).forEach(quay => {
       if (quay.id === quayRef) {

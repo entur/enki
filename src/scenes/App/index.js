@@ -75,9 +75,6 @@ const mapStateToProps = ({ providers, organisations }) => ({
   organisations
 });
 
-const hoc = R.compose(
-  injectIntl,
-  connect(mapStateToProps)
-);
+const hoc = R.compose(injectIntl, connect(mapStateToProps));
 
 export default hoc(App);

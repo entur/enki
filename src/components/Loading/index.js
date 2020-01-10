@@ -6,13 +6,7 @@ import LoadingIcon from '../icons/Loading';
 
 import './styles.css';
 
-const Loading = ({
-  className,
-  isLoading,
-  isFullScreen,
-  text,
-  children
-}) => {
+const Loading = ({ className, isLoading, isFullScreen, text, children }) => {
   if (!isLoading) {
     return children;
   }
@@ -26,7 +20,9 @@ const Loading = ({
 
   return (
     <div className={classNames}>
-      <div className="spinner"><LoadingIcon /></div>
+      <div className="spinner">
+        <LoadingIcon />
+      </div>
       <div className="text">{text}</div>
     </div>
   );

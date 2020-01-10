@@ -1,7 +1,8 @@
 export default function debounce(func, wait, immediate) {
   let timeout;
   return function() {
-    let context = this, args = arguments;
+    let context = this,
+      args = arguments;
     let later = function() {
       timeout = null;
       if (!immediate) {

@@ -3,7 +3,8 @@
 .overlay-loader {
   position: relative;
 
-  .overlay, .loader {
+  .overlay,
+  .loader {
     position: absolute;
     top: 0;
     z-index: 1001;
