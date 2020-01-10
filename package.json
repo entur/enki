@@ -6,7 +6,7 @@
   "dependencies": {
     "@entur/button": "^1.5.0",
     "@entur/component-library": "^0.2.13",
-    "@entur/dropdown": "^0.4.2",
+    "@entur/dropdown": "^0.5.0",
     "@entur/icons": "^0.4.3",
     "@entur/layout": "^1.0.2",
     "axios": "^0.18.1",

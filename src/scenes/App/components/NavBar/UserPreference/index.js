@@ -34,14 +34,13 @@ class UserPreference extends React.Component {
         <UserMenu />
         {providers && (
           <Contrast>
-            <div className="provider-wrapper">
-              <Dropdown
-                items={items}
-                label="Velg dataleverandør"
-                value={activeProvider || ''}
-                onChange={e => this.handleActiveProviderChange(e.value)}
-              />
-            </div>
+            <Dropdown
+              className="provider-wrapper"
+              items={items}
+              label="Velg dataleverandør"
+              value={activeProvider || ''}
+              onChange={e => this.handleActiveProviderChange(e.value)}
+            />
           </Contrast>
         )}
       </div>
