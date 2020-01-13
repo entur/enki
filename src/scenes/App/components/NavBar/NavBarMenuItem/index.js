@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Link, withRouter, matchPath } from 'react-router-dom';
 
-import './styles.css';
+import './styles.scss';
 
 class NavBarMenuItem extends Component {
   state = { active: false };

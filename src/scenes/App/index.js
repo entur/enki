@@ -15,7 +15,7 @@ import Routes from './Routes';
 import { getProviders } from 'actions/providers';
 import { getOrganisations } from 'actions/organisations';
 
-import './styles.css';
+import './styles.scss';
 
 import messages from './messages';
 

@@ -15,12 +15,11 @@ import IconButton from 'components/IconButton';
 import { loadExports } from 'actions/exports';
 import { EXPORT_STATUS } from 'model/enums';
 
-import './styles.css';
+import './styles.scss';
 import { getIconForStatus } from './scenes/icons';
 import { selectIntl } from 'i18n';
 import messages from './exports.messages';
 import { PrimaryButton } from '@entur/button';
-import '@entur/button/dist/styles.css';
 
 const Exports = ({ history }) => {
   const exports = useSelector(({ exports }) => exports);

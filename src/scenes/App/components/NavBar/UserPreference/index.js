@@ -7,10 +7,7 @@ import { Contrast } from '@entur/layout';
 
 import UserMenu from './UserMenu/';
 import { setActiveProvider } from 'actions/providers';
-import '@entur/dropdown/dist/styles.css';
-import '@entur/layout/dist/styles.css';
-import '@entur/form/dist/styles.css';
-import './styles.css';
+import './styles.scss';
 
 class UserPreference extends React.Component {
   handleActiveProviderChange(provider) {

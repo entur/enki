@@ -12,7 +12,7 @@ import {
 import Loading from 'components/Loading';
 import IconButton from 'components/IconButton';
 import { loadFlexibleLines } from 'actions/flexibleLines';
-import './styles.css';
+import './styles.scss';
 import { createSelector } from 'reselect';
 import { selectIntl } from 'i18n';
 import messages from './messages';

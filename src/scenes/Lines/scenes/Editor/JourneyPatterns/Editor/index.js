@@ -6,7 +6,7 @@ import { JourneyPattern } from 'model';
 import StopPointsEditor from './StopPoints';
 import ServiceJourneysEditor from './ServiceJourneys';
 
-import './styles.css';
+import './styles.scss';
 import General from './General';
 
 import { DEFAULT_SELECT_VALUE } from '../../constants';

@@ -12,7 +12,7 @@ import {
 import { ServiceJourney } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
 
-import './styles.css';
+import './styles.scss';
 
 class ServiceJourneysTable extends Component {
   state = { removeDialogOpenFor: null };

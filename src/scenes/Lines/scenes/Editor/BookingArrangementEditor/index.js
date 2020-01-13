@@ -8,7 +8,7 @@ import BookingTimeSelection from './bookingTimeSelection';
 import PaymentTimeSelection from './paymentTimeSelection';
 import BookingAccessSelection from './bookingAccessSelection';
 import BookingNoteField from './bookingNoteField';
-import './styles.css';
+import './styles.scss';
 
 const BookingArrangementEditor = props => {
   const {

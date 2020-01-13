@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import { Close } from '../icons';
 
-import './styles.css';
+import './styles.scss';
 
 Modal.setAppElement('#root');
 

@@ -16,7 +16,7 @@ import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';
 
 import PolygonMap from './components/PolygonMap';
-import './styles.css';
+import './styles.scss';
 import { createSelector } from 'reselect';
 import messages from './messages';
 import { selectIntl } from 'i18n';

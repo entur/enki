@@ -5,7 +5,7 @@ import propTypes from 'prop-types';
 import cx from 'classnames';
 import { Label } from '@entur/component-library';
 
-import './styles.css';
+import './styles.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class CustomDatepicker extends Component {

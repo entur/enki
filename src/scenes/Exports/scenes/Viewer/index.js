@@ -9,7 +9,7 @@ import { loadExportById } from 'actions/exports';
 import Loading from 'components/Loading';
 import { EXPORT_STATUS } from 'model/enums';
 
-import './styles.css';
+import './styles.scss';
 import { createSelector } from 'reselect';
 import { getIconForStatus, getIconForSeverity } from '../icons';
 

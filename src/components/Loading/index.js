@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import LoadingIcon from '../icons/Loading';
 
-import './styles.css';
+import './styles.scss';
 
 const Loading = ({ className, isLoading, isFullScreen, text, children }) => {
   if (!isLoading) {

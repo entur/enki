@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { Map, Polygon, TileLayer } from 'react-leaflet';
 
-import './styles.css';
+import './styles.scss';
 
 class PolygonMap extends Component {
   state = {

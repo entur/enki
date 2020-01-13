@@ -13,7 +13,7 @@ import Loading from 'components/Loading';
 import IconButton from 'components/IconButton';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import { selectIntl } from 'i18n';
-import './styles.css';
+import './styles.scss';
 import messages from './messages';
 
 const StopPlaces = ({ history }) => {

@@ -12,7 +12,7 @@ import {
 import { StopPoint } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
 
-import './styles.css';
+import './styles.scss';
 
 class StopPointsTable extends Component {
   state = { removeDialogOpenFor: null };

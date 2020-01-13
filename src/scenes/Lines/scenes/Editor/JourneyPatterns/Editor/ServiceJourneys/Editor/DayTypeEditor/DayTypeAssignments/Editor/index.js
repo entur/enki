@@ -10,7 +10,7 @@ import {
 import { DayTypeAssignment } from 'model';
 import CustomDatepicker from 'components/CustomDatepicker';
 import OperatingPeriod from 'model/OperatingPeriod';
-import './styles.css';
+import './styles.scss';
 
 class DayTypeAssignmentEditor extends Component {
   state = { useDateRange: this.props.dayTypeAssignment.operatingPeriod };

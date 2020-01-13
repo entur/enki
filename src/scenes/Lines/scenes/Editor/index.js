@@ -23,7 +23,7 @@ import BookingArrangementEditor from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
 import { DEFAULT_SELECT_VALUE } from './constants';
 import validateForm from './validateForm';
-import './styles.css';
+import './styles.scss';
 import General from './General';
 import { withRouter } from 'react-router-dom';
 import { createSelector } from 'reselect';

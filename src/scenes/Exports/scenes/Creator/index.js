@@ -11,7 +11,7 @@ import CustomDatepicker from 'components/CustomDatepicker';
 import { selectIntl } from 'i18n';
 import Errors from 'components/Errors';
 
-import './styles.css';
+import './styles.scss';
 import messages from './creator.messages';
 import validateForm from './validateForm';
 

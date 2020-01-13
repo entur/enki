@@ -14,7 +14,7 @@ import IconButton from 'components/IconButton';
 import { loadNetworks } from 'actions/networks';
 import { selectIntl } from 'i18n';
 import messages from './messages';
-import './styles.css';
+import './styles.scss';
 
 const Networks = ({ history }) => {
   const { formatMessage } = useSelector(selectIntl);

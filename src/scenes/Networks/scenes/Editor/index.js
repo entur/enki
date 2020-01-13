@@ -22,7 +22,7 @@ import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';
 
-import './styles.css';
+import './styles.scss';
 import { createSelector } from 'reselect';
 import selectActiveProvider from 'selectors/selectActiveProvider';
 import { selectIntl } from 'i18n';

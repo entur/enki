@@ -18,7 +18,7 @@ import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
 import { ORGANISATION_TYPE } from 'model/enums';
 
-import './styles.css';
+import './styles.scss';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
