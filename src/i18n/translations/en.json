@@ -208,6 +208,8 @@
   "stopPlaces.editor.loadingStopPlaceText": "Loading stop place",
   "stopPlaces.editor.nameFormLabelText": "* Name",
   "stopPlaces.editor.privateCodeFormLabelText": "Private code",
+  "stopPlaces.editor.coordinatesFormLabelText": "Coordinates",
+  "stopPlaces.editor.drawPolygonButtonText": "Draw polygon",
   "stopPlaces.editor.saveButtonText": "Save",
   "stopPlaces.editor.savingOverlayLoaderText": "Saving stop place...",
   "stopPlaces.editor.validateForm.errorFlexibleAreaNotEnoughPolygons": "You must add more map points",
