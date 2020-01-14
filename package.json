@@ -19,7 +19,6 @@
     "file-saver": "^2.0.2",
     "graphql-request": "^1.6.0",
     "helmet": "^3.21.2",
-    "js-base64": "^2.5.1",
     "keycloak-js": "^3.4.3",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.11",
