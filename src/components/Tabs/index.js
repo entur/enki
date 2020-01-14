@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import Tab from './Tab/';
 
-import './styles.css';
+import './styles.scss';
 
 class Tabs extends Component {
   state = { selectedTabIndex: 0 };

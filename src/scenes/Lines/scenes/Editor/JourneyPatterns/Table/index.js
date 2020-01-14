@@ -13,7 +13,7 @@ import {
 import { JourneyPattern } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
 
-import './styles.css';
+import './styles.scss';
 import { selectIntl } from 'i18n';
 import messages from './messages';
 

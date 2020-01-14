@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import CheckMark from '../Checkmark';
 
-import './styles.css';
+import './styles.scss';
 
 const Checkbox = props => {
   return <div className="checkbox-icon">{props.checked && <CheckMark />}</div>;

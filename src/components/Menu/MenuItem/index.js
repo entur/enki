@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { RightArrowIcon } from '@entur/icons';
 
-import './styles.css';
+import './styles.scss';
 
 class MenuItem extends React.Component {
   state = {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ContentCheckbox from '../ContentCheckbox';
 
-import './styles.css';
+import './styles.scss';
 
 class WeekdayPicker extends React.Component {
   handleDayChange(i) {

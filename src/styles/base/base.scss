@@ -1,5 +1,5 @@
-@import '../fonts/fonts.scss';
-@include font-face('fonts/');
+@import '~@entur/typography/dist/styles.css';
+@import '~@entur/fonts/index.css';
 @import './colors.scss';
 
 body {

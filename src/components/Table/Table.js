@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './styles.css';
+import './styles.scss';
 
 const Table = ({ className, children }) => {
   const childrenArray = React.Children.toArray(children);

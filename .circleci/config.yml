@@ -1,5 +1,8 @@
 version: 2
 aliases:
+- &ssh-fingerprint
+    fingerprints:
+      - "ae:83:a5:6c:93:c9:16:57:ec:21:b9:6f:9c:5a:10:9c"
 - &install-dependencies
   name: Install Node Dependencies
   command: npm install

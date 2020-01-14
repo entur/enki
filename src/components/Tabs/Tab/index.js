@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 
-import './styles.css';
+import './styles.scss';
 
 const Tab = props => {
   const { children, className, disabled } = props;

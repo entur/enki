@@ -6,7 +6,7 @@ import NavBarMenuItem from './NavBarMenuItem';
 
 import logo from '../../../../static/img/logo.png';
 
-import './styles.css';
+import './styles.scss';
 import { selectIntl } from 'i18n';
 import messages from './messages';
 import appMessages from '../../messages';

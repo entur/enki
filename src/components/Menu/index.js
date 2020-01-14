@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import './styles.css';
+import './styles.scss';
 
 class Menu extends React.Component {
   render() {

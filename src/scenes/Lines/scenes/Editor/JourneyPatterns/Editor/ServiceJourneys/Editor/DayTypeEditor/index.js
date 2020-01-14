@@ -7,7 +7,7 @@ import DayTypeAssignmentsEditor from './DayTypeAssignments';
 import WeekdayPicker from 'components/WeekdayPicker';
 import { DAY_OF_WEEK } from 'model/enums';
 
-import './styles.css';
+import './styles.scss';
 
 const daysOfWeekToBoolArray = dows => [
   dows.includes(DAY_OF_WEEK.MONDAY),

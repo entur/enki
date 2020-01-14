@@ -10,7 +10,7 @@ import { Checkbox } from 'components/icons';
 import { getMessages, LOCALE_KEY, selectIntl } from 'i18n';
 import messages from './messages';
 
-import './styles.css';
+import './styles.scss';
 
 const UserMenu = () => {
   const [open, setOpen] = useState(false);

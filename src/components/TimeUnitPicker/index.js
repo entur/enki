@@ -10,7 +10,7 @@ import {
   DropDownOptions
 } from '@entur/component-library';
 
-import './styles.css';
+import './styles.scss';
 
 class TimeUnitPicker extends React.Component {
   state = { open: false };

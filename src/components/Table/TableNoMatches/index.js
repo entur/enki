@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@entur/component-library';
 
-import './styles.css';
+import './styles.scss';
 
 const TableNoMatches = ({
   when,

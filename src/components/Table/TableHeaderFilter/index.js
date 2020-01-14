@@ -19,8 +19,8 @@ import {
 } from '../TableHeaderCell/headerPropTypes';
 import { fieldHasFilters } from 'helpers/filters';
 
-import './styles.css';
-import '../../Menu/styles/sort-filter-menu.css';
+import './styles.scss';
+import '../../Menu/styles/sort-filter-menu.scss';
 
 class TableHeaderFilter extends React.Component {
   state = { isOpen: false };

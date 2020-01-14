@@ -6,7 +6,7 @@ import { DestinationDisplay, StopPoint } from 'model';
 import { hasValue } from 'helpers/forms';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import Header from './Header';
-import './styles.css';
+import './styles.scss';
 import searchForQuay from './searchForQuay';
 import debounce from './debounce';
 import { DEFAULT_SELECT_VALUE, TABS } from './constants';

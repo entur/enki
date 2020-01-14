@@ -8,7 +8,7 @@ import DayTypeAssignmentEditor from './Editor';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import IconButton from 'components/IconButton';
 
-import './styles.css';
+import './styles.scss';
 
 class DayTypeAssignmentsEditor extends Component {
   updateDayTypeAssignment(index, dayTypeAssignment) {

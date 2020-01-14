@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import './styles.css';
+import './styles.scss';
 
 class ContentCheckbox extends React.Component {
   render() {

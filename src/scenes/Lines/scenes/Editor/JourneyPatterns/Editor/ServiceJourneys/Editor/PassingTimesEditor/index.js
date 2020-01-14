@@ -7,7 +7,7 @@ import { StopPoint, PassingTime } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import TimePicker from 'components/TimePicker';
 
-import './styles.css';
+import './styles.scss';
 
 class PassingTimesEditor extends Component {
   componentDidMount() {

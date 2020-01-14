@@ -10,7 +10,7 @@ import {
   CloseIcon
 } from '../../../../icons';
 
-import '../../../styles.css';
+import '../../../styles.scss';
 
 class Note extends Component {
   componentDidMount() {
