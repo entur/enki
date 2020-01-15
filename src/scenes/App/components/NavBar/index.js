@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import UserPreference from './UserPreference';
-import NavBarMenuItem from './NavBarMenuItem';
+import { Contrast } from '@entur/layout';
 
 import logo from '../../../../static/img/logo.png';
 
@@ -10,48 +10,63 @@ import './styles.scss';
 import { selectIntl } from 'i18n';
 import messages from './messages';
 import appMessages from '../../messages';
+import { SideNavigation, SideNavigationItem } from '@entur/menu';
 
-const NavBar = () => {
-  const { formatMessage } = useSelector(selectIntl);
+const isActive = (pathname, path) => {
+  return pathname.split('/')[1] === path.split('/')[1];
+};
+
+const NavBarItem = withRouter(({ location, text, path, className }) => {
   return (
-    <div className="navbar">
-      <Link to="/" className="link">
-        <div className="logo-wrapper">
-          <img
-            className="logo"
-            src={logo}
-            alt={formatMessage(messages.rootLinkLogoAltText)}
-          />
-          <span>{formatMessage(appMessages.title)}</span>
-        </div>
-      </Link>
+    <SideNavigationItem
+      active={isActive(location.pathname, path)}
+      as={Link}
+      to={path}
+      className={className}
+    >
+      {text}
+    </SideNavigationItem>
+  );
+});
 
-      <UserPreference />
+const NavBar = ({ location }) => {
+  const { formatMessage } = useSelector(selectIntl);
 
-      <div className="items">
-        <NavBarMenuItem
-          key="networks"
-          label={formatMessage(messages.networksMenuItemLabel)}
+  return (
+    <Contrast as="nav" className="navbar-wrapper">
+      <SideNavigation className="side-navigation">
+        <Link to="/">
+          <div className="logo-wrapper">
+            <img
+              className="logo"
+              src={logo}
+              alt={formatMessage(messages.rootLinkLogoAltText)}
+            />
+            <span>{formatMessage(appMessages.title)}</span>
+          </div>
+        </Link>
+
+        <UserPreference />
+
+        <NavBarItem
+          text={formatMessage(messages.networksMenuItemLabel)}
           path="/networks"
         />
-        <NavBarMenuItem
-          key="lines"
-          label={formatMessage(messages.linesMenuItemLabel)}
+        <NavBarItem
+          text={formatMessage(messages.linesMenuItemLabel)}
           path="/lines"
         />
-        <NavBarMenuItem
-          key="stop-places"
-          label={formatMessage(messages.stopPlacesMenuItemLabel)}
+        <NavBarItem
+          text={formatMessage(messages.stopPlacesMenuItemLabel)}
           path="/stop-places"
         />
-        <NavBarMenuItem
-          className="exports"
-          key="exports"
-          label={formatMessage(messages.exportsMenuItemLabel)}
+        <NavBarItem
+          text={formatMessage(messages.exportsMenuItemLabel)}
           path="/exports"
+          className="exports "
         />
-      </div>
-    </div>
+      </SideNavigation>
+    </Contrast>
   );
 };
 
