@@ -10,22 +10,23 @@ class PolygonMap extends Component {
       lng: 10.76
     },
     bounds: undefined,
-    zoom: 12
+    zoom: 14
   };
 
   map = createRef();
 
   setPolygonRef(element) {
-    if (element && !this.polygonRefLoaded) {
+    if (element) {
       const bounds = element.leafletElement.getBounds();
-      if (bounds.isValid()) {
+      if (this.isBoundsValid(bounds) && bounds !== this.state.bounds) {
         this.setState({ bounds });
       }
     }
+  }
 
-    if (element != null) {
-      this.polygonRefLoaded = true;
-    }
+  isBoundsValid(bounds) {
+    if (!bounds || !bounds.isValid()) return false;
+    return !bounds.getSouthWest().equals(bounds.getNorthEast());
   }
 
   componentDidMount() {

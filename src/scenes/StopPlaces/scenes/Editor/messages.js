@@ -43,7 +43,7 @@ export default defineMessages({
   },
   coordinatesFormLabelText: {
     id: 'stopPlaces.editor.coordinatesFormLabelText',
-    defaultMessage: 'Koordinater'
+    defaultMessage: 'Koordinater i GeoJson-rekkefølge [Long, Lat]'
   },
   loadingStopPlaceText: {
     id: 'stopPlaces.editor.loadingStopPlaceText',

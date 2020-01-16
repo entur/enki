@@ -52,8 +52,8 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
       ? flexibleStopPlace.flexibleArea.polygon.coordinates
       : [];
 
-  const [coordinates, setCoordinates] = useState(
-    polygonCoordinates.length === 0 ? '' : JSON.stringify(polygonCoordinates)
+  const [coordinates, setCoordinates] = useState(() =>
+    polygonCoordinates.length === 0 ? '' : coordinatesToText()
   );
 
   const [isSaving, setSaving] = useState(false);
@@ -65,6 +65,11 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   });
 
   const dispatch = useDispatch();
+
+  function coordinatesToText() {
+    // Show coordinates in GeoJson order [Long, Lat]
+    return JSON.stringify(polygonCoordinates.map(([x, y]) => [y, x]));
+  }
 
   useEffect(() => {
     dispatch(loadFlexibleLines());
@@ -124,24 +129,19 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   );
 
   const handleDrawPolygonClick = useCallback(() => {
-    let coords = JSON.parse(coordinates);
-    for (let coord of coords) {
-      if (coord[0] < coord[1]) {
-        // Super simple handling of lat/long-order.
-        // GeoJson standard is [Long, Lat], but the editor expects [Lat, Long].
-        coord.reverse();
-      }
-    }
+    // Transform input coordinates from GeoJson order [Long, Lat] to [Lat, Long]
+    let coords = JSON.parse(coordinates).map(([x, y]) => [y, x]);
+
     const polygon = new GeoJSON({
       type: GEOMETRY_TYPE.POLYGON,
       coordinates: coords
     });
 
+    const flexibleArea = flexibleStopPlace.flexibleArea || new FlexibleArea();
+    flexibleArea.polygon = polygon;
+
     setFlexibleStopPlace(
-      flexibleStopPlace.withFieldChange('flexibleArea', {
-        ...flexibleStopPlace.flexibleArea,
-        polygon
-      })
+      flexibleStopPlace.withFieldChange('flexibleArea', flexibleArea)
     );
   }, [flexibleStopPlace, coordinates]);
 
@@ -156,6 +156,22 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
           flexibleStopPlace.id
       ) ||
     isDeleting;
+
+  const coordinatesPlaceholder = `[
+    [
+      12.345,
+      67.890
+    ], [
+      12.345,
+      67.890
+    ], [
+      12.345,
+      67.890
+    ], [
+      12.345,
+      67.890
+    ]
+  ]`;
 
   return (
     <div className="stop-place-editor">
@@ -219,9 +235,10 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
               <Label>{formatMessage(messages.coordinatesFormLabelText)}</Label>
               <TextArea
                 type="text"
-                rows="8"
+                rows="12"
                 value={coordinates}
                 onChange={e => setCoordinates(e.target.value)}
+                placeholder={coordinatesPlaceholder}
               />
               <Button variant="success" onClick={handleDrawPolygonClick}>
                 {formatMessage(messages.drawPolygonButtonText)}

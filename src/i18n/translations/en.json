@@ -208,7 +208,7 @@
   "stopPlaces.editor.loadingStopPlaceText": "Loading stop place",
   "stopPlaces.editor.nameFormLabelText": "* Name",
   "stopPlaces.editor.privateCodeFormLabelText": "Private code",
-  "stopPlaces.editor.coordinatesFormLabelText": "Coordinates",
+  "stopPlaces.editor.coordinatesFormLabelText": "Coordinates in GeoJson order [Long, Lat]",
   "stopPlaces.editor.drawPolygonButtonText": "Draw polygon",
   "stopPlaces.editor.saveButtonText": "Save",
   "stopPlaces.editor.savingOverlayLoaderText": "Saving stop place...",
