@@ -208,6 +208,8 @@
   "stopPlaces.editor.loadingStopPlaceText": "Laster inn stoppestedet",
   "stopPlaces.editor.nameFormLabelText": "* Navn",
   "stopPlaces.editor.privateCodeFormLabelText": "Privat kode",
+  "stopPlaces.editor.coordinatesFormLabelText": "Koordinater i GeoJson-rekkefølge [Long, Lat]",
+  "stopPlaces.editor.drawPolygonButtonText": "Tegn polygon",
   "stopPlaces.editor.saveButtonText": "Lagre",
   "stopPlaces.editor.savingOverlayLoaderText": "Lagrer stoppestedet...",
   "stopPlaces.editor.validateForm.errorFlexibleAreaNotEnoughPolygons": "Du må legge til flere punkter i kartet",

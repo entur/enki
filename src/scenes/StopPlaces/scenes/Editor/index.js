@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, Label, TextField, TextArea } from '@entur/component-library';
 
-import { FlexibleStopPlace, FlexibleArea } from 'model';
-import { VEHICLE_MODE } from 'model/enums';
+import { FlexibleStopPlace, FlexibleArea, GeoJSON } from 'model';
+import { VEHICLE_MODE, GEOMETRY_TYPE } from 'model/enums';
 import {
   deleteFlexibleStopPlaceById,
   loadFlexibleStopPlaceById,
@@ -46,6 +46,16 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   const [flexibleStopPlace, setFlexibleStopPlace] = useState(
     currentFlexibleStopPlace
   );
+
+  const polygonCoordinates =
+    flexibleStopPlace && flexibleStopPlace.flexibleArea
+      ? flexibleStopPlace.flexibleArea.polygon.coordinates
+      : [];
+
+  const [coordinates, setCoordinates] = useState(() =>
+    polygonCoordinates.length === 0 ? '' : coordinatesToText()
+  );
+
   const [isSaving, setSaving] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
@@ -55,6 +65,11 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   });
 
   const dispatch = useDispatch();
+
+  function coordinatesToText() {
+    // Show coordinates in GeoJson order [Long, Lat]
+    return JSON.stringify(polygonCoordinates.map(([x, y]) => [y, x]));
+  }
 
   useEffect(() => {
     dispatch(loadFlexibleLines());
@@ -113,10 +128,22 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
     [flexibleStopPlace, onFieldChange]
   );
 
-  const polygonCoordinates =
-    flexibleStopPlace && flexibleStopPlace.flexibleArea
-      ? flexibleStopPlace.flexibleArea.polygon.coordinates
-      : [];
+  const handleDrawPolygonClick = useCallback(() => {
+    // Transform input coordinates from GeoJson order [Long, Lat] to [Lat, Long]
+    let coords = JSON.parse(coordinates).map(([x, y]) => [y, x]);
+
+    const polygon = new GeoJSON({
+      type: GEOMETRY_TYPE.POLYGON,
+      coordinates: coords
+    });
+
+    const flexibleArea = flexibleStopPlace.flexibleArea || new FlexibleArea();
+    flexibleArea.polygon = polygon;
+
+    setFlexibleStopPlace(
+      flexibleStopPlace.withFieldChange('flexibleArea', flexibleArea)
+    );
+  }, [flexibleStopPlace, coordinates]);
 
   const isDeleteDisabled =
     !flexibleStopPlace ||
@@ -129,6 +156,22 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
           flexibleStopPlace.id
       ) ||
     isDeleting;
+
+  const coordinatesPlaceholder = `[
+    [
+      12.345,
+      67.890
+    ], [
+      12.345,
+      67.890
+    ], [
+      12.345,
+      67.890
+    ], [
+      12.345,
+      67.890
+    ]
+  ]`;
 
   return (
     <div className="stop-place-editor">
@@ -188,6 +231,18 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
                 value={flexibleStopPlace.privateCode}
                 onChange={e => onFieldChange('privateCode', e.target.value)}
               />
+
+              <Label>{formatMessage(messages.coordinatesFormLabelText)}</Label>
+              <TextArea
+                type="text"
+                rows="12"
+                value={coordinates}
+                onChange={e => setCoordinates(e.target.value)}
+                placeholder={coordinatesPlaceholder}
+              />
+              <Button variant="success" onClick={handleDrawPolygonClick}>
+                {formatMessage(messages.drawPolygonButtonText)}
+              </Button>
             </div>
 
             <div className="stop-place-flexible-area">

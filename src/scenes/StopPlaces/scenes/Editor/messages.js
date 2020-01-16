@@ -17,6 +17,10 @@ export default defineMessages({
     id: 'stopPlaces.editor.deleteButtonText',
     defaultMessage: 'Slett'
   },
+  drawPolygonButtonText: {
+    id: 'stopPlaces.editor.drawPolygonButtonText',
+    defaultMessage: 'Tegn polygon'
+  },
   savingOverlayLoaderText: {
     id: 'stopPlaces.editor.savingOverlayLoaderText',
     defaultMessage: 'Lagrer stoppestedet...'
@@ -36,6 +40,10 @@ export default defineMessages({
   privateCodeFormLabelText: {
     id: 'stopPlaces.editor.privateCodeFormLabelText',
     defaultMessage: 'Privat kode'
+  },
+  coordinatesFormLabelText: {
+    id: 'stopPlaces.editor.coordinatesFormLabelText',
+    defaultMessage: 'Koordinater i GeoJson-rekkefølge [Long, Lat]'
   },
   loadingStopPlaceText: {
     id: 'stopPlaces.editor.loadingStopPlaceText',

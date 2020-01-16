@@ -50,4 +50,9 @@
     flex-direction: column;
     justify-content: center;
   }
+
+  textarea::placeholder {
+    color: #bbb;
+    font-size: 12px;
+  }
 }
