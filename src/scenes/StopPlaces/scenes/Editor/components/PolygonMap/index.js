@@ -1,5 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { Map, Polygon, TileLayer } from 'react-leaflet';
+import { FloatingButton } from '@entur/button';
+import { ResetIcon } from '@entur/icons';
 
 import './styles.scss';
 
@@ -40,17 +42,17 @@ class PolygonMap extends Component {
   }
 
   render() {
-    const { onClick, polygon } = this.props;
+    const { addCoordinate, polygon, undo } = this.props;
     const { center, bounds, zoom } = this.state;
 
     return (
-      <div className="map-container">
+      <div className="map-container eds-contrast">
         <Map
           className="map"
           center={[center.lat, center.lng]}
           zoom={zoom}
           bounds={bounds}
-          onClick={onClick}
+          onClick={addCoordinate}
           onLocationFound={this.handleLocationFound.bind(this)}
           ref={this.map}
         >
@@ -60,6 +62,10 @@ class PolygonMap extends Component {
           />
           <Polygon ref={this.setPolygonRef.bind(this)} positions={polygon} />
         </Map>
+
+        <FloatingButton size="small" aria-label="Undo" onClick={undo}>
+          <ResetIcon />
+        </FloatingButton>
       </div>
     );
   }

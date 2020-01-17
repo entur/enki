@@ -145,6 +145,14 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
     );
   }, [flexibleStopPlace, coordinates]);
 
+  const handleUndoClick = useCallback(
+    e => {
+      const flexibleArea = flexibleStopPlace.flexibleArea;
+      onFieldChange('flexibleArea', flexibleArea.removeLastCoordinate());
+    },
+    [flexibleStopPlace, onFieldChange]
+  );
+
   const isDeleteDisabled =
     !flexibleStopPlace ||
     !lines ||
@@ -248,8 +256,9 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
             <div className="stop-place-flexible-area">
               <Errors errors={errors.flexibleArea} />
               <PolygonMap
-                onClick={handleMapOnClick}
+                addCoordinate={handleMapOnClick}
                 polygon={polygonCoordinates}
+                undo={handleUndoClick}
               />
             </div>
           </div>
