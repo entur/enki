@@ -79,7 +79,7 @@ export default ({
         className="form-section"
         items={[
           { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
-          ...operators.map(o => ({ value: o.id, label: o.name }))
+          ...operators.map(({id, name}) => ({ value: id, label: name }))
         ]}
         label={formatMessage(messages.operatorFormGroupTitle)}
         onChange={({ value }) => handleOperatorSelectionChange(value)}
