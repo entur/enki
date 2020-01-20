@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Tabs, Tab } from '@entur/component-library';
+import { Button } from '@entur/component-library';
+import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 
 import { FlexibleLine } from 'model';
 import {
@@ -29,12 +30,6 @@ import { withRouter } from 'react-router-dom';
 import { createSelector } from 'reselect';
 import { selectIntl } from 'i18n';
 import messages from './messages';
-
-const TABS = Object.freeze({
-  GENERAL: 'general',
-  BOOKING: 'booking',
-  JOURNEY_PATTERNS: 'journeyPatterns'
-});
 
 const selectFlexibleLine = createSelector(
   state => state.flexibleLines,
@@ -69,7 +64,6 @@ const FlexibleLineEditor = ({ match, history }) => {
   const [networkSelection, setNetworkSelection] = useState(
     DEFAULT_SELECT_VALUE
   );
-  const [activeTab, setActiveTab] = useState(TABS.GENERAL);
   const [isSaving, setSaving] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
@@ -214,48 +208,39 @@ const FlexibleLineEditor = ({ match, history }) => {
               : formatMessage(messages.deleteLineLoadingText)
           }
         >
-          <Tabs
-            selected={activeTab}
-            onChange={activeTab => setActiveTab(activeTab)}
-          >
-            <Tab
-              value={TABS.GENERAL}
-              label={formatMessage(messages.generalTabLabel)}
-              className="general-tab"
-            >
-              <General
-                flexibleLine={flexibleLine}
-                networks={networks}
-                operators={operators}
-                errors={errors}
-                networkSelection={networkSelection}
-                operatorSelection={operatorSelection}
-                handleFieldChange={onFieldChange}
-                handleNetworkSelectionChange={handleNetworkSelectionChange}
-                handleOperatorSelectionChange={handleOperatorSelectionChange}
-              />
-            </Tab>
-
-            <Tab
-              value={TABS.JOURNEY_PATTERNS}
-              label={formatMessage(messages.journeyPatternsTabLabel)}
-            >
-              <JourneyPatternsEditor
-                journeyPatterns={flexibleLine.journeyPatterns}
-                onChange={jps => onFieldChange('journeyPatterns', jps)}
-              />
-            </Tab>
-
-            <Tab
-              value={TABS.BOOKING}
-              label={formatMessage(messages.bookingTabLabel)}
-              className="booking-tab"
-            >
-              <BookingArrangementEditor
-                bookingArrangement={flexibleLine.bookingArrangement}
-                onChange={b => onFieldChange('bookingArrangement', b)}
-              />
-            </Tab>
+          <Tabs>
+            <TabList>
+              <Tab>{formatMessage(messages.generalTabLabel)}</Tab>
+              <Tab>{formatMessage(messages.journeyPatternsTabLabel)}</Tab>
+              <Tab>{formatMessage(messages.bookingTabLabel)}</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <General
+                  flexibleLine={flexibleLine}
+                  networks={networks}
+                  operators={operators}
+                  errors={errors}
+                  networkSelection={networkSelection}
+                  operatorSelection={operatorSelection}
+                  handleFieldChange={onFieldChange}
+                  handleNetworkSelectionChange={handleNetworkSelectionChange}
+                  handleOperatorSelectionChange={handleOperatorSelectionChange}
+                />
+              </TabPanel>
+              <TabPanel>
+                <JourneyPatternsEditor
+                  journeyPatterns={flexibleLine.journeyPatterns}
+                  onChange={jps => onFieldChange('journeyPatterns', jps)}
+                />
+              </TabPanel>
+              <TabPanel>
+                <BookingArrangementEditor
+                  bookingArrangement={flexibleLine.bookingArrangement}
+                  onChange={b => onFieldChange('bookingArrangement', b)}
+                />
+              </TabPanel>
+            </TabPanels>
           </Tabs>
         </OverlayLoader>
       ) : (
