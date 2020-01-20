@@ -63,7 +63,12 @@ class PolygonMap extends Component {
           <Polygon ref={this.setPolygonRef.bind(this)} positions={polygon} />
         </Map>
 
-        <FloatingButton size="small" aria-label="Undo" onClick={undo}>
+        <FloatingButton
+          className="undo-button"
+          size="small"
+          aria-label="Undo"
+          onClick={undo}
+        >
           <ResetIcon />
         </FloatingButton>
       </div>
