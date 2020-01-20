@@ -75,7 +75,7 @@ class StopPointEditor extends Component {
 
   render() {
     const { flexibleStopPlaces, stopPoint, isEditMode, isFirst } = this.props;
-    const { stopPlaceSelection, activeTab, quaySearch, errors } = this.state;
+    const { stopPlaceSelection, quaySearch, errors } = this.state;
 
     if (!stopPoint) {
       return null;
