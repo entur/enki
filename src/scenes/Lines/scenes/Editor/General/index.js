@@ -2,15 +2,12 @@ import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextArea, TextField, InputGroup } from '@entur/form';
+import { isBlank } from 'helpers/forms';
 import { DEFAULT_SELECT_LABEL, DEFAULT_SELECT_VALUE } from '../constants';
 import Errors from 'components/Errors';
 import { FLEXIBLE_LINE_TYPE } from 'model/enums';
 import { selectIntl } from 'i18n';
 import messages from './messages';
-
-function inputStringIsEmpty(input) {
-  return !input || input.trim() === '';
-}
 
 export default ({
   flexibleLine,
@@ -29,11 +26,9 @@ export default ({
       <InputGroup
         className="form-section"
         label={formatMessage(messages.nameFormGroupTitle)}
-        variant={inputStringIsEmpty(flexibleLine.name) ? 'error' : undefined}
+        variant={isBlank(flexibleLine.name) ? 'error' : undefined}
         feedback={
-          inputStringIsEmpty(flexibleLine.name)
-            ? 'Navn må fylles inn.'
-            : undefined
+          isBlank(flexibleLine.name) ? 'Navn må fylles inn.' : undefined
         }
       >
         <TextField
@@ -47,7 +42,6 @@ export default ({
         label={formatMessage(messages.descriptionFormGroupTitle)}
       >
         <TextArea
-          type="text"
           value={flexibleLine.description || ''}
           onChange={e => handleFieldChange('description', e.target.value)}
         />
@@ -67,11 +61,9 @@ export default ({
       <InputGroup
         className="form-section"
         label={formatMessage(messages.publicCodeFormGroupTitle)}
-        variant={
-          inputStringIsEmpty(flexibleLine.publicCode) ? 'error' : undefined
-        }
+        variant={isBlank(flexibleLine.publicCode) ? 'error' : undefined}
         feedback={
-          inputStringIsEmpty(flexibleLine.publicCode)
+          isBlank(flexibleLine.publicCode)
             ? 'Public Code må fylles inn.'
             : undefined
         }
@@ -85,8 +77,10 @@ export default ({
 
       <Dropdown
         className="form-section"
-        searchable
-        items={operators.map(o => ({ value: o.id, label: o.name }))}
+        items={[
+          { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
+          ...operators.map(({id, name}) => ({ value: id, label: name }))
+        ]}
         label={formatMessage(messages.operatorFormGroupTitle)}
         onChange={({ value }) => handleOperatorSelectionChange(value)}
         placeholder="F.eks Østfold Kollektivtrafikk"
