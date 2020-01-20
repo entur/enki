@@ -18,7 +18,6 @@ const General = ({
   handleDirectionSelectionChange
 }) => {
   const { formatMessage } = useSelector(selectIntl);
-  console.log(journeyPattern.name);
 
   return (
     <Fragment>
