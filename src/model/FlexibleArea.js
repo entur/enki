@@ -17,11 +17,24 @@ class FlexibleArea extends Versioned {
   addCoordinate(coordinate) {
     // The polygon must be closed: first coordinate == last coordinate.
     let coordinates = this.polygon.coordinates.slice();
-    coordinates.pop();
-    coordinates = coordinates.concat(
-      [coordinate],
-      [coordinates[0] || coordinate]
-    );
+    const lastCoordinate = coordinates.pop() || coordinate;
+    coordinates.push(coordinate, lastCoordinate);
+
+    return this.withChanges({
+      polygon: this.polygon.withChanges({ coordinates })
+    });
+  }
+
+  removeLastCoordinate() {
+    let coordinates = this.polygon.coordinates.slice();
+    if (coordinates.length > 2) {
+      const lastCoordinate = coordinates.pop();
+      coordinates.pop();
+      coordinates.push(lastCoordinate);
+    } else {
+      coordinates = [];
+    }
+
     return this.withChanges({
       polygon: this.polygon.withChanges({ coordinates })
     });
