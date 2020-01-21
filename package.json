@@ -4,6 +4,7 @@
   "author": "Sondre Bjerkerud",
   "private": true,
   "dependencies": {
+    "@entur/alert": "^0.5.6",
     "@entur/button": "^1.5.0",
     "@entur/component-library": "^0.2.13",
     "@entur/dropdown": "^0.5.0",

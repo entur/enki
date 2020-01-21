@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/icons';
+import { BannerAlertBox } from '@entur/alert';
 
 import IconButton from 'components/IconButton';
 import { StopPoint } from 'model';
@@ -73,7 +74,9 @@ class StopPointsEditor extends Component {
           labelPosition="right"
           onClick={this.openDialogForNewStopPoint.bind(this)}
         />
-
+        <BannerAlertBox variant="info" title="Minst to stoppunkter">
+          Et <em>journey pattern</em> krever minst to stoppepunkter.
+        </BannerAlertBox>
         <StopPointsTable
           stopPoints={stopPoints}
           onRowClick={this.openDialogForStopPoint.bind(this)}
