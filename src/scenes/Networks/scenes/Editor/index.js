@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {
-  Button,
-  Label,
-  TextField,
-  TextArea,
-  DropDown,
-  DropDownOptions
-} from '@entur/component-library';
-
+import { Button } from '@entur/component-library';
+import { InputGroup, TextArea, TextField } from '@entur/form';
+import { Dropdown } from '@entur/dropdown';
+import { SuccessButton, NegativeButton } from '@entur/button';
 import { Network } from 'model';
+import { isBlank } from 'helpers/forms';
 import { ORGANISATION_TYPE } from 'model/enums';
 import {
   deleteNetworkById,
@@ -59,6 +55,7 @@ const NetworkEditor = ({ match, history }) => {
     () => dispatch(loadFlexibleLines()),
     [dispatch]
   );
+
 
   const dispatchLoadNetwork = useCallback(() => {
     if (match.params.id) {
@@ -131,22 +128,17 @@ const NetworkEditor = ({ match, history }) => {
         </h2>
 
         <div className="buttons">
-          <Button
-            variant="success"
-            onClick={handleOnSaveClick}
-            disabled={isSaveDisabled}
-          >
+          <SuccessButton onClick={handleOnSaveClick} disabled={isSaveDisabled}>
             {formatMessage(messages.saveButtonText)}
-          </Button>
+          </SuccessButton>
 
           {match.params.id && (
-            <Button
-              variant="negative"
+            <NegativeButton
               onClick={() => setDeleteDialogOpen(true)}
               disabled={isDeleteDisabled}
             >
               {formatMessage(messages.deleteButtonText)}
-            </Button>
+            </NegativeButton>
           )}
         </div>
       </div>
@@ -161,40 +153,56 @@ const NetworkEditor = ({ match, history }) => {
           }
         >
           <div className="network-form">
-            <Label>{formatMessage(messages.nameLabelText)}</Label>
-            <TextField
-              type="text"
-              value={network.name}
-              onChange={e => onFieldChange('name', e.target.value)}
-            />
-
-            <Label>{formatMessage(messages.descriptionLabelText)}</Label>
-            <TextArea
-              type="text"
-              value={network.description}
-              onChange={e => onFieldChange('description', e.target.value)}
-            />
-
-            <Label>{formatMessage(messages.privateCodeLabelText)}</Label>
-            <TextField
-              type="text"
-              value={network.privateCode}
-              onChange={e => onFieldChange('privateCode', e.target.value)}
-            />
-
-            <Label>{formatMessage(messages.authorityLabelText)}</Label>
-            <DropDown
-              value={authoritySelection}
-              onChange={e => handleAuthoritySelectionChange(e.target.value)}
+            <InputGroup
+              className="form-section"
+              label={formatMessage(messages.nameLabelText)}
+              variant={isBlank(network.name) ? 'error' : undefined}
+              feedback={
+                isBlank(network.name) ? 'Navn må fylles inn.' : undefined
+              }
             >
-              <DropDownOptions
-                label={DEFAULT_SELECT_LABEL}
-                value={DEFAULT_SELECT_VALUE}
+              <TextField
+                defaultValue={network.name}
+                onChange={e => onFieldChange('name', e.target.value)}
               />
-              {authorities.map(org => (
-                <DropDownOptions key={org.id} label={org.name} value={org.id} />
-              ))}
-            </DropDown>
+            </InputGroup>
+
+            <InputGroup
+              className="form-section"
+              label={formatMessage(messages.descriptionLabelText)}
+            >
+              <TextArea
+                value={network.description}
+                onChange={e => onFieldChange('description', e.target.value)}
+              />
+            </InputGroup>
+
+            <InputGroup
+              className="form-section"
+              label={formatMessage(messages.privateCodeLabelText)}
+            >
+              <TextField
+                value={network.privateCode}
+                onChange={e => onFieldChange('privateCode', e.target.value)}
+              />
+            </InputGroup>
+
+            <InputGroup
+              className="form-section"
+              label={formatMessage(messages.authorityLabelText)}
+            >
+              <Dropdown
+                items={[
+                  { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
+                  ...authorities.map(org => ({
+                    label: org.name,
+                    value: org.id
+                  }))
+                ]}
+                value={authoritySelection}
+                onChange={({ value }) => handleAuthoritySelectionChange(value)}
+              />
+            </InputGroup>
           </div>
         </OverlayLoader>
       ) : (

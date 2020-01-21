@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/icons';
 import { BannerAlertBox } from '@entur/alert';
-
-import IconButton from 'components/IconButton';
+import { SecondaryButton } from '@entur/button';
 import { StopPoint } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import Dialog from 'components/Dialog';
@@ -68,12 +67,10 @@ class StopPointsEditor extends Component {
 
     return (
       <div className="stop-points-editor">
-        <IconButton
-          icon={<AddIcon />}
-          label="Legg til stoppepunkt"
-          labelPosition="right"
-          onClick={this.openDialogForNewStopPoint.bind(this)}
-        />
+        <SecondaryButton onClick={() => this.openDialogForNewStopPoint()}>
+          <AddIcon />
+          Legg til stoppepunkt
+        </SecondaryButton>
         <BannerAlertBox variant="info" title="Minst to stoppunkter">
           Et <em>journey pattern</em> krever minst to stoppepunkter.
         </BannerAlertBox>

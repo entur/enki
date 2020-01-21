@@ -10,7 +10,7 @@ import {
   TableRowCell
 } from 'components/Table';
 import Loading from 'components/Loading';
-import IconButton from 'components/IconButton';
+import { SecondaryButton } from '@entur/button';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import { selectIntl } from 'i18n';
 import './styles.scss';
@@ -72,13 +72,14 @@ const StopPlaces = ({ history }) => {
     <div className="stop-places">
       <h2>{formatMessage(messages.header)}</h2>
 
-      <Link to="/stop-places/create">
-        <IconButton
-          icon={<AddIcon />}
-          label={formatMessage(messages.createStopPlaceLinkIconLabelText)}
-          labelPosition="right"
-        />
-      </Link>
+      <SecondaryButton
+        as={Link}
+        to="/stop-places/create"
+        className="new-stopplace-button"
+      >
+        <AddIcon />
+        {formatMessage(messages.createStopPlaceLinkIconLabelText)}
+      </SecondaryButton>
 
       <Table>
         <TableHeaderCell

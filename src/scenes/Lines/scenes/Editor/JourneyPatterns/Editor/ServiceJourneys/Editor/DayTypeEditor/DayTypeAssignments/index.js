@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment/moment';
 import { AddIcon } from '@entur/icons';
-
+import { SecondaryButton } from '@entur/button';
 import { DayTypeAssignment } from 'model';
 import DayTypeAssignmentEditor from './Editor';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
-import IconButton from 'components/IconButton';
 
 import './styles.scss';
 
@@ -39,12 +38,10 @@ class DayTypeAssignmentsEditor extends Component {
 
     return (
       <div className="day-type-assignments-editor">
-        <IconButton
-          icon={<AddIcon />}
-          label="Legg til dato"
-          labelPosition="right"
-          onClick={this.addNewDayTypeAssignment.bind(this)}
-        />
+        <SecondaryButton onClick={() => this.addNewDayTypeAssignment()}>
+          <AddIcon />
+          Legg til dato
+        </SecondaryButton>
 
         {dayTypeAssignments.length > 0 ? (
           dayTypeAssignments.map((dta, i) => (
