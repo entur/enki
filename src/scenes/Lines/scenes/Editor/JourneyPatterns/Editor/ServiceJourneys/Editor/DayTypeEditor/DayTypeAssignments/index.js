@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment/moment';
 import { AddIcon } from '@entur/icons';
 
-import { DayTypeAssignment, OperatingPeriod } from 'model';
+import { DayTypeAssignment } from 'model';
 import DayTypeAssignmentEditor from './Editor';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import IconButton from 'components/IconButton';
