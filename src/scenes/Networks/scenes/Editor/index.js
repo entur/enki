@@ -56,7 +56,6 @@ const NetworkEditor = ({ match, history }) => {
     [dispatch]
   );
 
-  console.log(network);
 
   const dispatchLoadNetwork = useCallback(() => {
     if (match.params.id) {
