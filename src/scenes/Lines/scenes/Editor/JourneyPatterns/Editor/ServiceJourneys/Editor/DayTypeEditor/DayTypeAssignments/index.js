@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment/moment';
 import { AddIcon } from '@entur/icons';
 
-import { DayTypeAssignment } from 'model';
+import { DayTypeAssignment, OperatingPeriod } from 'model';
 import DayTypeAssignmentEditor from './Editor';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import IconButton from 'components/IconButton';
@@ -22,8 +22,10 @@ class DayTypeAssignmentsEditor extends Component {
     onChange(
       dayTypeAssignments.concat(
         new DayTypeAssignment({
-          fromDate: today,
-          toDate: today
+          operatingPeriod: {
+            fromDate: today,
+            toDate: today
+          }
         })
       )
     );
@@ -49,7 +51,7 @@ class DayTypeAssignmentsEditor extends Component {
         {dayTypeAssignments.length > 0 ? (
           dayTypeAssignments.map((dta, i) => (
             <DayTypeAssignmentEditor
-              key={i}
+              key={dta.id}
               dayTypeAssignment={dta}
               onChange={dta => this.updateDayTypeAssignment(i, dta)}
               onDelete={() => this.deleteDayTypeAssignment(i)}

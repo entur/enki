@@ -74,6 +74,7 @@ export const loadFlexibleLineById = id => async (dispatch, getState) => {
       getFlexibleLineByIdQuery,
       { id }
     );
+
     dispatch(
       receiveFlexibleLineActionCreator(new FlexibleLine(data.flexibleLine))
     );

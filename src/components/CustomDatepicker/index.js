@@ -29,7 +29,7 @@ class CustomDatepicker extends Component {
     } = this.props;
     const classNames = cx('datepicker', className);
     const datePickerClassNames = cx('custom-datepicker', datePickerClassName);
-    const selectedDate = startDate !== null ? moment(startDate) : null;
+    const selectedDate = startDate ? moment(startDate) : null;
     return (
       <div className={classNames}>
         {label && <Label>{label}</Label>}

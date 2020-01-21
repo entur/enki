@@ -37,10 +37,8 @@ class DayTypeEditor extends Component {
   }
 
   render() {
-    const { dayType } = this.props;
-
-    const daysOfWeek = dayType ? dayType.daysOfWeek : [];
-    const dayTypeAssignments = dayType ? dayType.dayTypeAssignments : [];
+    const { dayType = {} } = this.props;
+    const { daysOfWeek = [], dayTypeAssignments = [] } = dayType;
 
     return (
       <div className="day-type-editor">
