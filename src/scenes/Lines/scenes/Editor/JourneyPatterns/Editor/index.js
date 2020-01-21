@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Tabs, Tab } from '@entur/component-library';
+import { Button } from '@entur/component-library';
+import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 
 import { JourneyPattern } from 'model';
 import StopPointsEditor from './StopPoints';
@@ -11,17 +12,10 @@ import General from './General';
 
 import { DEFAULT_SELECT_VALUE } from '../../constants';
 
-const TABS = Object.freeze({
-  GENERAL: 'general',
-  STOP_POINTS: 'stopPoints',
-  SERVICE_JOURNEYS: 'serviceJourneys'
-});
-
 class JourneyPatternEditor extends Component {
   state = {
     stopPlaceSelection: DEFAULT_SELECT_VALUE,
-    directionSelection: DEFAULT_SELECT_VALUE,
-    activeTab: TABS.GENERAL
+    directionSelection: DEFAULT_SELECT_VALUE
   };
 
   componentDidMount() {
@@ -52,7 +46,7 @@ class JourneyPatternEditor extends Component {
 
   render() {
     const { journeyPattern, isEditMode, onSave } = this.props;
-    const { directionSelection, activeTab } = this.state;
+    const { directionSelection } = this.state;
 
     return (
       <div className="journey-pattern-editor">
@@ -65,36 +59,37 @@ class JourneyPatternEditor extends Component {
             </Button>
           </div>
         </div>
-
-        <Tabs
-          selected={activeTab}
-          onChange={activeTab => this.setState({ activeTab })}
-        >
-          <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
-            <General
-              journeyPattern={journeyPattern}
-              directionSelection={directionSelection}
-              onFieldChange={this.onFieldChange.bind(this)}
-              handleDirectionSelectionChange={this.handleDirectionSelectionChange.bind(
-                this
-              )}
-            />
-          </Tab>
-
-          <Tab value={TABS.STOP_POINTS} label="Stoppepunkter">
-            <StopPointsEditor
-              stopPoints={journeyPattern.pointsInSequence}
-              onChange={pis => this.onFieldChange('pointsInSequence', pis)}
-            />
-          </Tab>
-
-          <Tab value={TABS.SERVICE_JOURNEYS} label="Service Journeys">
-            <ServiceJourneysEditor
-              serviceJourneys={journeyPattern.serviceJourneys}
-              stopPoints={journeyPattern.pointsInSequence}
-              onChange={sjs => this.onFieldChange('serviceJourneys', sjs)}
-            />
-          </Tab>
+        <Tabs>
+          <TabList>
+            <Tab>Generelt</Tab>
+            <Tab>Stoppepunkter</Tab>
+            <Tab>Service Journeys</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <General
+                journeyPattern={journeyPattern}
+                directionSelection={directionSelection}
+                onFieldChange={this.onFieldChange.bind(this)}
+                handleDirectionSelectionChange={this.handleDirectionSelectionChange.bind(
+                  this
+                )}
+              />
+            </TabPanel>
+            <TabPanel>
+              <StopPointsEditor
+                stopPoints={journeyPattern.pointsInSequence}
+                onChange={pis => this.onFieldChange('pointsInSequence', pis)}
+              />
+            </TabPanel>
+            <TabPanel>
+              <ServiceJourneysEditor
+                serviceJourneys={journeyPattern.serviceJourneys}
+                stopPoints={journeyPattern.pointsInSequence}
+                onChange={sjs => this.onFieldChange('serviceJourneys', sjs)}
+              />
+            </TabPanel>
+          </TabPanels>
         </Tabs>
       </div>
     );

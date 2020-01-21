@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Tab, Tabs } from '@entur/component-library';
+import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import { DestinationDisplay, StopPoint } from 'model';
 import { hasValue } from 'helpers/forms';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
@@ -9,14 +9,13 @@ import Header from './Header';
 import './styles.scss';
 import searchForQuay from './searchForQuay';
 import debounce from './debounce';
-import { DEFAULT_SELECT_VALUE, TABS } from './constants';
+import { DEFAULT_SELECT_VALUE } from './constants';
 import Form from './Form';
 import validateForm from './validateForm';
 
 class StopPointEditor extends Component {
   state = {
     stopPlaceSelection: DEFAULT_SELECT_VALUE,
-    activeTab: TABS.GENERAL,
     errors: { quayRef: [], flexibleStopPlaceRefAndQuayRef: [], frontText: [] },
     quaySearch: {}
   };
@@ -76,7 +75,7 @@ class StopPointEditor extends Component {
 
   render() {
     const { flexibleStopPlaces, stopPoint, isEditMode, isFirst } = this.props;
-    const { stopPlaceSelection, activeTab, quaySearch, errors } = this.state;
+    const { stopPlaceSelection, quaySearch, errors } = this.state;
 
     if (!stopPoint) {
       return null;
@@ -85,32 +84,35 @@ class StopPointEditor extends Component {
     return (
       <div className="stop-point-editor">
         <Header isEditMode={isEditMode} onSave={this.onSave} />
-        <Tabs
-          selected={activeTab}
-          onChange={activeTab => this.setState({ activeTab })}
-        >
-          <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
-            <Form
-              frontTextRequired={isFirst}
-              flexibleStopPlaces={flexibleStopPlaces}
-              stopPlaceSelection={stopPlaceSelection}
-              quaySearch={quaySearch}
-              errors={errors}
-              handleStopPlaceSelectionChange={
-                this.handleStopPlaceSelectionChange
-              }
-              handleFieldChange={this.onFieldChange}
-              debouncedSearchForQuay={this.debouncedSearchForQuay}
-              handleFrontTextChange={this.handleFrontTextChange}
-              stopPoint={stopPoint}
-            />
-          </Tab>
-          <Tab value={TABS.BOOKING} label="Bestilling" className="booking-tab">
-            <BookingArrangementEditor
-              bookingArrangement={stopPoint.bookingArrangement}
-              onChange={b => this.onFieldChange('bookingArrangement', b)}
-            />
-          </Tab>
+        <Tabs>
+          <TabList>
+            <Tab>Generelt</Tab>
+            <Tab>Bestilling</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Form
+                frontTextRequired={isFirst}
+                flexibleStopPlaces={flexibleStopPlaces}
+                stopPlaceSelection={stopPlaceSelection}
+                quaySearch={quaySearch}
+                errors={errors}
+                handleStopPlaceSelectionChange={
+                  this.handleStopPlaceSelectionChange
+                }
+                handleFieldChange={this.onFieldChange}
+                debouncedSearchForQuay={this.debouncedSearchForQuay}
+                handleFrontTextChange={this.handleFrontTextChange}
+                stopPoint={stopPoint}
+              />
+            </TabPanel>
+            <TabPanel>
+              <BookingArrangementEditor
+                bookingArrangement={stopPoint.bookingArrangement}
+                onChange={b => this.onFieldChange('bookingArrangement', b)}
+              />
+            </TabPanel>
+          </TabPanels>
         </Tabs>
       </div>
     );
