@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { AddIcon } from '@entur/icons';
-
+import { SecondaryButton } from '@entur/button';
 import {
   Table,
   TableHeaderCell,
@@ -10,7 +10,6 @@ import {
   TableRowCell
 } from 'components/Table';
 import Loading from 'components/Loading';
-import IconButton from 'components/IconButton';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import './styles.scss';
 import { createSelector } from 'reselect';
@@ -75,13 +74,10 @@ const Lines = ({ history }) => {
     <div className="lines">
       <h2>{formatMessage(messages.header)}</h2>
 
-      <Link to="/lines/create">
-        <IconButton
-          icon={<AddIcon />}
-          label={formatMessage(messages.createLineIconButtonLabel)}
-          labelPosition="right"
-        />
-      </Link>
+      <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
+        <AddIcon />
+        {formatMessage(messages.createLineIconButtonLabel)}
+      </SecondaryButton>
 
       <Table>
         <TableHeaderCell label={formatMessage(messages.nameTableHeaderLabel)} />

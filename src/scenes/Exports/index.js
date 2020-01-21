@@ -11,7 +11,7 @@ import {
   TableRowCell
 } from 'components/Table';
 import Loading from 'components/Loading';
-import IconButton from 'components/IconButton';
+import { SecondaryButton } from '@entur/button';
 import { loadExports } from 'actions/exports';
 import { EXPORT_STATUS } from 'model/enums';
 
@@ -88,13 +88,14 @@ const Exports = ({ history }) => {
     <div className="exports">
       <h2>{formatMessage(messages.header)}</h2>
 
-      <Link to="/exports/create">
-        <IconButton
-          icon={<AddIcon />}
-          label={formatMessage(messages.createExportButtonLabel)}
-          labelPosition="right"
-        />
-      </Link>
+      <SecondaryButton
+        as={Link}
+        to="/exports/create"
+        className="create-export-button"
+      >
+        <AddIcon />
+        {formatMessage(messages.createExportButtonLabel)}
+      </SecondaryButton>
 
       <Table>
         <TableHeaderCell label={formatMessage(messages.tableHeaderLabelName)} />

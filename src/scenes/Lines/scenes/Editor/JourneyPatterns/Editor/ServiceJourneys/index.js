@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/icons';
-
-import IconButton from 'components/IconButton';
+import { SecondaryButton } from '@entur/button';
 import { ServiceJourney, StopPoint } from 'model';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import Dialog from 'components/Dialog';
@@ -68,12 +67,10 @@ class ServiceJourneysEditor extends Component {
 
     return (
       <div className="service-journeys-editor">
-        <IconButton
-          icon={<AddIcon />}
-          label="Legg til service journey"
-          labelPosition="right"
-          onClick={this.openDialogForNewServiceJourney.bind(this)}
-        />
+        <SecondaryButton onClick={() => this.openDialogForNewServiceJourney()}>
+          <AddIcon />
+          Legg til service journey
+        </SecondaryButton>
 
         <ServiceJourneysTable
           serviceJourneys={serviceJourneys}

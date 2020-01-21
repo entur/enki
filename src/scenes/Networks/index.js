@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { AddIcon } from '@entur/icons';
-
+import { SecondaryButton } from '@entur/button';
 import {
   Table,
   TableHeaderCell,
@@ -10,7 +10,6 @@ import {
   TableRowCell
 } from 'components/Table';
 import Loading from 'components/Loading';
-import IconButton from 'components/IconButton';
 import { loadNetworks } from 'actions/networks';
 import { selectIntl } from 'i18n';
 import messages from './messages';
@@ -77,13 +76,14 @@ const Networks = ({ history }) => {
     <div className="networks">
       <h2>{formatMessage(messages.headerText)}</h2>
 
-      <Link to="/networks/create">
-        <IconButton
-          icon={<AddIcon />}
-          label={formatMessage(messages.createNetworkIconButtonLabel)}
-          labelPosition="right"
-        />
-      </Link>
+      <SecondaryButton
+        as={Link}
+        to="/networks/create"
+        className="new-network-button"
+      >
+        <AddIcon />
+        {formatMessage(messages.createNetworkIconButtonLabel)}
+      </SecondaryButton>
 
       <Table>
         <TableHeaderCell label={formatMessage(messages.nameTableHeaderLabel)} />

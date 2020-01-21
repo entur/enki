@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/icons';
-
-import IconButton from 'components/IconButton';
+import { SecondaryButton } from '@entur/button';
 import { JourneyPattern, StopPoint } from 'model';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import Dialog from 'components/Dialog';
@@ -52,12 +51,10 @@ const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
 
   return (
     <div className="journey-patterns-editor">
-      <IconButton
-        icon={<AddIcon />}
-        label={formatMessage(messages.addJourneyPatternIconButtonLabel)}
-        labelPosition="right"
-        onClick={openDialogForNewJourneyPattern}
-      />
+      <SecondaryButton onClick={openDialogForNewJourneyPattern}>
+        <AddIcon />
+        {formatMessage(messages.addJourneyPatternIconButtonLabel)}
+      </SecondaryButton>
 
       <JourneyPatternsTable
         journeyPatterns={journeyPatterns}
