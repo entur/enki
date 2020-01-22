@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@entur/component-library';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
+import { InputGroup, TextArea, TextField } from '@entur/form';
 
 import { JourneyPattern } from 'model';
 import StopPointsEditor from './StopPoints';

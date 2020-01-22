@@ -1,39 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  Label,
-  TextField,
-  TextArea,
-  DropDown,
-  DropDownOptions,
-  Button,
-  Tabs,
-  Tab
-} from '@entur/component-library';
+import { selectIntl } from 'i18n';
+import { Label, Button } from '@entur/component-library';
 
+import { Dropdown } from '@entur/dropdown';
+import { InputGroup, TextArea, TextField } from '@entur/form';
+import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import { ServiceJourney, StopPoint } from 'model';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
 import { ORGANISATION_TYPE } from 'model/enums';
+import { isBlank } from 'helpers/forms';
+import defineMessages from './messages';
 
 import './styles.scss';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
-const TABS = Object.freeze({
-  GENERAL: 'general',
-  AVAILABILITY: 'availability',
-  PASSING_TIMES: 'passingTimes',
-  BOOKING: 'booking'
-});
-
 class ServiceJourneyEditor extends Component {
   state = {
     operatorSelection: DEFAULT_SELECT_VALUE,
-    activeTab: TABS.GENERAL
+    activeTab: 'lol'
   };
 
   componentDidMount() {
@@ -70,10 +60,13 @@ class ServiceJourneyEditor extends Component {
       isEditMode
     } = this.props;
     const { operatorSelection, activeTab } = this.state;
+    console.log(selectIntl);
 
     const operators = organisations.filter(org =>
       org.types.includes(ORGANISATION_TYPE.OPERATOR)
     );
+
+    const isBlankName = isBlank(name);
 
     return (
       <div className="service-journey-editor">
@@ -91,71 +84,90 @@ class ServiceJourneyEditor extends Component {
           selected={activeTab}
           onChange={activeTab => this.setState({ activeTab })}
         >
-          <Tab value={TABS.GENERAL} label="Generelt" className="general-tab">
-            <Label>* Navn</Label>
-            <TextField
-              type="text"
-              value={name}
-              onChange={e => this.onFieldChange('name', e.target.value)}
-            />
+          <TabList>
+            <Tab>{selectIntl.formatMessage(defineMessages.general)}</Tab>
+            <Tab>{selectIntl.formatMessage(defineMessages.availability)}</Tab>
+            <Tab>{selectIntl.formatMessage(defineMessages.passingTimes)}</Tab>
+            <Tab>{selectIntl.formatMessage(defineMessages.booking)}</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Label>* Navn</Label>
+              <InputGroup
+                feedback={isBlankName ? 'Navn må fylles inn.' : undefined}
+                variant={isBlankName ? 'error' : undefined}
+              >
+                <TextField
+                  defaultValue={name}
+                  onChange={e => this.onFieldChange('name', e.target.value)}
+                />
+              </InputGroup>
 
-            <Label>Beskrivelse</Label>
-            <TextArea
-              type="text"
-              value={description}
-              onChange={e => this.onFieldChange('description', e.target.value)}
-            />
+              <Label>Beskrivelse</Label>
+              <InputGroup>
+                <TextArea
+                  type="text"
+                  defaultValue={description}
+                  onChange={e =>
+                    this.onFieldChange('description', e.target.value)
+                  }
+                />
+              </InputGroup>
 
-            <Label>Privat kode</Label>
-            <TextField
-              type="text"
-              value={privateCode}
-              onChange={e => this.onFieldChange('privateCode', e.target.value)}
-            />
-
-            <Label>Offentlig kode</Label>
-            <TextField
-              type="text"
-              value={publicCode}
-              onChange={e => this.onFieldChange('publicCode', e.target.value)}
-            />
-
-            <Label>Operatør</Label>
-            <DropDown
-              value={operatorSelection}
-              onChange={e => this.handleOperatorSelectionChange(e.target.value)}
-            >
-              <DropDownOptions
-                label={DEFAULT_SELECT_LABEL}
-                value={DEFAULT_SELECT_VALUE}
+              <Label>Privat kode</Label>
+              <TextField
+                type="text"
+                defaultValue={privateCode}
+                onChange={e =>
+                  this.onFieldChange('privateCode', e.target.value)
+                }
               />
-              {operators.map(o => (
-                <DropDownOptions key={o.name} label={o.name} value={o.id} />
-              ))}
-            </DropDown>
-          </Tab>
 
-          <Tab value={TABS.AVAILABILITY} label="Tilgjengelighet">
-            <DayTypeEditor
-              dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
-              onChange={dt => this.onFieldChange('dayTypes', [dt])}
-            />
-          </Tab>
+              <Label>Offentlig kode</Label>
+              <TextField
+                type="text"
+                defaultValue={publicCode}
+                onChange={e => this.onFieldChange('publicCode', e.target.value)}
+              />
 
-          <Tab value={TABS.PASSING_TIMES} label="Passeringstider">
-            <PassingTimesEditor
-              passingTimes={passingTimes}
-              stopPoints={stopPoints}
-              onChange={pts => this.onFieldChange('passingTimes', pts)}
-            />
-          </Tab>
+              <Label>Operatør</Label>
+              <Dropdown
+                items={[
+                  { label: DEFAULT_SELECT_LABEL, value: DEFAULT_SELECT_VALUE },
+                  ...operators.map(({ name, id }) => ({
+                    label: name,
+                    value: id
+                  }))
+                ]}
+                value={DEFAULT_SELECT_VALUE}
+                onChange={({ value }) =>
+                  this.handleOperatorSelectionChange(value)
+                }
+              />
+            </TabPanel>
 
-          <Tab value={TABS.BOOKING} label="Bestilling" className="booking-tab">
-            <BookingArrangementEditor
-              bookingArrangement={bookingArrangement || undefined}
-              onChange={b => this.onFieldChange('bookingArrangement', b)}
-            />
-          </Tab>
+            <TabPanel>
+              <DayTypeEditor
+                dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
+                onChange={dt => this.onFieldChange('dayTypes', [dt])}
+              />
+            </TabPanel>
+
+            <TabPanel>
+              <PassingTimesEditor
+                passingTimes={passingTimes}
+                stopPoints={stopPoints}
+                onChange={pts => this.onFieldChange('passingTimes', pts)}
+              />
+            </TabPanel>
+
+            <TabPanel>
+              <BookingArrangementEditor
+                bookingArrangement={bookingArrangement || undefined}
+                onChange={b => this.onFieldChange('bookingArrangement', b)}
+              />
+            </TabPanel>
+          </TabPanels>
         </Tabs>
       </div>
     );
