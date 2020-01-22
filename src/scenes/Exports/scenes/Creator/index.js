@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { Button, Label, TextField, Checkbox } from '@entur/component-library';
+import { Label, TextField, Checkbox } from '@entur/component-library';
 import { SuccessButton } from '@entur/button';
 
 import { Export } from 'model';
