@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { TextField, FormGroup } from '@entur/component-library';
+import { InputGroup, TextField } from '@entur/form';
 import { selectIntl } from 'i18n';
 import messages from './contactFields.messages';
 import { Contact } from 'model';
@@ -19,65 +19,55 @@ const ContactFields = props => {
 
   return (
     <Fragment>
-      <FormGroup
+      <InputGroup
         className="form-section"
-        inputId="name"
-        title={formatMessage(messages.contactPersonTitle)}
+        label={formatMessage(messages.contactPersonTitle)}
       >
         <TextField
-          type="text"
-          value={contactPerson}
+          defaultValue={contactPerson}
           onChange={e => onContactPersonChange(e.target.value)}
         />
-      </FormGroup>
+      </InputGroup>
 
-      <FormGroup
+      <InputGroup
         className="form-section"
-        inputId="phone"
-        title={formatMessage(messages.phoneTitle)}
+        label={formatMessage(messages.phoneTitle)}
       >
         <TextField
-          type="text"
-          value={phone}
+          defaultValue={phone}
           onChange={e => onPhoneChange(e.target.value)}
         />
-      </FormGroup>
+      </InputGroup>
 
-      <FormGroup
+      <InputGroup
         className="form-section"
-        inputId="email"
-        title={formatMessage(messages.emailTitle)}
+        label={formatMessage(messages.emailTitle)}
       >
         <TextField
-          type="text"
-          value={email}
+          defaultValue={email}
           onChange={e => onEmailChange(e.target.value)}
         />
-      </FormGroup>
+      </InputGroup>
 
-      <FormGroup
+      <InputGroup
         className="form-section"
-        inputId="urlFormGroup"
-        title={formatMessage(messages.urlTitle)}
+        label={formatMessage(messages.urlTitle)}
       >
         <TextField
-          type="text"
-          value={url}
+          defaultValue={url}
           onChange={e => onUrlChange(e.target.value)}
         />
-      </FormGroup>
+      </InputGroup>
 
-      <FormGroup
+      <InputGroup
         className="form-section"
-        inputId="details"
-        title={formatMessage(messages.furtherDetailsTitle)}
+        label={formatMessage(messages.furtherDetailsTitle)}
       >
         <TextField
-          type="text"
-          value={furtherDetails}
+          defaultValue={furtherDetails}
           onChange={e => onDetailsChange(e.target.value)}
         />
-      </FormGroup>
+      </InputGroup>
     </Fragment>
   );
 };
