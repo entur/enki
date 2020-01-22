@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import cx from 'classnames';
 
 import { CloseIcon } from '@entur/icons';
+import { Contrast } from '@entur/layout';
 
 import './styles.scss';
 
@@ -37,12 +38,14 @@ const ConfirmDialog = ({
       onRequestClose={onClose}
       className={classNames}
     >
-      <div className="close" onClick={onClose}>
-        <CloseIcon />
-      </div>
-      <div className="title">{title}</div>
-      <div className="message">{message}</div>
-      <div className={buttonClasses}>{buttons}</div>
+      <Contrast>
+        <div className="close" onClick={onClose}>
+          <CloseIcon />
+        </div>
+        <div className="title">{title}</div>
+        <div className="message">{message}</div>
+        <div className={buttonClasses}>{buttons}</div>
+      </Contrast>
     </Modal>
   );
 };

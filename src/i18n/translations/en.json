@@ -209,7 +209,7 @@
   "stopPlaces.editor.nameFormLabelText": "* Name",
   "stopPlaces.editor.privateCodeFormLabelText": "Private code",
   "stopPlaces.editor.coordinatesFormLabelText": "Coordinates in GeoJson order [Long, Lat]",
-  "stopPlaces.editor.drawPolygonButtonText": "Draw polygon",
+  "stopPlaces.editor.drawPolygonButtonText": "Draw polygon from coordinate list",
   "stopPlaces.editor.saveButtonText": "Save",
   "stopPlaces.editor.savingOverlayLoaderText": "Saving stop place...",
   "stopPlaces.editor.validateForm.errorFlexibleAreaNotEnoughPolygons": "You must add more map points",

@@ -23,13 +23,6 @@
       min-width: 250px;
       margin-right: 30px;
 
-      input,
-      textarea,
-      select {
-        width: 100%;
-        margin-bottom: 30px;
-      }
-
       .save-button-container {
         margin-top: 20px;
         text-align: right;
@@ -54,5 +47,9 @@
   textarea::placeholder {
     color: #bbb;
     font-size: 12px;
+  }
+
+  .draw-polygon-button {
+    margin-top: 1.5rem;
   }
 }

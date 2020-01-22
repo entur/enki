@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@entur/component-library';
+import { SuccessButton, NegativeButton, SecondaryButton } from '@entur/button';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 
 import { FlexibleLine } from 'model';
@@ -183,18 +183,17 @@ const FlexibleLineEditor = ({ match, history }) => {
         </h2>
 
         <div className="buttons">
-          <Button variant="success" onClick={handleOnSaveClick}>
+          <SuccessButton onClick={handleOnSaveClick}>
             {formatMessage(messages.saveButtonText)}
-          </Button>
+          </SuccessButton>
 
           {match.params.id && (
-            <Button
-              variant="negative"
+            <NegativeButton
               onClick={() => setDeleteDialogOpen(true)}
               disabled={isDeleteDisabled}
             >
               {formatMessage(messages.deleteButtonText)}
-            </Button>
+            </NegativeButton>
           )}
         </div>
       </div>
@@ -258,24 +257,12 @@ const FlexibleLineEditor = ({ match, history }) => {
         title={formatMessage(messages.deleteConfirmationDialogTitle)}
         message={formatMessage(messages.deleteConfirmationDialogMessage)}
         buttons={[
-          <Button
-            key={2}
-            onClick={() => setDeleteDialogOpen(false)}
-            variant="secondary"
-            width="md"
-            className="action-button"
-          >
+          <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
             {formatMessage(messages.deleteConfirmationDialogCancelButtonText)}
-          </Button>,
-          <Button
-            key={1}
-            onClick={handleDelete}
-            variant="success"
-            width="md"
-            className="action-button"
-          >
+          </SecondaryButton>,
+          <SuccessButton key={1} onClick={handleDelete}>
             {formatMessage(messages.deleteConfirmationDialogConfirmButtonText)}
-          </Button>
+          </SuccessButton>
         ]}
         onClose={() => setDeleteDialogOpen(false)}
       />
