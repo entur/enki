@@ -17,7 +17,7 @@ export default ({ bookingMethods, onChange }) => {
           onChange={e => onChange(e.target.value)}
           value={v}
           key={v}
-          checked={bookingMethods && bookingMethods.includes(v)}
+          checked={bookingMethods?.includes(v)}
         >
           {formatMessage(bookingMethodMessages[v])}
         </Checkbox>
