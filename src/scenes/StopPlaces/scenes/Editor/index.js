@@ -1,7 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Button, Label, TextField, TextArea } from '@entur/component-library';
+import { InputGroup, TextArea, TextField } from '@entur/form';
+import {
+  SuccessButton,
+  NegativeButton,
+  SecondaryButton,
+  TertiaryButton
+} from '@entur/button';
+import { MapIcon } from '@entur/icons';
 
 import { FlexibleStopPlace, FlexibleArea, GeoJSON } from 'model';
 import { VEHICLE_MODE, GEOMETRY_TYPE } from 'model/enums';
@@ -191,18 +198,17 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
         </h2>
 
         <div className="buttons">
-          <Button variant="success" onClick={handleOnSaveClick}>
+          <SuccessButton onClick={handleOnSaveClick}>
             {formatMessage(messages.saveButtonText)}
-          </Button>
+          </SuccessButton>
 
           {match.params.id && (
-            <Button
-              variant="negative"
+            <NegativeButton
               onClick={() => setDeleteDialogOpen(true)}
               disabled={isDeleteDisabled}
             >
               {formatMessage(messages.deleteButtonText)}
-            </Button>
+            </NegativeButton>
           )}
         </div>
       </div>
@@ -219,38 +225,48 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
           <div className="stop-place-form-container">
             <div className="stop-place-form">
               <Errors errors={errors.name} />
-              <Label>{formatMessage(messages.nameFormLabelText)}</Label>
-              <TextField
-                type="text"
-                value={flexibleStopPlace.name}
-                onChange={e => onFieldChange('name', e.target.value)}
-              />
+              <InputGroup label={formatMessage(messages.nameFormLabelText)}>
+                <TextField
+                  defaultValue={flexibleStopPlace.name}
+                  onChange={e => onFieldChange('name', e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup
+                label={formatMessage(messages.descriptionFormLabelText)}
+              >
+                <TextArea
+                  type="text"
+                  value={flexibleStopPlace.description}
+                  onChange={e => onFieldChange('description', e.target.value)}
+                />
+              </InputGroup>
 
-              <Label>{formatMessage(messages.descriptionFormLabelText)}</Label>
-              <TextArea
-                type="text"
-                value={flexibleStopPlace.description}
-                onChange={e => onFieldChange('description', e.target.value)}
-              />
+              <InputGroup
+                label={formatMessage(messages.privateCodeFormLabelText)}
+              >
+                <TextField
+                  value={flexibleStopPlace.privateCode}
+                  onChange={e => onFieldChange('privateCode', e.target.value)}
+                />
+              </InputGroup>
 
-              <Label>{formatMessage(messages.privateCodeFormLabelText)}</Label>
-              <TextField
-                type="text"
-                value={flexibleStopPlace.privateCode}
-                onChange={e => onFieldChange('privateCode', e.target.value)}
-              />
-
-              <Label>{formatMessage(messages.coordinatesFormLabelText)}</Label>
-              <TextArea
-                type="text"
-                rows="12"
-                value={coordinates}
-                onChange={e => setCoordinates(e.target.value)}
-                placeholder={coordinatesPlaceholder}
-              />
-              <Button variant="success" onClick={handleDrawPolygonClick}>
+              <InputGroup
+                label={formatMessage(messages.coordinatesFormLabelText)}
+              >
+                <TextArea
+                  rows="12"
+                  value={coordinates}
+                  onChange={e => setCoordinates(e.target.value)}
+                  placeholder={coordinatesPlaceholder}
+                />
+              </InputGroup>
+              <TertiaryButton
+                className="draw-polygon-button"
+                onClick={handleDrawPolygonClick}
+              >
+                <MapIcon />
                 {formatMessage(messages.drawPolygonButtonText)}
-              </Button>
+              </TertiaryButton>
             </div>
 
             <div className="stop-place-flexible-area">
@@ -278,24 +294,12 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
         title={formatMessage(messages.deleteStopPlaceDialogTitle)}
         message={formatMessage(messages.deleteStopPlaceDialogMessage)}
         buttons={[
-          <Button
-            key={2}
-            onClick={() => setDeleteDialogOpen(false)}
-            variant="secondary"
-            width="md"
-            className="action-button"
-          >
+          <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
             {formatMessage(messages.deleteStopPlaceDialogCancelButtonText)}
-          </Button>,
-          <Button
-            key={1}
-            onClick={handleDelete}
-            variant="success"
-            width="md"
-            className="action-button"
-          >
+          </SecondaryButton>,
+          <SuccessButton key={1} onClick={handleDelete}>
             {formatMessage(messages.deleteStopPlaceDialogConfirmButtonText)}
-          </Button>
+          </SuccessButton>
         ]}
         onClose={() => setDeleteDialogOpen(false)}
       />

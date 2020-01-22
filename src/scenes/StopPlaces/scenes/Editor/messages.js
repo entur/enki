@@ -19,7 +19,7 @@ export default defineMessages({
   },
   drawPolygonButtonText: {
     id: 'stopPlaces.editor.drawPolygonButtonText',
-    defaultMessage: 'Tegn polygon'
+    defaultMessage: 'Tegn polygon fra koordinatliste'
   },
   savingOverlayLoaderText: {
     id: 'stopPlaces.editor.savingOverlayLoaderText',

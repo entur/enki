@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { CheckboxGroup, Checkbox, FormGroup } from '@entur/component-library';
+import { Checkbox, Fieldset } from '@entur/form';
 import { BOOKING_METHOD } from 'model/enums';
 import { selectIntl } from 'i18n';
 import messages, {
@@ -11,24 +11,17 @@ export default ({ bookingMethods, onChange }) => {
   const { formatMessage } = useSelector(selectIntl);
 
   return (
-    <FormGroup
-      className="form-section"
-      inputId="bookingMethods"
-      title={formatMessage(messages.title)}
-    >
-      <CheckboxGroup
-        id="bookingMethods"
-        onChange={e => onChange(e.target.value)}
-      >
-        {Object.values(BOOKING_METHOD).map(v => (
-          <Checkbox
-            key={v}
-            label={formatMessage(bookingMethodMessages[v])}
-            value={v}
-            checked={bookingMethods && bookingMethods.includes(v)}
-          />
-        ))}
-      </CheckboxGroup>
-    </FormGroup>
+    <Fieldset className="form-section" label={formatMessage(messages.title)}>
+      {Object.values(BOOKING_METHOD).map(v => (
+        <Checkbox
+          onChange={e => onChange(e.target.value)}
+          value={v}
+          key={v}
+          checked={bookingMethods?.includes(v)}
+        >
+          {formatMessage(bookingMethodMessages[v])}
+        </Checkbox>
+      ))}
+    </Fieldset>
   );
 };

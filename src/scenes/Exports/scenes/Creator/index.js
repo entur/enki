@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { Button, Label, TextField, Checkbox } from '@entur/component-library';
+import { Label, TextField, Checkbox } from '@entur/component-library';
+import { SuccessButton } from '@entur/button';
 
 import { Export } from 'model';
 import { saveExport } from 'actions/exports';
@@ -56,9 +57,9 @@ const ExportsCreator = ({ history }) => {
         <h2>{formatMessage(messages.header)}</h2>
 
         <div className="buttons">
-          <Button variant="success" onClick={handleOnSaveClick}>
+          <SuccessButton onClick={handleOnSaveClick}>
             {formatMessage(messages.saveButtonLabelText)}
-          </Button>
+          </SuccessButton>
         </div>
       </div>
 
