@@ -164,8 +164,10 @@ const FlexibleLineEditor = ({ match, history }) => {
     );
   };
 
-  const operators = organisations.filter(org =>
-    org.types.includes(ORGANISATION_TYPE.OPERATOR)
+  const operators = organisations.filter(
+    org =>
+      org.types.includes(ORGANISATION_TYPE.OPERATOR) &&
+      org.references.netexOperatorId
   );
 
   const isLoadingLine = !flexibleLine;
