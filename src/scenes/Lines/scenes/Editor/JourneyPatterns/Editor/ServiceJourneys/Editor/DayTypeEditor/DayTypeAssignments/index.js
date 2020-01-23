@@ -21,8 +21,10 @@ class DayTypeAssignmentsEditor extends Component {
     onChange(
       dayTypeAssignments.concat(
         new DayTypeAssignment({
-          fromDate: today,
-          toDate: today
+          operatingPeriod: {
+            fromDate: today,
+            toDate: today
+          }
         })
       )
     );
@@ -46,7 +48,7 @@ class DayTypeAssignmentsEditor extends Component {
         {dayTypeAssignments.length > 0 ? (
           dayTypeAssignments.map((dta, i) => (
             <DayTypeAssignmentEditor
-              key={i}
+              key={dta.id}
               dayTypeAssignment={dta}
               onChange={dta => this.updateDayTypeAssignment(i, dta)}
               onDelete={() => this.deleteDayTypeAssignment(i)}

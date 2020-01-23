@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import moment from 'moment';
 import {
   Label,
   Checkbox,
@@ -13,7 +14,9 @@ import OperatingPeriod from 'model/OperatingPeriod';
 import './styles.scss';
 
 class DayTypeAssignmentEditor extends Component {
-  state = { useDateRange: this.props.dayTypeAssignment.operatingPeriod };
+  state = {
+    useDateRange: Boolean(this.props.dayTypeAssignment.operatingPeriod)
+  };
 
   onFieldChange(field, value) {
     const { dayTypeAssignment, onChange } = this.props;
@@ -21,9 +24,13 @@ class DayTypeAssignmentEditor extends Component {
   }
 
   handleDateRangeChange() {
-    if (this.state.useDateRange) {
-      this.onFieldChange('operatingPeriod', undefined);
-    }
+    const today = moment().format('YYYY-MM-DD');
+    this.state.useDateRange
+      ? this.onFieldChange('operatingPeriod', undefined)
+      : this.onFieldChange(
+          'operatingPeriod',
+          new OperatingPeriod({ fromDate: today, toDate: today })
+        );
     this.setState(s => ({ useDateRange: !s.useDateRange }));
   }
 
@@ -78,9 +85,7 @@ class DayTypeAssignmentEditor extends Component {
               <div>
                 <Label>Fra dato</Label>
                 <CustomDatepicker
-                  startDate={
-                    operatingPeriod ? operatingPeriod.fromDate : undefined
-                  }
+                  startDate={operatingPeriod?.fromDate}
                   onChange={date =>
                     this.handleOperatingPeriodFieldChange('fromDate', date)
                   }
@@ -90,9 +95,7 @@ class DayTypeAssignmentEditor extends Component {
               <div>
                 <Label>Til dato</Label>
                 <CustomDatepicker
-                  startDate={
-                    operatingPeriod ? operatingPeriod.toDate : undefined
-                  }
+                  startDate={operatingPeriod?.toDate}
                   onChange={date =>
                     this.handleOperatingPeriodFieldChange('toDate', date)
                   }
