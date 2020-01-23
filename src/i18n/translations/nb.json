@@ -53,7 +53,7 @@
   "exports.creator.validateForm.errorExportFromDateIsAfterToDate": "Fra-dato kan ikke være etter til-dato",
   "exports.creator.validateForm.errorExportFromDateIsEmpty": "Fra-dato mangler.",
   "exports.creator.validateForm.errorExportNameIsEmpty": "Navn må fylles ut.",
-  "exports.creator.validateForm.errorExportToDateIsEmpty": "Til-dato mangler..",
+  "exports.creator.validateForm.errorExportToDateIsEmpty": "Til-dato mangler.",
   "exports.downloadLinkText": "Last ned",
   "exports.dryRunNo": "Nei",
   "exports.dryRunYes": "Ja",
