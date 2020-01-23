@@ -11,7 +11,6 @@ class DayTypeAssignment extends Base {
     this.operatingPeriod = data.operatingPeriod
       ? new OperatingPeriod(data.operatingPeriod)
       : null;
-    this.id = uuid.v4();
   }
 }
 
