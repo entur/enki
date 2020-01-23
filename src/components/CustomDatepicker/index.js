@@ -3,7 +3,6 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import propTypes from 'prop-types';
 import cx from 'classnames';
-import { Label } from '@entur/component-library';
 
 import './styles.scss';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -22,7 +21,6 @@ class CustomDatepicker extends Component {
       startDate,
       showTimePicker,
       timeIntervals,
-      label,
       disabled,
       className,
       datePickerClassName
@@ -32,7 +30,6 @@ class CustomDatepicker extends Component {
     const selectedDate = startDate !== null ? moment(startDate) : null;
     return (
       <div className={classNames}>
-        {label && <Label>{label}</Label>}
         <DatePicker
           selected={selectedDate}
           onChange={this.handleDateChange.bind(this)}
@@ -55,7 +52,6 @@ class CustomDatepicker extends Component {
 CustomDatepicker.propTypes = {
   onChange: propTypes.func.isRequired,
   startDate: propTypes.string,
-  label: propTypes.string,
   showTimePicker: propTypes.bool,
   timeIntervals: propTypes.number,
   disabled: propTypes.bool
