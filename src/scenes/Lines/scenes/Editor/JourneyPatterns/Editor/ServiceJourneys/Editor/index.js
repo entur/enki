@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { Button } from '@entur/component-library';
 import { SuccessButton } from '@entur/button';
 
 import { Dropdown } from '@entur/dropdown';
@@ -32,7 +31,7 @@ export default function ServiceJourneyEditor(props) {
     setOperatorSelection({
       operatorSelection: props.serviceJourney.operatorRef
     });
-  }, []);
+  }, [props.serviceJourney.operatorRef]);
 
   const onFieldChange = (field, value, multi = false) => {
     const { serviceJourney, onChange } = props;
@@ -100,7 +99,6 @@ export default function ServiceJourneyEditor(props) {
 
             <InputGroup label="Beskrivelse" className="form-section">
               <TextArea
-                type="text"
                 defaultValue={description}
                 onChange={e => onFieldChange('description', e.target.value)}
               />
@@ -108,7 +106,6 @@ export default function ServiceJourneyEditor(props) {
 
             <InputGroup label="Tilgjengelighet" className="form-section">
               <TextField
-                type="text"
                 defaultValue={privateCode}
                 onChange={e => onFieldChange('privateCode', e.target.value)}
               />
@@ -116,7 +113,6 @@ export default function ServiceJourneyEditor(props) {
 
             <InputGroup label="Offentlig kode" className="form-section">
               <TextField
-                type="text"
                 defaultValue={publicCode}
                 onChange={e => onFieldChange('publicCode', e.target.value)}
               />
@@ -131,7 +127,7 @@ export default function ServiceJourneyEditor(props) {
                     value: id
                   }))
                 ]}
-                value={DEFAULT_SELECT_VALUE}
+                value={operatorSelection}
                 onChange={({ value }) => handleOperatorSelectionChange(value)}
               />
             </InputGroup>
