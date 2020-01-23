@@ -9,7 +9,7 @@ import {
   DeleteIcon
 } from '@entur/component-library';
 import { DayTypeAssignment } from 'model';
-import CustomDatepicker from 'components/CustomDatepicker';
+import { DatePicker } from '@entur/datepicker';
 import OperatingPeriod from 'model/OperatingPeriod';
 import './styles.scss';
 
@@ -73,8 +73,8 @@ class DayTypeAssignmentEditor extends Component {
           {!useDateRange && (
             <div>
               <Label>Dato</Label>
-              <CustomDatepicker
-                startDate={date}
+              <DatePicker
+                selectedDate={moment(date).toDate()}
                 onChange={date => this.onFieldChange('date', date)}
               />
             </div>
@@ -84,8 +84,12 @@ class DayTypeAssignmentEditor extends Component {
             <div className="range-dates">
               <div>
                 <Label>Fra dato</Label>
-                <CustomDatepicker
-                  startDate={operatingPeriod?.fromDate}
+                <DatePicker
+                  selectedDate={
+                    operatingPeriod
+                      ? moment(operatingPeriod.fromDate).toDate()
+                      : undefined
+                  }
                   onChange={date =>
                     this.handleOperatingPeriodFieldChange('fromDate', date)
                   }
@@ -94,8 +98,12 @@ class DayTypeAssignmentEditor extends Component {
 
               <div>
                 <Label>Til dato</Label>
-                <CustomDatepicker
-                  startDate={operatingPeriod?.toDate}
+                <DatePicker
+                  selectedDate={
+                    operatingPeriod
+                      ? moment(operatingPeriod.toDate).toDate()
+                      : undefined
+                  }
                   onChange={date =>
                     this.handleOperatingPeriodFieldChange('toDate', date)
                   }
