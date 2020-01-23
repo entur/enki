@@ -1,6 +1,5 @@
 import Base from './base/Base';
 import OperatingPeriod from './OperatingPeriod';
-import uuid from 'uuid';
 
 class DayTypeAssignment extends Base {
   constructor(data = {}) {
