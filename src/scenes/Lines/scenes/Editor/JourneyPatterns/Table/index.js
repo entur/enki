@@ -105,7 +105,7 @@ const JourneyPatternsTable = ({
           </Button>,
           <Button
             key={1}
-            onClick={doDelete} // TODO bytt ut disse
+            onClick={doDelete}
             variant="success"
             width="md"
             className="action-button"

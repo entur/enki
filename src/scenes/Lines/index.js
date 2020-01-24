@@ -47,11 +47,11 @@ const Lines = ({ history }) => {
   const renderTableRows = () => {
     if (lines) {
       return lines.length > 0 ? (
-        lines.map(n => (
-          <TableRow key={n.id} onClick={() => handleOnRowClick(n.id)}>
-            <DataCell title={n.description}>{n.name}</DataCell>
-            <DataCell>{n.privateCode}</DataCell>
-            <DataCell>{n.operatorName}</DataCell>
+        lines.map(line => (
+          <TableRow key={line.id} onClick={() => handleOnRowClick(line.id)}>
+            <DataCell title={line.description}>{line.name}</DataCell>
+            <DataCell>{line.privateCode}</DataCell>
+            <DataCell>{line.operatorName}</DataCell>
           </TableRow>
         ))
       ) : (

@@ -34,7 +34,7 @@ class ServiceJourneysTable extends Component {
     const tableRows =
       serviceJourneys.length > 0 ? (
         serviceJourneys.map((jp, i) => (
-          <TableRow key={i} onClick={() => onRowClick(i)}>
+          <TableRow key={JSON.stringify(jp)} onClick={() => onRowClick(i)}>
             <DataCell title={jp.description}>
               {jp.name ? jp.name : '- Nytt service journey -'}
             </DataCell>
