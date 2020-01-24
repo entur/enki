@@ -6,10 +6,12 @@ import { AddIcon } from '@entur/icons';
 import { FormattedDate } from 'react-intl';
 import {
   Table,
-  TableHeaderCell,
+  TableBody,
+  TableHead,
   TableRow,
-  TableRowCell
-} from 'components/Table';
+  HeaderCell,
+  DataCell
+} from '@entur/table';
 import Loading from 'components/Loading';
 import { SecondaryButton } from '@entur/button';
 import { loadExports } from 'actions/exports';
@@ -39,9 +41,9 @@ const Exports = ({ history }) => {
       return exports.length > 0 ? (
         exports.map(e => (
           <TableRow key={e.id} onClick={() => handleOnRowClick(e.id)}>
-            <TableRowCell>{e.name}</TableRowCell>
-            <TableRowCell>{getIconForStatus(e.exportStatus)}</TableRowCell>
-            <TableRowCell>
+            <DataCell>{e.name}</DataCell>
+            <DataCell>{getIconForStatus(e.exportStatus)}</DataCell>
+            <DataCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
                 <PrimaryButton
                   onClick={event => {
@@ -52,33 +54,33 @@ const Exports = ({ history }) => {
                   {formatMessage(messages.downloadLinkText)}
                 </PrimaryButton>
               )}
-            </TableRowCell>
-            <TableRowCell>
+            </DataCell>
+            <DataCell>
               {e.dryRun
                 ? formatMessage(messages.dryRunYes)
                 : formatMessage(messages.dryRunNo)}
-            </TableRowCell>
-            <TableRowCell>
+            </DataCell>
+            <DataCell>
               <FormattedDate value={moment(e.fromDate)} />
-            </TableRowCell>
-            <TableRowCell>
+            </DataCell>
+            <DataCell>
               <FormattedDate value={moment(e.toDate)} />
-            </TableRowCell>
+            </DataCell>
           </TableRow>
         ))
       ) : (
         <TableRow className="row-no-exports disabled">
-          <TableRowCell colSpan={6}>
+          <DataCell colSpan={6}>
             {formatMessage(messages.noExportsFoundText)}
-          </TableRowCell>
+          </DataCell>
         </TableRow>
       );
     } else {
       return (
         <TableRow className="disabled">
-          <TableRowCell colSpan={6}>
+          <DataCell colSpan={6}>
             <Loading text={formatMessage(messages.loadingExportsText)} />
-          </TableRowCell>
+          </DataCell>
         </TableRow>
       );
     }
@@ -98,24 +100,29 @@ const Exports = ({ history }) => {
       </SecondaryButton>
 
       <Table>
-        <TableHeaderCell label={formatMessage(messages.tableHeaderLabelName)} />
-        <TableHeaderCell
-          label={formatMessage(messages.tableHeaderLabelStatus)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.tableHeaderLabelDownload)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.tableHeaderLabelDryrun)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.tableHeaderLabelFromDate)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.tableHeaderLabelToDate)}
-        />
-
-        {renderTableRows()}
+        <TableHead>
+          <TableRow>
+            <HeaderCell>
+              {formatMessage(messages.tableHeaderLabelName)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.tableHeaderLabelStatus)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.tableHeaderLabelDownload)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.tableHeaderLabelDryrun)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.tableHeaderLabelFromDate)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.tableHeaderLabelToDate)}
+            </HeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{renderTableRows()}</TableBody>
       </Table>
     </div>
   );
