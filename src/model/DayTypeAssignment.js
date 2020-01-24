@@ -1,6 +1,5 @@
 import Base from './base/Base';
 import OperatingPeriod from './OperatingPeriod';
-import uuid from 'uuid';
 
 class DayTypeAssignment extends Base {
   constructor(data = {}) {
@@ -11,7 +10,6 @@ class DayTypeAssignment extends Base {
     this.operatingPeriod = data.operatingPeriod
       ? new OperatingPeriod(data.operatingPeriod)
       : null;
-    this.id = uuid.v4();
   }
 }
 

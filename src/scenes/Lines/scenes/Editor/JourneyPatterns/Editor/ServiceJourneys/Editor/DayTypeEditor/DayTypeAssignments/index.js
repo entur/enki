@@ -48,7 +48,7 @@ class DayTypeAssignmentsEditor extends Component {
         {dayTypeAssignments.length > 0 ? (
           dayTypeAssignments.map((dta, i) => (
             <DayTypeAssignmentEditor
-              key={dta.id}
+              key={Math.random()}
               dayTypeAssignment={dta}
               onChange={dta => this.updateDayTypeAssignment(i, dta)}
               onDelete={() => this.deleteDayTypeAssignment(i)}
