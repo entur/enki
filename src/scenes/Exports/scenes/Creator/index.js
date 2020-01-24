@@ -2,19 +2,21 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { Label, TextField, Checkbox } from '@entur/component-library';
 import { SuccessButton } from '@entur/button';
-
+import { Checkbox, InputGroup, TextField } from '@entur/form';
+import { DatePicker } from '@entur/datepicker';
 import { Export } from 'model';
 import { saveExport } from 'actions/exports';
 import OverlayLoader from 'components/OverlayLoader';
-import CustomDatepicker from 'components/CustomDatepicker';
 import { selectIntl } from 'i18n';
-import Errors from 'components/Errors';
 
 import './styles.scss';
 import messages from './creator.messages';
-import validateForm from './validateForm';
+import validatorMessages from './validateForm.messages';
+import validateForm, {
+  validateName,
+  toDateIsBeforeFromDate
+} from './validateForm';
 
 const newExport = () => {
   const today = moment().format('YYYY-MM-DD');
@@ -57,7 +59,10 @@ const ExportsCreator = ({ history }) => {
         <h2>{formatMessage(messages.header)}</h2>
 
         <div className="buttons">
-          <SuccessButton onClick={handleOnSaveClick}>
+          <SuccessButton
+            disabled={!validateForm(theExport)[0]}
+            onClick={handleOnSaveClick}
+          >
             {formatMessage(messages.saveButtonLabelText)}
           </SuccessButton>
         </div>
@@ -68,42 +73,49 @@ const ExportsCreator = ({ history }) => {
         text={formatMessage(messages.savingOverlayLoaderText)}
       >
         <div className="export-form">
-          <Label>{formatMessage(messages.nameFormLabel)}</Label>
-          <TextField
-            type="text"
-            value={theExport.name}
-            onChange={e => onFieldChange('name', e.target.value)}
-            className={errors.name.length ? 'input-error' : ''}
-          />
+          <InputGroup
+            label={formatMessage(messages.nameFormLabel)}
+            feedback={formatMessage(validatorMessages.errorExportNameIsEmpty)}
+            variant={validateName(theExport.name).length ? 'error' : undefined}
+          >
+            <TextField
+              defaultValue={theExport.name}
+              onChange={e => onFieldChange('name', e.target.value)}
+              className={errors.name.length ? 'input-error' : ''}
+            />
+          </InputGroup>
 
-          <Errors errors={errors.name} />
-
-          <Label>{formatMessage(messages.fromDateFormLabel)}</Label>
-          <CustomDatepicker
-            startDate={theExport.fromDate}
-            onChange={date => onFieldChange('fromDate', date)}
-            datePickerClassName={
-              errors.fromDateToDate.length ? 'input-error' : ''
+          <InputGroup
+            variant={
+              toDateIsBeforeFromDate(theExport.fromDate, theExport.toDate)
+                ? 'error'
+                : undefined
             }
-          />
+            feedback={formatMessage(
+              validatorMessages.errorExportFromDateIsAfterToDate
+            )}
+            label={formatMessage(messages.fromDateFormLabel)}
+          >
+            <DatePicker
+              selectedDate={moment(theExport.fromDate).toDate()}
+              onChange={date => onFieldChange('fromDate', date)}
+            />
+          </InputGroup>
 
-          <Label>{formatMessage(messages.toDateFormLabel)}</Label>
-          <CustomDatepicker
-            startDate={theExport.toDate}
-            onChange={date => onFieldChange('toDate', date)}
-            datePickerClassName={
-              errors.fromDateToDate.length ? 'input-error' : ''
-            }
-          />
+          <InputGroup label={formatMessage(messages.toDateFormLabel)}>
+            <DatePicker
+              selectedDate={moment(theExport.toDate).toDate()}
+              onChange={date => onFieldChange('toDate', date)}
+            />
+          </InputGroup>
 
-          <Errors errors={errors.fromDateToDate} />
-
-          <Label>{formatMessage(messages.dryRunFormLabel)}</Label>
-          <Checkbox
-            value="1"
-            checked={theExport.dryRun === true}
-            onChange={e => onFieldChange('dryRun', e.target.checked)}
-          />
+          <InputGroup label={formatMessage(messages.dryRunFormLabel)}>
+            <Checkbox
+              value="1"
+              checked={theExport.dryRun === true}
+              onChange={e => onFieldChange('dryRun', e.target.checked)}
+            />
+          </InputGroup>
         </div>
       </OverlayLoader>
     </div>

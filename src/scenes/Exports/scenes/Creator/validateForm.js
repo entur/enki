@@ -4,7 +4,7 @@ import { objectValues } from 'helpers/forms';
 import messages from './validateForm.messages';
 import moment from 'moment';
 
-function validateName(name) {
+export function validateName(name) {
   if (R.isNil(name) || R.isEmpty(name)) {
     return [messages.errorExportNameIsEmpty];
   }
@@ -19,10 +19,14 @@ function validateFromDateToDate(fromDate, toDate) {
   if (R.isNil(toDate) || R.isEmpty(toDate)) {
     errors.push(messages.errorExportToDateIsEmpty);
   }
-  if (moment(fromDate).isAfter(moment(toDate))) {
+  if (toDateIsBeforeFromDate(fromDate, toDate)) {
     errors.push(messages.errorExportFromDateIsAfterToDate);
   }
   return errors;
+}
+
+export function toDateIsBeforeFromDate(fromDate, toDate) {
+  return moment(fromDate).isAfter(moment(toDate));
 }
 
 export default function(theExport) {
