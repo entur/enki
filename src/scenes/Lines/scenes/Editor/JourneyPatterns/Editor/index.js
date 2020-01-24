@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@entur/component-library';
+import { SuccessButton } from '@entur/button';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 
 import { JourneyPattern } from 'model';
@@ -54,9 +54,7 @@ class JourneyPatternEditor extends Component {
           <h2>{isEditMode ? 'Rediger' : 'Opprett'} Journey Pattern</h2>
 
           <div className="header-buttons">
-            <Button variant="success" onClick={onSave}>
-              Lagre
-            </Button>
+            <SuccessButton onClick={onSave}>Lagre</SuccessButton>
           </div>
         </div>
         <Tabs>

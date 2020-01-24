@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Button } from '@entur/component-library';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
-import { SuccessButton, NegativeButton } from '@entur/button';
+import { SuccessButton, NegativeButton, SecondaryButton } from '@entur/button';
 import { Network } from 'model';
 import { isBlank } from 'helpers/forms';
 import { ORGANISATION_TYPE } from 'model/enums';
@@ -55,7 +54,6 @@ const NetworkEditor = ({ match, history }) => {
     () => dispatch(loadFlexibleLines()),
     [dispatch]
   );
-
 
   const dispatchLoadNetwork = useCallback(() => {
     if (match.params.id) {
@@ -220,24 +218,12 @@ const NetworkEditor = ({ match, history }) => {
         title={formatMessage(messages.deleteNetworkConfirmDialogTitle)}
         message={formatMessage(messages.deleteNetworkConfirmDialogMessage)}
         buttons={[
-          <Button
-            key={2}
-            onClick={() => setDeleteDialogOpen(false)}
-            variant="secondary"
-            width="md"
-            className="action-button"
-          >
+          <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
             {formatMessage(messages.deleteNetworkConfirmDialogCancelText)}
-          </Button>,
-          <Button
-            key={1}
-            onClick={handleDelete}
-            variant="success"
-            width="md"
-            className="action-button"
-          >
+          </SecondaryButton>,
+          <SuccessButton key={1} onClick={handleDelete}>
             {formatMessage(messages.deleteNetworkConfirmDialogConfirmText)}
-          </Button>
+          </SuccessButton>
         ]}
         onClose={() => setDeleteDialogOpen(false)}
       />

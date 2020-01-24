@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@entur/component-library';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 
 import {
@@ -67,24 +67,15 @@ class ServiceJourneysTable extends Component {
           title="Slette service journey"
           message="Er du sikker på at du ønsker å slette denne service journeyen?"
           buttons={[
-            <Button
+            <SecondaryButton
               key={2}
               onClick={() => this.showDeleteDialogFor(null)}
-              variant="secondary"
-              width="md"
-              className="action-button"
             >
               Nei
-            </Button>,
-            <Button
-              key={1}
-              onClick={this.doDelete.bind(this)}
-              variant="success"
-              width="md"
-              className="action-button"
-            >
+            </SecondaryButton>,
+            <SuccessButton key={1} onClick={this.doDelete.bind(this)}>
               Ja
-            </Button>
+            </SuccessButton>
           ]}
           onClose={() => this.showDeleteDialogFor(null)}
         />
