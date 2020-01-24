@@ -6,6 +6,7 @@ import { SuccessButton } from '@entur/button';
 import { Checkbox, InputGroup, TextField } from '@entur/form';
 import { DatePicker } from '@entur/datepicker';
 import { Export } from 'model';
+import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
 import OverlayLoader from 'components/OverlayLoader';
 import { selectIntl } from 'i18n';
@@ -98,7 +99,7 @@ const ExportsCreator = ({ history }) => {
           >
             <DatePicker
               selectedDate={moment(theExport.fromDate).toDate()}
-              onChange={date => onFieldChange('fromDate', date)}
+              onChange={date => onFieldChange('fromDate', dateToString(date))}
             />
           </InputGroup>
 
