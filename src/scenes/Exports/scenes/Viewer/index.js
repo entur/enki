@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { FormattedDate } from 'react-intl';
 import moment from 'moment';
-import { Label, Button } from '@entur/component-library';
+import { PrimaryButton } from '@entur/button';
+import { Label } from '@entur/typography';
+import { DownloadIcon } from '@entur/icons';
 
 import { loadExportById } from 'actions/exports';
 import Loading from 'components/Loading';
@@ -89,14 +91,15 @@ const ExportsViewer = ({ match, history }) => {
             <Fragment>
               <Label>{formatMessage(messages.downloadLabel)}</Label>
               <div className="value download">
-                <Button
+                <PrimaryButton
                   onClick={event => {
                     event.stopPropagation();
                     theExport.download();
                   }}
                 >
+                  <DownloadIcon />
                   {formatMessage(messages.downloadLinkText)}
-                </Button>
+                </PrimaryButton>
               </div>
             </Fragment>
           )}

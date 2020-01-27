@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button } from '@entur/component-library';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import {
   Table,
@@ -89,24 +89,15 @@ class StopPointsTable extends Component {
           title="Slette stoppepunkt"
           message="Er du sikker på at du ønsker å slette dette stoppepunktet?"
           buttons={[
-            <Button
+            <SecondaryButton
               key={2}
               onClick={() => this.showDeleteDialogFor(null)}
-              variant="secondary"
-              width="md"
-              className="action-button"
             >
               Nei
-            </Button>,
-            <Button
-              key={1}
-              onClick={this.doDelete.bind(this)}
-              variant="success"
-              width="md"
-              className="action-button"
-            >
+            </SecondaryButton>,
+            <SuccessButton key={1} onClick={this.doDelete.bind(this)}>
               Ja
-            </Button>
+            </SuccessButton>
           ]}
           onClose={() => this.showDeleteDialogFor(null)}
         />

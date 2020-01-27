@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button } from '@entur/component-library';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import {
   Table,
@@ -94,24 +94,12 @@ const JourneyPatternsTable = ({
         title={formatMessage(messages.deleteConfirmDialogTitle)}
         message={formatMessage(messages.deleteConfirmDialogMessage)}
         buttons={[
-          <Button
-            key={2}
-            onClick={() => showDeleteDialogFor(null)}
-            variant="secondary"
-            width="md"
-            className="action-button"
-          >
+          <SecondaryButton key={2} onClick={() => showDeleteDialogFor(null)}>
             {formatMessage(messages.deleteConfirmDialogCancelButtonText)}
-          </Button>,
-          <Button
-            key={1}
-            onClick={doDelete}
-            variant="success"
-            width="md"
-            className="action-button"
-          >
+          </SecondaryButton>,
+          <SuccessButton key={1} onClick={doDelete}>
             {formatMessage(messages.deleteConfirmDialogConfirmButtonText)}
-          </Button>
+          </SuccessButton>
         ]}
         onClose={() => showDeleteDialogFor(null)}
       />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@entur/component-library';
+import { SuccessButton } from '@entur/button';
 
 export default function Header({ isEditMode, onSave }) {
   return (
@@ -7,9 +7,7 @@ export default function Header({ isEditMode, onSave }) {
       <h2>{isEditMode ? 'Rediger' : 'Opprett'} Stoppepunkt</h2>
 
       <div className="header-buttons">
-        <Button variant="success" onClick={onSave}>
-          Lagre
-        </Button>
+        <SuccessButton onClick={onSave}>Lagre</SuccessButton>
       </div>
     </div>
   );
