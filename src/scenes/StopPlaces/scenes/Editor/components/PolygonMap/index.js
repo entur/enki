@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { Map, Polygon, TileLayer } from 'react-leaflet';
 import { FloatingButton } from '@entur/button';
-import { ResetIcon } from '@entur/icons';
+import { UndoIcon } from '@entur/icons';
 
 import './styles.scss';
 
@@ -69,7 +69,7 @@ class PolygonMap extends Component {
           aria-label="Undo"
           onClick={undo}
         >
-          <ResetIcon />
+          <UndoIcon />
         </FloatingButton>
       </div>
     );
