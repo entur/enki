@@ -15,6 +15,7 @@
     "@entur/layout": "^1.0.5",
     "@entur/menu": "^1.2.4",
     "@entur/tab": "^0.2.5",
+    "@entur/table": "^0.3.8",
     "@entur/tokens": "^1.1.2",
     "@entur/typography": "^0.7.4",
     "axios": "^0.18.1",

@@ -5,10 +5,12 @@ import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
 import {
   Table,
-  TableHeaderCell,
+  TableBody,
+  TableHead,
   TableRow,
-  TableRowCell
-} from 'components/Table';
+  HeaderCell,
+  DataCell
+} from '@entur/table';
 import Loading from 'components/Loading';
 import { loadNetworks } from 'actions/networks';
 import { selectIntl } from 'i18n';
@@ -47,26 +49,26 @@ const Networks = ({ history }) => {
             onClick={() => handleOnRowClick(n.id)}
             title={n.description}
           >
-            <TableRowCell>{n.name}</TableRowCell>
-            <TableRowCell>{n.privateCode}</TableRowCell>
-            <TableRowCell>
+            <DataCell>{n.name}</DataCell>
+            <DataCell>{n.privateCode}</DataCell>
+            <DataCell>
               {organisations.find(o => o.id === n.authorityRef).name}
-            </TableRowCell>
+            </DataCell>
           </TableRow>
         ))
       ) : (
         <TableRow className="row-no-networks disabled">
-          <TableRowCell colSpan={3}>
+          <DataCell colSpan={3}>
             {formatMessage(messages.noNetworksFoundText)}
-          </TableRowCell>
+          </DataCell>
         </TableRow>
       );
     } else {
       return (
         <TableRow className="disabled">
-          <TableRowCell colSpan={3}>
+          <DataCell colSpan={3}>
             <Loading text={formatMessage(messages.loadingNetworksText)} />
-          </TableRowCell>
+          </DataCell>
         </TableRow>
       );
     }
@@ -86,15 +88,20 @@ const Networks = ({ history }) => {
       </SecondaryButton>
 
       <Table>
-        <TableHeaderCell label={formatMessage(messages.nameTableHeaderLabel)} />
-        <TableHeaderCell
-          label={formatMessage(messages.privateCodeTableHeaderLabel)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.authorityTableHeaderLabel)}
-        />
-
-        {renderTableRows()}
+        <TableHead>
+          <TableRow>
+            <HeaderCell>
+              {formatMessage(messages.nameTableHeaderLabel)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.privateCodeTableHeaderLabel)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.authorityTableHeaderLabel)}
+            </HeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{renderTableRows()}</TableBody>
       </Table>
     </div>
   );

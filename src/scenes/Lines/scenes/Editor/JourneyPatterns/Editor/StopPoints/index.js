@@ -71,7 +71,11 @@ class StopPointsEditor extends Component {
           <AddIcon />
           Legg til stoppepunkt
         </SecondaryButton>
-        <BannerAlertBox variant="info" title="Minst to stoppunkter">
+        <BannerAlertBox
+          style={{ marginTop: '0.5rem' }}
+          variant="info"
+          title="Minst to stoppunkter"
+        >
           Et <em>journey pattern</em> krever minst to stoppepunkter.
         </BannerAlertBox>
         <StopPointsTable

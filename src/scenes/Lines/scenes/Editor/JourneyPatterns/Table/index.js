@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from '@entur/component-library';
 import { DeleteIcon } from '@entur/icons';
-
 import {
   Table,
-  TableHeaderCell,
+  TableBody,
+  TableHead,
   TableRow,
-  TableRowCell
-} from 'components/Table';
+  HeaderCell,
+  DataCell
+} from '@entur/table';
 import { JourneyPattern } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
 
@@ -38,15 +39,15 @@ const JourneyPatternsTable = ({
     journeyPatterns.length > 0 ? (
       journeyPatterns.map((jp, i) => (
         <TableRow key={i} title={jp.description} onClick={() => onRowClick(i)}>
-          <TableRowCell>
+          <DataCell>
             {jp.name
               ? jp.name
               : formatMessage(messages.newJourneyPatternDefaultText)}
-          </TableRowCell>
-          <TableRowCell>{jp.directionType || ''}</TableRowCell>
-          <TableRowCell>{jp.pointsInSequence.length}</TableRowCell>
-          <TableRowCell>{jp.serviceJourneys.length}</TableRowCell>
-          <TableRowCell>
+          </DataCell>
+          <DataCell>{jp.directionType || ''}</DataCell>
+          <DataCell>{jp.pointsInSequence.length}</DataCell>
+          <DataCell>{jp.serviceJourneys.length}</DataCell>
+          <DataCell>
             <div
               onClick={e => {
                 showDeleteDialogFor(i);
@@ -55,33 +56,37 @@ const JourneyPatternsTable = ({
             >
               <DeleteIcon />
             </div>
-          </TableRowCell>
+          </DataCell>
         </TableRow>
       ))
     ) : (
       <TableRow className="row-no-lines disabled">
-        <TableRowCell colSpan={3}>
+        <DataCell colSpan={3}>
           {formatMessage(messages.noJourneyPatternsText)}
-        </TableRowCell>
+        </DataCell>
       </TableRow>
     );
 
   return (
     <div>
       <Table className="journey-patterns-table">
-        <TableHeaderCell
-          label={formatMessage(messages.nameTableHeaderCellLabel)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.directionTableHeaderCellLabel)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.stopPlacesTableHeaderCellLabel)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.serviceJourneysTableHeaderCellLabel)}
-        />
-        {tableRows}
+        <TableHead>
+          <TableRow>
+            <HeaderCell>
+              {formatMessage(messages.nameTableHeaderCellLabel)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.directionTableHeaderCellLabel)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.stopPlacesTableHeaderCellLabel)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.serviceJourneysTableHeaderCellLabel)}
+            </HeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{tableRows}</TableBody>
       </Table>
 
       <ConfirmDialog

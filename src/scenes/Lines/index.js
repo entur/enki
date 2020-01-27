@@ -5,10 +5,12 @@ import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
 import {
   Table,
-  TableHeaderCell,
+  TableBody,
+  TableHead,
   TableRow,
-  TableRowCell
-} from 'components/Table';
+  HeaderCell,
+  DataCell
+} from '@entur/table';
 import Loading from 'components/Loading';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import './styles.scss';
@@ -45,26 +47,26 @@ const Lines = ({ history }) => {
   const renderTableRows = () => {
     if (lines) {
       return lines.length > 0 ? (
-        lines.map(n => (
-          <TableRow key={n.id} onClick={() => handleOnRowClick(n.id)}>
-            <TableRowCell title={n.description}>{n.name}</TableRowCell>
-            <TableRowCell>{n.privateCode}</TableRowCell>
-            <TableRowCell>{n.operatorName}</TableRowCell>
+        lines.map(line => (
+          <TableRow key={line.id} onClick={() => handleOnRowClick(line.id)}>
+            <DataCell title={line.description}>{line.name}</DataCell>
+            <DataCell>{line.privateCode}</DataCell>
+            <DataCell>{line.operatorName}</DataCell>
           </TableRow>
         ))
       ) : (
         <TableRow className="row-no-lines disabled">
-          <TableRowCell colSpan={3}>
+          <DataCell colSpan={3}>
             {formatMessage(messages.noLinesFoundText)}
-          </TableRowCell>
+          </DataCell>
         </TableRow>
       );
     } else {
       return (
         <TableRow className="disabled">
-          <TableRowCell colSpan={3}>
+          <DataCell colSpan={3}>
             <Loading text={formatMessage(messages.loadingText)} />
-          </TableRowCell>
+          </DataCell>
         </TableRow>
       );
     }
@@ -80,13 +82,20 @@ const Lines = ({ history }) => {
       </SecondaryButton>
 
       <Table>
-        <TableHeaderCell label={formatMessage(messages.nameTableHeaderLabel)} />
-        <TableHeaderCell
-          label={formatMessage(messages.privateCodeTableHeaderLabel)}
-        />
-        <TableHeaderCell label={formatMessage(messages.operatorTableHeader)} />
-
-        {renderTableRows()}
+        <TableHead>
+          <TableRow>
+            <HeaderCell>
+              {formatMessage(messages.nameTableHeaderLabel)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.privateCodeTableHeaderLabel)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.operatorTableHeader)}
+            </HeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{renderTableRows()}</TableBody>
       </Table>
     </div>
   );

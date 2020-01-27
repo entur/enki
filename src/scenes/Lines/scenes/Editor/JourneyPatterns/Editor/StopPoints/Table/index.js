@@ -5,10 +5,12 @@ import { Button } from '@entur/component-library';
 import { DeleteIcon } from '@entur/icons';
 import {
   Table,
-  TableHeaderCell,
+  TableBody,
+  TableHead,
   TableRow,
-  TableRowCell
-} from 'components/Table';
+  HeaderCell,
+  DataCell
+} from '@entur/table';
 import { StopPoint } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
 
@@ -34,8 +36,8 @@ class StopPointsTable extends Component {
       stopPoints.length > 0 ? (
         stopPoints.map((sp, i) => (
           <TableRow key={i} onClick={() => onRowClick(i)}>
-            <TableRowCell>{i + 1}</TableRowCell>
-            <TableRowCell>
+            <DataCell>{i + 1}</DataCell>
+            <DataCell>
               {sp.flexibleStopPlaceRef
                 ? flexibleStopPlaces.find(
                     fsp => fsp.id === sp.flexibleStopPlaceRef
@@ -43,13 +45,13 @@ class StopPointsTable extends Component {
                 : sp.quayRef
                 ? sp.quayRef
                 : '- Nytt stoppepunkt -'}
-            </TableRowCell>
-            <TableRowCell>
+            </DataCell>
+            <DataCell>
               {sp.destinationDisplay ? sp.destinationDisplay.frontText : ''}
-            </TableRowCell>
-            <TableRowCell>{sp.forBoarding ? 'Ja' : 'Nei'}</TableRowCell>
-            <TableRowCell>{sp.forAlighting ? 'Ja' : 'Nei'}</TableRowCell>
-            <TableRowCell>
+            </DataCell>
+            <DataCell>{sp.forBoarding ? 'Ja' : 'Nei'}</DataCell>
+            <DataCell>{sp.forAlighting ? 'Ja' : 'Nei'}</DataCell>
+            <DataCell>
               <div
                 onClick={e => {
                   this.showDeleteDialogFor(i);
@@ -58,24 +60,28 @@ class StopPointsTable extends Component {
               >
                 <DeleteIcon />
               </div>
-            </TableRowCell>
+            </DataCell>
           </TableRow>
         ))
       ) : (
         <TableRow className="row-no-lines disabled">
-          <TableRowCell colSpan={3}>Ingen stoppepunkter.</TableRowCell>
+          <DataCell colSpan={3}>Ingen stoppepunkter.</DataCell>
         </TableRow>
       );
 
     return (
       <div>
         <Table className="stop-points-table">
-          <TableHeaderCell label="#" />
-          <TableHeaderCell label="Navn" />
-          <TableHeaderCell label="Front text" />
-          <TableHeaderCell label="Påstigning" />
-          <TableHeaderCell label="Avstigning" />
-          {tableRows}
+          <TableHead>
+            <TableRow>
+              <HeaderCell>#</HeaderCell>
+              <HeaderCell>Navn</HeaderCell>
+              <HeaderCell>Front text</HeaderCell>
+              <HeaderCell>Påstigning</HeaderCell>
+              <HeaderCell>Avstigning</HeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{tableRows}</TableBody>
         </Table>
 
         <ConfirmDialog

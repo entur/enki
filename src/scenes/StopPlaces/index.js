@@ -5,10 +5,12 @@ import { AddIcon } from '@entur/icons';
 
 import {
   Table,
-  TableHeaderCell,
+  TableBody,
+  TableHead,
   TableRow,
-  TableRowCell
-} from 'components/Table';
+  HeaderCell,
+  DataCell
+} from '@entur/table';
 import Loading from 'components/Loading';
 import { SecondaryButton } from '@entur/button';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
@@ -43,26 +45,26 @@ const StopPlaces = ({ history }) => {
             onClick={() => handleOnRowClick(sp.id)}
             title={sp.description}
           >
-            <TableRowCell>{sp.name}</TableRowCell>
-            <TableRowCell>{sp.privateCode}</TableRowCell>
-            <TableRowCell>
+            <DataCell>{sp.name}</DataCell>
+            <DataCell>{sp.privateCode}</DataCell>
+            <DataCell>
               {sp.flexibleArea.polygon.coordinates.length - 1}
-            </TableRowCell>
+            </DataCell>
           </TableRow>
         ))
       ) : (
         <TableRow className="row-no-stop-places disabled">
-          <TableRowCell colSpan={3}>
+          <DataCell colSpan={3}>
             {formatMessage(messages.noStopPlacesFoundText)}
-          </TableRowCell>
+          </DataCell>
         </TableRow>
       );
     } else {
       return (
         <TableRow className="disabled">
-          <TableRowCell colSpan={3}>
+          <DataCell colSpan={3}>
             <Loading text={formatMessage(messages.loadingStopPlacesText)} />
-          </TableRowCell>
+          </DataCell>
         </TableRow>
       );
     }
@@ -82,17 +84,20 @@ const StopPlaces = ({ history }) => {
       </SecondaryButton>
 
       <Table>
-        <TableHeaderCell
-          label={formatMessage(messages.nameTableHeaderLabelText)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.privateCodeTableHeaderLabelText)}
-        />
-        <TableHeaderCell
-          label={formatMessage(messages.numberOfPointsTableHeaderLabelText)}
-        />
-
-        {renderTableRows()}
+        <TableHead>
+          <TableRow>
+            <HeaderCell>
+              {formatMessage(messages.nameTableHeaderLabelText)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.privateCodeTableHeaderLabelText)}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage(messages.numberOfPointsTableHeaderLabelText)}
+            </HeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{renderTableRows()}</TableBody>
       </Table>
     </div>
   );

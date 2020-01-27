@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@entur/component-library';
 import { DeleteIcon } from '@entur/icons';
-
 import {
   Table,
-  TableHeaderCell,
+  TableBody,
+  TableHead,
   TableRow,
-  TableRowCell
-} from 'components/Table';
+  HeaderCell,
+  DataCell
+} from '@entur/table';
 import { ServiceJourney } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
 
@@ -33,11 +34,11 @@ class ServiceJourneysTable extends Component {
     const tableRows =
       serviceJourneys.length > 0 ? (
         serviceJourneys.map((jp, i) => (
-          <TableRow key={i} onClick={() => onRowClick(i)}>
-            <TableRowCell title={jp.description}>
+          <TableRow key={jp.id} onClick={() => onRowClick(i)}>
+            <DataCell title={jp.description}>
               {jp.name ? jp.name : '- Nytt service journey -'}
-            </TableRowCell>
-            <TableRowCell>
+            </DataCell>
+            <DataCell>
               <div
                 onClick={e => {
                   this.showDeleteDialogFor(i);
@@ -46,20 +47,24 @@ class ServiceJourneysTable extends Component {
               >
                 <DeleteIcon />
               </div>
-            </TableRowCell>
+            </DataCell>
           </TableRow>
         ))
       ) : (
         <TableRow className="row-no-lines disabled">
-          <TableRowCell colSpan={3}>Ingen service journeys.</TableRowCell>
+          <DataCell colSpan={3}>Ingen service journeys.</DataCell>
         </TableRow>
       );
 
     return (
       <div>
         <Table className="service-journeys-table">
-          <TableHeaderCell label="Navn" />
-          {tableRows}
+          <TableHead>
+            <TableRow>
+              <HeaderCell>Navn</HeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{tableRows}</TableBody>
         </Table>
 
         <ConfirmDialog
