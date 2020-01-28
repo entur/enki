@@ -106,7 +106,7 @@ const ExportsCreator = ({ history }) => {
           <InputGroup label={formatMessage(messages.toDateFormLabel)}>
             <DatePicker
               selectedDate={moment(theExport.toDate).toDate()}
-              onChange={date => onFieldChange('toDate', date)}
+              onChange={date => onFieldChange('toDate', dateToString(date))}
             />
           </InputGroup>
 
