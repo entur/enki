@@ -51,7 +51,7 @@ const Form = ({
         {...quaySearchFeedback(errors.quayRef, quaySearch)}
       >
         <TextField
-          value={stopPoint.quayRef || ''}
+          value={stopPoint.quayRef ?? ''}
           onChange={e => {
             const value = e.target.value;
             handleFieldChange('quayRef', hasValue(value) ? value : null);
