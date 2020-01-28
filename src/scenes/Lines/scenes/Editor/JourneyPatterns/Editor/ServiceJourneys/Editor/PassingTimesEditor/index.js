@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { DropDown, DropDownOptions } from '@entur/component-library';
-
+import { Dropdown } from '@entur/dropdown';
+import { InputGroup } from '@entur/form';
 import { StopPoint, PassingTime } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import TimePicker from 'components/TimePicker';
@@ -50,48 +50,36 @@ class PassingTimesEditor extends Component {
   );
 
   getDayOffsetDropDown = (tpt, index, field) => (
-    <DropDown
+    <Dropdown
       value={tpt && tpt[field] ? tpt[field].toString() : '0'}
-      onChange={e => this.handleDayOffsetChange(index, field, e.target.value)}
-    >
-      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
-        <DropDownOptions key={i} label={'+' + i} value={i} />
-      ))}
-    </DropDown>
+      onChange={e => this.handleDayOffsetChange(index, field, e.value)}
+      placeholder="Daytime offset"
+      items={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => ({
+        value: i,
+        label: '+' + i
+      }))}
+    />
   );
 
-  render() {
-    const { flexibleStopPlaces, passingTimes, stopPoints } = this.props;
+  renderStopPlacePassingTimes() {
+    const { flexibleStopPlaces, stopPoints, passingTimes } = this.props;
 
-    const passingTimeEditors = stopPoints.map((sp, i) => {
-      let stopPlaceName;
-
+    return stopPoints.map((sp, i) => {
       const stopPlace = flexibleStopPlaces.find(
         fsp => fsp.id === sp.flexibleStopPlaceRef
       );
 
-      if (stopPlace) {
-        stopPlaceName = stopPlace.name;
-      } else {
-        stopPlaceName = sp.quayRef;
-      }
-
+      const stopPlaceName = stopPlace?.name ?? sp.quayRef;
       const tpt = passingTimes[i];
 
       return (
-        <div key={i} className="passing-time-editor">
-          <div className="number">{i + 1}</div>
-
-          <div className="stop-place">
-            <div>{stopPlaceName}</div>
-          </div>
-
-          <div className="times">
-            <div className="time-n-day">
-              <div className="time">
-                {this.getTimePicker(tpt, i, 'earliestDepartureTime')}
-              </div>
-              <div className="day">
+        <>
+          <h3>{'#' + (i + 1) + ' ' + stopPlaceName} </h3>
+          <h4>Avgang</h4>
+          <InputGroup label="Tidligste avgangstid">
+            <div className="time-and-offset-container">
+              <div>{this.getTimePicker(tpt, i, 'earliestDepartureTime')}</div>
+              <div className="time-and-offset">
                 {this.getDayOffsetDropDown(
                   tpt,
                   i,
@@ -99,64 +87,40 @@ class PassingTimesEditor extends Component {
                 )}
               </div>
             </div>
-            <div className="time-n-day">
-              <div className="time">
-                {this.getTimePicker(tpt, i, 'departureTime')}
-              </div>
-              <div className="day">
+          </InputGroup>
+
+          <InputGroup label="Normal avgangstid">
+            <div className="time-and-offset-container">
+              <div>{this.getTimePicker(tpt, i, 'departureTime')}</div>
+              <div className="time-and-offset">
                 {this.getDayOffsetDropDown(tpt, i, 'departureDayOffset')}
               </div>
             </div>
-          </div>
-
-          <div className="times">
-            <div className="time-n-day">
-              <div className="time">
-                {this.getTimePicker(tpt, i, 'arrivalTime')}
-              </div>
-              <div className="day">
+          </InputGroup>
+          <h4>Ankomst</h4>
+          <InputGroup label="Normal ankomsttid">
+            <div className="time-and-offset-container">
+              <div>{this.getTimePicker(tpt, i, 'arrivalTime')}</div>
+              <div className="time-and-offset">
                 {this.getDayOffsetDropDown(tpt, i, 'arrivalDayOffset')}
               </div>
             </div>
-            <div className="time-n-day">
-              <div className="time">
-                {this.getTimePicker(tpt, i, 'latestArrivalTime')}
-              </div>
-              <div className="day">
+          </InputGroup>
+          <InputGroup label="Seneste ankomsttid">
+            <div className="time-and-offset-container">
+              <div>{this.getTimePicker(tpt, i, 'latestArrivalTime')}</div>
+              <div className="time-and-offset">
                 {this.getDayOffsetDropDown(tpt, i, 'latestArrivalDayOffset')}
               </div>
             </div>
-          </div>
-        </div>
+          </InputGroup>
+        </>
       );
     });
+  }
 
-    return (
-      <div className="passing-times-editor">
-        <div className="headers">
-          <div className="number">#</div>
-          <div className="stop-place">Stoppested</div>
-          <div className="table-headers">
-            <div className="collection">
-              <div className="upper">Avgang</div>
-              <div className="lowers">
-                <div>Tidligst</div>
-                <div>Normalt</div>
-              </div>
-            </div>
-
-            <div className="collection">
-              <div className="upper">Ankomst</div>
-              <div className="lowers">
-                <div>Normalt</div>
-                <div>Senest</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="passing-time-editors">{passingTimeEditors}</div>
-      </div>
-    );
+  render() {
+    return <Fragment>{this.renderStopPlacePassingTimes()}</Fragment>;
   }
 }
 

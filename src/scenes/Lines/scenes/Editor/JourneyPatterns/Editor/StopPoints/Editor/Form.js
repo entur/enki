@@ -1,11 +1,21 @@
 import React, { Fragment } from 'react';
 import { injectIntl } from 'react-intl';
-import Errors from 'components/Errors';
-import { Checkbox, Label, TextField } from '@entur/component-library';
+import { Checkbox, Fieldset, InputGroup, TextField } from '@entur/form';
 import { hasValue } from 'helpers/forms';
 import StopPlaceSelection from './StopPlaceSelection';
-import QuaySearchResults from './QuaySearchResults';
+import { quaySearchResults } from './quaySearchResults';
 import messages from './Form.messages';
+
+function quaySearchFeedback(errors, searchResults) {
+  if (errors.length) {
+    return {
+      variant: 'error',
+      feedback: errors
+    };
+  }
+
+  return quaySearchResults(searchResults);
+}
 
 const Form = ({
   flexibleStopPlaces,
@@ -27,8 +37,6 @@ const Form = ({
 
   return (
     <Fragment>
-      <Errors errors={errors.flexibleStopPlaceRefAndQuayRef} />
-
       <StopPlaceSelection
         stopPlaceSelection={stopPlaceSelection}
         flexibleStopPlaceRefAndQuayRefErrors={
@@ -38,55 +46,54 @@ const Form = ({
         handleStopPlaceSelectionChange={handleStopPlaceSelectionChange}
       />
 
-      <Label>{formatMessage(messages.labelQuayRef)}</Label>
-      <TextField
-        type="text"
-        value={stopPoint.quayRef || ''}
-        onChange={e => {
-          let value = e.target.value;
-          handleFieldChange('quayRef', hasValue(value) ? value : null);
-          debouncedSearchForQuay();
-        }}
-        className={
-          errors.quayRef.length > 0 ||
-          errors.flexibleStopPlaceRefAndQuayRef.length > 0
-            ? 'input-error'
-            : ''
+      <InputGroup
+        label={formatMessage(messages.labelQuayRef)}
+        {...quaySearchFeedback(errors.quayRef, quaySearch)}
+      >
+        <TextField
+          value={stopPoint.quayRef ?? ''}
+          onChange={e => {
+            const value = e.target.value;
+            handleFieldChange('quayRef', hasValue(value) ? value : null);
+            debouncedSearchForQuay();
+          }}
+        />
+      </InputGroup>
+
+      <InputGroup
+        label={
+          (frontTextRequired ? '* ' : '') +
+          formatMessage(messages.labelFrontText)
         }
-      />
+      >
+        <TextField
+          value={frontTextValue}
+          onChange={e => handleFrontTextChange(e.target.value)}
+          variant={errors.frontText.length ? 'error' : undefined}
+          feedback={errors.frontText}
+        />
+      </InputGroup>
 
-      <QuaySearchResults quaySearch={quaySearch} />
-
-      <Errors errors={errors.quayRef} />
-
-      <Label>
-        {frontTextRequired && '* '}
-        {formatMessage(messages.labelFrontText)}
-      </Label>
-      <TextField
-        type="text"
-        value={frontTextValue}
-        onChange={e => handleFrontTextChange(e.target.value)}
-        className={errors.frontText.length > 0 ? 'input-error' : ''}
-      />
-
-      <Errors errors={errors.frontText} />
-
-      <div style={{ marginBottom: '1em' }}>
+      <Fieldset
+        label="På og/eller av-stigning"
+        className={{ marginTop: '0.5rem' }}
+      >
         <Checkbox
           value={'1'}
           checked={stopPoint.forBoarding === true}
           onChange={e => handleFieldChange('forBoarding', e.target.checked)}
-          label={formatMessage(messages.labelForBoarding)}
-        />
-      </div>
+        >
+          {formatMessage(messages.labelForBoarding)}
+        </Checkbox>
 
-      <Checkbox
-        value={'1'}
-        checked={stopPoint.forAlighting === true}
-        onChange={e => handleFieldChange('forAlighting', e.target.checked)}
-        label={formatMessage(messages.labelForAlighting)}
-      />
+        <Checkbox
+          value={'1'}
+          checked={stopPoint.forAlighting === true}
+          onChange={e => handleFieldChange('forAlighting', e.target.checked)}
+        >
+          {formatMessage(messages.labelForAlighting)}
+        </Checkbox>
+      </Fieldset>
     </Fragment>
   );
 };
