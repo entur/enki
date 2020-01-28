@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { InputGroup, TextField } from '@entur/form';
+import { TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
 import { NegativeButton, SuccessButton } from '@entur/button';
 
@@ -195,14 +195,13 @@ const Picker = ({ label, value, onChange, nrOfOptions }) => {
 
   return (
     <div className="picker">
-      <InputGroup label={label}>
-        <Dropdown
-          items={options}
-          value={value.toString()}
-          onChange={e => onChange(e.value)}
-          placeholder={value.toString()}
-        />
-      </InputGroup>
+      <Dropdown
+        items={options}
+        label={label}
+        value={value.toString()}
+        onChange={e => onChange(e.value)}
+        placeholder={value.toString()}
+      />
     </div>
   );
 };

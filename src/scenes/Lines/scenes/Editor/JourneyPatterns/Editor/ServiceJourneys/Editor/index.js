@@ -118,19 +118,19 @@ export default function ServiceJourneyEditor(props) {
               />
             </InputGroup>
 
-            <InputGroup label="Operatør" className="form-section">
-              <Dropdown
-                items={[
-                  { label: DEFAULT_SELECT_LABEL, value: DEFAULT_SELECT_VALUE },
-                  ...operators.map(({ name, id }) => ({
-                    label: name,
-                    value: id
-                  }))
-                ]}
-                value={operatorSelection}
-                onChange={({ value }) => handleOperatorSelectionChange(value)}
-              />
-            </InputGroup>
+            <Dropdown
+              className="form-section"
+              label="Operatør"
+              items={[
+                { label: DEFAULT_SELECT_LABEL, value: DEFAULT_SELECT_VALUE },
+                ...operators.map(({ name, id }) => ({
+                  label: name,
+                  value: id
+                }))
+              ]}
+              value={operatorSelection}
+              onChange={({ value }) => handleOperatorSelectionChange(value)}
+            />
           </TabPanel>
 
           <TabPanel>

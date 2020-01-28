@@ -185,22 +185,19 @@ const NetworkEditor = ({ match, history }) => {
               />
             </InputGroup>
 
-            <InputGroup
+            <Dropdown
               className="form-section"
               label={formatMessage(messages.authorityLabelText)}
-            >
-              <Dropdown
-                items={[
-                  { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
-                  ...authorities.map(org => ({
-                    label: org.name,
-                    value: org.id
-                  }))
-                ]}
-                value={authoritySelection}
-                onChange={({ value }) => handleAuthoritySelectionChange(value)}
-              />
-            </InputGroup>
+              items={[
+                { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
+                ...authorities.map(org => ({
+                  label: org.name,
+                  value: org.id
+                }))
+              ]}
+              value={authoritySelection}
+              onChange={({ value }) => handleAuthoritySelectionChange(value)}
+            />
           </div>
         </OverlayLoader>
       ) : (
