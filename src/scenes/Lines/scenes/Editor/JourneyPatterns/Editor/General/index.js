@@ -55,16 +55,15 @@ const General = ({
         />
       </InputGroup>
 
-      <InputGroup label={formatMessage(messages.directionLabel)}>
-        <Dropdown
-          items={[
-            { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
-            ...Object.values(DIRECTION_TYPE)
-          ]}
-          value={DEFAULT_SELECT_VALUE}
-          onChange={({ value }) => handleDirectionSelectionChange(value)}
-        />
-      </InputGroup>
+      <Dropdown
+        label={formatMessage(messages.directionLabel)}
+        items={[
+          { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
+          ...Object.values(DIRECTION_TYPE)
+        ]}
+        value={DEFAULT_SELECT_VALUE}
+        onChange={({ value }) => handleDirectionSelectionChange(value)}
+      />
     </Fragment>
   );
 };
