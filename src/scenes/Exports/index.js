@@ -13,7 +13,7 @@ import {
   DataCell
 } from '@entur/table';
 import Loading from 'components/Loading';
-import { SecondaryButton } from '@entur/button';
+import { SecondaryButton, SecondarySquareButton } from '@entur/button';
 import { loadExports } from 'actions/exports';
 import { EXPORT_STATUS } from 'model/enums';
 
@@ -44,15 +44,14 @@ const Exports = ({ history }) => {
             <DataCell>{getIconForStatus(e.exportStatus)}</DataCell>
             <DataCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
-                <SecondaryButton
-                  width="square"
+                <SecondarySquareButton
                   onClick={event => {
                     event.stopPropagation();
                     e.download();
                   }}
                 >
                   <DownloadIcon />
-                </SecondaryButton>
+                </SecondarySquareButton>
               )}
             </DataCell>
             <DataCell>
