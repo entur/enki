@@ -69,7 +69,7 @@ class PassingTimesEditor extends Component {
         fsp => fsp.id === sp.flexibleStopPlaceRef
       );
 
-      const stopPlaceName = stopPlace ? stopPlace.name : sp.quayRef;
+      const stopPlaceName = stopPlace?.name ?? sp.quayRef;
       const tpt = passingTimes[i];
 
       return (
