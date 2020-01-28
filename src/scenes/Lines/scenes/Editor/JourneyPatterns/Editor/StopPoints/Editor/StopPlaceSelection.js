@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import { DropDown, DropDownOptions, Label } from '@entur/component-library';
+import { Dropdown } from '@entur/dropdown';
+import { InputGroup } from '@entur/form';
 import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL } from './constants';
 
 export default function StopPlaceSelection({
@@ -10,22 +11,25 @@ export default function StopPlaceSelection({
 }) {
   return (
     <Fragment>
-      <Label>Stoppested</Label>
-      <DropDown
-        value={stopPlaceSelection}
-        onChange={e => handleStopPlaceSelectionChange(e.target.value)}
-        className={
-          flexibleStopPlaceRefAndQuayRefErrors.length > 0 ? 'input-error' : ''
+      <InputGroup
+        label="Stoppested"
+        variant={
+          flexibleStopPlaceRefAndQuayRefErrors.length ? 'error' : undefined
         }
+        feedback={flexibleStopPlaceRefAndQuayRefErrors[0]}
       >
-        <DropDownOptions
-          label={DEFAULT_SELECT_LABEL}
-          value={DEFAULT_SELECT_VALUE}
+        <Dropdown
+          items={[
+            { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
+            ...flexibleStopPlaces.map(fsp => ({
+              label: fsp.name,
+              value: fsp.id
+            }))
+          ]}
+          value={stopPlaceSelection}
+          onChange={e => handleStopPlaceSelectionChange(e.value)}
         />
-        {flexibleStopPlaces.map(fsp => (
-          <DropDownOptions key={fsp.name} label={fsp.name} value={fsp.id} />
-        ))}
-      </DropDown>
+      </InputGroup>
     </Fragment>
   );
 }

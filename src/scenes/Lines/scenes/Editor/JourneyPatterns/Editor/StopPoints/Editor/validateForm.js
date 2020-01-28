@@ -27,7 +27,7 @@ export default async function(stopPoint, stopPointIndex) {
     stopPointIndex === 0 &&
     (!destinationDisplay || !hasValue(destinationDisplay.frontText))
   ) {
-    errors.frontText.push(messages.errorFrontTextNoValue);
+    errors.frontText.push(messages.errorFrontTxextNoValue);
   }
   return [objectValues(errors).length === 0, errors];
 }

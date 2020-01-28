@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { Label, TextField, Radio } from '@entur/component-library';
+import { RadioGroup, TextField, Radio } from '@entur/form';
 import DurationPicker from 'components/DurationPicker';
 import { selectIntl } from 'i18n';
 import messages from './bookingLimitFields.messages';
@@ -35,41 +35,40 @@ export default props => {
 
   return (
     <div className="form-section">
-      <Label>{formatMessage(messages.headerLabel)}</Label>
+      <RadioGroup
+        label={formatMessage(messages.headerLabel)}
+        onChange={e => handleBookingLimitChange(e.target.value)}
+        value={bookingLimitType}
+      >
+        <Radio className="booking-limit-radio" value={BOOKING_LIMIT_TYPE.TIME}>
+          {formatMessage(messages.bookingLimitTypeTimeRadioButtonLabel)}
+        </Radio>
+        <TextField
+          type="time"
+          className="latest-time-picker"
+          defaultValue={latestBookingTime || undefined}
+          onChange={e => onLatestBookingTimeChange(e.target.value)}
+          disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
+        />
 
-      <Radio
-        className="booking-limit-radio"
-        label={formatMessage(messages.bookingLimitTypeTimeRadioButtonLabel)}
-        value={BOOKING_LIMIT_TYPE.TIME}
-        checked={bookingLimitType === BOOKING_LIMIT_TYPE.TIME}
-        onChange={() => handleBookingLimitChange(BOOKING_LIMIT_TYPE.TIME)}
-      />
-      <TextField
-        type="time"
-        className="latest-time-picker"
-        value={latestBookingTime}
-        onChange={e => onLatestBookingTimeChange(e.target.value)}
-        disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-      />
+        <Radio
+          className="booking-limit-radio"
+          value={BOOKING_LIMIT_TYPE.PERIOD}
+        >
+          {formatMessage(messages.bookingLimitTypePeriodRadioButtonLabel)}
+        </Radio>
 
-      <Radio
-        className="booking-limit-radio"
-        label={formatMessage(messages.bookingLimitTypePeriodRadioButtonLabel)}
-        value={BOOKING_LIMIT_TYPE.PERIOD}
-        checked={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
-        onChange={() => handleBookingLimitChange(BOOKING_LIMIT_TYPE.PERIOD)}
-      />
-
-      <DurationPicker
-        className="mimimum-booking-period-picker"
-        duration={minimumBookingPeriod}
-        resetOnZero
-        onChange={period => onMinimumBookingPeriodChange(period)}
-        disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
-        position="above"
-        showYears={false}
-        showMonths={false}
-      />
+        <DurationPicker
+          className="mimimum-booking-period-picker"
+          duration={minimumBookingPeriod}
+          resetOnZero
+          onChange={period => onMinimumBookingPeriodChange(period)}
+          disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
+          position="above"
+          showYears={false}
+          showMonths={false}
+        />
+      </RadioGroup>
     </div>
   );
 };

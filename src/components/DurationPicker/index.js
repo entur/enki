@@ -29,7 +29,6 @@ class DurationPicker extends React.Component {
 
   render() {
     const {
-      label,
       duration,
       resetOnZero,
       showSeconds,
@@ -92,8 +91,7 @@ class DurationPicker extends React.Component {
     return (
       <TimeUnitPicker
         onUnitChange={this.handleOnUnitChange.bind(this)}
-        onReset={!resetOnZero ? this.handleReset.bind(this) : undefined}
-        label={label}
+        onReset={!resetOnZero ? this.handleReset.bind(this) : () => undefined}
         years={years}
         months={months}
         days={days}
@@ -117,7 +115,6 @@ class DurationPicker extends React.Component {
 
 DurationPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
-  label: PropTypes.string,
   duration: PropTypes.string,
   resetOnZero: PropTypes.bool,
   showYears: PropTypes.bool,

@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {
-  Button,
-  TextField,
-  Label,
-  FormGroup,
-  DropDown,
-  DropDownOptions
-} from '@entur/component-library';
+import { InputGroup, TextField } from '@entur/form';
+import { Dropdown } from '@entur/dropdown';
+import { NegativeButton, SuccessButton } from '@entur/button';
 
 import './styles.scss';
 
@@ -51,7 +46,6 @@ class TimeUnitPicker extends React.Component {
     const {
       onUnitChange,
       onReset,
-      label,
       years,
       months,
       days,
@@ -75,8 +69,6 @@ class TimeUnitPicker extends React.Component {
 
     return (
       <div className={classNames}>
-        {label && <Label>{label}</Label>}
-
         <div ref={div => (this.trigger = div)}>
           <TextField value={textValue} readOnly={true} />
         </div>
@@ -141,20 +133,19 @@ class TimeUnitPicker extends React.Component {
 
             <div className="buttons">
               {onReset && (
-                <Button
-                  variant="negative"
+                <NegativeButton
                   onClick={() => {
                     onReset();
                     this.showPickers(false);
                   }}
                 >
                   Nullstill
-                </Button>
+                </NegativeButton>
               )}
 
-              <Button variant="success" onClick={() => this.showPickers(false)}>
+              <SuccessButton onClick={() => this.showPickers(false)}>
                 Ferdig
-              </Button>
+              </SuccessButton>
             </div>
           </div>
         )}
@@ -197,36 +188,26 @@ TimeUnitPicker.defaultProps = {
 };
 
 const Picker = ({ label, value, onChange, nrOfOptions }) => {
-  const getOptions = () => {
-    const options = [];
-    for (let i = 0; i < nrOfOptions; i++) {
-      options.push(
-        <DropDownOptions
-          value={i}
-          key={'option-' + i}
-          label={i < 10 ? '0' + i : i}
-        />
-      );
-    }
-    return options;
-  };
+  const options = [...Array(nrOfOptions).keys()].map(i => ({
+    value: i,
+    label: i < 10 ? '0' + i : i
+  }));
 
   return (
     <div className="picker">
-      <FormGroup inputId="TimeUnitPicker" title={label}>
-        <DropDown
+      <InputGroup label={label}>
+        <Dropdown
+          items={options}
           value={value.toString()}
-          onChange={e => onChange(e.target.value)}
-        >
-          {getOptions()}
-        </DropDown>
-      </FormGroup>
+          onChange={e => onChange(e.value)}
+          placeholder={value.toString()}
+        />
+      </InputGroup>
     </div>
   );
 };
 
 Picker.propTypes = {
-  label: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   nrOfOptions: PropTypes.number.isRequired

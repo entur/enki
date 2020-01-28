@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import moment from 'moment';
-import {
-  Label,
-  Checkbox,
-  SlideSwitch,
-  DeleteIcon
-} from '@entur/component-library';
+import { DeleteIcon } from '@entur/icons';
+import { Checkbox, InputGroup, Switch } from '@entur/form';
 import { DayTypeAssignment } from 'model';
 import { dateToString } from 'helpers/dates';
 import { DatePicker } from '@entur/datepicker';
@@ -64,59 +60,61 @@ class DayTypeAssignmentEditor extends Component {
         </div>
 
         <div>
-          <SlideSwitch
-            id="use-date-range-switch"
-            label="Bruk fra og til dato"
+          <Switch
+            label="Bruk fra- og til-dato"
             checked={useDateRange}
-            onChange={this.handleDateRangeChange.bind(this)}
+            onChange={() => this.handleDateRangeChange()}
           />
 
           {!useDateRange && (
             <div>
-              <Label>Dato</Label>
-              <DatePicker
-                selectedDate={moment(date).toDate()}
-                onChange={date =>
-                  this.onFieldChange('date', dateToString(date))
-                }
-              />
+              <InputGroup label="Dato">
+                <DatePicker
+                  selectedDate={moment(date).toDate()}
+                  onChange={date =>
+                    this.onFieldChange('date', dateToString(date))
+                  }
+                />
+              </InputGroup>
             </div>
           )}
 
           {useDateRange && (
             <div className="range-dates">
               <div>
-                <Label>Fra dato</Label>
-                <DatePicker
-                  selectedDate={
-                    operatingPeriod
-                      ? moment(operatingPeriod.fromDate).toDate()
-                      : undefined
-                  }
-                  onChange={date =>
-                    this.handleOperatingPeriodFieldChange(
-                      'fromDate',
-                      dateToString(date)
-                    )
-                  }
-                />
+                <InputGroup label="Fra dato">
+                  <DatePicker
+                    selectedDate={
+                      operatingPeriod
+                        ? moment(operatingPeriod.fromDate).toDate()
+                        : undefined
+                    }
+                    onChange={date =>
+                      this.handleOperatingPeriodFieldChange(
+                        'fromDate',
+                        dateToString(date)
+                      )
+                    }
+                  />
+                </InputGroup>
               </div>
 
               <div>
-                <Label>Til dato</Label>
-                <DatePicker
-                  selectedDate={
-                    operatingPeriod
-                      ? moment(operatingPeriod.toDate).toDate()
-                      : undefined
-                  }
-                  onChange={date =>
-                    this.handleOperatingPeriodFieldChange(
-                      'toDate',
-                      dateToString(date)
-                    )
-                  }
-                />
+                <InputGroup label="Til dato">
+                  <DatePicker
+                    selectedDate={
+                      operatingPeriod
+                        ? moment(operatingPeriod.toDate).toDate()
+                        : undefined
+                    }
+                    onChange={date =>
+                      this.handleOperatingPeriodFieldChange(
+                        'toDate',
+                        dateToString(date)
+                      )
+                    }
+                  />
+                </InputGroup>
               </div>
             </div>
           )}
