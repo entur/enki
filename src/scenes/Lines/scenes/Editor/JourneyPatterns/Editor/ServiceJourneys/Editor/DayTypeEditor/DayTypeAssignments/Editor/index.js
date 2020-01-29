@@ -60,17 +60,18 @@ class DayTypeAssignmentEditor extends Component {
         </div>
 
         <div>
-          <Switch
-            label="Bruk fra- og til-dato"
-            checked={useDateRange}
-            onChange={() => this.handleDateRangeChange()}
-          />
+          <InputGroup label="Bruk fra- og til-dato">
+            <Switch
+              checked={useDateRange}
+              onChange={() => this.handleDateRangeChange()}
+            />
+          </InputGroup>
 
           {!useDateRange && (
             <div>
               <InputGroup label="Dato">
                 <DatePicker
-                  selectedDate={moment(date).toDate()}
+                  selectedDate={date && moment(date).toDate()}
                   onChange={date =>
                     this.onFieldChange('date', dateToString(date))
                   }

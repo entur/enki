@@ -6,7 +6,7 @@ class DayTypeAssignment extends Base {
     super();
 
     this.isAvailable = data.isAvailable || false;
-    this.date = data.date;
+    this.date = data.date || undefined;
     this.operatingPeriod = data.operatingPeriod
       ? new OperatingPeriod(data.operatingPeriod)
       : null;
