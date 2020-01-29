@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { InputGroup } from '@entur/form';
+import { Label } from '@entur/typography';
 
 import { DayType } from 'model';
 import DayTypeAssignmentsEditor from './DayTypeAssignments';
@@ -42,20 +42,18 @@ class DayTypeEditor extends Component {
 
     return (
       <div className="day-type-editor">
-        <InputGroup label="Ukedager">
-          <WeekdayPicker
-            days={daysOfWeekToBoolArray(daysOfWeek)}
-            onDaysChange={arr =>
-              this.onFieldChange('daysOfWeek', boolArrayToDaysOfWeek(arr))
-            }
-          />
-        </InputGroup>
-        <InputGroup label="Datoer">
-          <DayTypeAssignmentsEditor
-            dayTypeAssignments={dayTypeAssignments}
-            onChange={dtas => this.onFieldChange('dayTypeAssignments', dtas)}
-          />
-        </InputGroup>
+        <Label>Ukedager</Label>
+        <WeekdayPicker
+          days={daysOfWeekToBoolArray(daysOfWeek)}
+          onDaysChange={arr =>
+            this.onFieldChange('daysOfWeek', boolArrayToDaysOfWeek(arr))
+          }
+        />
+        <Label>Datoer</Label>
+        <DayTypeAssignmentsEditor
+          dayTypeAssignments={dayTypeAssignments}
+          onChange={dtas => this.onFieldChange('dayTypeAssignments', dtas)}
+        />
       </div>
     );
   }
