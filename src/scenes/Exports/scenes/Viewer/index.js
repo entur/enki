@@ -9,6 +9,7 @@ import { DownloadIcon } from '@entur/icons';
 
 import { loadExportById } from 'actions/exports';
 import Loading from 'components/Loading';
+import PageHeader from 'components/PageHeader';
 import { EXPORT_STATUS } from 'model/enums';
 
 import './styles.scss';
@@ -54,7 +55,7 @@ const ExportsViewer = ({ match, history }) => {
   return (
     <div className="export-viewer">
       <div className="header">
-        <h2>{formatMessage(messages.header)}</h2>
+        <PageHeader withBackButton title={formatMessage(messages.header)} />
       </div>
 
       {theExport ? (

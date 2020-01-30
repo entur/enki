@@ -12,6 +12,7 @@ import {
   DataCell
 } from '@entur/table';
 import Loading from 'components/Loading';
+import PageHeader from 'components/PageHeader';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import './styles.scss';
 import { createSelector } from 'reselect';
@@ -74,7 +75,7 @@ const Lines = ({ history }) => {
 
   return (
     <div className="lines">
-      <h2>{formatMessage(messages.header)}</h2>
+      <PageHeader title={formatMessage(messages.header)} />
 
       <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
         <AddIcon />

@@ -20,8 +20,8 @@ import {
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
+import PageHeader from 'components/PageHeader';
 import ConfirmDialog from 'components/ConfirmDialog';
-
 import PolygonMap from './components/PolygonMap';
 import './styles.scss';
 import { createSelector } from 'reselect';
@@ -191,11 +191,14 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   return (
     <div className="stop-place-editor">
       <div className="header">
-        <h2>
-          {match.params.id
-            ? formatMessage(messages.editHeader)
-            : formatMessage(messages.createHeader)}
-        </h2>
+        <PageHeader
+          withBackButton
+          title={
+            match.params.id
+              ? formatMessage(messages.editHeader)
+              : formatMessage(messages.createHeader)
+          }
+        />
 
         <div className="buttons">
           <SuccessButton onClick={handleOnSaveClick}>

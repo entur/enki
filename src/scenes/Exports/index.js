@@ -13,6 +13,7 @@ import {
   DataCell
 } from '@entur/table';
 import Loading from 'components/Loading';
+import PageHeader from 'components/PageHeader';
 import { SecondaryButton, SecondarySquareButton } from '@entur/button';
 import { loadExports } from 'actions/exports';
 import { EXPORT_STATUS } from 'model/enums';
@@ -87,7 +88,7 @@ const Exports = ({ history }) => {
 
   return (
     <div className="exports">
-      <h2>{formatMessage(messages.header)}</h2>
+      <PageHeader title={formatMessage(messages.header)} />
 
       <SecondaryButton
         as={Link}

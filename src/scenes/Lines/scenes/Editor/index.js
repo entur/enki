@@ -18,6 +18,7 @@ import {
 import { loadNetworks } from 'actions/networks';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import Loading from 'components/Loading';
+import PageHeader from 'components/PageHeader';
 import OverlayLoader from 'components/OverlayLoader';
 import ConfirmDialog from 'components/ConfirmDialog';
 import BookingArrangementEditor from './BookingArrangementEditor';
@@ -178,11 +179,14 @@ const FlexibleLineEditor = ({ match, history }) => {
   return (
     <div className="line-editor">
       <div className="header">
-        <h2>
-          {match.params.id
-            ? formatMessage(messages.editLineHeader)
-            : formatMessage(messages.createLineHeader)}
-        </h2>
+        <PageHeader
+          withBackButton
+          title={
+            match.params.id
+              ? formatMessage(messages.editLineHeader)
+              : formatMessage(messages.createLineHeader)
+          }
+        />
 
         <div className="buttons">
           <SuccessButton onClick={handleOnSaveClick}>
