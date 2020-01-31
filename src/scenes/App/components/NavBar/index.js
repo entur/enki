@@ -21,10 +21,7 @@ const NavBarItem = withRouter(({ location, text, path, className }) => {
     <SideNavigationItem
       active={isActive(location.pathname, path)}
       as={Link}
-      to={{
-        pathname: path,
-        state: { title: 'Yo mofo' }
-      }}
+      to={path}
       className={className}
     >
       {text}
