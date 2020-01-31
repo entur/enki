@@ -199,21 +199,6 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
               : formatMessage(messages.createHeader)
           }
         />
-
-        <div className="buttons">
-          <SuccessButton onClick={handleOnSaveClick}>
-            {formatMessage(messages.saveButtonText)}
-          </SuccessButton>
-
-          {match.params.id && (
-            <NegativeButton
-              onClick={() => setDeleteDialogOpen(true)}
-              disabled={isDeleteDisabled}
-            >
-              {formatMessage(messages.deleteButtonText)}
-            </NegativeButton>
-          )}
-        </div>
       </div>
 
       {flexibleStopPlace ? (
@@ -227,49 +212,68 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
         >
           <div className="stop-place-form-container">
             <div className="stop-place-form">
-              <Errors errors={errors.name} />
-              <InputGroup label={formatMessage(messages.nameFormLabelText)}>
-                <TextField
-                  defaultValue={flexibleStopPlace.name}
-                  onChange={e => onFieldChange('name', e.target.value)}
-                />
-              </InputGroup>
-              <InputGroup
-                label={formatMessage(messages.descriptionFormLabelText)}
-              >
-                <TextArea
-                  type="text"
-                  value={flexibleStopPlace.description}
-                  onChange={e => onFieldChange('description', e.target.value)}
-                />
-              </InputGroup>
+              <div>
+                <Errors errors={errors.name} />
+                <InputGroup label={formatMessage(messages.nameFormLabelText)}>
+                  <TextField
+                    defaultValue={flexibleStopPlace.name}
+                    onChange={e => onFieldChange('name', e.target.value)}
+                  />
+                </InputGroup>
+                <InputGroup
+                  label={formatMessage(messages.descriptionFormLabelText)}
+                >
+                  <TextArea
+                    type="text"
+                    value={flexibleStopPlace.description}
+                    onChange={e => onFieldChange('description', e.target.value)}
+                  />
+                </InputGroup>
 
-              <InputGroup
-                label={formatMessage(messages.privateCodeFormLabelText)}
-              >
-                <TextField
-                  value={flexibleStopPlace.privateCode}
-                  onChange={e => onFieldChange('privateCode', e.target.value)}
-                />
-              </InputGroup>
+                <InputGroup
+                  label={formatMessage(messages.privateCodeFormLabelText)}
+                >
+                  <TextField
+                    value={flexibleStopPlace.privateCode}
+                    onChange={e => onFieldChange('privateCode', e.target.value)}
+                  />
+                </InputGroup>
 
-              <InputGroup
-                label={formatMessage(messages.coordinatesFormLabelText)}
-              >
-                <TextArea
-                  rows="12"
-                  value={coordinates}
-                  onChange={e => setCoordinates(e.target.value)}
-                  placeholder={coordinatesPlaceholder}
-                />
-              </InputGroup>
-              <TertiaryButton
-                className="draw-polygon-button"
-                onClick={handleDrawPolygonClick}
-              >
-                <MapIcon />
-                {formatMessage(messages.drawPolygonButtonText)}
-              </TertiaryButton>
+                <InputGroup
+                  label={formatMessage(messages.coordinatesFormLabelText)}
+                >
+                  <TextArea
+                    rows="12"
+                    value={coordinates}
+                    onChange={e => setCoordinates(e.target.value)}
+                    placeholder={coordinatesPlaceholder}
+                  />
+                </InputGroup>
+                <TertiaryButton
+                  className="draw-polygon-button"
+                  onClick={handleDrawPolygonClick}
+                >
+                  <MapIcon />
+                  {formatMessage(messages.drawPolygonButtonText)}
+                </TertiaryButton>
+              </div>
+
+              <div>
+                <div className="buttons">
+                  {match.params.id && (
+                    <NegativeButton
+                      onClick={() => setDeleteDialogOpen(true)}
+                      disabled={isDeleteDisabled}
+                    >
+                      {formatMessage(messages.deleteButtonText)}
+                    </NegativeButton>
+                  )}
+
+                  <SuccessButton onClick={handleOnSaveClick}>
+                    {formatMessage(messages.saveButtonText)}
+                  </SuccessButton>
+                </div>
+              </div>
             </div>
 
             <div className="stop-place-flexible-area">

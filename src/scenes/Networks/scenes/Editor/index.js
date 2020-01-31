@@ -128,21 +128,6 @@ const NetworkEditor = ({ match, history }) => {
               : formatMessage(messages.createNetworkHeaderText)
           }
         />
-
-        <div className="buttons">
-          <SuccessButton onClick={handleOnSaveClick} disabled={isSaveDisabled}>
-            {formatMessage(messages.saveButtonText)}
-          </SuccessButton>
-
-          {match.params.id && (
-            <NegativeButton
-              onClick={() => setDeleteDialogOpen(true)}
-              disabled={isDeleteDisabled}
-            >
-              {formatMessage(messages.deleteButtonText)}
-            </NegativeButton>
-          )}
-        </div>
       </div>
 
       {network && lines ? (
@@ -202,6 +187,24 @@ const NetworkEditor = ({ match, history }) => {
               value={authoritySelection}
               onChange={({ value }) => handleAuthoritySelectionChange(value)}
             />
+
+            <div className="buttons">
+              {match.params.id && (
+                <NegativeButton
+                  onClick={() => setDeleteDialogOpen(true)}
+                  disabled={isDeleteDisabled}
+                >
+                  {formatMessage(messages.deleteButtonText)}
+                </NegativeButton>
+              )}
+
+              <SuccessButton
+                onClick={handleOnSaveClick}
+                disabled={isSaveDisabled}
+              >
+                {formatMessage(messages.saveButtonText)}
+              </SuccessButton>
+            </div>
           </div>
         </OverlayLoader>
       ) : (
