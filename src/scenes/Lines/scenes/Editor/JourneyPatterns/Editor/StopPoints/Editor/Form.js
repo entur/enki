@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { injectIntl } from 'react-intl';
 import { Checkbox, Fieldset, InputGroup, TextField } from '@entur/form';
 import { hasValue } from 'helpers/forms';
