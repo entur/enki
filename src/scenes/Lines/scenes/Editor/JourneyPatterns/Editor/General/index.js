@@ -20,7 +20,7 @@ const General = ({
   const { formatMessage } = useSelector(selectIntl);
 
   return (
-    <Fragment>
+    <div className="tab-style">
       <InputGroup
         className="form-section"
         label={formatMessage(messages.nameLabel)}
@@ -64,7 +64,7 @@ const General = ({
         value={DEFAULT_SELECT_VALUE}
         onChange={({ value }) => handleDirectionSelectionChange(value)}
       />
-    </Fragment>
+    </div>
   );
 };
 

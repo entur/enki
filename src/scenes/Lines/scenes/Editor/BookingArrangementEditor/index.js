@@ -74,7 +74,7 @@ const BookingArrangementEditor = props => {
   } = bookingArrangement;
 
   return (
-    <div className="booking-editor">
+    <div className="booking-editor tab-style">
       <ContactFields
         contact={bookingContact}
         onContactPersonChange={contactFieldChangeHandlerFactory(

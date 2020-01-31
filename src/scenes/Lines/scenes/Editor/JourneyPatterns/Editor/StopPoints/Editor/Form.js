@@ -36,7 +36,7 @@ const Form = ({
       : '';
 
   return (
-    <Fragment>
+    <div className="tab-style">
       <StopPlaceSelection
         stopPlaceSelection={stopPlaceSelection}
         flexibleStopPlaceRefAndQuayRefErrors={
@@ -94,7 +94,7 @@ const Form = ({
           {formatMessage(messages.labelForAlighting)}
         </Checkbox>
       </Fieldset>
-    </Fragment>
+    </div>
   );
 };
 

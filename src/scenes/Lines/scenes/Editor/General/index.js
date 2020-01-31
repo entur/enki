@@ -22,7 +22,7 @@ export default ({
 }) => {
   const { formatMessage } = useSelector(selectIntl);
   return (
-    <Fragment>
+    <div className="tab-style">
       <InputGroup
         className="form-section"
         label={formatMessage(messages.nameFormGroupTitle)}
@@ -112,6 +112,6 @@ export default ({
         onChange={e => handleFieldChange('flexibleLineType', e.value)}
         value={flexibleLine.flexibleLineType}
       />
-    </Fragment>
+    </div>
   );
 };
