@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import cx from 'classnames';
 
-import { Close } from '../icons';
+import { CloseIcon } from '@entur/icons';
 
 import './styles.scss';
 
@@ -21,7 +21,7 @@ const Dialog = ({ isOpen, title, content, buttons, className, onClose }) => (
     className={cx('dialog', className)}
   >
     <div className="close" onClick={onClose}>
-      <Close className="close-icon" />
+      <CloseIcon className="close-icon" />
     </div>
     {title && <div className="title">{title}</div>}
     <div className="content">{content}</div>
