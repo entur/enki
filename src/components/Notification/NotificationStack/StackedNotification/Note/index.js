@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {
-  Info,
-  Success,
-  Warning,
-  ErrorCircle,
-  CloseIcon
-} from '../../../../icons';
+  CheckIcon,
+  CloseIcon,
+  ValidationErrorIcon,
+  WarningIcon,
+  ValidationInfoIcon
+} from '@entur/icons';
 
 import '../../../styles.scss';
 
@@ -23,25 +23,25 @@ class Note extends Component {
     if (type === 'success') {
       return (
         <span className="notification-icon success">
-          <Success />
+          <CheckIcon />
         </span>
       );
     } else if (type === 'error') {
       return (
         <span className="notification-icon error">
-          <ErrorCircle />
+          <ValidationErrorIcon />
         </span>
       );
     } else if (type === 'warning') {
       return (
         <span className="notification-icon warning">
-          <Warning />
+          <WarningIcon />
         </span>
       );
     } else if (type === 'info') {
       return (
         <span className="notification-icon info">
-          <Info />
+          <ValidationInfoIcon />
         </span>
       );
     } else {
