@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { SuccessButton } from '@entur/button';
-
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
+import PageHeader from 'components/PageHeader';
 import { ServiceJourney, StopPoint } from 'model';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
@@ -58,6 +58,7 @@ export default function ServiceJourneyEditor(props) {
     },
     stopPoints,
     onSave,
+    onClose,
     isEditMode
   } = props;
 
@@ -70,7 +71,11 @@ export default function ServiceJourneyEditor(props) {
   return (
     <div className="service-journey-editor">
       <div className="header">
-        <h2>{isEditMode ? 'Rediger' : 'Opprett'} Service Journey</h2>
+        <PageHeader
+          withBackButton
+          onBackButtonClick={onClose}
+          title={`${isEditMode ? 'Rediger' : 'Opprett'} Service Journey`}
+        />
 
         <div className="header-buttons">
           <SuccessButton onClick={onSave}>Lagre</SuccessButton>
@@ -164,6 +169,7 @@ ServiceJourneyEditor.propTypes = {
   serviceJourney: PropTypes.instanceOf(ServiceJourney).isRequired,
   stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
   onChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool
 };

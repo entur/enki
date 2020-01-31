@@ -8,6 +8,7 @@ import { DatePicker } from '@entur/datepicker';
 import { Export } from 'model';
 import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
+import PageHeader from 'components/PageHeader';
 import OverlayLoader from 'components/OverlayLoader';
 import { selectIntl } from 'i18n';
 
@@ -57,7 +58,7 @@ const ExportsCreator = ({ history }) => {
   return (
     <div className="export-editor">
       <div className="header">
-        <h2>{formatMessage(messages.header)}</h2>
+        <PageHeader withBackButton title={formatMessage(messages.header)} />
 
         <div className="buttons">
           <SuccessButton

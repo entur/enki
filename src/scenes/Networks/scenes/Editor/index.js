@@ -16,6 +16,7 @@ import { loadFlexibleLines } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';
+import PageHeader from 'components/PageHeader';
 
 import './styles.scss';
 import { createSelector } from 'reselect';
@@ -119,11 +120,14 @@ const NetworkEditor = ({ match, history }) => {
   return (
     <div className="network-editor">
       <div className="header">
-        <h2>
-          {match.params.id
-            ? formatMessage(messages.editNetworkHeaderText)
-            : formatMessage(messages.createNetworkHeaderText)}
-        </h2>
+        <PageHeader
+          withBackButton
+          title={
+            match.params.id
+              ? formatMessage(messages.editNetworkHeaderText)
+              : formatMessage(messages.createNetworkHeaderText)
+          }
+        />
 
         <div className="buttons">
           <SuccessButton onClick={handleOnSaveClick} disabled={isSaveDisabled}>

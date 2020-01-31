@@ -12,6 +12,7 @@ import {
   DataCell
 } from '@entur/table';
 import Loading from 'components/Loading';
+import PageHeader from 'components/PageHeader';
 import { loadNetworks } from 'actions/networks';
 import { selectIntl } from 'i18n';
 import messages from './messages';
@@ -76,7 +77,7 @@ const Networks = ({ history }) => {
 
   return (
     <div className="networks">
-      <h2>{formatMessage(messages.headerText)}</h2>
+      <PageHeader title={formatMessage(messages.headerText)} />
 
       <SecondaryButton
         as={Link}

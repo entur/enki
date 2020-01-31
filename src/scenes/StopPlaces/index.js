@@ -11,6 +11,7 @@ import {
   HeaderCell,
   DataCell
 } from '@entur/table';
+import PageHeader from 'components/PageHeader';
 import Loading from 'components/Loading';
 import { SecondaryButton } from '@entur/button';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
@@ -72,7 +73,7 @@ const StopPlaces = ({ history }) => {
 
   return (
     <div className="stop-places">
-      <h2>{formatMessage(messages.header)}</h2>
+      <PageHeader title={formatMessage(messages.header)} />
 
       <SecondaryButton
         as={Link}

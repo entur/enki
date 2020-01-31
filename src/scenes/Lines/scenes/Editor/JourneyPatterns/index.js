@@ -72,6 +72,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
               onChange={setJourneyPattern}
               onSave={handleOnJourneyPatternDialogSaveClick}
               isEditMode={journeyPatternIndex !== TEMP_INDEX}
+              onClose={closeJourneyPatternDialog}
             />
           }
           onClose={closeJourneyPatternDialog}

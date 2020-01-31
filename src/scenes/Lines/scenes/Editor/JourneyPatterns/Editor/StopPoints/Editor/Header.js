@@ -1,10 +1,15 @@
 import React from 'react';
 import { SuccessButton } from '@entur/button';
+import PageHeader from 'components/PageHeader';
 
-export default function Header({ isEditMode, onSave }) {
+export default function Header({ isEditMode, onSave, onClose }) {
   return (
     <div className="header">
-      <h2>{isEditMode ? 'Rediger' : 'Opprett'} Stoppepunkt</h2>
+      <PageHeader
+        withBackButton
+        onBackButtonClick={onClose}
+        title={`${isEditMode ? 'Rediger' : 'Opprett'} Stoppepunkt`}
+      />
 
       <div className="header-buttons">
         <SuccessButton onClick={onSave}>Lagre</SuccessButton>
