@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { injectIntl } from 'react-intl';
 import { Checkbox, Fieldset, InputGroup, TextField } from '@entur/form';
 import { hasValue } from 'helpers/forms';
@@ -36,7 +36,7 @@ const Form = ({
       : '';
 
   return (
-    <Fragment>
+    <div className="tab-style">
       <StopPlaceSelection
         stopPlaceSelection={stopPlaceSelection}
         flexibleStopPlaceRefAndQuayRefErrors={
@@ -94,7 +94,7 @@ const Form = ({
           {formatMessage(messages.labelForAlighting)}
         </Checkbox>
       </Fieldset>
-    </Fragment>
+    </div>
   );
 };
 

@@ -11,11 +11,15 @@
 .form-section {
   margin-bottom: 30px;
 
-  input:not(.entur-radio-checkbox__input),
+  input,
   textarea,
   select {
     width: 100%;
   }
+}
+
+.tab-style {
+  max-width: 450px;
 }
 
 .input-error {

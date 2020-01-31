@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextArea, TextField, InputGroup } from '@entur/form';
@@ -22,7 +22,7 @@ export default ({
 }) => {
   const { formatMessage } = useSelector(selectIntl);
   return (
-    <Fragment>
+    <div className="tab-style">
       <InputGroup
         className="form-section"
         label={formatMessage(messages.nameFormGroupTitle)}
@@ -112,6 +112,6 @@ export default ({
         onChange={e => handleFieldChange('flexibleLineType', e.value)}
         value={flexibleLine.flexibleLineType}
       />
-    </Fragment>
+    </div>
   );
 };

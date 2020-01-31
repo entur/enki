@@ -90,7 +90,7 @@ export default function ServiceJourneyEditor(props) {
           <Tab>{formatMessage(defineMessages.booking)}</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>
+          <TabPanel className="tab-style">
             <InputGroup
               label="* Navn"
               feedback={isBlankName ? 'Navn må fylles inn.' : undefined}
