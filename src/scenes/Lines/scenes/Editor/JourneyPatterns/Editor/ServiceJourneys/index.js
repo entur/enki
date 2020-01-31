@@ -37,12 +37,12 @@ class ServiceJourneysEditor extends Component {
     });
   }
 
-  closeServiceJourneyDialog() {
+  closeServiceJourneyDialog = () => {
     this.setState({
       serviceJourneyInDialog: null,
       serviceJourneyIndexInDialog: TEMP_INDEX
     });
-  }
+  };
 
   handleOnServiceJourneyDialogSaveClick() {
     const { serviceJourneys, onChange } = this.props;
@@ -88,11 +88,12 @@ class ServiceJourneysEditor extends Component {
                 onChange={serviceJourneyInDialog =>
                   this.setState({ serviceJourneyInDialog })
                 }
+                onClose={this.closeServiceJourneyDialog}
                 onSave={this.handleOnServiceJourneyDialogSaveClick.bind(this)}
                 isEditMode={serviceJourneyIndexInDialog !== TEMP_INDEX}
               />
             }
-            onClose={this.closeServiceJourneyDialog.bind(this)}
+            onClose={this.closeServiceJourneyDialog}
           />
         )}
       </div>

@@ -40,12 +40,12 @@ class StopPointsEditor extends Component {
     });
   }
 
-  closeStopPointDialog() {
+  closeStopPointDialog = () => {
     this.setState({
       stopPointInDialog: null,
       stopPointIndexInDialog: TEMP_INDEX
     });
-  }
+  };
 
   handleOnStopPointDialogSaveClick() {
     const { stopPoints, onChange } = this.props;
@@ -96,11 +96,12 @@ class StopPointsEditor extends Component {
                 onChange={stopPointInDialog =>
                   this.setState({ stopPointInDialog })
                 }
+                onClose={this.closeStopPointDialog}
                 onSave={this.handleOnStopPointDialogSaveClick.bind(this)}
                 isEditMode={stopPointIndexInDialog !== TEMP_INDEX}
               />
             }
-            onClose={this.closeStopPointDialog.bind(this)}
+            onClose={this.closeStopPointDialog}
           />
         )}
       </div>

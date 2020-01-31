@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { SuccessButton } from '@entur/button';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
-
+import PageHeader from 'components/PageHeader';
 import { JourneyPattern } from 'model';
 import StopPointsEditor from './StopPoints';
 import ServiceJourneysEditor from './ServiceJourneys';
@@ -45,13 +45,17 @@ class JourneyPatternEditor extends Component {
   }
 
   render() {
-    const { journeyPattern, isEditMode, onSave } = this.props;
+    const { journeyPattern, isEditMode, onSave, onClose } = this.props;
     const { directionSelection } = this.state;
 
     return (
       <div className="journey-pattern-editor">
         <div className="header">
-          <h2>{isEditMode ? 'Rediger' : 'Opprett'} Journey Pattern</h2>
+          <PageHeader
+            withBackButton
+            onBackButtonClick={onClose}
+            title={`${isEditMode ? 'Rediger' : 'Opprett'} Journey Pattern`}
+          />
 
           <div className="header-buttons">
             <SuccessButton onClick={onSave}>Lagre</SuccessButton>
@@ -98,6 +102,7 @@ JourneyPatternEditor.defaultProps = {
   journeyPattern: PropTypes.instanceOf(JourneyPattern).isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool
 };
 

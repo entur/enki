@@ -74,7 +74,13 @@ class StopPointEditor extends Component {
   }, 1000);
 
   render() {
-    const { flexibleStopPlaces, stopPoint, isEditMode, isFirst } = this.props;
+    const {
+      flexibleStopPlaces,
+      stopPoint,
+      isEditMode,
+      isFirst,
+      onClose
+    } = this.props;
     const { stopPlaceSelection, quaySearch, errors } = this.state;
 
     if (!stopPoint) {
@@ -83,7 +89,11 @@ class StopPointEditor extends Component {
 
     return (
       <div className="stop-point-editor">
-        <Header isEditMode={isEditMode} onSave={this.onSave} />
+        <Header
+          isEditMode={isEditMode}
+          onSave={this.onSave}
+          onClose={onClose}
+        />
         <Tabs>
           <TabList>
             <Tab>Generelt</Tab>
@@ -123,6 +133,7 @@ StopPointEditor.propTypes = {
   isFirst: PropTypes.bool.isRequired,
   stopPoint: PropTypes.instanceOf(StopPoint).isRequired,
   onChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool
 };
