@@ -1,11 +1,11 @@
-import * as R from 'ramda';
+import { isNil, isEmpty } from 'ramda';
 import { objectValues } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 import moment from 'moment';
 
 export function validateName(name) {
-  if (R.isNil(name) || R.isEmpty(name)) {
+  if (isNil(name) || isEmpty(name)) {
     return [messages.errorExportNameIsEmpty];
   }
   return [];
@@ -13,10 +13,10 @@ export function validateName(name) {
 
 function validateFromDateToDate(fromDate, toDate) {
   let errors = [];
-  if (R.isNil(fromDate) || R.isEmpty(fromDate)) {
+  if (isNil(fromDate) || isEmpty(fromDate)) {
     errors.push(messages.errorExportFromDateIsEmpty);
   }
-  if (R.isNil(toDate) || R.isEmpty(toDate)) {
+  if (isNil(toDate) || isEmpty(toDate)) {
     errors.push(messages.errorExportToDateIsEmpty);
   }
   if (toDateIsBeforeFromDate(fromDate, toDate)) {
