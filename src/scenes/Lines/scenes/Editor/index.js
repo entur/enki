@@ -187,21 +187,6 @@ const FlexibleLineEditor = ({ match, history }) => {
               : formatMessage(messages.createLineHeader)
           }
         />
-
-        <div className="buttons">
-          <SuccessButton onClick={handleOnSaveClick}>
-            {formatMessage(messages.saveButtonText)}
-          </SuccessButton>
-
-          {match.params.id && (
-            <NegativeButton
-              onClick={() => setDeleteDialogOpen(true)}
-              disabled={isDeleteDisabled}
-            >
-              {formatMessage(messages.deleteButtonText)}
-            </NegativeButton>
-          )}
-        </div>
       </div>
 
       {!isLoadingLine && !isLoadingDependencies ? (
@@ -247,6 +232,21 @@ const FlexibleLineEditor = ({ match, history }) => {
               </TabPanel>
             </TabPanels>
           </Tabs>
+
+          <div className="buttons">
+            <SuccessButton onClick={handleOnSaveClick}>
+              {formatMessage(messages.saveButtonText)}
+            </SuccessButton>
+
+            {match.params.id && (
+              <NegativeButton
+                onClick={() => setDeleteDialogOpen(true)}
+                disabled={isDeleteDisabled}
+              >
+                {formatMessage(messages.deleteButtonText)}
+              </NegativeButton>
+            )}
+          </div>
         </OverlayLoader>
       ) : (
         <Loading
