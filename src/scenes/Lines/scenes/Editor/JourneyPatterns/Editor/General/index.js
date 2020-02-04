@@ -61,7 +61,7 @@ const General = ({
           { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
           ...Object.values(DIRECTION_TYPE)
         ]}
-        value={DEFAULT_SELECT_VALUE}
+        value={directionSelection}
         onChange={({ value }) => handleDirectionSelectionChange(value)}
       />
     </div>
