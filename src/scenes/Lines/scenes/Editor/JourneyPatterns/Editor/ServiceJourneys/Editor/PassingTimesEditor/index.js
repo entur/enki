@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
@@ -6,6 +6,7 @@ import { InputGroup } from '@entur/form';
 import { StopPoint, PassingTime } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import TimePicker from 'components/TimePicker';
+import { validateTimes } from './validateForm';
 
 import './styles.scss';
 
@@ -24,6 +25,11 @@ class PassingTimesEditor extends Component {
       newPts.splice(stopPoints.length);
       onChange(newPts);
     }
+  }
+
+  componentDidUpdate() {
+    const { passingTimes, setValidPassingTimes } = this.props;
+    setValidPassingTimes(validateTimes(passingTimes));
   }
 
   onFieldChange(index, field, value) {
@@ -61,7 +67,23 @@ class PassingTimesEditor extends Component {
     />
   );
 
-  renderStopPlacePassingTimes() {
+  getValidationMessage = (
+    field: 'arrival' | 'departure',
+    isFirst: Boolean,
+    isLast: Boolean
+  ) => {
+    if (isFirst) {
+      return field === 'departure'
+        ? 'Must have a departure time set'
+        : undefined;
+    } else if (isLast) {
+      return field === 'arrival' ? 'Must have a arrival time set' : undefined;
+    } else {
+      return 'Either departure or arrival time must be set';
+    }
+  };
+
+  render() {
     const { flexibleStopPlaces, stopPoints, passingTimes } = this.props;
 
     return stopPoints.map((sp, i) => {
@@ -118,16 +140,13 @@ class PassingTimesEditor extends Component {
       );
     });
   }
-
-  render() {
-    return <Fragment>{this.renderStopPlacePassingTimes()}</Fragment>;
-  }
 }
 
 PassingTimesEditor.propTypes = {
   passingTimes: PropTypes.arrayOf(PropTypes.instanceOf(PassingTime)).isRequired,
   stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  setValidPassingTimes: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ flexibleStopPlaces }) => ({ flexibleStopPlaces });
