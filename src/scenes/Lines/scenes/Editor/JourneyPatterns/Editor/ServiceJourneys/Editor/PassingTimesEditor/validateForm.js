@@ -28,7 +28,10 @@ const hasAtleastOneFieldSet = passingTime => {
 
 export const validateTimes = (passingTimes, intlState) => {
   if (!passingTimes?.length > 2)
-    return { isValid: false, errorMessage: 'Requires atleast two stop points' };
+    return {
+      isValid: false,
+      errorMessage: 'Requires at least two stop points'
+    };
   const intl = getIntl(intlState);
 
   for (const [index, passingTime] of passingTimes.entries()) {

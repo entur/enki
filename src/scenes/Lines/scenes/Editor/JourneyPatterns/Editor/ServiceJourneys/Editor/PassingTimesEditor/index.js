@@ -77,22 +77,6 @@ class PassingTimesEditor extends Component {
     />
   );
 
-  getValidationMessage = (
-    field: 'arrival' | 'departure',
-    isFirst: Boolean,
-    isLast: Boolean
-  ) => {
-    if (isFirst) {
-      return field === 'departure'
-        ? 'Must have a departure time set'
-        : undefined;
-    } else if (isLast) {
-      return field === 'arrival' ? 'Must have a arrival time set' : undefined;
-    } else {
-      return 'Either departure or arrival time must be set';
-    }
-  };
-
   renderStopPlacePassingTimes() {
     const { flexibleStopPlaces, stopPoints, passingTimes } = this.props;
 
