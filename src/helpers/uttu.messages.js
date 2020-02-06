@@ -24,7 +24,7 @@ export default defineMessages({
   },
   MINIMUM_POINTS_IN_SEQUENCE: {
     id: 'helpers.uttu.uttuError.MINIMUM_POINTS_IN_SEQUENCE',
-    defaultMessage: 'Reisemønster må ha minimum 2 sekvensielle stoppepunkter'
+    defaultMessage: 'Reisemønster må ha minimum 2 sekvensielle stoppepunkter.'
   },
   CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME: {
     id: 'helpers.uttu.uttuError.CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME',
