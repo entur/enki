@@ -6,11 +6,17 @@ import { InputGroup } from '@entur/form';
 import { StopPoint, PassingTime } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import TimePicker from 'components/TimePicker';
+import { SmallAlertBox } from '@entur/alert';
 import { validateTimes } from './validateForm';
 
 import './styles.scss';
 
 class PassingTimesEditor extends Component {
+  state = {
+    isValid: true,
+    errorMessage: ''
+  };
+
   componentDidMount() {
     const { passingTimes, stopPoints, onChange } = this.props;
     if (passingTimes.length < stopPoints.length) {
@@ -27,9 +33,13 @@ class PassingTimesEditor extends Component {
     }
   }
 
-  componentDidUpdate() {
-    const { passingTimes, setValidPassingTimes } = this.props;
-    setValidPassingTimes(validateTimes(passingTimes));
+  componentDidUpdate(prevProps) {
+    const { passingTimes, setValidPassingTimes, intl } = this.props;
+    const { isValid, errorMessage } = validateTimes(passingTimes, { intl });
+    if (this.props !== prevProps) {
+      this.setState({ isValid, errorMessage });
+    }
+    setValidPassingTimes(isValid);
   }
 
   onFieldChange(index, field, value) {
@@ -83,7 +93,7 @@ class PassingTimesEditor extends Component {
     }
   };
 
-  render() {
+  renderStopPlacePassingTimes() {
     const { flexibleStopPlaces, stopPoints, passingTimes } = this.props;
 
     return stopPoints.map((sp, i) => {
@@ -140,6 +150,18 @@ class PassingTimesEditor extends Component {
       );
     });
   }
+
+  render() {
+    const { isValid, errorMessage } = this.state;
+    return (
+      <>
+        {!isValid && (
+          <SmallAlertBox variant="error"> {errorMessage} </SmallAlertBox>
+        )}
+        {this.renderStopPlacePassingTimes()}
+      </>
+    );
+  }
 }
 
 PassingTimesEditor.propTypes = {
@@ -149,6 +171,9 @@ PassingTimesEditor.propTypes = {
   setValidPassingTimes: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ flexibleStopPlaces }) => ({ flexibleStopPlaces });
+const mapStateToProps = ({ flexibleStopPlaces, intl }) => ({
+  flexibleStopPlaces,
+  intl
+});
 
 export default connect(mapStateToProps)(PassingTimesEditor);

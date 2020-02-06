@@ -1,4 +1,6 @@
 import moment from 'moment';
+import messages from './messages';
+import { getIntl } from 'i18n';
 
 const isBefore = (passingTime, dayOffset, nextPassingTime, nextDayOffset) => {
   if (!passingTime || !nextPassingTime) return false;
@@ -24,10 +26,12 @@ const hasAtleastOneFieldSet = passingTime => {
   );
 };
 
-export const validateTimes = passingTimes => {
-  if (!passingTimes?.length) return false;
+export const validateTimes = (passingTimes, intlState) => {
+  if (!passingTimes?.length > 2)
+    return { isValid: false, errorMessage: 'Requires atleast two stop points' };
+  const intl = getIntl(intlState);
 
-  return passingTimes.every((passingTime, index) => {
+  for (const [index, passingTime] of passingTimes.entries()) {
     const {
       departureTime,
       arrivalTime,
@@ -39,11 +43,18 @@ export const validateTimes = passingTimes => {
       earliestDepartureDayOffset
     } = passingTime;
 
-    if (!hasAtleastOneFieldSet(passingTime)) return false;
+    if (!hasAtleastOneFieldSet(passingTime))
+      return {
+        isValid: false,
+        errorMessage: intl.formatMessage(messages.atleastOneField)
+      };
     if (
-      isBefore(arrivalTime, arrivalDayOffset, departureTime, departureDayOffset)
+      isBefore(departureTime, departureDayOffset, arrivalTime, arrivalDayOffset)
     )
-      return false;
+      return {
+        isValid: false,
+        errorMessage: intl.formatMessage(messages.departureAfterArrival)
+      };
     if (
       isBefore(
         departureTime,
@@ -52,7 +63,10 @@ export const validateTimes = passingTimes => {
         earliestDepartureDayOffset
       )
     )
-      return false;
+      return {
+        isValid: false,
+        errorMessage: intl.formatMessage(messages.departureAfterEarliest)
+      };
     if (
       isBefore(
         latestArrivalTime,
@@ -61,8 +75,11 @@ export const validateTimes = passingTimes => {
         arrivalDayOffset
       )
     )
-      return false;
-    if (index === 0) return true;
+      return {
+        isValid: false,
+        errorMessage: intl.formatMessage(messages.arrivalBeforeLatest)
+      };
+    if (index === 0) return { isValid: true, errorMessage: '' };
 
     const prevPassingTime = passingTimes[index - 1];
 
@@ -92,8 +109,11 @@ export const validateTimes = passingTimes => {
         prevPassingTime.earliestDepartureDayOffset
       )
     ) {
-      return false;
+      return {
+        isValid: false,
+        errorMessage: intl.formatMessage(messages.laterThanPrevious)
+      };
     }
-    return true;
-  });
+  }
+  return { isValid: true, errorMessage: '' };
 };

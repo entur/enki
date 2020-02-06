@@ -219,5 +219,10 @@
   "stopPlaces.nameTableHeaderLabelText": "Navn",
   "stopPlaces.noStopPlacesFoundText": "Ingen stoppesteder ble funnet.",
   "stopPlaces.numberOfPointsTableHeaderLabelText": "Antall punkter",
-  "stopPlaces.privateCodeTableHeaderLabelText": "Privat kode"
+  "stopPlaces.privateCodeTableHeaderLabelText": "Privat kode",
+  "passingTimes.error.atleastOneField": "Minst ett felt må være fylt ut",
+  "passingTimes.error.departureAfterArrival": "Avgangstid kan ikke være før ankomsttid",
+  "passingTimes.error.departureAfterEarliest": "Avgangstid kan ikke være før tidligst avgangstid",
+  "passingTimes.error.arrivalBeforeLatest": "Ankomsttid ikke kan være senere enn senest ankomsttid",
+  "passingTimes.error.laterThanPrevious": "Tidspunktene må være senere enn forrige stoppesteds tidspunkt"
 }
