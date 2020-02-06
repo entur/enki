@@ -21,8 +21,7 @@ const hasAtleastOneFieldSet = passingTime => {
     latestArrivalTime
   } = passingTime;
   return Boolean(
-    departure || earliestDepartureTime || arrivalTime,
-    latestArrivalTime
+    departure || earliestDepartureTime || arrivalTime || latestArrivalTime
   );
 };
 
