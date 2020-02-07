@@ -24,6 +24,7 @@ export default function ServiceJourneyEditor(props) {
   const [operatorSelection, setOperatorSelection] = useState(
     DEFAULT_SELECT_VALUE
   );
+  const [validPassingTimes, setValidPassingTimes] = useState(false);
   const organisations = useSelector(state => state.organisations);
   const { formatMessage } = useSelector(selectIntl);
 
@@ -78,7 +79,9 @@ export default function ServiceJourneyEditor(props) {
         />
 
         <div className="header-buttons">
-          <SuccessButton onClick={onSave}>Lagre</SuccessButton>
+          <SuccessButton onClick={validPassingTimes ? onSave : undefined}>
+            Lagre
+          </SuccessButton>
         </div>
       </div>
 
@@ -150,6 +153,7 @@ export default function ServiceJourneyEditor(props) {
               passingTimes={passingTimes}
               stopPoints={stopPoints}
               onChange={pts => onFieldChange('passingTimes', pts)}
+              setValidPassingTimes={setValidPassingTimes}
             />
           </TabPanel>
 

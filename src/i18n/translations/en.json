@@ -219,5 +219,11 @@
   "stopPlaces.nameTableHeaderLabelText": "Name",
   "stopPlaces.noStopPlacesFoundText": "No stop places found.",
   "stopPlaces.numberOfPointsTableHeaderLabelText": "Number of points",
-  "stopPlaces.privateCodeTableHeaderLabelText": "Private code"
+  "stopPlaces.privateCodeTableHeaderLabelText": "Private code",
+  "passingTimes.error.atleastOneField": "At least one field must be set.",
+  "passingTimes.error.departureAfterArrival": "Departure time cannot be before arrival time.",
+  "passingTimes.error.departureAfterEarliest": "Departure time cannot be before earliest departure time.",
+  "passingTimes.error.laterThanPreviousDeparture": "Arrival time cannot be later than latest arrival time.",
+  "passingTimes.error.arrivalBeforeLatest": "Arrival time cannot be later than latest arrival time.",
+  "passingTimes.error.laterThanPrevious": "All specified times must be later than previous stop point's times."
 }
