@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SuccessButton, NegativeButton, SecondaryButton } from '@entur/button';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
-
 import { FlexibleLine } from 'model';
+import { ValidationErrorIcon } from '@entur/icons';
 import {
   ORGANISATION_TYPE,
   FLEXIBLE_LINE_TYPE,
@@ -28,60 +28,46 @@ import validateForm from './validateForm';
 import './styles.scss';
 import General from './General';
 import { withRouter } from 'react-router-dom';
-import { createSelector } from 'reselect';
 import { selectIntl } from 'i18n';
+import { createSelector } from 'reselect';
 import messages from './messages';
+
+const ErrorIcon = ({ visible }) => {
+  return (
+    <ValidationErrorIcon
+      className={`error-icon ${visible ? '' : 'no-error'}`}
+    />
+  );
+};
 
 const selectFlexibleLine = createSelector(
   state => state.flexibleLines,
   (_, match) => match,
-  (flexibleLines, match) =>
-    match.params.id
+  (flexibleLines, match) => {
+    const defaultFlexibleLine = new FlexibleLine({
+      transportMode: VEHICLE_MODE.BUS,
+      transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
+      flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
+    });
+    return match.params.id
       ? flexibleLines
         ? flexibleLines.find(l => l.id === match.params.id)
-        : null
-      : new FlexibleLine({
-          transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
-          flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
-        })
+        : defaultFlexibleLine
+      : defaultFlexibleLine;
+  }
 );
 
-const FlexibleLineEditor = ({ match, history }) => {
-  const { formatMessage } = useSelector(selectIntl);
-  const organisations = useSelector(({ organisations }) => organisations);
-  const networks = useSelector(({ networks }) => networks);
-  const flexibleStopPlaces = useSelector(
-    ({ flexibleStopPlaces }) => flexibleStopPlaces
-  );
-  const currentFlexibleLine = useSelector(state =>
-    selectFlexibleLine(state, match)
-  );
-
-  const [flexibleLine, setFlexibleLine] = useState(null);
-  const [operatorSelection, setOperatorSelection] = useState(
-    DEFAULT_SELECT_VALUE
-  );
-  const [networkSelection, setNetworkSelection] = useState(
-    DEFAULT_SELECT_VALUE
-  );
-  const [isSaving, setSaving] = useState(false);
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [isDeleting, setDeleting] = useState(false);
-  const [errors, setErrors] = useState({
-    networkRef: []
-  });
-
+function useLoadDependencies(match, history) {
   const dispatch = useDispatch();
-
-  const dispatchLoadNetworks = useCallback(() => dispatch(loadNetworks()), [
-    dispatch
-  ]);
 
   const dispatchLoadFlexibleStopPlaces = useCallback(
     () => dispatch(loadFlexibleStopPlaces()),
     [dispatch]
   );
+
+  const dispatchLoadNetworks = useCallback(() => dispatch(loadNetworks()), [
+    dispatch
+  ]);
 
   const dispatchLoadFlexibleLineById = useCallback(() => {
     if (match.params.id) {
@@ -93,47 +79,30 @@ const FlexibleLineEditor = ({ match, history }) => {
 
   useEffect(() => {
     dispatchLoadNetworks();
-    dispatchLoadFlexibleStopPlaces();
     dispatchLoadFlexibleLineById();
+    dispatchLoadFlexibleStopPlaces();
   }, [
     dispatchLoadNetworks,
     dispatchLoadFlexibleStopPlaces,
     dispatchLoadFlexibleLineById
   ]);
+}
 
+const useFlexibleLine = match => {
+  const savedLine = useSelector(state => selectFlexibleLine(state, match));
+  const [flexibleLine, setFlexibleLine] = useState(null);
   useEffect(() => {
-    setOperatorSelection(
-      currentFlexibleLine
-        ? currentFlexibleLine.operatorRef
-        : DEFAULT_SELECT_VALUE
+    setFlexibleLine(savedLine);
+  }, [savedLine]);
+
+  const handleNetworkSelectionChange = networkSelection => {
+    setFlexibleLine(
+      flexibleLine.withFieldChange(
+        'networkRef',
+        networkSelection !== DEFAULT_SELECT_VALUE ? networkSelection : undefined
+      )
     );
-    setNetworkSelection(
-      currentFlexibleLine
-        ? currentFlexibleLine.networkRef
-        : DEFAULT_SELECT_VALUE
-    );
-    setFlexibleLine(currentFlexibleLine);
-  }, [currentFlexibleLine]);
-
-  const handleOnSaveClick = () => {
-    let [valid, errors] = validateForm(flexibleLine);
-
-    setErrors(errors);
-
-    if (valid) {
-      setSaving(true);
-      dispatch(saveFlexibleLine(flexibleLine))
-        .then(() => history.push('/lines'))
-        .finally(() => setSaving(false));
-    }
   };
-
-  const onFieldChange = useCallback(
-    (field, value, multi = false) => {
-      setFlexibleLine(flexibleLine.withFieldChange(field, value, multi));
-    },
-    [flexibleLine]
-  );
 
   const handleOperatorSelectionChange = operatorSelection => {
     setFlexibleLine(
@@ -144,17 +113,59 @@ const FlexibleLineEditor = ({ match, history }) => {
           : undefined
       )
     );
-    setOperatorSelection(operatorSelection);
   };
 
-  const handleNetworkSelectionChange = networkSelection => {
-    setFlexibleLine(
-      flexibleLine.withFieldChange(
-        'networkRef',
-        networkSelection !== DEFAULT_SELECT_VALUE ? networkSelection : undefined
-      )
-    );
-    setNetworkSelection(networkSelection);
+  const onFieldChange = useCallback(
+    (field, value, multi = false) => {
+      setFlexibleLine(flexibleLine.withFieldChange(field, value, multi));
+    },
+    [flexibleLine]
+  );
+
+  return {
+    handleNetworkSelectionChange,
+    handleOperatorSelectionChange,
+    onFieldChange,
+    flexibleLine
+  };
+};
+
+const FlexibleLineEditor = ({ match, history }) => {
+  const { formatMessage } = useSelector(selectIntl);
+  const organisations = useSelector(({ organisations }) => organisations);
+  const networks = useSelector(({ networks }) => networks);
+  const flexibleStopPlaces = useSelector(
+    ({ flexibleStopPlaces }) => flexibleStopPlaces
+  );
+
+  const {
+    handleNetworkSelectionChange,
+    handleOperatorSelectionChange,
+    onFieldChange,
+    flexibleLine
+  } = useFlexibleLine(match);
+
+  const [isSaving, setSaving] = useState(false);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
+  const [errors, setErrors] = useState(validateForm(flexibleLine));
+
+  useEffect(() => {
+    setErrors(validateForm(flexibleLine));
+  }, [flexibleLine]);
+
+  const dispatch = useDispatch();
+  useLoadDependencies(match, history);
+
+  const handleOnSaveClick = () => {
+    const valid = validateForm(flexibleLine).isValid;
+
+    if (valid) {
+      setSaving(true);
+      dispatch(saveFlexibleLine(flexibleLine))
+        .then(() => history.push('/lines'))
+        .finally(() => setSaving(false));
+    }
   };
 
   const handleDelete = () => {
@@ -200,7 +211,10 @@ const FlexibleLineEditor = ({ match, history }) => {
         >
           <Tabs>
             <TabList>
-              <Tab>{formatMessage(messages.generalTabLabel)}</Tab>
+              <Tab>
+                {formatMessage(messages.generalTabLabel)}
+                <ErrorIcon visible={!errors.isValid} />
+              </Tab>
               <Tab>{formatMessage(messages.journeyPatternsTabLabel)}</Tab>
               <Tab>{formatMessage(messages.bookingTabLabel)}</Tab>
             </TabList>
@@ -211,8 +225,12 @@ const FlexibleLineEditor = ({ match, history }) => {
                   networks={networks}
                   operators={operators}
                   errors={errors}
-                  networkSelection={networkSelection}
-                  operatorSelection={operatorSelection}
+                  networkSelection={
+                    flexibleLine.networkRef || DEFAULT_SELECT_VALUE
+                  }
+                  operatorSelection={
+                    flexibleLine.operatorRef || DEFAULT_SELECT_VALUE
+                  }
                   handleFieldChange={onFieldChange}
                   handleNetworkSelectionChange={handleNetworkSelectionChange}
                   handleOperatorSelectionChange={handleOperatorSelectionChange}
