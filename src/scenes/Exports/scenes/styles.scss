@@ -1,0 +1,13 @@
+@import '~@entur/tokens/dist/styles.scss';
+
+.error-icon {
+  color: $colors-validation-lava;
+}
+
+.success-icon {
+  color: $colors-validation-mint;
+}
+
+.exlamation-icon {
+  color: $colors-validation-canary;
+}

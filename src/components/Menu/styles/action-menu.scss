@@ -1,7 +1,7 @@
-@import '../../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .action-menu {
-  background-color: $grey-10;
+  background-color: $colors-greys-grey10;
   right: 0;
   min-width: 160px;
   margin-top: 13px;
@@ -10,11 +10,11 @@
   .menu-item {
     padding: 10px 10px 10px 0;
     box-sizing: content-box;
-    border-bottom: 2px solid $grey-10;
+    border-bottom: 2px solid $colors-greys-grey10;
     font-weight: 500;
 
     &:hover {
-      background-color: $grey-20;
+      background-color: $colors-greys-grey20;
     }
 
     .icon-container {
@@ -42,13 +42,13 @@
     top: -8px;
     border-width: 2px 0 0 2px;
     transform: rotate(45deg) translateY(2px);
-    border-color: $grey-10;
-    background: #f3f3f3;
+    border-color: $colors-greys-grey10;
+    background: $colors-greys-grey30;
     z-index: -1;
   }
 
   a {
     text-decoration: none;
-    color: $primary;
+    color: $colors-brand-blue;
   }
 }

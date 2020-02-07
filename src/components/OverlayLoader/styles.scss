@@ -1,4 +1,4 @@
-@import '../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .overlay-loader {
   position: relative;
@@ -13,7 +13,7 @@
   }
 
   .overlay {
-    background-color: white;
+    background-color: $colors-brand-white;
     opacity: 1;
 
     &.seeThrough {

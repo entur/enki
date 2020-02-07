@@ -5,17 +5,17 @@ import {
   ValidationErrorIcon,
   ValidationExclamationIcon
 } from '@entur/icons';
-
+import './styles.scss';
 import { EXPORT_STATUS, SEVERITY } from 'model/enums';
 
 export const getIconForStatus = status => {
   switch (status) {
     case EXPORT_STATUS.SUCCESS:
-      return <ValidationCheckIcon color="rgba(44,255,0,1)" />;
+      return <ValidationCheckIcon className="success-icon" />;
     case EXPORT_STATUS.FAILED:
-      return <ValidationErrorIcon color="rgba(255,0,0,1)" />;
+      return <ValidationErrorIcon className="error-icon" />;
     case EXPORT_STATUS.IN_PROGRESS:
-      return <ValidationExclamationIcon color="rgba(231,231,98,1)" />;
+      return <ValidationExclamationIcon className="exlamation-icon" />;
     default:
       return null;
   }
@@ -24,11 +24,11 @@ export const getIconForStatus = status => {
 export const getIconForSeverity = severity => {
   switch (severity) {
     case SEVERITY.INFO:
-      return <ValidationExclamationIcon color="rgba(203,203,188,1)" />;
+      return <ValidationExclamationIcon className="exlamation-icon" />;
     case SEVERITY.WARN:
-      return <ValidationErrorIcon color="rgba(255,234,0,1)" />;
+      return <ValidationErrorIcon className="error-icon" />;
     case SEVERITY.ERROR:
-      return <ValidationErrorIcon color="rgba(255,0,0,1)" />;
+      return <ValidationErrorIcon className="error-icon" />;
     default:
       return null;
   }

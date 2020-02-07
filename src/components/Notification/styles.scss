@@ -1,4 +1,4 @@
-@import '../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .notification {
   position: fixed;
@@ -37,19 +37,19 @@
   box-sizing: content-box;
 
   .warning {
-    color: $canary;
+    color: $colors-validation-canary;
   }
 
   .success {
-    color: $dark-mint;
+    color: $colors-validation-mint;
   }
 
   .error {
-    color: $dark-coral;
+    color: $colors-validation-lava;
   }
 
   .info {
-    color: $primary;
+    color: $colors-validation-sky;
   }
 
   .notification-bar-label {
@@ -60,7 +60,7 @@
 .notification-bar-message {
   font-size: 14px;
   font-weight: 500;
-  color: $primary;
+  color: $colors-brand-blue;
   margin-left: 45px;
   box-sizing: content-box;
   margin-bottom: 20px;
@@ -71,20 +71,20 @@
   display: inline-block;
 }
 .notification-error {
-  background: #fddbd3;
-  border-bottom: 3px solid $dark-coral;
+  background: $colors-validation-lava-tint;
+  border-bottom: 3px solid $colors-brand-coral;
 }
 .notification-warning {
-  background-color: #faf3da;
-  border-bottom: 3px solid $canary;
+  background-color: $colors-validation-sky-tint;
+  border-bottom: 3px solid $colors-validation-canary;
 }
 .notification-success {
-  background-color: #def0e6;
-  border-bottom: 3px solid $dark-mint;
+  background-color: $colors-validation-mint-tint;
+  border-bottom: 3px solid $colors-validation-mint;
 }
 .notification-info {
-  background-color: #d9d6df;
-  border-bottom: 3px solid $primary;
+  background-color: $colors-blues-blue60;
+  border-bottom: 3px solid $colors-brand-blue;
 }
 .notification-default {
   position: fixed;

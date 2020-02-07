@@ -1,34 +1,4 @@
-@import '../../../../../../../../styles/base/colors.scss';
-
 .stop-point-editor {
-  .general-tab {
-    width: 500px;
-    max-width: 500px;
-
-    input:not(.entur-radio-checkbox__input),
-    textarea,
-    select {
-      width: 100%;
-      margin-bottom: 30px;
-    }
-
-    input.entur-just-radio-checkbox {
-      margin-bottom: 30px;
-    }
-  }
-
-  .booking-tab {
-    width: 500px;
-    max-width: 500px;
-
-    input:not(.entur-radio-checkbox__input),
-    textarea,
-    select {
-      width: 100%;
-      margin-bottom: 30px;
-    }
-  }
-
   .entur-radio-checkbox-group input {
     margin-bottom: 0;
   }

@@ -1,13 +1,13 @@
-@import '../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .confirmation-dialog-dark {
-  background-color: $primary;
-  color: $white;
+  background-color: $colors-brand-blue;
+  color: $colors-brand-white;
 }
 
 .confirmation-dialog-light {
-  background-color: $white;
-  color: $black;
+  background-color: $colors-brand-white;
+  color: $colors-misc-black;
 }
 
 .confirmation-dialog {
