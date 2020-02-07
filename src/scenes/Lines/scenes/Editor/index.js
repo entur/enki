@@ -43,18 +43,13 @@ const ErrorIcon = ({ visible }) => {
 const selectFlexibleLine = createSelector(
   state => state.flexibleLines,
   (_, match) => match,
-  (flexibleLines, match) => {
-    const defaultFlexibleLine = new FlexibleLine({
+  (flexibleLines, match) =>
+    (match.params.id && flexibleLines?.find(l => l.id === match.params.id)) ||
+    new FlexibleLine({
       transportMode: VEHICLE_MODE.BUS,
       transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
       flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
-    });
-    return match.params.id
-      ? flexibleLines
-        ? flexibleLines.find(l => l.id === match.params.id)
-        : defaultFlexibleLine
-      : defaultFlexibleLine;
-  }
+    })
 );
 
 function useLoadDependencies(match, history) {
