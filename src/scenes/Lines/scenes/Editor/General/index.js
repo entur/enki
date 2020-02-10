@@ -2,18 +2,17 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextArea, TextField, InputGroup } from '@entur/form';
-import { isBlank } from 'helpers/forms';
 import { DEFAULT_SELECT_LABEL, DEFAULT_SELECT_VALUE } from '../constants';
-import Errors from 'components/Errors';
 import { FLEXIBLE_LINE_TYPE } from 'model/enums';
 import { selectIntl } from 'i18n';
 import messages from './messages';
+import validationMessages from '../validateForm.messages';
 
 export default ({
   flexibleLine,
   networks,
-  operators,
   errors,
+  operators,
   networkSelection,
   operatorSelection,
   handleFieldChange,
@@ -21,15 +20,21 @@ export default ({
   handleOperatorSelectionChange
 }) => {
   const { formatMessage } = useSelector(selectIntl);
+  const {
+    errors: {
+      name: nameError,
+      publicCode: publicCodeError,
+      networkRef: networkError
+    }
+  } = errors;
+
   return (
     <div className="tab-style">
       <InputGroup
         className="form-section"
         label={formatMessage(messages.nameFormGroupTitle)}
-        variant={isBlank(flexibleLine.name) ? 'error' : undefined}
-        feedback={
-          isBlank(flexibleLine.name) ? 'Navn må fylles inn.' : undefined
-        }
+        variant={nameError ? 'error' : undefined}
+        feedback={nameError ?? undefined}
       >
         <TextField
           defaultValue={flexibleLine.name}
@@ -61,12 +66,8 @@ export default ({
       <InputGroup
         className="form-section"
         label={formatMessage(messages.publicCodeFormGroupTitle)}
-        variant={isBlank(flexibleLine.publicCode) ? 'error' : undefined}
-        feedback={
-          isBlank(flexibleLine.publicCode)
-            ? 'Public Code må fylles inn.'
-            : undefined
-        }
+        variant={publicCodeError ? 'error' : undefined}
+        feedback={publicCodeError ?? undefined}
       >
         <TextField
           type="text"
@@ -94,10 +95,11 @@ export default ({
         onChange={({ value }) => handleNetworkSelectionChange(value)}
         placeHolder={DEFAULT_SELECT_LABEL}
         value={networkSelection}
-        variant={errors.networkRef.length > 0 ? 'input-error' : undefined}
+        feedback={formatMessage(
+          validationMessages.errorFlexibleLineNetworkRefEmpty
+        )}
+        variant={networkError ? 'error' : undefined}
       />
-
-      <Errors errors={errors.networkRef} />
 
       <Dropdown
         className="form-section"
@@ -109,7 +111,7 @@ export default ({
           }))
         ]}
         label={formatMessage(messages.typeFormGroupTitle)}
-        onChange={e => handleFieldChange('flexibleLineType', e.value)}
+        onChange={({ value }) => handleFieldChange('flexibleLineType', value)}
         value={flexibleLine.flexibleLineType}
       />
     </div>
