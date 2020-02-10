@@ -77,5 +77,25 @@ export default defineMessages({
   operator: {
     id: 'lines.journeyPatterns.serviceJourney.general.operator',
     defaultMessage: 'Operatør'
+  },
+  weekdays: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays',
+    defaultMessage: 'Ukedager'
+  },
+  dates: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dates',
+    defaultMessage: 'Datoer'
+  },
+  addDayTypeAssignment: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.addDayTypeAssignment',
+    defaultMessage: 'Legg til dato'
+  },
+  noDayTypeAssignments: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.noDayTypeAssignments',
+    defaultMessage: 'Ingen datoer er definert.'
   }
 });
