@@ -1,4 +1,4 @@
-@import '../../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .checkbox-icon {
   display: flex;
@@ -6,10 +6,10 @@
   justify-content: center;
   width: 12px;
   height: 12px;
-  border: 1px solid $primary;
+  border: 1px solid $colors-brand-blue;
   border-radius: 1px;
-  background: $white;
+  background: $colors-brand-white;
   svg {
-    fill: $primary;
+    fill: $colors-brand-blue;
   }
 }

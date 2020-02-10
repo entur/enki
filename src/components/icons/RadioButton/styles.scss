@@ -1,4 +1,4 @@
-@import '../../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .radio-button-icon {
   display: flex;
@@ -6,11 +6,11 @@
   justify-content: center;
   width: 12px;
   height: 12px;
-  border: 1px solid $primary;
+  border: 1px solid $colors-brand-blue;
   border-radius: 50%;
 
   & .checked {
-    background-color: $primary;
+    background-color: $colors-brand-blue;
     width: 6px;
     height: 6px;
     border-radius: 50%;

@@ -1,6 +1,6 @@
 @import '~@entur/typography/dist/styles.css';
+@import '~@entur/tokens/dist/styles.scss';
 @import '~@entur/fonts/index.css';
-@import './colors.scss';
 
 body {
   margin: 0;
@@ -17,27 +17,29 @@ h1 {
   font-size: 34px;
   font-weight: 600;
   line-height: 42px;
-  color: $primary;
+  color: $colors-brand-blue;
 }
 
 h2 {
   font-size: 28px;
   font-weight: 600;
   line-height: 36px;
-  color: $primary;
+  color: $colors-brand-blue;
 }
 
 h3 {
   font-size: 22px;
   font-weight: 600;
   line-height: 30px;
-  color: $primary;
+  color: $colors-brand-blue;
 }
 h4 {
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
+  color: $colors-brand-blue;
 }
+
 p {
   font-size: 16px;
   font-weight: 500;
@@ -74,7 +76,7 @@ small {
 }
 
 .positive {
-  color: $dark-mint;
+  color: $colors-validation-mint;
 }
 
 table {

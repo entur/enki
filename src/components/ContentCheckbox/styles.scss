@@ -1,4 +1,4 @@
-@import '../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 @import '../../styles/base/dimensions.scss';
 
 .content-checkbox {
@@ -6,9 +6,9 @@
   height: $inputHeight;
   width: $inputHeight;
   margin: 0;
-  border: 2px solid $secondary;
+  border: 2px solid $colors-blues-blue60;
   border-radius: 1px;
-  color: $primary;
+  color: $colors-brand-blue;
   font-size: 16px;
   font-weight: 600;
   box-sizing: border-box;
@@ -26,16 +26,16 @@
 
   &:focus {
     outline: none;
-    border-color: $focus;
+    border-color: $colors-validation-sky-contrast;
   }
 
   &.checked {
-    background-color: $secondary;
-    border-color: $secondary;
-    border-bottom-color: $primary;
+    background-color: $colors-blues-blue60;
+    border-color: $colors-blues-blue60;
+    border-bottom-color: $colors-brand-blue;
 
     &:focus {
-      border-color: $focus;
+      border-color: $colors-misc-focus;
     }
   }
 

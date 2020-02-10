@@ -1,12 +1,9 @@
-@import '~@entur/menu/dist/styles.css';
-@import '../../../../styles/base/colors.scss';
 @import '~@entur/tokens/dist/styles.scss';
-@import '~@entur/layout/dist/styles.css';
 
 .navbar-wrapper {
   left: 0;
   top: 0;
-  background-color: $primary;
+  background-color: $colors-brand-blue;
   padding-bottom: 10rem;
   min-height: 100vh;
 }

@@ -1,12 +1,4 @@
-export { default as ArrowDown } from './arrows/ArrowDown';
-export { default as ArrowLeft } from './arrows/ArrowLeft';
-export { default as ArrowRight } from './arrows/ArrowRight';
-export { default as ArrowUp } from './arrows/ArrowUp';
-export { default as BackArrow } from './arrows/BackArrow';
-export { default as TailedArrowDown } from './arrows/TailedArrowDown';
 export { default as Checkbox } from './Checkbox';
 export { default as Checkmark } from './Checkmark';
 export { default as Loading } from './Loading';
 export { default as RadioButton } from './RadioButton';
-export { default as Success } from './Success';
-export { default as Warning } from './Warning';

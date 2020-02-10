@@ -1,4 +1,5 @@
 @import './base/base.scss';
+@import '~@entur/tokens/dist/styles.scss';
 @import '~@entur/dropdown/dist/styles.css';
 @import '~@entur/tab/dist/styles.css';
 @import '~@entur/a11y/dist/styles.css';
@@ -8,7 +9,8 @@
 @import '~@entur/expand/dist/styles.css';
 @import '~@entur/table/dist/styles.css';
 @import '~@entur/datepicker/dist/styles.css';
-@import '~@entur/expand/dist/styles.css';
+@import '~@entur/menu/dist/styles.css';
+@import '~@entur/form/dist/styles.css';
 
 .form-section {
   margin-bottom: 30px;
@@ -25,5 +27,5 @@
 }
 
 .input-error {
-  border: solid 1px $dark-coral;
+  border: solid 1px $colors-brand-coral;
 }
