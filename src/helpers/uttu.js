@@ -1,12 +1,11 @@
 import messages from './uttu.messages';
 
-export const getUttuError = e => {
-  return e.response?.errors &&
-    e.response.errors?.length &&
-    e.response.errors[0].message
-    ? e.response.errors[0].message
-    : null;
-};
+export const getUttuError = e => e.response?.errors?.[0]?.message ?? null;
+
+export const getStyledUttuError = (e, generalMessage, fallback = '') =>
+  getUttuError(e)
+    ? `${generalMessage}: ${getUttuError(e)}`
+    : `${generalMessage}. ${fallback}`;
 
 const validErrorCodes = [
   'UNKNOWN',
