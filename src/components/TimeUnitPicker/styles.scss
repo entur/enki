@@ -1,12 +1,12 @@
-@import '../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .time-unit-picker {
   position: relative;
 
   input {
     width: 100%;
-    background: $grey-30 url('../../static/icons/Arrowdown.svg') no-repeat right
-      16px center;
+    background: $colors-greys-grey30 url('../../static/icons/Arrowdown.svg')
+      no-repeat right 16px center;
     padding-right: 30px;
     cursor: default;
     user-select: none;
@@ -17,7 +17,7 @@
     z-index: 100;
     width: 345px;
     padding: 25px;
-    background-color: $blue-80;
+    background-color: $colors-blues-blue80;
     text-align: center;
 
     .picker {
@@ -41,7 +41,7 @@
           min-width: 75px;
           padding-left: 16px;
           background-position: right 16px center;
-          color: $primary;
+          color: $colors-brand-blue;
           font-weight: 500;
         }
       }
@@ -70,7 +70,7 @@
         content: '';
         border-style: solid;
         border-width: 6px 6px 0 6px;
-        border-color: $blue-80 transparent transparent transparent;
+        border-color: $colors-blues-blue80 transparent transparent transparent;
         position: absolute;
         left: 15px;
         bottom: -6px;
@@ -84,7 +84,7 @@
         content: '';
         border-style: solid;
         border-width: 0 6px 6px 6px;
-        border-color: transparent transparent $blue-80 transparent;
+        border-color: transparent transparent $colors-blues-blue60 transparent;
         position: absolute;
         left: 15px;
         top: -6px;

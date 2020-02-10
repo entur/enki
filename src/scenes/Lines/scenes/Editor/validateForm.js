@@ -1,23 +1,50 @@
-import * as R from 'ramda';
+import { isNil, isEmpty } from 'ramda';
 import { DEFAULT_SELECT_VALUE } from './constants';
-import { objectValues } from 'helpers/forms';
+import { isBlank } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 
 function validateNetworkRef(networkRef) {
   if (
-    R.isNil(networkRef) ||
+    isNil(networkRef) ||
     networkRef === DEFAULT_SELECT_VALUE ||
-    R.isEmpty(networkRef)
+    isEmpty(networkRef)
   ) {
-    return [messages.errorFlexibleLineNetworkRefEmpty];
+    return messages.errorFlexibleLineNetworkRefEmpty;
   }
-  return [];
+}
+
+function validateName(name) {
+  if (isBlank(name)) {
+    return 'Navn må fylles inn.';
+  }
+}
+
+function validatePublicCode(publicCode) {
+  if (isBlank(publicCode)) {
+    return 'Public Code må fylles inn.';
+  }
 }
 
 export default function(flexibleLine) {
+  if (!flexibleLine) {
+    return {
+      isValid: true,
+      errors: {
+        networkRef: undefined,
+        name: undefined,
+        publicCode: undefined
+      }
+    };
+  }
   let errors = {
-    networkRef: validateNetworkRef(flexibleLine.networkRef)
+    networkRef: validateNetworkRef(flexibleLine.networkRef),
+    name: validateName(flexibleLine.name),
+    publicCode: validatePublicCode(flexibleLine.publicCode)
   };
-  return [objectValues(errors).length === 0, errors];
+
+  return {
+    isValid: Object.values(errors).filter(Boolean).length === 0,
+    errors: errors
+  };
 }

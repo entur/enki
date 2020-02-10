@@ -1,14 +1,14 @@
-@import '../../../../../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .user-menu {
   font-size: 16px;
-  color: #fff;
+  color: $colors-brand-white;
   display: flex;
   align-items: center;
   cursor: pointer;
 
   .user-icon {
-    background-color: #393d79;
+    background-color: $colors-blues-blue20;
     border-radius: 20px;
     padding: 10px;
     margin-right: 15px;
@@ -47,22 +47,22 @@
   }
 
   .menu-item {
-    border-bottom: 2px solid $grey-10;
-    border-right: 2px solid $grey-10;
+    border-bottom: 2px solid $colors-greys-grey10;
+    border-right: 2px solid $colors-greys-grey10;
   }
 
   .popover {
     position: absolute;
     width: 100px;
-    color: #000;
+    color: $colors-misc-black;
     cursor: pointer;
     box-sizing: content-box;
 
     .menu-item-nested {
-      border-left: 2px solid $grey-10;
+      border-left: 2px solid $colors-greys-grey10;
       transform: translateY(155px);
-      background-color: $grey-30;
-      border-top: 2px solid $grey-10;
+      background-color: $colors-greys-grey10;
+      border-top: 2px solid $colors-greys-grey10;
 
       &:before {
         content: '';
@@ -72,10 +72,10 @@
         left: -5px;
         top: 12px;
         -webkit-transform: rotate(45deg) translateY(2px);
-        border: 2px solid $grey-10;
+        border: 2px solid $colors-greys-grey10;
         -ms-transform: rotate(45deg) translateY(2px);
         transform: rotate(45deg) translateY(2px);
-        background: #f3f3f3;
+        background: $colors-greys-grey30;
         z-index: -1;
       }
     }
@@ -94,7 +94,7 @@
     }
 
     .user-icon {
-      background-color: #54568c;
+      background-color: $colors-blues-blue30;
     }
   }
 }

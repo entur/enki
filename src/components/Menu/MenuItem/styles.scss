@@ -1,4 +1,4 @@
-@import '../../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .menu-item-wrapper {
   flex-direction: column;
@@ -16,15 +16,15 @@
   height: 0;
   min-height: 20px;
   min-width: 140px;
-  background: $grey-30;
+  background: $colors-greys-grey30;
   box-sizing: content-box;
 
   &:hover {
-    background: $grey-10;
+    background: $colors-greys-grey10;
   }
 
   &.active {
-    background: $grey-10;
+    background: $colors-greys-grey10;
   }
 
   &.disabled {
@@ -43,7 +43,7 @@
 
 .menu-item-nested {
   position: absolute;
-  background: $white;
+  background: $colors-brand-white;
   min-width: 100px;
 }
 

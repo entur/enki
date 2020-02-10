@@ -6,7 +6,7 @@ import {
   showErrorNotification,
   showSuccessNotification
 } from 'components/Notification/actions';
-import { getUttuError } from 'helpers/uttu';
+import { getStyledUttuError } from 'helpers/uttu';
 
 export const REQUEST_NETWORKS = 'REQUEST_NETWORKS';
 export const RECEIVE_NETWORKS = 'RECEIVE_NETWORKS';
@@ -69,7 +69,12 @@ export const loadNetworks = () => async (dispatch, getState) => {
   } catch (e) {
     dispatch(
       showErrorNotification(
-        `En feil oppstod under lastingen av nettverkene: ${getUttuError(e)}`
+        'Laste nettverk',
+        getStyledUttuError(
+          e,
+          'En feil oppstod under lastingen av nettverkene',
+          'Prøv igjen senere.'
+        )
       )
     );
     throw e;
@@ -90,7 +95,11 @@ export const loadNetworkById = id => async (dispatch, getState) => {
     dispatch(
       showErrorNotification(
         'Laste nettverk',
-        `En feil oppstod under lastingen av nettverket: ${getUttuError(e)}`
+        getStyledUttuError(
+          e,
+          'En feil oppstod under lastingen av nettverket',
+          'Prøv igjen senere.'
+        )
       )
     );
     throw e;
@@ -113,7 +122,11 @@ export const saveNetwork = network => async (dispatch, getState) => {
     dispatch(
       showErrorNotification(
         'Lagre nettverk',
-        `En feil oppstod under lagringen av nettverket: ${getUttuError(e)}`
+        getStyledUttuError(
+          e,
+          'En feil oppstod under lagringen av nettverket',
+          'Prøv igjen senere.'
+        )
       )
     );
     throw e;
@@ -134,7 +147,7 @@ export const deleteNetworkById = id => async (dispatch, getState) => {
     dispatch(
       showErrorNotification(
         'Slette nettverk',
-        `En feil oppstod under slettingen av nettverket: ${getUttuError(e)}`
+        getStyledUttuError(e, 'En feil oppstod under slettingen av nettverket')
       )
     );
     throw e;

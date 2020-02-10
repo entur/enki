@@ -1,4 +1,4 @@
-@import '../../../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .line-editor {
   flex: 1;
@@ -25,5 +25,15 @@
   .save-button-container {
     margin-top: 20px;
     text-align: right;
+  }
+
+  .error-icon {
+    color: $colors-validation-lava;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+  }
+
+  .no-error {
+    opacity: 0;
   }
 }

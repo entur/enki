@@ -1,12 +1,12 @@
-@import '../../styles/base/colors.scss';
+@import '~@entur/tokens/dist/styles.scss';
 
 .menu {
-  background: $white;
+  background: $colors-brand-white;
   font-size: 12px;
   z-index: 99;
   position: absolute;
   display: flex;
-  border: 2px solid $grey-10;
+  border: 2px solid $colors-greys-grey10;
   border-bottom: none;
   flex-direction: column;
 }
