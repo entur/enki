@@ -1,17 +1,17 @@
-import * as R from 'ramda';
+import { isNil, isEmpty } from 'ramda';
 import { objectValues } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 
 function validateName(name) {
-  if (R.isNil(name) || R.isEmpty(name)) {
+  if (isNil(name) || isEmpty(name)) {
     return [messages.errorNameEmpty];
   }
   return [];
 }
 
 function validateFlexibleArea(flexibleArea) {
-  if (R.isNil(flexibleArea) || flexibleArea.polygon.coordinates.length < 4) {
+  if (isNil(flexibleArea) || flexibleArea.polygon.coordinates.length < 4) {
     return [messages.errorFlexibleAreaNotEnoughPolygons];
   }
   return [];

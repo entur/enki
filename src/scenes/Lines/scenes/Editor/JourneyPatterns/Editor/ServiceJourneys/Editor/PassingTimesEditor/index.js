@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
@@ -6,10 +6,17 @@ import { InputGroup } from '@entur/form';
 import { StopPoint, PassingTime } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import TimePicker from 'components/TimePicker';
+import { SmallAlertBox } from '@entur/alert';
+import { validateTimes } from './validateForm';
 
 import './styles.scss';
 
 class PassingTimesEditor extends Component {
+  state = {
+    isValid: true,
+    errorMessage: ''
+  };
+
   componentDidMount() {
     const { passingTimes, stopPoints, onChange } = this.props;
     if (passingTimes.length < stopPoints.length) {
@@ -24,6 +31,15 @@ class PassingTimesEditor extends Component {
       newPts.splice(stopPoints.length);
       onChange(newPts);
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { passingTimes, setValidPassingTimes, intl } = this.props;
+    const { isValid, errorMessage } = validateTimes(passingTimes, { intl });
+    if (this.props !== prevProps) {
+      this.setState({ isValid, errorMessage });
+    }
+    setValidPassingTimes(isValid);
   }
 
   onFieldChange(index, field, value) {
@@ -120,16 +136,28 @@ class PassingTimesEditor extends Component {
   }
 
   render() {
-    return <Fragment>{this.renderStopPlacePassingTimes()}</Fragment>;
+    const { isValid, errorMessage } = this.state;
+    return (
+      <>
+        {!isValid && (
+          <SmallAlertBox variant="error"> {errorMessage} </SmallAlertBox>
+        )}
+        {this.renderStopPlacePassingTimes()}
+      </>
+    );
   }
 }
 
 PassingTimesEditor.propTypes = {
   passingTimes: PropTypes.arrayOf(PropTypes.instanceOf(PassingTime)).isRequired,
   stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  setValidPassingTimes: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ flexibleStopPlaces }) => ({ flexibleStopPlaces });
+const mapStateToProps = ({ flexibleStopPlaces, intl }) => ({
+  flexibleStopPlaces,
+  intl
+});
 
 export default connect(mapStateToProps)(PassingTimesEditor);

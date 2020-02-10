@@ -85,7 +85,7 @@
   "helpers.uttu.uttuError.CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME": "Linjen må ha et unikt navn",
   "helpers.uttu.uttuError.ENTITY_IS_REFERENCED": "Entiteten kan ikke slettes fordi {noOfLines, number} {noOfLines, plural, one {en annen entitet} other {andre entiteter}} refererer til den.",
   "helpers.uttu.uttuError.FROM_DATE_AFTER_TO_DATE": "Fra dato kan ikke være etter til dato",
-  "helpers.uttu.uttuError.MINIMUM_POINTS_IN_SEQUENCE": "Reisemønster må ha minimum 2 sekvensielle stoppepunkter",
+  "helpers.uttu.uttuError.MINIMUM_POINTS_IN_SEQUENCE": "Reisemønster må ha minimum 2 sekvensielle stoppepunkter.",
   "helpers.uttu.uttuError.MISSING_OPERATOR": "Tur eller linje må ha operatør",
   "helpers.uttu.uttuError.ORGANISATION_NOT_VALID_OPERATOR": "Ugyldig operatør",
   "helpers.uttu.uttuError.UNKNOWN": "Ukjent feil",
@@ -219,5 +219,10 @@
   "stopPlaces.nameTableHeaderLabelText": "Navn",
   "stopPlaces.noStopPlacesFoundText": "Ingen stoppesteder ble funnet.",
   "stopPlaces.numberOfPointsTableHeaderLabelText": "Antall punkter",
-  "stopPlaces.privateCodeTableHeaderLabelText": "Privat kode"
+  "stopPlaces.privateCodeTableHeaderLabelText": "Privat kode",
+  "passingTimes.error.atleastOneField": "Minst ett felt må være fylt ut.",
+  "passingTimes.error.departureAfterArrival": "Avgangstid kan ikke være før ankomsttid.",
+  "passingTimes.error.departureAfterEarliest": "Avgangstid kan ikke være før tidligst avgangstid.",
+  "passingTimes.error.arrivalBeforeLatest": "Ankomsttid ikke kan være senere enn senest ankomsttid.",
+  "passingTimes.error.laterThanPrevious": "Tidspunktene må være senere enn forrige stoppesteds tidspunkt."
 }
