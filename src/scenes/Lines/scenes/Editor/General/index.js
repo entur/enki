@@ -90,7 +90,10 @@ export default ({
 
       <Dropdown
         className="form-section"
-        items={networks.map(n => ({ value: n.id, label: n.name }))}
+        items={[
+          { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
+          ...networks.map(n => ({ value: n.id, label: n.name }))
+        ]}
         label={formatMessage(messages.networkFormGroupTitle)}
         onChange={({ value }) => handleNetworkSelectionChange(value)}
         placeHolder={DEFAULT_SELECT_LABEL}

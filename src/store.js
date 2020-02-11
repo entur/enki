@@ -1,4 +1,5 @@
 import { applyMiddleware, createStore, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 import { intlReducer as intl } from 'react-intl-redux';
 import Raven from 'raven-js';
@@ -11,14 +12,6 @@ const SENTRY_DSN = 'https://cc3cacbc67234cc7bfe1cf391010414b@sentry.io/1769954';
 
 const getMiddlewares = () => {
   const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
-
-  if (process.env.NODE_ENV === 'development') {
-    const { createLogger } = require('redux-logger');
-    const logger = createLogger({
-      duration: true
-    });
-    middlewares.push(logger);
-  }
 
   const useSentry = process.env.NODE_ENV === 'production';
   if (useSentry) {
@@ -54,7 +47,11 @@ export const configureStore = user => {
   const enhancer = applyMiddleware(...middlewares);
 
   return {
-    store: createStore(combinedReducers, initialState, enhancer),
+    store: createStore(
+      combinedReducers,
+      initialState,
+      composeWithDevTools(enhancer)
+    ),
     Raven
   };
 };
