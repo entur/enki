@@ -55,8 +55,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }) => {
         ))
       ) : (
         <div className="no-day-types">
-          {' '}
-          {formatMessage(messages.noDayTypeAssignments)}{' '}
+          {formatMessage(messages.noDayTypeAssignments)}
         </div>
       )}
     </div>
