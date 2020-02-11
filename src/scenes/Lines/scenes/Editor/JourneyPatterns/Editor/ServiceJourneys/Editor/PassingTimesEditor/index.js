@@ -81,16 +81,15 @@ class PassingTimesEditor extends Component {
   getTimePicker = (tpt, index, field) => {
     const currentValue = tpt && tpt[field];
 
-    const shownValue = [currentValue && currentValue.split()]
-      .slice(0, 2)
-      .join(':');
+    const shownValue =
+      currentValue
+        ?.split(':')
+        .slice(0, 2)
+        .join(':') || undefined;
 
     return (
       <TextField
-        onChange={e => {
-          console.log(e.target.value);
-          this.onFieldChange(index, field, e.target.value + ':00');
-        }}
+        onChange={e => this.onFieldChange(index, field, e.target.value + ':00')}
         prepend={<ClockIcon inline />}
         type="time"
         className="timepicker"
