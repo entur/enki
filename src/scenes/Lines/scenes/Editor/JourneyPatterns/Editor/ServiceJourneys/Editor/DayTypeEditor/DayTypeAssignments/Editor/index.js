@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectIntl } from 'i18n';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import moment from 'moment';
@@ -8,126 +10,117 @@ import { DayTypeAssignment } from 'model';
 import { dateToString } from 'helpers/dates';
 import { DatePicker } from '@entur/datepicker';
 import OperatingPeriod from 'model/OperatingPeriod';
+import messages from '../../../../../messages';
 import './styles.scss';
 
-class DayTypeAssignmentEditor extends Component {
-  state = {
-    useDateRange: Boolean(this.props.dayTypeAssignment.operatingPeriod)
+const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
+  const [useDateRange, setUseDateRange] = useState(
+    Boolean(dayTypeAssignment.operatingPeriod)
+  );
+  const { isAvailable, operatingPeriod, date } = dayTypeAssignment || {};
+  const { formatMessage } = useSelector(selectIntl);
+
+  const onFieldChange = (field, value) => {
+    onChange(dayTypeAssignment.withFieldChange(field, value));
   };
 
-  onFieldChange(field, value) {
-    const { dayTypeAssignment, onChange } = this.props;
-    onChange(dayTypeAssignment.withFieldChange(field, value));
-  }
-
-  handleDateRangeChange() {
+  const handleDateRangeChange = () => {
     const today = moment().format('YYYY-MM-DD');
-    this.state.useDateRange
-      ? this.onFieldChange('operatingPeriod', undefined)
-      : this.onFieldChange(
+    useDateRange
+      ? onFieldChange('operatingPeriod', undefined)
+      : onFieldChange(
           'operatingPeriod',
           new OperatingPeriod({ fromDate: today, toDate: today })
         );
-    this.setState(s => ({ useDateRange: !s.useDateRange }));
-  }
+    setUseDateRange(!useDateRange);
+  };
 
-  handleOperatingPeriodFieldChange(field, value) {
-    const { dayTypeAssignment } = this.props;
+  const handleOperatingPeriodFieldChange = (field, value) => {
     const operatingPeriod = dayTypeAssignment.operatingPeriod
       ? dayTypeAssignment.operatingPeriod.withFieldChange(field, value)
       : new OperatingPeriod({ [field]: value });
 
-    this.onFieldChange('operatingPeriod', operatingPeriod);
-  }
+    onFieldChange('operatingPeriod', operatingPeriod);
+  };
 
-  render() {
-    const {
-      dayTypeAssignment: { isAvailable, date, operatingPeriod },
-      onDelete
-    } = this.props;
-    const { useDateRange } = this.state;
+  return (
+    <div
+      className={cx('day-type-assignment-editor', { available: isAvailable })}
+    >
+      <div className="set-availability">
+        <Checkbox
+          value="1"
+          checked={isAvailable === true}
+          onChange={e => onFieldChange('isAvailable', e.target.checked)}
+        />
+      </div>
 
-    return (
-      <div
-        className={cx('day-type-assignment-editor', { available: isAvailable })}
-      >
-        <div className="set-availability">
-          <Checkbox
-            value="1"
-            checked={isAvailable === true}
-            onChange={e => this.onFieldChange('isAvailable', e.target.checked)}
+      <div>
+        <InputGroup label={formatMessage(messages.fromAndToDate)}>
+          <Switch
+            checked={useDateRange}
+            onChange={() => handleDateRangeChange()}
           />
-        </div>
+        </InputGroup>
 
-        <div>
-          <InputGroup label="Bruk fra- og til-dato">
-            <Switch
-              checked={useDateRange}
-              onChange={() => this.handleDateRangeChange()}
-            />
-          </InputGroup>
+        {!useDateRange && (
+          <div>
+            <InputGroup label={formatMessage(messages.date)}>
+              <DatePicker
+                selectedDate={date && moment(date).toDate()}
+                onChange={date => onFieldChange('date', dateToString(date))}
+              />
+            </InputGroup>
+          </div>
+        )}
 
-          {!useDateRange && (
+        {useDateRange && (
+          <div className="range-dates">
             <div>
-              <InputGroup label="Dato">
+              <InputGroup label={formatMessage(messages.fromDate)}>
                 <DatePicker
-                  selectedDate={date && moment(date).toDate()}
+                  selectedDate={
+                    operatingPeriod
+                      ? moment(operatingPeriod.fromDate).toDate()
+                      : undefined
+                  }
                   onChange={date =>
-                    this.onFieldChange('date', dateToString(date))
+                    handleOperatingPeriodFieldChange(
+                      'fromDate',
+                      dateToString(date)
+                    )
                   }
                 />
               </InputGroup>
             </div>
-          )}
 
-          {useDateRange && (
-            <div className="range-dates">
-              <div>
-                <InputGroup label="Fra dato">
-                  <DatePicker
-                    selectedDate={
-                      operatingPeriod
-                        ? moment(operatingPeriod.fromDate).toDate()
-                        : undefined
-                    }
-                    onChange={date =>
-                      this.handleOperatingPeriodFieldChange(
-                        'fromDate',
-                        dateToString(date)
-                      )
-                    }
-                  />
-                </InputGroup>
-              </div>
-
-              <div>
-                <InputGroup label="Til dato">
-                  <DatePicker
-                    selectedDate={
-                      operatingPeriod
-                        ? moment(operatingPeriod.toDate).toDate()
-                        : undefined
-                    }
-                    onChange={date =>
-                      this.handleOperatingPeriodFieldChange(
-                        'toDate',
-                        dateToString(date)
-                      )
-                    }
-                  />
-                </InputGroup>
-              </div>
+            <div>
+              <InputGroup label={formatMessage(messages.toDate)}>
+                <DatePicker
+                  selectedDate={
+                    operatingPeriod
+                      ? moment(operatingPeriod.toDate).toDate()
+                      : undefined
+                  }
+                  onChange={date =>
+                    handleOperatingPeriodFieldChange(
+                      'toDate',
+                      dateToString(date)
+                    )
+                  }
+                />
+              </InputGroup>
             </div>
-          )}
-        </div>
-
-        <div className="delete" onClick={onDelete}>
-          <DeleteIcon />
-        </div>
+          </div>
+        )}
       </div>
-    );
-  }
-}
+
+      <div className="delete" onClick={onDelete}>
+        <DeleteIcon />
+      </div>
+    </div>
+  );
+};
 
 DayTypeAssignmentEditor.propTypes = {
   dayTypeAssignment: PropTypes.instanceOf(DayTypeAssignment).isRequired,
