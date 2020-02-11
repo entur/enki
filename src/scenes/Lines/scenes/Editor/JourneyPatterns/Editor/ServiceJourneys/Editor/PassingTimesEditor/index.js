@@ -2,10 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
-import { InputGroup } from '@entur/form';
+import { Label } from '@entur/typography';
+import { TextField } from '@entur/form';
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  HeaderCell,
+  DataCell
+} from '@entur/table';
+import { ClockIcon } from '@entur/icons';
 import { StopPoint, PassingTime } from 'model';
 import { replaceElement } from 'helpers/arrays';
-import TimePicker from 'components/TimePicker';
 import { SmallAlertBox } from '@entur/alert';
 import { validateTimes } from './validateForm';
 
@@ -57,83 +66,107 @@ class PassingTimesEditor extends Component {
     this.onFieldChange(index, field, value !== 0 ? value : undefined);
   }
 
-  getTimePicker = (tpt, index, field) => (
-    <TimePicker
-      time={tpt && tpt[field] ? tpt[field] : null}
-      onChange={t => this.onFieldChange(index, field, t)}
-      position="below"
-    />
-  );
-
   getDayOffsetDropDown = (tpt, index, field) => (
     <Dropdown
-      value={tpt && tpt[field] ? tpt[field].toString() : '0'}
-      onChange={e => this.handleDayOffsetChange(index, field, e.value)}
-      placeholder="Daytime offset"
-      items={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => ({
+      items={[...Array(10).keys()].map(i => ({
         value: i,
-        label: '+' + i
+        label: i
       }))}
+      onChange={({ value }) => this.handleDayOffsetChange(index, field, value)}
+      className="hourpicker"
+      value={tpt && tpt[field] ? tpt[field].toString() : 0}
     />
   );
 
-  renderStopPlacePassingTimes() {
-    const { flexibleStopPlaces, stopPoints, passingTimes } = this.props;
+  getTimePicker = (tpt, index, field) => {
+    const currentValue = tpt && tpt[field];
 
-    return stopPoints.map((sp, i) => {
-      const stopPlace = flexibleStopPlaces.find(
-        fsp => fsp.id === sp.flexibleStopPlaceRef
-      );
+    const shownValue =
+      currentValue
+        ?.split(':')
+        .slice(0, 2)
+        .join(':') || undefined;
 
-      const stopPlaceName = stopPlace?.name ?? sp.quayRef;
-      const tpt = passingTimes[i];
+    return (
+      <TextField
+        onChange={e => this.onFieldChange(index, field, e.target.value + ':00')}
+        prepend={<ClockIcon inline />}
+        type="time"
+        className="timepicker"
+        value={shownValue}
+      />
+    );
+  };
 
-      return (
-        <>
-          <h3>{'#' + (i + 1) + ' ' + stopPlaceName} </h3>
-          <h4>Avgang</h4>
-          <InputGroup label="Tidligste avgangstid">
-            <div className="time-and-offset-container">
-              <div>{this.getTimePicker(tpt, i, 'earliestDepartureTime')}</div>
-              <div className="time-and-offset">
-                {this.getDayOffsetDropDown(
-                  tpt,
-                  i,
-                  'earliestDepartureDayOffset'
-                )}
+  renderRow = (sp, i) => {
+    const { flexibleStopPlaces, passingTimes } = this.props;
+    const stopPlace = flexibleStopPlaces.find(
+      fsp => fsp.id === sp.flexibleStopPlaceRef
+    );
+
+    const stopPlaceName = stopPlace?.name ?? sp.quayRef;
+    const tpt = passingTimes[i];
+
+    return (
+      <TableRow>
+        <DataCell>{i}</DataCell>
+        <DataCell>{stopPlaceName}</DataCell>
+        <DataCell>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div>
+              <Label>Tidligst</Label>
+              <div style={{ display: 'flex' }}>
+                <div>{this.getTimePicker(tpt, i, 'earliestDepartureTime')}</div>
+                <div>
+                  {this.getDayOffsetDropDown(
+                    tpt,
+                    i,
+                    'earliestDepartureDayOffset'
+                  )}
+                </div>
               </div>
             </div>
-          </InputGroup>
+            <div>
+              <Label>Normalt</Label>
+              <div style={{ display: 'flex' }}>
+                <div>{this.getTimePicker(tpt, i, 'departureTime')}</div>
+                <div>
+                  {this.getDayOffsetDropDown(tpt, i, 'departureDayOffset')}
+                </div>
+              </div>
+            </div>
+          </div>
+        </DataCell>
+        <DataCell>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div>
+              <Label>Normalt</Label>
+              <div style={{ display: 'flex' }}>
+                <div>{this.getTimePicker(tpt, i, 'arrivalTime')}</div>
+                <div>
+                  {this.getDayOffsetDropDown(tpt, i, 'arrivalDayOffset')}
+                </div>
+              </div>
+            </div>
+            <div>
+              <Label>Senest</Label>
+              <div style={{ display: 'flex' }}>
+                <div>{this.getTimePicker(tpt, i, 'latestArrivalTime')}</div>
+                <div>
+                  {this.getDayOffsetDropDown(tpt, i, 'latestArrivalDayOffset')}
+                </div>
+              </div>
+            </div>
+          </div>
+        </DataCell>
+      </TableRow>
+    );
+  };
 
-          <InputGroup label="Normal avgangstid">
-            <div className="time-and-offset-container">
-              <div>{this.getTimePicker(tpt, i, 'departureTime')}</div>
-              <div className="time-and-offset">
-                {this.getDayOffsetDropDown(tpt, i, 'departureDayOffset')}
-              </div>
-            </div>
-          </InputGroup>
-          <h4>Ankomst</h4>
-          <InputGroup label="Normal ankomsttid">
-            <div className="time-and-offset-container">
-              <div>{this.getTimePicker(tpt, i, 'arrivalTime')}</div>
-              <div className="time-and-offset">
-                {this.getDayOffsetDropDown(tpt, i, 'arrivalDayOffset')}
-              </div>
-            </div>
-          </InputGroup>
-          <InputGroup label="Seneste ankomsttid">
-            <div className="time-and-offset-container">
-              <div>{this.getTimePicker(tpt, i, 'latestArrivalTime')}</div>
-              <div className="time-and-offset">
-                {this.getDayOffsetDropDown(tpt, i, 'latestArrivalDayOffset')}
-              </div>
-            </div>
-          </InputGroup>
-        </>
-      );
-    });
-  }
+  renderRows = () => {
+    const { stopPoints } = this.props;
+    return stopPoints.map((sp, i) => this.renderRow(sp, i));
+  };
 
   render() {
     const { isValid, errorMessage } = this.state;
@@ -142,7 +175,17 @@ class PassingTimesEditor extends Component {
         {!isValid && (
           <SmallAlertBox variant="error"> {errorMessage} </SmallAlertBox>
         )}
-        {this.renderStopPlacePassingTimes()}
+        <Table>
+          <TableHead>
+            <TableRow>
+              <HeaderCell>#</HeaderCell>
+              <HeaderCell>Stoppested</HeaderCell>
+              <HeaderCell>Ankomst</HeaderCell>
+              <HeaderCell>Avgang</HeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{this.renderRows()}</TableBody>
+        </Table>
       </>
     );
   }

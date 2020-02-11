@@ -5,3 +5,17 @@
 .time-and-offset {
   padding-left: 0.5rem;
 }
+
+.timepicker {
+  width: 9rem;
+}
+
+.hourpicker {
+  width: 4rem;
+  margin-left: 0.3rem;
+  margin-right: 1rem;
+
+  .eds-form-control-wrapper {
+    height: 3rem;
+  }
+}
