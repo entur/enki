@@ -13,7 +13,7 @@ import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
 import { ORGANISATION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
-import defineMessages from './messages';
+import messages from '../../messages';
 
 import './styles.scss';
 
@@ -75,28 +75,34 @@ export default function ServiceJourneyEditor(props) {
         <PageHeader
           withBackButton
           onBackButtonClick={onClose}
-          title={`${isEditMode ? 'Rediger' : 'Opprett'} Service Journey`}
+          title={`${
+            isEditMode
+              ? formatMessage(messages.edit)
+              : formatMessage(messages.create)
+          } Service Journey`}
         />
 
         <div className="header-buttons">
           <SuccessButton onClick={validPassingTimes ? onSave : undefined}>
-            Lagre
+            {formatMessage(messages.save)}
           </SuccessButton>
         </div>
       </div>
 
       <Tabs>
         <TabList>
-          <Tab>{formatMessage(defineMessages.general)}</Tab>
-          <Tab>{formatMessage(defineMessages.availability)}</Tab>
-          <Tab>{formatMessage(defineMessages.passingTimes)}</Tab>
-          <Tab>{formatMessage(defineMessages.booking)}</Tab>
+          <Tab>{formatMessage(messages.general)}</Tab>
+          <Tab>{formatMessage(messages.availability)}</Tab>
+          <Tab>{formatMessage(messages.passingTimes)}</Tab>
+          <Tab>{formatMessage(messages.booking)}</Tab>
         </TabList>
         <TabPanels>
           <TabPanel className="tab-style">
             <InputGroup
-              label="* Navn"
-              feedback={isBlankName ? 'Navn må fylles inn.' : undefined}
+              label={formatMessage(messages.nameLabel)}
+              feedback={
+                isBlankName ? formatMessage(messages.nameRequired) : undefined
+              }
               variant={isBlankName ? 'error' : undefined}
             >
               <TextField
@@ -105,21 +111,30 @@ export default function ServiceJourneyEditor(props) {
               />
             </InputGroup>
 
-            <InputGroup label="Beskrivelse" className="form-section">
+            <InputGroup
+              label={formatMessage(messages.description)}
+              className="form-section"
+            >
               <TextArea
                 defaultValue={description}
                 onChange={e => onFieldChange('description', e.target.value)}
               />
             </InputGroup>
 
-            <InputGroup label="Tilgjengelighet" className="form-section">
+            <InputGroup
+              label={formatMessage(messages.serviceAvailability)}
+              className="form-section"
+            >
               <TextField
                 defaultValue={privateCode}
                 onChange={e => onFieldChange('privateCode', e.target.value)}
               />
             </InputGroup>
 
-            <InputGroup label="Offentlig kode" className="form-section">
+            <InputGroup
+              label={formatMessage(messages.publicCode)}
+              className="form-section"
+            >
               <TextField
                 defaultValue={publicCode}
                 onChange={e => onFieldChange('publicCode', e.target.value)}
@@ -128,7 +143,7 @@ export default function ServiceJourneyEditor(props) {
 
             <Dropdown
               className="form-section"
-              label="Operatør"
+              label={formatMessage(messages.operator)}
               items={[
                 { label: DEFAULT_SELECT_LABEL, value: DEFAULT_SELECT_VALUE },
                 ...operators.map(({ name, id }) => ({

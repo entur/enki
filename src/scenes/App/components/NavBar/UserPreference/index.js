@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dropdown } from '@entur/dropdown';
 import { Contrast } from '@entur/layout';
+import { getIntl } from 'i18n';
 
 import UserMenu from './UserMenu/';
 import { setActiveProvider } from 'actions/providers';
+import messages from '../messages';
 import './styles.scss';
 
 class UserPreference extends React.Component {
@@ -17,7 +19,8 @@ class UserPreference extends React.Component {
   }
 
   render() {
-    const { providers, activeProvider } = this.props;
+    const { providers, activeProvider, intl } = this.props;
+    const translations = getIntl({ intl });
 
     const items = providers
       ? providers.map(p => ({
@@ -34,7 +37,7 @@ class UserPreference extends React.Component {
             <Dropdown
               className="provider-wrapper"
               items={items}
-              label="Velg dataleverandør"
+              label={translations.formatMessage(messages.dataProvider)}
               value={activeProvider || ''}
               onChange={e => this.handleActiveProviderChange(e.value)}
             />
@@ -45,9 +48,10 @@ class UserPreference extends React.Component {
   }
 }
 
-const mapStateToProps = ({ providers }) => ({
+const mapStateToProps = ({ intl, providers }) => ({
   providers: providers.providers,
-  activeProvider: providers.active
+  activeProvider: providers.active,
+  intl: intl
 });
 
 export default compose(withRouter, connect(mapStateToProps))(UserPreference);

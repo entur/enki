@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectIntl } from 'i18n';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
@@ -7,99 +9,84 @@ import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import Dialog from 'components/Dialog';
 import ServiceJourneysTable from './Table';
 import ServiceJourneyEditor from './Editor';
+import messages from '../messages';
 
 const TEMP_INDEX = -1;
 
-class ServiceJourneysEditor extends Component {
-  state = {
-    serviceJourneyInDialog: null,
-    serviceJourneyIndexInDialog: TEMP_INDEX
-  };
+const ServiceJourneysEditor = ({ serviceJourneys, onChange, stopPoints }) => {
+  const [serviceJourneyInDialog, setServiceJourneyInDialog] = useState(null);
+  const [
+    serviceJourneyIndexInDialog,
+    setServiceJourneyIndexInDialog
+  ] = useState(TEMP_INDEX);
+  const { formatMessage } = useSelector(selectIntl);
 
-  updateServiceJourney(index, serviceJourney) {
-    const { serviceJourneys, onChange } = this.props;
+  const updateServiceJourney = (index, serviceJourney) => {
     onChange(replaceElement(serviceJourneys, index, serviceJourney));
-  }
-
-  deleteServiceJourney(index) {
-    const { serviceJourneys, onChange } = this.props;
-    onChange(removeElementByIndex(serviceJourneys, index));
-  }
-
-  openDialogForNewServiceJourney() {
-    this.setState({ serviceJourneyInDialog: new ServiceJourney() });
-  }
-
-  openDialogForServiceJourney(index) {
-    this.setState({
-      serviceJourneyInDialog: this.props.serviceJourneys[index],
-      serviceJourneyIndexInDialog: index
-    });
-  }
-
-  closeServiceJourneyDialog = () => {
-    this.setState({
-      serviceJourneyInDialog: null,
-      serviceJourneyIndexInDialog: TEMP_INDEX
-    });
   };
 
-  handleOnServiceJourneyDialogSaveClick() {
-    const { serviceJourneys, onChange } = this.props;
-    const { serviceJourneyInDialog, serviceJourneyIndexInDialog } = this.state;
+  const deleteServiceJourney = index => {
+    onChange(removeElementByIndex(serviceJourneys, index));
+  };
+
+  const openDialogForNewServiceJourney = () => {
+    setServiceJourneyInDialog(new ServiceJourney());
+  };
+
+  const openDialogForServiceJourney = index => {
+    setServiceJourneyInDialog(serviceJourneys[index]);
+    setServiceJourneyIndexInDialog(index);
+  };
+
+  const closeServiceJourneyDialog = () => {
+    setServiceJourneyInDialog(null);
+    setServiceJourneyIndexInDialog(TEMP_INDEX);
+  };
+
+  const handleOnServiceJourneyDialogSaveClick = () => {
     if (serviceJourneyIndexInDialog === TEMP_INDEX) {
       onChange(serviceJourneys.concat(serviceJourneyInDialog));
     } else {
-      this.updateServiceJourney(
-        serviceJourneyIndexInDialog,
-        serviceJourneyInDialog
-      );
+      updateServiceJourney(serviceJourneyIndexInDialog, serviceJourneyInDialog);
     }
-    this.setState({
-      serviceJourneyInDialog: null,
-      serviceJourneyIndexInDialog: TEMP_INDEX
-    });
-  }
+    setServiceJourneyInDialog(null);
+    setServiceJourneyIndexInDialog(TEMP_INDEX);
+  };
 
-  render() {
-    const { serviceJourneys, stopPoints } = this.props;
-    const { serviceJourneyInDialog, serviceJourneyIndexInDialog } = this.state;
+  return (
+    <div className="service-journeys-editor">
+      <SecondaryButton onClick={() => openDialogForNewServiceJourney()}>
+        <AddIcon />
+        {formatMessage(messages.addServiceJourneys)}
+      </SecondaryButton>
 
-    return (
-      <div className="service-journeys-editor">
-        <SecondaryButton onClick={() => this.openDialogForNewServiceJourney()}>
-          <AddIcon />
-          Legg til service journey
-        </SecondaryButton>
+      <ServiceJourneysTable
+        serviceJourneys={serviceJourneys}
+        onRowClick={openDialogForServiceJourney.bind(this)}
+        onDeleteClick={deleteServiceJourney.bind(this)}
+      />
 
-        <ServiceJourneysTable
-          serviceJourneys={serviceJourneys}
-          onRowClick={this.openDialogForServiceJourney.bind(this)}
-          onDeleteClick={this.deleteServiceJourney.bind(this)}
+      {serviceJourneyInDialog !== null && (
+        <Dialog
+          isOpen={true}
+          content={
+            <ServiceJourneyEditor
+              serviceJourney={serviceJourneyInDialog}
+              stopPoints={stopPoints}
+              onChange={serviceJourneyInDialog =>
+                setServiceJourneyInDialog(serviceJourneyInDialog)
+              }
+              onClose={closeServiceJourneyDialog}
+              onSave={handleOnServiceJourneyDialogSaveClick.bind(this)}
+              isEditMode={serviceJourneyIndexInDialog !== TEMP_INDEX}
+            />
+          }
+          onClose={closeServiceJourneyDialog}
         />
-
-        {serviceJourneyInDialog !== null && (
-          <Dialog
-            isOpen={true}
-            content={
-              <ServiceJourneyEditor
-                serviceJourney={serviceJourneyInDialog}
-                stopPoints={stopPoints}
-                onChange={serviceJourneyInDialog =>
-                  this.setState({ serviceJourneyInDialog })
-                }
-                onClose={this.closeServiceJourneyDialog}
-                onSave={this.handleOnServiceJourneyDialogSaveClick.bind(this)}
-                isEditMode={serviceJourneyIndexInDialog !== TEMP_INDEX}
-              />
-            }
-            onClose={this.closeServiceJourneyDialog}
-          />
-        )}
-      </div>
-    );
-  }
-}
+      )}
+    </div>
+  );
+};
 
 ServiceJourneysEditor.propTypes = {
   serviceJourneys: PropTypes.arrayOf(PropTypes.instanceOf(ServiceJourney))

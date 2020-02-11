@@ -20,5 +20,9 @@ export default defineMessages({
   exportsMenuItemLabel: {
     id: 'app.navBar.exportsMenuItemLabel',
     defaultMessage: 'Eksporter'
+  },
+  dataProvider: {
+    id: 'app.navBar.dataProvider',
+    defaultMessage: 'Velg dataleverandør'
   }
 });

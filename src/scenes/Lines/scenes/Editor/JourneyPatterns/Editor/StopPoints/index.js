@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectIntl } from 'i18n';
 import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/icons';
 import { BannerAlertBox } from '@entur/alert';
@@ -8,106 +10,87 @@ import { replaceElement } from 'helpers/arrays';
 import Dialog from 'components/Dialog';
 import StopPointsTable from './Table';
 import StopPointEditor from './Editor';
+import messages from '../messages';
 
 const TEMP_INDEX = -1;
 
-class StopPointsEditor extends Component {
-  state = {
-    stopPointInDialog: null,
-    stopPointIndexInDialog: TEMP_INDEX
+const StopPointsEditor = ({ stopPoints, onChange }) => {
+  const [stopPointInDialog, setStopPointInDialog] = useState(null);
+  const [stopPointIndexInDialog, setStopPointIndexInDialog] = useState(
+    TEMP_INDEX
+  );
+  const { formatMessage } = useSelector(selectIntl);
+
+  const updateStopPoint = (index, stopPlace) => {
+    onChange(replaceElement(stopPoints, index, stopPlace));
   };
 
-  updateStopPoint(index, stopPlace) {
-    const { stopPoints, onChange } = this.props;
-    onChange(replaceElement(stopPoints, index, stopPlace));
-  }
-
-  deleteStopPlace(index) {
-    const { stopPoints, onChange } = this.props;
+  const deleteStopPlace = index => {
     const copy = stopPoints.slice();
     copy.splice(index, 1);
     onChange(copy);
-  }
-
-  openDialogForNewStopPoint() {
-    this.setState({ stopPointInDialog: new StopPoint() });
-  }
-
-  openDialogForStopPoint(index) {
-    this.setState({
-      stopPointInDialog: this.props.stopPoints[index],
-      stopPointIndexInDialog: index
-    });
-  }
-
-  closeStopPointDialog = () => {
-    this.setState({
-      stopPointInDialog: null,
-      stopPointIndexInDialog: TEMP_INDEX
-    });
   };
 
-  handleOnStopPointDialogSaveClick() {
-    const { stopPoints, onChange } = this.props;
-    const { stopPointInDialog, stopPointIndexInDialog } = this.state;
+  const openDialogForStopPoint = index => {
+    setStopPointInDialog(stopPoints[index]);
+    setStopPointIndexInDialog(index);
+  };
+
+  const closeStopPointDialog = () => {
+    setStopPointInDialog(null);
+    setStopPointIndexInDialog(TEMP_INDEX);
+  };
+
+  const handleOnStopPointDialogSaveClick = () => {
     if (stopPointIndexInDialog === TEMP_INDEX) {
       onChange(stopPoints.concat(stopPointInDialog));
     } else {
-      this.updateStopPoint(stopPointIndexInDialog, stopPointInDialog);
+      updateStopPoint(stopPointIndexInDialog, stopPointInDialog);
     }
-    this.setState({
-      stopPointInDialog: null,
-      stopPointIndexInDialog: TEMP_INDEX
-    });
-  }
+    setStopPointInDialog(null);
+    setStopPointIndexInDialog(TEMP_INDEX);
+  };
 
-  render() {
-    const { stopPoints } = this.props;
-    const { stopPointInDialog, stopPointIndexInDialog } = this.state;
+  return (
+    <div className="stop-points-editor">
+      <SecondaryButton onClick={() => setStopPointInDialog(new StopPoint())}>
+        <AddIcon />
+        {formatMessage(messages.addStopPoint)}
+      </SecondaryButton>
+      <BannerAlertBox
+        style={{ marginTop: '0.5rem' }}
+        variant="info"
+        title={formatMessage(messages.atleastTwoPoints)}
+      >
+        {formatMessage(messages.atleastTwoPointsDetailed)}
+      </BannerAlertBox>
+      <StopPointsTable
+        stopPoints={stopPoints}
+        onRowClick={openDialogForStopPoint.bind(this)}
+        onDeleteClick={deleteStopPlace.bind(this)}
+      />
 
-    return (
-      <div className="stop-points-editor">
-        <SecondaryButton onClick={() => this.openDialogForNewStopPoint()}>
-          <AddIcon />
-          Legg til stoppepunkt
-        </SecondaryButton>
-        <BannerAlertBox
-          style={{ marginTop: '0.5rem' }}
-          variant="info"
-          title="Minst to stoppunkter"
-        >
-          Et <em>journey pattern</em> krever minst to stoppepunkter.
-        </BannerAlertBox>
-        <StopPointsTable
-          stopPoints={stopPoints}
-          onRowClick={this.openDialogForStopPoint.bind(this)}
-          onDeleteClick={this.deleteStopPlace.bind(this)}
+      {stopPointInDialog !== null && (
+        <Dialog
+          isOpen={true}
+          content={
+            <StopPointEditor
+              isFirst={stopPoints.length === 0 || stopPointIndexInDialog === 0}
+              stopPoint={stopPointInDialog}
+              onChange={stopPointInDialog =>
+                this.setState({ stopPointInDialog })
+              }
+              onClose={closeStopPointDialog}
+              onSave={handleOnStopPointDialogSaveClick.bind(this)}
+              isEditMode={stopPointIndexInDialog !== TEMP_INDEX}
+            />
+          }
+          onClose={closeStopPointDialog}
         />
-
-        {stopPointInDialog !== null && (
-          <Dialog
-            isOpen={true}
-            content={
-              <StopPointEditor
-                isFirst={
-                  stopPoints.length === 0 || stopPointIndexInDialog === 0
-                }
-                stopPoint={stopPointInDialog}
-                onChange={stopPointInDialog =>
-                  this.setState({ stopPointInDialog })
-                }
-                onClose={this.closeStopPointDialog}
-                onSave={this.handleOnStopPointDialogSaveClick.bind(this)}
-                isEditMode={stopPointIndexInDialog !== TEMP_INDEX}
-              />
-            }
-            onClose={this.closeStopPointDialog}
-          />
-        )}
-      </div>
-    );
-  }
-}
+      )}
+    </div>
+  );
+};
 
 StopPointsEditor.propTypes = {
   stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,

@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectIntl } from 'i18n';
 import PropTypes from 'prop-types';
 import moment from 'moment/moment';
 import { AddIcon } from '@entur/icons';
@@ -6,17 +8,18 @@ import { SecondaryButton } from '@entur/button';
 import { DayTypeAssignment } from 'model';
 import DayTypeAssignmentEditor from './Editor';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
+import messages from '../../../../messages';
 
 import './styles.scss';
 
-class DayTypeAssignmentsEditor extends Component {
-  updateDayTypeAssignment(index, dayTypeAssignment) {
-    const { dayTypeAssignments, onChange } = this.props;
-    onChange(replaceElement(dayTypeAssignments, index, dayTypeAssignment));
-  }
+const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }) => {
+  const { formatMessage } = useSelector(selectIntl);
 
-  addNewDayTypeAssignment() {
-    const { dayTypeAssignments, onChange } = this.props;
+  const updateDayTypeAssignment = (index, dayTypeAssignment) => {
+    onChange(replaceElement(dayTypeAssignments, index, dayTypeAssignment));
+  };
+
+  const addNewDayTypeAssignment = () => {
     const today = moment().format('YYYY-MM-DD');
     onChange(
       dayTypeAssignments.concat(
@@ -28,39 +31,36 @@ class DayTypeAssignmentsEditor extends Component {
         })
       )
     );
-  }
+  };
 
-  deleteDayTypeAssignment(index) {
-    const { dayTypeAssignments, onChange } = this.props;
+  const deleteDayTypeAssignment = index => {
     onChange(removeElementByIndex(dayTypeAssignments, index));
-  }
+  };
 
-  render() {
-    const { dayTypeAssignments } = this.props;
+  return (
+    <div className="day-type-assignments-editor">
+      <SecondaryButton onClick={() => addNewDayTypeAssignment()}>
+        <AddIcon />
+        {formatMessage(messages.addDayTypeAssignment)}
+      </SecondaryButton>
 
-    return (
-      <div className="day-type-assignments-editor">
-        <SecondaryButton onClick={() => this.addNewDayTypeAssignment()}>
-          <AddIcon />
-          Legg til dato
-        </SecondaryButton>
-
-        {dayTypeAssignments.length > 0 ? (
-          dayTypeAssignments.map((dta, i) => (
-            <DayTypeAssignmentEditor
-              key={Math.random()}
-              dayTypeAssignment={dta}
-              onChange={dta => this.updateDayTypeAssignment(i, dta)}
-              onDelete={() => this.deleteDayTypeAssignment(i)}
-            />
-          ))
-        ) : (
-          <div className="no-day-types">Ingen datoer er definert.</div>
-        )}
-      </div>
-    );
-  }
-}
+      {dayTypeAssignments.length > 0 ? (
+        dayTypeAssignments.map((dta, i) => (
+          <DayTypeAssignmentEditor
+            key={Math.random()}
+            dayTypeAssignment={dta}
+            onChange={dta => updateDayTypeAssignment(i, dta)}
+            onDelete={() => deleteDayTypeAssignment(i)}
+          />
+        ))
+      ) : (
+        <div className="no-day-types">
+          {formatMessage(messages.noDayTypeAssignments)}
+        </div>
+      )}
+    </div>
+  );
+};
 
 DayTypeAssignmentsEditor.propTypes = {
   dayTypeAssignments: PropTypes.arrayOf(PropTypes.instanceOf(DayTypeAssignment))
