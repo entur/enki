@@ -108,7 +108,7 @@ class PassingTimesEditor extends Component {
     const tpt = passingTimes[i];
 
     return (
-      <TableRow>
+      <TableRow key={i}>
         <DataCell>{i}</DataCell>
         <DataCell>{stopPlaceName}</DataCell>
         <DataCell>

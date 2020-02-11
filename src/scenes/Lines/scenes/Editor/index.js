@@ -53,22 +53,35 @@ const selectFlexibleLine = createSelector(
 );
 
 function useLoadDependencies(match, history) {
+  const [networksIsLoading, setNetworksIsLoading] = useState(true);
+  const [flexibleLineIsLoading, setFlexibleLineIsLoading] = useState(true);
+  const [
+    flexibleStopPlacesIsLoading,
+    setFlexibleStopPlacesIsLoading
+  ] = useState(true);
+
   const dispatch = useDispatch();
 
   const dispatchLoadFlexibleStopPlaces = useCallback(
-    () => dispatch(loadFlexibleStopPlaces()),
+    () =>
+      dispatch(loadFlexibleStopPlaces()).then(() =>
+        setFlexibleStopPlacesIsLoading(false)
+      ),
     [dispatch]
   );
 
-  const dispatchLoadNetworks = useCallback(() => dispatch(loadNetworks()), [
-    dispatch
-  ]);
+  const dispatchLoadNetworks = useCallback(
+    () => dispatch(loadNetworks()).then(() => setNetworksIsLoading(false)),
+    [dispatch]
+  );
 
   const dispatchLoadFlexibleLineById = useCallback(() => {
     if (match.params.id) {
-      dispatch(loadFlexibleLineById(match.params.id)).catch(() =>
-        history.push('/lines')
-      );
+      dispatch(loadFlexibleLineById(match.params.id))
+        .catch(() => history.push('/lines'))
+        .then(() => setFlexibleLineIsLoading(false));
+    } else {
+      setFlexibleLineIsLoading(false);
     }
   }, [dispatch, match.params.id, history]);
 
@@ -81,6 +94,9 @@ function useLoadDependencies(match, history) {
     dispatchLoadFlexibleStopPlaces,
     dispatchLoadFlexibleLineById
   ]);
+  return (
+    networksIsLoading || flexibleLineIsLoading || flexibleStopPlacesIsLoading
+  );
 }
 
 const useFlexibleLine = match => {
@@ -129,9 +145,6 @@ const FlexibleLineEditor = ({ match, history }) => {
   const { formatMessage } = useSelector(selectIntl);
   const organisations = useSelector(({ organisations }) => organisations);
   const networks = useSelector(({ networks }) => networks);
-  const flexibleStopPlaces = useSelector(
-    ({ flexibleStopPlaces }) => flexibleStopPlaces
-  );
 
   const {
     handleNetworkSelectionChange,
@@ -150,7 +163,7 @@ const FlexibleLineEditor = ({ match, history }) => {
   }, [flexibleLine]);
 
   const dispatch = useDispatch();
-  useLoadDependencies(match, history);
+  const isLoadingDependencies = useLoadDependencies(match, history);
 
   const handleOnSaveClick = () => {
     const valid = validateForm(flexibleLine).isValid;
@@ -176,9 +189,7 @@ const FlexibleLineEditor = ({ match, history }) => {
       org.types.includes(ORGANISATION_TYPE.OPERATOR) &&
       org.references.netexOperatorId
   );
-
   const isLoadingLine = !flexibleLine;
-  const isLoadingDependencies = !networks || !flexibleStopPlaces;
 
   const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
@@ -22,17 +22,11 @@ const DEFAULT_SELECT_VALUE = '-1';
 
 export default function ServiceJourneyEditor(props) {
   const [operatorSelection, setOperatorSelection] = useState(
-    DEFAULT_SELECT_VALUE
+    props.serviceJourney.operatorRef
   );
   const [validPassingTimes, setValidPassingTimes] = useState(false);
   const organisations = useSelector(state => state.organisations);
   const { formatMessage } = useSelector(selectIntl);
-
-  useEffect(() => {
-    setOperatorSelection({
-      operatorSelection: props.serviceJourney.operatorRef
-    });
-  }, [props.serviceJourney.operatorRef]);
 
   const onFieldChange = (field, value, multi = false) => {
     const { serviceJourney, onChange } = props;
@@ -44,7 +38,7 @@ export default function ServiceJourneyEditor(props) {
       'operatorRef',
       operatorSelection !== DEFAULT_SELECT_VALUE ? operatorSelection : undefined
     );
-    setOperatorSelection({ operatorSelection });
+    setOperatorSelection(operatorSelection);
   };
 
   const {
