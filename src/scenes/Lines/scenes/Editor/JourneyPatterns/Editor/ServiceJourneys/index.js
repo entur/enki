@@ -18,7 +18,7 @@ const ServiceJourneysEditor = ({ serviceJourneys, onChange, stopPoints }) => {
   const [
     serviceJourneyIndexInDialog,
     setServiceJourneyIndexInDialog
-  ] = useState();
+  ] = useState(TEMP_INDEX);
   const { formatMessage } = useSelector(selectIntl);
 
   const updateServiceJourney = (index, serviceJourney) => {

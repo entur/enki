@@ -149,7 +149,7 @@
   "lines.editor.journeyPatterns.editor.addStopPoint": "Legg til stoppepunkt",
   "lines.editor.journeyPatterns.editor.addServiceJourneys": "Legg til service journey",
   "lines.editor.journeyPatterns.editor.edit": "Rediger",
-  "lines.editor.journeyPatterns.editor.create": "Oprett",
+  "lines.editor.journeyPatterns.editor.create": "Opprett",
   "lines.editor.journeyPatterns.editor.stopPoints.atleastTwoPoints": "Minst to stoppepunkter",
   "lines.editor.journeyPatterns.editor.stopPoints.atleastTwoPointsDetailed": "Et journey pattern krever minst to stoppepunkter.",
   "lines.editor.journeyPatterns.editor.general.descriptionLabel": "Beskrivelse",

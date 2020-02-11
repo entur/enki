@@ -19,7 +19,7 @@ export default defineMessages({
   },
   create: {
     id: 'lines.editor.journeyPatterns.editor.create',
-    defaultMessage: 'Oprett'
+    defaultMessage: 'Opprett'
   },
   save: {
     id: 'lines.editor.journeyPatterns.editor.save',
@@ -35,7 +35,7 @@ export default defineMessages({
   },
   atleastTwoPoints: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.atleastTwoPoints',
-    defaultMessage: 'Minst to stoppunkter'
+    defaultMessage: 'Minst to stoppepunkter'
   },
   atleastTwoPointsDetailed: {
     id:
