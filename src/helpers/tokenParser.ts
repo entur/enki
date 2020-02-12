@@ -1,4 +1,4 @@
-export const isAdmin = token => {
+export const isAdmin = (token: { realm_access: any } | undefined) => {
   if (!token) {
     return false;
   }
