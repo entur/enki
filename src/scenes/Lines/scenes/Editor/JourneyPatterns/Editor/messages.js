@@ -97,5 +97,25 @@ export default defineMessages({
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.noDayTypeAssignments',
     defaultMessage: 'Ingen datoer er definert.'
+  },
+  date: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.date',
+    defaultMessage: 'Dato'
+  },
+  fromAndToDate: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.fromAndToDate',
+    defaultMessage: 'Bruk fra- og til-dato'
+  },
+  fromDate: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.fromDate',
+    defaultMessage: 'Fra dato'
+  },
+  toDate: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.toDate',
+    defaultMessage: 'Til dato'
   }
 });

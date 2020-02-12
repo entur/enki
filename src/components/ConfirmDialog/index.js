@@ -56,7 +56,8 @@ ConfirmDialog.propTypes = {
   message: propTypes.node.isRequired,
   buttons: propTypes.array,
   onClose: propTypes.func.isRequired,
-  color: propTypes.string
+  color: propTypes.string,
+  className: propTypes.string
 };
 
 ConfirmDialog.defaultProps = {
