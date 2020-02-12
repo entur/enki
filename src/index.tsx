@@ -13,12 +13,14 @@ import { API_BASE } from 'http/http';
 
 import './styles/index.scss';
 
-const renderIndex = userInfo => {
+const renderIndex = (userInfo: UserInfo) => {
   const root = document.getElementById('root');
-  const { store, Raven } = configureStore(userInfo);
+  const { store, sentry } = configureStore(userInfo);
 
   ReactDOM.render(
-    <ErrorBoundary Raven={Raven}>
+    <ErrorBoundary sentry={sentry}>
+      {/* Store is not typed yet
+          // @ts-ignore */}
       <Provider store={store}>
         <App />
       </Provider>
@@ -33,10 +35,20 @@ const minValiditySeconds = 60;
 // How often should lib check for valid token
 const refreshRateMs = 10000;
 
+type UserInfo = {
+  logoutUrl: string;
+  familyName: string;
+  givenName: string;
+  email: string;
+  username: string;
+  isAdmin: boolean;
+};
+
 const initAuth = () => {
-  const kc = new Keycloak(API_BASE + '/keycloak.json');
+  const kc = Keycloak(API_BASE + '/keycloak.json');
+  /* kc.idTokenParsed?.nonce; */
   const options = { checkLoginIframe: false };
-  kc.init(options).success(authenticated => {
+  kc.init(options).success((authenticated: boolean) => {
     if (authenticated) {
       token.save(kc.token);
       setInterval(() => {
@@ -45,12 +57,17 @@ const initAuth = () => {
       }, refreshRateMs);
       const userInfo = {
         logoutUrl: kc.createLogoutUrl(options),
-        familyName: kc.idTokenParsed.family_name,
+        // @ts-ignore: Store is not typed yet
+        familyName: kc.idTokenParsed?.family_name,
+        // @ts-ignore: Store is not typed yet
         givenName: kc.idTokenParsed.given_name,
+        // @ts-ignore: Store is not typed yet
         email: kc.idTokenParsed.email,
+        // @ts-ignore: Store is not typed yet
         username: kc.idTokenParsed.preferred_username,
         isAdmin: isAdmin(kc.tokenParsed)
       };
+      console.log(userInfo);
       renderIndex(userInfo);
     } else {
       kc.login();
