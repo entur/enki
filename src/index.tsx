@@ -37,7 +37,7 @@ const refreshRateMs = 10000;
 
 type UserInfo = {
   logoutUrl: string;
-  familyName: string;
+  familyName?: string;
   givenName: string;
   email: string;
   username: string;
@@ -46,7 +46,6 @@ type UserInfo = {
 
 const initAuth = () => {
   const kc = Keycloak(API_BASE + '/keycloak.json');
-  /* kc.idTokenParsed?.nonce; */
   const options = { checkLoginIframe: false };
   kc.init(options).success((authenticated: boolean) => {
     if (authenticated) {
@@ -57,17 +56,16 @@ const initAuth = () => {
       }, refreshRateMs);
       const userInfo = {
         logoutUrl: kc.createLogoutUrl(options),
-        // @ts-ignore: Store is not typed yet
+        // @ts-ignore
         familyName: kc.idTokenParsed?.family_name,
-        // @ts-ignore: Store is not typed yet
+        // @ts-ignore
         givenName: kc.idTokenParsed.given_name,
-        // @ts-ignore: Store is not typed yet
+        // @ts-ignore
         email: kc.idTokenParsed.email,
-        // @ts-ignore: Store is not typed yet
+        // @ts-ignore
         username: kc.idTokenParsed.preferred_username,
         isAdmin: isAdmin(kc.tokenParsed)
       };
-      console.log(userInfo);
       renderIndex(userInfo);
     } else {
       kc.login();
