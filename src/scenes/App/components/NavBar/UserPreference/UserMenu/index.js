@@ -6,7 +6,7 @@ import { RightArrowIcon, UserIcon } from '@entur/icons';
 import Menu from 'components/Menu';
 import MenuItem from 'components/Menu/MenuItem';
 import Popover from 'components/Popover';
-import { Checkbox } from 'components/icons';
+import { Checkbox } from '@entur/form';
 import { getMessages, LOCALE_KEY, selectIntl } from 'i18n';
 import messages from './messages';
 
@@ -49,7 +49,7 @@ const UserMenu = () => {
                 }}
               >
                 <div className="locale">
-                  <Checkbox checked={locale === 'nb'} />
+                  <Checkbox checked={locale === 'nb'} readOnly />
                   <span>{formatMessage(messages.menuItemTextNorwegian)}</span>
                 </div>
               </MenuItem>,
@@ -60,7 +60,7 @@ const UserMenu = () => {
                 }}
               >
                 <div className="locale">
-                  <Checkbox checked={locale === 'en'} />
+                  <Checkbox checked={locale === 'en'} readOnly />
                   <span>{formatMessage(messages.menuItemTextEnglish)}</span>
                 </div>
               </MenuItem>
