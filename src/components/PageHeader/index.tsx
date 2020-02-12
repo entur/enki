@@ -4,7 +4,7 @@ import { SecondarySquareButton } from '@entur/button';
 import { BackArrowIcon } from '@entur/icons';
 import { Heading1 as H1 } from '@entur/typography';
 
-function BackButton({ onBackButtonClick }) {
+function BackButton({ onBackButtonClick }: { onBackButtonClick: () => void }) {
   const history = useHistory();
   return (
     <SecondarySquareButton onClick={onBackButtonClick ?? history.goBack}>
@@ -13,7 +13,17 @@ function BackButton({ onBackButtonClick }) {
   );
 }
 
-function PageHeader({ title, withBackButton, onBackButtonClick }) {
+type PageHeaderProps = {
+  title: string;
+  withBackButton: boolean;
+  onBackButtonClick: () => void;
+};
+
+function PageHeader({
+  title,
+  withBackButton,
+  onBackButtonClick
+}: PageHeaderProps) {
   return (
     <div style={{ display: 'flex' }}>
       {withBackButton && (
