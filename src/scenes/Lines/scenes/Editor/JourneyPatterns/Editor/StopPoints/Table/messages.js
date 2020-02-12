@@ -7,7 +7,7 @@ export default defineMessages({
   },
   no: {
     id: 'lines.journeyPatterns.stopPoints.table.no',
-    defaultMessage: 'Nej'
+    defaultMessage: 'Nei'
   },
   name: {
     id: 'lines.journeyPatterns.stopPoints.table.name',
