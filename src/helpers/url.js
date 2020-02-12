@@ -4,7 +4,7 @@ export const normalizeAllUrls = data => {
 
   if (stacktrace && stacktrace.frames) {
     stacktrace.frames.forEach(frame => {
-      if (frame.filename.startsWith('/')) {
+      if (frame?.filename.startsWith('/')) {
         frame.filename = 'app:///' + frame.filename;
       }
     });

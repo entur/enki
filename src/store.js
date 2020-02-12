@@ -2,7 +2,8 @@ import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 import { intlReducer as intl } from 'react-intl-redux';
-import Raven from 'raven-js';
+import * as Sentry from '@sentry/browser';
+import createSentryMiddleware from 'redux-sentry-middleware';
 
 import reducers from 'reducers';
 import { geti18n, loadLocaleData, getIntl } from 'i18n/';
@@ -15,14 +16,16 @@ const getMiddlewares = () => {
 
   const useSentry = process.env.NODE_ENV === 'production';
   if (useSentry) {
-    Raven.config(SENTRY_DSN, {
+    Sentry.init({
+      dsn: SENTRY_DSN,
       release: process.env.IMAGE_TAG,
-      stacktrace: true,
+      attachStacktrace: true,
       environment: process.env.NODE_ENV,
-      dataCallback: normalizeAllUrls
-    }).install();
-    const createRavenMiddleware = require('redux-raven-middleware');
-    middlewares.push(createRavenMiddleware(Raven));
+      beforeSend(e) {
+        return normalizeAllUrls(e);
+      }
+    });
+    middlewares.push(createSentryMiddleware(Sentry));
   }
   return middlewares;
 };
@@ -52,6 +55,6 @@ export const configureStore = user => {
       initialState,
       composeWithDevTools(enhancer)
     ),
-    Raven
+    sentry: Sentry
   };
 };
