@@ -60,7 +60,10 @@ const JourneyPatternEditor = ({
         />
 
         <div className="header-buttons">
-          <SuccessButton onClick={onSave}>
+          <SuccessButton
+            onClick={onSave}
+            disabled={journeyPattern.pointsInSequence.length < 2}
+          >
             {' '}
             {formatMessage(messages.save)}{' '}
           </SuccessButton>
