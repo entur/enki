@@ -16,6 +16,7 @@
     "@entur/tab": "^0.3.2",
     "@entur/table": "^0.3.11",
     "@entur/tokens": "^1.2.0",
+    "@entur/tooltip": "^1.1.9",
     "@entur/typography": "^1.0.2",
     "@sentry/browser": "^5.12.1",
     "@types/jest": "^25.1.2",
