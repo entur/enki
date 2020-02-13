@@ -4,7 +4,6 @@ import { selectIntl } from 'i18n';
 import { SuccessButton } from '@entur/button';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import PageHeader from 'components/PageHeader';
-import { JourneyPattern } from 'model';
 import StopPointsEditor from './StopPoints';
 import ServiceJourneysEditor from './ServiceJourneys';
 import messages from './messages';
