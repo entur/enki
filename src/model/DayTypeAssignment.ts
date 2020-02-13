@@ -3,7 +3,7 @@ import OperatingPeriod from './OperatingPeriod';
 
 type Props = {
   isAvailable: boolean;
-  date: string;
+  date?: string;
   operatingPeriod: OperatingPeriod;
 };
 
