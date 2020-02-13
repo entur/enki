@@ -238,6 +238,7 @@
   "stopPlaces.editor.savingOverlayLoaderText": "Lagrer stoppestedet...",
   "stopPlaces.editor.validateForm.errorFlexibleAreaNotEnoughPolygons": "Du må legge til flere punkter i kartet",
   "stopPlaces.editor.validateForm.errorNameEmpty": "Du må gi stoppestedet et navn",
+  "stopPlace": "Stoppested",
   "stopPlaces.header": "Stoppesteder",
   "stopPlaces.loadingStopPlacesText": "Laster inn stoppesteder...",
   "stopPlaces.nameTableHeaderLabelText": "Navn",

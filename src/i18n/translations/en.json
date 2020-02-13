@@ -219,6 +219,7 @@
   "networks.noNetworksFoundText": "No networks found",
   "networks.privateCodeTableHeaderLabel": "Private code",
   "stopPlaces.createStopPlaceLinkIconLabelText": "Create stop place",
+  "stopPlace": "Stop Place",
   "stopPlaces.editor.createHeader": "Create stop place",
   "stopPlaces.editor.deleteButtonText": "Delete",
   "stopPlaces.editor.deleteStopPlaceDialogCancelButtonText": "No",

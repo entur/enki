@@ -3,6 +3,7 @@ import { Dropdown } from '@entur/dropdown';
 import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL } from './constants';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
+import messages from './Form.messages';
 
 export default function StopPlaceSelection({
   stopPlaceSelection,
@@ -16,7 +17,7 @@ export default function StopPlaceSelection({
   return (
     <Fragment>
       <Dropdown
-        label="Stoppested"
+        label={formatMessage(messages.stopPlace)}
         variant={error ? 'error' : undefined}
         feedback={error ? formatMessage(error) : undefined}
         items={[
