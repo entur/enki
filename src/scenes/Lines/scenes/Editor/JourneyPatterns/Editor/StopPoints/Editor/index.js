@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import { DestinationDisplay, StopPoint } from 'model';
-import { hasValue } from 'helpers/forms';
+import { hasValue, isBlank } from 'helpers/forms';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import Header from './Header';
 import './styles.scss';
@@ -92,6 +92,9 @@ class StopPointEditor extends Component {
         <Header
           isEditMode={isEditMode}
           onSave={this.onSave}
+          saveDisabled={
+            isFirst && isBlank(stopPoint.destinationDisplay?.frontText)
+          }
           onClose={onClose}
         />
         <Tabs>
