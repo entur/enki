@@ -18,9 +18,8 @@ import './styles.scss';
 
 type Props = {
   stopPoints: any[];
-  onRowClick: (i: number | null) => void;
+  onRowClick: (i: number) => void;
   onDeleteClick: (sp: any) => void;
-  flexibleStopPlaces: any;
 };
 
 const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
@@ -104,6 +103,7 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
       </Table>
 
       <ConfirmDialog
+        className="dummy"
         isOpen={removeDialogOpenFor !== null}
         title={formatMessage(messages.deleteTitle)}
         message={formatMessage(messages.deleteMessage)}
