@@ -44,7 +44,6 @@ class PassingTimesEditor extends Component {
 
   componentDidUpdate(prevProps) {
     const { passingTimes, setValidPassingTimes, intl } = this.props;
-    console.log(passingTimes, typeof passingTimes);
     const { isValid, errorMessage } = validateTimes(passingTimes, { intl });
     if (this.props !== prevProps) {
       this.setState({ isValid, errorMessage });
