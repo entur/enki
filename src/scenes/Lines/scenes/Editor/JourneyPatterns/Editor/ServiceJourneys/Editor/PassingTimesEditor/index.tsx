@@ -91,7 +91,6 @@ class PassingTimesEditor extends Component<Props> {
   );
 
   padTimePickerInput = (time: string): string | undefined => {
-    console.log('time', time, time?.length);
     if (time.length === 0) return undefined;
     return time + ':00';
   };
