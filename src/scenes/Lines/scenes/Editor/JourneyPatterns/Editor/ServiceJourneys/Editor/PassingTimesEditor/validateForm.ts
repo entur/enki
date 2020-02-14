@@ -1,6 +1,7 @@
 import moment from 'moment';
 import messages from './messages';
 import { getIntl } from '../../../../../../../../../i18n';
+import { errorMonitor } from 'events';
 
 const isBefore = (
   passingTime: string | undefined,
@@ -30,7 +31,10 @@ const hasAtleastOneFieldSet = (passingTime: any) => {
   );
 };
 
-export const validateTimes = (passingTimes: any[], intlState: any) => {
+export const validateTimes = (
+  passingTimes: any[],
+  intlState: any
+): { isValid: boolean; errorMessage: string } => {
   if (!(passingTimes?.length >= 2))
     return {
       isValid: false,
@@ -93,7 +97,14 @@ export const validateTimes = (passingTimes: any[], intlState: any) => {
           errorMessage: intl.formatMessage(messages.arrivalBeforeLatest)
         };
       if (index === 0) return { isValid: true, errorMessage: '' };
-      if (index === passingTimes.length - 1) {
+      if (
+        index === passingTimes.length - 1 &&
+        !passingTime.arrivalTime && !passingTime.latestArrivalTime
+      ) {
+        return {
+          isValid: false,
+          errorMessage: intl.formatMessage(messages.lastArrivalMustBeSet)
+        };
       }
 
       const prevPassingTime = passingTimes[index - 1];
