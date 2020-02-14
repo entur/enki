@@ -3,9 +3,9 @@ import messages from './messages';
 import { getIntl } from '../../../../../../../../../i18n';
 
 const isBefore = (
-  passingTime: string,
+  passingTime: string | undefined,
   dayOffset: number,
-  nextPassingTime: string,
+  nextPassingTime: string | undefined,
   nextDayOffset: number
 ) => {
   if (!passingTime || !nextPassingTime) return false;
@@ -93,6 +93,8 @@ export const validateTimes = (passingTimes: any[], intlState: any) => {
           errorMessage: intl.formatMessage(messages.arrivalBeforeLatest)
         };
       if (index === 0) return { isValid: true, errorMessage: '' };
+      if (index === passingTimes.length - 1) {
+      }
 
       const prevPassingTime = passingTimes[index - 1];
 
