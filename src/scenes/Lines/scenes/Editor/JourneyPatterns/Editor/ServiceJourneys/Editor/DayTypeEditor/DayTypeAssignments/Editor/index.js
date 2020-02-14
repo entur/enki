@@ -9,9 +9,8 @@ import { Checkbox, InputGroup, Switch } from '@entur/form';
 import { DayTypeAssignment } from 'model';
 import { dateToString } from 'helpers/dates';
 import { DatePicker } from '@entur/datepicker';
-import OperatingPeriod from 'model/OperatingPeriod';
-import messages from '../../../../../messages';
 import './styles.scss';
+import messages from '../../../../../messages';
 
 const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
   const [useDateRange, setUseDateRange] = useState(
@@ -28,17 +27,15 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
     const today = moment().format('YYYY-MM-DD');
     useDateRange
       ? onFieldChange('operatingPeriod', undefined)
-      : onFieldChange(
-          'operatingPeriod',
-          new OperatingPeriod({ fromDate: today, toDate: today })
-        );
+      : onFieldChange('operatingPeriod', { fromDate: today, toDate: today });
     setUseDateRange(!useDateRange);
   };
 
   const handleOperatingPeriodFieldChange = (field, value) => {
-    const operatingPeriod = dayTypeAssignment.operatingPeriod
-      ? dayTypeAssignment.operatingPeriod.withFieldChange(field, value)
-      : new OperatingPeriod({ [field]: value });
+    const operatingPeriod = {
+      ...dayTypeAssignment.operatingPeriod,
+      [field]: value
+    };
 
     onFieldChange('operatingPeriod', operatingPeriod);
   };

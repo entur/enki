@@ -49,6 +49,10 @@
   .menu-item {
     border-bottom: 2px solid $colors-greys-grey10;
     border-right: 2px solid $colors-greys-grey10;
+
+    .eds-checkbox-icon {
+      margin-right: 0;
+    }
   }
 
   .popover {

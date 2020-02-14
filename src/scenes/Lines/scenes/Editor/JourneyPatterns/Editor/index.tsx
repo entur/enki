@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import PropTypes from 'prop-types';
 import { SuccessButton } from '@entur/button';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import PageHeader from 'components/PageHeader';
-import { JourneyPattern } from 'model';
 import StopPointsEditor from './StopPoints';
 import ServiceJourneysEditor from './ServiceJourneys';
 import messages from './messages';
@@ -15,13 +13,21 @@ import General from './General';
 
 import { DEFAULT_SELECT_VALUE } from '../../constants';
 
+type Props = {
+  journeyPattern: any;
+  isEditMode: boolean;
+  onSave: () => void;
+  onChange: any;
+  onClose: () => void;
+};
+
 const JourneyPatternEditor = ({
   journeyPattern,
   isEditMode,
   onSave,
   onChange,
   onClose
-}) => {
+}: Props) => {
   const [directionSelection, setDirectionSelection] = useState(
     DEFAULT_SELECT_VALUE
   );
@@ -32,16 +38,16 @@ const JourneyPatternEditor = ({
     setDirectionSelection(directionType || DEFAULT_SELECT_VALUE);
   }, [directionType]);
 
-  const onFieldChange = (field, value) => {
+  const onFieldChange = (field: string, value: any) => {
     onChange(journeyPattern.withFieldChange(field, value));
   };
 
-  const handleDirectionSelectionChange = directionSelection => {
+  const handleDirectionSelectionChange = (directionSelection: any) => {
     const newDirectionValue =
       directionSelection !== DEFAULT_SELECT_VALUE
         ? directionSelection
         : undefined;
-    this.onFieldChange('directionType', newDirectionValue);
+    onFieldChange('directionType', newDirectionValue);
     setDirectionSelection(directionSelection);
   };
 
@@ -60,7 +66,10 @@ const JourneyPatternEditor = ({
         />
 
         <div className="header-buttons">
-          <SuccessButton onClick={onSave}>
+          <SuccessButton
+            onClick={onSave}
+            disabled={journeyPattern.pointsInSequence.length < 2}
+          >
             {' '}
             {formatMessage(messages.save)}{' '}
           </SuccessButton>
@@ -77,10 +86,8 @@ const JourneyPatternEditor = ({
             <General
               journeyPattern={journeyPattern}
               directionSelection={directionSelection}
-              onFieldChange={onFieldChange.bind(this)}
-              handleDirectionSelectionChange={handleDirectionSelectionChange.bind(
-                this
-              )}
+              onFieldChange={onFieldChange}
+              handleDirectionSelectionChange={handleDirectionSelectionChange}
             />
           </TabPanel>
           <TabPanel>
@@ -100,14 +107,6 @@ const JourneyPatternEditor = ({
       </Tabs>
     </div>
   );
-};
-
-JourneyPatternEditor.defaultProps = {
-  journeyPattern: PropTypes.instanceOf(JourneyPattern).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  isEditMode: PropTypes.bool
 };
 
 export default JourneyPatternEditor;

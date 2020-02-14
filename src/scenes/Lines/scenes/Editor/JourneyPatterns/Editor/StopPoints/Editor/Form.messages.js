@@ -1,6 +1,10 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  stopPlace: {
+    id: 'stopPlace',
+    defaultMessage: 'Stoppested'
+  },
   labelQuayRef: {
     id: 'lines.journeyPatterns.stopPoints.form.label.quayRef',
     defaultMessage: 'Plattform-ID (fra NSR)'
