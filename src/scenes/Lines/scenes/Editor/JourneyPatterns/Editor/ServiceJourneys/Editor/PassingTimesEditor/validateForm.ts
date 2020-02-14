@@ -1,7 +1,6 @@
 import moment from 'moment';
 import messages from './messages';
 import { getIntl } from '../../../../../../../../../i18n';
-import { errorMonitor } from 'events';
 
 const isBefore = (
   passingTime: string | undefined,
@@ -99,7 +98,8 @@ export const validateTimes = (
       if (index === 0) return { isValid: true, errorMessage: '' };
       if (
         index === passingTimes.length - 1 &&
-        !passingTime.arrivalTime && !passingTime.latestArrivalTime
+        !passingTime.arrivalTime &&
+        !passingTime.latestArrivalTime
       ) {
         return {
           isValid: false,
