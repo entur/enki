@@ -21,5 +21,10 @@ export default defineMessages({
     id: 'passingTimes.error.laterThanPrevious',
     defaultMessage:
       'Tidspunktene må være senere enn forrige stoppesteds tidspunkt.'
+  },
+  lastArrivalMustBeSet: {
+    id: 'passingTimes.error.lastArrivalMustBeSet',
+    defaultMessage:
+      'Ankomsttid eller seneste ankomsttid for siste stoppested må være satt.'
   }
 });

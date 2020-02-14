@@ -261,5 +261,6 @@
   "passingTimes.error.departureAfterArrival": "Avgangstid kan ikke være før ankomsttid.",
   "passingTimes.error.departureAfterEarliest": "Avgangstid kan ikke være før tidligst avgangstid.",
   "passingTimes.error.arrivalBeforeLatest": "Ankomsttid ikke kan være senere enn senest ankomsttid.",
-  "passingTimes.error.laterThanPrevious": "Tidspunktene må være senere enn forrige stoppesteds tidspunkt."
+  "passingTimes.error.laterThanPrevious": "Tidspunktene må være senere enn forrige stoppesteds tidspunkt.",
+  "passingTimes.error.lastArrivalMustBeSet": "Ankomsttid eller seneste ankomsttid for siste stoppested må være satt."
 }

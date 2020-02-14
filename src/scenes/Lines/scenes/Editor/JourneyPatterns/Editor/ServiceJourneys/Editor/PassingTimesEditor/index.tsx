@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { Label } from '@entur/typography';
@@ -13,14 +12,24 @@ import {
   DataCell
 } from '@entur/table';
 import { ClockIcon } from '@entur/icons';
-import { StopPoint, PassingTime } from 'model';
+import { PassingTime } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import { SmallAlertBox } from '@entur/alert';
 import { validateTimes } from './validateForm';
 
 import './styles.scss';
+import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 
-class PassingTimesEditor extends Component {
+type Props = {
+  passingTimes: any[];
+  stopPoints: any[];
+  flexibleStopPlaces: any[];
+  onChange: (pts: any[]) => void;
+  setValidPassingTimes: (isTrue: boolean) => void;
+  intl: any;
+};
+
+class PassingTimesEditor extends Component<Props> {
   state = {
     isValid: true,
     errorMessage: ''
@@ -42,7 +51,7 @@ class PassingTimesEditor extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     const { passingTimes, setValidPassingTimes, intl } = this.props;
     const { isValid, errorMessage } = validateTimes(passingTimes, { intl });
     if (this.props !== prevProps) {
@@ -51,7 +60,7 @@ class PassingTimesEditor extends Component {
     setValidPassingTimes(isValid);
   }
 
-  onFieldChange(index, field, value) {
+  onFieldChange(index: number, field: string, value: any) {
     const { passingTimes, onChange } = this.props;
     const newPt = passingTimes[index]
       ? passingTimes[index].withFieldChange(field, value)
@@ -61,24 +70,32 @@ class PassingTimesEditor extends Component {
     onChange(newPts);
   }
 
-  handleDayOffsetChange(index, field, value) {
-    value = parseInt(value);
-    this.onFieldChange(index, field, value !== 0 ? value : undefined);
+  handleDayOffsetChange(index: number, field: string, value: string) {
+    const parsedValue = parseInt(value);
+    this.onFieldChange(index, field, parsedValue !== 0 ? value : undefined);
   }
 
-  getDayOffsetDropDown = (tpt, index, field) => (
+  getDayOffsetDropDown = (tpt: any, index: number, field: string) => (
     <Dropdown
       items={[...Array(10).keys()].map(i => ({
-        value: i,
-        label: i
+        value: String(i),
+        label: String(i)
       }))}
-      onChange={({ value }) => this.handleDayOffsetChange(index, field, value)}
+      onChange={(e: NormalizedDropdownItemType | null) => {
+        if (!e?.value) return;
+        this.handleDayOffsetChange(index, field, e.value);
+      }}
       className="hourpicker"
       value={tpt && tpt[field] ? tpt[field].toString() : 0}
     />
   );
 
-  getTimePicker = (tpt, index, field) => {
+  padTimePickerInput = (time: string): string | undefined => {
+    if (time.length === 0) return undefined;
+    return time + ':00';
+  };
+
+  getTimePicker = (tpt: any, index: number, field: string) => {
     const currentValue = tpt && tpt[field];
 
     const shownValue =
@@ -89,7 +106,13 @@ class PassingTimesEditor extends Component {
 
     return (
       <TextField
-        onChange={e => this.onFieldChange(index, field, e.target.value + ':00')}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          this.onFieldChange(
+            index,
+            field,
+            this.padTimePickerInput(e.target.value)
+          )
+        }
         prepend={<ClockIcon inline />}
         type="time"
         className="timepicker"
@@ -98,7 +121,7 @@ class PassingTimesEditor extends Component {
     );
   };
 
-  renderRow = (sp, i) => {
+  renderRow = (sp: any, i: number) => {
     const { flexibleStopPlaces, passingTimes } = this.props;
     const stopPlace = flexibleStopPlaces.find(
       fsp => fsp.id === sp.flexibleStopPlaceRef
@@ -191,14 +214,13 @@ class PassingTimesEditor extends Component {
   }
 }
 
-PassingTimesEditor.propTypes = {
-  passingTimes: PropTypes.arrayOf(PropTypes.instanceOf(PassingTime)).isRequired,
-  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
-  onChange: PropTypes.func.isRequired,
-  setValidPassingTimes: PropTypes.func.isRequired
-};
-
-const mapStateToProps = ({ flexibleStopPlaces, intl }) => ({
+const mapStateToProps = ({
+  flexibleStopPlaces,
+  intl
+}: {
+  flexibleStopPlaces: any[];
+  intl: any;
+}) => ({
   flexibleStopPlaces,
   intl
 });
