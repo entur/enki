@@ -30,7 +30,7 @@ const NavBarItem = withRouter(
 
     return (
       <SideNavigationItem
-        onClick={e => handleOnClick(e)}
+        onClick={handleOnClick}
         active={isActive(location.pathname, path)}
         as={Link}
         to={path}
