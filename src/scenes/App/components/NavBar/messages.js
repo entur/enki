@@ -32,7 +32,7 @@ export default defineMessages({
   message: {
     id: 'app.navBar.redirect.message',
     defaultMessage:
-      'Du har gjort endringer som ikke er lagret, disse vil gå tapt hvis du forlater siden.'
+      'Du har gjort endringer som ikke er lagret. Disse vil gå tapt hvis du forlater siden.'
   },
   yes: {
     id: 'app.navBar.redirect.yes',
