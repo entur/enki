@@ -76,7 +76,6 @@ const StopPointsEditor = ({ stopPoints, onChange }: Props) => {
 
       {stopPointInDialog !== null && (
         <Dialog
-          className="dummy"
           isOpen={true}
           content={
             <StopPointEditor
