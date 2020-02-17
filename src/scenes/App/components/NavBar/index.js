@@ -1,8 +1,10 @@
-import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { Link, withRouter, Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import UserPreference from './UserPreference';
 import { Contrast } from '@entur/layout';
+import { SecondaryButton, NegativeButton } from '@entur/button';
+import ConfirmDialog from 'components/ConfirmDialog';
 
 import logo from '../../../../static/img/logo.png';
 
@@ -11,26 +13,50 @@ import { selectIntl } from 'i18n';
 import messages from './messages';
 import appMessages from '../../messages';
 import { SideNavigation, SideNavigationItem } from '@entur/menu';
+import { setUnsavedChanges } from 'actions/editor';
 
 const isActive = (pathname, path) => {
   return pathname.split('/')[1] === path.split('/')[1];
 };
 
-const NavBarItem = withRouter(({ location, text, path, className }) => {
-  return (
-    <SideNavigationItem
-      active={isActive(location.pathname, path)}
-      as={Link}
-      to={path}
-      className={className}
-    >
-      {text}
-    </SideNavigationItem>
-  );
-});
+const NavBarItem = withRouter(
+  ({ location, text, path, className, setRedirect }) => {
+    const { isUnsaved } = useSelector(state => state.editor);
+    const handleOnClick = e => {
+      if (!isUnsaved) return;
+      e.preventDefault();
+      setRedirect({ showConfirm: true, path, shouldRedirect: false });
+    };
 
-const NavBar = ({ location }) => {
+    return (
+      <SideNavigationItem
+        onClick={e => handleOnClick(e)}
+        active={isActive(location.pathname, path)}
+        as={Link}
+        to={path}
+        className={className}
+      >
+        {text}
+      </SideNavigationItem>
+    );
+  }
+);
+
+const NavBar = () => {
   const { formatMessage } = useSelector(selectIntl);
+  const [redirect, setRedirect] = useState({
+    showConfirm: false,
+    path: '',
+    shouldRedirect: false
+  });
+  const { showConfirm, shouldRedirect, path } = redirect;
+  const dispatch = useDispatch();
+
+  const RedirectHandler = () => {
+    setRedirect({ showConfirm: false, shouldRedirect: false, path: '' });
+    dispatch(setUnsavedChanges(false));
+    return <Redirect to={path} />;
+  };
 
   return (
     <Contrast as="nav" className="navbar-wrapper">
@@ -51,21 +77,50 @@ const NavBar = ({ location }) => {
         <NavBarItem
           text={formatMessage(messages.networksMenuItemLabel)}
           path="/networks"
+          setRedirect={setRedirect}
         />
         <NavBarItem
           text={formatMessage(messages.linesMenuItemLabel)}
           path="/lines"
+          setRedirect={setRedirect}
         />
         <NavBarItem
           text={formatMessage(messages.stopPlacesMenuItemLabel)}
           path="/stop-places"
+          setRedirect={setRedirect}
         />
         <NavBarItem
           text={formatMessage(messages.exportsMenuItemLabel)}
           path="/exports"
-          className="exports "
+          className="exports"
+          setRedirect={setRedirect}
         />
       </SideNavigation>
+
+      {showConfirm && (
+        <ConfirmDialog
+          isOpen
+          title={formatMessage(messages.title)}
+          message={formatMessage(messages.message)}
+          buttons={[
+            <NegativeButton
+              key={1}
+              onClick={() => setRedirect({ ...redirect, shouldRedirect: true })}
+            >
+              {formatMessage(messages.yes)}
+            </NegativeButton>,
+            <SecondaryButton
+              key={2}
+              onClick={() => setRedirect({ ...redirect, showConfirm: false })}
+            >
+              {formatMessage(messages.no)}
+            </SecondaryButton>
+          ]}
+          onClose={() => setRedirect({ ...redirect, showConfirm: false })}
+        />
+      )}
+
+      {shouldRedirect && <RedirectHandler />}
     </Contrast>
   );
 };

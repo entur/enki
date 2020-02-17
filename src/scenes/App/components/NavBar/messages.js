@@ -24,5 +24,22 @@ export default defineMessages({
   dataProvider: {
     id: 'app.navBar.dataProvider',
     defaultMessage: 'Velg dataleverandør'
+  },
+  title: {
+    id: 'app.navBar.redirect.title',
+    defaultMessage: 'Endringer er ikke lagret'
+  },
+  message: {
+    id: 'app.navBar.redirect.message',
+    defaultMessage:
+      'Du har gjort endringer som ikke er lagret, disse vil gå tapt hvis du forlater siden.'
+  },
+  yes: {
+    id: 'app.navBar.redirect.yes',
+    defaultMessage: 'Fortsett likevel'
+  },
+  no: {
+    id: 'app.navBar.redirect.no',
+    defaultMessage: 'Bli på denne siden'
   }
 });

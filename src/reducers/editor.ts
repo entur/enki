@@ -1,7 +1,7 @@
 import { SET_UNSAVEDCHANGES, EditorActionTypes } from 'actions/editor';
 
 const initialState = {
-  hasUnsavedChanges: false
+  isUnsaved: false
 };
 
 function editor(state = initialState, action: EditorActionTypes) {

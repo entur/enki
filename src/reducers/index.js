@@ -6,6 +6,7 @@ import exports from './exports';
 import networks from './networks';
 import flexibleLines from './flexibleLines';
 import flexibleStopPlaces from './flexibleStopPlaces';
+import editor from './editor';
 
 const reducers = {
   notification,
@@ -15,7 +16,8 @@ const reducers = {
   exports,
   networks,
   flexibleLines,
-  flexibleStopPlaces
+  flexibleStopPlaces,
+  editor
 };
 
 export default reducers;

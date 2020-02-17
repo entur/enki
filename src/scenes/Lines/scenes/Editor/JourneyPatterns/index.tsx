@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { AddIcon, ValidationInfoIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
@@ -9,6 +9,7 @@ import Dialog from 'components/Dialog';
 import JourneyPatternsTable from './Table';
 import JourneyPatternEditor from './Editor';
 import { selectIntl } from 'i18n';
+import { setUnsavedChanges } from 'actions/editor';
 import messages from './messages';
 import './styles.scss';
 
@@ -23,7 +24,8 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const [journeyPattern, setJourneyPattern] = useState<any | null>(null);
   const [journeyPatternIndex, setJourneyPatternIndex] = useState(TEMP_INDEX);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState<boolean>(false);
+  const { isUnsaved } = useSelector((state: any) => state.editor);
+  const dispatch = useDispatch();
 
   const deleteJourneyPattern = (index: number) => {
     onChange(removeElementByIndex(journeyPatterns, index));
@@ -50,14 +52,12 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
       onChange(
         replaceElement(journeyPatterns, journeyPatternIndex, journeyPattern)
       );
-      setHasUnsavedChanges(true);
+      dispatch(setUnsavedChanges(true));
     }
 
     setJourneyPattern(null);
     setJourneyPatternIndex(TEMP_INDEX);
   };
-
-  console.log('Rerendering!');
 
   return (
     <div>
@@ -71,7 +71,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
         onRowClick={openDialogForJourneyPattern}
         onDeleteClick={deleteJourneyPattern}
       />
-      {hasUnsavedChanges && (
+      {isUnsaved && (
         <div className="unsaved-changes">
           <ValidationInfoIcon inline /> Du har endringar som ikke er spart.
         </div>
