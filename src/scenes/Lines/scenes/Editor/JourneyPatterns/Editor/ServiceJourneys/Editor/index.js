@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { SuccessButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
+import { Tooltip } from '@entur/tooltip';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import PageHeader from 'components/PageHeader';
@@ -63,6 +64,8 @@ export default function ServiceJourneyEditor(props) {
 
   const isBlankName = isBlank(name);
 
+  const ToolTipIfError = !validPassingTimes ? Tooltip : Fragment;
+
   return (
     <div className="service-journey-editor">
       <div className="header">
@@ -77,9 +80,14 @@ export default function ServiceJourneyEditor(props) {
         />
 
         <div className="header-buttons">
-          <SuccessButton onClick={validPassingTimes ? onSave : undefined}>
-            {formatMessage(messages.save)}
-          </SuccessButton>
+          <ToolTipIfError
+            content="Du må ha gyldige passeringstider."
+            placement="bottom-left"
+          >
+            <SuccessButton disabled={!validPassingTimes} onClick={onSave}>
+              {formatMessage(messages.save)}
+            </SuccessButton>
+          </ToolTipIfError>
         </div>
       </div>
 
