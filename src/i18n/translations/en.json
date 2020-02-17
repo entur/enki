@@ -142,7 +142,7 @@
   "lines.editor.general.typeFormGroupTitle": "* Flexible line type",
   "lines.editor.generalTabLabel": "General",
   "lines.editor.journeyPatterns.addJourneyPatternIconButtonLabel": "Add journey pattern",
-  "lines.editor.journeyPatterns.unsavedChanges": "Yo have unsaved changes.",
+  "lines.editor.journeyPatterns.unsavedChanges": "You have unsaved changes.",
   "lines.editor.journeyPatterns.editor.general": "General",
   "lines.editor.journeyPatterns.editor.stopPoints": "Stop points",
   "lines.editor.journeyPatterns.editor.serviceJourneys": "Service Journeys",
