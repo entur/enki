@@ -73,7 +73,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
       />
       {isUnsaved && (
         <div className="unsaved-changes">
-          <ValidationInfoIcon inline /> Du har endringar som ikke er spart.
+          <ValidationInfoIcon inline /> {formatMessage(messages.unsavedChanges)}
         </div>
       )}
 

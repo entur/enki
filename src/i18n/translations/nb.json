@@ -142,6 +142,7 @@
   "lines.editor.general.typeFormGroupTitle": "* Flexible line type",
   "lines.editor.generalTabLabel": "Generelt",
   "lines.editor.journeyPatterns.addJourneyPatternIconButtonLabel": "Legg til journey pattern",
+  "lines.editor.journeyPatterns.unsavedChanges": "Du har endringer som ikke er lagret.",
   "lines.editor.journeyPatterns.editor.general": "Generelt",
   "lines.editor.journeyPatterns.editor.stopPoints": "Stoppepunkter",
   "lines.editor.journeyPatterns.editor.serviceJourneys": "Service Journeys",
