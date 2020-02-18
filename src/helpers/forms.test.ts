@@ -1,4 +1,4 @@
-import { isBlank, objectIsEmpty } from './forms';
+import { isBlank, objectValuesAreEmpty } from './forms';
 
 describe('forms', () => {
   describe('isBlank', () => {
@@ -15,15 +15,14 @@ describe('forms', () => {
 
   describe('objectIsEmpty', () => {
     it('should return true if object is empty', () => {
-      expect(objectIsEmpty({})).toBeTruthy();
-      expect(objectIsEmpty([])).toBeTruthy();
-      expect(objectIsEmpty('')).toBeTruthy();
+      expect(objectValuesAreEmpty({})).toBeTruthy();
+      expect(objectValuesAreEmpty([])).toBeTruthy();
+      expect(objectValuesAreEmpty({ name: [] })).toBeTruthy();
     });
 
     it('should return false if object is not empty', () => {
-      expect(objectIsEmpty({ a: 1, b: 2, c: { d: 3 } })).toBeFalsy();
-      expect(objectIsEmpty([1, 2, 3])).toBeFalsy();
-      expect(objectIsEmpty('abc')).toBeFalsy();
+      expect(objectValuesAreEmpty({ a: 1, b: 2, c: { d: 3 } })).toBeFalsy();
+      expect(objectValuesAreEmpty([1, 2, 3])).toBeFalsy();
     });
   });
 });

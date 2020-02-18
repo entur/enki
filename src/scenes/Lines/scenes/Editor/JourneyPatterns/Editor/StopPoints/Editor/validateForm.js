@@ -1,4 +1,4 @@
-import { isBlank, objectIsEmpty } from 'helpers/forms';
+import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import searchForQuay from './searchForQuay';
 import messages from './validateForm.messages';
 
@@ -29,5 +29,5 @@ export default async function(stopPoint, stopPointIndex) {
   ) {
     errors.frontText.push(messages.errorFrontTextNoValue);
   }
-  return [objectIsEmpty(errors), errors];
+  return [objectValuesAreEmpty(errors), errors];
 }
