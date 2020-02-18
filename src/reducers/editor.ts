@@ -4,7 +4,14 @@ const initialState = {
   isSaved: true
 };
 
-function editor(state = initialState, action: EditorActionTypes) {
+type EditorType = {
+  isSaved: boolean;
+};
+
+function editor(
+  state: EditorType = initialState,
+  action: EditorActionTypes
+): EditorType {
   switch (action.type) {
     case SET_SAVED_CHANGES:
       const { payload } = action;
