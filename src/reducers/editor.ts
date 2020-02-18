@@ -1,14 +1,14 @@
-import { SET_UNSAVEDCHANGES, EditorActionTypes } from 'actions/editor';
+import { SET_SAVED_CHANGES, EditorActionTypes } from 'actions/editor';
 
 const initialState = {
-  isUnsaved: false
+  isSaved: true
 };
 
 function editor(state = initialState, action: EditorActionTypes) {
   switch (action.type) {
-    case SET_UNSAVEDCHANGES:
+    case SET_SAVED_CHANGES:
       const { payload } = action;
-      return { ...payload, isUnsaved: payload.isUnsaved };
+      return { ...payload, isSaved: payload.isSaved };
 
     default:
       return state;

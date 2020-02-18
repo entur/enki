@@ -1,15 +1,15 @@
-export const SET_UNSAVEDCHANGES = 'SET_UNSAVEDCHANGES';
+export const SET_SAVED_CHANGES = 'SET_SAVED_CHANGES';
 
-type SetUnsavedChanges = {
-  type: typeof SET_UNSAVEDCHANGES;
-  payload: { isUnsaved: boolean };
+type SetSavedChanges = {
+  type: typeof SET_SAVED_CHANGES;
+  payload: { isSaved: boolean };
 };
 
-export function setUnsavedChanges(isUnsaved: boolean): SetUnsavedChanges {
+export function setSavedChanges(isSaved: boolean): SetSavedChanges {
   return {
-    type: SET_UNSAVEDCHANGES,
-    payload: { isUnsaved }
+    type: SET_SAVED_CHANGES,
+    payload: { isSaved }
   };
 }
 
-export type EditorActionTypes = SetUnsavedChanges;
+export type EditorActionTypes = SetSavedChanges;

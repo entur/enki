@@ -13,7 +13,7 @@ import { selectIntl } from 'i18n';
 import messages from './messages';
 import appMessages from '../../messages';
 import { SideNavigation, SideNavigationItem } from '@entur/menu';
-import { setUnsavedChanges } from 'actions/editor';
+import { setSavedChanges } from 'actions/editor';
 
 const isActive = (pathname, path) => {
   return pathname.split('/')[1] === path.split('/')[1];
@@ -21,9 +21,9 @@ const isActive = (pathname, path) => {
 
 const NavBarItem = withRouter(
   ({ location, text, path, className, setRedirect }) => {
-    const { isUnsaved } = useSelector(state => state.editor);
+    const { isSaved } = useSelector(state => state.editor);
     const handleOnClick = e => {
-      if (!isUnsaved) return;
+      if (isSaved) return;
       e.preventDefault();
       setRedirect({ showConfirm: true, path, shouldRedirect: false });
     };
@@ -54,7 +54,7 @@ const NavBar = () => {
 
   const RedirectHandler = () => {
     setRedirect({ showConfirm: false, shouldRedirect: false, path: '' });
-    dispatch(setUnsavedChanges(false));
+    dispatch(setSavedChanges(true));
     return <Redirect to={path} />;
   };
 

@@ -9,7 +9,7 @@ import Dialog from 'components/Dialog';
 import JourneyPatternsTable from './Table';
 import JourneyPatternEditor from './Editor';
 import { selectIntl } from 'i18n';
-import { setUnsavedChanges } from 'actions/editor';
+import { setSavedChanges } from 'actions/editor';
 import messages from './messages';
 import './styles.scss';
 
@@ -24,7 +24,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const [journeyPattern, setJourneyPattern] = useState<any | null>(null);
   const [journeyPatternIndex, setJourneyPatternIndex] = useState(TEMP_INDEX);
-  const { isUnsaved } = useSelector((state: any) => state.editor);
+  const { isSaved } = useSelector((state: any) => state.editor);
   const dispatch = useDispatch();
 
   const deleteJourneyPattern = (index: number) => {
@@ -52,7 +52,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
       onChange(
         replaceElement(journeyPatterns, journeyPatternIndex, journeyPattern)
       );
-      dispatch(setUnsavedChanges(true));
+      dispatch(setSavedChanges(false));
     }
 
     setJourneyPattern(null);
@@ -71,7 +71,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
         onRowClick={openDialogForJourneyPattern}
         onDeleteClick={deleteJourneyPattern}
       />
-      {isUnsaved && (
+      {!isSaved && (
         <div className="unsaved-changes">
           <ValidationInfoIcon inline /> {formatMessage(messages.unsavedChanges)}
         </div>
