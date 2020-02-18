@@ -6,7 +6,7 @@ import * as Sentry from '@sentry/browser';
 import createSentryMiddleware from 'redux-sentry-middleware';
 
 import reducers from 'reducers';
-import { geti18n, loadLocaleData, getIntl } from 'i18n/';
+import { geti18n, getIntl, loadLocaleData } from './i18n';
 import { normalizeAllUrls } from 'helpers/url';
 
 const SENTRY_DSN = 'https://cc3cacbc67234cc7bfe1cf391010414b@sentry.io/1769954';

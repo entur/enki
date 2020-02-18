@@ -1,10 +1,10 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import { Checkbox, Fieldset, InputGroup, TextField } from '@entur/form';
-import { hasValue } from 'helpers/forms';
 import StopPlaceSelection from './StopPlaceSelection';
 import { quaySearchResults } from './quaySearchResults';
 import messages from './Form.messages';
+import { isBlank } from 'helpers/forms';
 
 function quaySearchFeedback(errors, searchResults) {
   if (errors.length) {
@@ -54,7 +54,7 @@ const Form = ({
           value={stopPoint.quayRef ?? ''}
           onChange={e => {
             const value = e.target.value;
-            handleFieldChange('quayRef', hasValue(value) ? value : null);
+            handleFieldChange('quayRef', isBlank(value) ? null : value);
             debouncedSearchForQuay();
           }}
         />
