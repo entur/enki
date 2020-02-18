@@ -8,7 +8,6 @@
     "@entur/button": "^2.1.1",
     "@entur/datepicker": "^0.3.4",
     "@entur/dropdown": "^0.5.7",
-    "@entur/fonts": "git+ssh://git@bitbucket.org/enturas/entur-fonts.git#master",
     "@entur/form": "^2.3.1",
     "@entur/icons": "^0.6.0",
     "@entur/layout": "^1.2.1",
@@ -61,6 +60,9 @@
     "source-map-explorer": "^2.2.2",
     "typescript": "^3.7.5",
     "uuid": "^3.4.0"
+  },
+  "optionalDependencies": {
+    "@entur/fonts": "git+ssh://git@bitbucket.org/enturas/entur-fonts.git#master"
   },
   "devDependencies": {
     "cross-env": "5.1.1",
