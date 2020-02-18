@@ -1,24 +1,33 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { AddIcon } from '@entur/icons';
+import { AddIcon, ValidationInfoIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
-import { JourneyPattern, StopPoint } from 'model';
+import { JourneyPattern } from 'model';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import Dialog from 'components/Dialog';
 import JourneyPatternsTable from './Table';
 import JourneyPatternEditor from './Editor';
 import { selectIntl } from 'i18n';
+import { setSavedChanges } from 'actions/editor';
 import messages from './messages';
+import './styles.scss';
 
 const TEMP_INDEX = -1;
 
-const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
-  const { formatMessage } = useSelector(selectIntl);
-  const [journeyPattern, setJourneyPattern] = useState(null);
-  const [journeyPatternIndex, setJourneyPatternIndex] = useState(TEMP_INDEX);
+type Props = {
+  journeyPatterns: any;
+  onChange: (journeyPatterns: any[]) => void;
+};
 
-  const deleteJourneyPattern = index => {
+const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
+  const { formatMessage } = useSelector(selectIntl);
+  const [journeyPattern, setJourneyPattern] = useState<any | null>(null);
+  const [journeyPatternIndex, setJourneyPatternIndex] = useState(TEMP_INDEX);
+  const { isSaved } = useSelector((state: any) => state.editor);
+  const dispatch = useDispatch();
+
+  const deleteJourneyPattern = (index: number) => {
     onChange(removeElementByIndex(journeyPatterns, index));
   };
 
@@ -26,7 +35,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
     setJourneyPattern(new JourneyPattern());
   };
 
-  const openDialogForJourneyPattern = index => {
+  const openDialogForJourneyPattern = (index: number) => {
     setJourneyPattern(journeyPatterns[index]);
     setJourneyPatternIndex(index);
   };
@@ -43,6 +52,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
       onChange(
         replaceElement(journeyPatterns, journeyPatternIndex, journeyPattern)
       );
+      dispatch(setSavedChanges(false));
     }
 
     setJourneyPattern(null);
@@ -50,7 +60,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
   };
 
   return (
-    <div className="journey-patterns-editor">
+    <div>
       <SecondaryButton onClick={openDialogForNewJourneyPattern}>
         <AddIcon />
         {formatMessage(messages.addJourneyPatternIconButtonLabel)}
@@ -61,6 +71,11 @@ const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
         onRowClick={openDialogForJourneyPattern}
         onDeleteClick={deleteJourneyPattern}
       />
+      {!isSaved && (
+        <div className="unsaved-changes">
+          <ValidationInfoIcon inline /> {formatMessage(messages.unsavedChanges)}
+        </div>
+      )}
 
       {journeyPattern !== null && (
         <Dialog
@@ -68,7 +83,6 @@ const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
           content={
             <JourneyPatternEditor
               journeyPattern={journeyPattern}
-              stopPoints={stopPoints}
               onChange={setJourneyPattern}
               onSave={handleOnJourneyPatternDialogSaveClick}
               isEditMode={journeyPatternIndex !== TEMP_INDEX}
@@ -85,7 +99,6 @@ const JourneyPatternsEditor = ({ journeyPatterns, stopPoints, onChange }) => {
 JourneyPatternsEditor.propTypes = {
   journeyPatterns: PropTypes.arrayOf(PropTypes.instanceOf(JourneyPattern))
     .isRequired,
-  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)),
   onChange: PropTypes.func.isRequired
 };
 

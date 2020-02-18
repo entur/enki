@@ -70,8 +70,7 @@ const JourneyPatternEditor = ({
             onClick={onSave}
             disabled={journeyPattern.pointsInSequence.length < 2}
           >
-            {' '}
-            {formatMessage(messages.save)}{' '}
+            {formatMessage(messages.save)}
           </SuccessButton>
         </div>
       </div>
