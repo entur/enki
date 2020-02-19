@@ -36,28 +36,9 @@ class PassingTimesEditor extends Component<Props> {
   };
 
   componentDidMount() {
-    const {
-      passingTimes,
-      setValidPassingTimes,
-      intl,
-      stopPoints,
-      onChange
-    } = this.props;
+    const { passingTimes, setValidPassingTimes, intl } = this.props;
     const { isValid } = validateTimes(passingTimes, { intl });
     setValidPassingTimes(isValid);
-
-    if (passingTimes.length < stopPoints.length) {
-      const count = stopPoints.length - passingTimes.length;
-      const newPts = passingTimes.slice();
-      for (let i = count; i > 0; i--) {
-        newPts.push(new PassingTime());
-      }
-      onChange(newPts);
-    } else if (stopPoints.length < passingTimes.length) {
-      const newPts = passingTimes.slice();
-      newPts.splice(stopPoints.length);
-      onChange(newPts);
-    }
   }
 
   componentDidUpdate(prevProps: Props) {
