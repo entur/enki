@@ -13,7 +13,7 @@
     "@entur/icons": "^0.9.0",
     "@entur/layout": "^1.2.3",
     "@entur/menu": "^1.2.10",
-    "@entur/tab": "^0.4.1",
+    "@entur/tab": "^0.3.2",
     "@entur/table": "^0.3.13",
     "@entur/tokens": "^1.2.0",
     "@entur/tooltip": "^1.1.9",

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import PropTypes from 'prop-types';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
-import { ServiceJourney, StopPoint } from 'model';
+import { ServiceJourney } from 'model';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import Dialog from 'components/Dialog';
 import ServiceJourneysTable from './Table';
@@ -13,19 +12,31 @@ import messages from '../messages';
 
 const TEMP_INDEX = -1;
 
-const ServiceJourneysEditor = ({ serviceJourneys, onChange, stopPoints }) => {
-  const [serviceJourneyInDialog, setServiceJourneyInDialog] = useState(null);
+type Props = {
+  serviceJourneys: any[];
+  onChange: (sj: any) => void;
+  stopPoints: any[];
+};
+
+const ServiceJourneysEditor = ({
+  serviceJourneys,
+  onChange,
+  stopPoints
+}: Props) => {
+  const [serviceJourneyInDialog, setServiceJourneyInDialog] = useState<
+    any | null
+  >(null);
   const [
     serviceJourneyIndexInDialog,
     setServiceJourneyIndexInDialog
   ] = useState(TEMP_INDEX);
   const { formatMessage } = useSelector(selectIntl);
 
-  const updateServiceJourney = (index, serviceJourney) => {
+  const updateServiceJourney = (index: number, serviceJourney: any) => {
     onChange(replaceElement(serviceJourneys, index, serviceJourney));
   };
 
-  const deleteServiceJourney = index => {
+  const deleteServiceJourney = (index: number) => {
     onChange(removeElementByIndex(serviceJourneys, index));
   };
 
@@ -33,7 +44,7 @@ const ServiceJourneysEditor = ({ serviceJourneys, onChange, stopPoints }) => {
     setServiceJourneyInDialog(new ServiceJourney());
   };
 
-  const openDialogForServiceJourney = index => {
+  const openDialogForServiceJourney = (index: number) => {
     setServiceJourneyInDialog(serviceJourneys[index]);
     setServiceJourneyIndexInDialog(index);
   };
@@ -62,8 +73,8 @@ const ServiceJourneysEditor = ({ serviceJourneys, onChange, stopPoints }) => {
 
       <ServiceJourneysTable
         serviceJourneys={serviceJourneys}
-        onRowClick={openDialogForServiceJourney.bind(this)}
-        onDeleteClick={deleteServiceJourney.bind(this)}
+        onRowClick={openDialogForServiceJourney}
+        onDeleteClick={deleteServiceJourney}
       />
 
       {serviceJourneyInDialog !== null && (
@@ -77,7 +88,7 @@ const ServiceJourneysEditor = ({ serviceJourneys, onChange, stopPoints }) => {
                 setServiceJourneyInDialog(serviceJourneyInDialog)
               }
               onClose={closeServiceJourneyDialog}
-              onSave={handleOnServiceJourneyDialogSaveClick.bind(this)}
+              onSave={handleOnServiceJourneyDialogSaveClick}
               isEditMode={serviceJourneyIndexInDialog !== TEMP_INDEX}
             />
           }
@@ -86,13 +97,6 @@ const ServiceJourneysEditor = ({ serviceJourneys, onChange, stopPoints }) => {
       )}
     </div>
   );
-};
-
-ServiceJourneysEditor.propTypes = {
-  serviceJourneys: PropTypes.arrayOf(PropTypes.instanceOf(ServiceJourney))
-    .isRequired,
-  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
-  onChange: PropTypes.func.isRequired
 };
 
 export default ServiceJourneysEditor;

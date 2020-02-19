@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import {
@@ -10,22 +9,34 @@ import {
   HeaderCell,
   DataCell
 } from '@entur/table';
-import { ServiceJourney } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
 
 import './styles.scss';
 
-class ServiceJourneysTable extends Component {
-  state = { removeDialogOpenFor: null };
+type Props = {
+  onDeleteClick: (number: number) => void;
+  serviceJourneys: any[];
+  onRowClick: (row: number) => void;
+};
 
-  showDeleteDialogFor(jp) {
+type State = {
+  removeDialogOpenFor: number | null;
+};
+
+class ServiceJourneysTable extends Component<Props, State> {
+  readonly state: State = { removeDialogOpenFor: null };
+
+  showDeleteDialogFor = (jp: number | null) => {
     this.setState({ removeDialogOpenFor: jp });
-  }
+  };
 
-  doDelete() {
-    this.props.onDeleteClick(this.state.removeDialogOpenFor);
-    this.showDeleteDialogFor(null);
-  }
+  doDelete = () => {
+    const { removeDialogOpenFor } = this.state;
+    if (removeDialogOpenFor) {
+      this.props.onDeleteClick(removeDialogOpenFor);
+      this.showDeleteDialogFor(-1);
+    }
+  };
 
   render() {
     const { serviceJourneys, onRowClick } = this.props;
@@ -78,7 +89,7 @@ class ServiceJourneysTable extends Component {
             >
               Nei
             </SecondaryButton>,
-            <SuccessButton key={1} onClick={this.doDelete.bind(this)}>
+            <SuccessButton key={1} onClick={this.doDelete}>
               Ja
             </SuccessButton>
           ]}
@@ -88,12 +99,5 @@ class ServiceJourneysTable extends Component {
     );
   }
 }
-
-ServiceJourneysTable.propTypes = {
-  serviceJourneys: PropTypes.arrayOf(PropTypes.instanceOf(ServiceJourney))
-    .isRequired,
-  onRowClick: PropTypes.func.isRequired,
-  onDeleteClick: PropTypes.func.isRequired
-};
 
 export default ServiceJourneysTable;

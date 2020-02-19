@@ -23,7 +23,7 @@ import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedIt
 type Props = {
   passingTimes: any[];
   stopPoints: any[];
-  flexibleStopPlaces: any[];
+  flexibleStopPlaces: { id: string; name: string }[];
   onChange: (pts: any[]) => void;
   setValidPassingTimes: (isTrue: boolean) => void;
   intl: any;
