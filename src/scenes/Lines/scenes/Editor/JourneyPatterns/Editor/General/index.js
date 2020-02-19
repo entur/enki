@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 
-import { JourneyPattern } from 'model';
 import { DIRECTION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
 import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL } from '../../../constants';
