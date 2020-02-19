@@ -36,7 +36,16 @@ class PassingTimesEditor extends Component<Props> {
   };
 
   componentDidMount() {
-    const { passingTimes, stopPoints, onChange } = this.props;
+    const {
+      passingTimes,
+      setValidPassingTimes,
+      intl,
+      stopPoints,
+      onChange
+    } = this.props;
+    const { isValid } = validateTimes(passingTimes, { intl });
+    setValidPassingTimes(isValid);
+
     if (passingTimes.length < stopPoints.length) {
       const count = stopPoints.length - passingTimes.length;
       const newPts = passingTimes.slice();
@@ -86,7 +95,7 @@ class PassingTimesEditor extends Component<Props> {
         this.handleDayOffsetChange(index, field, e.value);
       }}
       className="hourpicker"
-      value={tpt && tpt[field] ? tpt[field].toString() : 0}
+      value={tpt && tpt[field] ? tpt[field].toString() : String(0)}
     />
   );
 
