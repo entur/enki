@@ -56,12 +56,22 @@ const JourneyPatternEditor = ({
     setDirectionSelection(directionSelection);
   };
 
-  console.log(journeyPattern.pointsInSequence);
-
   const deleteStopPoint = (index: number) => {
     const copy = pointsInSequence.slice();
     copy.splice(index, 1);
-    onChange(journeyPattern.withFieldChange('pointsInSequence', copy));
+
+    const newServiceJourneys = serviceJourneys.map(sj => {
+      const copyOfPassingTimes = sj.passingTimes.slice();
+      copyOfPassingTimes.splice(index, 1);
+
+      return sj.withFieldChange('passingTimes', copyOfPassingTimes);
+    });
+
+    onChange(
+      journeyPattern
+        .withFieldChange('pointsInSequence', copy)
+        .withFieldChange('serviceJourneys', newServiceJourneys)
+    );
   };
 
   return (
