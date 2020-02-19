@@ -15,10 +15,11 @@ const TEMP_INDEX = -1;
 
 type Props = {
   stopPoints: any[];
+  deleteStopPoint: (index: number) => void;
   onChange: (stopPoints: any) => void;
 };
 
-const StopPointsEditor = ({ stopPoints, onChange }: Props) => {
+const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
   const [stopPointInDialog, setStopPointInDialog] = useState<any | null>(null);
   const [stopPointIndexInDialog, setStopPointIndexInDialog] = useState(
     TEMP_INDEX
@@ -27,12 +28,6 @@ const StopPointsEditor = ({ stopPoints, onChange }: Props) => {
 
   const updateStopPoint = (index: number, stopPlace: any) => {
     onChange(replaceElement(stopPoints, index, stopPlace));
-  };
-
-  const deleteStopPlace = (index: number) => {
-    const copy = stopPoints.slice();
-    copy.splice(index, 1);
-    onChange(copy);
   };
 
   const openDialogForStopPoint = (index: number) => {
@@ -71,7 +66,7 @@ const StopPointsEditor = ({ stopPoints, onChange }: Props) => {
       <StopPointsTable
         stopPoints={stopPoints}
         onRowClick={openDialogForStopPoint}
-        onDeleteClick={deleteStopPlace}
+        onDeleteClick={deleteStopPoint}
       />
 
       {stopPointInDialog !== null && (

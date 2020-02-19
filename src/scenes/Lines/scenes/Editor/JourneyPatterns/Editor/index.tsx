@@ -14,7 +14,12 @@ import General from './General';
 import { DEFAULT_SELECT_VALUE } from '../../constants';
 
 type Props = {
-  journeyPattern: any;
+  journeyPattern: {
+    pointsInSequence: any[];
+    directionType: string;
+    serviceJourneys: any[];
+    withFieldChange: any;
+  };
   isEditMode: boolean;
   onSave: () => void;
   onChange: any;
@@ -49,6 +54,14 @@ const JourneyPatternEditor = ({
         : undefined;
     onFieldChange('directionType', newDirectionValue);
     setDirectionSelection(directionSelection);
+  };
+
+  console.log(journeyPattern.pointsInSequence);
+
+  const deleteStopPoint = (index: number) => {
+    const copy = pointsInSequence.slice();
+    copy.splice(index, 1);
+    onChange(journeyPattern.withFieldChange('pointsInSequence', copy));
   };
 
   return (
@@ -92,6 +105,7 @@ const JourneyPatternEditor = ({
           <TabPanel>
             <StopPointsEditor
               stopPoints={pointsInSequence}
+              deleteStopPoint={deleteStopPoint}
               onChange={pis => onFieldChange('pointsInSequence', pis)}
             />
           </TabPanel>
