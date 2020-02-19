@@ -57,7 +57,7 @@ const DayTypeEditor = ({ dayType, onChange }) => {
 };
 
 DayTypeEditor.propTypes = {
-  dayType: PropTypes.instanceOf(DayType).isRequired,
+  dayType: PropTypes.instanceOf(DayType),
   onChange: PropTypes.func.isRequired
 };
 
