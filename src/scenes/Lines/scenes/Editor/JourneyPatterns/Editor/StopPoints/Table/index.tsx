@@ -39,7 +39,6 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
   const tableRows =
     stopPoints.length > 0 ? (
       stopPoints.map((sp, i) => (
-        // @ts-ignore
         <TableRow key={i} onClick={() => onRowClick(i)}>
           <DataCell>{i + 1}</DataCell>
           <DataCell>
@@ -78,8 +77,6 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
       ))
     ) : (
       <TableRow className="row-no-lines disabled">
-        {/*
-        // @ts-ignore */}
         <DataCell colSpan={3}>
           {' '}
           {formatMessage(messages.noStopPoints)}{' '}
@@ -103,7 +100,6 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
       </Table>
 
       <ConfirmDialog
-        className="dummy"
         isOpen={removeDialogOpenFor !== null}
         title={formatMessage(messages.deleteTitle)}
         message={formatMessage(messages.deleteMessage)}
