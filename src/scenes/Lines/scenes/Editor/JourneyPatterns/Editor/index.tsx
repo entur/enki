@@ -18,7 +18,7 @@ type Props = {
     pointsInSequence: any[];
     directionType: string;
     serviceJourneys: any[];
-    withFieldChange: any;
+    withFieldChange: (field: string, value: any) => any;
   };
   isEditMode: boolean;
   onSave: () => void;
