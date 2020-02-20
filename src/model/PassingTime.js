@@ -1,5 +1,4 @@
 import Versioned from './base/Versioned';
-import Notice from './Notice';
 
 class PassingTime extends Versioned {
   constructor(data = {}) {
@@ -16,7 +15,7 @@ class PassingTime extends Versioned {
     this.latestArrivalDayOffset = data.latestArrivalDayOffset;
     this.earliestDepartureTime = data.earliestDepartureTime;
     this.earliestDepartureDayOffset = data.earliestDepartureDayOffset;
-    this.notices = (data.notices || []).map(n => new Notice(n));
+    this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 }
 
