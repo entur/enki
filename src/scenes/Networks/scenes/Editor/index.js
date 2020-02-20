@@ -229,7 +229,7 @@ const NetworkEditor = ({ match, history }) => {
             {formatMessage(messages.deleteNetworkConfirmDialogConfirmText)}
           </SuccessButton>
         ]}
-        onClose={() => setDeleteDialogOpen(false)}
+        onDismiss={() => setDeleteDialogOpen(false)}
       />
     </div>
   );
