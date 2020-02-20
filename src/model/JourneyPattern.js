@@ -1,7 +1,6 @@
 import Versioned from './base/Versioned';
 import StopPoint from './StopPoint';
 import ServiceJourney from './ServiceJourney';
-import Notice from './Notice';
 import { replaceElement } from 'helpers/arrays';
 
 class JourneyPattern extends Versioned {
@@ -18,7 +17,7 @@ class JourneyPattern extends Versioned {
     this.serviceJourneys = (data.serviceJourneys || []).map(
       sj => new ServiceJourney(sj)
     );
-    this.notices = (data.notices || []).map(n => new Notice(n));
+    this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 
   addServiceJourney(serviceJourney) {

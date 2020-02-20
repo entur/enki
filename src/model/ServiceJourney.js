@@ -1,7 +1,6 @@
 import Versioned from './base/Versioned';
 import DayType from './DayType';
 import PassingTime from './PassingTime';
-import Notice from './Notice';
 import BookingArrangement from './BookingArrangement';
 
 class ServiceJourney extends Versioned {
@@ -20,7 +19,7 @@ class ServiceJourney extends Versioned {
       pt => new PassingTime(pt)
     );
     this.dayTypes = (data.dayTypes || []).map(dt => new DayType(dt));
-    this.notices = (data.notices || []).map(n => new Notice(n));
+    this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 }
 
