@@ -1,13 +1,21 @@
 import http from 'http/http';
+import { OrganisationState } from 'reducers/organisations';
 
 export const RECEIVE_ORGANISATIONS = 'RECEIVE_ORGANISATIONS';
 
-const receiveOrganisations = organisations => ({
+export type ReceiveOrganisations = {
+  type: typeof RECEIVE_ORGANISATIONS;
+  organisations: OrganisationState;
+};
+
+export const receiveOrganisations = (
+  organisations: OrganisationState
+): ReceiveOrganisations => ({
   type: RECEIVE_ORGANISATIONS,
   organisations
 });
 
-export const getOrganisations = types => dispatch => {
+export const getOrganisations = (types: any) => (dispatch: any) => {
   let typesQuery = types
     ? '?types' + (Array.isArray(types) ? types.join(',') : types)
     : '';

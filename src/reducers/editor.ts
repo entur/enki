@@ -1,10 +1,10 @@
 import { SET_SAVED_CHANGES, EditorActionTypes } from 'actions/editor';
 
-const initialState = {
+const initialState: EditorState = {
   isSaved: true
 };
 
-type EditorState = {
+export type EditorState = {
   isSaved: boolean;
 };
 

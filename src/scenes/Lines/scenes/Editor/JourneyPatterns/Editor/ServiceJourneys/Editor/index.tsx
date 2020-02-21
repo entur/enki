@@ -15,26 +15,47 @@ import DayTypeEditor from './DayTypeEditor';
 import { ORGANISATION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
 import messages from '../../messages';
+import { OrganisationState } from 'reducers/organisations';
 
 import './styles.scss';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
-export default function ServiceJourneyEditor(props) {
+ServiceJourneyEditor.propTypes = {
+  serviceJourney: PropTypes.instanceOf(ServiceJourney).isRequired,
+  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool
+};
+
+type Props = {
+  serviceJourney: any;
+  stopPoints: any[];
+  onChange: (serviceJourney: any) => void;
+  onClose: () => void;
+  onSave: () => void;
+  isEditMode?: boolean;
+};
+
+export default function ServiceJourneyEditor(props: Props) {
   const [operatorSelection, setOperatorSelection] = useState(
     props.serviceJourney.operatorRef
   );
   const [validPassingTimes, setValidPassingTimes] = useState(false);
-  const organisations = useSelector(state => state.organisations);
+  const organisations = useSelector(
+    (state: { organisations: OrganisationState[] }) => state.organisations
+  );
   const { formatMessage } = useSelector(selectIntl);
 
-  const onFieldChange = (field, value, multi = false) => {
+  const onFieldChange = (field: any, value: any, multi: boolean = false) => {
     const { serviceJourney, onChange } = props;
     onChange(serviceJourney.withFieldChange(field, value, multi));
   };
 
-  const handleOperatorSelectionChange = operatorSelection => {
+  const handleOperatorSelectionChange = (operatorSelection: any) => {
     onFieldChange(
       'operatorRef',
       operatorSelection !== DEFAULT_SELECT_VALUE ? operatorSelection : undefined
@@ -109,7 +130,7 @@ export default function ServiceJourneyEditor(props) {
             >
               <TextField
                 defaultValue={name}
-                onChange={e => onFieldChange('name', e.target.value)}
+                onChange={(e: any) => onFieldChange('name', e.target.value)}
               />
             </InputGroup>
 
@@ -119,7 +140,9 @@ export default function ServiceJourneyEditor(props) {
             >
               <TextArea
                 defaultValue={description}
-                onChange={e => onFieldChange('description', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('description', e.target.value)
+                }
               />
             </InputGroup>
 
@@ -129,7 +152,9 @@ export default function ServiceJourneyEditor(props) {
             >
               <TextField
                 defaultValue={privateCode}
-                onChange={e => onFieldChange('privateCode', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('privateCode', e.target.value)
+                }
               />
             </InputGroup>
 
@@ -139,7 +164,9 @@ export default function ServiceJourneyEditor(props) {
             >
               <TextField
                 defaultValue={publicCode}
-                onChange={e => onFieldChange('publicCode', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('publicCode', e.target.value)
+                }
               />
             </InputGroup>
 
@@ -154,7 +181,9 @@ export default function ServiceJourneyEditor(props) {
                 }))
               ]}
               value={operatorSelection}
-              onChange={({ value }) => handleOperatorSelectionChange(value)}
+              onChange={({ value }: any) =>
+                handleOperatorSelectionChange(value)
+              }
             />
           </TabPanel>
 
@@ -185,12 +214,3 @@ export default function ServiceJourneyEditor(props) {
     </div>
   );
 }
-
-ServiceJourneyEditor.propTypes = {
-  serviceJourney: PropTypes.instanceOf(ServiceJourney).isRequired,
-  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  isEditMode: PropTypes.bool
-};
