@@ -1,3 +1,4 @@
+@import '~@entur/modal/dist/styles.css';
 .stop-place-editor {
   flex: 1;
   display: flex;
@@ -39,6 +40,7 @@
       display: flex;
       flex: 1;
       flex-direction: column;
+      z-index: 0;
     }
   }
 

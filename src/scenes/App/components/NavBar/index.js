@@ -116,7 +116,7 @@ const NavBar = () => {
               {formatMessage(messages.no)}
             </SecondaryButton>
           ]}
-          onClose={() => setRedirect({ ...redirect, showConfirm: false })}
+          onDismiss={() => setRedirect({ ...redirect, showConfirm: false })}
         />
       )}
 

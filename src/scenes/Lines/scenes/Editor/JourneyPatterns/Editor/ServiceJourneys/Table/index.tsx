@@ -93,7 +93,7 @@ class ServiceJourneysTable extends Component<Props, State> {
               Ja
             </SuccessButton>
           ]}
-          onClose={() => this.showDeleteDialogFor(null)}
+          onDismiss={() => this.showDeleteDialogFor(null)}
         />
       </div>
     );

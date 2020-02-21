@@ -2,7 +2,6 @@ import Versioned from './base/Versioned';
 import FlexibleStopPlace from './FlexibleStopPlace';
 import DestinationDisplay from './DestinationDisplay';
 import BookingArrangement from './BookingArrangement';
-import Notice from './Notice';
 
 class StopPoint extends Versioned {
   constructor(data = {}) {
@@ -23,7 +22,7 @@ class StopPoint extends Versioned {
       : undefined;
     this.forBoarding = data.forBoarding;
     this.forAlighting = data.forAlighting;
-    this.notices = (data.notices || []).map(n => new Notice(n));
+    this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 
   toPayload() {

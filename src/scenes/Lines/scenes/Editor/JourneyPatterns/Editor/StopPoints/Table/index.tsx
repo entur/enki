@@ -111,7 +111,7 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
             {formatMessage(messages.yes)}
           </SuccessButton>
         ]}
-        onClose={() => setRemoveDialogOpenFor(null)}
+        onDismiss={() => setRemoveDialogOpenFor(null)}
       />
     </div>
   );
