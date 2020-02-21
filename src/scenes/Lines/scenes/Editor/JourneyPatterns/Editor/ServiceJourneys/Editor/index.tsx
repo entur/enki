@@ -49,7 +49,7 @@ export default function ServiceJourneyEditor(props: Props) {
   );
   const { formatMessage } = useSelector(selectIntl);
 
-  const onFieldChange = (field: any, value: any, multi: boolean = false) => {
+  const onFieldChange = (field: string, value: any, multi: boolean = false) => {
     const { serviceJourney, onChange } = props;
     onChange(serviceJourney.withFieldChange(field, value, multi));
   };
