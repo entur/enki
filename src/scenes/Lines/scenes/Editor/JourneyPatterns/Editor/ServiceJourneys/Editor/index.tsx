@@ -43,7 +43,7 @@ export default function ServiceJourneyEditor(props: Props) {
   const [operatorSelection, setOperatorSelection] = useState(
     props.serviceJourney.operatorRef
   );
-  const [validPassingTimes, setValidPassingTimes] = useState(false);
+  const [validPassingTimes, setValidPassingTimes] = useState<boolean>(false);
   const organisations = useSelector(
     (state: { organisations: OrganisationState[] }) => state.organisations
   );
