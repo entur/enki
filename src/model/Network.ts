@@ -1,9 +1,9 @@
 import Versioned from './base/Versioned';
 
-type data = {
-  name: string;
-  description: string;
-  privateCode: string;
+type Data = {
+  name?: string;
+  description?: string;
+  privateCode?: string;
   authorityRef: string;
 };
 
@@ -13,7 +13,7 @@ class Network extends Versioned {
   privateCode: string;
   authorityRef: string;
 
-  constructor(data?: data) {
+  constructor(data?: Data) {
     super(data || {});
 
     this.name = data?.name || '';

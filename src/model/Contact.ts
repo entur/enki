@@ -1,6 +1,6 @@
 import Base from './base/Base';
 
-type data = {
+type Data = {
   name?: string;
   description?: string;
   privateCode?: string;
@@ -20,7 +20,7 @@ class Contact extends Base {
   email?: string;
   url?: string;
   furtherDetails?: string;
-  constructor(data?: data) {
+  constructor(data?: Data) {
     super();
 
     this.name = data?.name;

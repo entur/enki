@@ -1,7 +1,7 @@
 import Base from './base/Base';
 import Contact from './Contact';
 
-type data = {
+type Data = {
   name?: string;
   description?: string;
   privateCode?: string;
@@ -32,7 +32,7 @@ class BookingArrangement extends Base {
     return new BookingArrangement({ bookingContact: new Contact() });
   }
 
-  constructor(data: data = {}) {
+  constructor(data: Data = {}) {
     super();
 
     this.name = data?.name;
