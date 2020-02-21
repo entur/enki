@@ -5,7 +5,7 @@ import { selectIntl } from 'i18n';
 import { SuccessButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
 import { Tooltip } from '@entur/tooltip';
-import { InputGroup, TextArea, TextField } from '@entur/form';
+import { InputGroup, TextField } from '@entur/form';
 import PageHeader from 'components/PageHeader';
 import { ServiceJourney, StopPoint } from 'model';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
@@ -111,62 +111,59 @@ export default function ServiceJourneyEditor(props: Props) {
         </div>
       </div>
 
-      <div className="inputGroup">
-        <h1> Generellt </h1>
-        <InputGroup
-          label={formatMessage(messages.nameLabel)}
-          feedback={
-            isBlankName ? formatMessage(messages.nameRequired) : undefined
-          }
-          variant={isBlankName ? 'error' : undefined}
-        >
-          <TextField
-            defaultValue={name}
-            onChange={(e: any) => onFieldChange('name', e.target.value)}
-          />
-        </InputGroup>
-
-        <InputGroup
-          label={formatMessage(messages.description)}
-          className="form-section"
-        >
-          <TextArea
-            defaultValue={description}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onFieldChange('description', e.target.value)
+      <div className="input-group">
+        <h1> {formatMessage(messages.general)} </h1>
+        <div className="input-fields">
+          <InputGroup
+            className="form-section"
+            label={formatMessage(messages.nameLabel)}
+            feedback={
+              isBlankName ? formatMessage(messages.nameRequired) : undefined
             }
-          />
-        </InputGroup>
+            variant={isBlankName ? 'error' : undefined}
+          >
+            <TextField
+              defaultValue={name}
+              onChange={(e: any) => onFieldChange('name', e.target.value)}
+            />
+          </InputGroup>
 
-        <InputGroup
-          label={formatMessage(messages.serviceAvailability)}
-          className="form-section"
-        >
-          <TextField
-            defaultValue={privateCode}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onFieldChange('privateCode', e.target.value)
-            }
-          />
-        </InputGroup>
+          <InputGroup
+            label={formatMessage(messages.description)}
+            className="form-section"
+          >
+            <TextField
+              defaultValue={description}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('description', e.target.value)
+              }
+            />
+          </InputGroup>
 
-        <InputGroup
-          label={formatMessage(messages.publicCode)}
-          className="form-section"
-        >
-          <TextField
-            defaultValue={publicCode}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onFieldChange('publicCode', e.target.value)
-            }
-          />
-        </InputGroup>
-      </div>
+          <InputGroup label={'Private code'} className="form-section">
+            <TextField
+              defaultValue={privateCode}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('privateCode', e.target.value)
+              }
+            />
+          </InputGroup>
 
-      <div className="inputGroup">
-        <h1>Availability</h1>
+          <InputGroup
+            label={formatMessage(messages.publicCode)}
+            className="form-section"
+          >
+            <TextField
+              defaultValue={publicCode}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('publicCode', e.target.value)
+              }
+            />
+          </InputGroup>
+        </div>
+
         <Dropdown
-          className="form-section"
+          className="form-section operator-selector"
           label={formatMessage(messages.operator)}
           items={[
             { label: DEFAULT_SELECT_LABEL, value: DEFAULT_SELECT_VALUE },
@@ -178,6 +175,10 @@ export default function ServiceJourneyEditor(props: Props) {
           value={operatorSelection}
           onChange={({ value }: any) => handleOperatorSelectionChange(value)}
         />
+      </div>
+
+      <div className="input-group">
+        <h1> {formatMessage(messages.availability)} </h1>
 
         <DayTypeEditor
           dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
@@ -185,8 +186,8 @@ export default function ServiceJourneyEditor(props: Props) {
         />
       </div>
 
-      <div className="inputGroup">
-        <h1>Passing times</h1>
+      <div className="input-group">
+        <h1> {formatMessage(messages.passingTimes)} </h1>
         <PassingTimesEditor
           passingTimes={passingTimes}
           stopPoints={stopPoints}
@@ -195,8 +196,8 @@ export default function ServiceJourneyEditor(props: Props) {
         />
       </div>
 
-      <div className="inputGroup">
-        <h1>Booking</h1>
+      <div className="input-group">
+        <h1> {formatMessage(messages.booking)} </h1>
         <BookingArrangementEditor
           bookingArrangement={bookingArrangement || undefined}
           onChange={b => onFieldChange('bookingArrangement', b)}
