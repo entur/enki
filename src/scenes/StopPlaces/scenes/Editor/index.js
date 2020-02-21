@@ -56,9 +56,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   );
 
   const polygonCoordinates =
-    flexibleStopPlace && flexibleStopPlace.flexibleArea
-      ? flexibleStopPlace.flexibleArea.polygon.coordinates
-      : [];
+    flexibleStopPlace?.flexibleArea?.polygon.coordinates ?? [];
 
   const [coordinates, setCoordinates] = useState(() =>
     polygonCoordinates.length === 0 ? '' : coordinatesToText()
@@ -226,7 +224,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
                 >
                   <TextArea
                     type="text"
-                    value={flexibleStopPlace.description}
+                    value={flexibleStopPlace.description ?? ''}
                     onChange={e => onFieldChange('description', e.target.value)}
                   />
                 </InputGroup>
@@ -235,7 +233,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
                   label={formatMessage(messages.privateCodeFormLabelText)}
                 >
                   <TextField
-                    value={flexibleStopPlace.privateCode}
+                    value={flexibleStopPlace.privateCode ?? ''}
                     onChange={e => onFieldChange('privateCode', e.target.value)}
                   />
                 </InputGroup>
