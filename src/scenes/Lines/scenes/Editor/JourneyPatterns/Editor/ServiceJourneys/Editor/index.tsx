@@ -124,7 +124,7 @@ export default function ServiceJourneyEditor(props: Props) {
           >
             <TextField
               defaultValue={name}
-              onChange={(e: any) => onFieldChange('name', e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onFieldChange('name', e.target.value)}
             />
           </InputGroup>
 
