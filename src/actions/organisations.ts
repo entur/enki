@@ -15,7 +15,9 @@ export const receiveOrganisations = (
   organisations
 });
 
-export const getOrganisations = (types: any) => (dispatch: any) => {
+export const getOrganisations = (types: any) => (
+  dispatch: (receiveOrganisations: ReceiveOrganisations) => void
+) => {
   let typesQuery = types
     ? '?types' + (Array.isArray(types) ? types.join(',') : types)
     : '';
