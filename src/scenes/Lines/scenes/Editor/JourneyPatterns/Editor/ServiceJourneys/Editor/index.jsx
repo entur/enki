@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
@@ -63,8 +63,11 @@ export default function ServiceJourneyEditor(props) {
   );
 
   const isBlankName = isBlank(name);
-
-  const ToolTipIfError = !validPassingTimes ? Tooltip : Fragment;
+  const saveButton = (
+    <SuccessButton disabled={!validPassingTimes} onClick={onSave}>
+      {formatMessage(messages.save)}
+    </SuccessButton>
+  );
 
   return (
     <div className="service-journey-editor">
@@ -80,14 +83,16 @@ export default function ServiceJourneyEditor(props) {
         />
 
         <div className="header-buttons">
-          <ToolTipIfError
-            content="Du må ha gyldige passeringstider."
-            placement="bottom-left"
-          >
-            <SuccessButton disabled={!validPassingTimes} onClick={onSave}>
-              {formatMessage(messages.save)}
-            </SuccessButton>
-          </ToolTipIfError>
+          {!validPassingTimes ? (
+            <Tooltip
+              content="Du må ha gyldige passeringstider."
+              placement="bottom-left"
+            >
+              {saveButton}
+            </Tooltip>
+          ) : (
+            saveButton
+          )}
         </div>
       </div>
 

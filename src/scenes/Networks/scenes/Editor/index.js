@@ -42,7 +42,7 @@ const NetworkEditor = ({ match, history }) => {
   const currentNetwork = useSelector(state => selectNetwork(state, match));
 
   const [authoritySelection, setAuthoritySelection] = useState(
-    DEFAULT_SELECT_VALUE
+    currentNetwork?.authorityRef || DEFAULT_SELECT_VALUE
   );
   const [isSaving, setSaving] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -149,7 +149,7 @@ const NetworkEditor = ({ match, history }) => {
               }
             >
               <TextField
-                defaultValue={network.name}
+                defaultValue={network.name ?? ''}
                 onChange={e => onFieldChange('name', e.target.value)}
               />
             </InputGroup>
@@ -159,7 +159,7 @@ const NetworkEditor = ({ match, history }) => {
               label={formatMessage(messages.descriptionLabelText)}
             >
               <TextArea
-                value={network.description}
+                value={network.description ?? ''}
                 onChange={e => onFieldChange('description', e.target.value)}
               />
             </InputGroup>
@@ -169,7 +169,7 @@ const NetworkEditor = ({ match, history }) => {
               label={formatMessage(messages.privateCodeLabelText)}
             >
               <TextField
-                value={network.privateCode}
+                value={network.privateCode ?? ''}
                 onChange={e => onFieldChange('privateCode', e.target.value)}
               />
             </InputGroup>
