@@ -5,9 +5,9 @@ import {
 import { ORGANISATION_TYPE } from 'model/enums';
 
 type ContactInfo = {
-  url: string;
-  email: string;
-  phone: string;
+  url?: string;
+  email?: string;
+  phone?: string;
 };
 
 export type OrganisationState = {
