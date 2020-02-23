@@ -27,6 +27,7 @@ import { DEFAULT_SELECT_VALUE } from './constants';
 import validateForm from './validateForm';
 import './styles.scss';
 import General from './General';
+import { setSavedChanges } from 'actions/editor';
 import { withRouter } from 'react-router-dom';
 import { selectIntl } from 'i18n';
 import { createSelector } from 'reselect';
@@ -173,6 +174,7 @@ const FlexibleLineEditor = ({ match, history }) => {
       dispatch(saveFlexibleLine(flexibleLine))
         .then(() => history.push('/lines'))
         .finally(() => setSaving(false));
+      dispatch(setSavedChanges(true));
     }
   };
 
