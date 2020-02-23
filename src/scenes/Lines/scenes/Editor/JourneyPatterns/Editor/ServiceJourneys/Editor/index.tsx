@@ -43,13 +43,13 @@ export default function ServiceJourneyEditor(props: Props) {
   const [operatorSelection, setOperatorSelection] = useState(
     props.serviceJourney.operatorRef
   );
-  const [validPassingTimes, setValidPassingTimes] = useState(false);
+  const [validPassingTimes, setValidPassingTimes] = useState<boolean>(false);
   const organisations = useSelector(
     (state: { organisations: OrganisationState[] }) => state.organisations
   );
   const { formatMessage } = useSelector(selectIntl);
 
-  const onFieldChange = (field: any, value: any, multi: boolean = false) => {
+  const onFieldChange = (field: string, value: any, multi: boolean = false) => {
     const { serviceJourney, onChange } = props;
     onChange(serviceJourney.withFieldChange(field, value, multi));
   };
@@ -124,7 +124,7 @@ export default function ServiceJourneyEditor(props: Props) {
           >
             <TextField
               defaultValue={name}
-              onChange={(e: any) => onFieldChange('name', e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onFieldChange('name', e.target.value)}
             />
           </InputGroup>
 
