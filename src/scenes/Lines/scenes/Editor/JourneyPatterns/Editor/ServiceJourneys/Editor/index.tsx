@@ -112,7 +112,7 @@ export default function ServiceJourneyEditor(props: Props) {
       </div>
 
       <div className="input-group">
-        <h1> {formatMessage(messages.general)} </h1>
+        <h2> {formatMessage(messages.general)} </h2>
         <div className="input-fields">
           <InputGroup
             className="form-section"
@@ -124,7 +124,9 @@ export default function ServiceJourneyEditor(props: Props) {
           >
             <TextField
               defaultValue={name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onFieldChange('name', e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('name', e.target.value)
+              }
             />
           </InputGroup>
 
@@ -178,7 +180,7 @@ export default function ServiceJourneyEditor(props: Props) {
       </div>
 
       <div className="input-group">
-        <h1> {formatMessage(messages.availability)} </h1>
+        <h2> {formatMessage(messages.availability)} </h2>
 
         <DayTypeEditor
           dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
@@ -187,7 +189,7 @@ export default function ServiceJourneyEditor(props: Props) {
       </div>
 
       <div className="input-group">
-        <h1> {formatMessage(messages.passingTimes)} </h1>
+        <h2> {formatMessage(messages.passingTimes)} </h2>
         <PassingTimesEditor
           passingTimes={passingTimes}
           stopPoints={stopPoints}
@@ -197,7 +199,7 @@ export default function ServiceJourneyEditor(props: Props) {
       </div>
 
       <div className="input-group">
-        <h1> {formatMessage(messages.booking)} </h1>
+        <h2> {formatMessage(messages.booking)} </h2>
         <BookingArrangementEditor
           bookingArrangement={bookingArrangement || undefined}
           onChange={b => onFieldChange('bookingArrangement', b)}
