@@ -1,5 +1,5 @@
 import { isNil, isEmpty } from 'ramda';
-import { objectValues } from 'helpers/forms';
+import { objectValuesAreEmpty } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 
@@ -22,5 +22,5 @@ export default function(stopPlace) {
     name: validateName(stopPlace.name),
     flexibleArea: validateFlexibleArea(stopPlace.flexibleArea)
   };
-  return [objectValues(errors).length === 0, errors];
+  return [objectValuesAreEmpty(errors), errors];
 }

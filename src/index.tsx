@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'normalize.css';
 import { Provider } from 'react-intl-redux';
-import Keycloak from 'keycloak-js';
+import Keycloak, { KeycloakInstance } from 'keycloak-js';
 
 import App from './scenes/App';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -45,7 +45,7 @@ type UserInfo = {
 };
 
 const initAuth = () => {
-  const kc = Keycloak(API_BASE + '/keycloak.json');
+  const kc: KeycloakInstance = Keycloak(API_BASE + '/keycloak.json');
   const options = { checkLoginIframe: false };
   kc.init(options).success((authenticated: boolean) => {
     if (authenticated) {

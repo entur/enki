@@ -1,4 +1,5 @@
-export const isBlank = (val: string) => !val || val.trim() === '';
-export const hasValue = (val: string) => !isBlank(val);
+export const isBlank = (val: string | undefined): boolean =>
+  !val || val.trim() === '';
 
-export const objectValues = <E>(obj: E) => Object.values(obj).flat();
+export const objectValuesAreEmpty = (obj: object): boolean =>
+  Object.values(obj).reduce((acc, curr) => acc.concat(curr), []).length === 0;

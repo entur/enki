@@ -1,8 +1,6 @@
-import { copyObj } from 'helpers/objects';
-
 class Base {
   withChanges(args) {
-    return copyObj(this, args);
+    return Object.assign(Object.create(this), this, args);
   }
 
   withFieldChange(field, value, multi = false) {

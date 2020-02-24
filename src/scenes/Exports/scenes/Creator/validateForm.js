@@ -1,5 +1,5 @@
 import { isNil, isEmpty } from 'ramda';
-import { objectValues } from 'helpers/forms';
+import { objectValuesAreEmpty } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 import moment from 'moment';
@@ -34,5 +34,5 @@ export default function(theExport) {
     name: validateName(theExport.name),
     fromDateToDate: validateFromDateToDate(theExport.fromDate, theExport.toDate)
   };
-  return [objectValues(errors).length === 0, errors];
+  return [objectValuesAreEmpty(errors), errors];
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import { DestinationDisplay, StopPoint } from 'model';
-import { hasValue, isBlank } from 'helpers/forms';
+import { isBlank } from 'helpers/forms';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import Header from './Header';
 import './styles.scss';
@@ -64,12 +64,12 @@ class StopPointEditor extends Component {
   };
 
   debouncedSearchForQuay = debounce(async () => {
-    let quayRef = this.props.stopPoint.quayRef;
-    if (hasValue(quayRef)) {
+    const quayRef = this.props.stopPoint.quayRef;
+    if (isBlank(quayRef)) {
+      this.setState({ quaySearch: {} });
+    } else {
       let quaySearch = await searchForQuay(quayRef);
       this.setState({ quaySearch });
-    } else {
-      this.setState({ quaySearch: {} });
     }
   }, 1000);
 

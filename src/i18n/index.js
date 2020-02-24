@@ -1,6 +1,7 @@
-import { addLocaleData, IntlProvider } from 'react-intl';
-import nbLocaleData from 'react-intl/locale-data/nb';
+import { IntlProvider } from 'react-intl';
 import 'moment/locale/nb';
+import '@formatjs/intl-pluralrules/polyfill';
+import '@formatjs/intl-pluralrules/dist/locale-data/nb';
 import { createSelector } from 'reselect';
 
 export const defaultLocale = 'nb';
@@ -43,18 +44,12 @@ export const geti18n = () => {
   };
 };
 
-/* React-intl requires additional locale-data for languages (except 'en', included) for formatting rules,
- * these are kept in memory */
-export const loadLocaleData = () => {
-  addLocaleData(nbLocaleData);
-};
-
 let cachedIntl = null;
 let prevLocale = '';
 
 export const getIntl = ({ intl: { locale, messages } }) => {
   if (!cachedIntl || locale !== prevLocale) {
-    cachedIntl = new IntlProvider({ locale, messages }).getChildContext().intl;
+    cachedIntl = new IntlProvider({ locale, messages }).state.intl;
     prevLocale = locale;
   }
   return cachedIntl;
