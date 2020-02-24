@@ -15,11 +15,7 @@ export type OrganisationState = {
   name: string;
   legalName: string;
   types: ORGANISATION_TYPE[];
-  contact: {
-    url: string;
-    email: string;
-    phone: string;
-  };
+  contact: ContactInfo;
   customerContact: ContactInfo;
   logo: string;
   references: { [key in string | number]: string };
