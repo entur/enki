@@ -43,15 +43,15 @@ export const FLEXIBLE_LINE_TYPE = Object.freeze({
   OTHER: 'other'
 });
 
-export const DAY_OF_WEEK = Object.freeze({
-  MONDAY: 'monday',
-  TUESDAY: 'tuesday',
-  WEDNESDAY: 'wednesday',
-  THURSDAY: 'thursday',
-  FRIDAY: 'friday',
-  SATURDAY: 'saturday',
-  SUNDAY: 'sunday'
-});
+export enum DAY_OF_WEEK {
+  MONDAY = 'monday',
+  TUESDAY = 'tuesday',
+  WEDNESDAY = 'wednesday',
+  THURSDAY = 'thursday',
+  FRIDAY = 'friday',
+  SATURDAY = 'saturday',
+  SUNDAY = 'sunday'
+}
 
 export const BOOKING_METHOD = Object.freeze({
   CALL_DRIVER: 'callDriver',

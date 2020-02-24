@@ -1,8 +1,8 @@
 import Base from './base/Base';
 import OperatingPeriod from './OperatingPeriod';
 
-type Props = {
-  isAvailable: boolean;
+export type DayTypeAssignmentProps = {
+  isAvailable?: boolean;
   date?: string;
   operatingPeriod: OperatingPeriod;
 };
@@ -12,7 +12,7 @@ class DayTypeAssignment extends Base {
   date: string | undefined;
   operatingPeriod: OperatingPeriod | null;
 
-  constructor(data: Props) {
+  constructor(data: DayTypeAssignmentProps) {
     super();
     const { operatingPeriod } = data;
 

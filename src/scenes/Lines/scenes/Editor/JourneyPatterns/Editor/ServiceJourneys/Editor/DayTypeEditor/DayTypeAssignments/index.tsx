@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import PropTypes from 'prop-types';
 import moment from 'moment/moment';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
@@ -12,10 +11,18 @@ import messages from '../../../../messages';
 
 import './styles.scss';
 
-const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }) => {
+type Props = {
+  dayTypeAssignments: DayTypeAssignment[];
+  onChange: (dayTypeAssignment: DayTypeAssignment[]) => void;
+};
+
+const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
-  const updateDayTypeAssignment = (index, dayTypeAssignment) => {
+  const updateDayTypeAssignment = (
+    index: number,
+    dayTypeAssignment: DayTypeAssignment
+  ) => {
     onChange(replaceElement(dayTypeAssignments, index, dayTypeAssignment));
   };
 
@@ -33,7 +40,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }) => {
     );
   };
 
-  const deleteDayTypeAssignment = index => {
+  const deleteDayTypeAssignment = (index: number) => {
     onChange(removeElementByIndex(dayTypeAssignments, index));
   };
 
@@ -60,12 +67,6 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }) => {
       )}
     </div>
   );
-};
-
-DayTypeAssignmentsEditor.propTypes = {
-  dayTypeAssignments: PropTypes.arrayOf(PropTypes.instanceOf(DayTypeAssignment))
-    .isRequired,
-  onChange: PropTypes.func.isRequired
 };
 
 export default DayTypeAssignmentsEditor;
