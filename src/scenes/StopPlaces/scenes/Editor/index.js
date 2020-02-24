@@ -2,12 +2,14 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { InputGroup, TextArea, TextField } from '@entur/form';
+import ConfirmDialog from 'components/ConfirmDialog';
 import {
   SuccessButton,
   NegativeButton,
   SecondaryButton,
   TertiaryButton
 } from '@entur/button';
+
 import { MapIcon } from '@entur/icons';
 
 import { FlexibleStopPlace, FlexibleArea, GeoJSON } from 'model';
@@ -21,7 +23,6 @@ import { loadFlexibleLines } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import PageHeader from 'components/PageHeader';
-import ConfirmDialog from 'components/ConfirmDialog';
 import PolygonMap from './components/PolygonMap';
 import './styles.scss';
 import { createSelector } from 'reselect';
@@ -55,9 +56,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
   );
 
   const polygonCoordinates =
-    flexibleStopPlace && flexibleStopPlace.flexibleArea
-      ? flexibleStopPlace.flexibleArea.polygon.coordinates
-      : [];
+    flexibleStopPlace?.flexibleArea?.polygon.coordinates ?? [];
 
   const [coordinates, setCoordinates] = useState(() =>
     polygonCoordinates.length === 0 ? '' : coordinatesToText()
@@ -225,7 +224,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
                 >
                   <TextArea
                     type="text"
-                    value={flexibleStopPlace.description}
+                    value={flexibleStopPlace.description ?? ''}
                     onChange={e => onFieldChange('description', e.target.value)}
                   />
                 </InputGroup>
@@ -234,7 +233,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
                   label={formatMessage(messages.privateCodeFormLabelText)}
                 >
                   <TextField
-                    value={flexibleStopPlace.privateCode}
+                    value={flexibleStopPlace.privateCode ?? ''}
                     onChange={e => onFieldChange('privateCode', e.target.value)}
                   />
                 </InputGroup>
@@ -308,7 +307,7 @@ const FlexibleStopPlaceEditor = ({ match, history }) => {
             {formatMessage(messages.deleteStopPlaceDialogConfirmButtonText)}
           </SuccessButton>
         ]}
-        onClose={() => setDeleteDialogOpen(false)}
+        onDismiss={() => setDeleteDialogOpen(false)}
       />
     </div>
   );

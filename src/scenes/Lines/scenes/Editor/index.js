@@ -294,7 +294,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             {formatMessage(messages.deleteConfirmationDialogConfirmButtonText)}
           </SuccessButton>
         ]}
-        onClose={() => setDeleteDialogOpen(false)}
+        onDismiss={() => setDeleteDialogOpen(false)}
       />
     </div>
   );

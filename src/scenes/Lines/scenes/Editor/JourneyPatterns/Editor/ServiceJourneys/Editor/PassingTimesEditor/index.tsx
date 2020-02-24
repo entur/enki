@@ -23,7 +23,7 @@ import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedIt
 type Props = {
   passingTimes: any[];
   stopPoints: any[];
-  flexibleStopPlaces: any[];
+  flexibleStopPlaces: { id: string; name: string }[];
   onChange: (pts: any[]) => void;
   setValidPassingTimes: (isTrue: boolean) => void;
   intl: any;
@@ -36,19 +36,9 @@ class PassingTimesEditor extends Component<Props> {
   };
 
   componentDidMount() {
-    const { passingTimes, stopPoints, onChange } = this.props;
-    if (passingTimes.length < stopPoints.length) {
-      const count = stopPoints.length - passingTimes.length;
-      const newPts = passingTimes.slice();
-      for (let i = count; i > 0; i--) {
-        newPts.push(new PassingTime());
-      }
-      onChange(newPts);
-    } else if (stopPoints.length < passingTimes.length) {
-      const newPts = passingTimes.slice();
-      newPts.splice(stopPoints.length);
-      onChange(newPts);
-    }
+    const { passingTimes, setValidPassingTimes, intl } = this.props;
+    const { isValid } = validateTimes(passingTimes, { intl });
+    setValidPassingTimes(isValid);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -86,7 +76,7 @@ class PassingTimesEditor extends Component<Props> {
         this.handleDayOffsetChange(index, field, e.value);
       }}
       className="hourpicker"
-      value={tpt && tpt[field] ? tpt[field].toString() : 0}
+      value={tpt && tpt[field] ? tpt[field].toString() : String(0)}
     />
   );
 

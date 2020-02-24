@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { SuccessButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
+import { Tooltip } from '@entur/tooltip';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import PageHeader from 'components/PageHeader';
@@ -21,6 +22,22 @@ const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
 export default function ServiceJourneyEditor(props) {
+  const {
+    serviceJourney: {
+      name,
+      description,
+      privateCode,
+      publicCode,
+      bookingArrangement,
+      passingTimes,
+      dayTypes
+    },
+    stopPoints,
+    onSave,
+    onClose,
+    isEditMode
+  } = props;
+
   const [operatorSelection, setOperatorSelection] = useState(
     props.serviceJourney.operatorRef
   );
@@ -41,27 +58,16 @@ export default function ServiceJourneyEditor(props) {
     setOperatorSelection(operatorSelection);
   };
 
-  const {
-    serviceJourney: {
-      name,
-      description,
-      privateCode,
-      publicCode,
-      bookingArrangement,
-      passingTimes,
-      dayTypes
-    },
-    stopPoints,
-    onSave,
-    onClose,
-    isEditMode
-  } = props;
-
   const operators = organisations.filter(org =>
     org.types.includes(ORGANISATION_TYPE.OPERATOR)
   );
 
   const isBlankName = isBlank(name);
+  const saveButton = (
+    <SuccessButton disabled={!validPassingTimes} onClick={onSave}>
+      {formatMessage(messages.save)}
+    </SuccessButton>
+  );
 
   return (
     <div className="service-journey-editor">
@@ -77,9 +83,16 @@ export default function ServiceJourneyEditor(props) {
         />
 
         <div className="header-buttons">
-          <SuccessButton onClick={validPassingTimes ? onSave : undefined}>
-            {formatMessage(messages.save)}
-          </SuccessButton>
+          {!validPassingTimes ? (
+            <Tooltip
+              content="Du må ha gyldige passeringstider."
+              placement="bottom-left"
+            >
+              {saveButton}
+            </Tooltip>
+          ) : (
+            saveButton
+          )}
         </div>
       </div>
 

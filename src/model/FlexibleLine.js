@@ -2,7 +2,6 @@ import Versioned from './base/Versioned';
 import Network from './Network';
 import BookingArrangement from './BookingArrangement';
 import JourneyPattern from './JourneyPattern';
-import Notice from './Notice';
 import { replaceElement } from 'helpers/arrays';
 
 class FlexibleLine extends Versioned {
@@ -26,7 +25,7 @@ class FlexibleLine extends Versioned {
     this.journeyPatterns = (data.journeyPatterns || []).map(
       jp => new JourneyPattern(jp)
     );
-    this.notices = (data.notices || []).map(n => new Notice(n));
+    this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 
   addJourneyPattern(journeyPattern) {

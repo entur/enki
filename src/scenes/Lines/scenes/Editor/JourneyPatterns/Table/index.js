@@ -101,7 +101,7 @@ const JourneyPatternsTable = ({
             {formatMessage(messages.deleteConfirmDialogConfirmButtonText)}
           </SuccessButton>
         ]}
-        onClose={() => showDeleteDialogFor(null)}
+        onDismiss={() => showDeleteDialogFor(null)}
       />
     </div>
   );

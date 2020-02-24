@@ -14,7 +14,12 @@ import General from './General';
 import { DEFAULT_SELECT_VALUE } from '../../constants';
 
 type Props = {
-  journeyPattern: any;
+  journeyPattern: {
+    pointsInSequence: any[];
+    directionType: string;
+    serviceJourneys: any[];
+    withFieldChange: (field: string, value: any) => any;
+  };
   isEditMode: boolean;
   onSave: () => void;
   onChange: any;
@@ -51,6 +56,24 @@ const JourneyPatternEditor = ({
     setDirectionSelection(directionSelection);
   };
 
+  const deleteStopPoint = (index: number) => {
+    const copy = pointsInSequence.slice();
+    copy.splice(index, 1);
+
+    const newServiceJourneys = serviceJourneys.map(sj => {
+      const copyOfPassingTimes = sj.passingTimes.slice();
+      copyOfPassingTimes.splice(index, 1);
+
+      return sj.withFieldChange('passingTimes', copyOfPassingTimes);
+    });
+
+    onChange(
+      journeyPattern
+        .withFieldChange('pointsInSequence', copy)
+        .withFieldChange('serviceJourneys', newServiceJourneys)
+    );
+  };
+
   return (
     <div className="journey-pattern-editor">
       <div className="header">
@@ -70,8 +93,7 @@ const JourneyPatternEditor = ({
             onClick={onSave}
             disabled={journeyPattern.pointsInSequence.length < 2}
           >
-            {' '}
-            {formatMessage(messages.save)}{' '}
+            {formatMessage(messages.save)}
           </SuccessButton>
         </div>
       </div>
@@ -93,6 +115,7 @@ const JourneyPatternEditor = ({
           <TabPanel>
             <StopPointsEditor
               stopPoints={pointsInSequence}
+              deleteStopPoint={deleteStopPoint}
               onChange={pis => onFieldChange('pointsInSequence', pis)}
             />
           </TabPanel>

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import cx from 'classnames';
 
@@ -13,7 +12,15 @@ const customStyles = {
   overlay: { zIndex: 1001 }
 };
 
-const Dialog = ({ isOpen, title, content, buttons, className, onClose }) => (
+type Props = {
+  isOpen: boolean;
+  title?: string;
+  content: React.ReactNode;
+  className?: string;
+  onClose: () => void;
+};
+
+const Dialog = ({ isOpen, title, content, className, onClose }: Props) => (
   <Modal
     isOpen={isOpen}
     style={customStyles}
@@ -25,16 +32,7 @@ const Dialog = ({ isOpen, title, content, buttons, className, onClose }) => (
     </div>
     {title && <div className="title">{title}</div>}
     <div className="content">{content}</div>
-    {buttons && <div className="dialog-buttons">{buttons}</div>}
   </Modal>
 );
-
-Dialog.propTypes = {
-  content: PropTypes.node.isRequired,
-  onClose: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool,
-  title: PropTypes.string,
-  buttons: PropTypes.array
-};
 
 export default Dialog;
