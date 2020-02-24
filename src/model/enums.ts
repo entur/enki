@@ -1,13 +1,13 @@
 export enum ORGANISATION_TYPE {
-  STATUTORYBODY = 'statutoryBody',
+  STATUTORY_BODY = 'statutoryBody',
   AUTHORITY = 'authority',
   OPERATOR = 'operator',
-  RAILOPERATOR = 'railOperator',
-  RAILFREIGHTOPERATOR = 'railFreightOperator',
-  FACILITYOPERATOR = 'facilityOperator',
-  TRAVELAGENT = 'travelAgent',
-  SERVICEDORGANISATION = 'servicedOrganisation',
-  RETAILCONSORTIUM = 'retailConsortium',
+  RAIL_OPERATOR = 'railOperator',
+  RAIL_FREIGHT_OPERATOR = 'railFreightOperator',
+  FACILITY_OPERATOR = 'facilityOperator',
+  TRAVEL_AGENT = 'travelAgent',
+  SERVICED_ORGANISATION = 'servicedOrganisation',
+  RETAIL_CONSORTIUM = 'retailConsortium',
   OTHER = 'other'
 }
 
