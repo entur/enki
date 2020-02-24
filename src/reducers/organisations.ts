@@ -5,19 +5,19 @@ import {
 import { ORGANISATION_TYPE } from 'model/enums';
 
 type ContactInfo = {
-  url?: string;
-  email?: string;
-  phone?: string;
+  url: string;
+  email: string;
+  phone: string;
 };
 
 export type OrganisationState = {
   id: string;
   name: string;
-  legalName: string;
+  legalName: string | null;
   types: ORGANISATION_TYPE[];
-  contact: ContactInfo;
-  customerContact: ContactInfo;
-  logo: string;
+  contact: ContactInfo | null;
+  customerContact: ContactInfo | null;
+  logo: string | null;
   references: { [key in string | number]: string };
   version: number;
 };
