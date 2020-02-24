@@ -21,4 +21,24 @@
       margin-left: 30px;
     }
   }
+
+  .input-group {
+    margin-bottom: 4rem;
+    padding: 0 60px;
+
+    .input-fields {
+      display: flex;
+      flex-wrap: wrap;
+
+      div {
+        flex: 40%;
+        margin-right: 2rem;
+        margin-top: 0;
+      }
+    }
+  }
+
+  .operator-selector {
+    width: 20%;
+  }
 }

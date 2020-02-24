@@ -1,15 +1,15 @@
-export const ORGANISATION_TYPE = Object.freeze({
-  AUTHORITY: 'authority',
-  OPERATOR: 'operator',
-  RAIL_OPERATOR: 'railOperator',
-  RAIL_FREIGHT_OPERATOR: 'railFreightOperator',
-  FACILITY_OPERATOR: 'facilityOperator',
-  STATUTORY_BODY: 'statutoryBody',
-  TRAVEL_AGENT: 'travelAgent',
-  SERVICED_ORGANISATION: 'servicedOrganisation',
-  RETAIL_CONSORTIUM: 'retailConsortium',
-  OTHER: 'other'
-});
+export enum ORGANISATION_TYPE {
+  STATUTORY_BODY = 'statutoryBody',
+  AUTHORITY = 'authority',
+  OPERATOR = 'operator',
+  RAIL_OPERATOR = 'railOperator',
+  RAIL_FREIGHT_OPERATOR = 'railFreightOperator',
+  FACILITY_OPERATOR = 'facilityOperator',
+  TRAVEL_AGENT = 'travelAgent',
+  SERVICED_ORGANISATION = 'servicedOrganisation',
+  RETAIL_CONSORTIUM = 'retailConsortium',
+  OTHER = 'other'
+}
 
 export const VEHICLE_MODE = Object.freeze({
   BUS: 'bus',
