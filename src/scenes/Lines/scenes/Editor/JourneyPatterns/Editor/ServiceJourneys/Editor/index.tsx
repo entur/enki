@@ -21,8 +21,6 @@ type Props = {
   serviceJourney: any;
   stopPoints: any[];
   onChange: (serviceJourney: any) => void;
-  // onClose: () => void;
-  onSave: () => void;
 };
 
 export default function ServiceJourneyEditor(props: Props) {
@@ -37,7 +35,6 @@ export default function ServiceJourneyEditor(props: Props) {
 
   const onFieldChange = (field: string, value: any, multi: boolean = false) => {
     const { serviceJourney, onChange } = props;
-    console.log(serviceJourney);
     onChange(serviceJourney.withFieldChange(field, value, multi));
   };
 
@@ -59,8 +56,7 @@ export default function ServiceJourneyEditor(props: Props) {
       passingTimes,
       dayTypes
     },
-    stopPoints,
-    onSave // removed save button
+    stopPoints
   } = props;
 
   const operators = organisations.filter(org =>
