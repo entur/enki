@@ -83,6 +83,16 @@ export default defineMessages({
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays',
     defaultMessage: 'Ukedager'
   },
+  availabilityMustBeFilled: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays.error',
+    defaultMessage: 'Du må fylle ut tilgjengeligheten'
+  },
+  passingTimesMustBeFilled: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.passingTimesEditor.error',
+    defaultMessage: 'Du må ha gyldige passeringstider.'
+  },
   dates: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dates',

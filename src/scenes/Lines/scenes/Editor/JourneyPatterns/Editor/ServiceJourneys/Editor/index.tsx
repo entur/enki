@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { ReactElement, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
@@ -83,8 +83,23 @@ export default function ServiceJourneyEditor(props: Props) {
   );
 
   const isBlankName = isBlank(name);
+  const validDayTimes = (dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
 
-  const ToolTipIfError = !validPassingTimes ? Tooltip : Fragment;
+  const ToolTipIfError = ({ children }: { children: ReactElement }) =>
+    validPassingTimes && validDayTimes ? (
+      children
+    ) : (
+      <Tooltip
+        content={formatMessage(
+          validPassingTimes
+            ? messages.availabilityMustBeFilled
+            : messages.passingTimesMustBeFilled
+        )}
+        placement="bottom-left"
+      >
+        {children}
+      </Tooltip>
+    );
 
   return (
     <div className="service-journey-editor">
@@ -100,11 +115,11 @@ export default function ServiceJourneyEditor(props: Props) {
         />
 
         <div className="header-buttons">
-          <ToolTipIfError
-            content="Du må ha gyldige passeringstider."
-            placement="bottom-left"
-          >
-            <SuccessButton disabled={!validPassingTimes} onClick={onSave}>
+          <ToolTipIfError>
+            <SuccessButton
+              disabled={!(validPassingTimes && validDayTimes)}
+              onClick={onSave}
+            >
               {formatMessage(messages.save)}
             </SuccessButton>
           </ToolTipIfError>

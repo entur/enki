@@ -15,22 +15,6 @@ type Props = {
   onChange: (dayType: DayType) => void;
 };
 
-export const daysOfWeekToBoolArray = (dows: DAY_OF_WEEK[]) => [
-  dows.includes(DAY_OF_WEEK.MONDAY),
-  dows.includes(DAY_OF_WEEK.TUESDAY),
-  dows.includes(DAY_OF_WEEK.WEDNESDAY),
-  dows.includes(DAY_OF_WEEK.THURSDAY),
-  dows.includes(DAY_OF_WEEK.FRIDAY),
-  dows.includes(DAY_OF_WEEK.SATURDAY),
-  dows.includes(DAY_OF_WEEK.SUNDAY)
-];
-
-export const boolArrayToDaysOfWeek = (arr: boolean[]) =>
-  arr
-    .map((bool, i) => ({ dow: Object.values(DAY_OF_WEEK)[i], bool }))
-    .filter(obj => obj.bool)
-    .map(obj => obj.dow);
-
 const DayTypeEditor = ({ dayType, onChange }: Props) => {
   const { daysOfWeek = [], dayTypeAssignments = [] } = dayType || {};
   const { formatMessage } = useSelector(selectIntl);
@@ -50,10 +34,9 @@ const DayTypeEditor = ({ dayType, onChange }: Props) => {
     <div className="day-type-editor">
       <Label> {formatMessage(messages.weekdays)} </Label>
       <WeekdayPicker
-        days={daysOfWeekToBoolArray(daysOfWeek)}
-        onDaysChange={arr => {
-          onFieldChange('daysOfWeek', boolArrayToDaysOfWeek(arr));
-        }}
+        days={daysOfWeek}
+        onDaysChange={arr => onFieldChange('daysOfWeek', arr)}
+        feedbackMessage={formatMessage(messages.availabilityMustBeFilled)}
       />
       <Label>{formatMessage(messages.dates)}</Label>
       <DayTypeAssignmentsEditor
