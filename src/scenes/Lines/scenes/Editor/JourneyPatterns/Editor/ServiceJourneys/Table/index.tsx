@@ -38,7 +38,7 @@ class ServiceJourneysTable extends Component<Props, State> {
 
     const test = () =>
       serviceJourneys.map((sj, index) => (
-        <ExpandablePanel key={sj.id} title={sj?.name}>
+        <ExpandablePanel key={sj.id ?? index} title={sj.name}>
           <ServiceJourneyEditor
             serviceJourney={sj}
             stopPoints={stopPoints}

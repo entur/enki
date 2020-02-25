@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import ServiceJourney from 'model/ServiceJourney';
 import { selectIntl } from 'i18n';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
@@ -21,11 +22,13 @@ const ServiceJourneysEditor = ({
   const { formatMessage } = useSelector(selectIntl);
 
   const updateServiceJourney = (index: number, serviceJourney: any) => {
-    console.log();
     onChange(replaceElement(serviceJourneys, index, serviceJourney));
   };
   const deleteServiceJourney = (index: number) => {
     onChange(removeElementByIndex(serviceJourneys, index));
+  };
+  const addNewServiceJourney = () => {
+    onChange(serviceJourneys.concat(new ServiceJourney()));
   };
 
   return (
@@ -34,11 +37,10 @@ const ServiceJourneysEditor = ({
         serviceJourneys={serviceJourneys}
         stopPoints={stopPoints}
         onChange={updateServiceJourney}
-        // onSave={handleOnServiceJourneyDialogSaveClick}
         onDeleteClick={deleteServiceJourney}
       />
 
-      <SecondaryButton onClick={() => undefined}>
+      <SecondaryButton style={{ marginTop: 16 }} onClick={addNewServiceJourney}>
         <AddIcon />
         {formatMessage(messages.addServiceJourneys)}
       </SecondaryButton>

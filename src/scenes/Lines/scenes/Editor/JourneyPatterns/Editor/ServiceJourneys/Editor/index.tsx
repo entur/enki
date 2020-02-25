@@ -68,7 +68,7 @@ export default function ServiceJourneyEditor(props: Props) {
   return (
     <div className="service-journey-editor">
       <div className="input-group">
-        <h3> {formatMessage(messages.general)} </h3>
+        <h4> {formatMessage(messages.general)} </h4>
         <div className="input-fields">
           <InputGroup
             className="form-section"
@@ -136,7 +136,7 @@ export default function ServiceJourneyEditor(props: Props) {
       </div>
 
       <div className="input-group">
-        <h3> {formatMessage(messages.availability)} </h3>
+        <h4> {formatMessage(messages.availability)} </h4>
 
         <DayTypeEditor
           dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
@@ -144,16 +144,13 @@ export default function ServiceJourneyEditor(props: Props) {
         />
       </div>
 
-      <div className="input-group">
-        <h3> {formatMessage(messages.passingTimes)} </h3>
-
-        <PassingTimesEditor
-          passingTimes={passingTimes}
-          stopPoints={stopPoints}
-          onChange={pts => onFieldChange('passingTimes', pts)}
-          setValidPassingTimes={setValidPassingTimes}
-        />
-      </div>
+      <h4> {formatMessage(messages.passingTimes)} </h4>
+      <PassingTimesEditor
+        passingTimes={passingTimes}
+        stopPoints={stopPoints}
+        onChange={pts => onFieldChange('passingTimes', pts)}
+        setValidPassingTimes={setValidPassingTimes}
+      />
 
       <ExpandableText title={formatMessage(messages.booking)}>
         <BookingArrangementEditor

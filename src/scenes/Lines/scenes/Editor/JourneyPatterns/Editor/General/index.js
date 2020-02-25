@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Dropdown } from '@entur/dropdown';
-import { InputGroup, TextArea, TextField } from '@entur/form';
+import { InputGroup, TextField } from '@entur/form';
 
 import { DIRECTION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
