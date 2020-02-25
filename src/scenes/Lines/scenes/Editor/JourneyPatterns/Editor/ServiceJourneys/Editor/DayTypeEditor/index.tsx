@@ -8,7 +8,7 @@ import WeekdayPicker from 'components/WeekdayPicker';
 import { DAY_OF_WEEK } from 'model/enums';
 import './styles.scss';
 import messages from '../../../messages';
-import DayTypeAssignment from '../../../../../../../../../model/DayTypeAssignment';
+import DayTypeAssignment from 'model/DayTypeAssignment';
 
 type Props = {
   dayType?: DayType;
