@@ -86,7 +86,7 @@ export default defineMessages({
   availabilityMustBeFilled: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays.error',
-    defaultMessage: 'Du må fylle ut tilgjengeligheten'
+    defaultMessage: 'Du må fylle ut tilgjengeligheten.'
   },
   passingTimesMustBeFilled: {
     id:
