@@ -155,7 +155,7 @@
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.fromAndToDate": "Use from- and to-date",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.fromDate": "From date",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.toDate": "To date",
-  "lines.editor.journeyPatterns.editor.serviceJourneys.passingTimesEditor.error": "You need valid passing times",
+  "lines.editor.journeyPatterns.editor.serviceJourneys.passingTimesEditor.error": "You need valid passing times.",
   "lines.editor.journeyPatterns.editor.save": "Save",
   "lines.editor.journeyPatterns.editor.addStopPoint": "Create new stop point",
   "lines.editor.journeyPatterns.editor.addServiceJourneys": "Create new service journey",
