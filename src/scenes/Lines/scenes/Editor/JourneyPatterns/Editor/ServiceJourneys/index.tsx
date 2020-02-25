@@ -5,9 +5,7 @@ import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
 import { ServiceJourney } from 'model';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
-import Dialog from 'components/Dialog';
 import ServiceJourneysTable from './Table';
-import ServiceJourneyEditor from './Editor';
 import messages from '../messages';
 
 const TEMP_INDEX = -1;
@@ -44,15 +42,15 @@ const ServiceJourneysEditor = ({
     setServiceJourneyInDialog(new ServiceJourney());
   };
 
-  const openDialogForServiceJourney = (index: number) => {
-    setServiceJourneyInDialog(serviceJourneys[index]);
-    setServiceJourneyIndexInDialog(index);
-  };
+  // const setServiceJourney = (serviceJourney: any, index: number) => {
+  //   setServiceJourneyInDialog(serviceJourney);
+  //   setServiceJourneyIndexInDialog(index);
+  // };
 
-  const closeServiceJourneyDialog = () => {
-    setServiceJourneyInDialog(null);
-    setServiceJourneyIndexInDialog(TEMP_INDEX);
-  };
+  // const closeServiceJourneyDialog = () => {
+  //   setServiceJourneyInDialog(null);
+  //   setServiceJourneyIndexInDialog(TEMP_INDEX);
+  // };
 
   const handleOnServiceJourneyDialogSaveClick = () => {
     if (serviceJourneyIndexInDialog === TEMP_INDEX) {
@@ -66,18 +64,21 @@ const ServiceJourneysEditor = ({
 
   return (
     <div className="service-journeys-editor">
+      <ServiceJourneysTable
+        serviceJourneys={serviceJourneys}
+        stopPoints={stopPoints}
+        onChange={() => undefined}
+        // onClose={closeServiceJourneyDialog}
+        onSave={handleOnServiceJourneyDialogSaveClick}
+        onDeleteClick={deleteServiceJourney}
+      />
+
       <SecondaryButton onClick={() => openDialogForNewServiceJourney()}>
         <AddIcon />
         {formatMessage(messages.addServiceJourneys)}
       </SecondaryButton>
 
-      <ServiceJourneysTable
-        serviceJourneys={serviceJourneys}
-        onRowClick={openDialogForServiceJourney}
-        onDeleteClick={deleteServiceJourney}
-      />
-
-      {serviceJourneyInDialog !== null && (
+      {/* {serviceJourneyInDialog !== null && (
         <Dialog
           isOpen={true}
           content={
@@ -94,7 +95,7 @@ const ServiceJourneysEditor = ({
           }
           onClose={closeServiceJourneyDialog}
         />
-      )}
+      )} */}
     </div>
   );
 };

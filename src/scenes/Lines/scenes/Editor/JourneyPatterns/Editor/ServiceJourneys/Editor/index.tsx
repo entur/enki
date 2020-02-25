@@ -1,13 +1,9 @@
-import React, { useState, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { SuccessButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
-import { Tooltip } from '@entur/tooltip';
 import { InputGroup, TextField } from '@entur/form';
-import PageHeader from 'components/PageHeader';
-import { ServiceJourney, StopPoint } from 'model';
+import { ExpandableText } from '@entur/expand';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
@@ -21,22 +17,12 @@ import './styles.scss';
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
-ServiceJourneyEditor.propTypes = {
-  serviceJourney: PropTypes.instanceOf(ServiceJourney).isRequired,
-  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  isEditMode: PropTypes.bool
-};
-
 type Props = {
   serviceJourney: any;
   stopPoints: any[];
   onChange: (serviceJourney: any) => void;
-  onClose: () => void;
+  // onClose: () => void;
   onSave: () => void;
-  isEditMode?: boolean;
 };
 
 export default function ServiceJourneyEditor(props: Props) {
@@ -51,6 +37,7 @@ export default function ServiceJourneyEditor(props: Props) {
 
   const onFieldChange = (field: string, value: any, multi: boolean = false) => {
     const { serviceJourney, onChange } = props;
+    console.log(serviceJourney);
     onChange(serviceJourney.withFieldChange(field, value, multi));
   };
 
@@ -73,9 +60,7 @@ export default function ServiceJourneyEditor(props: Props) {
       dayTypes
     },
     stopPoints,
-    onSave,
-    onClose,
-    isEditMode
+    onSave // removed save button
   } = props;
 
   const operators = organisations.filter(org =>
@@ -84,35 +69,10 @@ export default function ServiceJourneyEditor(props: Props) {
 
   const isBlankName = isBlank(name);
 
-  const ToolTipIfError = !validPassingTimes ? Tooltip : Fragment;
-
   return (
     <div className="service-journey-editor">
-      <div className="header">
-        <PageHeader
-          withBackButton
-          onBackButtonClick={onClose}
-          title={`${
-            isEditMode
-              ? formatMessage(messages.edit)
-              : formatMessage(messages.create)
-          } Service Journey`}
-        />
-
-        <div className="header-buttons">
-          <ToolTipIfError
-            content="Du må ha gyldige passeringstider."
-            placement="bottom-left"
-          >
-            <SuccessButton disabled={!validPassingTimes} onClick={onSave}>
-              {formatMessage(messages.save)}
-            </SuccessButton>
-          </ToolTipIfError>
-        </div>
-      </div>
-
       <div className="input-group">
-        <h2> {formatMessage(messages.general)} </h2>
+        <h3> {formatMessage(messages.general)} </h3>
         <div className="input-fields">
           <InputGroup
             className="form-section"
@@ -180,7 +140,7 @@ export default function ServiceJourneyEditor(props: Props) {
       </div>
 
       <div className="input-group">
-        <h2> {formatMessage(messages.availability)} </h2>
+        <h3> {formatMessage(messages.availability)} </h3>
 
         <DayTypeEditor
           dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
@@ -189,7 +149,8 @@ export default function ServiceJourneyEditor(props: Props) {
       </div>
 
       <div className="input-group">
-        <h2> {formatMessage(messages.passingTimes)} </h2>
+        <h3> {formatMessage(messages.passingTimes)} </h3>
+
         <PassingTimesEditor
           passingTimes={passingTimes}
           stopPoints={stopPoints}
@@ -198,13 +159,12 @@ export default function ServiceJourneyEditor(props: Props) {
         />
       </div>
 
-      <div className="input-group">
-        <h2> {formatMessage(messages.booking)} </h2>
+      <ExpandableText title={formatMessage(messages.booking)}>
         <BookingArrangementEditor
           bookingArrangement={bookingArrangement || undefined}
           onChange={b => onFieldChange('bookingArrangement', b)}
         />
-      </div>
+      </ExpandableText>
     </div>
   );
 }
