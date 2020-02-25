@@ -147,7 +147,7 @@
   "lines.editor.journeyPatterns.editor.stopPoints": "Stoppepunkter",
   "lines.editor.journeyPatterns.editor.serviceJourneys": "Service Journeys",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays": "Ukedager",
-  "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays.error": "Du må fylle ut tilgjengeligheten",
+  "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays.error": "Du må fylle ut tilgjengeligheten.",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dates": "Datoer",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.addDayTypeAssignment": "Legg til dato",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.noDayTypeAssignments": "Ingen datoer er definert.",
