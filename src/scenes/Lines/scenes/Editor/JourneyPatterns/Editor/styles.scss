@@ -9,3 +9,36 @@
     }
   }
 }
+
+.journey-pattern-inputs {
+  display: flex;
+  flex-wrap: wrap;
+
+  .eds-input-group {
+    flex: 40% 1;
+    margin-right: 2rem;
+  }
+
+  .eds-input-group + .eds-input-group {
+    margin-top: 0;
+  }
+}
+
+.input-group {
+  margin-bottom: 4rem;
+
+  .input-fields {
+    display: flex;
+    flex-wrap: wrap;
+
+    div {
+      flex: 40%;
+      margin-right: 2rem;
+      margin-top: 0;
+    }
+  }
+}
+
+.operator-selector {
+  width: 20%;
+}

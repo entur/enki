@@ -19,7 +19,7 @@ const General = ({
   const { formatMessage } = useSelector(selectIntl);
 
   return (
-    <div className="tab-style">
+    <div className="journey-pattern-inputs">
       <InputGroup
         className="form-section"
         label={formatMessage(messages.nameLabel)}
@@ -38,7 +38,7 @@ const General = ({
         label={formatMessage(messages.descriptionLabel)}
         className="form-section"
       >
-        <TextArea
+        <TextField
           value={journeyPattern.description || ''}
           onChange={e => onFieldChange('description', e.target.value)}
         />
