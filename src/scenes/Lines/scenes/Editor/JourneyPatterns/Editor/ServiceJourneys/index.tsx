@@ -12,12 +12,14 @@ type Props = {
   serviceJourneys: any[];
   onChange: (sj: any) => void;
   stopPoints: any[];
+  setIsValidServiceJourney: (isValid: boolean) => void;
 };
 
 const ServiceJourneysEditor = ({
   serviceJourneys,
   onChange,
-  stopPoints
+  stopPoints,
+  setIsValidServiceJourney
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
@@ -38,6 +40,7 @@ const ServiceJourneysEditor = ({
         stopPoints={stopPoints}
         onChange={updateServiceJourney}
         onDeleteClick={deleteServiceJourney}
+        setIsValidServiceJourney={setIsValidServiceJourney}
       />
 
       <SecondaryButton style={{ marginTop: 16 }} onClick={addNewServiceJourney}>

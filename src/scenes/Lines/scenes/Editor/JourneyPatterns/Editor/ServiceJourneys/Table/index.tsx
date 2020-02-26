@@ -11,6 +11,7 @@ type Props = {
   serviceJourneys: any[];
   stopPoints: any[];
   onChange: (serviceJourney: any, index: number) => void;
+  setIsValidServiceJourney: (isValid: boolean) => void;
 };
 
 type State = {
@@ -33,7 +34,12 @@ class ServiceJourneysTable extends Component<Props, State> {
   };
 
   render() {
-    const { serviceJourneys, stopPoints, onChange } = this.props;
+    const {
+      serviceJourneys,
+      stopPoints,
+      onChange,
+      setIsValidServiceJourney
+    } = this.props;
     const { removeDialogOpenFor } = this.state;
 
     const test = () =>
@@ -43,6 +49,7 @@ class ServiceJourneysTable extends Component<Props, State> {
             serviceJourney={sj}
             stopPoints={stopPoints}
             onChange={serviceJourney => onChange(index, serviceJourney)}
+            setIsValidServiceJourney={setIsValidServiceJourney}
           />
         </ExpandablePanel>
       ));

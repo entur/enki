@@ -36,6 +36,9 @@ const JourneyPatternEditor = ({
   const [directionSelection, setDirectionSelection] = useState(
     DEFAULT_SELECT_VALUE
   );
+  const [isValidServiceJourney, setIsValidServiceJourney] = useState<boolean>(
+    true
+  );
   const { pointsInSequence, directionType, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
 
@@ -91,7 +94,10 @@ const JourneyPatternEditor = ({
         <div className="header-buttons">
           <SuccessButton
             onClick={onSave}
-            disabled={journeyPattern.pointsInSequence.length < 2}
+            disabled={
+              !isValidServiceJourney ||
+              journeyPattern.pointsInSequence.length < 2
+            }
           >
             {formatMessage(messages.save)}
           </SuccessButton>
@@ -124,6 +130,7 @@ const JourneyPatternEditor = ({
               serviceJourneys={serviceJourneys}
               stopPoints={pointsInSequence}
               onChange={sjs => onFieldChange('serviceJourneys', sjs)}
+              setIsValidServiceJourney={setIsValidServiceJourney}
             />
           </TabPanel>
         </TabPanels>

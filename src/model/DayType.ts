@@ -1,8 +1,17 @@
 import Versioned from './base/Versioned';
-import DayTypeAssignment from './DayTypeAssignment';
+import DayTypeAssignment, { DayTypeAssignmentProps } from './DayTypeAssignment';
+import { DAY_OF_WEEK } from './enums';
+
+type Props = {
+  daysOfWeek?: DAY_OF_WEEK[];
+  dayTypeAssignments?: DayTypeAssignmentProps[];
+};
 
 class DayType extends Versioned {
-  constructor(data = {}) {
+  daysOfWeek: DAY_OF_WEEK[];
+  dayTypeAssignments: DayTypeAssignment[];
+
+  constructor(data: Props = {}) {
     super(data);
 
     this.daysOfWeek = data.daysOfWeek || [];

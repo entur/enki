@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
@@ -21,31 +22,10 @@ type Props = {
   serviceJourney: any;
   stopPoints: any[];
   onChange: (serviceJourney: any) => void;
+  setIsValidServiceJourney: (isValid: boolean) => void;
 };
 
 export default function ServiceJourneyEditor(props: Props) {
-  const [operatorSelection, setOperatorSelection] = useState(
-    props.serviceJourney.operatorRef
-  );
-  const [validPassingTimes, setValidPassingTimes] = useState<boolean>(false);
-  const organisations = useSelector(
-    (state: { organisations: OrganisationState[] }) => state.organisations
-  );
-  const { formatMessage } = useSelector(selectIntl);
-
-  const onFieldChange = (field: string, value: any, multi: boolean = false) => {
-    const { serviceJourney, onChange } = props;
-    onChange(serviceJourney.withFieldChange(field, value, multi));
-  };
-
-  const handleOperatorSelectionChange = (operatorSelection: any) => {
-    onFieldChange(
-      'operatorRef',
-      operatorSelection !== DEFAULT_SELECT_VALUE ? operatorSelection : undefined
-    );
-    setOperatorSelection(operatorSelection);
-  };
-
   const {
     serviceJourney: {
       name,
@@ -56,17 +36,88 @@ export default function ServiceJourneyEditor(props: Props) {
       passingTimes,
       dayTypes
     },
-    stopPoints
+    setIsValidServiceJourney,
+    onChange,
+    stopPoints,
+    serviceJourney
   } = props;
+
+  const [operatorSelection, setOperatorSelection] = useState(
+    serviceJourney.operatorRef
+  );
+  const [validPassingTimes, setValidPassingTimes] = useState<boolean>(false);
+  const organisations = useSelector(
+    (state: { organisations: OrganisationState[] }) => state.organisations
+  );
+  const { formatMessage } = useSelector(selectIntl);
+
+  const handleOperatorSelectionChange = (operatorSelection: any) => {
+    onFieldChange(
+      'operatorRef',
+      operatorSelection !== DEFAULT_SELECT_VALUE ? operatorSelection : undefined
+    );
+    setOperatorSelection(operatorSelection);
+  };
 
   const operators = organisations.filter(org =>
     org.types.includes(ORGANISATION_TYPE.OPERATOR)
   );
 
   const isBlankName = isBlank(name);
+  const validDayTimes = (dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
+
+  const onFieldChange = (field: string, value: any, multi: boolean = false) => {
+    onChange(serviceJourney.withFieldChange(field, value, multi));
+    setIsValidServiceJourney(validPassingTimes && validDayTimes);
+  };
 
   return (
     <div className="service-journey-editor">
+      {/* =======
+  const validDayTimes = (dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
+
+  const ToolTipIfError = ({ children }: { children: ReactElement }) =>
+    validPassingTimes && validDayTimes ? (
+      children
+    ) : (
+      <Tooltip
+        content={formatMessage(
+          validPassingTimes
+            ? messages.availabilityMustBeFilled
+            : messages.passingTimesMustBeFilled
+        )}
+        placement="bottom-left"
+      >
+        {children}
+      </Tooltip>
+    );
+
+  return (
+    <div className="service-journey-editor">
+      <div className="header">
+        <PageHeader
+          withBackButton
+          onBackButtonClick={onClose}
+          title={`${
+            isEditMode
+              ? formatMessage(messages.edit)
+              : formatMessage(messages.create)
+          } Service Journey`}
+        />
+
+        <div className="header-buttons">
+          <ToolTipIfError>
+            <SuccessButton
+              disabled={!(validPassingTimes && validDayTimes)}
+              onClick={onSave}
+            >
+              {formatMessage(messages.save)}
+            </SuccessButton>
+          </ToolTipIfError>
+        </div>
+      </div>
+
+>>>>>>> master */}
       <div className="input-group">
         <h4> {formatMessage(messages.general)} </h4>
         <div className="input-fields">
