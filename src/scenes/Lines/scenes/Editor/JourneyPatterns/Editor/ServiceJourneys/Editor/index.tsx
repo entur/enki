@@ -1,5 +1,4 @@
-import React, { ReactElement, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
@@ -119,7 +118,6 @@ export default function ServiceJourneyEditor(props: Props) {
 
 >>>>>>> master */}
       <div className="input-group">
-        <h4> {formatMessage(messages.general)} </h4>
         <div className="input-fields">
           <InputGroup
             className="form-section"

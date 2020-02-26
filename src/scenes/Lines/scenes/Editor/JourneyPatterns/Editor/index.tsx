@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { SuccessButton } from '@entur/button';
+import { ValidationInfoIcon } from '@entur/icons';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import PageHeader from 'components/PageHeader';
 import StopPointsEditor from './StopPoints';
@@ -103,38 +104,43 @@ const JourneyPatternEditor = ({
           </SuccessButton>
         </div>
       </div>
-      <Tabs>
-        <TabList>
-          <Tab>{formatMessage(messages.general)}</Tab>
+      {/* <Tab>{formatMessage(messages.general)}</Tab>
           <Tab>{formatMessage(messages.stopPoints)}</Tab>
-          <Tab>{formatMessage(messages.serviceJourneys)}</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <General
-              journeyPattern={journeyPattern}
-              directionSelection={directionSelection}
-              onFieldChange={onFieldChange}
-              handleDirectionSelectionChange={handleDirectionSelectionChange}
-            />
-          </TabPanel>
-          <TabPanel>
-            <StopPointsEditor
-              stopPoints={pointsInSequence}
-              deleteStopPoint={deleteStopPoint}
-              onChange={pis => onFieldChange('pointsInSequence', pis)}
-            />
-          </TabPanel>
-          <TabPanel>
-            <ServiceJourneysEditor
-              serviceJourneys={serviceJourneys}
-              stopPoints={pointsInSequence}
-              onChange={sjs => onFieldChange('serviceJourneys', sjs)}
-              setIsValidServiceJourney={setIsValidServiceJourney}
-            />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+          <Tab>{formatMessage(messages.serviceJourneys)}</Tab> */}
+      <section>
+        <General
+          journeyPattern={journeyPattern}
+          directionSelection={directionSelection}
+          onFieldChange={onFieldChange}
+          handleDirectionSelectionChange={handleDirectionSelectionChange}
+        />
+      </section>
+
+      <section>
+        <h3> {formatMessage(messages.stopPoints)} </h3>
+        <p>
+          <ValidationInfoIcon inline /> {formatMessage(messages.stopPointsInfo)}{' '}
+        </p>
+        <StopPointsEditor
+          stopPoints={pointsInSequence}
+          deleteStopPoint={deleteStopPoint}
+          onChange={pis => onFieldChange('pointsInSequence', pis)}
+        />
+      </section>
+
+      <section>
+        <h3> {formatMessage(messages.serviceJourneys)} </h3>
+        <p>
+          <ValidationInfoIcon inline />{' '}
+          {formatMessage(messages.serviceJourneysInfo)}{' '}
+        </p>
+        <ServiceJourneysEditor
+          serviceJourneys={serviceJourneys}
+          stopPoints={pointsInSequence}
+          onChange={sjs => onFieldChange('serviceJourneys', sjs)}
+          setIsValidServiceJourney={setIsValidServiceJourney}
+        />
+      </section>
     </div>
   );
 };
