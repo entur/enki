@@ -72,51 +72,6 @@ export default function ServiceJourneyEditor(props: Props) {
 
   return (
     <div className="service-journey-editor">
-      {/* =======
-  const validDayTimes = (dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
-
-  const ToolTipIfError = ({ children }: { children: ReactElement }) =>
-    validPassingTimes && validDayTimes ? (
-      children
-    ) : (
-      <Tooltip
-        content={formatMessage(
-          validPassingTimes
-            ? messages.availabilityMustBeFilled
-            : messages.passingTimesMustBeFilled
-        )}
-        placement="bottom-left"
-      >
-        {children}
-      </Tooltip>
-    );
-
-  return (
-    <div className="service-journey-editor">
-      <div className="header">
-        <PageHeader
-          withBackButton
-          onBackButtonClick={onClose}
-          title={`${
-            isEditMode
-              ? formatMessage(messages.edit)
-              : formatMessage(messages.create)
-          } Service Journey`}
-        />
-
-        <div className="header-buttons">
-          <ToolTipIfError>
-            <SuccessButton
-              disabled={!(validPassingTimes && validDayTimes)}
-              onClick={onSave}
-            >
-              {formatMessage(messages.save)}
-            </SuccessButton>
-          </ToolTipIfError>
-        </div>
-      </div>
-
->>>>>>> master */}
       <div className="input-group">
         <div className="input-fields">
           <InputGroup
