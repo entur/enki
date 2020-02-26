@@ -199,7 +199,7 @@ export default function ServiceJourneyEditor(props: Props) {
 
         <DayTypeEditor
           dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
-          onChange={dt => onFieldChange('dayTypes', [dt])}
+          onChange={dt => onFieldChange('dayTypes', [dt].filter(Boolean))}
         />
       </div>
 
