@@ -1,13 +1,12 @@
 import React, { ReactElement, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
+import { DayType } from 'model';
 import { SuccessButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
 import { Tooltip } from '@entur/tooltip';
 import { InputGroup, TextField } from '@entur/form';
 import PageHeader from 'components/PageHeader';
-import { ServiceJourney, StopPoint } from 'model';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
@@ -21,14 +20,9 @@ import './styles.scss';
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
-ServiceJourneyEditor.propTypes = {
-  serviceJourney: PropTypes.instanceOf(ServiceJourney).isRequired,
-  stopPoints: PropTypes.arrayOf(PropTypes.instanceOf(StopPoint)).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  isEditMode: PropTypes.bool
-};
+function isNullOrUndefined(dayType: DayType) {
+  return dayType !== null || dayType !== undefined;
+}
 
 type Props = {
   serviceJourney: any;
@@ -199,7 +193,9 @@ export default function ServiceJourneyEditor(props: Props) {
 
         <DayTypeEditor
           dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
-          onChange={dt => onFieldChange('dayTypes', [dt].filter(Boolean))}
+          onChange={dt =>
+            onFieldChange('dayTypes', [dt].filter(isNullOrUndefined))
+          }
         />
       </div>
 
