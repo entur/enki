@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import { DeleteIcon } from '@entur/icons';
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableRow,
-  HeaderCell,
-  DataCell
-} from '@entur/table';
+import { ExpandablePanel } from '@entur/expand';
+import ServiceJourneyEditor from '../Editor';
 import ConfirmDialog from 'components/ConfirmDialog';
 
 import './styles.scss';
@@ -16,7 +9,9 @@ import './styles.scss';
 type Props = {
   onDeleteClick: (number: number) => void;
   serviceJourneys: any[];
-  onRowClick: (row: number) => void;
+  stopPoints: any[];
+  onChange: (serviceJourney: any, index: number) => void;
+  setIsValidServiceJourney: (isValid: boolean) => void;
 };
 
 type State = {
@@ -39,44 +34,29 @@ class ServiceJourneysTable extends Component<Props, State> {
   };
 
   render() {
-    const { serviceJourneys, onRowClick } = this.props;
+    const {
+      serviceJourneys,
+      stopPoints,
+      onChange,
+      setIsValidServiceJourney
+    } = this.props;
     const { removeDialogOpenFor } = this.state;
 
-    const tableRows =
-      serviceJourneys.length > 0 ? (
-        serviceJourneys.map((jp, i) => (
-          <TableRow key={jp.id} onClick={() => onRowClick(i)}>
-            <DataCell title={jp.description}>
-              {jp.name ? jp.name : '- Nytt service journey -'}
-            </DataCell>
-            <DataCell>
-              <div
-                onClick={e => {
-                  this.showDeleteDialogFor(i);
-                  e.stopPropagation();
-                }}
-              >
-                <DeleteIcon />
-              </div>
-            </DataCell>
-          </TableRow>
-        ))
-      ) : (
-        <TableRow className="row-no-lines disabled">
-          <DataCell colSpan={3}>Ingen service journeys.</DataCell>
-        </TableRow>
-      );
+    const test = () =>
+      serviceJourneys.map((sj, index) => (
+        <ExpandablePanel key={sj.id ?? index} title={sj.name}>
+          <ServiceJourneyEditor
+            serviceJourney={sj}
+            stopPoints={stopPoints}
+            onChange={serviceJourney => onChange(index, serviceJourney)}
+            setIsValidServiceJourney={setIsValidServiceJourney}
+          />
+        </ExpandablePanel>
+      ));
 
     return (
       <div>
-        <Table className="service-journeys-table">
-          <TableHead>
-            <TableRow>
-              <HeaderCell>Navn</HeaderCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{tableRows}</TableBody>
-        </Table>
+        {test()}
 
         <ConfirmDialog
           isOpen={removeDialogOpenFor !== null}

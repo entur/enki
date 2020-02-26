@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Dropdown } from '@entur/dropdown';
-import { InputGroup, TextArea, TextField } from '@entur/form';
+import { InputGroup, TextField } from '@entur/form';
 
 import { DIRECTION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
@@ -19,7 +19,7 @@ const General = ({
   const { formatMessage } = useSelector(selectIntl);
 
   return (
-    <div className="tab-style">
+    <div className="journey-pattern-inputs">
       <InputGroup
         className="form-section"
         label={formatMessage(messages.nameLabel)}
@@ -38,7 +38,7 @@ const General = ({
         label={formatMessage(messages.descriptionLabel)}
         className="form-section"
       >
-        <TextArea
+        <TextField
           value={journeyPattern.description || ''}
           onChange={e => onFieldChange('description', e.target.value)}
         />
