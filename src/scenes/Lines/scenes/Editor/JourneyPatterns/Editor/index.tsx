@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { SuccessButton } from '@entur/button';
 import { ValidationInfoIcon } from '@entur/icons';
-import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import PageHeader from 'components/PageHeader';
 import StopPointsEditor from './StopPoints';
 import ServiceJourneysEditor from './ServiceJourneys';
@@ -104,9 +103,6 @@ const JourneyPatternEditor = ({
           </SuccessButton>
         </div>
       </div>
-      {/* <Tab>{formatMessage(messages.general)}</Tab>
-          <Tab>{formatMessage(messages.stopPoints)}</Tab>
-          <Tab>{formatMessage(messages.serviceJourneys)}</Tab> */}
       <section>
         <General
           journeyPattern={journeyPattern}
