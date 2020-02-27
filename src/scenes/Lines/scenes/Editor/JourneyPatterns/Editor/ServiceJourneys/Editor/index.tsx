@@ -3,12 +3,15 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import { DeleteIcon } from '@entur/icons';
 import { ExpandableText } from '@entur/expand';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
 import { ORGANISATION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
+import ConfirmDialog from 'components/ConfirmDialog';
 import messages from '../../messages';
 import { OrganisationState } from 'reducers/organisations';
 
@@ -22,6 +25,7 @@ type Props = {
   stopPoints: any[];
   onChange: (serviceJourney: any) => void;
   setIsValidServiceJourney: (isValid: boolean) => void;
+  deleteServiceJourney: (index: number) => void;
 };
 
 export default function ServiceJourneyEditor(props: Props) {
@@ -38,13 +42,15 @@ export default function ServiceJourneyEditor(props: Props) {
     setIsValidServiceJourney,
     onChange,
     stopPoints,
-    serviceJourney
+    serviceJourney,
+    deleteServiceJourney
   } = props;
 
   const [operatorSelection, setOperatorSelection] = useState(
     serviceJourney.operatorRef
   );
   const [validPassingTimes, setValidPassingTimes] = useState<boolean>(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const organisations = useSelector(
     (state: { organisations: OrganisationState[] }) => state.organisations
   );
@@ -72,6 +78,12 @@ export default function ServiceJourneyEditor(props: Props) {
 
   return (
     <div className="service-journey-editor">
+      <SecondaryButton
+        className="delete-button"
+        onClick={() => setShowDeleteDialog(true)}
+      >
+        <DeleteIcon inline /> Slett
+      </SecondaryButton>
       <div className="input-group">
         <div className="input-fields">
           <InputGroup
@@ -134,7 +146,7 @@ export default function ServiceJourneyEditor(props: Props) {
               value: id
             }))
           ]}
-          value={operatorSelection}
+          defaultValue={operatorSelection}
           onChange={({ value }: any) => handleOperatorSelectionChange(value)}
         />
       </div>
@@ -162,6 +174,23 @@ export default function ServiceJourneyEditor(props: Props) {
           onChange={b => onFieldChange('bookingArrangement', b)}
         />
       </ExpandableText>
+
+      {showDeleteDialog && (
+        <ConfirmDialog
+          isOpen={showDeleteDialog}
+          title="Slette service journey"
+          message="Er du sikker på at du ønsker å slette denne service journeyen?"
+          buttons={[
+            <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
+              Nei
+            </SecondaryButton>,
+            <SuccessButton key={1} onClick={deleteServiceJourney}>
+              Ja
+            </SuccessButton>
+          ]}
+          onDismiss={() => setShowDeleteDialog(false)}
+        />
+      )}
     </div>
   );
 }

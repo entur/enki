@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import { AddIcon, ValidationInfoIcon } from '@entur/icons';
+import { ExpandablePanel } from '@entur/expand';
 import { SecondaryButton } from '@entur/button';
 import { JourneyPattern } from 'model';
-import { removeElementByIndex, replaceElement } from 'helpers/arrays';
-import Dialog from 'components/Dialog';
-import JourneyPatternsTable from './Table';
+import { replaceElement } from 'helpers/arrays';
 import JourneyPatternEditor from './Editor';
 import { selectIntl } from 'i18n';
 import { setSavedChanges } from 'actions/editor';
 import messages from './messages';
 import './styles.scss';
-
-const TEMP_INDEX = -1;
 
 type Props = {
   journeyPatterns: any;
@@ -22,84 +18,48 @@ type Props = {
 
 const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
-  const [journeyPattern, setJourneyPattern] = useState<any | null>(null);
-  const [journeyPatternIndex, setJourneyPatternIndex] = useState(TEMP_INDEX);
   const { isSaved } = useSelector((state: any) => state.editor);
   const dispatch = useDispatch();
 
-  const deleteJourneyPattern = (index: number) => {
-    onChange(removeElementByIndex(journeyPatterns, index));
-  };
-
-  const openDialogForNewJourneyPattern = () => {
-    setJourneyPattern(new JourneyPattern());
-  };
-
-  const openDialogForJourneyPattern = (index: number) => {
-    setJourneyPattern(journeyPatterns[index]);
-    setJourneyPatternIndex(index);
-  };
-
-  const closeJourneyPatternDialog = () => {
-    setJourneyPattern(null);
-    setJourneyPatternIndex(TEMP_INDEX);
-  };
-
-  const handleOnJourneyPatternDialogSaveClick = () => {
-    if (journeyPatternIndex === TEMP_INDEX) {
-      onChange(journeyPatterns.concat(journeyPattern));
-    } else {
-      onChange(
-        replaceElement(journeyPatterns, journeyPatternIndex, journeyPattern)
-      );
-      dispatch(setSavedChanges(false));
-    }
-
-    setJourneyPattern(null);
-    setJourneyPatternIndex(TEMP_INDEX);
+  const handleSave = (journeyPattern: JourneyPattern, index?: number) => {
+    if (index === undefined)
+      return onChange(journeyPatterns.concat(journeyPattern));
+    onChange(replaceElement(journeyPatterns, index, journeyPattern));
+    dispatch(setSavedChanges(true));
   };
 
   return (
     <div>
-      <SecondaryButton onClick={openDialogForNewJourneyPattern}>
-        <AddIcon />
-        {formatMessage(messages.addJourneyPatternIconButtonLabel)}
-      </SecondaryButton>
+      {journeyPatterns?.length === 0 && (
+        <SecondaryButton onClick={() => undefined}>
+          <AddIcon />
+          {formatMessage(messages.addJourneyPatternIconButtonLabel)}
+        </SecondaryButton>
+      )}
 
-      <JourneyPatternsTable
+      {/* <JourneyPatternsTable
         journeyPatterns={journeyPatterns}
         onRowClick={openDialogForJourneyPattern}
         onDeleteClick={deleteJourneyPattern}
-      />
+      /> */}
       {!isSaved && (
         <div className="unsaved-changes">
           <ValidationInfoIcon inline /> {formatMessage(messages.unsavedChanges)}
         </div>
       )}
 
-      {journeyPattern !== null && (
-        <Dialog
-          isOpen={true}
-          content={
-            <JourneyPatternEditor
-              journeyPattern={journeyPattern}
-              onChange={setJourneyPattern}
-              onSave={handleOnJourneyPatternDialogSaveClick}
-              isEditMode={journeyPatternIndex !== TEMP_INDEX}
-              onClose={closeJourneyPatternDialog}
-            />
-          }
-          onClose={closeJourneyPatternDialog}
-        />
-      )}
+      {journeyPatterns.map((jp: any, index: number) => (
+        <ExpandablePanel key={jp.name ?? index} title={jp.name}>
+          <JourneyPatternEditor
+            journeyPattern={jp}
+            onSave={handleSave}
+            index={index}
+            // isEditMode={journeyPatternIndex !== TEMP_INDEX}
+          />
+        </ExpandablePanel>
+      ))}
     </div>
   );
-};
-
-JourneyPatternsEditor.propTypes = {
-  journeyPatterns: PropTypes.arrayOf(PropTypes.instanceOf(JourneyPattern))
-    .isRequired,
-  onChange: PropTypes.func.isRequired
 };
 
 export default JourneyPatternsEditor;

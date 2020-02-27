@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { SuccessButton } from '@entur/button';
 import { ValidationInfoIcon } from '@entur/icons';
-import PageHeader from 'components/PageHeader';
 import StopPointsEditor from './StopPoints';
 import ServiceJourneysEditor from './ServiceJourneys';
 import messages from './messages';
@@ -20,19 +18,11 @@ type Props = {
     serviceJourneys: any[];
     withFieldChange: (field: string, value: any) => any;
   };
-  isEditMode: boolean;
-  onSave: () => void;
-  onChange: any;
-  onClose: () => void;
+  onSave: (journeyPattern: any, index: number) => void;
+  index: number;
 };
 
-const JourneyPatternEditor = ({
-  journeyPattern,
-  isEditMode,
-  onSave,
-  onChange,
-  onClose
-}: Props) => {
+const JourneyPatternEditor = ({ journeyPattern, onSave, index }: Props) => {
   const [directionSelection, setDirectionSelection] = useState(
     DEFAULT_SELECT_VALUE
   );
@@ -47,7 +37,7 @@ const JourneyPatternEditor = ({
   }, [directionType]);
 
   const onFieldChange = (field: string, value: any) => {
-    onChange(journeyPattern.withFieldChange(field, value));
+    onSave(journeyPattern.withFieldChange(field, value), index);
   };
 
   const handleDirectionSelectionChange = (directionSelection: any) => {
@@ -70,39 +60,16 @@ const JourneyPatternEditor = ({
       return sj.withFieldChange('passingTimes', copyOfPassingTimes);
     });
 
-    onChange(
+    onSave(
       journeyPattern
         .withFieldChange('pointsInSequence', copy)
-        .withFieldChange('serviceJourneys', newServiceJourneys)
+        .withFieldChange('serviceJourneys', newServiceJourneys),
+      index
     );
   };
 
   return (
     <div className="journey-pattern-editor">
-      <div className="header">
-        <PageHeader
-          withBackButton
-          onBackButtonClick={onClose}
-          title={`${
-            isEditMode
-              ? formatMessage(messages.edit)
-              : formatMessage(messages.create)
-          }
-            Journey Pattern`}
-        />
-
-        <div className="header-buttons">
-          <SuccessButton
-            onClick={onSave}
-            disabled={
-              !isValidServiceJourney ||
-              journeyPattern.pointsInSequence.length < 2
-            }
-          >
-            {formatMessage(messages.save)}
-          </SuccessButton>
-        </div>
-      </div>
       <section>
         <General
           journeyPattern={journeyPattern}

@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SuccessButton, NegativeButton, SecondaryButton } from '@entur/button';
+import {
+  SuccessButton,
+  PrimaryButton,
+  NegativeButton,
+  SecondaryButton
+} from '@entur/button';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import { FlexibleLine } from 'model';
 import { ValidationErrorIcon } from '@entur/icons';
@@ -260,10 +265,6 @@ const FlexibleLineEditor = ({ match, history }) => {
           </Tabs>
 
           <div className="buttons">
-            <SuccessButton onClick={handleOnSaveClick}>
-              {formatMessage(messages.saveButtonText)}
-            </SuccessButton>
-
             {match.params.id && (
               <NegativeButton
                 onClick={() => setDeleteDialogOpen(true)}
@@ -272,6 +273,9 @@ const FlexibleLineEditor = ({ match, history }) => {
                 {formatMessage(messages.deleteButtonText)}
               </NegativeButton>
             )}
+            <PrimaryButton onClick={handleOnSaveClick}>
+              {formatMessage(messages.saveButtonText)}
+            </PrimaryButton>
           </div>
         </OverlayLoader>
       ) : (
