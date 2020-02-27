@@ -127,5 +127,15 @@ export default defineMessages({
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.toDate',
     defaultMessage: 'Til dato'
+  },
+  stopPointsInfo: {
+    id: 'lines.editor.journeyPatterns.editor.stopPoints.info',
+    defaultMessage:
+      'Du må opprette minst to stoppepunkter. Ett for påstigning og ett for avstigning.'
+  },
+  serviceJourneysInfo: {
+    id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',
+    defaultMessage:
+      'Opprett ulike Service Journeys for ulike åpningstider. For eksempel én for hverdag og én for helg.'
   }
 });
