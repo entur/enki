@@ -31,7 +31,7 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
   return (
     <div>
       {journeyPatterns?.length === 0 && (
-        <SecondaryButton onClick={() => undefined}>
+        <SecondaryButton onClick={() => handleSave(new JourneyPattern())}>
           <AddIcon />
           {formatMessage(messages.addJourneyPatternIconButtonLabel)}
         </SecondaryButton>
