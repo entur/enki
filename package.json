@@ -76,9 +76,11 @@
     "lint-staged": "^9.5.0",
     "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
-    "snyk": "^1.290.2"
+    "snyk": "^1.290.2",
+    "check-node-version": "4.0.2"
   },
   "scripts": {
+    "postinstall": "check-node-version --npm ~6.13.7",
     "test": "react-scripts test --env=jsdom --modulePaths=src",
     "start": "react-scripts start",
     "start-devenv": "cross-env npm run start",
@@ -87,9 +89,6 @@
     "snyk-protect": "snyk protect",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
-  },
-  "engines": {
-    "npm": "~6.13.7"
   },
   "prettier": {
     "singleQuote": true
