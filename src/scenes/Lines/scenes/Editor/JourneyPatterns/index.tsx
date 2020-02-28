@@ -14,9 +14,14 @@ import './styles.scss';
 type Props = {
   journeyPatterns: any;
   onChange: (journeyPatterns: any[]) => void;
+  setIsValidServiceJourney: (isValid: boolean) => void;
 };
 
-const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
+const JourneyPatternsEditor = ({
+  journeyPatterns,
+  onChange,
+  setIsValidServiceJourney
+}: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const { isSaved } = useSelector((state: any) => state.editor);
   const dispatch = useDispatch();
@@ -44,11 +49,16 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
       )}
 
       {journeyPatterns.map((jp: any, index: number) => (
-        <ExpandablePanel key={jp.name ?? index} title={jp.name}>
+        <ExpandablePanel
+          title={jp.name}
+          key={jp.name ?? index}
+          defaultOpen={journeyPatterns.length === 1}
+        >
           <JourneyPatternEditor
             journeyPattern={jp}
             onSave={handleSave}
             index={index}
+            setIsValidServiceJourney={setIsValidServiceJourney}
           />
         </ExpandablePanel>
       ))}

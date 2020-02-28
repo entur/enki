@@ -19,16 +19,20 @@ type Props = {
     withFieldChange: (field: string, value: any) => any;
   };
   onSave: (journeyPattern: any, index: number) => void;
+  setIsValidServiceJourney: (isValid: boolean) => void;
   index: number;
 };
 
-const JourneyPatternEditor = ({ journeyPattern, onSave, index }: Props) => {
+const JourneyPatternEditor = ({
+  journeyPattern,
+  onSave,
+  setIsValidServiceJourney,
+  index
+}: Props) => {
   const [directionSelection, setDirectionSelection] = useState(
     DEFAULT_SELECT_VALUE
   );
-  const [isValidServiceJourney, setIsValidServiceJourney] = useState<boolean>(
-    true
-  );
+
   const { pointsInSequence, directionType, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
 
@@ -71,6 +75,7 @@ const JourneyPatternEditor = ({ journeyPattern, onSave, index }: Props) => {
   return (
     <div className="journey-pattern-editor">
       <section>
+        <h3> {formatMessage(messages.general)} </h3>
         <General
           journeyPattern={journeyPattern}
           directionSelection={directionSelection}

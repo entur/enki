@@ -36,7 +36,6 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
     onDeleteClick(removeDialogOpenFor);
     setRemoveDialogOpenFor(null);
   };
-  console.log(stopPoints);
 
   const tableRows =
     stopPoints.length > 0 ? (

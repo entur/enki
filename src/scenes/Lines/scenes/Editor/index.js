@@ -163,6 +163,7 @@ const FlexibleLineEditor = ({ match, history }) => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
   const [errors, setErrors] = useState(validateForm(flexibleLine));
+  const [isValidServiceJourney, setIsValidServiceJourney] = useState(true);
 
   useEffect(() => {
     setErrors(validateForm(flexibleLine));
@@ -174,7 +175,7 @@ const FlexibleLineEditor = ({ match, history }) => {
   const handleOnSaveClick = () => {
     const valid = validateForm(flexibleLine).isValid;
 
-    if (valid) {
+    if (valid && isValidServiceJourney) {
       setSaving(true);
       dispatch(saveFlexibleLine(flexibleLine))
         .then(() => history.push('/lines'))
@@ -253,6 +254,7 @@ const FlexibleLineEditor = ({ match, history }) => {
                 <JourneyPatternsEditor
                   journeyPatterns={flexibleLine.journeyPatterns}
                   onChange={jps => onFieldChange('journeyPatterns', jps)}
+                  setIsValidServiceJourney={setIsValidServiceJourney}
                 />
               </TabPanel>
               <TabPanel>
@@ -273,7 +275,10 @@ const FlexibleLineEditor = ({ match, history }) => {
                 {formatMessage(messages.deleteButtonText)}
               </NegativeButton>
             )}
-            <PrimaryButton onClick={handleOnSaveClick}>
+            <PrimaryButton
+              onClick={handleOnSaveClick}
+              disabled={!isValidServiceJourney}
+            >
               {formatMessage(messages.saveButtonText)}
             </PrimaryButton>
           </div>
