@@ -1,7 +1,14 @@
 import Base from './base/Base';
 
+type Data = {
+  type: string;
+  coordinates?: number[];
+};
+
 class GeoJSON extends Base {
-  constructor(data = {}) {
+  type: string;
+  coordinates: number[];
+  constructor(data: Data) {
     super();
 
     this.type = data.type;
