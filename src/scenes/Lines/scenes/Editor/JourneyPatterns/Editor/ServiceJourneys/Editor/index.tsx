@@ -9,6 +9,7 @@ import { ExpandableText } from '@entur/expand';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
+import { DayType } from 'model';
 import { ORGANISATION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -19,6 +20,10 @@ import './styles.scss';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
+
+function isNotNullOrUndefined(dayType: DayType) {
+  return dayType !== null && dayType !== undefined;
+}
 
 type Props = {
   serviceJourney: any;
@@ -156,7 +161,9 @@ export default function ServiceJourneyEditor(props: Props) {
 
         <DayTypeEditor
           dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
-          onChange={dt => onFieldChange('dayTypes', [dt])}
+          onChange={dt =>
+            onFieldChange('dayTypes', [dt].filter(isNotNullOrUndefined))
+          }
         />
       </div>
 

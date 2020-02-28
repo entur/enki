@@ -47,7 +47,8 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
               ? flexibleStopPlaces.find(
                   (fsp: any) => fsp.id === sp.flexibleStopPlaceRef
                 ).name
-              : //@ts-ignore: 27.02.2020 - Checka vad sp.Ref skal vara
+              : // prettier-ignore
+              //@ts-ignore: 27.02.2020 - Checka vad sp.Ref skal vara
               sp.Ref
               ? sp.quayRef
               : formatMessage(messages.defaultValue)}

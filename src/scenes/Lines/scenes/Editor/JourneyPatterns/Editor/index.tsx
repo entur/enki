@@ -32,7 +32,6 @@ const JourneyPatternEditor = ({
   const [directionSelection, setDirectionSelection] = useState(
     DEFAULT_SELECT_VALUE
   );
-
   const { pointsInSequence, directionType, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
 
