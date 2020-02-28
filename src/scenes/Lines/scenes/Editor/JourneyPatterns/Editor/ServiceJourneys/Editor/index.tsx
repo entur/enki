@@ -87,7 +87,7 @@ export default function ServiceJourneyEditor(props: Props) {
         className="delete-button"
         onClick={() => setShowDeleteDialog(true)}
       >
-        <DeleteIcon inline /> Slett
+        <DeleteIcon inline /> {formatMessage(messages.delete)}
       </SecondaryButton>
       <div className="input-group">
         <div className="input-fields">
@@ -185,14 +185,14 @@ export default function ServiceJourneyEditor(props: Props) {
       {showDeleteDialog && (
         <ConfirmDialog
           isOpen={showDeleteDialog}
-          title="Slette service journey"
-          message="Er du sikker på at du ønsker å slette denne service journeyen?"
+          title={formatMessage(messages.deleteTitle)}
+          message={formatMessage(messages.deleteMessage)}
           buttons={[
             <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
-              Nei
+              {formatMessage(messages.no)}
             </SecondaryButton>,
             <SuccessButton key={1} onClick={deleteServiceJourney}>
-              Ja
+              {formatMessage(messages.yes)}
             </SuccessButton>
           ]}
           onDismiss={() => setShowDeleteDialog(false)}
