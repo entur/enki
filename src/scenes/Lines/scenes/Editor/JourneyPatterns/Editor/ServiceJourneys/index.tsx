@@ -1,17 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ServiceJourney from 'model/ServiceJourney';
+import { ServiceJourney, StopPoint } from 'model';
+import ServiceJourneyEditor from './Editor';
 import { selectIntl } from 'i18n';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
-import ServiceJourneysTable from './Table';
+import { ExpandablePanel } from '@entur/expand';
 import messages from '../messages';
 
 type Props = {
-  serviceJourneys: any[];
-  onChange: (sj: any) => void;
-  stopPoints: any[];
+  serviceJourneys: ServiceJourney[];
+  onChange: (sj: ServiceJourney[]) => void;
+  stopPoints: StopPoint[];
   setIsValidServiceJourney: (isValid: boolean) => void;
 };
 
@@ -35,15 +36,24 @@ const ServiceJourneysEditor = ({
 
   return (
     <div className="service-journeys-editor">
-      <ServiceJourneysTable
-        serviceJourneys={serviceJourneys}
-        stopPoints={stopPoints}
-        onChange={updateServiceJourney}
-        onDeleteClick={deleteServiceJourney}
-        setIsValidServiceJourney={setIsValidServiceJourney}
-      />
+      {serviceJourneys.map((sj, index) => (
+        <ExpandablePanel key={sj.id ?? index} title={sj.name}>
+          <ServiceJourneyEditor
+            serviceJourney={sj}
+            stopPoints={stopPoints}
+            onChange={serviceJourney =>
+              updateServiceJourney(index, serviceJourney)
+            }
+            setIsValidServiceJourney={setIsValidServiceJourney}
+            deleteServiceJourney={() => deleteServiceJourney(index)}
+          />
+        </ExpandablePanel>
+      ))}
 
-      <SecondaryButton style={{ marginTop: 16 }} onClick={addNewServiceJourney}>
+      <SecondaryButton
+        style={{ marginTop: '2rem' }}
+        onClick={addNewServiceJourney}
+      >
         <AddIcon />
         {formatMessage(messages.addServiceJourneys)}
       </SecondaryButton>

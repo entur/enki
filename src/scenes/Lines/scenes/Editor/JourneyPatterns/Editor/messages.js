@@ -137,5 +137,26 @@ export default defineMessages({
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',
     defaultMessage:
       'Opprett ulike Service Journeys for ulike åpningstider. For eksempel én for hverdag og én for helg.'
+  },
+  delete: {
+    id: 'lines.editor.deleteButtonText',
+    defaultMessage: 'Slett'
+  },
+  deleteMessage: {
+    id: 'lines.journeyPatterns.serviceJourney.delete.message',
+    defaultMessage:
+      'Er du sikker på at du ænsker å slette denne service journeyen?'
+  },
+  deleteTitle: {
+    id: 'lines.journeyPatterns.serviceJourney.delete.title',
+    defaultMessage: 'Slette service journey'
+  },
+  yes: {
+    id: 'lines.journeyPatterns.stopPoints.table.yes',
+    defaultMessage: 'Ja'
+  },
+  no: {
+    id: 'lines.journeyPatterns.stopPoints.table.no',
+    defaultMessage: 'Nei'
   }
 });

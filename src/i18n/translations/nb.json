@@ -212,6 +212,8 @@
   "lines.journeyPatterns.serviceJourney.general.availability": "Tilgjengelighet",
   "lines.journeyPatterns.serviceJourney.general.publicCode": "Offentlig kode",
   "lines.journeyPatterns.serviceJourney.general.operator": "Operatør",
+  "lines.journeyPatterns.serviceJourney.delete.title": "Slette service journey",
+  "lines.journeyPatterns.serviceJourney.delete.message": "Er du sikker på at du ønsker å slette denne service journeyen?",
   "lines.loadingText": "Laster inn linjer...",
   "lines.nameTableHeaderLabel": "Navn",
   "lines.noLinesFoundText": "Ingen linjer ble funnet.",

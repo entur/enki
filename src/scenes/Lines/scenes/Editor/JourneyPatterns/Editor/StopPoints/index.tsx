@@ -52,10 +52,6 @@ const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
 
   return (
     <div className="stop-points-editor">
-      <SecondaryButton onClick={() => setStopPointInDialog(new StopPoint())}>
-        <AddIcon />
-        {formatMessage(messages.addStopPoint)}
-      </SecondaryButton>
       <BannerAlertBox
         style={{ marginTop: '0.5rem' }}
         variant="info"
@@ -68,6 +64,14 @@ const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
         onRowClick={openDialogForStopPoint}
         onDeleteClick={deleteStopPoint}
       />
+
+      <SecondaryButton
+        onClick={() => setStopPointInDialog(new StopPoint())}
+        style={{ margin: '2rem 0' }}
+      >
+        <AddIcon />
+        {formatMessage(messages.addStopPoint)}
+      </SecondaryButton>
 
       {stopPointInDialog !== null && (
         <Dialog

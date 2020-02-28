@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { SuccessButton } from '@entur/button';
 import { ValidationInfoIcon } from '@entur/icons';
-import PageHeader from 'components/PageHeader';
 import StopPointsEditor from './StopPoints';
 import ServiceJourneysEditor from './ServiceJourneys';
 import messages from './messages';
@@ -20,24 +18,19 @@ type Props = {
     serviceJourneys: any[];
     withFieldChange: (field: string, value: any) => any;
   };
-  isEditMode: boolean;
-  onSave: () => void;
-  onChange: any;
-  onClose: () => void;
+  onSave: (journeyPattern: any, index: number) => void;
+  setIsValidServiceJourney: (isValid: boolean) => void;
+  index: number;
 };
 
 const JourneyPatternEditor = ({
   journeyPattern,
-  isEditMode,
   onSave,
-  onChange,
-  onClose
+  setIsValidServiceJourney,
+  index
 }: Props) => {
   const [directionSelection, setDirectionSelection] = useState(
     DEFAULT_SELECT_VALUE
-  );
-  const [isValidServiceJourney, setIsValidServiceJourney] = useState<boolean>(
-    true
   );
   const { pointsInSequence, directionType, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
@@ -47,7 +40,7 @@ const JourneyPatternEditor = ({
   }, [directionType]);
 
   const onFieldChange = (field: string, value: any) => {
-    onChange(journeyPattern.withFieldChange(field, value));
+    onSave(journeyPattern.withFieldChange(field, value), index);
   };
 
   const handleDirectionSelectionChange = (directionSelection: any) => {
@@ -59,51 +52,29 @@ const JourneyPatternEditor = ({
     setDirectionSelection(directionSelection);
   };
 
-  const deleteStopPoint = (index: number) => {
+  const deleteStopPoint = (stopPointIndex: number) => {
     const copy = pointsInSequence.slice();
-    copy.splice(index, 1);
+    copy.splice(stopPointIndex, 1);
 
     const newServiceJourneys = serviceJourneys.map(sj => {
       const copyOfPassingTimes = sj.passingTimes.slice();
-      copyOfPassingTimes.splice(index, 1);
+      copyOfPassingTimes.splice(stopPointIndex, 1);
 
       return sj.withFieldChange('passingTimes', copyOfPassingTimes);
     });
 
-    onChange(
+    onSave(
       journeyPattern
         .withFieldChange('pointsInSequence', copy)
-        .withFieldChange('serviceJourneys', newServiceJourneys)
+        .withFieldChange('serviceJourneys', newServiceJourneys),
+      index
     );
   };
 
   return (
     <div className="journey-pattern-editor">
-      <div className="header">
-        <PageHeader
-          withBackButton
-          onBackButtonClick={onClose}
-          title={`${
-            isEditMode
-              ? formatMessage(messages.edit)
-              : formatMessage(messages.create)
-          }
-            Journey Pattern`}
-        />
-
-        <div className="header-buttons">
-          <SuccessButton
-            onClick={onSave}
-            disabled={
-              !isValidServiceJourney ||
-              journeyPattern.pointsInSequence.length < 2
-            }
-          >
-            {formatMessage(messages.save)}
-          </SuccessButton>
-        </div>
-      </div>
       <section>
+        <h3> {formatMessage(messages.general)} </h3>
         <General
           journeyPattern={journeyPattern}
           directionSelection={directionSelection}

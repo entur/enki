@@ -212,6 +212,8 @@
   "lines.journeyPatterns.serviceJourney.general.availability": "Availability",
   "lines.journeyPatterns.serviceJourney.general.publicCode": "Public code",
   "lines.journeyPatterns.serviceJourney.general.operator": "Operator",
+  "lines.journeyPatterns.serviceJourney.delete.title": "Delete service journey",
+  "lines.journeyPatterns.serviceJourney.delete.message": "Are you sure you want to delete this service journey?",
   "lines.loadingText": "Loading lines...",
   "lines.nameTableHeaderLabel": "Name",
   "lines.noLinesFoundText": "No lines found.",
