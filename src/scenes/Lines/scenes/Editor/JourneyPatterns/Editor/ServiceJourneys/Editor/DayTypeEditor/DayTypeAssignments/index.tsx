@@ -28,16 +28,14 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
   const addNewDayTypeAssignment = () => {
     const today = moment().format('YYYY-MM-DD');
-    onChange(
-      dayTypeAssignments.concat(
-        new DayTypeAssignment({
-          operatingPeriod: {
-            fromDate: today,
-            toDate: today
-          }
-        })
-      )
-    );
+    const dayTypeAssignment = {
+      isAvailable: false,
+      operatingPeriod: {
+        fromDate: today,
+        toDate: today
+      }
+    };
+    onChange(dayTypeAssignments.concat(dayTypeAssignment));
   };
 
   const deleteDayTypeAssignment = (index: number) => {

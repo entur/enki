@@ -19,15 +19,13 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
   const { isAvailable, operatingPeriod, date } = dayTypeAssignment || {};
   const { formatMessage } = useSelector(selectIntl);
 
-  const onFieldChange = (field, value) => {
-    onChange(dayTypeAssignment.withFieldChange(field, value));
-  };
-
   const handleDateRangeChange = () => {
     const today = moment().format('YYYY-MM-DD');
-    useDateRange
-      ? onFieldChange('operatingPeriod', undefined)
-      : onFieldChange('operatingPeriod', { fromDate: today, toDate: today });
+    const operatingPeriod = useDateRange
+      ? undefined
+      : { fromDate: today, toDate: today };
+
+    onChange({ ...dayTypeAssignment, operatingPeriod });
     setUseDateRange(!useDateRange);
   };
 
@@ -37,7 +35,7 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
       [field]: value
     };
 
-    onFieldChange('operatingPeriod', operatingPeriod);
+    onChange({ ...dayTypeAssignment, operatingPeriod });
   };
 
   return (
@@ -48,7 +46,9 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
         <Checkbox
           value="1"
           checked={isAvailable === true}
-          onChange={e => onFieldChange('isAvailable', e.target.checked)}
+          onChange={e =>
+            onChange({ ...dayTypeAssignment, isAvailable: e.target.checked })
+          }
         />
       </div>
 
@@ -65,7 +65,9 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
             <InputGroup label={formatMessage(messages.date)}>
               <DatePicker
                 selectedDate={date && moment(date).toDate()}
-                onChange={date => onFieldChange('date', dateToString(date))}
+                onChange={date =>
+                  onChange({ ...dayTypeAssignment, date: dateToString(date) })
+                }
               />
             </InputGroup>
           </div>
