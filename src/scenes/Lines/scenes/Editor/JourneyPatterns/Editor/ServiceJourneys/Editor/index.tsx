@@ -15,6 +15,7 @@ import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
 import messages from '../../messages';
 import { OrganisationState } from 'reducers/organisations';
+import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 
 import './styles.scss';
 
@@ -152,7 +153,9 @@ export default function ServiceJourneyEditor(props: Props) {
             }))
           ]}
           defaultValue={operatorSelection}
-          onChange={({ value }: any) => handleOperatorSelectionChange(value)}
+          onChange={(e: NormalizedDropdownItemType | null) =>
+            handleOperatorSelectionChange(e?.value)
+          }
         />
       </div>
 
