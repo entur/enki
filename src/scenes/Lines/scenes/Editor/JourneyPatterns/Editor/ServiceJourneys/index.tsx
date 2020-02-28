@@ -11,7 +11,7 @@ import messages from '../messages';
 
 type Props = {
   serviceJourneys: ServiceJourney[];
-  onChange: (sj: any) => void;
+  onChange: (sj: ServiceJourney[]) => void;
   stopPoints: StopPoint[];
   setIsValidServiceJourney: (isValid: boolean) => void;
 };
