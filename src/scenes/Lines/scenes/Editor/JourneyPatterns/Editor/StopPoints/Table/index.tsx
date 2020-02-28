@@ -3,6 +3,7 @@ import { selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
+import { StopPoint } from 'model';
 import {
   Table,
   TableBody,
@@ -17,7 +18,7 @@ import messages from './messages';
 import './styles.scss';
 
 type Props = {
-  stopPoints: any[];
+  stopPoints: StopPoint[];
   onRowClick: (i: number) => void;
   onDeleteClick: (sp: any) => void;
 };
@@ -35,18 +36,20 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
     onDeleteClick(removeDialogOpenFor);
     setRemoveDialogOpenFor(null);
   };
+  console.log(stopPoints);
 
   const tableRows =
     stopPoints.length > 0 ? (
       stopPoints.map((sp, i) => (
-        <TableRow key={i} onClick={() => onRowClick(i)}>
+        <TableRow key={sp.id} onClick={() => onRowClick(i)}>
           <DataCell>{i + 1}</DataCell>
           <DataCell>
             {sp.flexibleStopPlaceRef
               ? flexibleStopPlaces.find(
                   (fsp: any) => fsp.id === sp.flexibleStopPlaceRef
                 ).name
-              : sp.Ref
+              : //@ts-ignore: 27.02.2020 - Checka vad sp.Ref skal vara
+              sp.Ref
               ? sp.quayRef
               : formatMessage(messages.defaultValue)}
           </DataCell>

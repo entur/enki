@@ -50,7 +50,10 @@ const ServiceJourneysEditor = ({
         </ExpandablePanel>
       ))}
 
-      <SecondaryButton style={{ marginTop: 16 }} onClick={addNewServiceJourney}>
+      <SecondaryButton
+        style={{ marginTop: '2rem' }}
+        onClick={addNewServiceJourney}
+      >
         <AddIcon />
         {formatMessage(messages.addServiceJourneys)}
       </SecondaryButton>

@@ -49,13 +49,13 @@ const JourneyPatternEditor = ({ journeyPattern, onSave, index }: Props) => {
     setDirectionSelection(directionSelection);
   };
 
-  const deleteStopPoint = (index: number) => {
+  const deleteStopPoint = (stopPointIndex: number) => {
     const copy = pointsInSequence.slice();
-    copy.splice(index, 1);
+    copy.splice(stopPointIndex, 1);
 
     const newServiceJourneys = serviceJourneys.map(sj => {
       const copyOfPassingTimes = sj.passingTimes.slice();
-      copyOfPassingTimes.splice(index, 1);
+      copyOfPassingTimes.splice(stopPointIndex, 1);
 
       return sj.withFieldChange('passingTimes', copyOfPassingTimes);
     });

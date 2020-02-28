@@ -37,11 +37,6 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
         </SecondaryButton>
       )}
 
-      {/* <JourneyPatternsTable
-        journeyPatterns={journeyPatterns}
-        onRowClick={openDialogForJourneyPattern}
-        onDeleteClick={deleteJourneyPattern}
-      /> */}
       {!isSaved && (
         <div className="unsaved-changes">
           <ValidationInfoIcon inline /> {formatMessage(messages.unsavedChanges)}
@@ -54,7 +49,6 @@ const JourneyPatternsEditor = ({ journeyPatterns, onChange }: Props) => {
             journeyPattern={jp}
             onSave={handleSave}
             index={index}
-            // isEditMode={journeyPatternIndex !== TEMP_INDEX}
           />
         </ExpandablePanel>
       ))}
