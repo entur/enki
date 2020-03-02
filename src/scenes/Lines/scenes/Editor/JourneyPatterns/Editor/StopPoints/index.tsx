@@ -13,13 +13,13 @@ import messages from '../messages';
 type Props = {
   stopPoints: StopPoint[];
   deleteStopPoint: (index: number) => void;
-  onChange: (stopPoints: any) => void;
+  onChange: (stopPoints: StopPoint[]) => void;
 };
 
 const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
-  const updateStopPoint = (index: number, stopPlace: any) => {
+  const updateStopPoint = (index: number, stopPlace: StopPoint) => {
     onChange(replaceElement(stopPoints, index, stopPlace));
   };
 
@@ -38,7 +38,9 @@ const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
           <StopPointEditor
             isFirst={index === 0}
             stopPoint={stopPoint}
-            onChange={(stopPoint: any) => updateStopPoint(index, stopPoint)}
+            onChange={(stopPoint: StopPoint) =>
+              updateStopPoint(index, stopPoint)
+            }
           />
         </ExpandablePanel>
       ))}
