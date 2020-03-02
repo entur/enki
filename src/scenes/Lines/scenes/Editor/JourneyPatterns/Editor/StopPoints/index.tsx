@@ -34,7 +34,10 @@ const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
       </BannerAlertBox>
 
       {stopPoints.map((stopPoint, index) => (
-        <ExpandablePanel title={stopPoint.destinationDisplay?.frontText}>
+        <ExpandablePanel
+          key={stopPoint.id}
+          title={stopPoint.destinationDisplay?.frontText}
+        >
           <StopPointEditor
             isFirst={index === 0}
             stopPoint={stopPoint}

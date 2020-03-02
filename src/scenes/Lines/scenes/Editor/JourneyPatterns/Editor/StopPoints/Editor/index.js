@@ -96,6 +96,8 @@ class StopPointEditor extends Component {
         />
 
         <ExpandableText title="Bestilling">
+          {' '}
+          {/* TODO: Translate */}
           <BookingArrangementEditor
             bookingArrangement={stopPoint.bookingArrangement}
             onChange={b => this.onFieldChange('bookingArrangement', b)}
@@ -109,10 +111,7 @@ class StopPointEditor extends Component {
 StopPointEditor.propTypes = {
   isFirst: PropTypes.bool.isRequired,
   stopPoint: PropTypes.instanceOf(StopPoint).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  isEditMode: PropTypes.bool
+  onChange: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ flexibleStopPlaces }) => ({ flexibleStopPlaces });

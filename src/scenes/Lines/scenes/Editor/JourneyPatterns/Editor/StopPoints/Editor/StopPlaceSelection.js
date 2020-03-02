@@ -27,7 +27,7 @@ export default function StopPlaceSelection({
             value: fsp.id
           }))
         ]}
-        value={stopPlaceSelection}
+        defaultValue={stopPlaceSelection}
         onChange={e => handleStopPlaceSelectionChange(e.value)}
       />
     </Fragment>
