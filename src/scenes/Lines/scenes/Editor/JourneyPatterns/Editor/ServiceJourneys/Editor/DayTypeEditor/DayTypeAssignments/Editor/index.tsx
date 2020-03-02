@@ -58,7 +58,6 @@ const DayTypeAssignmentEditor = ({
     onChange(newOperatingPeriod);
   };
 
-  console.log(dayTypeAssignment);
   return (
     <div
       className={cx('day-type-assignment-editor', { available: isAvailable })}
