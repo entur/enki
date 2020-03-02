@@ -1,4 +1,11 @@
-export function quaySearchResults(quaySearch) {
+import { InputGroupProps } from '@entur/form';
+
+export type QuaySearchResults =
+  | Pick<InputGroupProps, 'variant' | 'feedback'>
+  | undefined;
+export type QuaySearch = { stopPlace: any; quay: any };
+
+export function quaySearchResults(quaySearch: QuaySearch): QuaySearchResults {
   if (!quaySearch) return undefined;
   const { stopPlace } = quaySearch;
   if (!stopPlace) return undefined;
