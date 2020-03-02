@@ -1,7 +1,8 @@
 import React from 'react';
 
-import ContentCheckbox from '../ContentCheckbox';
+// import FilterChip from '../ContentCheckbox';
 import { InputGroup } from '@entur/form';
+import { FilterChip } from '@entur/chip';
 
 import './styles.scss';
 import { DAY_OF_WEEK } from '../../model/enums';
@@ -27,48 +28,55 @@ const WeekdayPicker = ({ days, onDaysChange, feedbackMessage }: Props) => (
     feedback={feedbackMessage}
   >
     <div className="checkboxes">
-      <ContentCheckbox
-        isChecked={days.includes(DAY_OF_WEEK.MONDAY)}
+      <FilterChip
+        checked={days.includes(DAY_OF_WEEK.MONDAY)}
         onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.MONDAY))}
+        value="M"
       >
         M
-      </ContentCheckbox>
-      <ContentCheckbox
-        isChecked={days.includes(DAY_OF_WEEK.TUESDAY)}
+      </FilterChip>
+      <FilterChip
+        checked={days.includes(DAY_OF_WEEK.TUESDAY)}
         onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.TUESDAY))}
+        value="T"
       >
         T
-      </ContentCheckbox>
-      <ContentCheckbox
-        isChecked={days.includes(DAY_OF_WEEK.WEDNESDAY)}
+      </FilterChip>
+      <FilterChip
+        checked={days.includes(DAY_OF_WEEK.WEDNESDAY)}
         onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.WEDNESDAY))}
+        value="O"
       >
         O
-      </ContentCheckbox>
-      <ContentCheckbox
-        isChecked={days.includes(DAY_OF_WEEK.THURSDAY)}
+      </FilterChip>
+      <FilterChip
+        checked={days.includes(DAY_OF_WEEK.THURSDAY)}
         onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.THURSDAY))}
+        value="T"
       >
         T
-      </ContentCheckbox>
-      <ContentCheckbox
-        isChecked={days.includes(DAY_OF_WEEK.FRIDAY)}
+      </FilterChip>
+      <FilterChip
+        checked={days.includes(DAY_OF_WEEK.FRIDAY)}
         onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.FRIDAY))}
+        value="F"
       >
         F
-      </ContentCheckbox>
-      <ContentCheckbox
-        isChecked={days.includes(DAY_OF_WEEK.SATURDAY)}
+      </FilterChip>
+      <FilterChip
+        checked={days.includes(DAY_OF_WEEK.SATURDAY)}
         onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.SATURDAY))}
+        value="L"
       >
         L
-      </ContentCheckbox>
-      <ContentCheckbox
-        isChecked={days.includes(DAY_OF_WEEK.SUNDAY)}
+      </FilterChip>
+      <FilterChip
+        checked={days.includes(DAY_OF_WEEK.SUNDAY)}
         onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.SUNDAY))}
+        value="S"
       >
         S
-      </ContentCheckbox>
+      </FilterChip>
     </div>
   </InputGroup>
 );
