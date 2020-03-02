@@ -11,8 +11,8 @@ class Codespace extends Versioned {
   constructor(data?: Data) {
     super(data ?? {});
 
-    this.xmlns = data?.xmlns || '';
-    this.xmlnsUrl = data?.xmlnsUrl || '';
+    this.xmlns = data?.xmlns ?? '';
+    this.xmlnsUrl = data?.xmlnsUrl ?? '';
   }
 }
 
