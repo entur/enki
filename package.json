@@ -81,7 +81,7 @@
     "check-node-version": "4.0.2"
   },
   "scripts": {
-    "postinstall": "check-node-version --npm 6.14.0",
+    "postinstall": "check-node-version --npm ~6.14.0",
     "test": "react-scripts test --env=jsdom --modulePaths=src",
     "start": "react-scripts start",
     "start-devenv": "cross-env npm run start",

@@ -1,20 +1,45 @@
-import React from 'react';
-import { injectIntl } from 'react-intl';
+import React, { ChangeEvent } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Checkbox, Fieldset, InputGroup, TextField } from '@entur/form';
 import StopPlaceSelection from './StopPlaceSelection';
-import { quaySearchResults } from './quaySearchResults';
+import { QuaySearchResults, quaySearchResults } from './quaySearchResults';
 import messages from './Form.messages';
 import { isBlank } from 'helpers/forms';
+import { StopPoint, FlexibleStopPlace } from 'model';
+import { StopPlaceSelectionType } from './index';
+import { QuaySearch } from './searchForQuay';
 
-function quaySearchFeedback(errors, searchResults) {
+function quaySearchFeedback(
+  errors: string[],
+  searchResults: QuaySearch | undefined
+): QuaySearchResults {
   if (errors.length) {
     return {
       variant: 'error',
-      feedback: errors
+      feedback: errors.join(';')
     };
   }
 
   return quaySearchResults(searchResults);
+}
+
+interface Props extends WrappedComponentProps {
+  flexibleStopPlaces: FlexibleStopPlace[];
+  stopPlaceSelection: StopPlaceSelectionType;
+  quaySearch: QuaySearch | undefined;
+  errors: {
+    quayRef: any[];
+    flexibleStopPlaceRefAndQuayRef: any[];
+    frontText: any[];
+  };
+  handleStopPlaceSelectionChange: (
+    stopPlaceSelection: StopPlaceSelectionType
+  ) => void;
+  handleFieldChange: (field: string, value: any) => void;
+  debouncedSearchForQuay: () => void;
+  handleFrontTextChange: (frontText: string) => void;
+  stopPoint: StopPoint;
+  frontTextRequired: boolean;
 }
 
 const Form = ({
@@ -29,7 +54,7 @@ const Form = ({
   handleFrontTextChange,
   stopPoint,
   frontTextRequired
-}) => {
+}: Props) => {
   let frontTextValue =
     stopPoint.destinationDisplay && stopPoint.destinationDisplay.frontText
       ? stopPoint.destinationDisplay.frontText
@@ -52,7 +77,7 @@ const Form = ({
       >
         <TextField
           value={stopPoint.quayRef ?? ''}
-          onChange={e => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value;
             handleFieldChange('quayRef', isBlank(value) ? null : value);
             debouncedSearchForQuay();
@@ -68,20 +93,21 @@ const Form = ({
       >
         <TextField
           value={frontTextValue}
-          onChange={e => handleFrontTextChange(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleFrontTextChange(e.target.value)
+          }
           variant={errors.frontText.length ? 'error' : undefined}
           feedback={errors.frontText}
         />
       </InputGroup>
 
-      <Fieldset
-        label="På og/eller av-stigning"
-        className={{ marginTop: '0.5rem' }}
-      >
+      <Fieldset label="På og/eller av-stigning" style={{ marginTop: '0.5rem' }}>
         <Checkbox
           value={'1'}
           checked={stopPoint.forBoarding === true}
-          onChange={e => handleFieldChange('forBoarding', e.target.checked)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleFieldChange('forBoarding', e.target.checked)
+          }
         >
           {formatMessage(messages.labelForBoarding)}
         </Checkbox>
@@ -89,7 +115,9 @@ const Form = ({
         <Checkbox
           value={'1'}
           checked={stopPoint.forAlighting === true}
-          onChange={e => handleFieldChange('forAlighting', e.target.checked)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleFieldChange('forAlighting', e.target.checked)
+          }
         >
           {formatMessage(messages.labelForAlighting)}
         </Checkbox>

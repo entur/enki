@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { DestinationDisplay, StopPoint } from 'model';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -9,37 +8,56 @@ import { SecondaryButton, SuccessButton } from '@entur/button';
 import { getIntl } from 'i18n';
 import { DeleteIcon } from '@entur/icons';
 import './styles.scss';
-import searchForQuay from './searchForQuay';
 import { ExpandableText } from '@entur/expand';
+import searchForQuay, { QuaySearch } from './searchForQuay';
 import debounce from './debounce';
 import { DEFAULT_SELECT_VALUE } from './constants';
 import Form from './Form';
 import validateForm from './validateForm';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import messages from '../../messages';
 
-class StopPointEditor extends Component {
-  state = {
-    stopPlaceSelection: DEFAULT_SELECT_VALUE,
+export type StopPlaceSelectionType = string | null;
+
+type Props = {
+  isFirst: boolean;
+  stopPoint: StopPoint;
+  onChange: (stopPoint: any) => void;
+};
+
+type StateProps = {
+  flexibleStopPlaces: FlexibleStopPlace[];
+  intl: any;
+};
+
+type State = {
+  stopPlaceSelection: StopPlaceSelectionType;
+  errors: {
+    quayRef: any[];
+    flexibleStopPlaceRefAndQuayRef: any[];
+    frontText: any[];
+  };
+  quaySearch: QuaySearch | undefined;
+  isDeleteDialogOpen: boolean;
+};
+
+class StopPointEditor extends Component<Props & StateProps> {
+  state: State = {
+    stopPlaceSelection:
+      this.props.stopPoint.flexibleStopPlaceRef ?? DEFAULT_SELECT_VALUE,
     errors: { quayRef: [], flexibleStopPlaceRefAndQuayRef: [], frontText: [] },
-    quaySearch: {},
+    quaySearch: undefined,
     isDeleteDialogOpen: false
   };
 
-  componentDidMount() {
-    if (!this.props.stopPoint) {
-      return;
-    }
-    this.setState({
-      stopPlaceSelection: this.props.stopPoint.flexibleStopPlaceRef
-    });
-  }
-
-  onFieldChange = (field, value) => {
+  onFieldChange = (field: string, value: any) => {
     const { stopPoint, onChange } = this.props;
     onChange(stopPoint.withFieldChange(field, value));
   };
 
-  handleStopPlaceSelectionChange = stopPlaceSelection => {
+  handleStopPlaceSelectionChange = (
+    stopPlaceSelection: StopPlaceSelectionType
+  ) => {
     this.onFieldChange(
       'flexibleStopPlaceRef',
       stopPlaceSelection !== DEFAULT_SELECT_VALUE ? stopPlaceSelection : null
@@ -47,7 +65,7 @@ class StopPointEditor extends Component {
     this.setState({ stopPlaceSelection });
   };
 
-  handleFrontTextChange = frontText => {
+  handleFrontTextChange = (frontText: string) => {
     const { stopPoint } = this.props;
     const destinationDisplay = stopPoint.destinationDisplay
       ? stopPoint.destinationDisplay.withFieldChange('frontText', frontText)
@@ -55,18 +73,18 @@ class StopPointEditor extends Component {
     this.onFieldChange('destinationDisplay', destinationDisplay);
   };
 
-  onSave = async () => {
-    let [valid, errors] = await validateForm(
-      this.props.stopPoint,
-      this.props.stopPointIndex
-    );
+  // onSave = async () => {
+  //   let [valid, errors] = await validateForm(
+  //     this.props.stopPoint,
+  //     this.props.stopPointIndex
+  //   );
 
-    this.setState({ errors }, () => {
-      if (valid) {
-        this.props.onSave();
-      }
-    });
-  };
+  //   this.setState({ errors }, () => {
+  //     if (valid) {
+  //       this.props.onSave();
+  //     }
+  //   });
+  // };
 
   debouncedSearchForQuay = debounce(async () => {
     const quayRef = this.props.stopPoint.quayRef;
@@ -80,12 +98,13 @@ class StopPointEditor extends Component {
 
   render() {
     const { flexibleStopPlaces, stopPoint, isFirst, intl } = this.props;
-    const { stopPlaceSelection, quaySearch, errors } = this.state;
     const translations = getIntl({ intl });
 
-    if (!stopPoint) {
-      return null;
-    }
+    // const firstElementHasFrontText =
+    //   isFirst && isBlank(stopPoint.destinationDisplay?.frontText);
+    // const stopPlaceAndQuaySearchAreEmpty =
+    //   (this.state.stopPlaceSelection ?? '-1') === '-1' &&
+    //   objectValuesAreEmpty(this.state.quaySearch ?? {});
 
     return (
       <div className="stop-point-editor">
@@ -101,9 +120,9 @@ class StopPointEditor extends Component {
         <Form
           frontTextRequired={isFirst}
           flexibleStopPlaces={flexibleStopPlaces}
-          stopPlaceSelection={stopPlaceSelection}
-          quaySearch={quaySearch}
-          errors={errors}
+          stopPlaceSelection={this.state.stopPlaceSelection}
+          quaySearch={this.state.quaySearch}
+          errors={this.state.errors}
           handleStopPlaceSelectionChange={this.handleStopPlaceSelectionChange}
           handleFieldChange={this.onFieldChange}
           debouncedSearchForQuay={this.debouncedSearchForQuay}
@@ -122,14 +141,14 @@ class StopPointEditor extends Component {
 
         <ConfirmDialog
           isOpen={this.state.isDeleteDialogOpen}
-          title={formatMessage(messages.deleteStopPlaceDialogTitle)}
-          message={formatMessage(messages.deleteStopPlaceDialogMessage)}
+          title={translations.formatMessage(messages.create)}
+          message={translations.formatMessage(messages.create)}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+            <SecondaryButton key={2} onClick={() => undefined}>
               {/* {formatMessage(messages.deleteStopPlaceDialogCancelButtonText)} */}
               no
             </SecondaryButton>,
-            <SuccessButton key={1} onClick={handleDelete}>
+            <SuccessButton key={1} onClick={() => undefined}>
               {/* {formatMessage(messages.deleteStopPlaceDialogConfirmButtonText)} */}
               yes
             </SuccessButton>
@@ -143,13 +162,7 @@ class StopPointEditor extends Component {
   }
 }
 
-StopPointEditor.propTypes = {
-  isFirst: PropTypes.bool.isRequired,
-  stopPoint: PropTypes.instanceOf(StopPoint).isRequired,
-  onChange: PropTypes.func.isRequired
-};
-
-const mapStateToProps = ({ flexibleStopPlaces, intl }) => ({
+const mapStateToProps = ({ flexibleStopPlaces, intl }: StateProps) => ({
   flexibleStopPlaces,
   intl
 });
