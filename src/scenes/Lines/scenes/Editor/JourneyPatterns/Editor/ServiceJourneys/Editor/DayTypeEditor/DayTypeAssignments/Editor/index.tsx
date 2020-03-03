@@ -1,43 +1,61 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import PropTypes from 'prop-types';
 import cx from 'classnames';
 import moment from 'moment';
 import { DeleteIcon } from '@entur/icons';
 import { Checkbox, InputGroup, Switch } from '@entur/form';
-import { DayTypeAssignment } from 'model';
+import { DayTypeAssignment, OperatingPeriod } from 'model';
 import { dateToString } from 'helpers/dates';
 import { DatePicker } from '@entur/datepicker';
 import './styles.scss';
 import messages from '../../../../../messages';
 
-const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
+type Props = {
+  dayTypeAssignment: DayTypeAssignment;
+  onChange: (dayTypeAssignment: DayTypeAssignment) => void;
+  onDelete: () => void;
+};
+
+const DayTypeAssignmentEditor = ({
+  dayTypeAssignment,
+  onChange,
+  onDelete
+}: Props) => {
   const [useDateRange, setUseDateRange] = useState(
     Boolean(dayTypeAssignment.operatingPeriod)
   );
   const { isAvailable, operatingPeriod, date } = dayTypeAssignment || {};
   const { formatMessage } = useSelector(selectIntl);
 
-  const onFieldChange = (field, value) => {
-    onChange(dayTypeAssignment.withFieldChange(field, value));
-  };
-
   const handleDateRangeChange = () => {
     const today = moment().format('YYYY-MM-DD');
-    useDateRange
-      ? onFieldChange('operatingPeriod', undefined)
-      : onFieldChange('operatingPeriod', { fromDate: today, toDate: today });
+    const dateFields = useDateRange
+      ? { date: today, operatingPeriod: null }
+      : {
+          date: undefined,
+          operatingPeriod: { fromDate: today, toDate: today }
+        };
+
+    onChange({ ...dayTypeAssignment, ...dateFields });
     setUseDateRange(!useDateRange);
   };
 
-  const handleOperatingPeriodFieldChange = (field, value) => {
-    const operatingPeriod = {
-      ...dayTypeAssignment.operatingPeriod,
-      [field]: value
+  const handleOperatingPeriodFieldChange = (
+    field: keyof OperatingPeriod,
+    date: Date | null
+  ) => {
+    if (!dayTypeAssignment.operatingPeriod || !date) return;
+
+    const newOperatingPeriod = {
+      ...dayTypeAssignment,
+      operatingPeriod: {
+        ...dayTypeAssignment.operatingPeriod,
+        [field]: dateToString(date)
+      }
     };
 
-    onFieldChange('operatingPeriod', operatingPeriod);
+    onChange(newOperatingPeriod);
   };
 
   return (
@@ -48,7 +66,9 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
         <Checkbox
           value="1"
           checked={isAvailable === true}
-          onChange={e => onFieldChange('isAvailable', e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange({ ...dayTypeAssignment, isAvailable: e.target.checked })
+          }
         />
       </div>
 
@@ -64,8 +84,13 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
           <div>
             <InputGroup label={formatMessage(messages.date)}>
               <DatePicker
-                selectedDate={date && moment(date).toDate()}
-                onChange={date => onFieldChange('date', dateToString(date))}
+                selectedDate={moment(date).toDate()}
+                onChange={(date: Date | null) =>
+                  onChange({
+                    ...dayTypeAssignment,
+                    date: date !== null ? dateToString(date) : undefined
+                  })
+                }
               />
             </InputGroup>
           </div>
@@ -81,11 +106,8 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
                       ? moment(operatingPeriod.fromDate).toDate()
                       : undefined
                   }
-                  onChange={date =>
-                    handleOperatingPeriodFieldChange(
-                      'fromDate',
-                      dateToString(date)
-                    )
+                  onChange={(date: Date | null) =>
+                    handleOperatingPeriodFieldChange('fromDate', date)
                   }
                 />
               </InputGroup>
@@ -99,11 +121,8 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
                       ? moment(operatingPeriod.toDate).toDate()
                       : undefined
                   }
-                  onChange={date =>
-                    handleOperatingPeriodFieldChange(
-                      'toDate',
-                      dateToString(date)
-                    )
+                  onChange={(date: Date | null) =>
+                    handleOperatingPeriodFieldChange('toDate', date)
                   }
                 />
               </InputGroup>
@@ -117,12 +136,6 @@ const DayTypeAssignmentEditor = ({ dayTypeAssignment, onChange, onDelete }) => {
       </div>
     </div>
   );
-};
-
-DayTypeAssignmentEditor.propTypes = {
-  dayTypeAssignment: PropTypes.instanceOf(DayTypeAssignment).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
 };
 
 export default DayTypeAssignmentEditor;
