@@ -1,40 +1,60 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import { DestinationDisplay, StopPoint } from 'model';
-import { isBlank } from 'helpers/forms';
+import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import Header from './Header';
 import './styles.scss';
-import searchForQuay from './searchForQuay';
+import searchForQuay, { QuaySearch } from './searchForQuay';
 import debounce from './debounce';
 import { DEFAULT_SELECT_VALUE } from './constants';
 import Form from './Form';
 import validateForm from './validateForm';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
 
-class StopPointEditor extends Component {
-  state = {
-    stopPlaceSelection: DEFAULT_SELECT_VALUE,
+export type StopPlaceSelectionType = string | null;
+
+type Props = {
+  isFirst: boolean;
+  stopPoint: StopPoint;
+  onChange: (stopPoint: any) => void;
+  onClose: () => void;
+  onSave: () => void;
+  isEditMode: boolean;
+  stopPointIndex: number;
+};
+
+type StateProps = {
+  flexibleStopPlaces: FlexibleStopPlace[];
+};
+
+type State = {
+  stopPlaceSelection: StopPlaceSelectionType;
+  errors: {
+    quayRef: any[];
+    flexibleStopPlaceRefAndQuayRef: any[];
+    frontText: any[];
+  };
+  quaySearch: QuaySearch | undefined;
+};
+
+class StopPointEditor extends Component<Props & StateProps> {
+  state: State = {
+    stopPlaceSelection:
+      this.props.stopPoint.flexibleStopPlaceRef ?? DEFAULT_SELECT_VALUE,
     errors: { quayRef: [], flexibleStopPlaceRefAndQuayRef: [], frontText: [] },
-    quaySearch: {}
+    quaySearch: undefined
   };
 
-  componentDidMount() {
-    if (!this.props.stopPoint) {
-      return;
-    }
-    this.setState({
-      stopPlaceSelection: this.props.stopPoint.flexibleStopPlaceRef
-    });
-  }
-
-  onFieldChange = (field, value) => {
+  onFieldChange = (field: string, value: any) => {
     const { stopPoint, onChange } = this.props;
     onChange(stopPoint.withFieldChange(field, value));
   };
 
-  handleStopPlaceSelectionChange = stopPlaceSelection => {
+  handleStopPlaceSelectionChange = (
+    stopPlaceSelection: StopPlaceSelectionType
+  ) => {
     this.onFieldChange(
       'flexibleStopPlaceRef',
       stopPlaceSelection !== DEFAULT_SELECT_VALUE ? stopPlaceSelection : null
@@ -42,7 +62,7 @@ class StopPointEditor extends Component {
     this.setState({ stopPlaceSelection });
   };
 
-  handleFrontTextChange = frontText => {
+  handleFrontTextChange = (frontText: string) => {
     const { stopPoint } = this.props;
     const destinationDisplay = stopPoint.destinationDisplay
       ? stopPoint.destinationDisplay.withFieldChange('frontText', frontText)
@@ -81,11 +101,12 @@ class StopPointEditor extends Component {
       isFirst,
       onClose
     } = this.props;
-    const { stopPlaceSelection, quaySearch, errors } = this.state;
 
-    if (!stopPoint) {
-      return null;
-    }
+    const firstElementHasFrontText =
+      isFirst && isBlank(stopPoint.destinationDisplay?.frontText);
+    const stopPlaceAndQuaySearchAreEmpty =
+      (this.state.stopPlaceSelection ?? '-1') === '-1' &&
+      objectValuesAreEmpty(this.state.quaySearch ?? {});
 
     return (
       <div className="stop-point-editor">
@@ -93,7 +114,7 @@ class StopPointEditor extends Component {
           isEditMode={isEditMode}
           onSave={this.onSave}
           saveDisabled={
-            isFirst && isBlank(stopPoint.destinationDisplay?.frontText)
+            firstElementHasFrontText || stopPlaceAndQuaySearchAreEmpty
           }
           onClose={onClose}
         />
@@ -107,9 +128,9 @@ class StopPointEditor extends Component {
               <Form
                 frontTextRequired={isFirst}
                 flexibleStopPlaces={flexibleStopPlaces}
-                stopPlaceSelection={stopPlaceSelection}
-                quaySearch={quaySearch}
-                errors={errors}
+                stopPlaceSelection={this.state.stopPlaceSelection}
+                quaySearch={this.state.quaySearch}
+                errors={this.state.errors}
                 handleStopPlaceSelectionChange={
                   this.handleStopPlaceSelectionChange
                 }
@@ -132,15 +153,8 @@ class StopPointEditor extends Component {
   }
 }
 
-StopPointEditor.propTypes = {
-  isFirst: PropTypes.bool.isRequired,
-  stopPoint: PropTypes.instanceOf(StopPoint).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  isEditMode: PropTypes.bool
-};
-
-const mapStateToProps = ({ flexibleStopPlaces }) => ({ flexibleStopPlaces });
+const mapStateToProps = ({ flexibleStopPlaces }: StateProps) => ({
+  flexibleStopPlaces
+});
 
 export default connect(mapStateToProps)(StopPointEditor);

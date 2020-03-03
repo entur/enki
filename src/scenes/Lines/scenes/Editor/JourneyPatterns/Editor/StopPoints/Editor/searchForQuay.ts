@@ -1,6 +1,25 @@
 import { request } from 'graphql-request';
 
-export default async function search(quayRef) {
+export type Quay = {
+  id: string;
+  publicCode: null | string;
+  name: null | string;
+};
+
+export type StopPlace = {
+  id: string;
+  name: { value: string };
+  quays: Quay[];
+};
+
+export type SearchForQuayResponse = {
+  stopPlace: null | StopPlace[];
+  errors?: any[];
+};
+
+export type QuaySearch = { stopPlace?: StopPlace; quay?: Quay };
+
+export default async function search(quayRef: string): Promise<QuaySearch> {
   const endpoint = '/api/stopPlaces';
 
   const query = /* GraphQL */ `
@@ -42,10 +61,15 @@ export default async function search(quayRef) {
     quayRef
   };
 
-  const data = await request(endpoint, query, variables);
-  let foundQuay = 'not-found',
-    foundStopPlace = 'not-found';
-  data.stopPlace.forEach(stop => {
+  const data: null | SearchForQuayResponse = await request(
+    endpoint,
+    query,
+    variables
+  );
+  let foundQuay = undefined,
+    foundStopPlace = undefined;
+
+  data?.stopPlace?.forEach(stop => {
     (stop.quays || []).forEach(quay => {
       if (quay.id === quayRef) {
         foundStopPlace = stop;

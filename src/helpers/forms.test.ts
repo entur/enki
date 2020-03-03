@@ -18,6 +18,9 @@ describe('forms', () => {
       expect(objectValuesAreEmpty({})).toBeTruthy();
       expect(objectValuesAreEmpty([])).toBeTruthy();
       expect(objectValuesAreEmpty({ name: [] })).toBeTruthy();
+      expect(
+        objectValuesAreEmpty({ name: undefined, age: undefined })
+      ).toBeTruthy();
     });
 
     it('should return false if object is not empty', () => {
