@@ -8,9 +8,9 @@ export type QuaySearchResults =
 export function quaySearchResults(
   quaySearch: QuaySearch | undefined
 ): QuaySearchResults {
-  if (!quaySearch) {
-    return undefined;
-  } else if (quaySearch.stopPlace && quaySearch.quay) {
+  if (!quaySearch) return undefined;
+
+  if (quaySearch.stopPlace && quaySearch.quay) {
     const name = quaySearch.stopPlace.name.value;
     const publicCode = quaySearch.quay.publicCode ?? '';
 

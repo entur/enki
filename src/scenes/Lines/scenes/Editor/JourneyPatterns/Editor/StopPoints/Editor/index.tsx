@@ -18,7 +18,7 @@ export type StopPlaceSelectionType = string | null;
 type Props = {
   isFirst: boolean;
   stopPoint: StopPoint;
-  onChange: (any: any) => void;
+  onChange: (stopPoint: StopPoint) => void;
   onClose: () => void;
   onSave: () => void;
   isEditMode: boolean;
