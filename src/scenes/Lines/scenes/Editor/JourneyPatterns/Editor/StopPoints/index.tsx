@@ -25,13 +25,15 @@ const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
 
   return (
     <div className="stop-points-editor">
-      <BannerAlertBox
-        style={{ marginTop: '0.5rem' }}
-        variant="info"
-        title={formatMessage(messages.atleastTwoPoints)}
-      >
-        {formatMessage(messages.atleastTwoPointsDetailed)}
-      </BannerAlertBox>
+      {stopPoints.length < 2 && (
+        <BannerAlertBox
+          style={{ margin: '0.5rem 0' }}
+          variant="info"
+          title={formatMessage(messages.atleastTwoPoints)}
+        >
+          {formatMessage(messages.atleastTwoPointsDetailed)}
+        </BannerAlertBox>
+      )}
 
       {stopPoints.map((stopPoint, index) => (
         <ExpandablePanel

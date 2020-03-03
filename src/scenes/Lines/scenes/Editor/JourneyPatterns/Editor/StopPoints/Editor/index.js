@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { DestinationDisplay, StopPoint } from 'model';
 import { isBlank } from 'helpers/forms';
+import ConfirmDialog from 'components/ConfirmDialog';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import { getIntl } from 'i18n';
+import { DeleteIcon } from '@entur/icons';
 import './styles.scss';
 import searchForQuay from './searchForQuay';
 import { ExpandableText } from '@entur/expand';
@@ -11,12 +15,14 @@ import debounce from './debounce';
 import { DEFAULT_SELECT_VALUE } from './constants';
 import Form from './Form';
 import validateForm from './validateForm';
+import messages from '../../messages';
 
 class StopPointEditor extends Component {
   state = {
     stopPlaceSelection: DEFAULT_SELECT_VALUE,
     errors: { quayRef: [], flexibleStopPlaceRefAndQuayRef: [], frontText: [] },
-    quaySearch: {}
+    quaySearch: {},
+    isDeleteDialogOpen: false
   };
 
   componentDidMount() {
@@ -73,8 +79,9 @@ class StopPointEditor extends Component {
   }, 1000);
 
   render() {
-    const { flexibleStopPlaces, stopPoint, isFirst } = this.props;
+    const { flexibleStopPlaces, stopPoint, isFirst, intl } = this.props;
     const { stopPlaceSelection, quaySearch, errors } = this.state;
+    const translations = getIntl({ intl });
 
     if (!stopPoint) {
       return null;
@@ -82,6 +89,15 @@ class StopPointEditor extends Component {
 
     return (
       <div className="stop-point-editor">
+        <SecondaryButton
+          className="delete-button"
+          onClick={() =>
+            this.setState({ ...this.state, isDeleteDialogOpen: true })
+          }
+        >
+          <DeleteIcon inline /> {translations.formatMessage(messages.delete)}
+        </SecondaryButton>
+
         <Form
           frontTextRequired={isFirst}
           flexibleStopPlaces={flexibleStopPlaces}
@@ -103,6 +119,25 @@ class StopPointEditor extends Component {
             onChange={b => this.onFieldChange('bookingArrangement', b)}
           />
         </ExpandableText>
+
+        <ConfirmDialog
+          isOpen={this.state.isDeleteDialogOpen}
+          title={formatMessage(messages.deleteStopPlaceDialogTitle)}
+          message={formatMessage(messages.deleteStopPlaceDialogMessage)}
+          buttons={[
+            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+              {/* {formatMessage(messages.deleteStopPlaceDialogCancelButtonText)} */}
+              no
+            </SecondaryButton>,
+            <SuccessButton key={1} onClick={handleDelete}>
+              {/* {formatMessage(messages.deleteStopPlaceDialogConfirmButtonText)} */}
+              yes
+            </SuccessButton>
+          ]}
+          onDismiss={() =>
+            this.setState({ ...this.state, isDeleteDialogOpen: false })
+          }
+        />
       </div>
     );
   }
@@ -114,6 +149,9 @@ StopPointEditor.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ flexibleStopPlaces }) => ({ flexibleStopPlaces });
+const mapStateToProps = ({ flexibleStopPlaces, intl }) => ({
+  flexibleStopPlaces,
+  intl
+});
 
 export default connect(mapStateToProps)(StopPointEditor);
