@@ -4,7 +4,7 @@ import OperatingPeriod from './OperatingPeriod';
 export type DayTypeAssignmentProps = {
   isAvailable?: boolean;
   date?: string;
-  operatingPeriod: OperatingPeriod;
+  operatingPeriod?: OperatingPeriod | null;
 };
 
 class DayTypeAssignment extends Base {
@@ -14,12 +14,14 @@ class DayTypeAssignment extends Base {
 
   constructor(data: DayTypeAssignmentProps) {
     super();
-    const { operatingPeriod } = data;
 
     this.isAvailable = data.isAvailable || false;
     this.date = data.date || undefined;
-    this.operatingPeriod = operatingPeriod
-      ? { fromDate: operatingPeriod.fromDate, toDate: operatingPeriod.toDate }
+    this.operatingPeriod = data.operatingPeriod
+      ? {
+          fromDate: data.operatingPeriod.fromDate,
+          toDate: data.operatingPeriod.toDate
+        }
       : null;
   }
 }

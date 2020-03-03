@@ -65,6 +65,8 @@
     "uuid": "^3.4.0"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.1",
+    "check-node-version": "4.0.2",
     "cross-env": "5.1.1",
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.6.0",
@@ -76,8 +78,7 @@
     "lint-staged": "^9.5.0",
     "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
-    "snyk": "^1.290.2",
-    "check-node-version": "4.0.2"
+    "snyk": "^1.290.2"
   },
   "scripts": {
     "postinstall": "check-node-version --npm ~6.14.0",

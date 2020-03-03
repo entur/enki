@@ -4,8 +4,9 @@ import {
   RECEIVE_EXPORT
 } from 'actions/exports';
 import { AnyAction } from 'redux';
+import Export from 'model/Export';
 
-type ExportsState = any[] | null;
+type ExportsState = Export[] | null;
 
 const exportsReducer = (exports: ExportsState = null, action: AnyAction) => {
   switch (action.type) {

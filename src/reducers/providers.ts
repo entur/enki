@@ -4,9 +4,10 @@ import {
   SET_ACTIVE_PROVIDER
 } from 'actions/providers';
 import { AnyAction } from 'redux';
+import Provider from 'model/Provider';
 
 type ProvidersState = {
-  providers: any[] | null;
+  providers: Provider[] | null;
   failure: boolean;
   active: string | null;
   exports: null;

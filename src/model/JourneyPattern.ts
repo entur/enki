@@ -1,9 +1,28 @@
 import Versioned from './base/Versioned';
 import StopPoint from './StopPoint';
 import ServiceJourney from './ServiceJourney';
+import Notice from './Notice';
+
+type Data = {
+  name?: string;
+  description?: string;
+  privateCode?: string;
+  directionType?: string;
+  pointsInSequence?: StopPoint[];
+  serviceJourneys?: ServiceJourney[];
+  notices?: Notice[];
+};
 
 class JourneyPattern extends Versioned {
-  constructor(data = {}) {
+  name: string | undefined;
+  description: string | undefined;
+  privateCode: string | undefined;
+  directionType: string | undefined;
+  pointsInSequence: StopPoint[];
+  serviceJourneys: ServiceJourney[];
+  notices: Notice[];
+
+  constructor(data: Data = {}) {
     super(data);
 
     this.name = data.name;
