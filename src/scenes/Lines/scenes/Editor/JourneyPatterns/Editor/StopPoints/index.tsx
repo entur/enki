@@ -14,7 +14,7 @@ import messages from '../messages';
 const TEMP_INDEX = -1;
 
 type Props = {
-  stopPoints: any[];
+  stopPoints: StopPoint[];
   deleteStopPoint: (index: number) => void;
   onChange: (stopPoints: any) => void;
 };
@@ -86,6 +86,7 @@ const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
               onClose={closeStopPointDialog}
               onSave={handleOnStopPointDialogSaveClick}
               isEditMode={stopPointIndexInDialog !== TEMP_INDEX}
+              stopPointIndex={stopPointIndexInDialog}
             />
           }
           onClose={closeStopPointDialog}

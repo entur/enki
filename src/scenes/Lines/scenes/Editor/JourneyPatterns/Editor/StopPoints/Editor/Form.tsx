@@ -2,19 +2,16 @@ import React, { ChangeEvent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Checkbox, Fieldset, InputGroup, TextField } from '@entur/form';
 import StopPlaceSelection from './StopPlaceSelection';
-import {
-  QuaySearch,
-  QuaySearchResults,
-  quaySearchResults
-} from './quaySearchResults';
+import { QuaySearchResults, quaySearchResults } from './quaySearchResults';
 import messages from './Form.messages';
 import { isBlank } from 'helpers/forms';
-import FlexibleStopPlace from '../../../../../../../../model/FlexibleStopPlace';
-import StopPoint from '../../../../../../../../model/StopPoint';
+import { StopPoint, FlexibleStopPlace } from 'model';
+import { StopPlaceSelectionType } from './index';
+import { QuaySearch } from './searchForQuay';
 
 function quaySearchFeedback(
   errors: string[],
-  searchResults: QuaySearch
+  searchResults: QuaySearch | undefined
 ): QuaySearchResults {
   if (errors.length) {
     return {
@@ -26,19 +23,17 @@ function quaySearchFeedback(
   return quaySearchResults(searchResults);
 }
 
-type StopPlaceSelection = string | null;
-
 interface Props extends WrappedComponentProps {
-  flexibleStopPlaces: FlexibleStopPlace;
-  stopPlaceSelection: StopPlaceSelection;
-  quaySearch: QuaySearch;
+  flexibleStopPlaces: FlexibleStopPlace[];
+  stopPlaceSelection: StopPlaceSelectionType;
+  quaySearch: QuaySearch | undefined;
   errors: {
     quayRef: any[];
     flexibleStopPlaceRefAndQuayRef: any[];
     frontText: any[];
   };
   handleStopPlaceSelectionChange: (
-    stopPlaceSelection: StopPlaceSelection
+    stopPlaceSelection: StopPlaceSelectionType
   ) => void;
   handleFieldChange: (field: string, value: any) => void;
   debouncedSearchForQuay: () => void;
@@ -106,10 +101,7 @@ const Form = ({
         />
       </InputGroup>
 
-      <Fieldset
-        label="På og/eller av-stigning"
-        // className={{ marginTop: '0.5rem' }}
-      >
+      <Fieldset label="På og/eller av-stigning" style={{ marginTop: '0.5rem' }}>
         <Checkbox
           value={'1'}
           checked={stopPoint.forBoarding === true}

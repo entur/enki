@@ -40,7 +40,7 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
   const tableRows =
     stopPoints.length > 0 ? (
       stopPoints.map((sp, i) => (
-        <TableRow key={sp.id} onClick={() => onRowClick(i)}>
+        <TableRow key={sp.id ?? i} onClick={() => onRowClick(i)}>
           <DataCell>{i + 1}</DataCell>
           <DataCell>
             {sp.flexibleStopPlaceRef
