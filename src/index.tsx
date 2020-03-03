@@ -12,8 +12,9 @@ import { isAdmin } from 'helpers/tokenParser';
 import { API_BASE } from 'http/http';
 
 import './styles/index.scss';
+import { UserState } from './reducers/user';
 
-const renderIndex = (userInfo: UserInfo) => {
+const renderIndex = (userInfo: UserState) => {
   const root = document.getElementById('root');
   const { store, sentry } = configureStore(userInfo);
 
@@ -34,15 +35,6 @@ const minValiditySeconds = 60;
 
 // How often should lib check for valid token
 const refreshRateMs = 10000;
-
-type UserInfo = {
-  logoutUrl: string;
-  familyName?: string;
-  givenName: string;
-  email: string;
-  username: string;
-  isAdmin: boolean;
-};
 
 const initAuth = () => {
   const kc: KeycloakInstance = Keycloak(API_BASE + '/keycloak.json');

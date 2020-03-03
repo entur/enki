@@ -1,6 +1,10 @@
 import { RECEIVE_NETWORKS, RECEIVE_NETWORK } from 'actions/networks';
+import Network from '../model/Network';
+import { AnyAction } from 'redux';
 
-const networksReducer = (networks = null, action) => {
+export type NetworksState = Network[] | null;
+
+const networksReducer = (networks: NetworksState = null, action: AnyAction) => {
   switch (action.type) {
     case RECEIVE_NETWORKS:
       return action.networks;

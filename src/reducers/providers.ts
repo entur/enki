@@ -3,14 +3,26 @@ import {
   FAILED_RECEIVING_PROVIDERS,
   SET_ACTIVE_PROVIDER
 } from 'actions/providers';
+import { AnyAction } from 'redux';
+
+type ProvidersState = {
+  providers: any[] | null;
+  failure: boolean;
+  active: string | null;
+  exports: null;
+};
 
 const initialState = {
   providers: null,
   failure: false,
-  active: null
+  active: null,
+  exports: null
 };
 
-const providersReducer = (state = initialState, action) => {
+const providersReducer = (
+  state: ProvidersState = initialState,
+  action: AnyAction
+): ProvidersState => {
   switch (action.type) {
     case RECEIVE_PROVIDERS: {
       const active =
