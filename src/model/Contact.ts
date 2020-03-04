@@ -12,14 +12,15 @@ type Data = {
 };
 
 class Contact extends Base {
-  name?: string;
-  description?: string;
-  privateCode?: string;
-  contactPerson?: string;
-  phone?: string;
-  email?: string;
-  url?: string;
-  furtherDetails?: string;
+  name: string | undefined;
+  description: string | undefined;
+  privateCode: string | undefined;
+  contactPerson: string | undefined;
+  phone: string | undefined;
+  email: string | undefined;
+  url: string | undefined;
+  furtherDetails: string | undefined;
+
   constructor(data?: Data) {
     super();
 

@@ -85,7 +85,7 @@ class StopPointEditor extends Component<Props & StateProps> {
 
   debouncedSearchForQuay = debounce(async () => {
     const quayRef = this.props.stopPoint.quayRef;
-    if (isBlank(quayRef)) {
+    if (quayRef === undefined || isBlank(quayRef)) {
       this.setState({ quaySearch: {} });
     } else {
       let quaySearch = await searchForQuay(quayRef);

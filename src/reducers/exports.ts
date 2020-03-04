@@ -3,8 +3,12 @@ import {
   RECEIVE_EXPORTS,
   RECEIVE_EXPORT
 } from 'actions/exports';
+import { AnyAction } from 'redux';
+import Export from 'model/Export';
 
-const exportsReducer = (exports = null, action) => {
+type ExportsState = Export[] | null;
+
+const exportsReducer = (exports: ExportsState = null, action: AnyAction) => {
   switch (action.type) {
     case REQUEST_EXPORTS:
       return null;

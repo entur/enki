@@ -1,7 +1,13 @@
 import Versioned from './base/Versioned';
 
+type Data = {
+  frontText?: string;
+};
+
 class DestinationDisplay extends Versioned {
-  constructor(data = {}) {
+  frontText: string | undefined;
+
+  constructor(data: Data = {}) {
     super(data);
 
     this.frontText = data.frontText;

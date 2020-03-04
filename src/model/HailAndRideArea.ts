@@ -1,7 +1,21 @@
 import Versioned from './base/Versioned';
 
+type Data = {
+  name?: string;
+  description?: string;
+  privateCode?: string;
+  startQuayRef?: string;
+  endQuayRef?: string;
+};
+
 class HailAndRideArea extends Versioned {
-  constructor(data = {}) {
+  name: string;
+  description: string;
+  privateCode: string;
+  startQuayRef: string;
+  endQuayRef: string;
+
+  constructor(data: Data = {}) {
     super(data);
 
     this.name = data.name || '';

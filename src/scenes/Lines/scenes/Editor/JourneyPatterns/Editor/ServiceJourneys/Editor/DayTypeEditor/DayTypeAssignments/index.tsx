@@ -4,7 +4,7 @@ import { selectIntl } from 'i18n';
 import moment from 'moment/moment';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
-import { DayTypeAssignment } from 'model';
+import DayTypeAssignment from 'model/DayTypeAssignment';
 import DayTypeAssignmentEditor from './Editor';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import messages from '../../../../messages';

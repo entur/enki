@@ -4,8 +4,26 @@ import http from 'http/http';
 import { saveAs } from 'file-saver';
 import token from 'http/token';
 
+type Data = {
+  name?: string;
+  exportStatus?: string;
+  fromDate?: string;
+  toDate?: string;
+  dryRun?: boolean;
+  downloadUrl?: string;
+  messages?: Message[];
+};
+
 class Export extends Versioned {
-  constructor(data = {}) {
+  name: string | undefined;
+  exportStatus: string | undefined;
+  fromDate: string | undefined;
+  toDate: string | undefined;
+  dryRun: boolean | undefined;
+  downloadUrl: string | undefined;
+  messages: Message[];
+
+  constructor(data: Data = {}) {
     super(data);
 
     this.name = data.name;
