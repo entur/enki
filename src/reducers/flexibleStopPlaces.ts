@@ -7,7 +7,7 @@ import {
 import FlexibleStopPlace from '../model/FlexibleStopPlace';
 import { AnyAction } from 'redux';
 
-type FlexibleStopPlacesState = FlexibleStopPlace[] | null;
+export type FlexibleStopPlacesState = FlexibleStopPlace[] | null;
 
 const flexibleStopPlaces = (
   stopPlaces: FlexibleStopPlacesState = null,

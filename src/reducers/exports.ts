@@ -6,7 +6,7 @@ import {
 import { AnyAction } from 'redux';
 import Export from 'model/Export';
 
-type ExportsState = Export[] | null;
+export type ExportsState = Export[] | null;
 
 const exportsReducer = (exports: ExportsState = null, action: AnyAction) => {
   switch (action.type) {

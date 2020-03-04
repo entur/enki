@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
 import { SuccessButton, NegativeButton, SecondaryButton } from '@entur/button';
-import { Network } from 'model';
+import { RouteComponentProps } from 'react-router';
 import { isBlank } from 'helpers/forms';
 import { ORGANISATION_TYPE } from 'model/enums';
 import {
@@ -19,42 +19,60 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import PageHeader from 'components/PageHeader';
 
 import './styles.scss';
-import { createSelector } from 'reselect';
 import selectActiveProvider from 'selectors/selectActiveProvider';
 import { selectIntl } from 'i18n';
 import messages from './messages';
+import { GlobalState } from 'reducers';
+import { Network } from 'model/Network';
+import { FlexibleLinesState } from 'reducers/flexibleLines';
+import { OrganisationState } from 'reducers/organisations';
+import { IntlState } from 'react-intl-redux';
+import { IntlFormatters } from 'react-intl';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
 
-const selectNetwork = createSelector(
-  state => state.networks,
-  (_, match) => match.params.id,
-  (networks, id) =>
-    id ? (networks ? networks.find(n => n.id === id) : null) : new Network()
-);
+type MatchParams = {
+  id: string;
+};
 
-const NetworkEditor = ({ match, history }) => {
-  const { formatMessage } = useSelector(selectIntl);
+const getCurrentNetwork = (
+  state: GlobalState,
+  match: { params: MatchParams }
+): Network =>
+  state.networks?.find(network => network.id === match.params.id) ?? {};
+
+const NetworkEditor = ({
+  match,
+  history
+}: RouteComponentProps<MatchParams>) => {
+  const { formatMessage } = useSelector<IntlState, IntlFormatters>(selectIntl);
   const activeProvider = useSelector(selectActiveProvider());
-  const organisations = useSelector(({ organisations }) => organisations);
-  const lines = useSelector(({ flexibleLines }) => flexibleLines);
-  const currentNetwork = useSelector(state => selectNetwork(state, match));
-
-  const [authoritySelection, setAuthoritySelection] = useState(
-    currentNetwork?.authorityRef || DEFAULT_SELECT_VALUE
+  const organisations = useSelector<GlobalState, OrganisationState>(
+    ({ organisations }) => organisations
   );
-  const [isSaving, setSaving] = useState(false);
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [isDeleting, setDeleting] = useState(false);
-  const [network, setNetwork] = useState(currentNetwork);
+  const lines = useSelector<GlobalState, FlexibleLinesState>(
+    ({ flexibleLines }) => flexibleLines
+  );
+  const currentNetwork = useSelector<GlobalState, Network>(state =>
+    getCurrentNetwork(state, match)
+  );
 
-  const dispatch = useDispatch();
+  const [isSaving, setSaving] = useState<boolean>(false);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [isDeleting, setDeleting] = useState<boolean>(false);
+  const [network, setNetwork] = useState<Network>(currentNetwork);
+
+  const dispatch = useDispatch<any>();
 
   const dispatchLoadFlexibleLines = useCallback(
     () => dispatch(loadFlexibleLines()),
     [dispatch]
   );
+
+  const onFieldChange = (field: keyof Network, value: string) => {
+    setNetwork({ ...network, [field]: value });
+  };
 
   const dispatchLoadNetwork = useCallback(() => {
     if (match.params.id) {
@@ -69,13 +87,6 @@ const NetworkEditor = ({ match, history }) => {
     dispatchLoadNetwork();
   }, [dispatchLoadFlexibleLines, dispatchLoadNetwork]);
 
-  useEffect(() => {
-    setAuthoritySelection(
-      currentNetwork ? currentNetwork.authorityRef : DEFAULT_SELECT_VALUE
-    );
-    setNetwork(currentNetwork);
-  }, [currentNetwork]);
-
   const handleOnSaveClick = () => {
     setSaving(true);
     dispatch(saveNetwork(network))
@@ -83,26 +94,28 @@ const NetworkEditor = ({ match, history }) => {
       .finally(() => setSaving(false));
   };
 
-  const onFieldChange = (field, value) => {
-    setNetwork(network.withFieldChange(field, value));
-  };
-
-  const handleAuthoritySelectionChange = authoritySelection => {
+  const handleAuthoritySelectionChange = (
+    authoritySelection: string | undefined
+  ) => {
     const authorityRef =
-      authoritySelection !== DEFAULT_SELECT_VALUE ? authoritySelection : null;
-    setNetwork(network.withFieldChange('authorityRef', authorityRef));
-    setAuthoritySelection(authoritySelection);
+      authoritySelection !== DEFAULT_SELECT_VALUE
+        ? authoritySelection
+        : undefined;
+    setNetwork({
+      ...network,
+      authorityRef: authorityRef
+    });
   };
 
   const handleDelete = () => {
     setDeleteDialogOpen(false);
     setDeleting(true);
-    dispatch(deleteNetworkById(network.id)).then(() =>
+    dispatch(deleteNetworkById(network?.id)).then(() =>
       history.push('/networks')
     );
   };
 
-  const authorities = organisations.filter(
+  const authorities = (organisations ?? []).filter(
     org =>
       org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
       org.references.netexAuthorityId &&
@@ -132,6 +145,7 @@ const NetworkEditor = ({ match, history }) => {
 
       {network && lines ? (
         <OverlayLoader
+          className=""
           isLoading={isSaving || isDeleting}
           text={
             isSaving
@@ -150,7 +164,9 @@ const NetworkEditor = ({ match, history }) => {
             >
               <TextField
                 defaultValue={network.name ?? ''}
-                onChange={e => onFieldChange('name', e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('name', e.target.value)
+                }
               />
             </InputGroup>
 
@@ -160,7 +176,9 @@ const NetworkEditor = ({ match, history }) => {
             >
               <TextArea
                 value={network.description ?? ''}
-                onChange={e => onFieldChange('description', e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('description', e.target.value)
+                }
               />
             </InputGroup>
 
@@ -170,7 +188,9 @@ const NetworkEditor = ({ match, history }) => {
             >
               <TextField
                 value={network.privateCode ?? ''}
-                onChange={e => onFieldChange('privateCode', e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('privateCode', e.target.value)
+                }
               />
             </InputGroup>
 
@@ -184,8 +204,10 @@ const NetworkEditor = ({ match, history }) => {
                   value: org.id
                 }))
               ]}
-              value={authoritySelection}
-              onChange={({ value }) => handleAuthoritySelectionChange(value)}
+              value={network.authorityRef ?? DEFAULT_SELECT_VALUE}
+              onChange={organisation =>
+                handleAuthoritySelectionChange(organisation?.value)
+              }
             />
 
             <div className="buttons">
@@ -209,6 +231,10 @@ const NetworkEditor = ({ match, history }) => {
         </OverlayLoader>
       ) : (
         <Loading
+          className=""
+          isLoading={!network}
+          isFullScreen
+          children={null}
           text={
             !network
               ? formatMessage(messages.loadingNetworkText)

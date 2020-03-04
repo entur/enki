@@ -1,7 +1,6 @@
 import { UttuQuery } from 'graphql';
 import { deleteNetwork, networkMutation } from 'graphql/uttu/mutations';
 import { getNetworkByIdQuery, getNetworksQuery } from 'graphql/uttu/queries';
-import { Network } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
@@ -64,8 +63,7 @@ export const loadNetworks = () => async (dispatch, getState) => {
       getNetworksQuery,
       {}
     );
-    const networks = data.networks.map(n => new Network(n));
-    dispatch(receiveNetworksActionCreator(networks));
+    dispatch(receiveNetworksActionCreator(data.networks));
   } catch (e) {
     dispatch(
       showErrorNotification(
@@ -90,7 +88,7 @@ export const loadNetworkById = id => async (dispatch, getState) => {
       getNetworkByIdQuery,
       { id }
     );
-    dispatch(receiveNetworkActionCreator(new Network(data.network)));
+    dispatch(receiveNetworkActionCreator(data.network));
   } catch (e) {
     dispatch(
       showErrorNotification(

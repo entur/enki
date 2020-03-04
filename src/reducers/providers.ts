@@ -6,7 +6,7 @@ import {
 import { AnyAction } from 'redux';
 import Provider from 'model/Provider';
 
-type ProvidersState = {
+export type ProvidersState = {
   providers: Provider[] | null;
   failure: boolean;
   active: string | null;
