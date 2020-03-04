@@ -15,9 +15,7 @@ class DayType extends Versioned {
     super(data);
 
     this.daysOfWeek = data.daysOfWeek || [];
-    this.dayTypeAssignments = (data.dayTypeAssignments || []).map(
-      dta => new DayTypeAssignment(dta)
-    );
+    this.dayTypeAssignments = data.dayTypeAssignments || [];
   }
 
   isEmpty() {
