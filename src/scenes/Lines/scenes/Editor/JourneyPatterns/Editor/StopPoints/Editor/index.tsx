@@ -64,7 +64,7 @@ const StopPointEditor = (props: Props & StateProps) => {
   const onFieldChange = (field: string, value: any) => {
     const newStopPoint = stopPoint.withFieldChange(field, value);
     onChange(newStopPoint);
-    // checkFormErrors(newStopPoint, isFirst, quaySearch)
+    checkFormErrors(newStopPoint, isFirst);
   };
 
   const handleStopPlaceSelectionChange = (
@@ -84,12 +84,8 @@ const StopPointEditor = (props: Props & StateProps) => {
     onFieldChange('destinationDisplay', destinationDisplay);
   };
 
-  const checkFormErrors = (
-    stopPoint: StopPoint,
-    isFirst: boolean,
-    quaySearch: QuaySearch | undefined
-  ) => {
-    const [valid, errors] = validateForm(stopPoint, isFirst, quaySearch);
+  const checkFormErrors = (stopPoint: StopPoint, isFirst: boolean) => {
+    const [valid, errors] = validateForm(stopPoint, isFirst);
 
     setErrors(errors);
     setIsValidStopPoints(valid);
@@ -100,6 +96,7 @@ const StopPointEditor = (props: Props & StateProps) => {
       if (isBlank(quayRef)) return setQuaySearch({});
 
       const quaySearch = await searchForQuay(quayRef);
+      console.log(quaySearch);
       setQuaySearch(quaySearch);
     }, 1000),
     []

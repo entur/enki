@@ -15,6 +15,7 @@ import { isBlank } from 'helpers/forms';
 import { StopPoint, FlexibleStopPlace } from 'model';
 import { StopPlaceSelectionType } from './index';
 import { QuaySearch } from './searchForQuay';
+import { DEFAULT_SELECT_VALUE } from './constants';
 
 function quaySearchFeedback(
   errors: string[],
@@ -68,11 +69,21 @@ const Form = ({
       : '';
   const [selectMode, setSelectMode] = useState<string | null>('custom');
 
+  const changeSelectMode = (selectedMode: string | null) => {
+    if (selectedMode === 'custom') {
+      handleFieldChange('quayRef', null);
+      setSelectMode('custom');
+    } else if (selectedMode === 'nsr') {
+      handleStopPlaceSelectionChange(DEFAULT_SELECT_VALUE);
+      setSelectMode('nsr');
+    }
+  };
+
   return (
     <div className="tab-style">
       <div style={{ marginBottom: '1rem' }}>
         <SegmentedControl
-          onChange={selectedValue => setSelectMode(selectedValue)}
+          onChange={selectedValue => changeSelectMode(selectedValue)}
           selectedValue={selectMode}
         >
           <SegmentedChoice value="custom">
@@ -103,7 +114,7 @@ const Form = ({
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               const value = e.target.value;
               handleFieldChange('quayRef', isBlank(value) ? null : value);
-              debouncedSearchForQuay(e.target.value);
+              debouncedSearchForQuay(value);
             }}
           />
         </InputGroup>

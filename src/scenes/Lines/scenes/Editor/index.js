@@ -279,7 +279,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             )}
             <PrimaryButton
               onClick={handleOnSaveClick}
-              disabled={!isValidServiceJourney}
+              disabled={!isValidServiceJourney || !isValidStopPoints}
             >
               {formatMessage(messages.saveButtonText)}
             </PrimaryButton>

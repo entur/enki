@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Dropdown } from '@entur/dropdown';
 import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL } from './constants';
 import { useSelector } from 'react-redux';
@@ -15,21 +15,20 @@ export default function StopPlaceSelection({
   const error = flexibleStopPlaceRefAndQuayRefErrors[0];
 
   return (
-    <Fragment>
-      <Dropdown
-        label={formatMessage(messages.stopPlace)}
-        variant={error ? 'error' : undefined}
-        feedback={error ? formatMessage(error) : undefined}
-        items={[
-          { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
-          ...flexibleStopPlaces.map(fsp => ({
-            label: fsp.name,
-            value: fsp.id
-          }))
-        ]}
-        defaultValue={stopPlaceSelection}
-        onChange={e => handleStopPlaceSelectionChange(e.value)}
-      />
-    </Fragment>
+    <Dropdown
+      label={formatMessage(messages.stopPlace)}
+      variant={error ? 'error' : undefined}
+      feedback={error ? formatMessage(error) : undefined}
+      items={[
+        { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
+        ...flexibleStopPlaces.map(fsp => ({
+          label: fsp.name,
+          value: fsp.id
+        }))
+      ]}
+      defaultValue={stopPlaceSelection}
+      value={stopPlaceSelection}
+      onChange={e => handleStopPlaceSelectionChange(e.value)}
+    />
   );
 }
