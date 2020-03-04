@@ -5,11 +5,12 @@ import cx from 'classnames';
 import moment from 'moment';
 import { DeleteIcon } from '@entur/icons';
 import { Checkbox, InputGroup, Switch } from '@entur/form';
-import { DayTypeAssignment, OperatingPeriod } from 'model';
 import { dateToString } from 'helpers/dates';
 import { DatePicker } from '@entur/datepicker';
 import './styles.scss';
 import messages from '../../../../../messages';
+import DayTypeAssignment from 'model/DayTypeAssignment';
+import OperatingPeriod from 'model/OperatingPeriod';
 
 type Props = {
   dayTypeAssignment: DayTypeAssignment;
