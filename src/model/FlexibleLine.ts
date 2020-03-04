@@ -3,9 +3,40 @@ import Network from './Network';
 import BookingArrangement from './BookingArrangement';
 import JourneyPattern from './JourneyPattern';
 import { replaceElement } from 'helpers/arrays';
+import Notice from './Notice';
+
+type Data = {
+  name?: string;
+  description?: string;
+  privateCode?: string;
+  publicCode?: string;
+  transportMode?: string;
+  transportSubmode?: string;
+  flexibleLineType?: string;
+  network?: Network;
+  networkRef?: string;
+  operatorRef?: string;
+  bookingArrangement?: BookingArrangement;
+  journeyPatterns?: JourneyPattern[];
+  notices?: Notice[];
+};
 
 class FlexibleLine extends Versioned {
-  constructor(data = {}) {
+  name: string | undefined;
+  description: string | undefined;
+  privateCode: string | undefined;
+  publicCode: string | undefined;
+  transportMode: string | undefined;
+  transportSubmode: string | undefined;
+  flexibleLineType: string | undefined;
+  network: Network | undefined;
+  networkRef: string;
+  operatorRef: string | undefined;
+  bookingArrangement: BookingArrangement | undefined;
+  journeyPatterns: JourneyPattern[];
+  notices: Notice[];
+
+  constructor(data: Data = {}) {
     super(data);
 
     this.name = data.name;
@@ -16,8 +47,7 @@ class FlexibleLine extends Versioned {
     this.transportSubmode = data.transportSubmode;
     this.flexibleLineType = data.flexibleLineType;
     this.network = data.network ? new Network(data.network) : undefined;
-    this.networkRef =
-      data.networkRef || data.network ? data.network.id : undefined;
+    this.networkRef = data.networkRef ?? data.network?.id ?? undefined;
     this.operatorRef = data.operatorRef;
     this.bookingArrangement = data.bookingArrangement
       ? new BookingArrangement(data.bookingArrangement)
@@ -28,13 +58,13 @@ class FlexibleLine extends Versioned {
     this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 
-  addJourneyPattern(journeyPattern) {
+  addJourneyPattern(journeyPattern: JourneyPattern) {
     return this.withChanges({
       journeyPatterns: this.journeyPatterns.concat(journeyPattern)
     });
   }
 
-  updateJourneyPattern(index, journeyPattern) {
+  updateJourneyPattern(index: number, journeyPattern: JourneyPattern) {
     const journeyPatterns = replaceElement(
       this.journeyPatterns,
       index,
@@ -43,7 +73,7 @@ class FlexibleLine extends Versioned {
     return this.withChanges({ journeyPatterns });
   }
 
-  removeJourneyPattern(index) {
+  removeJourneyPattern(index: number) {
     const copy = this.journeyPatterns.slice();
     copy.splice(index, 1);
     return this.withChanges({ journeyPatterns: copy });

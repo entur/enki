@@ -4,8 +4,15 @@ import {
   REQUEST_FLEXIBLE_STOP_PLACE,
   RECEIVE_FLEXIBLE_STOP_PLACE
 } from 'actions/flexibleStopPlaces';
+import FlexibleStopPlace from '../model/FlexibleStopPlace';
+import { AnyAction } from 'redux';
 
-const flexibleStopPlaces = (stopPlaces = null, action) => {
+type FlexibleStopPlacesState = FlexibleStopPlace[] | null;
+
+const flexibleStopPlaces = (
+  stopPlaces: FlexibleStopPlacesState = null,
+  action: AnyAction
+): FlexibleStopPlacesState => {
   switch (action.type) {
     case REQUEST_FLEXIBLE_STOP_PLACES:
       return null;

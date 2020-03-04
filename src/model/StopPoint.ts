@@ -2,9 +2,30 @@ import Versioned from './base/Versioned';
 import FlexibleStopPlace from './FlexibleStopPlace';
 import DestinationDisplay from './DestinationDisplay';
 import BookingArrangement from './BookingArrangement';
+import Notice from './Notice';
+
+type Data = {
+  flexibleStopPlace?: FlexibleStopPlace;
+  flexibleStopPlaceRef?: string;
+  quayRef?: string;
+  bookingArrangement?: BookingArrangement;
+  destinationDisplay?: DestinationDisplay;
+  forBoarding?: boolean;
+  forAlighting?: boolean;
+  notices?: Notice[];
+};
 
 class StopPoint extends Versioned {
-  constructor(data = {}) {
+  flexibleStopPlace: FlexibleStopPlace | undefined;
+  flexibleStopPlaceRef: string | undefined;
+  quayRef: string | undefined;
+  bookingArrangement: BookingArrangement | undefined;
+  destinationDisplay: DestinationDisplay | undefined;
+  forBoarding: boolean | undefined;
+  forAlighting: boolean | undefined;
+  notices: Notice[] | undefined;
+
+  constructor(data: Data = {}) {
     super(data);
 
     this.flexibleStopPlace = data.flexibleStopPlace

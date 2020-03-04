@@ -4,7 +4,7 @@ import { selectIntl } from 'i18n';
 import moment from 'moment/moment';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
-import { DayTypeAssignment } from 'model';
+import DayTypeAssignment from 'model/DayTypeAssignment';
 import DayTypeAssignmentEditor from './Editor';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import messages from '../../../../messages';
@@ -28,16 +28,14 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
   const addNewDayTypeAssignment = () => {
     const today = moment().format('YYYY-MM-DD');
-    onChange(
-      dayTypeAssignments.concat(
-        new DayTypeAssignment({
-          operatingPeriod: {
-            fromDate: today,
-            toDate: today
-          }
-        })
-      )
-    );
+    const dayTypeAssignment = {
+      isAvailable: false,
+      operatingPeriod: {
+        fromDate: today,
+        toDate: today
+      }
+    };
+    onChange(dayTypeAssignments.concat(dayTypeAssignment));
   };
 
   const deleteDayTypeAssignment = (index: number) => {

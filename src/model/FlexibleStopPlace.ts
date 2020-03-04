@@ -2,8 +2,24 @@ import Versioned from './base/Versioned';
 import FlexibleArea from './FlexibleArea';
 import HailAndRideArea from './HailAndRideArea';
 
+type Data = {
+  name?: string;
+  description?: string;
+  privateCode?: string;
+  transportMode?: string;
+  flexibleArea?: FlexibleArea;
+  hailAndRideArea?: HailAndRideArea;
+};
+
 class FlexibleStopPlace extends Versioned {
-  constructor(data = {}) {
+  name: string | undefined;
+  description: string | undefined;
+  privateCode: string | undefined;
+  transportMode: string | undefined;
+  flexibleArea: FlexibleArea | undefined;
+  hailAndRideArea: HailAndRideArea | undefined;
+
+  constructor(data: Data = {}) {
     super(data);
 
     this.name = data.name;

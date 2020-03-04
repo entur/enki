@@ -2,8 +2,20 @@ import Versioned from './base/Versioned';
 import GeoJSON from './GeoJSON';
 import { GEOMETRY_TYPE } from './enums';
 
+type Data = {
+  name?: string;
+  description?: string;
+  privateCode?: string;
+  polygon?: GeoJSON;
+};
+
 class FlexibleArea extends Versioned {
-  constructor(data = {}) {
+  name: string | undefined;
+  description: string | undefined;
+  privateCode: string | undefined;
+  polygon: GeoJSON;
+
+  constructor(data: Data = {}) {
     super(data);
 
     this.name = data.name;
@@ -14,7 +26,7 @@ class FlexibleArea extends Versioned {
       : new GeoJSON({ type: GEOMETRY_TYPE.POLYGON });
   }
 
-  addCoordinate(coordinate) {
+  addCoordinate(coordinate: number) {
     // The polygon must be closed: first coordinate == last coordinate.
     let coordinates = this.polygon.coordinates.slice();
     const lastCoordinate = coordinates.pop() || coordinate;
@@ -28,7 +40,7 @@ class FlexibleArea extends Versioned {
   removeLastCoordinate() {
     let coordinates = this.polygon.coordinates.slice();
     if (coordinates.length > 2) {
-      const lastCoordinate = coordinates.pop();
+      const lastCoordinate = coordinates.pop()!;
       coordinates.pop();
       coordinates.push(lastCoordinate);
     } else {

@@ -1,8 +1,18 @@
 import Versioned from './base/Versioned';
 import Codespace from './Codespace';
 
+type Data = {
+  name?: string;
+  code?: string;
+  codespace?: Codespace | null;
+};
+
 class Provider extends Versioned {
-  constructor(data = {}) {
+  name: string;
+  code: string;
+  codespace: Codespace | null;
+
+  constructor(data: Data = {}) {
     super(data);
 
     this.name = data.name || '';

@@ -8,6 +8,7 @@ type Data = {
 class GeoJSON extends Base {
   type: string;
   coordinates: number[];
+
   constructor(data: Data) {
     super();
 

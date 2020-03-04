@@ -2,8 +2,15 @@ import {
   RECEIVE_FLEXIBLE_LINES,
   RECEIVE_FLEXIBLE_LINE
 } from 'actions/flexibleLines';
+import FlexibleLine from '../model/FlexibleLine';
+import { AnyAction } from 'redux';
 
-const flexibleLines = (lines = null, action) => {
+type FlexibleLinesState = FlexibleLine[] | null;
+
+const flexibleLines = (
+  lines: FlexibleLinesState = null,
+  action: AnyAction
+): FlexibleLinesState => {
   switch (action.type) {
     case RECEIVE_FLEXIBLE_LINES:
       return action.lines;

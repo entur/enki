@@ -9,7 +9,7 @@ import { getIntl } from 'i18n';
 import { DeleteIcon } from '@entur/icons';
 import './styles.scss';
 import { ExpandableText } from '@entur/expand';
-import searchForQuay, { QuaySearch } from './searchForQuay';
+import searchForQuay, { QuaySearch, StopPlace } from './searchForQuay';
 import debounce from './debounce';
 import { DEFAULT_SELECT_VALUE } from './constants';
 import Form from './Form';
@@ -48,9 +48,9 @@ const StopPointEditor = (props: Props & StateProps) => {
     deleteStopPoint
   } = props;
 
-  const [stopPlaceSelection, setStopPlaceSelection] = useState(
-    stopPoint.flexibleStopPlaceRef ?? DEFAULT_SELECT_VALUE
-  );
+  const [stopPlaceSelection, setStopPlaceSelection] = useState<
+    StopPlaceSelectionType
+  >(stopPoint.flexibleStopPlaceRef ?? DEFAULT_SELECT_VALUE);
   const [errors, setErrors] = useState<StopPointsFormError>({
     quayRef: [],
     flexibleStopPlaceRefAndQuayRef: [],
