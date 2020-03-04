@@ -146,6 +146,8 @@
   "lines.editor.journeyPatterns.editor.general": "General",
   "lines.editor.journeyPatterns.editor.stopPoints": "Stop points",
   "lines.editor.journeyPatterns.editor.stopPoints.info": "You have to create at least two stop points. One for boarding and one for alighting.",
+  "lines.editor.journeyPatterns.editor.stopPoints.delete.title": "Delete stop point",
+  "lines.editor.journeyPatterns.editor.stopPoints.delete.message": "Are you sure you want to delete this stop point?",
   "lines.editor.journeyPatterns.editor.serviceJourneys": "Service Journeys",
   "lines.editor.journeyPatterns.editor.serviceJourneys.info": "Create different Service Journeys for different opening hours. For instance one for weekdays and one for the weekend.",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays": "Weekdays",

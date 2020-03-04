@@ -1,9 +1,15 @@
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
-import searchForQuay from './searchForQuay';
 import messages from './validateForm.messages';
+import { StopPoint } from 'model';
+import { QuaySearch } from './searchForQuay';
+import { StopPointsFormError } from './index';
 
-export default async function(stopPoint, stopPointIndex) {
-  let errors = {
+export default function(
+  stopPoint: StopPoint,
+  isFirst: boolean,
+  quaySearch: QuaySearch | undefined
+): [boolean, StopPointsFormError] {
+  let errors: StopPointsFormError = {
     quayRef: [],
     flexibleStopPlaceRefAndQuayRef: [],
     frontText: []
@@ -15,16 +21,16 @@ export default async function(stopPoint, stopPointIndex) {
       messages.errorFlexibleStopPlaceRefAndQuayRefNoValues
     );
   } else if (flexibleStopPlaceRef && !isBlank(quayRef)) {
+    console.log(flexibleStopPlaceRef, quayRef);
     errors.flexibleStopPlaceRefAndQuayRef.push(
       messages.errorFlexibleStopPlaceRefAndQuayRefBothValues
     );
   } else if (!isBlank(quayRef)) {
-    let quaySearch = await searchForQuay(quayRef);
-    if (!quaySearch.quay.id) {
+    if (!quaySearch?.quay?.id) {
       errors.quayRef.push(messages.errorQuayRefInvalid);
     }
   } else if (
-    stopPointIndex === 0 &&
+    isFirst &&
     (!destinationDisplay || isBlank(destinationDisplay.frontText))
   ) {
     errors.frontText.push(messages.errorFrontTextNoValue);

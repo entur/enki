@@ -14,9 +14,15 @@ type Props = {
   stopPoints: StopPoint[];
   deleteStopPoint: (index: number) => void;
   onChange: (stopPoints: StopPoint[]) => void;
+  setIsValidStopPoints: (isValid: boolean) => void;
 };
 
-const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
+const StopPointsEditor = ({
+  stopPoints,
+  deleteStopPoint,
+  onChange,
+  setIsValidStopPoints
+}: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
   const updateStopPoint = (index: number, stopPlace: StopPoint) => {
@@ -43,9 +49,11 @@ const StopPointsEditor = ({ stopPoints, deleteStopPoint, onChange }: Props) => {
           <StopPointEditor
             isFirst={index === 0}
             stopPoint={stopPoint}
+            deleteStopPoint={() => deleteStopPoint(index)}
             onChange={(stopPoint: StopPoint) =>
               updateStopPoint(index, stopPoint)
             }
+            setIsValidStopPoints={setIsValidStopPoints}
           />
         </ExpandablePanel>
       ))}

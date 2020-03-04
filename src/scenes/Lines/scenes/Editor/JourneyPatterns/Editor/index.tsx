@@ -20,6 +20,7 @@ type Props = {
   };
   onSave: (journeyPattern: any, index: number) => void;
   setIsValidServiceJourney: (isValid: boolean) => void;
+  setIsValidStopPoints: (isValid: boolean) => void;
   index: number;
 };
 
@@ -27,6 +28,7 @@ const JourneyPatternEditor = ({
   journeyPattern,
   onSave,
   setIsValidServiceJourney,
+  setIsValidStopPoints,
   index
 }: Props) => {
   const [directionSelection, setDirectionSelection] = useState(
@@ -92,6 +94,7 @@ const JourneyPatternEditor = ({
           stopPoints={pointsInSequence}
           deleteStopPoint={deleteStopPoint}
           onChange={pis => onFieldChange('pointsInSequence', pis)}
+          setIsValidStopPoints={setIsValidStopPoints}
         />
       </section>
 

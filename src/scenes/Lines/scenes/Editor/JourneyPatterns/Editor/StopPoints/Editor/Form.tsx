@@ -36,7 +36,7 @@ interface Props extends WrappedComponentProps {
     stopPlaceSelection: StopPlaceSelectionType
   ) => void;
   handleFieldChange: (field: string, value: any) => void;
-  debouncedSearchForQuay: () => void;
+  debouncedSearchForQuay: (quayRef: string) => void;
   handleFrontTextChange: (frontText: string) => void;
   stopPoint: StopPoint;
   frontTextRequired: boolean;
@@ -80,7 +80,7 @@ const Form = ({
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value;
             handleFieldChange('quayRef', isBlank(value) ? null : value);
-            debouncedSearchForQuay();
+            debouncedSearchForQuay(e.target.value);
           }}
         />
       </InputGroup>
