@@ -22,3 +22,7 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 export default http;
+
+export type MatchParams = {
+  id: string;
+};

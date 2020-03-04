@@ -28,13 +28,10 @@ import { FlexibleLinesState } from 'reducers/flexibleLines';
 import { OrganisationState } from 'reducers/organisations';
 import { IntlState } from 'react-intl-redux';
 import { IntlFormatters } from 'react-intl';
+import { MatchParams } from 'http/http';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
-
-type MatchParams = {
-  id: string;
-};
 
 const getCurrentNetwork = (
   state: GlobalState,

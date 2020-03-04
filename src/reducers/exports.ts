@@ -4,7 +4,7 @@ import {
   RECEIVE_EXPORT
 } from 'actions/exports';
 import { AnyAction } from 'redux';
-import Export from 'model/Export';
+import { Export } from 'model/Export';
 
 export type ExportsState = Export[] | null;
 

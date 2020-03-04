@@ -5,7 +5,6 @@ import moment from 'moment';
 import { SuccessButton } from '@entur/button';
 import { Checkbox, InputGroup, TextField } from '@entur/form';
 import { DatePicker } from '@entur/datepicker';
-import { Export } from 'model';
 import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
 import PageHeader from 'components/PageHeader';
@@ -22,7 +21,7 @@ import validateForm, {
 
 const newExport = () => {
   const today = moment().format('YYYY-MM-DD');
-  return new Export({ fromDate: today, toDate: today });
+  return { name: '', fromDate: today, toDate: today, dryRun: false };
 };
 
 const ExportsCreator = ({ history }) => {
@@ -50,7 +49,10 @@ const ExportsCreator = ({ history }) => {
 
   const onFieldChange = useCallback(
     (field, value) => {
-      setTheExport(theExport.withFieldChange(field, value));
+      setTheExport({
+        ...theExport,
+        [field]: value
+      });
     },
     [theExport]
   );
