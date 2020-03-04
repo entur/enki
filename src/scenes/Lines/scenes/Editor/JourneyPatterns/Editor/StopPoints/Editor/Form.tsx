@@ -1,6 +1,13 @@
-import React, { ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { Checkbox, Fieldset, InputGroup, TextField } from '@entur/form';
+import {
+  Checkbox,
+  Fieldset,
+  InputGroup,
+  TextField,
+  SegmentedControl,
+  SegmentedChoice
+} from '@entur/form';
 import StopPlaceSelection from './StopPlaceSelection';
 import { QuaySearchResults, quaySearchResults } from './quaySearchResults';
 import messages from './Form.messages';
@@ -59,31 +66,48 @@ const Form = ({
     stopPoint.destinationDisplay && stopPoint.destinationDisplay.frontText
       ? stopPoint.destinationDisplay.frontText
       : '';
+  const [selectMode, setSelectMode] = useState<string | null>('custom');
 
   return (
     <div className="tab-style">
-      <StopPlaceSelection
-        stopPlaceSelection={stopPlaceSelection}
-        flexibleStopPlaceRefAndQuayRefErrors={
-          errors.flexibleStopPlaceRefAndQuayRef
-        }
-        flexibleStopPlaces={flexibleStopPlaces}
-        handleStopPlaceSelectionChange={handleStopPlaceSelectionChange}
-      />
+      <div style={{ marginBottom: '1rem' }}>
+        <SegmentedControl
+          onChange={selectedValue => setSelectMode(selectedValue)}
+          selectedValue={selectMode}
+        >
+          <SegmentedChoice value="custom">
+            {formatMessage(messages.selectCustom)}
+          </SegmentedChoice>
+          <SegmentedChoice value="nsr">
+            {formatMessage(messages.selectNSR)}
+          </SegmentedChoice>
+        </SegmentedControl>
+      </div>
 
-      <InputGroup
-        label={formatMessage(messages.labelQuayRef)}
-        {...quaySearchFeedback(errors.quayRef, quaySearch)}
-      >
-        <TextField
-          value={stopPoint.quayRef ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            const value = e.target.value;
-            handleFieldChange('quayRef', isBlank(value) ? null : value);
-            debouncedSearchForQuay(e.target.value);
-          }}
+      {selectMode === 'custom' ? (
+        <StopPlaceSelection
+          stopPlaceSelection={stopPlaceSelection}
+          flexibleStopPlaceRefAndQuayRefErrors={
+            errors.flexibleStopPlaceRefAndQuayRef
+          }
+          flexibleStopPlaces={flexibleStopPlaces}
+          handleStopPlaceSelectionChange={handleStopPlaceSelectionChange}
         />
-      </InputGroup>
+      ) : (
+        <InputGroup
+          label={formatMessage(messages.labelQuayRef)}
+          {...quaySearchFeedback(errors.quayRef, quaySearch)}
+        >
+          <TextField
+            value={stopPoint.quayRef ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              const value = e.target.value;
+              handleFieldChange('quayRef', isBlank(value) ? null : value);
+              debouncedSearchForQuay(e.target.value);
+            }}
+          />
+        </InputGroup>
+      )}
 
       <InputGroup
         label={
