@@ -4,7 +4,7 @@ import { getNetworkByIdQuery, getNetworksQuery } from 'graphql/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification
-} from 'components/Notification/actions';
+} from 'actions/notification';
 import { getStyledUttuError } from 'helpers/uttu';
 
 export const REQUEST_NETWORKS = 'REQUEST_NETWORKS';

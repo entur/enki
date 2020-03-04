@@ -7,7 +7,7 @@ import { FlexibleStopPlace } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
-} from 'components/Notification/actions';
+} from 'actions/notification';
 import {
   deleteFlexibleStopPlace,
   flexibleStopPlaceMutation

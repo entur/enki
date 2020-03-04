@@ -1,4 +1,4 @@
-import notification from 'components/Notification/reducer';
+import notification, { NotificationState } from 'reducers/notification';
 import user, { UserState } from './user';
 import organisations, { OrganisationState } from './organisations';
 import providers, { ProvidersState } from './providers';
@@ -11,7 +11,7 @@ import flexibleStopPlaces, {
 import editor, { EditorState } from './editor';
 
 export type GlobalState = {
-  notification: any;
+  notification: NotificationState;
   user: UserState;
   organisations: OrganisationState;
   providers: ProvidersState;

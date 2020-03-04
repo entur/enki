@@ -5,7 +5,7 @@ import { Export } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
-} from 'components/Notification/actions';
+} from 'actions/notification';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import messages from './exports.messages';
