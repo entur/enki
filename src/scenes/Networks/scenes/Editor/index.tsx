@@ -22,13 +22,13 @@ import './styles.scss';
 import selectActiveProvider from 'selectors/selectActiveProvider';
 import { selectIntl } from 'i18n';
 import messages from './messages';
+import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
-import { FlexibleLinesState } from 'reducers/flexibleLines';
-import { OrganisationState } from 'reducers/organisations';
 import { IntlState } from 'react-intl-redux';
 import { IntlFormatters } from 'react-intl';
-import { MatchParams } from 'http/http';
+import { OrganisationState } from 'reducers/organisations';
+import { FlexibleLinesState } from 'reducers/flexibleLines';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';

@@ -15,12 +15,14 @@ type Props = {
   journeyPatterns: any;
   onChange: (journeyPatterns: any[]) => void;
   setIsValidServiceJourney: (isValid: boolean) => void;
+  setIsValidStopPoints: (isValid: boolean) => void;
 };
 
 const JourneyPatternsEditor = ({
   journeyPatterns,
   onChange,
-  setIsValidServiceJourney
+  setIsValidServiceJourney,
+  setIsValidStopPoints
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const { isSaved } = useSelector((state: any) => state.editor);
@@ -59,6 +61,7 @@ const JourneyPatternsEditor = ({
             onSave={handleSave}
             index={index}
             setIsValidServiceJourney={setIsValidServiceJourney}
+            setIsValidStopPoints={setIsValidStopPoints}
           />
         </ExpandablePanel>
       ))}

@@ -164,6 +164,7 @@ const FlexibleLineEditor = ({ match, history }) => {
   const [isDeleting, setDeleting] = useState(false);
   const [errors, setErrors] = useState(validateForm(flexibleLine));
   const [isValidServiceJourney, setIsValidServiceJourney] = useState(true);
+  const [isValidStopPoints, setIsValidStopPoints] = useState(true);
 
   useEffect(() => {
     setErrors(validateForm(flexibleLine));
@@ -255,6 +256,7 @@ const FlexibleLineEditor = ({ match, history }) => {
                   journeyPatterns={flexibleLine.journeyPatterns}
                   onChange={jps => onFieldChange('journeyPatterns', jps)}
                   setIsValidServiceJourney={setIsValidServiceJourney}
+                  setIsValidStopPoints={setIsValidStopPoints}
                 />
               </TabPanel>
               <TabPanel>
@@ -277,7 +279,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             )}
             <PrimaryButton
               onClick={handleOnSaveClick}
-              disabled={!isValidServiceJourney}
+              disabled={!isValidServiceJourney || !isValidStopPoints}
             >
               {formatMessage(messages.saveButtonText)}
             </PrimaryButton>

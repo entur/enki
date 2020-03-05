@@ -158,5 +158,13 @@ export default defineMessages({
   no: {
     id: 'lines.journeyPatterns.stopPoints.table.no',
     defaultMessage: 'Nei'
+  },
+  stopPointDeleteMessage: {
+    id: 'lines.editor.journeyPatterns.editor.stopPoints.delete.message',
+    defaultMessage: 'Er du sikker på at du ønsker å slette dette stoppepunktet?'
+  },
+  stopPointDeleteTitle: {
+    id: 'lines.editor.journeyPatterns.editor.stopPoints.delete.title',
+    defaultMessage: 'Slette stoppepunkt'
   }
 });
