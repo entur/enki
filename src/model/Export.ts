@@ -16,12 +16,10 @@ export type Export = VersionedType & {
   messages?: Message[];
 };
 
-export const toPayload = (selectedExport: Export): Export => ({
-  ...selectedExport,
-  exportStatus: undefined,
-  downloadUrl: undefined,
-  messages: undefined
-});
+export const toPayload = (selectedExport: Export): Export => {
+  const { exportStatus, downloadUrl, messages, ...rest } = selectedExport;
+  return rest;
+};
 
 export const download = async (selectedExport: Export) => {
   try {

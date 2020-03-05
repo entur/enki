@@ -15,11 +15,11 @@ import { RouteComponentProps } from 'react-router';
 import './styles.scss';
 import messages from './creator.messages';
 import validatorMessages from './validateForm.messages';
-import validateForm, {
+import {
   validateName,
   toDateIsBeforeFromDate,
-  ExportValidation,
-  ExportError
+  ExportError,
+  validateForm
 } from './validateForm';
 import { Export } from 'model/Export';
 import { GlobalState } from 'reducers';
@@ -44,7 +44,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
   const dispatch = useDispatch<any>();
 
   const handleOnSaveClick = () => {
-    const [valid, errors] = validateForm(theExport) as ExportValidation;
+    const [valid, errors] = validateForm(theExport);
     if (!valid) {
       setErrors(errors);
     } else {

@@ -35,10 +35,10 @@ export const validateFromDateToDate = (
 export const toDateIsBeforeFromDate = (fromDate: string, toDate: string) =>
   moment(fromDate).isAfter(moment(toDate));
 
-export default function(theExport: Export) {
+export const validateForm = (theExport: Export): ExportValidation => {
   const errors = {
     name: validateName(theExport.name),
     fromDateToDate: validateFromDateToDate(theExport.fromDate, theExport.toDate)
   };
   return [objectValuesAreEmpty(errors), errors];
-}
+};
