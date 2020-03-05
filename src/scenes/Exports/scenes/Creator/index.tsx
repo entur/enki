@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
@@ -22,15 +22,19 @@ import validateForm, {
   ExportError
 } from './validateForm';
 import { Export } from 'model/Export';
+import { GlobalState } from 'reducers';
+import { IntlFormatters } from 'react-intl';
 
-const newExport = () => {
+const newExport = (): Export => {
   const today = moment().format('YYYY-MM-DD');
   return { name: '', fromDate: today, toDate: today, dryRun: false };
 };
 
 const ExportsCreator = ({ history }: RouteComponentProps) => {
-  const { formatMessage } = useSelector(selectIntl);
-  const [isSaving, setSaving] = useState(false);
+  const { formatMessage } = useSelector<GlobalState, IntlFormatters>(
+    selectIntl
+  );
+  const [isSaving, setSaving] = useState<boolean>(false);
   const [theExport, setTheExport] = useState<Export>(newExport());
   const [errors, setErrors] = useState<ExportError>({
     name: [],
@@ -40,7 +44,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
   const dispatch = useDispatch<any>();
 
   const handleOnSaveClick = () => {
-    let [valid, errors] = validateForm(theExport) as ExportValidation;
+    const [valid, errors] = validateForm(theExport) as ExportValidation;
     if (!valid) {
       setErrors(errors);
     } else {
@@ -51,15 +55,9 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
     }
   };
 
-  const onFieldChange = useCallback(
-    (field, value) => {
-      setTheExport({
-        ...theExport,
-        [field]: value
-      });
-    },
-    [theExport]
-  );
+  const onFieldChange = (field: keyof Export, value: string | boolean) => {
+    setTheExport({ ...theExport, [field]: value });
+  };
 
   return (
     <div className="export-editor">

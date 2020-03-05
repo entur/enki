@@ -40,18 +40,15 @@ const ExportsViewer = ({
   const { formatMessage } = useSelector<GlobalState, IntlFormatters>(
     selectIntl
   );
-
   const currentExport = useSelector<GlobalState, Export | undefined>(state =>
     getCurrentExport(state, match)
   );
-
   const [theExport, setTheExport] = useState(currentExport);
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const dispatchLoadExport = useCallback(() => {
     if (match.params.id) {
-      dispatch<any>(loadExportById(match.params.id)).catch(() =>
+      dispatch(loadExportById(match.params.id)).catch(() =>
         history.push('/exports')
       );
     } else {
