@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import FilterChip from '../ContentCheckbox';
 import { InputGroup } from '@entur/form';
 import { FilterChip } from '@entur/chip';
 
