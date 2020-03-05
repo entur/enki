@@ -9,7 +9,7 @@ import { getIntl } from 'i18n';
 import { DeleteIcon } from '@entur/icons';
 import './styles.scss';
 import { ExpandableText } from '@entur/expand';
-import searchForQuay, { QuaySearch, StopPlace } from './searchForQuay';
+import searchForQuay, { QuaySearch } from './searchForQuay';
 import debounce from './debounce';
 import { DEFAULT_SELECT_VALUE } from './constants';
 import Form from './Form';

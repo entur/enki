@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
   Checkbox,
@@ -69,21 +69,22 @@ const Form = ({
       : '';
   const [selectMode, setSelectMode] = useState<string | null>('custom');
 
-  const changeSelectMode = (selectedMode: string | null) => {
-    if (selectedMode === 'custom') {
+  useEffect(() => {
+    if (selectMode === 'custom') {
       handleFieldChange('quayRef', null);
       setSelectMode('custom');
-    } else if (selectedMode === 'nsr') {
+    } else if (selectMode === 'nsr') {
       handleStopPlaceSelectionChange(DEFAULT_SELECT_VALUE);
       setSelectMode('nsr');
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectMode]);
 
   return (
     <div className="tab-style">
       <div style={{ marginBottom: '1rem' }}>
         <SegmentedControl
-          onChange={selectedValue => changeSelectMode(selectedValue)}
+          onChange={selectedValue => setSelectMode(selectedValue)}
           selectedValue={selectMode}
         >
           <SegmentedChoice value="custom">
