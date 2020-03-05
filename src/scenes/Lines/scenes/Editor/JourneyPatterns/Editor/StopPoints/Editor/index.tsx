@@ -1,160 +1,159 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
 import { DestinationDisplay, StopPoint } from 'model';
-import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
+import { isBlank } from 'helpers/forms';
+import ConfirmDialog from 'components/ConfirmDialog';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
-import Header from './Header';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import { getIntl } from 'i18n';
+import { DeleteIcon } from '@entur/icons';
 import './styles.scss';
+import { ExpandableText } from '@entur/expand';
 import searchForQuay, { QuaySearch } from './searchForQuay';
 import debounce from './debounce';
 import { DEFAULT_SELECT_VALUE } from './constants';
 import Form from './Form';
 import validateForm from './validateForm';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
+import messages from '../../messages';
 
 export type StopPlaceSelectionType = string | null;
+export type StopPointsFormError = {
+  quayRef: any;
+  flexibleStopPlaceRefAndQuayRef: any;
+  frontText: any;
+};
 
 type Props = {
   isFirst: boolean;
   stopPoint: StopPoint;
   onChange: (stopPoint: any) => void;
-  onClose: () => void;
-  onSave: () => void;
-  isEditMode: boolean;
-  stopPointIndex: number;
+  deleteStopPoint: () => void;
+  setIsValidStopPoints: (isValid: boolean) => void;
 };
 
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
+  intl: any;
 };
 
-type State = {
-  stopPlaceSelection: StopPlaceSelectionType;
-  errors: {
-    quayRef: any[];
-    flexibleStopPlaceRefAndQuayRef: any[];
-    frontText: any[];
-  };
-  quaySearch: QuaySearch | undefined;
-};
+const StopPointEditor = (props: Props & StateProps) => {
+  const {
+    flexibleStopPlaces,
+    stopPoint,
+    isFirst,
+    intl,
+    onChange,
+    setIsValidStopPoints,
+    deleteStopPoint
+  } = props;
 
-class StopPointEditor extends Component<Props & StateProps> {
-  state: State = {
-    stopPlaceSelection:
-      this.props.stopPoint.flexibleStopPlaceRef ?? DEFAULT_SELECT_VALUE,
-    errors: { quayRef: [], flexibleStopPlaceRefAndQuayRef: [], frontText: [] },
-    quaySearch: undefined
+  const [stopPlaceSelection, setStopPlaceSelection] = useState<
+    StopPlaceSelectionType
+  >(stopPoint.flexibleStopPlaceRef ?? DEFAULT_SELECT_VALUE);
+  const [errors, setErrors] = useState<StopPointsFormError>({
+    quayRef: [],
+    flexibleStopPlaceRefAndQuayRef: [],
+    frontText: []
+  });
+  const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
+    undefined
+  );
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const onFieldChange = (field: string, value: any) => {
+    const newStopPoint = stopPoint.withFieldChange(field, value);
+    onChange(newStopPoint);
+    checkFormErrors(newStopPoint, isFirst);
   };
 
-  onFieldChange = (field: string, value: any) => {
-    const { stopPoint, onChange } = this.props;
-    onChange(stopPoint.withFieldChange(field, value));
-  };
-
-  handleStopPlaceSelectionChange = (
-    stopPlaceSelection: StopPlaceSelectionType
+  const handleStopPlaceSelectionChange = (
+    selectedStopPlace: StopPlaceSelectionType
   ) => {
-    this.onFieldChange(
+    onFieldChange(
       'flexibleStopPlaceRef',
-      stopPlaceSelection !== DEFAULT_SELECT_VALUE ? stopPlaceSelection : null
+      selectedStopPlace !== DEFAULT_SELECT_VALUE ? selectedStopPlace : null
     );
-    this.setState({ stopPlaceSelection });
+    setStopPlaceSelection(selectedStopPlace);
   };
 
-  handleFrontTextChange = (frontText: string) => {
-    const { stopPoint } = this.props;
+  const handleFrontTextChange = (frontText: string) => {
     const destinationDisplay = stopPoint.destinationDisplay
       ? stopPoint.destinationDisplay.withFieldChange('frontText', frontText)
       : new DestinationDisplay({ frontText });
-    this.onFieldChange('destinationDisplay', destinationDisplay);
+    onFieldChange('destinationDisplay', destinationDisplay);
   };
 
-  onSave = async () => {
-    let [valid, errors] = await validateForm(
-      this.props.stopPoint,
-      this.props.stopPointIndex
-    );
+  const checkFormErrors = (stopPoint: StopPoint, isFirst: boolean) => {
+    const [valid, errors] = validateForm(stopPoint, isFirst);
 
-    this.setState({ errors }, () => {
-      if (valid) {
-        this.props.onSave();
-      }
-    });
+    setErrors(errors);
+    setIsValidStopPoints(valid);
   };
 
-  debouncedSearchForQuay = debounce(async () => {
-    const quayRef = this.props.stopPoint.quayRef;
-    if (quayRef === undefined || isBlank(quayRef)) {
-      this.setState({ quaySearch: {} });
-    } else {
-      let quaySearch = await searchForQuay(quayRef);
-      this.setState({ quaySearch });
-    }
-  }, 1000);
+  const debouncedSearchForQuay = useCallback(
+    debounce(async (quayRef: string) => {
+      if (isBlank(quayRef)) return setQuaySearch({});
 
-  render() {
-    const {
-      flexibleStopPlaces,
-      stopPoint,
-      isEditMode,
-      isFirst,
-      onClose
-    } = this.props;
+      const quaySearch = await searchForQuay(quayRef);
+      console.log(quaySearch);
+      setQuaySearch(quaySearch);
+    }, 1000),
+    []
+  );
 
-    const firstElementHasFrontText =
-      isFirst && isBlank(stopPoint.destinationDisplay?.frontText);
-    const stopPlaceAndQuaySearchAreEmpty =
-      (this.state.stopPlaceSelection ?? '-1') === '-1' &&
-      objectValuesAreEmpty(this.state.quaySearch ?? {});
+  const translations = getIntl({ intl });
 
-    return (
-      <div className="stop-point-editor">
-        <Header
-          isEditMode={isEditMode}
-          onSave={this.onSave}
-          saveDisabled={
-            firstElementHasFrontText || stopPlaceAndQuaySearchAreEmpty
-          }
-          onClose={onClose}
+  return (
+    <div className="stop-point-editor">
+      <SecondaryButton
+        className="delete-button"
+        onClick={() => setDeleteDialogOpen(true)}
+      >
+        <DeleteIcon inline /> {translations.formatMessage(messages.delete)}
+      </SecondaryButton>
+
+      <Form
+        frontTextRequired={isFirst}
+        flexibleStopPlaces={flexibleStopPlaces}
+        stopPlaceSelection={stopPlaceSelection}
+        quaySearch={quaySearch}
+        errors={errors}
+        handleStopPlaceSelectionChange={handleStopPlaceSelectionChange}
+        handleFieldChange={onFieldChange}
+        debouncedSearchForQuay={debouncedSearchForQuay}
+        handleFrontTextChange={handleFrontTextChange}
+        stopPoint={stopPoint}
+      />
+
+      <ExpandableText title={translations.formatMessage(messages.booking)}>
+        <BookingArrangementEditor
+          bookingArrangement={stopPoint.bookingArrangement}
+          onChange={b => onFieldChange('bookingArrangement', b)}
         />
-        <Tabs>
-          <TabList>
-            <Tab>Generelt</Tab>
-            <Tab>Bestilling</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Form
-                frontTextRequired={isFirst}
-                flexibleStopPlaces={flexibleStopPlaces}
-                stopPlaceSelection={this.state.stopPlaceSelection}
-                quaySearch={this.state.quaySearch}
-                errors={this.state.errors}
-                handleStopPlaceSelectionChange={
-                  this.handleStopPlaceSelectionChange
-                }
-                handleFieldChange={this.onFieldChange}
-                debouncedSearchForQuay={this.debouncedSearchForQuay}
-                handleFrontTextChange={this.handleFrontTextChange}
-                stopPoint={stopPoint}
-              />
-            </TabPanel>
-            <TabPanel>
-              <BookingArrangementEditor
-                bookingArrangement={stopPoint.bookingArrangement}
-                onChange={b => this.onFieldChange('bookingArrangement', b)}
-              />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </div>
-    );
-  }
-}
+      </ExpandableText>
 
-const mapStateToProps = ({ flexibleStopPlaces }: StateProps) => ({
-  flexibleStopPlaces
+      <ConfirmDialog
+        isOpen={isDeleteDialogOpen}
+        title={translations.formatMessage(messages.stopPointDeleteTitle)}
+        message={translations.formatMessage(messages.stopPointDeleteMessage)}
+        buttons={[
+          <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+            {translations.formatMessage(messages.no)}
+          </SecondaryButton>,
+          <SuccessButton key={1} onClick={deleteStopPoint}>
+            {translations.formatMessage(messages.yes)}
+          </SuccessButton>
+        ]}
+        onDismiss={() => setDeleteDialogOpen(false)}
+      />
+    </div>
+  );
+};
+
+const mapStateToProps = ({ flexibleStopPlaces, intl }: StateProps) => ({
+  flexibleStopPlaces,
+  intl
 });
 
 export default connect(mapStateToProps)(StopPointEditor);
