@@ -11,7 +11,6 @@ export { default as GeoJSON } from './GeoJSON';
 export { default as HailAndRideArea } from './HailAndRideArea';
 export { default as JourneyPattern } from './JourneyPattern';
 export { default as Message } from './Message';
-export { default as Network } from './Network';
 export { default as Provider } from './Provider';
 export { default as ServiceJourney } from './ServiceJourney';
 export { default as StopPoint } from './StopPoint';

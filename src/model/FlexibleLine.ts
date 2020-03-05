@@ -1,9 +1,9 @@
 import Versioned from './base/Versioned';
-import Network from './Network';
 import BookingArrangement from './BookingArrangement';
 import JourneyPattern from './JourneyPattern';
 import { replaceElement } from 'helpers/arrays';
 import Notice from './Notice';
+import { Network } from './Network';
 
 type Data = {
   name?: string;
@@ -30,7 +30,7 @@ class FlexibleLine extends Versioned {
   transportSubmode: string | undefined;
   flexibleLineType: string | undefined;
   network: Network | undefined;
-  networkRef: string;
+  networkRef: string | undefined;
   operatorRef: string | undefined;
   bookingArrangement: BookingArrangement | undefined;
   journeyPatterns: JourneyPattern[];
@@ -46,8 +46,8 @@ class FlexibleLine extends Versioned {
     this.transportMode = data.transportMode;
     this.transportSubmode = data.transportSubmode;
     this.flexibleLineType = data.flexibleLineType;
-    this.network = data.network ? new Network(data.network) : undefined;
-    this.networkRef = data.networkRef ?? data.network?.id ?? undefined;
+    this.network = data.network;
+    this.networkRef = data.networkRef ?? data.network?.id;
     this.operatorRef = data.operatorRef;
     this.bookingArrangement = data.bookingArrangement
       ? new BookingArrangement(data.bookingArrangement)

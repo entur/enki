@@ -5,7 +5,7 @@ import {
 import FlexibleLine from '../model/FlexibleLine';
 import { AnyAction } from 'redux';
 
-type FlexibleLinesState = FlexibleLine[] | null;
+export type FlexibleLinesState = FlexibleLine[] | null;
 
 const flexibleLines = (
   lines: FlexibleLinesState = null,

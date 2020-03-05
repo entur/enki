@@ -18,6 +18,7 @@ import { OrganisationState } from 'reducers/organisations';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 
 import './styles.scss';
+import { GlobalState } from 'reducers';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
@@ -57,8 +58,8 @@ export default function ServiceJourneyEditor(props: Props) {
   );
   const [validPassingTimes, setValidPassingTimes] = useState<boolean>(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
-  const organisations = useSelector(
-    (state: { organisations: OrganisationState[] }) => state.organisations
+  const organisations = useSelector<GlobalState, OrganisationState>(
+    state => state.organisations
   );
   const { formatMessage } = useSelector(selectIntl);
 
@@ -70,7 +71,7 @@ export default function ServiceJourneyEditor(props: Props) {
     setOperatorSelection(operatorSelection);
   };
 
-  const operators = organisations.filter(org =>
+  const operators = (organisations ?? []).filter(org =>
     org.types.includes(ORGANISATION_TYPE.OPERATOR)
   );
 

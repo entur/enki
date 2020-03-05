@@ -10,7 +10,9 @@ type ContactInfo = {
   phone: string;
 };
 
-export type OrganisationState = {
+export type OrganisationState = Organisation[] | null;
+
+type Organisation = {
   id: string;
   name: string;
   legalName: string | null;
@@ -23,7 +25,7 @@ export type OrganisationState = {
 };
 
 const organisationsReducer = (
-  state: OrganisationState | null = null,
+  state: OrganisationState = null,
   action: ReceiveOrganisations
 ) => {
   switch (action.type) {

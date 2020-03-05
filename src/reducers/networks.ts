@@ -1,6 +1,6 @@
 import { RECEIVE_NETWORKS, RECEIVE_NETWORK } from 'actions/networks';
-import Network from '../model/Network';
 import { AnyAction } from 'redux';
+import { Network } from 'model/Network';
 
 export type NetworksState = Network[] | null;
 
