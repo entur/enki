@@ -16,6 +16,7 @@ import Form from './Form';
 import validateForm from './validateForm';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import messages from '../../messages';
+import { GlobalState } from 'reducers';
 
 export type StopPlaceSelectionType = string | null;
 export type StopPointsFormError = {
@@ -30,10 +31,10 @@ type Props = {
   onChange: (stopPoint: any) => void;
   deleteStopPoint: () => void;
   setIsValidStopPoints: (isValid: boolean) => void;
+  flexibleStopPlaces: FlexibleStopPlace[];
 };
 
 type StateProps = {
-  flexibleStopPlaces: FlexibleStopPlace[];
   intl: any;
 };
 
@@ -96,7 +97,6 @@ const StopPointEditor = (props: Props & StateProps) => {
       if (isBlank(quayRef)) return setQuaySearch({});
 
       const quaySearch = await searchForQuay(quayRef);
-      console.log(quaySearch);
       setQuaySearch(quaySearch);
     }, 1000),
     []
@@ -151,8 +151,7 @@ const StopPointEditor = (props: Props & StateProps) => {
   );
 };
 
-const mapStateToProps = ({ flexibleStopPlaces, intl }: StateProps) => ({
-  flexibleStopPlaces,
+const mapStateToProps = ({ intl }: GlobalState): StateProps => ({
   intl
 });
 

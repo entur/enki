@@ -67,7 +67,9 @@ const Form = ({
     stopPoint.destinationDisplay && stopPoint.destinationDisplay.frontText
       ? stopPoint.destinationDisplay.frontText
       : '';
-  const [selectMode, setSelectMode] = useState<string | null>('custom');
+  const [selectMode, setSelectMode] = useState<string | null>(
+    stopPoint.quayRef ? 'nsr' : 'custom'
+  );
 
   useEffect(() => {
     if (selectMode === 'custom') {
@@ -111,12 +113,16 @@ const Form = ({
           {...quaySearchFeedback(errors.quayRef, quaySearch)}
         >
           <TextField
-            value={stopPoint.quayRef ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              const value = e.target.value;
-              handleFieldChange('quayRef', isBlank(value) ? null : value);
-              debouncedSearchForQuay(value);
-            }}
+            defaultValue={stopPoint.quayRef ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              debouncedSearchForQuay(e.target.value)
+            }
+            onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+              handleFieldChange(
+                'quayRef',
+                isBlank(e.target.value) ? null : e.target.value
+              )
+            }
           />
         </InputGroup>
       )}
