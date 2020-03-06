@@ -137,7 +137,7 @@
   "lines.editor.general.nameFormGroupTitle": "* Navn",
   "lines.editor.general.networkFormGroupTitle": "* Nettverk",
   "lines.editor.general.operatorFormGroupTitle": "Operatør",
-  "lines.editor.general.privateCodeFormGroupTitle": "Privat kode",
+  "lines.editor.general.privateCodeFormGroupTitle": "* Privat kode",
   "lines.editor.general.publicCodeFormGroupTitle": "* Offentlig kode",
   "lines.editor.general.typeFormGroupTitle": "* Flexible line type",
   "lines.editor.generalTabLabel": "Generelt",

@@ -26,6 +26,11 @@ function validatePublicCode(publicCode) {
   }
 }
 
+function validatePrivateCode(privateCode) {
+  if (isBlank(privateCode)) return 'Private Code må fylles inn.';
+  if (isNaN(+privateCode)) return 'Kun siffrer';
+}
+
 export default function(flexibleLine) {
   if (!flexibleLine) {
     return {
@@ -40,7 +45,8 @@ export default function(flexibleLine) {
   let errors = {
     networkRef: validateNetworkRef(flexibleLine.networkRef),
     name: validateName(flexibleLine.name),
-    publicCode: validatePublicCode(flexibleLine.publicCode)
+    publicCode: validatePublicCode(flexibleLine.publicCode),
+    privateCode: validatePrivateCode(flexibleLine.privateCode)
   };
 
   return {

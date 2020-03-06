@@ -25,7 +25,8 @@ export default ({
     errors: {
       name: nameError,
       publicCode: publicCodeError,
-      networkRef: networkError
+      networkRef: networkError,
+      privateCode: privateCodeError
     }
   } = errors;
 
@@ -58,6 +59,8 @@ export default ({
         <InputGroup
           className="form-section"
           label={formatMessage(messages.privateCodeFormGroupTitle)}
+          variant={privateCodeError ? 'error' : undefined}
+          feedback={privateCodeError ?? undefined}
         >
           <TextField
             type="text"
