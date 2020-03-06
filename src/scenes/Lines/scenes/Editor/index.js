@@ -237,7 +237,7 @@ const FlexibleLineEditor = ({ match, history }) => {
           }
         >
           {activeStepperIndex === 0 && (
-            <section>
+            <section className="general-line-info">
               <General
                 flexibleLine={flexibleLine}
                 networks={networks}
