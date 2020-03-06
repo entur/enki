@@ -8,7 +8,6 @@ import {
 } from '@entur/button';
 import { Stepper } from '@entur/menu';
 import { FlexibleLine } from 'model';
-import { ValidationErrorIcon } from '@entur/icons';
 import {
   ORGANISATION_TYPE,
   FLEXIBLE_LINE_TYPE,
@@ -205,7 +204,7 @@ const FlexibleLineEditor = ({ match, history }) => {
       org.references.netexOperatorId
   );
   const isLoadingLine = !flexibleLine;
-
+  const isEdit = match.params.id;
   const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
 
   return (
@@ -214,7 +213,7 @@ const FlexibleLineEditor = ({ match, history }) => {
         <PageHeader
           withBackButton
           title={
-            match.params.id
+            isEdit
               ? formatMessage(messages.editLineHeader)
               : formatMessage(messages.createLineHeader)
           }
@@ -222,7 +221,9 @@ const FlexibleLineEditor = ({ match, history }) => {
         <Stepper
           steps={FLEXIBLE_LINE_STEPS}
           activeIndex={activeStepperIndex}
-          onStepClick={() => undefined}
+          onStepClick={index =>
+            isEdit ? setActiveStepperIndex(index) : undefined
+          }
         />
       </div>
 
@@ -235,17 +236,6 @@ const FlexibleLineEditor = ({ match, history }) => {
               : formatMessage(messages.deleteLineLoadingText)
           }
         >
-          {/* <Tabs>
-            <TabList>
-              <Tab>
-                {formatMessage(messages.generalTabLabel)}
-                <ErrorIcon visible={!errors.isValid} />
-              </Tab>
-              <Tab>{formatMessage(messages.journeyPatternsTabLabel)}</Tab>
-              <Tab>{formatMessage(messages.bookingTabLabel)}</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel> */}
           {activeStepperIndex === 0 && (
             <section>
               <General
@@ -298,7 +288,7 @@ const FlexibleLineEditor = ({ match, history }) => {
 
           {activeStepperIndex === NUM_OF_LAST_STEP - 1 && (
             <div className="buttons">
-              {match.params.id && (
+              {isEdit && (
                 <NegativeButton
                   onClick={() => setDeleteDialogOpen(true)}
                   disabled={isDeleteDisabled}

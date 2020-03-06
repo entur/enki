@@ -1,0 +1,25 @@
+@import '~@entur/tokens/dist/styles.scss';
+
+.lines-editor-general {
+  .header {
+    margin-bottom: $line-heights-extra-large7;
+  }
+  .inputs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .eds-input-group + .eds-input-group {
+      margin-top: 0;
+    }
+
+    .eds-input-group {
+      margin: 0 $space-large $space-large 0;
+      flex: 1 40% 40%;
+    }
+
+    .eds-input-group:nth-child(even) {
+      margin-right: $space-large;
+    }
+  }
+}

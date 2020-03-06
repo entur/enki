@@ -17,7 +17,7 @@
     "@entur/modal": "^1.1.5",
     "@entur/tab": "^0.3.2",
     "@entur/table": "^0.3.13",
-    "@entur/tokens": "^1.2.0",
+    "@entur/tokens": "^1.2.1",
     "@entur/tooltip": "^1.1.9",
     "@entur/typography": "^1.1.0",
     "@formatjs/intl-pluralrules": "^1.5.2",

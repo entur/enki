@@ -11,6 +11,10 @@
     align-items: center;
   }
 
+  section {
+    max-width: 60%;
+  }
+
   .buttons {
     display: flex;
     justify-content: flex-end;
@@ -39,5 +43,8 @@
 
   .next-button {
     margin-top: 1rem;
+    margin-right: $space-large;
+    display: block;
+    margin-left: auto;
   }
 }
