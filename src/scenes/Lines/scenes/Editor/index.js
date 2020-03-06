@@ -42,16 +42,12 @@ import { selectIntl } from 'i18n';
 import { createSelector } from 'reselect';
 import messages from './messages';
 
-const ErrorIcon = ({ visible }) => {
-  return (
-    <ValidationErrorIcon
-      className={`error-icon ${visible ? '' : 'no-error'}`}
-    />
-  );
-};
-
 const NextStepButton = ({ onClick, isDisabled }) => (
-  <PrimaryButton onClick={onClick} disabled={isDisabled}>
+  <PrimaryButton
+    onClick={onClick}
+    disabled={isDisabled}
+    className="next-button"
+  >
     Lagre og gå videre
   </PrimaryButton>
 );

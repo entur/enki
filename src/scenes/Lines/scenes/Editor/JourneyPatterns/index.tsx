@@ -1,18 +1,13 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { AddIcon, ValidationInfoIcon } from '@entur/icons';
-import { ExpandablePanel } from '@entur/expand';
-import { SecondaryButton } from '@entur/button';
+import React, { useEffect } from 'react';
+import * as R from 'ramda';
 import { JourneyPattern } from 'model';
+import { ExpandablePanel } from '@entur/expand';
 import { replaceElement } from 'helpers/arrays';
 import JourneyPatternEditor from './Editor';
-import { selectIntl } from 'i18n';
-import { setSavedChanges } from 'actions/editor';
-import messages from './messages';
 import './styles.scss';
 
 type Props = {
-  journeyPatterns: any;
+  journeyPatterns: JourneyPattern[];
   onChange: (journeyPatterns: any[]) => void;
   setIsValidServiceJourney: (isValid: boolean) => void;
   setIsValidStopPoints: (isValid: boolean) => void;
@@ -24,47 +19,41 @@ const JourneyPatternsEditor = ({
   setIsValidServiceJourney,
   setIsValidStopPoints
 }: Props) => {
-  const { formatMessage } = useSelector(selectIntl);
-  const { isSaved } = useSelector((state: any) => state.editor);
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (R.isEmpty(journeyPatterns))
+      onChange(journeyPatterns.concat(new JourneyPattern()));
+  }, [journeyPatterns, onChange]);
 
-  const handleSave = (journeyPattern: JourneyPattern, index?: number) => {
-    if (index === undefined)
-      return onChange(journeyPatterns.concat(journeyPattern));
+  const handleSave = (journeyPattern: JourneyPattern, index: number) => {
     onChange(replaceElement(journeyPatterns, index, journeyPattern));
-    dispatch(setSavedChanges(true));
   };
-
   return (
     <div>
-      {journeyPatterns?.length === 0 && (
-        <SecondaryButton onClick={() => handleSave(new JourneyPattern())}>
-          <AddIcon />
-          {formatMessage(messages.addJourneyPatternIconButtonLabel)}
-        </SecondaryButton>
+      {journeyPatterns.length === 1 ? (
+        <JourneyPatternEditor
+          journeyPattern={R.head(journeyPatterns)!}
+          onSave={handleSave}
+          index={0}
+          setIsValidServiceJourney={setIsValidServiceJourney}
+          setIsValidStopPoints={setIsValidServiceJourney}
+        />
+      ) : (
+        journeyPatterns.map((jp: JourneyPattern, index: number) => (
+          <ExpandablePanel
+            title={jp.name}
+            key={jp.name ?? index}
+            defaultOpen={journeyPatterns.length === 1}
+          >
+            <JourneyPatternEditor
+              journeyPattern={jp}
+              onSave={handleSave}
+              index={index}
+              setIsValidServiceJourney={setIsValidServiceJourney}
+              setIsValidStopPoints={setIsValidStopPoints}
+            />
+          </ExpandablePanel>
+        ))
       )}
-
-      {!isSaved && (
-        <div className="unsaved-changes">
-          <ValidationInfoIcon inline /> {formatMessage(messages.unsavedChanges)}
-        </div>
-      )}
-
-      {journeyPatterns.map((jp: any, index: number) => (
-        <ExpandablePanel
-          title={jp.name}
-          key={jp.name ?? index}
-          defaultOpen={journeyPatterns.length === 1}
-        >
-          <JourneyPatternEditor
-            journeyPattern={jp}
-            onSave={handleSave}
-            index={index}
-            setIsValidServiceJourney={setIsValidServiceJourney}
-            setIsValidStopPoints={setIsValidStopPoints}
-          />
-        </ExpandablePanel>
-      ))}
     </div>
   );
 };
