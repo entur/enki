@@ -2,9 +2,9 @@
 
 import { AnyAction } from 'redux';
 
-type UserStateShield = UserState | {};
+export type UserState = User | {};
 
-export type UserState = {
+export type User = {
   logoutUrl: string;
   familyName?: string;
   givenName: string;
@@ -13,10 +13,7 @@ export type UserState = {
   isAdmin: boolean;
 };
 
-const userReducer = (
-  state: UserStateShield = {},
-  action: AnyAction
-): UserStateShield => {
+const userReducer = (state: UserState = {}, action: AnyAction): UserState => {
   switch (action.type) {
     default:
       return state;

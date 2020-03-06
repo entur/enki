@@ -1,4 +1,4 @@
-import notification from 'components/Notification/reducer';
+import notification, { NotificationState } from 'reducers/notification';
 import user, { UserState } from './user';
 import organisations, { OrganisationState } from './organisations';
 import providers, { ProvidersState } from './providers';
@@ -9,9 +9,10 @@ import flexibleStopPlaces, {
   FlexibleStopPlacesState
 } from './flexibleStopPlaces';
 import editor, { EditorState } from './editor';
+import { IntlState } from 'react-intl-redux';
 
 export type GlobalState = {
-  notification: any;
+  notification: NotificationState;
   user: UserState;
   organisations: OrganisationState;
   providers: ProvidersState;
@@ -20,6 +21,7 @@ export type GlobalState = {
   flexibleLines: FlexibleLinesState;
   flexibleStopPlaces: FlexibleStopPlacesState;
   editor: EditorState;
+  intl: IntlState;
 };
 
 const reducers = {

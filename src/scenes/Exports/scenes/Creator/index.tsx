@@ -1,43 +1,50 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { SuccessButton } from '@entur/button';
 import { Checkbox, InputGroup, TextField } from '@entur/form';
 import { DatePicker } from '@entur/datepicker';
-import { Export } from 'model';
 import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
 import PageHeader from 'components/PageHeader';
 import OverlayLoader from 'components/OverlayLoader';
 import { selectIntl } from 'i18n';
+import { RouteComponentProps } from 'react-router';
 
 import './styles.scss';
 import messages from './creator.messages';
 import validatorMessages from './validateForm.messages';
-import validateForm, {
+import {
   validateName,
-  toDateIsBeforeFromDate
+  toDateIsBeforeFromDate,
+  ExportError,
+  validateForm
 } from './validateForm';
+import { Export } from 'model/Export';
+import { GlobalState } from 'reducers';
+import { IntlFormatters } from 'react-intl';
 
-const newExport = () => {
+const newExport = (): Export => {
   const today = moment().format('YYYY-MM-DD');
-  return new Export({ fromDate: today, toDate: today });
+  return { name: '', fromDate: today, toDate: today, dryRun: false };
 };
 
-const ExportsCreator = ({ history }) => {
-  const { formatMessage } = useSelector(selectIntl);
-  const [isSaving, setSaving] = useState(false);
-  const [theExport, setTheExport] = useState(newExport());
-  const [errors, setErrors] = useState({
+const ExportsCreator = ({ history }: RouteComponentProps) => {
+  const { formatMessage } = useSelector<GlobalState, IntlFormatters>(
+    selectIntl
+  );
+  const [isSaving, setSaving] = useState<boolean>(false);
+  const [theExport, setTheExport] = useState<Export>(newExport());
+  const [errors, setErrors] = useState<ExportError>({
     name: [],
     fromDateToDate: []
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const handleOnSaveClick = () => {
-    let [valid, errors] = validateForm(theExport);
+    const [valid, errors] = validateForm(theExport);
     if (!valid) {
       setErrors(errors);
     } else {
@@ -48,12 +55,9 @@ const ExportsCreator = ({ history }) => {
     }
   };
 
-  const onFieldChange = useCallback(
-    (field, value) => {
-      setTheExport(theExport.withFieldChange(field, value));
-    },
-    [theExport]
-  );
+  const onFieldChange = (field: keyof Export, value: string | boolean) => {
+    setTheExport({ ...theExport, [field]: value });
+  };
 
   return (
     <div className="export-editor">
@@ -71,6 +75,7 @@ const ExportsCreator = ({ history }) => {
       </div>
 
       <OverlayLoader
+        className=""
         isLoading={isSaving}
         text={formatMessage(messages.savingOverlayLoaderText)}
       >
@@ -82,7 +87,9 @@ const ExportsCreator = ({ history }) => {
           >
             <TextField
               defaultValue={theExport.name}
-              onChange={e => onFieldChange('name', e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('name', e.target.value)
+              }
               className={errors.name.length ? 'input-error' : ''}
             />
           </InputGroup>
@@ -100,22 +107,28 @@ const ExportsCreator = ({ history }) => {
           >
             <DatePicker
               selectedDate={moment(theExport.fromDate).toDate()}
-              onChange={date => onFieldChange('fromDate', dateToString(date))}
+              onChange={(date: Date | null) =>
+                onFieldChange('fromDate', dateToString(date))
+              }
             />
           </InputGroup>
 
           <InputGroup label={formatMessage(messages.toDateFormLabel)}>
             <DatePicker
               selectedDate={moment(theExport.toDate).toDate()}
-              onChange={date => onFieldChange('toDate', dateToString(date))}
+              onChange={(date: Date | null) =>
+                onFieldChange('toDate', dateToString(date))
+              }
             />
           </InputGroup>
 
           <InputGroup label={formatMessage(messages.dryRunFormLabel)}>
             <Checkbox
               value="1"
-              checked={theExport.dryRun === true}
-              onChange={e => onFieldChange('dryRun', e.target.checked)}
+              checked={theExport.dryRun}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('dryRun', e.target.checked)
+              }
             />
           </InputGroup>
         </div>

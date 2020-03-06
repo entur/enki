@@ -1,14 +1,16 @@
 import { UttuQuery } from 'graphql';
 import { exportMutation } from 'graphql/uttu/mutations';
 import { getExportByIdQuery, getExportsQuery } from 'graphql/uttu/queries';
-import { Export } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
-} from 'components/Notification/actions';
+} from 'actions/notification';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import messages from './exports.messages';
+import { Export, toPayload } from 'model/Export';
+import { Dispatch } from 'redux';
+import { GlobalState } from 'reducers';
 
 export const REQUEST_EXPORTS = 'REQUEST_EXPORTS';
 export const RECEIVE_EXPORTS = 'RECEIVE_EXPORTS';
@@ -23,17 +25,20 @@ const requestExportsActionCreator = () => ({
   type: REQUEST_EXPORTS
 });
 
-const receiveExportsActionCreator = exports => ({
+const receiveExportsActionCreator = (exports: Export[]) => ({
   type: RECEIVE_EXPORTS,
   exports
 });
 
-const receiveExportActionCreator = receivedExport => ({
+const receiveExportActionCreator = (receivedExport: Export) => ({
   type: RECEIVE_EXPORT,
   export: receivedExport
 });
 
-export const loadExports = () => async (dispatch, getState) => {
+export const loadExports = () => async (
+  dispatch: Dispatch<GlobalState>,
+  getState: () => GlobalState
+) => {
   dispatch(requestExportsActionCreator());
 
   const activeProvider = getState().providers.active;
@@ -43,8 +48,7 @@ export const loadExports = () => async (dispatch, getState) => {
     const data = await UttuQuery(activeProvider, getExportsQuery, {
       historicDays: 30
     });
-    const exports = data.exports.map(e => new Export(e));
-    dispatch(receiveExportsActionCreator(exports));
+    dispatch(receiveExportsActionCreator(data.exports));
   } catch (e) {
     dispatch(
       showErrorNotification(
@@ -58,13 +62,16 @@ export const loadExports = () => async (dispatch, getState) => {
   }
 };
 
-export const loadExportById = id => async (dispatch, getState) => {
+export const loadExportById = (id: string) => async (
+  dispatch: Dispatch<GlobalState>,
+  getState: () => GlobalState
+) => {
   const activeProvider = getState().providers.active;
   const intl = getIntl(getState());
 
   try {
     const data = await UttuQuery(activeProvider, getExportByIdQuery, { id });
-    dispatch(receiveExportActionCreator(new Export(data.export)));
+    dispatch(receiveExportActionCreator(data.export));
   } catch (e) {
     dispatch(
       showErrorNotification(
@@ -78,13 +85,16 @@ export const loadExportById = id => async (dispatch, getState) => {
   }
 };
 
-export const saveExport = theExport => async (dispatch, getState) => {
+export const saveExport = (theExport: Export) => async (
+  dispatch: Dispatch<GlobalState>,
+  getState: () => GlobalState
+) => {
   const activeProvider = getState().providers.active;
   const intl = getIntl(getState());
 
   try {
     await UttuQuery(activeProvider, exportMutation, {
-      input: theExport.toPayload()
+      input: toPayload(theExport)
     });
     dispatch(
       showSuccessNotification(

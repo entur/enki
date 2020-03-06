@@ -7,7 +7,7 @@ import { FlexibleLine } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
-} from 'components/Notification/actions';
+} from 'actions/notification';
 import {
   deleteFlexibleLine,
   flexibleLineMutation

@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 import moment from 'moment';
 import { AddIcon, DownloadIcon } from '@entur/icons';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, IntlFormatters } from 'react-intl';
 import {
   Table,
   TableBody,
@@ -22,17 +23,24 @@ import './styles.scss';
 import { getIconForStatus } from './scenes/icons';
 import { selectIntl } from 'i18n';
 import messages from './exports.messages';
+import { GlobalState } from 'reducers';
+import { ExportsState } from 'reducers/exports';
+import { download } from 'model/Export';
 
-const Exports = ({ history }) => {
-  const exports = useSelector(({ exports }) => exports);
-  const { formatMessage } = useSelector(selectIntl);
+const Exports = ({ history }: RouteComponentProps) => {
+  const exports = useSelector<GlobalState, ExportsState>(
+    state => state.exports
+  );
+  const { formatMessage } = useSelector<GlobalState, IntlFormatters>(
+    selectIntl
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadExports());
   }, [dispatch]);
 
-  const handleOnRowClick = id => {
+  const handleOnRowClick = (id: string) => {
     history.push(`/exports/view/${id}`);
   };
 
@@ -40,15 +48,15 @@ const Exports = ({ history }) => {
     if (exports) {
       return exports.length > 0 ? (
         exports.map(e => (
-          <TableRow key={e.id} onClick={() => handleOnRowClick(e.id)}>
+          <TableRow key={e.id} onClick={() => handleOnRowClick(e.id ?? '')}>
             <DataCell>{e.name}</DataCell>
             <DataCell>{getIconForStatus(e.exportStatus)}</DataCell>
             <DataCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
                 <SecondarySquareButton
-                  onClick={event => {
+                  onClick={(event: ChangeEvent) => {
                     event.stopPropagation();
-                    e.download();
+                    download(e);
                   }}
                 >
                   <DownloadIcon />
@@ -61,10 +69,10 @@ const Exports = ({ history }) => {
                 : formatMessage(messages.dryRunNo)}
             </DataCell>
             <DataCell>
-              <FormattedDate value={moment(e.fromDate)} />
+              <FormattedDate value={moment(e.fromDate).toDate()} />
             </DataCell>
             <DataCell>
-              <FormattedDate value={moment(e.toDate)} />
+              <FormattedDate value={moment(e.toDate).toDate()} />
             </DataCell>
           </TableRow>
         ))
@@ -79,7 +87,12 @@ const Exports = ({ history }) => {
       return (
         <TableRow className="disabled">
           <DataCell colSpan={6}>
-            <Loading text={formatMessage(messages.loadingExportsText)} />
+            <Loading
+              text={formatMessage(messages.loadingExportsText)}
+              isLoading={!exports}
+              children={null}
+              className=""
+            />
           </DataCell>
         </TableRow>
       );
@@ -88,7 +101,10 @@ const Exports = ({ history }) => {
 
   return (
     <div className="exports">
-      <PageHeader title={formatMessage(messages.header)} />
+      <PageHeader
+        title={formatMessage(messages.header)}
+        withBackButton={false}
+      />
 
       <SecondaryButton
         as={Link}

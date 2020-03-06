@@ -3,36 +3,42 @@ import { objectValuesAreEmpty } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 import moment from 'moment';
+import { Export } from 'model/Export';
 
-export function validateName(name) {
+export type ExportError = { name: any[]; fromDateToDate: any[] };
+export type ExportValidation = [boolean, ExportError];
+
+export const validateName = (name: string | undefined) => {
   if (isNil(name) || isEmpty(name)) {
     return [messages.errorExportNameIsEmpty];
   }
   return [];
-}
+};
 
-function validateFromDateToDate(fromDate, toDate) {
-  let errors = [];
+export const validateFromDateToDate = (
+  fromDate: string | null,
+  toDate: string | null
+) => {
+  const errors = [];
   if (isNil(fromDate) || isEmpty(fromDate)) {
     errors.push(messages.errorExportFromDateIsEmpty);
   }
   if (isNil(toDate) || isEmpty(toDate)) {
     errors.push(messages.errorExportToDateIsEmpty);
   }
-  if (toDateIsBeforeFromDate(fromDate, toDate)) {
+  if (fromDate && toDate && toDateIsBeforeFromDate(fromDate, toDate)) {
     errors.push(messages.errorExportFromDateIsAfterToDate);
   }
   return errors;
-}
+};
 
-export function toDateIsBeforeFromDate(fromDate, toDate) {
-  return moment(fromDate).isAfter(moment(toDate));
-}
+export const toDateIsBeforeFromDate = (fromDate: string, toDate: string) =>
+  moment(fromDate).isAfter(moment(toDate));
 
-export default function(theExport) {
-  let errors = {
+export const validateForm = (theExport: Export): ExportValidation => {
+  const errors = {
     name: validateName(theExport.name),
     fromDateToDate: validateFromDateToDate(theExport.fromDate, theExport.toDate)
   };
   return [objectValuesAreEmpty(errors), errors];
-}
+};

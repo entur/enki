@@ -12,9 +12,9 @@ import { isAdmin } from 'helpers/tokenParser';
 import { API_BASE } from 'http/http';
 
 import './styles/index.scss';
-import { UserState } from './reducers/user';
+import { User } from './reducers/user';
 
-const renderIndex = (userInfo: UserState) => {
+const renderIndex = (userInfo: User) => {
   const root = document.getElementById('root');
   const { store, sentry } = configureStore(userInfo);
 

@@ -1,7 +1,14 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, {
+  Fragment,
+  useState,
+  useEffect,
+  useCallback,
+  ChangeEvent
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { FormattedDate } from 'react-intl';
+import { RouteComponentProps } from 'react-router';
+import { FormattedDate, IntlFormatters } from 'react-intl';
 import moment from 'moment';
 import { PrimaryButton } from '@entur/button';
 import { Label } from '@entur/typography';
@@ -13,26 +20,31 @@ import PageHeader from 'components/PageHeader';
 import { EXPORT_STATUS } from 'model/enums';
 
 import './styles.scss';
-import { createSelector } from 'reselect';
 import { getIconForStatus, getIconForSeverity } from '../icons';
 
 import messages, { exportStatuses, exportMessages } from './viewer.messages';
 import { selectIntl } from 'i18n';
+import { MatchParams } from 'http/http';
+import { GlobalState } from 'reducers';
+import { download, Export } from 'model/Export';
 
-const selectExport = createSelector(
-  state => state.exports,
-  (_, match) => match.params.id,
-  (theExports, id) => (theExports ? theExports.find(e => e.id === id) : null)
-);
+const getCurrentExport = (
+  state: GlobalState,
+  match: { params: MatchParams }
+): Export | undefined => state.exports?.find(e => e.id === match.params.id);
 
-const ExportsViewer = ({ match, history }) => {
-  const { formatMessage } = useSelector(selectIntl);
-
-  const currentExport = useSelector(state => selectExport(state, match));
-
+const ExportsViewer = ({
+  match,
+  history
+}: RouteComponentProps<MatchParams>) => {
+  const { formatMessage } = useSelector<GlobalState, IntlFormatters>(
+    selectIntl
+  );
+  const currentExport = useSelector<GlobalState, Export | undefined>(state =>
+    getCurrentExport(state, match)
+  );
   const [theExport, setTheExport] = useState(currentExport);
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const dispatchLoadExport = useCallback(() => {
     if (match.params.id) {
@@ -65,12 +77,12 @@ const ExportsViewer = ({ match, history }) => {
 
           <Label>{formatMessage(messages.fromDateLabel)}</Label>
           <div className="value">
-            <FormattedDate value={moment(theExport.fromDate)} />
+            <FormattedDate value={moment(theExport.fromDate).toDate()} />
           </div>
 
           <Label>{formatMessage(messages.toDateLabel)}</Label>
           <div className="value">
-            <FormattedDate value={moment(theExport.toDate)} />
+            <FormattedDate value={moment(theExport.toDate).toDate()} />
           </div>
 
           <Label>{formatMessage(messages.dryRunLabel)}</Label>
@@ -85,7 +97,10 @@ const ExportsViewer = ({ match, history }) => {
             <div className="icon">
               {getIconForStatus(theExport.exportStatus)}
             </div>
-            <div>{formatMessage(exportStatuses[theExport.exportStatus])}</div>
+            <div>
+              {theExport.exportStatus &&
+                formatMessage(exportStatuses[theExport.exportStatus])}
+            </div>
           </div>
 
           {theExport.exportStatus === EXPORT_STATUS.SUCCESS && (
@@ -93,9 +108,9 @@ const ExportsViewer = ({ match, history }) => {
               <Label>{formatMessage(messages.downloadLabel)}</Label>
               <div className="value download">
                 <PrimaryButton
-                  onClick={event => {
+                  onClick={(event: ChangeEvent) => {
                     event.stopPropagation();
-                    theExport.download();
+                    download(theExport);
                   }}
                 >
                   <DownloadIcon />
@@ -105,15 +120,16 @@ const ExportsViewer = ({ match, history }) => {
             </Fragment>
           )}
 
-          {theExport.messages.length > 0 && (
+          {(theExport?.messages ?? []).length > 0 && (
             <Fragment>
               <Label>{formatMessage(messages.messagesLabel)}</Label>
               <div className="value messages">
-                {theExport.messages.map((m, i) => (
+                {(theExport?.messages ?? []).map((m, i) => (
                   <div key={i} className="message">
                     <div className="icon">{getIconForSeverity(m.severity)}</div>
                     <div>
-                      {Object.keys(exportMessages).includes(m.message)
+                      {m?.message &&
+                      Object.keys(exportMessages).includes(m.message)
                         ? formatMessage(exportMessages[m.message])
                         : m.message}
                     </div>
@@ -124,7 +140,12 @@ const ExportsViewer = ({ match, history }) => {
           )}
         </div>
       ) : (
-        <Loading text={formatMessage(messages.loadingText)} />
+        <Loading
+          text={formatMessage(messages.loadingText)}
+          isLoading={!theExport}
+          className=""
+          children={null}
+        />
       )}
     </div>
   );
