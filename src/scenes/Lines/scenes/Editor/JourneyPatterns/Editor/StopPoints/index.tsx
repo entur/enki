@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { AddIcon } from '@entur/icons';
@@ -6,6 +7,7 @@ import { SecondaryButton } from '@entur/button';
 import { StopPoint } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import { ExpandablePanel } from '@entur/expand';
+import validateForm from './Editor/validateForm';
 import StopPointEditor from './Editor';
 import messages from '../messages';
 
@@ -34,6 +36,7 @@ const StopPointsEditor = ({
         <ExpandablePanel
           key={stopPoint.id}
           title={stopPoint.destinationDisplay?.frontText}
+          defaultOpen={!R.head(validateForm(stopPoint, index === 0))}
         >
           <StopPointEditor
             isFirst={index === 0}
