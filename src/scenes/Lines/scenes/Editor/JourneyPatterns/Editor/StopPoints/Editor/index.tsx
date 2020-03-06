@@ -96,7 +96,6 @@ const StopPointEditor = (props: Props & StateProps) => {
       if (isBlank(quayRef)) return setQuaySearch({});
 
       const quaySearch = await searchForQuay(quayRef);
-      console.log(quaySearch);
       setQuaySearch(quaySearch);
     }, 1000),
     []

@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { AddIcon } from '@entur/icons';
-import { BannerAlertBox } from '@entur/alert';
 import { SecondaryButton } from '@entur/button';
 import { StopPoint } from 'model';
 import { replaceElement } from 'helpers/arrays';
@@ -31,16 +30,6 @@ const StopPointsEditor = ({
 
   return (
     <div className="stop-points-editor">
-      {stopPoints.length < 2 && (
-        <BannerAlertBox
-          style={{ margin: '0.5rem 0' }}
-          variant="info"
-          title={formatMessage(messages.atleastTwoPoints)}
-        >
-          {formatMessage(messages.atleastTwoPointsDetailed)}
-        </BannerAlertBox>
-      )}
-
       {stopPoints.map((stopPoint, index) => (
         <ExpandablePanel
           key={stopPoint.id}

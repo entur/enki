@@ -145,7 +145,7 @@
   "lines.editor.journeyPatterns.unsavedChanges": "Du har endringer som ikke er lagret.",
   "lines.editor.journeyPatterns.editor.general": "Generelt",
   "lines.editor.journeyPatterns.editor.stopPoints": "Stoppepunkter",
-  "lines.editor.journeyPatterns.editor.stopPoints.info": "Du må opprette minst to stoppepunkter. Ett for påstigning og ett for avstigning.",
+  "lines.editor.journeyPatterns.editor.stopPoints.info": "Du må opprette minst to stoppepunkter.",
   "lines.editor.journeyPatterns.editor.stopPoints.delete.title": "Slette stoppepunkt",
   "lines.editor.journeyPatterns.editor.stopPoints.delete.message": "Er du sikker på at du ønsker å slette dette stoppepunktet?",
   "lines.editor.journeyPatterns.editor.stopPoints.select.custom": "Egendefinert stoppested",

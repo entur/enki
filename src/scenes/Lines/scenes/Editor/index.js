@@ -6,7 +6,7 @@ import {
   NegativeButton,
   SecondaryButton
 } from '@entur/button';
-import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@entur/tab';
+import { Stepper } from '@entur/menu';
 import { FlexibleLine } from 'model';
 import { ValidationErrorIcon } from '@entur/icons';
 import {
@@ -28,7 +28,11 @@ import OverlayLoader from 'components/OverlayLoader';
 import ConfirmDialog from 'components/ConfirmDialog';
 import BookingArrangementEditor from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
-import { DEFAULT_SELECT_VALUE } from './constants';
+import {
+  DEFAULT_SELECT_VALUE,
+  FLEXIBLE_LINE_STEPS,
+  NUM_OF_LAST_STEP
+} from './constants';
 import validateForm from './validateForm';
 import './styles.scss';
 import General from './General';
@@ -46,6 +50,11 @@ const ErrorIcon = ({ visible }) => {
   );
 };
 
+const NextStepButton = ({ onClick, isDisabled }) => (
+  <PrimaryButton onClick={onClick} disabled={isDisabled}>
+    Lagre og gå videre
+  </PrimaryButton>
+);
 const selectFlexibleLine = createSelector(
   state => state.flexibleLines,
   (_, match) => match,
@@ -151,6 +160,7 @@ const FlexibleLineEditor = ({ match, history }) => {
   const { formatMessage } = useSelector(selectIntl);
   const organisations = useSelector(({ organisations }) => organisations);
   const networks = useSelector(({ networks }) => networks);
+  const [activeStepperIndex, setActiveStepperIndex] = useState(0);
 
   const {
     handleNetworkSelectionChange,
@@ -213,6 +223,11 @@ const FlexibleLineEditor = ({ match, history }) => {
               : formatMessage(messages.createLineHeader)
           }
         />
+        <Stepper
+          steps={FLEXIBLE_LINE_STEPS}
+          activeIndex={activeStepperIndex}
+          onStepClick={() => undefined}
+        />
       </div>
 
       {!isLoadingLine && !isLoadingDependencies ? (
@@ -224,7 +239,7 @@ const FlexibleLineEditor = ({ match, history }) => {
               : formatMessage(messages.deleteLineLoadingText)
           }
         >
-          <Tabs>
+          {/* <Tabs>
             <TabList>
               <Tab>
                 {formatMessage(messages.generalTabLabel)}
@@ -234,56 +249,75 @@ const FlexibleLineEditor = ({ match, history }) => {
               <Tab>{formatMessage(messages.bookingTabLabel)}</Tab>
             </TabList>
             <TabPanels>
-              <TabPanel>
-                <General
-                  flexibleLine={flexibleLine}
-                  networks={networks}
-                  operators={operators}
-                  errors={errors}
-                  networkSelection={
-                    flexibleLine.networkRef || DEFAULT_SELECT_VALUE
-                  }
-                  operatorSelection={
-                    flexibleLine.operatorRef || DEFAULT_SELECT_VALUE
-                  }
-                  handleFieldChange={onFieldChange}
-                  handleNetworkSelectionChange={handleNetworkSelectionChange}
-                  handleOperatorSelectionChange={handleOperatorSelectionChange}
-                />
-              </TabPanel>
-              <TabPanel>
-                <JourneyPatternsEditor
-                  journeyPatterns={flexibleLine.journeyPatterns}
-                  onChange={jps => onFieldChange('journeyPatterns', jps)}
-                  setIsValidServiceJourney={setIsValidServiceJourney}
-                  setIsValidStopPoints={setIsValidStopPoints}
-                />
-              </TabPanel>
-              <TabPanel>
-                <BookingArrangementEditor
-                  bookingArrangement={flexibleLine.bookingArrangement}
-                  onChange={b => onFieldChange('bookingArrangement', b)}
-                />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+              <TabPanel> */}
+          {activeStepperIndex === 0 && (
+            <section>
+              <General
+                flexibleLine={flexibleLine}
+                networks={networks}
+                operators={operators}
+                errors={errors}
+                networkSelection={
+                  flexibleLine.networkRef || DEFAULT_SELECT_VALUE
+                }
+                operatorSelection={
+                  flexibleLine.operatorRef || DEFAULT_SELECT_VALUE
+                }
+                handleFieldChange={onFieldChange}
+                handleNetworkSelectionChange={handleNetworkSelectionChange}
+                handleOperatorSelectionChange={handleOperatorSelectionChange}
+              />
 
-          <div className="buttons">
-            {match.params.id && (
-              <NegativeButton
-                onClick={() => setDeleteDialogOpen(true)}
-                disabled={isDeleteDisabled}
+              <NextStepButton
+                onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
+                isDisabled={!errors.isValid}
+              />
+            </section>
+          )}
+
+          {activeStepperIndex === 1 && (
+            <section>
+              <JourneyPatternsEditor
+                journeyPatterns={flexibleLine.journeyPatterns}
+                onChange={jps => onFieldChange('journeyPatterns', jps)}
+                setIsValidServiceJourney={setIsValidServiceJourney}
+                setIsValidStopPoints={setIsValidStopPoints}
+              />
+
+              <NextStepButton
+                onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
+                isDisabled={!isValidStopPoints || !isValidServiceJourney}
+              />
+            </section>
+          )}
+
+          {activeStepperIndex === 2 && (
+            <section>
+              <BookingArrangementEditor
+                bookingArrangement={flexibleLine.bookingArrangement}
+                onChange={b => onFieldChange('bookingArrangement', b)}
+              />
+            </section>
+          )}
+
+          {activeStepperIndex === NUM_OF_LAST_STEP - 1 && (
+            <div className="buttons">
+              {match.params.id && (
+                <NegativeButton
+                  onClick={() => setDeleteDialogOpen(true)}
+                  disabled={isDeleteDisabled}
+                >
+                  {formatMessage(messages.deleteButtonText)}
+                </NegativeButton>
+              )}
+              <PrimaryButton
+                onClick={handleOnSaveClick}
+                disabled={!isValidServiceJourney || !isValidStopPoints}
               >
-                {formatMessage(messages.deleteButtonText)}
-              </NegativeButton>
-            )}
-            <PrimaryButton
-              onClick={handleOnSaveClick}
-              disabled={!isValidServiceJourney || !isValidStopPoints}
-            >
-              {formatMessage(messages.saveButtonText)}
-            </PrimaryButton>
-          </div>
+                {formatMessage(messages.saveButtonText)}
+              </PrimaryButton>
+            </div>
+          )}
         </OverlayLoader>
       ) : (
         <Loading

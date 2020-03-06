@@ -145,7 +145,7 @@
   "lines.editor.journeyPatterns.unsavedChanges": "You have unsaved changes.",
   "lines.editor.journeyPatterns.editor.general": "General",
   "lines.editor.journeyPatterns.editor.stopPoints": "Stop points",
-  "lines.editor.journeyPatterns.editor.stopPoints.info": "You have to create at least two stop points. One for boarding and one for alighting.",
+  "lines.editor.journeyPatterns.editor.stopPoints.info": "You have to create at least two stop points.",
   "lines.editor.journeyPatterns.editor.stopPoints.delete.title": "Delete stop point",
   "lines.editor.journeyPatterns.editor.stopPoints.delete.message": "Are you sure you want to delete this stop point?",
   "lines.editor.journeyPatterns.editor.stopPoints.select.custom": "Custom stop point",
