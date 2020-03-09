@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
@@ -9,6 +9,9 @@ import { ExpandablePanel } from '@entur/expand';
 import validateForm from './Editor/validateForm';
 import StopPointEditor from './Editor';
 import messages from '../messages';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
+import { GlobalState } from 'reducers';
+import searchForQuay from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/searchForQuay';
 
 type Props = {
   stopPoints: StopPoint[];
@@ -17,17 +20,46 @@ type Props = {
   setIsValidStopPoints: (isValid: boolean) => void;
 };
 
+type StateProps = {
+  flexibleStopPlaces: FlexibleStopPlace[] | null;
+};
+
+const Title = ({ quayRef }: { quayRef: string }): ReactElement => {
+  const [title, setTitle] = useState(quayRef);
+
+  useEffect(() => {
+    const fetchTitle = async () =>
+      await searchForQuay(quayRef).then(response =>
+        setTitle(response.stopPlace?.name.value ?? quayRef)
+      );
+    fetchTitle();
+  }, [quayRef]);
+
+  return <div>{title}</div>;
+};
+
 const StopPointsEditor = ({
   stopPoints,
   deleteStopPoint,
   onChange,
-  setIsValidStopPoints
-}: Props) => {
+  setIsValidStopPoints,
+  flexibleStopPlaces
+}: Props & StateProps) => {
   const { formatMessage } = useSelector(selectIntl);
-
   const updateStopPoint = (index: number, stopPlace: StopPoint) => {
     onChange(replaceElement(stopPoints, index, stopPlace));
   };
+
+  const getFetchedTitle = (stopPoint: StopPoint): ReactElement =>
+    stopPoint.quayRef ? (
+      <Title quayRef={stopPoint.quayRef} />
+    ) : (
+      <div>
+        {flexibleStopPlaces?.find(
+          stop => stop.id === stopPoint.flexibleStopPlaceRef
+        )?.name ?? ''}
+      </div>
+    );
 
   return (
     <div className="stop-points-editor">
@@ -36,7 +68,7 @@ const StopPointsEditor = ({
         return (
           <ExpandablePanel
             key={stopPoint.id}
-            title={stopPoint.destinationDisplay?.frontText}
+            title={getFetchedTitle(stopPoint)}
             defaultOpen={!isValid}
           >
             <StopPointEditor
@@ -47,6 +79,7 @@ const StopPointsEditor = ({
                 updateStopPoint(index, stopPoint)
               }
               setIsValidStopPoints={setIsValidStopPoints}
+              flexibleStopPlaces={flexibleStopPlaces ?? []}
             />
           </ExpandablePanel>
         );
@@ -63,4 +96,8 @@ const StopPointsEditor = ({
   );
 };
 
-export default StopPointsEditor;
+const mapStateToProps = ({ flexibleStopPlaces }: GlobalState): StateProps => ({
+  flexibleStopPlaces
+});
+
+export default connect(mapStateToProps)(StopPointsEditor);
