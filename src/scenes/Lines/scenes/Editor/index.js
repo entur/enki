@@ -248,7 +248,7 @@ const FlexibleLineEditor = ({ match, history }) => {
 
               <PrimaryButton
                 onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                isDisabled={!errors.isValid}
+                disabled={!errors.isValid}
                 className="next-button"
               >
                 {formatMessage(messages.saveAndContinue)}
@@ -267,7 +267,7 @@ const FlexibleLineEditor = ({ match, history }) => {
 
               <PrimaryButton
                 onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                isDisabled={!isValidStopPoints || !isValidServiceJourney}
+                disabled={!isValidStopPoints || !isValidServiceJourney}
                 className="next-button"
               >
                 {formatMessage(messages.saveAndContinue)}
