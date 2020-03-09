@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import * as R from 'ramda';
 import { JourneyPattern } from 'model';
 import { ExpandablePanel } from '@entur/expand';
 import { replaceElement } from 'helpers/arrays';
@@ -20,7 +19,7 @@ const JourneyPatternsEditor = ({
   setIsValidStopPoints
 }: Props) => {
   useEffect(() => {
-    if (journeyPatterns.length)
+    if (!journeyPatterns.length)
       onChange(journeyPatterns.concat(new JourneyPattern()));
   }, [journeyPatterns, onChange]);
 
