@@ -32,7 +32,7 @@ export default ({
 
   return (
     <div className="lines-editor-general">
-      <h4 className="header">Om linjen</h4>
+      <h4 className="header"> {formatMessage(messages.about)}</h4>
       <section className="inputs">
         <InputGroup
           className="form-section"

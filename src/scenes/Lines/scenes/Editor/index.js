@@ -27,11 +27,7 @@ import OverlayLoader from 'components/OverlayLoader';
 import ConfirmDialog from 'components/ConfirmDialog';
 import BookingArrangementEditor from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
-import {
-  DEFAULT_SELECT_VALUE,
-  FLEXIBLE_LINE_STEPS,
-  NUM_OF_LAST_STEP
-} from './constants';
+import { DEFAULT_SELECT_VALUE } from './constants';
 import validateForm from './validateForm';
 import './styles.scss';
 import General from './General';
@@ -41,15 +37,6 @@ import { selectIntl } from 'i18n';
 import { createSelector } from 'reselect';
 import messages from './messages';
 
-const NextStepButton = ({ onClick, isDisabled }) => (
-  <PrimaryButton
-    onClick={onClick}
-    disabled={isDisabled}
-    className="next-button"
-  >
-    Lagre og gå videre
-  </PrimaryButton>
-);
 const selectFlexibleLine = createSelector(
   state => state.flexibleLines,
   (_, match) => match,
@@ -156,6 +143,11 @@ const FlexibleLineEditor = ({ match, history }) => {
   const organisations = useSelector(({ organisations }) => organisations);
   const networks = useSelector(({ networks }) => networks);
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
+  const FLEXIBLE_LINE_STEPS = [
+    formatMessage(messages.stepperAbout),
+    formatMessage(messages.stepperJourneyPattern),
+    formatMessage(messages.stepperBooking)
+  ];
 
   const {
     handleNetworkSelectionChange,
@@ -254,10 +246,13 @@ const FlexibleLineEditor = ({ match, history }) => {
                 handleOperatorSelectionChange={handleOperatorSelectionChange}
               />
 
-              <NextStepButton
+              <PrimaryButton
                 onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
                 isDisabled={!errors.isValid}
-              />
+                className="next-button"
+              >
+                {formatMessage(messages.saveAndContinue)}
+              </PrimaryButton>
             </section>
           )}
 
@@ -270,10 +265,13 @@ const FlexibleLineEditor = ({ match, history }) => {
                 setIsValidStopPoints={setIsValidStopPoints}
               />
 
-              <NextStepButton
+              <PrimaryButton
                 onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
                 isDisabled={!isValidStopPoints || !isValidServiceJourney}
-              />
+                className="next-button"
+              >
+                {formatMessage(messages.saveAndContinue)}
+              </PrimaryButton>
             </section>
           )}
 
@@ -286,7 +284,7 @@ const FlexibleLineEditor = ({ match, history }) => {
             </section>
           )}
 
-          {activeStepperIndex === NUM_OF_LAST_STEP - 1 && (
+          {activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1 && (
             <div className="buttons">
               {isEdit && (
                 <NegativeButton

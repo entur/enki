@@ -28,5 +28,9 @@ export default defineMessages({
   typeFormGroupTitle: {
     id: 'lines.editor.general.typeFormGroupTitle',
     defaultMessage: '* Flexible line type'
+  },
+  about: {
+    id: 'lines.editor.journeyPatterns.editor.about',
+    defaultMessage: 'Om linjen'
   }
 });
