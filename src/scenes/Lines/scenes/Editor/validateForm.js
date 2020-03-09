@@ -1,6 +1,6 @@
 import { isNil, isEmpty } from 'ramda';
 import { DEFAULT_SELECT_VALUE } from './constants';
-import { isBlank } from 'helpers/forms';
+import { isBlank, isNumeric } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 
@@ -28,7 +28,7 @@ function validatePublicCode(publicCode) {
 
 function validatePrivateCode(privateCode) {
   if (isBlank(privateCode)) return 'Private Code må fylles inn.';
-  if (isNaN(+privateCode)) return 'Kun siffrer';
+  if (!isNumeric(privateCode)) return 'Kun siffrer';
 }
 
 export default function(flexibleLine) {
