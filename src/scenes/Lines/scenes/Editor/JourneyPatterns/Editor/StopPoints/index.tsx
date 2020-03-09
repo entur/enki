@@ -1,5 +1,4 @@
 import React from 'react';
-import * as R from 'ramda';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { AddIcon } from '@entur/icons';

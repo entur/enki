@@ -20,7 +20,7 @@ const JourneyPatternsEditor = ({
   setIsValidStopPoints
 }: Props) => {
   useEffect(() => {
-    if (R.isEmpty(journeyPatterns))
+    if (journeyPatterns.length)
       onChange(journeyPatterns.concat(new JourneyPattern()));
   }, [journeyPatterns, onChange]);
 
@@ -31,7 +31,7 @@ const JourneyPatternsEditor = ({
     <div>
       {journeyPatterns.length === 1 ? (
         <JourneyPatternEditor
-          journeyPattern={R.head(journeyPatterns)!}
+          journeyPattern={journeyPatterns[0]}
           onSave={handleSave}
           index={0}
           setIsValidServiceJourney={setIsValidServiceJourney}
