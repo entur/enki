@@ -13,7 +13,7 @@ export default ({ bookWhen, onChange }) => {
     <Dropdown
       className="form-section"
       label={formatMessage(messages.title)}
-      value={bookWhen}
+      value={bookWhen ?? DEFAULT_SELECT_VALUE}
       items={[
         { label: DEFAULT_SELECT_LABEL, value: DEFAULT_SELECT_VALUE },
         ...Object.values(PURCHASE_WHEN).map(v => ({

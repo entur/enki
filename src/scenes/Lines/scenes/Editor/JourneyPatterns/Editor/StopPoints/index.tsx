@@ -67,7 +67,7 @@ const StopPointsEditor = ({
         const [isValid] = validateForm(stopPoint, index === 0);
         return (
           <ExpandablePanel
-            key={stopPoint.id}
+            key={index}
             title={getFetchedTitle(stopPoint)}
             defaultOpen={!isValid}
           >

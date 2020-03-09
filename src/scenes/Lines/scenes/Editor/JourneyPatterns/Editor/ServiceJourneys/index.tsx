@@ -37,11 +37,7 @@ const ServiceJourneysEditor = ({
   return (
     <div className="service-journeys-editor">
       {serviceJourneys.map((sj, index) => (
-        <ExpandablePanel
-          key={sj.id ?? index}
-          title={sj.name}
-          defaultOpen={!sj.id}
-        >
+        <ExpandablePanel key={index} title={sj.name} defaultOpen={!sj.id}>
           <ServiceJourneyEditor
             serviceJourney={sj}
             stopPoints={stopPoints}

@@ -40,7 +40,7 @@ const JourneyPatternsEditor = ({
         journeyPatterns.map((jp: JourneyPattern, index: number) => (
           <ExpandablePanel
             title={jp.name}
-            key={jp.name ?? index}
+            key={index}
             defaultOpen={journeyPatterns.length === 1}
           >
             <JourneyPatternEditor
