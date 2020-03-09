@@ -32,23 +32,26 @@ const StopPointsEditor = ({
 
   return (
     <div className="stop-points-editor">
-      {stopPoints.map((stopPoint, index) => (
-        <ExpandablePanel
-          key={stopPoint.id}
-          title={stopPoint.destinationDisplay?.frontText}
-          defaultOpen={!R.head(validateForm(stopPoint, index === 0))}
-        >
-          <StopPointEditor
-            isFirst={index === 0}
-            stopPoint={stopPoint}
-            deleteStopPoint={() => deleteStopPoint(index)}
-            onChange={(stopPoint: StopPoint) =>
-              updateStopPoint(index, stopPoint)
-            }
-            setIsValidStopPoints={setIsValidStopPoints}
-          />
-        </ExpandablePanel>
-      ))}
+      {stopPoints.map((stopPoint, index) => {
+        const [isValid] = validateForm(stopPoint, index === 0);
+        return (
+          <ExpandablePanel
+            key={stopPoint.id}
+            title={stopPoint.destinationDisplay?.frontText}
+            defaultOpen={!isValid}
+          >
+            <StopPointEditor
+              isFirst={index === 0}
+              stopPoint={stopPoint}
+              deleteStopPoint={() => deleteStopPoint(index)}
+              onChange={(stopPoint: StopPoint) =>
+                updateStopPoint(index, stopPoint)
+              }
+              setIsValidStopPoints={setIsValidStopPoints}
+            />
+          </ExpandablePanel>
+        );
+      })}
 
       <SecondaryButton
         onClick={() => onChange(stopPoints.concat(new StopPoint()))}

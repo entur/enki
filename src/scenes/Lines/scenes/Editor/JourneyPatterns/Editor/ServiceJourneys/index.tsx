@@ -40,7 +40,7 @@ const ServiceJourneysEditor = ({
         <ExpandablePanel
           key={sj.id ?? index}
           title={sj.name}
-          defaultOpen={!Boolean(sj.id)}
+          defaultOpen={!sj.id}
         >
           <ServiceJourneyEditor
             serviceJourney={sj}
