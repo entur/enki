@@ -12,7 +12,7 @@ import {
   DataCell
 } from '@entur/table';
 import { ClockIcon } from '@entur/icons';
-import { PassingTime } from 'model';
+import { PassingTime, StopPoint } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import { SmallAlertBox } from '@entur/alert';
 import { validateTimes } from './validateForm';
@@ -29,8 +29,8 @@ type StateProps = {
 
 type Props = {
   passingTimes: PassingTime[];
-  stopPoints: any[];
-  onChange: (pts: any[]) => void;
+  stopPoints: StopPoint[];
+  onChange: (pts: PassingTime[]) => void;
   setValidPassingTimes: (isTrue: boolean) => void;
 };
 
@@ -39,12 +39,6 @@ class PassingTimesEditor extends Component<Props & StateProps> {
     isValid: true,
     errorMessage: ''
   };
-
-  componentDidMount() {
-    const { stopPoints, passingTimes, setValidPassingTimes, intl } = this.props;
-    const { isValid } = validateTimes(stopPoints, passingTimes, intl);
-    setValidPassingTimes(isValid);
-  }
 
   componentDidUpdate(prevProps: Props) {
     const { stopPoints, passingTimes, setValidPassingTimes, intl } = this.props;
@@ -56,6 +50,7 @@ class PassingTimesEditor extends Component<Props & StateProps> {
     if (this.props !== prevProps) {
       this.setState({ isValid, errorMessage });
     }
+    console.log('Setting valid passingtimes:', isValid);
     setValidPassingTimes(isValid);
   }
 
@@ -120,7 +115,7 @@ class PassingTimesEditor extends Component<Props & StateProps> {
     );
   };
 
-  renderRow = (sp: any, i: number) => {
+  renderRow = (sp: StopPoint, i: number) => {
     const { flexibleStopPlaces, passingTimes } = this.props;
     const stopPlace = flexibleStopPlaces.find(
       fsp => fsp.id === sp.flexibleStopPlaceRef

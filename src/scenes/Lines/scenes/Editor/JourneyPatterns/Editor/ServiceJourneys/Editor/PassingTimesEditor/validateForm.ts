@@ -21,15 +21,15 @@ const isBefore = (
   return date < nextDate;
 };
 
-const hasAtleastOneFieldSet = (passingTime: any) => {
+const hasAtleastOneFieldSet = (passingTime: PassingTime) => {
   const {
-    departure,
+    departureTime,
     earliestDepartureTime,
     arrivalTime,
     latestArrivalTime
   } = passingTime;
   return Boolean(
-    departure || earliestDepartureTime || arrivalTime || latestArrivalTime
+    departureTime || earliestDepartureTime || arrivalTime || latestArrivalTime
   );
 };
 
@@ -72,10 +72,10 @@ export const validateTimes = (
         };
       if (
         isBefore(
-          departureTime,
-          departureDayOffset,
           arrivalTime,
-          arrivalDayOffset
+          arrivalDayOffset,
+          departureTime,
+          departureDayOffset
         )
       )
         return {

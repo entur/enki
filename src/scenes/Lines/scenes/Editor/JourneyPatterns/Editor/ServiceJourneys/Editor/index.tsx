@@ -9,7 +9,7 @@ import { ExpandableText } from '@entur/expand';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
-import { DayType } from 'model';
+import { DayType, ServiceJourney, StopPoint } from 'model';
 import { ORGANISATION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -28,8 +28,8 @@ function isNotNullOrUndefined(dayType: DayType) {
 }
 
 type Props = {
-  serviceJourney: any;
-  stopPoints: any[];
+  serviceJourney: ServiceJourney;
+  stopPoints: StopPoint[];
   onChange: (serviceJourney: any) => void;
   setIsValidServiceJourney: (isValid: boolean) => void;
   deleteServiceJourney: (index: number) => void;
