@@ -80,7 +80,9 @@ export default function ServiceJourneyEditor(props: Props) {
 
   const onFieldChange = (field: string, value: any, multi: boolean = false) => {
     onChange(serviceJourney.withFieldChange(field, value, multi));
-    setIsValidServiceJourney(validPassingTimes && validDayTimes);
+    setIsValidServiceJourney(
+      !isBlankName && validPassingTimes && validDayTimes
+    );
   };
 
   return (

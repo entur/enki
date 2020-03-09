@@ -130,8 +130,7 @@ export default defineMessages({
   },
   stopPointsInfo: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.info',
-    defaultMessage:
-      'Du må opprette minst to stoppepunkter. Ett for påstigning og ett for avstigning.'
+    defaultMessage: 'Du må opprette minst to stoppepunkter.'
   },
   serviceJourneysInfo: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',

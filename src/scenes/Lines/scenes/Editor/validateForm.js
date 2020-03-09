@@ -1,6 +1,6 @@
 import { isNil, isEmpty } from 'ramda';
 import { DEFAULT_SELECT_VALUE } from './constants';
-import { isBlank } from 'helpers/forms';
+import { isBlank, isNumeric } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 
@@ -26,6 +26,11 @@ function validatePublicCode(publicCode) {
   }
 }
 
+function validatePrivateCode(privateCode) {
+  if (isBlank(privateCode)) return 'Private Code må fylles inn.';
+  if (!isNumeric(privateCode)) return 'Kun siffrer';
+}
+
 export default function(flexibleLine) {
   if (!flexibleLine) {
     return {
@@ -40,7 +45,8 @@ export default function(flexibleLine) {
   let errors = {
     networkRef: validateNetworkRef(flexibleLine.networkRef),
     name: validateName(flexibleLine.name),
-    publicCode: validatePublicCode(flexibleLine.publicCode)
+    publicCode: validatePublicCode(flexibleLine.publicCode),
+    privateCode: validatePrivateCode(flexibleLine.privateCode)
   };
 
   return {

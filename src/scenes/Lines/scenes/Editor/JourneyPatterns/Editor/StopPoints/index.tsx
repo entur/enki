@@ -2,11 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { AddIcon } from '@entur/icons';
-import { BannerAlertBox } from '@entur/alert';
 import { SecondaryButton } from '@entur/button';
 import { StopPoint } from 'model';
 import { replaceElement } from 'helpers/arrays';
 import { ExpandablePanel } from '@entur/expand';
+import validateForm from './Editor/validateForm';
 import StopPointEditor from './Editor';
 import messages from '../messages';
 
@@ -31,32 +31,26 @@ const StopPointsEditor = ({
 
   return (
     <div className="stop-points-editor">
-      {stopPoints.length < 2 && (
-        <BannerAlertBox
-          style={{ margin: '0.5rem 0' }}
-          variant="info"
-          title={formatMessage(messages.atleastTwoPoints)}
-        >
-          {formatMessage(messages.atleastTwoPointsDetailed)}
-        </BannerAlertBox>
-      )}
-
-      {stopPoints.map((stopPoint, index) => (
-        <ExpandablePanel
-          key={stopPoint.id}
-          title={stopPoint.destinationDisplay?.frontText}
-        >
-          <StopPointEditor
-            isFirst={index === 0}
-            stopPoint={stopPoint}
-            deleteStopPoint={() => deleteStopPoint(index)}
-            onChange={(stopPoint: StopPoint) =>
-              updateStopPoint(index, stopPoint)
-            }
-            setIsValidStopPoints={setIsValidStopPoints}
-          />
-        </ExpandablePanel>
-      ))}
+      {stopPoints.map((stopPoint, index) => {
+        const [isValid] = validateForm(stopPoint, index === 0);
+        return (
+          <ExpandablePanel
+            key={stopPoint.id}
+            title={stopPoint.destinationDisplay?.frontText}
+            defaultOpen={!isValid}
+          >
+            <StopPointEditor
+              isFirst={index === 0}
+              stopPoint={stopPoint}
+              deleteStopPoint={() => deleteStopPoint(index)}
+              onChange={(stopPoint: StopPoint) =>
+                updateStopPoint(index, stopPoint)
+              }
+              setIsValidStopPoints={setIsValidStopPoints}
+            />
+          </ExpandablePanel>
+        );
+      })}
 
       <SecondaryButton
         onClick={() => onChange(stopPoints.concat(new StopPoint()))}
