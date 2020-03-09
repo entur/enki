@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Dropdown } from '@entur/dropdown';
@@ -16,6 +16,7 @@ const General = ({
   onFieldChange,
   handleDirectionSelectionChange
 }) => {
+  const [nameHolder, setNameHolder] = useState(journeyPattern.name);
   const { formatMessage } = useSelector(selectIntl);
 
   return (
@@ -23,14 +24,13 @@ const General = ({
       <InputGroup
         className="form-section"
         label={formatMessage(messages.nameLabel)}
-        feedback={
-          isBlank(journeyPattern.name) ? 'Navn må fylles inn.' : undefined
-        }
-        variant={isBlank(journeyPattern.name) ? 'error' : undefined}
+        feedback={isBlank(nameHolder) ? 'Navn må fylles inn.' : undefined}
+        variant={isBlank(nameHolder) ? 'error' : undefined}
       >
         <TextField
-          defaultValue={journeyPattern.name}
-          onChange={e => onFieldChange('name', e.target.value)}
+          defaultValue={nameHolder}
+          onChange={e => setNameHolder(e.target.value)}
+          onBlur={e => onFieldChange('name', e.target.value)}
         />
       </InputGroup>
 

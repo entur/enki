@@ -11,6 +11,10 @@
     align-items: center;
   }
 
+  .general-line-info {
+    max-width: 80%;
+  }
+
   .buttons {
     display: flex;
     justify-content: flex-end;
@@ -35,5 +39,12 @@
 
   .no-error {
     opacity: 0;
+  }
+
+  .next-button {
+    margin-top: 1rem;
+    margin-right: $space-large;
+    display: block;
+    margin-left: auto;
   }
 }

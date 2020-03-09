@@ -60,5 +60,21 @@ export default defineMessages({
   deleteConfirmationDialogConfirmButtonText: {
     id: 'lines.editor.deleteConfirmationDialogConfirmButtonText',
     defaultMessage: 'Ja'
+  },
+  stepperAbout: {
+    id: 'lines.editor.journeyPatterns.editor.stepper.about',
+    defaultMessage: 'Om linjen'
+  },
+  stepperJourneyPattern: {
+    id: 'lines.editor.journeyPatterns.editor.stepper.journeyPattern',
+    defaultMessage: 'Journey patterns'
+  },
+  stepperBooking: {
+    id: 'lines.editor.journeyPatterns.editor.stepper.booking',
+    defaultMessage: 'Bestillingsinfo'
+  },
+  saveAndContinue: {
+    id: 'lines.editor.journeyPatterns.saveAndContinue',
+    defaultMessage: 'Lagre og gå videre'
   }
 });

@@ -10,14 +10,10 @@ import './styles.scss';
 import General from './General';
 
 import { DEFAULT_SELECT_VALUE } from '../../constants';
+import { JourneyPattern } from 'model';
 
 type Props = {
-  journeyPattern: {
-    pointsInSequence: any[];
-    directionType: string;
-    serviceJourneys: any[];
-    withFieldChange: (field: string, value: any) => any;
-  };
+  journeyPattern: JourneyPattern;
   onSave: (journeyPattern: any, index: number) => void;
   setIsValidServiceJourney: (isValid: boolean) => void;
   setIsValidStopPoints: (isValid: boolean) => void;
