@@ -6,9 +6,9 @@ type Data = {
   description?: string;
   privateCode?: string;
   arrivalTime?: string;
-  arrivalDayOffset?: string;
+  arrivalDayOffset?: number;
   departureTime?: string;
-  departureDayOffset?: string;
+  departureDayOffset?: number;
   latestArrivalTime?: string;
   latestArrivalDayOffset?: number;
   earliestDepartureTime?: string;
@@ -21,9 +21,9 @@ class PassingTime extends Versioned {
   description: string | undefined;
   privateCode: string | undefined;
   arrivalTime: string | undefined;
-  arrivalDayOffset: string | undefined;
+  arrivalDayOffset: number | undefined;
   departureTime: string | undefined;
-  departureDayOffset: string | undefined;
+  departureDayOffset: number | undefined;
   latestArrivalTime: string | undefined;
   latestArrivalDayOffset: number | undefined;
   earliestDepartureTime: string | undefined;

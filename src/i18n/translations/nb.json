@@ -279,5 +279,7 @@
   "passingTimes.error.departureAfterEarliest": "Avgangstid kan ikke være før tidligst avgangstid.",
   "passingTimes.error.arrivalBeforeLatest": "Ankomsttid ikke kan være senere enn senest ankomsttid.",
   "passingTimes.error.laterThanPrevious": "Tidspunktene må være senere enn forrige stoppesteds tidspunkt.",
-  "passingTimes.error.lastArrivalMustBeSet": "Ankomsttid eller seneste ankomsttid for siste stoppested må være satt."
+  "passingTimes.error.lastArrivalMustBeSet": "Ankomsttid eller seneste ankomsttid for siste stoppested må være satt.",
+  "passingTimes.error.stopPoints": "Du må opprette minst to stoppepunkter.",
+  "passingTimes.error.aRowIsMissingData": "Minst èn av radene mangler tidspunkter."
 }

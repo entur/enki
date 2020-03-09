@@ -280,5 +280,7 @@
   "passingTimes.error.laterThanPreviousDeparture": "Arrival time cannot be later than latest arrival time.",
   "passingTimes.error.arrivalBeforeLatest": "Arrival time cannot be later than latest arrival time.",
   "passingTimes.error.laterThanPrevious": "All specified times must be later than previous stop point's times.",
-  "passingTimes.error.lastArrivalMustBeSet": "Arrival time or latest arrival time for last stop place must be set."
+  "passingTimes.error.lastArrivalMustBeSet": "Arrival time or latest arrival time for last stop place must be set.",
+  "passingTimes.error.stopPoints": "You have to create at least two stop points.",
+  "passingTimes.error.aRowIsMissingData": "At least one of the rows is missing passing times."
 }
