@@ -137,7 +137,7 @@
   "lines.editor.general.nameFormGroupTitle": "* Name",
   "lines.editor.general.networkFormGroupTitle": "* Network",
   "lines.editor.general.operatorFormGroupTitle": "Operator",
-  "lines.editor.general.privateCodeFormGroupTitle": "* Private code",
+  "lines.editor.general.privateCodeFormGroupTitle": "Private code",
   "lines.editor.general.publicCodeFormGroupTitle": "* Public code",
   "lines.editor.general.typeFormGroupTitle": "* Flexible line type",
   "lines.editor.generalTabLabel": "General",

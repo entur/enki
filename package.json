@@ -1,8 +1,19 @@
 {
-  "name": "order-transport",
-  "version": "0.0.1",
-  "author": "Sondre Bjerkerud",
+  "name": "flexible-transport",
+  "version": "0.0.2",
+  "author": "Entur",
   "private": true,
+  "scripts": {
+    "postinstall": "check-node-version --npm ~6.14.0",
+    "test": "react-scripts test --env=jsdom --modulePaths=src",
+    "start": "react-scripts start",
+    "start-devenv": "cross-env npm run start",
+    "build": "react-scripts build",
+    "eslint": "eslint 'src/**/*.js'",
+    "snyk-protect": "snyk protect",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
+  },
   "dependencies": {
     "@entur/alert": "^0.5.11",
     "@entur/button": "^2.1.3",
@@ -81,17 +92,6 @@
     "prettier": "^1.19.1",
     "snyk": "^1.290.2",
     "check-node-version": "4.0.2"
-  },
-  "scripts": {
-    "postinstall": "check-node-version --npm ~6.14.0",
-    "test": "react-scripts test --env=jsdom --modulePaths=src",
-    "start": "react-scripts start",
-    "start-devenv": "cross-env npm run start",
-    "build": "react-scripts build",
-    "eslint": "eslint 'src/**/*.js'",
-    "snyk-protect": "snyk protect",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "prettier": {
     "singleQuote": true
