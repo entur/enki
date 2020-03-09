@@ -50,7 +50,6 @@ class PassingTimesEditor extends Component<Props & StateProps> {
     if (this.props !== prevProps) {
       this.setState({ isValid, errorMessage });
     }
-    console.log('Setting valid passingtimes:', isValid);
     setValidPassingTimes(isValid);
   }
 
