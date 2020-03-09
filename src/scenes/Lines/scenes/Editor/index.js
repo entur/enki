@@ -167,6 +167,8 @@ const FlexibleLineEditor = ({ match, history }) => {
     setErrors(validateForm(flexibleLine));
   }, [flexibleLine]);
 
+  const goToLines = () => history.push('/lines');
+
   const dispatch = useDispatch();
   const isLoadingDependencies = useLoadDependencies(match, history);
 
@@ -176,7 +178,7 @@ const FlexibleLineEditor = ({ match, history }) => {
     if (valid && isValidServiceJourney) {
       setSaving(true);
       dispatch(saveFlexibleLine(flexibleLine))
-        .then(() => history.push('/lines'))
+        .then(() => goToLines())
         .finally(() => setSaving(false));
       dispatch(setSavedChanges(true));
     }
@@ -185,9 +187,7 @@ const FlexibleLineEditor = ({ match, history }) => {
   const handleDelete = () => {
     setDeleteDialogOpen(false);
     setDeleting(true);
-    dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() =>
-      history.push('/lines')
-    );
+    dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() => goToLines());
   };
 
   const operators = organisations.filter(
@@ -199,23 +199,33 @@ const FlexibleLineEditor = ({ match, history }) => {
   const isEdit = match.params.id;
   const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
 
+  const onStepClicked = (stepIndexClicked, isInEditMode) => {
+    const allowPreviousStepClick = activeStepperIndex > stepIndexClicked;
+    if (isInEditMode || allowPreviousStepClick) {
+      setActiveStepperIndex(stepIndexClicked);
+    }
+  };
+
   return (
     <div className="line-editor">
       <div className="header">
         <PageHeader
           withBackButton
-          title={
-            isEdit
-              ? formatMessage(messages.editLineHeader)
-              : formatMessage(messages.createLineHeader)
+          onBackButtonClick={
+            activeStepperIndex === 0
+              ? () => goToLines()
+              : () => setActiveStepperIndex(activeStepperIndex - 1)
+          }
+          backButtonTitle={
+            activeStepperIndex === 0
+              ? formatMessage(messages.linesMenuItemLabel)
+              : FLEXIBLE_LINE_STEPS[activeStepperIndex - 1]
           }
         />
         <Stepper
           steps={FLEXIBLE_LINE_STEPS}
           activeIndex={activeStepperIndex}
-          onStepClick={index =>
-            isEdit ? setActiveStepperIndex(index) : undefined
-          }
+          onStepClick={index => onStepClicked(index, isEdit)}
         />
       </div>
 

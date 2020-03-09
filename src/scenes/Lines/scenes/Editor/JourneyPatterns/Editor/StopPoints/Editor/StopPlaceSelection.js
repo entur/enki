@@ -26,8 +26,7 @@ export default function StopPlaceSelection({
           value: fsp.id
         }))
       ]}
-      defaultValue={stopPlaceSelection}
-      value={stopPlaceSelection}
+      value={stopPlaceSelection ?? DEFAULT_SELECT_VALUE}
       onChange={e => handleStopPlaceSelectionChange(e.value)}
     />
   );
