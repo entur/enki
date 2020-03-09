@@ -1,17 +1,20 @@
 import moment from 'moment';
 import messages from './messages';
-import { getIntl } from '../../../../../../../../../i18n';
+import { getIntl } from 'i18n';
+import PassingTime from 'model/PassingTime';
+import { IntlState } from 'react-intl-redux';
+import StopPoint from 'model/StopPoint';
 
 const isBefore = (
   passingTime: string | undefined,
-  dayOffset: number,
+  dayOffset: number | undefined,
   nextPassingTime: string | undefined,
-  nextDayOffset: number
+  nextDayOffset: number | undefined
 ) => {
   if (!passingTime || !nextPassingTime) return false;
-  const date = moment(passingTime, 'HH:mm:ss').add(dayOffset, 'days');
+  const date = moment(passingTime, 'HH:mm:ss').add(dayOffset ?? 0, 'days');
   const nextDate = moment(nextPassingTime, 'HH:mm:ss').add(
-    nextDayOffset,
+    nextDayOffset ?? 0,
     'days'
   );
 
@@ -31,15 +34,23 @@ const hasAtleastOneFieldSet = (passingTime: any) => {
 };
 
 export const validateTimes = (
-  passingTimes: any[],
-  intlState: any
+  stopPoints: StopPoint[],
+  passingTimes: PassingTime[],
+  intlState: IntlState
 ): { isValid: boolean; errorMessage: string } => {
-  if (!(passingTimes?.length >= 2))
+  const intl = getIntl({ intl: intlState });
+
+  if (stopPoints.length < 2)
     return {
       isValid: false,
-      errorMessage: 'Requires at least two stop points.'
+      errorMessage: intl.formatMessage(messages.stopPointsInfo)
     };
-  const intl = getIntl(intlState);
+
+  if (stopPoints.length > passingTimes.length)
+    return {
+      isValid: false,
+      errorMessage: intl.formatMessage(messages.aRowIsMissingData)
+    };
 
   const firstError = passingTimes
     .map((passingTime, index: number) => {
@@ -137,7 +148,7 @@ export const validateTimes = (
       ) {
         return {
           isValid: false,
-          errorMessage: intl.formatMessage(messages.laterThanPrevious)
+          errorMessage: intl!.formatMessage(messages.laterThanPrevious)
         };
       }
       return {

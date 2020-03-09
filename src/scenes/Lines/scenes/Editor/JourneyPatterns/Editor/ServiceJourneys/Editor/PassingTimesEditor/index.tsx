@@ -19,31 +19,40 @@ import { validateTimes } from './validateForm';
 
 import './styles.scss';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
+import { IntlState } from 'react-intl-redux';
 
-type Props = {
-  passingTimes: any[];
-  stopPoints: any[];
-  flexibleStopPlaces: { id: string; name: string }[];
-  onChange: (pts: any[]) => void;
-  setValidPassingTimes: (isTrue: boolean) => void;
-  intl: any;
+type StateProps = {
+  flexibleStopPlaces: FlexibleStopPlace[];
+  intl: IntlState;
 };
 
-class PassingTimesEditor extends Component<Props> {
+type Props = {
+  passingTimes: PassingTime[];
+  stopPoints: any[];
+  onChange: (pts: any[]) => void;
+  setValidPassingTimes: (isTrue: boolean) => void;
+};
+
+class PassingTimesEditor extends Component<Props & StateProps> {
   state = {
     isValid: true,
     errorMessage: ''
   };
 
   componentDidMount() {
-    const { passingTimes, setValidPassingTimes, intl } = this.props;
-    const { isValid } = validateTimes(passingTimes, { intl });
+    const { stopPoints, passingTimes, setValidPassingTimes, intl } = this.props;
+    const { isValid } = validateTimes(stopPoints, passingTimes, intl);
     setValidPassingTimes(isValid);
   }
 
   componentDidUpdate(prevProps: Props) {
-    const { passingTimes, setValidPassingTimes, intl } = this.props;
-    const { isValid, errorMessage } = validateTimes(passingTimes, { intl });
+    const { stopPoints, passingTimes, setValidPassingTimes, intl } = this.props;
+    const { isValid, errorMessage } = validateTimes(
+      stopPoints,
+      passingTimes,
+      intl
+    );
     if (this.props !== prevProps) {
       this.setState({ isValid, errorMessage });
     }
@@ -204,13 +213,7 @@ class PassingTimesEditor extends Component<Props> {
   }
 }
 
-const mapStateToProps = ({
-  flexibleStopPlaces,
-  intl
-}: {
-  flexibleStopPlaces: any[];
-  intl: any;
-}) => ({
+const mapStateToProps = ({ flexibleStopPlaces, intl }: StateProps) => ({
   flexibleStopPlaces,
   intl
 });

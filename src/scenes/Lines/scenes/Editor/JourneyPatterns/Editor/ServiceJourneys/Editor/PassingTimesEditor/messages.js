@@ -26,5 +26,13 @@ export default defineMessages({
     id: 'passingTimes.error.lastArrivalMustBeSet',
     defaultMessage:
       'Ankomsttid eller seneste ankomsttid for siste stoppested må være satt.'
+  },
+  stopPointsInfo: {
+    id: 'passingTimes.error.stopPoints',
+    defaultMessage: 'Du må opprette minst to stoppepunkter.'
+  },
+  aRowIsMissingData: {
+    id: 'passingTimes.error.aRowIsMissingData',
+    defaultMessage: 'Minst èn av radene mangler tidspunkter.'
   }
 });
