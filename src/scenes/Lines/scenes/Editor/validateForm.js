@@ -1,6 +1,6 @@
 import { isNil, isEmpty } from 'ramda';
 import { DEFAULT_SELECT_VALUE } from './constants';
-import { isBlank, isNumeric } from 'helpers/forms';
+import { isBlank } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 
