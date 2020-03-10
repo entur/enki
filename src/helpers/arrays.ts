@@ -33,11 +33,11 @@ export const useUniqueKeys = (list: any[]): string[] => {
       const updatedList = ids.filter(
         (element, index) => index !== indexOfDeletedElement
       );
-
       setId(updatedList);
     }
 
     setListHolder(list);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [list]);
 
   return ids;
