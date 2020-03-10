@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { JourneyPattern } from 'model';
 import { ExpandablePanel } from '@entur/expand';
-import { replaceElement } from 'helpers/arrays';
+import { replaceElement, useUniqueKeys } from 'helpers/arrays';
 import JourneyPatternEditor from './Editor';
 import './styles.scss';
 
@@ -26,6 +26,9 @@ const JourneyPatternsEditor = ({
   const handleSave = (journeyPattern: JourneyPattern, index: number) => {
     onChange(replaceElement(journeyPatterns, index, journeyPattern));
   };
+
+  const keys = useUniqueKeys(journeyPatterns);
+
   return (
     <div>
       {journeyPatterns.length === 1 ? (
@@ -40,7 +43,7 @@ const JourneyPatternsEditor = ({
         journeyPatterns.map((jp: JourneyPattern, index: number) => (
           <ExpandablePanel
             title={jp.name}
-            key={index}
+            key={jp.id ?? keys[index]}
             defaultOpen={journeyPatterns.length === 1}
           >
             <JourneyPatternEditor
