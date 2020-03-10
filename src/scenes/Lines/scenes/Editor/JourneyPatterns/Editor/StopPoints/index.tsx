@@ -4,7 +4,7 @@ import { selectIntl } from 'i18n';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
 import { StopPoint } from 'model';
-import { replaceElement } from 'helpers/arrays';
+import { replaceElement, useUniqueKeys } from 'helpers/arrays';
 import { ExpandablePanel } from '@entur/expand';
 import validateForm from './Editor/validateForm';
 import StopPointEditor from './Editor';
@@ -61,13 +61,15 @@ const StopPointsEditor = ({
       </div>
     );
 
+  const keys = useUniqueKeys(stopPoints);
+
   return (
     <div className="stop-points-editor">
       {stopPoints.map((stopPoint, index) => {
         const [isValid] = validateForm(stopPoint, index === 0);
         return (
           <ExpandablePanel
-            key={stopPoint.id}
+            key={stopPoint.id ?? keys[index]}
             title={getFetchedTitle(stopPoint)}
             defaultOpen={!isValid}
           >

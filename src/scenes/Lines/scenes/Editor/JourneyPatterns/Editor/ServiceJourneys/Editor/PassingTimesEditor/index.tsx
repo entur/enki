@@ -109,7 +109,7 @@ class PassingTimesEditor extends Component<Props & StateProps> {
         prepend={<ClockIcon inline />}
         type="time"
         className="timepicker"
-        value={shownValue}
+        defaultValue={shownValue}
       />
     );
   };

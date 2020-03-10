@@ -155,7 +155,7 @@ export default function ServiceJourneyEditor(props: Props) {
               value: id
             }))
           ]}
-          defaultValue={operatorSelection}
+          value={operatorSelection ?? DEFAULT_SELECT_VALUE}
           onChange={(e: NormalizedDropdownItemType | null) =>
             handleOperatorSelectionChange(e?.value)
           }
