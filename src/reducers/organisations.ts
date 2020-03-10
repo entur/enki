@@ -37,4 +37,13 @@ const organisationsReducer = (
   }
 };
 
+export const filterNetexOperators = (
+  organisations: Organisation[]
+): Organisation[] =>
+  organisations.filter(
+    org =>
+      org.types.includes(ORGANISATION_TYPE.OPERATOR) &&
+      org.references.netexOperatorId
+  );
+
 export default organisationsReducer;

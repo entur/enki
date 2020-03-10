@@ -8,12 +8,7 @@ import {
 } from '@entur/button';
 import { Stepper } from '@entur/menu';
 import { FlexibleLine } from 'model';
-import {
-  ORGANISATION_TYPE,
-  FLEXIBLE_LINE_TYPE,
-  VEHICLE_MODE,
-  VEHICLE_SUBMODE
-} from 'model/enums';
+import { FLEXIBLE_LINE_TYPE, VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 import {
   deleteFlexibleLineById,
   loadFlexibleLineById,
@@ -36,6 +31,7 @@ import { withRouter } from 'react-router-dom';
 import { selectIntl } from 'i18n';
 import { createSelector } from 'reselect';
 import messages from './messages';
+import { filterNetexOperators } from 'reducers/organisations';
 
 const selectFlexibleLine = createSelector(
   state => state.flexibleLines,
@@ -190,11 +186,7 @@ const FlexibleLineEditor = ({ match, history }) => {
     dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() => goToLines());
   };
 
-  const operators = organisations.filter(
-    org =>
-      org.types.includes(ORGANISATION_TYPE.OPERATOR) &&
-      org.references.netexOperatorId
-  );
+  const operators = filterNetexOperators(organisations);
   const isLoadingLine = !flexibleLine;
   const isEdit = match.params.id;
   const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
