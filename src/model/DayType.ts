@@ -1,26 +1,13 @@
-import Versioned from './base/Versioned';
 import DayTypeAssignment from './DayTypeAssignment';
 import { DAY_OF_WEEK } from './enums';
+import { VersionedType } from 'model/base/VersionedType';
 
-type Props = {
-  daysOfWeek?: DAY_OF_WEEK[];
-  dayTypeAssignments?: DayTypeAssignment[];
-};
-
-class DayType extends Versioned {
+type DayType = VersionedType & {
   daysOfWeek: DAY_OF_WEEK[];
   dayTypeAssignments: DayTypeAssignment[];
+};
 
-  constructor(data: Props = {}) {
-    super(data);
-
-    this.daysOfWeek = data.daysOfWeek || [];
-    this.dayTypeAssignments = data.dayTypeAssignments || [];
-  }
-
-  isEmpty() {
-    return this.daysOfWeek.length === 0 && this.dayTypeAssignments.length === 0;
-  }
-}
+export const dayTypeIsEmpty = (dayType: DayType) =>
+  dayType.daysOfWeek.length === 0 && dayType.dayTypeAssignments.length === 0;
 
 export default DayType;

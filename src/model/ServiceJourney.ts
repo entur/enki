@@ -41,7 +41,7 @@ class ServiceJourney extends Versioned {
     this.passingTimes = (data.passingTimes || []).map(
       pt => new PassingTime(pt)
     );
-    this.dayTypes = (data.dayTypes || []).map(dt => new DayType(dt));
+    this.dayTypes = data.dayTypes || [];
     this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 }

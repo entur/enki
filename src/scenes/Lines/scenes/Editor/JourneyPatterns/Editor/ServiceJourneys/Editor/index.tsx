@@ -9,7 +9,7 @@ import { ExpandableText } from '@entur/expand';
 import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
-import { DayType, ServiceJourney, StopPoint } from 'model';
+import { ServiceJourney, StopPoint } from 'model';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
 import messages from '../../messages';
@@ -24,10 +24,6 @@ import { GlobalState } from 'reducers';
 
 const DEFAULT_SELECT_LABEL = '--- velg ---';
 const DEFAULT_SELECT_VALUE = '-1';
-
-function isNotNullOrUndefined(dayType: DayType) {
-  return dayType !== null && dayType !== undefined;
-}
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -169,10 +165,12 @@ export default function ServiceJourneyEditor(props: Props) {
         <h4> {formatMessage(messages.availability)} </h4>
 
         <DayTypeEditor
-          dayType={dayTypes.length > 0 ? dayTypes[0] : undefined}
-          onChange={dt =>
-            onFieldChange('dayTypes', [dt].filter(isNotNullOrUndefined))
+          dayType={
+            dayTypes.length > 0
+              ? dayTypes[0]
+              : { daysOfWeek: [], dayTypeAssignments: [] }
           }
+          onChange={dt => onFieldChange('dayTypes', [dt])}
         />
       </div>
 
