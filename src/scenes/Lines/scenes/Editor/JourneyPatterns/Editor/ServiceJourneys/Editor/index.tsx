@@ -10,11 +10,13 @@ import BookingArrangementEditor from '../../../../BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
 import { DayType, ServiceJourney, StopPoint } from 'model';
-import { ORGANISATION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
 import messages from '../../messages';
-import { OrganisationState } from 'reducers/organisations';
+import {
+  filterNetexOperators,
+  OrganisationState
+} from 'reducers/organisations';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 
 import './styles.scss';
@@ -71,9 +73,7 @@ export default function ServiceJourneyEditor(props: Props) {
     setOperatorSelection(operatorSelection);
   };
 
-  const operators = (organisations ?? []).filter(org =>
-    org.types.includes(ORGANISATION_TYPE.OPERATOR)
-  );
+  const operators = filterNetexOperators(organisations ?? []);
 
   const isBlankName = isBlank(name);
   const validDayTimes = (dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;

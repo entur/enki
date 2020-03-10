@@ -3,6 +3,10 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   errorFlexibleLineNetworkRefEmpty: {
     id: 'lines.validateForm.error.flexibleLine.networkRef.empty',
-    defaultMessage: 'Du må velge et nettverk'
+    defaultMessage: 'Du må velge et nettverk.'
+  },
+  errorFlexibleLineOperatorRefEmpty: {
+    id: 'lines.validateForm.error.flexibleLine.operatorRef.empty',
+    defaultMessage: 'Du må velge en operatør.'
   }
 });

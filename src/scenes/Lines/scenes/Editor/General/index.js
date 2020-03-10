@@ -25,7 +25,8 @@ export default ({
     errors: {
       name: nameError,
       publicCode: publicCodeError,
-      networkRef: networkError
+      networkRef: networkError,
+      operatorRef: operatorError
     }
   } = errors;
 
@@ -87,7 +88,10 @@ export default ({
           ]}
           label={formatMessage(messages.operatorFormGroupTitle)}
           onChange={({ value }) => handleOperatorSelectionChange(value)}
-          placeholder="F.eks Østfold Kollektivtrafikk"
+          feedback={formatMessage(
+            validationMessages.errorFlexibleLineOperatorRefEmpty
+          )}
+          variant={operatorError ? 'error' : undefined}
           value={operatorSelection}
         />
 

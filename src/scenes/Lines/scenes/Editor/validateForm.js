@@ -14,6 +14,16 @@ function validateNetworkRef(networkRef) {
   }
 }
 
+function validateOperatorRef(operatorRef) {
+  if (
+    isNil(operatorRef) ||
+    operatorRef === DEFAULT_SELECT_VALUE ||
+    isEmpty(operatorRef)
+  ) {
+    return messages.errorFlexibleLineOperatorRefEmpty;
+  }
+}
+
 function validateName(name) {
   if (isBlank(name)) {
     return 'Navn må fylles inn.';
@@ -33,14 +43,16 @@ export default function(flexibleLine) {
       errors: {
         networkRef: undefined,
         name: undefined,
-        publicCode: undefined
+        publicCode: undefined,
+        operatorRef: undefined
       }
     };
   }
   let errors = {
     networkRef: validateNetworkRef(flexibleLine.networkRef),
     name: validateName(flexibleLine.name),
-    publicCode: validatePublicCode(flexibleLine.publicCode)
+    publicCode: validatePublicCode(flexibleLine.publicCode),
+    operatorRef: validateOperatorRef(flexibleLine.operatorRef)
   };
 
   return {
