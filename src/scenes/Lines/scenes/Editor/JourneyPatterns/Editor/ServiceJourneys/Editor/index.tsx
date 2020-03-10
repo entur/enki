@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
@@ -78,11 +78,14 @@ export default function ServiceJourneyEditor(props: Props) {
   const isBlankName = isBlank(name);
   const validDayTimes = (dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
 
-  const onFieldChange = (field: string, value: any, multi: boolean = false) => {
-    onChange(serviceJourney.withFieldChange(field, value, multi));
+  useEffect(() => {
     setIsValidServiceJourney(
       !isBlankName && validPassingTimes && validDayTimes
     );
+  }, [setIsValidServiceJourney, isBlankName, validPassingTimes, validDayTimes]);
+
+  const onFieldChange = (field: string, value: any, multi: boolean = false) => {
+    onChange(serviceJourney.withFieldChange(field, value, multi));
   };
 
   return (
