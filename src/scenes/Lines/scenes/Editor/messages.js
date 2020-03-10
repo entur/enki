@@ -76,5 +76,9 @@ export default defineMessages({
   saveAndContinue: {
     id: 'lines.editor.journeyPatterns.saveAndContinue',
     defaultMessage: 'Lagre og gå videre'
+  },
+  linesMenuItemLabel: {
+    id: 'app.navBar.linesMenuItemLabel',
+    defaultMessage: 'Linjer'
   }
 });
