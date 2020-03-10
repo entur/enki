@@ -145,9 +145,9 @@ class PassingTimesEditor extends Component<Props & StateProps> {
             <div>
               <Label>Normalt</Label>
               <div style={{ display: 'flex' }}>
-                <div>{this.getTimePicker(tpt, i, 'departureTime')}</div>
+                <div>{this.getTimePicker(tpt, i, 'arrivalTime')}</div>
                 <div>
-                  {this.getDayOffsetDropDown(tpt, i, 'departureDayOffset')}
+                  {this.getDayOffsetDropDown(tpt, i, 'arrivalDayOffset')}
                 </div>
               </div>
             </div>
@@ -158,9 +158,9 @@ class PassingTimesEditor extends Component<Props & StateProps> {
             <div>
               <Label>Normalt</Label>
               <div style={{ display: 'flex' }}>
-                <div>{this.getTimePicker(tpt, i, 'arrivalTime')}</div>
+                <div>{this.getTimePicker(tpt, i, 'departureTime')}</div>
                 <div>
-                  {this.getDayOffsetDropDown(tpt, i, 'arrivalDayOffset')}
+                  {this.getDayOffsetDropDown(tpt, i, 'departureDayOffset')}
                 </div>
               </div>
             </div>

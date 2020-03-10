@@ -72,10 +72,10 @@ export const validateTimes = (
         };
       if (
         isBefore(
-          arrivalTime,
-          arrivalDayOffset,
           departureTime,
-          departureDayOffset
+          departureDayOffset,
+          arrivalTime,
+          arrivalDayOffset
         )
       )
         return {
