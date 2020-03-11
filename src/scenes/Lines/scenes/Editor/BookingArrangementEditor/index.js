@@ -1,20 +1,18 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { BookingArrangement } from 'model';
-import ContactFields from './contactFields';
+import ContactFields from 'scenes/Lines/scenes/Editor/BookingArrangementEditor/contactFields';
 import BookingLimitFields from './bookingLimitFields';
 import BookingMethodSelection from './bookingMethodSelection';
 import BookingTimeSelection from './bookingTimeSelection';
 import PaymentTimeSelection from './paymentTimeSelection';
 import BookingAccessSelection from './bookingAccessSelection';
 import BookingNoteField from './bookingNoteField';
+import { contactIsEmpty } from 'model/Contact';
 import './styles.scss';
 
 const BookingArrangementEditor = props => {
-  const {
-    bookingArrangement = BookingArrangement.createInstance(),
-    onChange
-  } = props;
+  const { bookingArrangement = new BookingArrangement(), onChange } = props;
 
   const onFieldChange = useCallback(
     (field, value, multi = false) => {
@@ -29,18 +27,13 @@ const BookingArrangementEditor = props => {
   );
 
   const handleContactFieldChange = useCallback(
-    (field, value) => {
-      const newContact = bookingArrangement.bookingContact.withFieldChange(
-        field,
-        value
-      );
-
+    contact => {
       onFieldChange(
         'bookingContact',
-        newContact.isEmpty() ? undefined : newContact
+        contactIsEmpty(contact) ? undefined : contact
       );
     },
-    [bookingArrangement, onFieldChange]
+    [onFieldChange]
   );
 
   const resetBookingLimit = useCallback(() => {
@@ -54,16 +47,12 @@ const BookingArrangementEditor = props => {
     }
   }, [bookingArrangement, onChange]);
 
-  const contactFieldChangeHandlerFactory = fieldName => {
-    return newValue => handleContactFieldChange(fieldName, newValue);
-  };
-
   const fieldChangeHandlerFactory = (fieldName, multiple = false) => {
     return newValue => onFieldChange(fieldName, newValue, multiple);
   };
 
   const {
-    bookingContact,
+    bookingContact = {},
     bookingMethods,
     bookWhen,
     latestBookingTime = null,
@@ -77,14 +66,7 @@ const BookingArrangementEditor = props => {
     <div className="booking-editor tab-style">
       <ContactFields
         contact={bookingContact}
-        onContactPersonChange={contactFieldChangeHandlerFactory(
-          'contactPerson'
-        )}
-        onPhoneChange={contactFieldChangeHandlerFactory('phone')}
-        onEmailChange={contactFieldChangeHandlerFactory('email')}
-        onUrlChange={contactFieldChangeHandlerFactory('url')}
-        onDetailsChange={contactFieldChangeHandlerFactory('furtherDetails')}
-        handleContactFieldChange={handleContactFieldChange}
+        onContactChange={contact => handleContactFieldChange(contact)}
       />
 
       <BookingMethodSelection

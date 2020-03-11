@@ -5,7 +5,7 @@ type Data = {
   name?: string;
   description?: string;
   privateCode?: string;
-  bookingContact?: Contact | null;
+  bookingContact?: Contact;
   bookingNote?: string;
   bookingMethods?: any[];
   bookingAccess?: any;
@@ -19,7 +19,7 @@ class BookingArrangement extends Base {
   name: string | undefined;
   description: string | undefined;
   privateCode: string | undefined;
-  bookingContact: Contact | null;
+  bookingContact: Contact | undefined;
   bookingNote: string | undefined;
   bookingMethods: any[];
   bookingAccess: any | undefined;
@@ -28,19 +28,13 @@ class BookingArrangement extends Base {
   latestBookingTime: any | undefined;
   minimumBookingPeriod: any | undefined;
 
-  static createInstance() {
-    return new BookingArrangement({ bookingContact: new Contact() });
-  }
-
   constructor(data: Data = {}) {
     super();
 
     this.name = data?.name;
     this.description = data?.description;
     this.privateCode = data?.privateCode;
-    this.bookingContact = data?.bookingContact
-      ? new Contact(data.bookingContact)
-      : null;
+    this.bookingContact = data?.bookingContact;
     this.bookingNote = data?.bookingNote;
     this.bookingMethods = data?.bookingMethods || [];
     this.bookingAccess = data?.bookingAccess;
