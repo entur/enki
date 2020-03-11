@@ -8,7 +8,10 @@ export default ({ bookingNote, onChange }) => {
   const { formatMessage } = useSelector(selectIntl);
   return (
     <InputGroup className="form-section" label={formatMessage(messages.title)}>
-      <TextArea value={bookingNote} onChange={e => onChange(e.target.value)} />
+      <TextArea
+        value={bookingNote ?? ''}
+        onChange={e => onChange(e.target.value)}
+      />
     </InputGroup>
   );
 };

@@ -53,13 +53,13 @@ export enum DAY_OF_WEEK {
   SUNDAY = 'sunday'
 }
 
-export const BOOKING_METHOD = Object.freeze({
-  CALL_DRIVER: 'callDriver',
-  CALL_OFFICE: 'callOffice',
-  ONLINE: 'online',
-  PHONE_AT_STOP: 'phoneAtStop',
-  TEXT: 'text'
-});
+export enum BOOKING_METHOD {
+  CALL_DRIVER = 'callDriver',
+  CALL_OFFICE = 'callOffice',
+  ONLINE = 'online',
+  PHONE_AT_STOP = 'phoneAtStop',
+  TEXT = 'text'
+}
 
 export const BOOKING_ACCESS = Object.freeze({
   PUBLIC: 'public',
@@ -74,12 +74,12 @@ export const PURCHASE_WHEN = Object.freeze({
   ADVANCE_AND_DAY_OF_TRAVEL: 'advanceAndDayOfTravel'
 });
 
-export const PURCHASE_MOMENT = Object.freeze({
-  ON_RESERVATION: 'onReservation',
-  BEFORE_BOARDING: 'beforeBoarding',
-  AFTER_BOARDING: 'afterBoarding',
-  ON_CHECK_OUT: 'onCheckOut'
-});
+export enum PURCHASE_MOMENT {
+  ON_RESERVATION = 'onReservation',
+  BEFORE_BOARDING = 'beforeBoarding',
+  AFTER_BOARDING = 'afterBoarding',
+  ON_CHECK_OUT = 'onCheckOut'
+}
 
 export const GEOMETRY_TYPE = Object.freeze({
   POINT: 'Point',

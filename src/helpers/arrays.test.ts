@@ -1,4 +1,4 @@
-import { removeElementByIndex, replaceElement } from './arrays';
+import { addOrRemove, removeElementByIndex, replaceElement } from './arrays';
 
 describe('arrays', () => {
   describe('replaceElement', () => {
@@ -26,6 +26,22 @@ describe('arrays', () => {
       expect(removeElementByIndex(['first value', 'other value'], 10)).toEqual([
         'first value',
         'other value'
+      ]);
+    });
+  });
+
+  describe('addToListIfNotExistsOtherwiseRemove', () => {
+    it('should remove element if it exists in list', () => {
+      expect(
+        addOrRemove('remove me', ['first value', 'remove me', 'other value'])
+      ).toEqual(['first value', 'other value']);
+    });
+
+    it('should add element if it does not exist in the list', () => {
+      expect(addOrRemove('add me', ['first value', 'other value'])).toEqual([
+        'first value',
+        'other value',
+        'add me'
       ]);
     });
   });

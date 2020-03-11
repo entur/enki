@@ -49,9 +49,7 @@ class FlexibleLine extends Versioned {
     this.network = data.network;
     this.networkRef = data.networkRef ?? data.network?.id;
     this.operatorRef = data.operatorRef;
-    this.bookingArrangement = data.bookingArrangement
-      ? new BookingArrangement(data.bookingArrangement)
-      : undefined;
+    this.bookingArrangement = data.bookingArrangement;
     this.journeyPatterns = (data.journeyPatterns || []).map(
       jp => new JourneyPattern(jp)
     );

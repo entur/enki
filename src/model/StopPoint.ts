@@ -35,9 +35,7 @@ class StopPoint extends Versioned {
       data.flexibleStopPlaceRef ||
       (data.flexibleStopPlace ? data.flexibleStopPlace.id : undefined);
     this.quayRef = data.quayRef;
-    this.bookingArrangement = data.bookingArrangement
-      ? new BookingArrangement(data.bookingArrangement)
-      : undefined;
+    this.bookingArrangement = data.bookingArrangement;
     this.destinationDisplay = data.destinationDisplay
       ? new DestinationDisplay(data.destinationDisplay)
       : undefined;
