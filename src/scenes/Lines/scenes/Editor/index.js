@@ -8,7 +8,7 @@ import {
 } from '@entur/button';
 import { Stepper } from '@entur/menu';
 import { FlexibleLine } from 'model';
-import { FLEXIBLE_LINE_TYPE, VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
+import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 import {
   deleteFlexibleLineById,
   loadFlexibleLineById,
@@ -22,7 +22,6 @@ import OverlayLoader from 'components/OverlayLoader';
 import ConfirmDialog from 'components/ConfirmDialog';
 import BookingArrangementEditor from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
-import { DEFAULT_SELECT_VALUE } from './constants';
 import validateForm from './validateForm';
 import './styles.scss';
 import General from './General';
@@ -40,8 +39,7 @@ const selectFlexibleLine = createSelector(
     (match.params.id && flexibleLines?.find(l => l.id === match.params.id)) ||
     new FlexibleLine({
       transportMode: VEHICLE_MODE.BUS,
-      transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
-      flexibleLineType: FLEXIBLE_LINE_TYPE.FLEXIBLE_AREAS_ONLY
+      transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS
     })
 );
 
@@ -101,21 +99,13 @@ const useFlexibleLine = match => {
 
   const handleNetworkSelectionChange = networkSelection => {
     setFlexibleLine(
-      flexibleLine.withFieldChange(
-        'networkRef',
-        networkSelection !== DEFAULT_SELECT_VALUE ? networkSelection : undefined
-      )
+      flexibleLine.withFieldChange('networkRef', networkSelection)
     );
   };
 
   const handleOperatorSelectionChange = operatorSelection => {
     setFlexibleLine(
-      flexibleLine.withFieldChange(
-        'operatorRef',
-        operatorSelection !== DEFAULT_SELECT_VALUE
-          ? operatorSelection
-          : undefined
-      )
+      flexibleLine.withFieldChange('operatorRef', operatorSelection)
     );
   };
 
@@ -237,12 +227,8 @@ const FlexibleLineEditor = ({ match, history }) => {
                 networks={networks}
                 operators={operators}
                 errors={errors}
-                networkSelection={
-                  flexibleLine.networkRef || DEFAULT_SELECT_VALUE
-                }
-                operatorSelection={
-                  flexibleLine.operatorRef || DEFAULT_SELECT_VALUE
-                }
+                networkSelection={flexibleLine.networkRef}
+                operatorSelection={flexibleLine.operatorRef}
                 handleFieldChange={onFieldChange}
                 handleNetworkSelectionChange={handleNetworkSelectionChange}
                 handleOperatorSelectionChange={handleOperatorSelectionChange}

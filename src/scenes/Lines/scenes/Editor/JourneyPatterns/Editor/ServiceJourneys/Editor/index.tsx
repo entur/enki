@@ -22,9 +22,6 @@ import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedIt
 import './styles.scss';
 import { GlobalState } from 'reducers';
 
-const DEFAULT_SELECT_LABEL = '--- velg ---';
-const DEFAULT_SELECT_VALUE = '-1';
-
 type Props = {
   serviceJourney: ServiceJourney;
   stopPoints: StopPoint[];
@@ -62,10 +59,7 @@ export default function ServiceJourneyEditor(props: Props) {
   const { formatMessage } = useSelector(selectIntl);
 
   const handleOperatorSelectionChange = (operatorSelection: any) => {
-    onFieldChange(
-      'operatorRef',
-      operatorSelection !== DEFAULT_SELECT_VALUE ? operatorSelection : undefined
-    );
+    onFieldChange('operatorRef', operatorSelection);
     setOperatorSelection(operatorSelection);
   };
 
@@ -148,13 +142,12 @@ export default function ServiceJourneyEditor(props: Props) {
           className="form-section operator-selector"
           label={formatMessage(messages.operator)}
           items={[
-            { label: DEFAULT_SELECT_LABEL, value: DEFAULT_SELECT_VALUE },
             ...operators.map(({ name, id }) => ({
               label: name,
               value: id
             }))
           ]}
-          value={operatorSelection ?? DEFAULT_SELECT_VALUE}
+          value={operatorSelection}
           onChange={(e: NormalizedDropdownItemType | null) =>
             handleOperatorSelectionChange(e?.value)
           }

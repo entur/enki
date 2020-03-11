@@ -11,7 +11,6 @@ import './styles.scss';
 import { ExpandableText } from '@entur/expand';
 import searchForQuay, { QuaySearch } from './searchForQuay';
 import debounce from './debounce';
-import { DEFAULT_SELECT_VALUE } from './constants';
 import Form from './Form';
 import validateForm from './validateForm';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
@@ -51,7 +50,7 @@ const StopPointEditor = (props: Props & StateProps) => {
 
   const [stopPlaceSelection, setStopPlaceSelection] = useState<
     StopPlaceSelectionType
-  >(stopPoint.flexibleStopPlaceRef ?? DEFAULT_SELECT_VALUE);
+  >(stopPoint.flexibleStopPlaceRef ?? null);
   const [errors, setErrors] = useState<StopPointsFormError>({
     quayRef: [],
     flexibleStopPlaceRefAndQuayRef: [],
@@ -71,10 +70,7 @@ const StopPointEditor = (props: Props & StateProps) => {
   const handleStopPlaceSelectionChange = (
     selectedStopPlace: StopPlaceSelectionType
   ) => {
-    onFieldChange(
-      'flexibleStopPlaceRef',
-      selectedStopPlace !== DEFAULT_SELECT_VALUE ? selectedStopPlace : null
-    );
+    onFieldChange('flexibleStopPlaceRef', selectedStopPlace);
     setStopPlaceSelection(selectedStopPlace);
   };
 

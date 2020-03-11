@@ -30,9 +30,6 @@ import { IntlFormatters } from 'react-intl';
 import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
 
-const DEFAULT_SELECT_LABEL = '--- velg ---';
-const DEFAULT_SELECT_VALUE = '-1';
-
 const getCurrentNetwork = (
   state: GlobalState,
   match: { params: MatchParams }
@@ -94,10 +91,7 @@ const NetworkEditor = ({
   const handleAuthoritySelectionChange = (
     authoritySelection: string | undefined
   ) => {
-    const authorityRef =
-      authoritySelection !== DEFAULT_SELECT_VALUE
-        ? authoritySelection
-        : undefined;
+    const authorityRef = authoritySelection;
     setNetwork({
       ...network,
       authorityRef: authorityRef
@@ -195,13 +189,12 @@ const NetworkEditor = ({
               className="form-section"
               label={formatMessage(messages.authorityLabelText)}
               items={[
-                { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
                 ...authorities.map(org => ({
                   label: org.name,
                   value: org.id
                 }))
               ]}
-              value={network.authorityRef ?? DEFAULT_SELECT_VALUE}
+              value={network.authorityRef}
               onChange={organisation =>
                 handleAuthoritySelectionChange(organisation?.value)
               }

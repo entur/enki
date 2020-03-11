@@ -15,7 +15,6 @@ import { isBlank } from 'helpers/forms';
 import { StopPoint, FlexibleStopPlace } from 'model';
 import { StopPlaceSelectionType } from './index';
 import { QuaySearch } from './searchForQuay';
-import { DEFAULT_SELECT_VALUE } from './constants';
 
 function quaySearchFeedback(
   errors: string[],
@@ -76,7 +75,7 @@ const Form = ({
       handleFieldChange('quayRef', null);
       setSelectMode('custom');
     } else if (selectMode === 'nsr') {
-      handleStopPlaceSelectionChange(DEFAULT_SELECT_VALUE);
+      handleStopPlaceSelectionChange(null);
       setSelectMode('nsr');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

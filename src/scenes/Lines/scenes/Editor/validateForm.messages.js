@@ -8,5 +8,9 @@ export default defineMessages({
   errorFlexibleLineOperatorRefEmpty: {
     id: 'lines.validateForm.error.flexibleLine.operatorRef.empty',
     defaultMessage: 'Du må velge en operatør.'
+  },
+  errorFlexibleLineFlexibleLineTypeEmpty: {
+    id: 'lines.validateForm.error.flexibleLine.flexibleLineType.empty',
+    defaultMessage: 'Du må velge en type.'
   }
 });

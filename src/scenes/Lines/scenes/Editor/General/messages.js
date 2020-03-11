@@ -19,7 +19,7 @@ export default defineMessages({
   },
   operatorFormGroupTitle: {
     id: 'lines.editor.general.operatorFormGroupTitle',
-    defaultMessage: 'Operatør'
+    defaultMessage: '* Operatør'
   },
   networkFormGroupTitle: {
     id: 'lines.editor.general.networkFormGroupTitle',
