@@ -6,7 +6,7 @@ import { InputGroup, TextField } from '@entur/form';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import { ExpandableText } from '@entur/expand';
-import BookingArrangementEditor from '../../../../BookingArrangementEditor';
+import BookingArrangementEditor from 'scenes/Lines/scenes/Editor/BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
 import { ServiceJourney, StopPoint } from 'model';
@@ -184,7 +184,7 @@ export default function ServiceJourneyEditor(props: Props) {
 
       <ExpandableText title={formatMessage(messages.booking)}>
         <BookingArrangementEditor
-          bookingArrangement={bookingArrangement || undefined}
+          bookingArrangement={bookingArrangement ?? {}}
           onChange={b => onFieldChange('bookingArrangement', b)}
         />
       </ExpandableText>

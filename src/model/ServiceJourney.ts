@@ -10,7 +10,7 @@ type Data = {
   privateCode?: string;
   publicCode?: string;
   operatorRef?: string;
-  bookingArrangement?: BookingArrangement | null;
+  bookingArrangement?: BookingArrangement;
   passingTimes?: PassingTime[];
   dayTypes?: DayType[];
   notices?: Notice[];
@@ -22,7 +22,7 @@ class ServiceJourney extends Versioned {
   privateCode: string | undefined;
   publicCode: string | undefined;
   operatorRef: string | undefined;
-  bookingArrangement: BookingArrangement | null;
+  bookingArrangement: BookingArrangement | undefined;
   passingTimes: PassingTime[];
   dayTypes: DayType[];
   notices: Notice[];
@@ -35,9 +35,7 @@ class ServiceJourney extends Versioned {
     this.privateCode = data.privateCode;
     this.publicCode = data.publicCode;
     this.operatorRef = data.operatorRef;
-    this.bookingArrangement = data.bookingArrangement
-      ? new BookingArrangement(data.bookingArrangement)
-      : null;
+    this.bookingArrangement = data.bookingArrangement;
     this.passingTimes = (data.passingTimes || []).map(
       pt => new PassingTime(pt)
     );

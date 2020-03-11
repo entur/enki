@@ -42,3 +42,9 @@ export const useUniqueKeys = (list: any[]): string[] => {
 
   return ids;
 };
+
+export function addOrRemove<T>(element: T, list: T[]): T[] {
+  return list.includes(element)
+    ? list.filter(el => el !== element)
+    : [...list, element];
+}

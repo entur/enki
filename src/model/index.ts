@@ -1,4 +1,3 @@
-export { default as BookingArrangement } from './BookingArrangement';
 export { default as Codespace } from './Codespace';
 export { default as DestinationDisplay } from './DestinationDisplay';
 export { default as FlexibleArea } from './FlexibleArea';

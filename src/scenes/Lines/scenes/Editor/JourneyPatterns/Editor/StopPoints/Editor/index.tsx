@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { DestinationDisplay, StopPoint } from 'model';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
-import BookingArrangementEditor from '../../../../BookingArrangementEditor';
+import BookingArrangementEditor from 'scenes/Lines/scenes/Editor/BookingArrangementEditor';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { getIntl } from 'i18n';
 import { DeleteIcon } from '@entur/icons';
@@ -128,7 +128,7 @@ const StopPointEditor = (props: Props & StateProps) => {
 
       <ExpandableText title={translations.formatMessage(messages.booking)}>
         <BookingArrangementEditor
-          bookingArrangement={stopPoint.bookingArrangement}
+          bookingArrangement={stopPoint.bookingArrangement ?? {}}
           onChange={b => onFieldChange('bookingArrangement', b)}
         />
       </ExpandableText>
