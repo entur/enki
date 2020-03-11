@@ -280,7 +280,7 @@ const FlexibleLineEditor = ({ match, history }) => {
           {activeStepperIndex === 2 && (
             <section>
               <BookingArrangementEditor
-                bookingArrangement={flexibleLine.bookingArrangement}
+                bookingArrangement={flexibleLine.bookingArrangement ?? {}}
                 onChange={b => onFieldChange('bookingArrangement', b)}
               />
             </section>
