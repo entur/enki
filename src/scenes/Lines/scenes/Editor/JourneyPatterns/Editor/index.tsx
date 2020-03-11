@@ -80,7 +80,6 @@ const JourneyPatternEditor = ({
         })
       : [new ServiceJourney({ passingTimes: [new PassingTime()] })];
 
-    console.log('Added stopPoint', journeyPattern);
     onSave(
       journeyPattern
         .withFieldChange('pointsInSequence', updatedPoints)

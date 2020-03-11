@@ -42,13 +42,6 @@ const getPassingTimeKeys = (
 
   if (!keys) return { time: 'departureTime', offset: 'departureDayOffset' };
   return keys;
-
-  // R.find(
-  //   R.pipe(
-  //     R.prop,
-  //     R.isNil,
-  //   )(passingTimesKeys)
-  // )
 };
 
 type StateProps = {
@@ -96,10 +89,6 @@ const PassingTimesEditor = (props: Props & StateProps) => {
       arrivalDayOffset: passingTime[offset]
     });
     const newPassingTimes = replaceElement(passingTimes, index, newPassingTime);
-    // const newPt = passingTime
-    //   ? passingTimes[index].withFieldChange(field, value)
-    //   : new PassingTime({ [field]: value });
-    // const newPts = replaceElement(passingTimes, index, newPt);
 
     onChange(newPassingTimes);
   };
@@ -172,7 +161,6 @@ const PassingTimesEditor = (props: Props & StateProps) => {
 
     const stopPlaceName = stopPlace?.name ?? sp.quayRef;
     const passingTime = passingTimes[i];
-    console.log(passingTimes);
     const { time, offset } = getPassingTimeKeys(passingTime);
 
     return (
