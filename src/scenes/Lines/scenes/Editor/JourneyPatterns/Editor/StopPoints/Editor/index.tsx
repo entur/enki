@@ -10,14 +10,12 @@ import './styles.scss';
 import searchForQuay, { QuaySearch } from './searchForQuay';
 import debounce from './debounce';
 import Form from './Form';
-import validateForm from './validateForm';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import messages from '../../messages';
 import { GlobalState } from 'reducers';
 
 export type StopPlaceSelectionType = string | null;
 export type StopPointsFormError = {
-  quayRef: any;
   flexibleStopPlaceRefAndQuayRef: any;
   frontText: any;
 };
@@ -26,8 +24,8 @@ type Props = {
   isFirst: boolean;
   stopPoint: StopPoint;
   onChange: (stopPoint: any) => void;
-  deleteStopPoint: () => void;
-  setIsValidStopPoints: (isValid: boolean) => void;
+  deleteStopPoint?: () => void;
+  errors: StopPointsFormError;
   flexibleStopPlaces: FlexibleStopPlace[];
 };
 
@@ -42,18 +40,13 @@ const StopPointEditor = (props: Props & StateProps) => {
     isFirst,
     intl,
     onChange,
-    setIsValidStopPoints,
+    errors,
     deleteStopPoint
   } = props;
 
   const [stopPlaceSelection, setStopPlaceSelection] = useState<
     StopPlaceSelectionType
   >(stopPoint.flexibleStopPlaceRef ?? null);
-  const [errors, setErrors] = useState<StopPointsFormError>({
-    quayRef: [],
-    flexibleStopPlaceRefAndQuayRef: [],
-    frontText: []
-  });
   const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
     undefined
   );
@@ -62,7 +55,6 @@ const StopPointEditor = (props: Props & StateProps) => {
   const onFieldChange = (field: string, value: any) => {
     const newStopPoint = stopPoint.withFieldChange(field, value);
     onChange(newStopPoint);
-    checkFormErrors(newStopPoint, isFirst);
   };
 
   const handleStopPlaceSelectionChange = (
@@ -79,13 +71,6 @@ const StopPointEditor = (props: Props & StateProps) => {
     onFieldChange('destinationDisplay', destinationDisplay);
   };
 
-  const checkFormErrors = (stopPoint: StopPoint, isFirst: boolean) => {
-    const [valid, errors] = validateForm(stopPoint, isFirst);
-
-    setErrors(errors);
-    setIsValidStopPoints(valid);
-  };
-
   const debouncedSearchForQuay = useCallback(
     debounce(async (quayRef: string) => {
       if (isBlank(quayRef)) return setQuaySearch({});
@@ -99,13 +84,15 @@ const StopPointEditor = (props: Props & StateProps) => {
   const translations = getIntl({ intl });
 
   return (
-    <div className="stop-point-editor">
-      <SecondaryButton
-        className="delete-button"
-        onClick={() => setDeleteDialogOpen(true)}
-      >
-        <DeleteIcon inline /> {translations.formatMessage(messages.delete)}
-      </SecondaryButton>
+    <div className="stop-point-editor" style={{ marginTop: '2rem' }}>
+      {deleteStopPoint && (
+        <SecondaryButton
+          className="delete-button"
+          onClick={() => setDeleteDialogOpen(true)}
+        >
+          <DeleteIcon inline /> {translations.formatMessage(messages.delete)}
+        </SecondaryButton>
+      )}
 
       <Form
         frontTextRequired={isFirst}

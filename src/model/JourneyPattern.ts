@@ -29,9 +29,9 @@ class JourneyPattern extends Versioned {
     this.description = data.description;
     this.privateCode = data.privateCode;
     this.directionType = data.directionType;
-    this.pointsInSequence = (data.pointsInSequence || []).map(
-      p => new StopPoint(p)
-    );
+    this.pointsInSequence = (
+      data.pointsInSequence || [new StopPoint(), new StopPoint()]
+    ).map(p => new StopPoint(p));
     this.serviceJourneys = (data.serviceJourneys || []).map(
       sj => new ServiceJourney(sj)
     );

@@ -147,7 +147,7 @@ const FlexibleLineEditor = ({ match, history }) => {
   const [isDeleting, setDeleting] = useState(false);
   const [errors, setErrors] = useState(validateForm(flexibleLine));
   const [isValidServiceJourney, setIsValidServiceJourney] = useState(true);
-  const [isValidStopPoints, setIsValidStopPoints] = useState(true);
+  const [isValidJourneyPattern, setIsValidJourneyPattern] = useState(true);
 
   useEffect(() => {
     setErrors(validateForm(flexibleLine));
@@ -249,13 +249,12 @@ const FlexibleLineEditor = ({ match, history }) => {
               <JourneyPatternsEditor
                 journeyPatterns={flexibleLine.journeyPatterns}
                 onChange={jps => onFieldChange('journeyPatterns', jps)}
-                setIsValidServiceJourney={setIsValidServiceJourney}
-                setIsValidStopPoints={setIsValidStopPoints}
+                setIsValidJourneyPattern={setIsValidJourneyPattern}
               />
 
               <PrimaryButton
                 onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                disabled={!isValidStopPoints || !isValidServiceJourney}
+                disabled={!isValidJourneyPattern || !isValidServiceJourney}
                 className="next-button"
               >
                 {formatMessage(messages.saveAndContinue)}
@@ -284,7 +283,7 @@ const FlexibleLineEditor = ({ match, history }) => {
               )}
               <PrimaryButton
                 onClick={handleOnSaveClick}
-                disabled={!isValidServiceJourney || !isValidStopPoints}
+                disabled={!isValidServiceJourney || !isValidJourneyPattern}
               >
                 {formatMessage(messages.saveButtonText)}
               </PrimaryButton>

@@ -8,15 +8,13 @@ import './styles.scss';
 type Props = {
   journeyPatterns: JourneyPattern[];
   onChange: (journeyPatterns: any[]) => void;
-  setIsValidServiceJourney: (isValid: boolean) => void;
-  setIsValidStopPoints: (isValid: boolean) => void;
+  setIsValidJourneyPattern: (isValid: boolean) => void;
 };
 
 const JourneyPatternsEditor = ({
   journeyPatterns,
   onChange,
-  setIsValidServiceJourney,
-  setIsValidStopPoints
+  setIsValidJourneyPattern
 }: Props) => {
   useEffect(() => {
     if (!journeyPatterns.length)
@@ -36,8 +34,7 @@ const JourneyPatternsEditor = ({
           journeyPattern={journeyPatterns[0]}
           onSave={handleSave}
           index={0}
-          setIsValidServiceJourney={setIsValidServiceJourney}
-          setIsValidStopPoints={setIsValidServiceJourney}
+          setIsValidJourneyPattern={setIsValidJourneyPattern}
         />
       ) : (
         journeyPatterns.map((jp: JourneyPattern, index: number) => (
@@ -50,8 +47,7 @@ const JourneyPatternsEditor = ({
               journeyPattern={jp}
               onSave={handleSave}
               index={index}
-              setIsValidServiceJourney={setIsValidServiceJourney}
-              setIsValidStopPoints={setIsValidStopPoints}
+              setIsValidJourneyPattern={setIsValidJourneyPattern}
             />
           </ExpandablePanel>
         ))

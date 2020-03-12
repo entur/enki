@@ -1,13 +1,17 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  general: {
-    id: 'lines.editor.journeyPatterns.editor.general',
-    defaultMessage: 'Generelt'
+  journeyPattern: {
+    id: 'lines.editor.journeyPatternsTabLabel',
+    defaultMessage: 'Journey patterns'
+  },
+  enterInformation: {
+    id: 'lines.editor.journeyPatterns.editor.fillInformation',
+    defaultMessage: 'Fyll inn informasjon om Journey Pattern.'
   },
   stopPoints: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints',
-    defaultMessage: 'Stoppepunkter'
+    defaultMessage: 'Legg til stoppepunkter for Journey Pattern'
   },
   serviceJourneys: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys',
@@ -130,7 +134,8 @@ export default defineMessages({
   },
   stopPointsInfo: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.info',
-    defaultMessage: 'Du må opprette minst to stoppepunkter.'
+    defaultMessage:
+      'Du må opprette minst to stoppepunkter. Et for påstigning og et for avstigning.'
   },
   serviceJourneysInfo: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',

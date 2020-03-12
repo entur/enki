@@ -8,37 +8,19 @@ import {
   SegmentedControl,
   SegmentedChoice
 } from '@entur/form';
-import StopPlaceSelection from './StopPlaceSelection';
-import { QuaySearchResults, quaySearchResults } from './quaySearchResults';
+import StopPlaceSelection from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/StopPlaceSelection';
 import messages from './Form.messages';
 import { isBlank } from 'helpers/forms';
 import { StopPoint, FlexibleStopPlace } from 'model';
-import { StopPlaceSelectionType } from './index';
+import { StopPlaceSelectionType, StopPointsFormError } from './index';
 import { QuaySearch } from './searchForQuay';
-
-function quaySearchFeedback(
-  errors: string[],
-  searchResults: QuaySearch | undefined
-): QuaySearchResults {
-  if (errors.length) {
-    return {
-      variant: 'error',
-      feedback: errors.join(';')
-    };
-  }
-
-  return quaySearchResults(searchResults);
-}
+import { quaySearchResults } from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/quaySearchResults';
 
 interface Props extends WrappedComponentProps {
   flexibleStopPlaces: FlexibleStopPlace[];
   stopPlaceSelection: StopPlaceSelectionType;
   quaySearch: QuaySearch | undefined;
-  errors: {
-    quayRef: any[];
-    flexibleStopPlaceRefAndQuayRef: any[];
-    frontText: any[];
-  };
+  errors: StopPointsFormError;
   handleStopPlaceSelectionChange: (
     stopPlaceSelection: StopPlaceSelectionType
   ) => void;
@@ -100,16 +82,20 @@ const Form = ({
       {selectMode === 'custom' ? (
         <StopPlaceSelection
           stopPlaceSelection={stopPlaceSelection}
-          flexibleStopPlaceRefAndQuayRefErrors={
-            errors.flexibleStopPlaceRefAndQuayRef
-          }
+          error={errors.flexibleStopPlaceRefAndQuayRef}
           flexibleStopPlaces={flexibleStopPlaces}
           handleStopPlaceSelectionChange={handleStopPlaceSelectionChange}
         />
       ) : (
         <InputGroup
           label={formatMessage(messages.labelQuayRef)}
-          {...quaySearchFeedback(errors.quayRef, quaySearch)}
+          feedback={
+            errors.flexibleStopPlaceRefAndQuayRef
+              ? formatMessage(errors.flexibleStopPlaceRefAndQuayRef)
+              : undefined
+          }
+          variant={errors.flexibleStopPlaceRefAndQuayRef ? 'error' : undefined}
+          {...quaySearchResults(quaySearch)}
         >
           <TextField
             defaultValue={stopPoint.quayRef ?? ''}
@@ -137,8 +123,10 @@ const Form = ({
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             handleFrontTextChange(e.target.value)
           }
-          variant={errors.frontText.length ? 'error' : undefined}
-          feedback={errors.frontText}
+          variant={errors.frontText ? 'error' : undefined}
+          feedback={
+            errors.frontText ? formatMessage(errors.frontText) : undefined
+          }
         />
       </InputGroup>
 

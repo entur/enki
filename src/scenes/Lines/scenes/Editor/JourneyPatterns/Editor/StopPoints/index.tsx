@@ -2,23 +2,22 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { AddIcon } from '@entur/icons';
-import { SecondaryButton } from '@entur/button';
+import { SecondarySquareButton } from '@entur/button';
 import { StopPoint } from 'model';
 import { replaceElement, useUniqueKeys } from 'helpers/arrays';
-import { ExpandablePanel } from '@entur/expand';
-import validateForm from './Editor/validateForm';
 import StopPointEditor from './Editor';
 import messages from '../messages';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { GlobalState } from 'reducers';
-import searchForQuay from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/searchForQuay';
+import searchForQuay from './Editor/searchForQuay';
+import { Paragraph } from '@entur/typography';
+import { validateStopPoint } from './Editor/validateForm';
 
 type Props = {
   stopPoints: StopPoint[];
   deleteStopPoint: (index: number) => void;
-  addStopPoint: (index: number) => void;
+  addStopPoint: () => void;
   onChange: (stopPoints: StopPoint[]) => void;
-  setIsValidStopPoints: (isValid: boolean) => void;
 };
 
 type StateProps = {
@@ -44,10 +43,10 @@ const StopPointsEditor = ({
   deleteStopPoint,
   addStopPoint,
   onChange,
-  setIsValidStopPoints,
   flexibleStopPlaces
 }: Props & StateProps) => {
   const { formatMessage } = useSelector(selectIntl);
+
   const updateStopPoint = (index: number, stopPlace: StopPoint) => {
     onChange(replaceElement(stopPoints, index, stopPlace));
   };
@@ -66,34 +65,32 @@ const StopPointsEditor = ({
   const keys = useUniqueKeys(stopPoints);
 
   return (
-    <div className="stop-points-editor">
-      {stopPoints.map((stopPoint, index) => {
-        const [isValid] = validateForm(stopPoint, index === 0);
-        return (
-          <ExpandablePanel
-            key={stopPoint.id ?? keys[index]}
-            title={getFetchedTitle(stopPoint)}
-            defaultOpen={!isValid}
-          >
-            <StopPointEditor
-              isFirst={index === 0}
-              stopPoint={stopPoint}
-              deleteStopPoint={() => deleteStopPoint(index)}
-              onChange={(stopPoint: StopPoint) =>
-                updateStopPoint(index, stopPoint)
-              }
-              setIsValidStopPoints={setIsValidStopPoints}
-              flexibleStopPlaces={flexibleStopPlaces ?? []}
-            />
-          </ExpandablePanel>
-        );
-      })}
-
-      <SecondaryButton onClick={addStopPoint} style={{ margin: '2rem 0' }}>
-        <AddIcon />
-        {formatMessage(messages.addStopPoint)}
-      </SecondaryButton>
-    </div>
+    <>
+      {stopPoints.map((stopPoint, index) => (
+        <StopPointEditor
+          key={keys[index]}
+          isFirst={index === 0}
+          stopPoint={stopPoint}
+          errors={validateStopPoint(stopPoint, index === 0)}
+          deleteStopPoint={
+            stopPoints.length > 2 ? () => deleteStopPoint(index) : undefined
+          }
+          onChange={(stopPoint: StopPoint) => updateStopPoint(index, stopPoint)}
+          flexibleStopPlaces={flexibleStopPlaces ?? []}
+        />
+      ))}
+      <div
+        style={{ display: 'flex', alignItems: 'baseline', marginTop: '3rem' }}
+      >
+        <SecondarySquareButton
+          onClick={addStopPoint}
+          style={{ marginRight: '1rem' }}
+        >
+          <AddIcon />
+        </SecondarySquareButton>
+        <Paragraph>{formatMessage(messages.addStopPoint)}</Paragraph>
+      </div>
+    </>
   );
 };
 

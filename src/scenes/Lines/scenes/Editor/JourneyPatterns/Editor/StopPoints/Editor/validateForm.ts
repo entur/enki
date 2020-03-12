@@ -3,31 +3,40 @@ import messages from './validateForm.messages';
 import { StopPoint } from 'model';
 import { StopPointsFormError } from './index';
 
-export default function(
+export const validateStopPoints = (stopPoints: StopPoint[]): boolean =>
+  getStopPointsErrors(stopPoints).every(stopPointErrors =>
+    objectValuesAreEmpty(stopPointErrors)
+  );
+
+export const getStopPointsErrors = (
+  stopPoints: StopPoint[]
+): StopPointsFormError[] =>
+  stopPoints.map((stopPoint, index) =>
+    validateStopPoint(stopPoint, index === 0)
+  );
+
+export const validateStopPoint = (
   stopPoint: StopPoint,
   isFirst: boolean
-): [boolean, StopPointsFormError] {
-  let errors: StopPointsFormError = {
-    quayRef: [],
-    flexibleStopPlaceRefAndQuayRef: [],
-    frontText: []
-  };
+): StopPointsFormError => {
   const { quayRef, flexibleStopPlaceRef, destinationDisplay } = stopPoint;
 
-  if (!flexibleStopPlaceRef && isBlank(quayRef)) {
-    errors.flexibleStopPlaceRefAndQuayRef.push(
-      messages.errorFlexibleStopPlaceRefAndQuayRefNoValues
-    );
-  } else if (flexibleStopPlaceRef && !isBlank(quayRef)) {
-    errors.flexibleStopPlaceRefAndQuayRef.push(
-      messages.errorFlexibleStopPlaceRefAndQuayRefBothValues
-    );
-  } else if (
-    isFirst &&
-    (!destinationDisplay || isBlank(destinationDisplay.frontText))
-  ) {
-    errors.frontText.push(messages.errorFrontTextNoValue);
-  }
+  const getFlexibleStopPlaceRefAndQuayRefError = () => {
+    if (isBlank(quayRef) && !flexibleStopPlaceRef)
+      return messages.errorFlexibleStopPlaceRefAndQuayRefNoValues;
+    if (!isBlank(quayRef) && flexibleStopPlaceRef)
+      return messages.errorFlexibleStopPlaceRefAndQuayRefBothValues;
+    return undefined;
+  };
 
-  return [objectValuesAreEmpty(errors), errors];
-}
+  const getFrontTextError = () => {
+    if (isFirst && isBlank(destinationDisplay?.frontText))
+      return messages.errorFrontTextNoValue;
+    return undefined;
+  };
+
+  return {
+    flexibleStopPlaceRefAndQuayRef: getFlexibleStopPlaceRefAndQuayRefError(),
+    frontText: getFrontTextError()
+  };
+};
