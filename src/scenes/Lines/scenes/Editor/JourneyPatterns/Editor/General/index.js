@@ -6,7 +6,6 @@ import { InputGroup, TextField } from '@entur/form';
 
 import { DIRECTION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
-import { DEFAULT_SELECT_VALUE, DEFAULT_SELECT_LABEL } from '../../../constants';
 import messages from './messages';
 import { selectIntl } from 'i18n';
 
@@ -56,10 +55,7 @@ const General = ({
 
       <Dropdown
         label={formatMessage(messages.directionLabel)}
-        items={[
-          { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
-          ...Object.values(DIRECTION_TYPE)
-        ]}
+        items={[...Object.values(DIRECTION_TYPE)]}
         value={directionSelection}
         onChange={({ value }) => handleDirectionSelectionChange(value)}
       />
@@ -69,7 +65,7 @@ const General = ({
 
 General.propTypes = {
   journeyPattern: PropTypes.object.isRequired,
-  directionSelection: PropTypes.string.isRequired,
+  directionSelection: PropTypes.string,
   onFieldChange: PropTypes.func.isRequired,
   handleDirectionSelectionChange: PropTypes.func.isRequired
 };

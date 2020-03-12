@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextField, InputGroup } from '@entur/form';
-import { DEFAULT_SELECT_LABEL, DEFAULT_SELECT_VALUE } from '../constants';
 import { FLEXIBLE_LINE_TYPE } from 'model/enums';
 import { selectIntl } from 'i18n';
 import messages from './messages';
@@ -26,7 +25,8 @@ export default ({
       name: nameError,
       publicCode: publicCodeError,
       networkRef: networkError,
-      operatorRef: operatorError
+      operatorRef: operatorError,
+      flexibleLineType: flexibleLineTypeError
     }
   } = errors;
 
@@ -83,7 +83,6 @@ export default ({
         <Dropdown
           className="form-section"
           items={[
-            { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
             ...operators.map(({ id, name }) => ({ value: id, label: name }))
           ]}
           label={formatMessage(messages.operatorFormGroupTitle)}
@@ -97,13 +96,9 @@ export default ({
 
         <Dropdown
           className="form-section"
-          items={[
-            { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
-            ...networks.map(n => ({ value: n.id, label: n.name }))
-          ]}
+          items={[...networks.map(n => ({ value: n.id, label: n.name }))]}
           label={formatMessage(messages.networkFormGroupTitle)}
           onChange={({ value }) => handleNetworkSelectionChange(value)}
-          placeHolder={DEFAULT_SELECT_LABEL}
           value={networkSelection}
           feedback={formatMessage(
             validationMessages.errorFlexibleLineNetworkRefEmpty
@@ -114,7 +109,6 @@ export default ({
         <Dropdown
           className="form-section"
           items={[
-            { value: DEFAULT_SELECT_VALUE, label: DEFAULT_SELECT_LABEL },
             ...Object.values(FLEXIBLE_LINE_TYPE).map(type => ({
               value: type,
               label: type
@@ -123,6 +117,10 @@ export default ({
           label={formatMessage(messages.typeFormGroupTitle)}
           onChange={({ value }) => handleFieldChange('flexibleLineType', value)}
           value={flexibleLine.flexibleLineType}
+          feedback={formatMessage(
+            validationMessages.errorFlexibleLineFlexibleLineTypeEmpty
+          )}
+          variant={flexibleLineTypeError ? 'error' : undefined}
         />
       </section>
     </div>

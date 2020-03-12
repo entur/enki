@@ -1,26 +1,23 @@
 import { isNil, isEmpty } from 'ramda';
-import { DEFAULT_SELECT_VALUE } from './constants';
 import { isBlank } from 'helpers/forms';
 
 import messages from './validateForm.messages';
 
 function validateNetworkRef(networkRef) {
-  if (
-    isNil(networkRef) ||
-    networkRef === DEFAULT_SELECT_VALUE ||
-    isEmpty(networkRef)
-  ) {
+  if (isNil(networkRef) || isEmpty(networkRef)) {
     return messages.errorFlexibleLineNetworkRefEmpty;
   }
 }
 
 function validateOperatorRef(operatorRef) {
-  if (
-    isNil(operatorRef) ||
-    operatorRef === DEFAULT_SELECT_VALUE ||
-    isEmpty(operatorRef)
-  ) {
+  if (isNil(operatorRef) || isEmpty(operatorRef)) {
     return messages.errorFlexibleLineOperatorRefEmpty;
+  }
+}
+
+function validateFlexibleLineType(flexibleLineType) {
+  if (isNil(flexibleLineType) || isEmpty(flexibleLineType)) {
+    return messages.errorFlexibleLineFlexibleLineTypeEmpty;
   }
 }
 
@@ -52,7 +49,8 @@ export default function(flexibleLine) {
     networkRef: validateNetworkRef(flexibleLine.networkRef),
     name: validateName(flexibleLine.name),
     publicCode: validatePublicCode(flexibleLine.publicCode),
-    operatorRef: validateOperatorRef(flexibleLine.operatorRef)
+    operatorRef: validateOperatorRef(flexibleLine.operatorRef),
+    flexibleLineType: validateFlexibleLineType(flexibleLine.flexibleLineType)
   };
 
   return {

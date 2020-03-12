@@ -10,7 +10,6 @@ import messages from './messages';
 import './styles.scss';
 import General from './General';
 
-import { DEFAULT_SELECT_VALUE } from '../../constants';
 import { JourneyPattern } from 'model';
 
 type Props = {
@@ -28,14 +27,14 @@ const JourneyPatternEditor = ({
   setIsValidStopPoints,
   index
 }: Props) => {
-  const [directionSelection, setDirectionSelection] = useState(
-    DEFAULT_SELECT_VALUE
-  );
+  const [directionSelection, setDirectionSelection] = useState<
+    string | undefined
+  >(undefined);
   const { pointsInSequence, directionType, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
 
   useEffect(() => {
-    setDirectionSelection(directionType || DEFAULT_SELECT_VALUE);
+    setDirectionSelection(directionType);
   }, [directionType]);
 
   const onFieldChange = (field: string, value: any) => {
@@ -43,10 +42,7 @@ const JourneyPatternEditor = ({
   };
 
   const handleDirectionSelectionChange = (directionSelection: any) => {
-    const newDirectionValue =
-      directionSelection !== DEFAULT_SELECT_VALUE
-        ? directionSelection
-        : undefined;
+    const newDirectionValue = directionSelection;
     onFieldChange('directionType', newDirectionValue);
     setDirectionSelection(directionSelection);
   };
