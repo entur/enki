@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
-import { Label } from '@entur/typography';
+import * as R from 'ramda';
 import { TextField } from '@entur/form';
 import {
   Table,
@@ -22,6 +22,28 @@ import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedIt
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlState } from 'react-intl-redux';
 
+const passingTimesKeys: {
+  time: keyof PassingTime;
+  offset: keyof PassingTime;
+}[] = [
+  { time: 'departureTime', offset: 'departureDayOffset' },
+  { time: 'latestArrivalTime', offset: 'latestArrivalDayOffset' },
+  { time: 'arrivalTime', offset: 'arrivalDayOffset' },
+  { time: 'earliestDepartureTime', offset: 'earliestDepartureDayOffset' }
+];
+
+const getPassingTimeKeys = (
+  passingTime: PassingTime
+): { time: keyof PassingTime; offset: keyof PassingTime } => {
+  const keys = passingTimesKeys.find(
+    ({ time, offset }) =>
+      passingTime[time] && R.props([time, offset], passingTime)
+  );
+
+  if (!keys) return { time: 'departureTime', offset: 'departureDayOffset' };
+  return keys;
+};
+
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
   intl: IntlState;
@@ -40,7 +62,8 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     passingTimes,
     intl,
     onChange,
-    setValidPassingTimes
+    setValidPassingTimes,
+    flexibleStopPlaces
   } = props;
   const { isValid, errorMessage } = validateTimes(
     stopPoints,
@@ -52,25 +75,38 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     setValidPassingTimes(isValid);
   }, [setValidPassingTimes, isValid]);
 
-  const onFieldChange = (index: number, field: string, value: any) => {
-    const newPt = passingTimes[index]
-      ? passingTimes[index].withFieldChange(field, value)
-      : new PassingTime({ [field]: value });
-    const newPts = replaceElement(passingTimes, index, newPt);
+  const onFieldChange = (
+    index: number,
+    field: keyof PassingTime,
+    value: PassingTime[keyof PassingTime]
+  ) => {
+    const passingTime = passingTimes[index].withFieldChange(field, value);
+    const { time, offset } = getPassingTimeKeys(passingTime);
+    const newPassingTime = new PassingTime({
+      departureTime: passingTime[time],
+      arrivalTime: passingTime[time],
+      departureDayOffset: passingTime[offset],
+      arrivalDayOffset: passingTime[offset]
+    });
+    const newPassingTimes = replaceElement(passingTimes, index, newPassingTime);
 
-    onChange(newPts);
+    onChange(newPassingTimes);
   };
 
   const handleDayOffsetChange = (
     index: number,
-    field: string,
-    value: string
+    field: keyof PassingTime,
+    value: PassingTime[keyof PassingTime]
   ) => {
     const parsedValue = parseInt(value);
     onFieldChange(index, field, parsedValue !== 0 ? value : undefined);
   };
 
-  const getDayOffsetDropDown = (tpt: any, index: number, field: string) => (
+  const getDayOffsetDropdown = (
+    tpt: PassingTime,
+    index: number,
+    field: keyof PassingTime
+  ) => (
     <Dropdown
       items={[...Array(10).keys()].map(i => ({
         value: String(i),
@@ -81,7 +117,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
         handleDayOffsetChange(index, field, e.value);
       }}
       className="hourpicker"
-      value={tpt && tpt[field] ? tpt[field].toString() : String(0)}
+      value={tpt[field]?.toString() ?? '0'}
     />
   );
 
@@ -90,8 +126,12 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     return time + ':00';
   };
 
-  const getTimePicker = (tpt: any, index: number, field: string) => {
-    const currentValue = tpt && tpt[field];
+  const getTimePicker = (
+    tpt: PassingTime,
+    index: number,
+    field: keyof PassingTime
+  ) => {
+    const currentValue = tpt[field];
 
     const shownValue =
       currentValue
@@ -100,78 +140,41 @@ const PassingTimesEditor = (props: Props & StateProps) => {
         .join(':') || undefined;
 
     return (
-      <TextField
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          onFieldChange(index, field, padTimePickerInput(e.target.value))
-        }
-        prepend={<ClockIcon inline />}
-        type="time"
-        className="timepicker"
-        defaultValue={shownValue}
-      />
+      <div>
+        <TextField
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onFieldChange(index, field, padTimePickerInput(e.target.value))
+          }
+          prepend={<ClockIcon inline />}
+          type="time"
+          className="timepicker"
+          defaultValue={shownValue}
+        />
+      </div>
     );
   };
 
   const renderRow = (sp: StopPoint, i: number) => {
-    const { flexibleStopPlaces, passingTimes } = props;
     const stopPlace = flexibleStopPlaces.find(
       fsp => fsp.id === sp.flexibleStopPlaceRef
     );
 
     const stopPlaceName = stopPlace?.name ?? sp.quayRef;
-    const tpt = passingTimes[i];
+    const passingTime = passingTimes[i];
+    const { time, offset } = getPassingTimeKeys(passingTime);
 
     return (
       <TableRow key={i}>
         <DataCell>{i}</DataCell>
         <DataCell>{stopPlaceName}</DataCell>
         <DataCell>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <div>
-              <Label>Tidligst</Label>
-              <div style={{ display: 'flex' }}>
-                <div>{getTimePicker(tpt, i, 'earliestDepartureTime')}</div>
-                <div>
-                  {getDayOffsetDropDown(tpt, i, 'earliestDepartureDayOffset')}
-                </div>
-              </div>
-            </div>
-            <div>
-              <Label>Normalt</Label>
-              <div style={{ display: 'flex' }}>
-                <div>{getTimePicker(tpt, i, 'arrivalTime')}</div>
-                <div>{getDayOffsetDropDown(tpt, i, 'arrivalDayOffset')}</div>
-              </div>
-            </div>
-          </div>
-        </DataCell>
-        <DataCell>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <div>
-              <Label>Normalt</Label>
-              <div style={{ display: 'flex' }}>
-                <div>{getTimePicker(tpt, i, 'departureTime')}</div>
-                <div>{getDayOffsetDropDown(tpt, i, 'departureDayOffset')}</div>
-              </div>
-            </div>
-            <div>
-              <Label>Senest</Label>
-              <div style={{ display: 'flex' }}>
-                <div>{getTimePicker(tpt, i, 'latestArrivalTime')}</div>
-                <div>
-                  {getDayOffsetDropDown(tpt, i, 'latestArrivalDayOffset')}
-                </div>
-              </div>
-            </div>
+          <div style={{ display: 'flex' }}>
+            {getTimePicker(passingTime, i, time)}
+            {getDayOffsetDropdown(passingTime, i, offset)}
           </div>
         </DataCell>
       </TableRow>
     );
-  };
-
-  const renderRows = () => {
-    const { stopPoints } = props;
-    return stopPoints.map((sp, i) => renderRow(sp, i));
   };
 
   return (
@@ -184,11 +187,10 @@ const PassingTimesEditor = (props: Props & StateProps) => {
           <TableRow>
             <HeaderCell>#</HeaderCell>
             <HeaderCell>Stoppested</HeaderCell>
-            <HeaderCell>Ankomst</HeaderCell>
-            <HeaderCell>Avgang</HeaderCell>
+            <HeaderCell>Passeringstid</HeaderCell>
           </TableRow>
         </TableHead>
-        <TableBody>{renderRows()}</TableBody>
+        <TableBody>{stopPoints.map((sp, i) => renderRow(sp, i))}</TableBody>
       </Table>
     </>
   );

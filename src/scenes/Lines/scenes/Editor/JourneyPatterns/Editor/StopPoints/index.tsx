@@ -16,6 +16,7 @@ import searchForQuay from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/Sto
 type Props = {
   stopPoints: StopPoint[];
   deleteStopPoint: (index: number) => void;
+  addStopPoint: (index: number) => void;
   onChange: (stopPoints: StopPoint[]) => void;
   setIsValidStopPoints: (isValid: boolean) => void;
 };
@@ -41,6 +42,7 @@ const Title = ({ quayRef }: { quayRef: string }): ReactElement => {
 const StopPointsEditor = ({
   stopPoints,
   deleteStopPoint,
+  addStopPoint,
   onChange,
   setIsValidStopPoints,
   flexibleStopPlaces
@@ -87,10 +89,7 @@ const StopPointsEditor = ({
         );
       })}
 
-      <SecondaryButton
-        onClick={() => onChange(stopPoints.concat(new StopPoint()))}
-        style={{ margin: '2rem 0' }}
-      >
+      <SecondaryButton onClick={addStopPoint} style={{ margin: '2rem 0' }}>
         <AddIcon />
         {formatMessage(messages.addStopPoint)}
       </SecondaryButton>
