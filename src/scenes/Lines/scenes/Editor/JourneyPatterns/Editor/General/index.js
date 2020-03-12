@@ -65,7 +65,7 @@ const General = ({
 
 General.propTypes = {
   journeyPattern: PropTypes.object.isRequired,
-  directionSelection: PropTypes.string.isRequired,
+  directionSelection: PropTypes.string,
   onFieldChange: PropTypes.func.isRequired,
   handleDirectionSelectionChange: PropTypes.func.isRequired
 };

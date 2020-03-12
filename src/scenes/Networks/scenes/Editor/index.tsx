@@ -91,10 +91,9 @@ const NetworkEditor = ({
   const handleAuthoritySelectionChange = (
     authoritySelection: string | undefined
   ) => {
-    const authorityRef = authoritySelection;
     setNetwork({
       ...network,
-      authorityRef: authorityRef
+      authorityRef: authoritySelection
     });
   };
 

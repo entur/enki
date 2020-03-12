@@ -26,7 +26,9 @@ const JourneyPatternEditor = ({
   setIsValidStopPoints,
   index
 }: Props) => {
-  const [directionSelection, setDirectionSelection] = useState();
+  const [directionSelection, setDirectionSelection] = useState<
+    string | undefined
+  >(undefined);
   const { pointsInSequence, directionType, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
 
