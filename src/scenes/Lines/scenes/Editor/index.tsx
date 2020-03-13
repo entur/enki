@@ -28,22 +28,20 @@ import General from './General';
 import { setSavedChanges } from 'actions/editor';
 import { withRouter } from 'react-router-dom';
 import { selectIntl } from 'i18n';
-import { createSelector } from 'reselect';
 import messages from './messages';
-import { filterNetexOperators } from 'reducers/organisations';
+import {
+  filterNetexOperators,
+  OrganisationState
+} from 'reducers/organisations';
+import { GlobalState } from 'reducers';
+import { RouteComponentProps } from 'react-router';
+import { MatchParams } from 'http/http';
+import { isBlank } from 'helpers/forms';
 
-const selectFlexibleLine = createSelector(
-  state => state.flexibleLines,
-  (_, match) => match,
-  (flexibleLines, match) =>
-    (match.params.id && flexibleLines?.find(l => l.id === match.params.id)) ||
-    new FlexibleLine({
-      transportMode: VEHICLE_MODE.BUS,
-      transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS
-    })
-);
-
-function useLoadDependencies(match, history) {
+const useLoadDependencies = ({
+  match,
+  history
+}: RouteComponentProps<MatchParams>) => {
   const [networksIsLoading, setNetworksIsLoading] = useState(true);
   const [flexibleLineIsLoading, setFlexibleLineIsLoading] = useState(true);
   const [
@@ -51,7 +49,7 @@ function useLoadDependencies(match, history) {
     setFlexibleStopPlacesIsLoading
   ] = useState(true);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const dispatchLoadFlexibleStopPlaces = useCallback(
     () =>
@@ -88,22 +86,29 @@ function useLoadDependencies(match, history) {
   return (
     networksIsLoading || flexibleLineIsLoading || flexibleStopPlacesIsLoading
   );
-}
+};
 
-const useFlexibleLine = match => {
-  const savedLine = useSelector(state => selectFlexibleLine(state, match));
-  const [flexibleLine, setFlexibleLine] = useState(null);
-  useEffect(() => {
-    setFlexibleLine(savedLine);
-  }, [savedLine]);
+const useFlexibleLine = (match: { params: MatchParams }) => {
+  const flexibleLineId = match.params.id;
+  const savedLine = useSelector<GlobalState, FlexibleLine>(
+    state =>
+      state.flexibleLines?.find(
+        flexibleLine => flexibleLine.id === flexibleLineId
+      ) ??
+      new FlexibleLine({
+        transportMode: VEHICLE_MODE.BUS,
+        transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS
+      })
+  );
+  const [flexibleLine, setFlexibleLine] = useState<FlexibleLine>(savedLine);
 
-  const handleNetworkSelectionChange = networkSelection => {
+  const handleNetworkSelectionChange = (networkSelection: any) => {
     setFlexibleLine(
       flexibleLine.withFieldChange('networkRef', networkSelection)
     );
   };
 
-  const handleOperatorSelectionChange = operatorSelection => {
+  const handleOperatorSelectionChange = (operatorSelection: any) => {
     setFlexibleLine(
       flexibleLine.withFieldChange('operatorRef', operatorSelection)
     );
@@ -124,10 +129,15 @@ const useFlexibleLine = match => {
   };
 };
 
-const FlexibleLineEditor = ({ match, history }) => {
+const FlexibleLineEditor = ({
+  match,
+  history
+}: RouteComponentProps<MatchParams>) => {
   const { formatMessage } = useSelector(selectIntl);
-  const organisations = useSelector(({ organisations }) => organisations);
-  const networks = useSelector(({ networks }) => networks);
+  const organisations = useSelector<GlobalState, OrganisationState>(
+    state => state.organisations
+  );
+  const networks = useSelector((state: GlobalState) => state.networks);
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
   const FLEXIBLE_LINE_STEPS = [
     formatMessage(messages.stepperAbout),
@@ -155,8 +165,11 @@ const FlexibleLineEditor = ({ match, history }) => {
 
   const goToLines = () => history.push('/lines');
 
-  const dispatch = useDispatch();
-  const isLoadingDependencies = useLoadDependencies(match, history);
+  const dispatch = useDispatch<any>();
+  const isLoadingDependencies = useLoadDependencies({
+    match: match,
+    history: history
+  } as RouteComponentProps<MatchParams>);
 
   const handleOnSaveClick = () => {
     const valid = validateForm(flexibleLine).isValid;
@@ -176,12 +189,12 @@ const FlexibleLineEditor = ({ match, history }) => {
     dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() => goToLines());
   };
 
-  const operators = filterNetexOperators(organisations);
+  const operators = filterNetexOperators(organisations ?? []);
   const isLoadingLine = !flexibleLine;
-  const isEdit = match.params.id;
+  const isEdit = isBlank(match.params.id);
   const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
 
-  const onStepClicked = (stepIndexClicked, isInEditMode) => {
+  const onStepClicked = (stepIndexClicked: number, isInEditMode: boolean) => {
     const allowPreviousStepClick = activeStepperIndex > stepIndexClicked;
     if (isInEditMode || allowPreviousStepClick) {
       setActiveStepperIndex(stepIndexClicked);
@@ -213,6 +226,7 @@ const FlexibleLineEditor = ({ match, history }) => {
 
       {!isLoadingLine && !isLoadingDependencies ? (
         <OverlayLoader
+          className=""
           isLoading={isSaving || isDeleting}
           text={
             isSaving
@@ -292,6 +306,8 @@ const FlexibleLineEditor = ({ match, history }) => {
         </OverlayLoader>
       ) : (
         <Loading
+          className=""
+          children={null}
           text={
             isLoadingLine
               ? formatMessage(messages.loadingLineText)
