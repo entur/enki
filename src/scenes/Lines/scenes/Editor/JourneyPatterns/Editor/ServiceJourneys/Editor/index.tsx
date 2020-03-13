@@ -5,8 +5,6 @@ import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
-import { ExpandableText } from '@entur/expand';
-import BookingArrangementEditor from 'scenes/Lines/scenes/Editor/BookingArrangementEditor';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
 import { ServiceJourney, StopPoint } from 'model';
@@ -37,7 +35,6 @@ export default function ServiceJourneyEditor(props: Props) {
       description,
       privateCode,
       publicCode,
-      bookingArrangement,
       passingTimes,
       dayTypes
     },
@@ -174,13 +171,6 @@ export default function ServiceJourneyEditor(props: Props) {
         onChange={pts => onFieldChange('passingTimes', pts)}
         setValidPassingTimes={setValidPassingTimes}
       />
-
-      <ExpandableText title={formatMessage(messages.booking)}>
-        <BookingArrangementEditor
-          bookingArrangement={bookingArrangement ?? {}}
-          onChange={b => onFieldChange('bookingArrangement', b)}
-        />
-      </ExpandableText>
 
       {showDeleteDialog && (
         <ConfirmDialog

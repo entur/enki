@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 import { DestinationDisplay, StopPoint } from 'model';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
-import BookingArrangementEditor from 'scenes/Lines/scenes/Editor/BookingArrangementEditor';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { getIntl } from 'i18n';
 import { DeleteIcon } from '@entur/icons';
 import './styles.scss';
-import { ExpandableText } from '@entur/expand';
 import searchForQuay, { QuaySearch } from './searchForQuay';
 import debounce from './debounce';
 import Form from './Form';
@@ -121,13 +119,6 @@ const StopPointEditor = (props: Props & StateProps) => {
         handleFrontTextChange={handleFrontTextChange}
         stopPoint={stopPoint}
       />
-
-      <ExpandableText title={translations.formatMessage(messages.booking)}>
-        <BookingArrangementEditor
-          bookingArrangement={stopPoint.bookingArrangement ?? {}}
-          onChange={b => onFieldChange('bookingArrangement', b)}
-        />
-      </ExpandableText>
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
