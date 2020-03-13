@@ -179,6 +179,7 @@
   "lines.editor.journeyPatterns.editor.general.directionLabel": "Direction",
   "lines.editor.journeyPatterns.editor.general.nameLabel": "* Name",
   "lines.editor.journeyPatterns.editor.general.privateCodeLabel": "Private code",
+  "lines.editor.journeyPatterns.editor.general.validationName": "You must enter a name.",
   "lines.editor.journeyPatterns.table.deleteConfirmDialogCancelButtonText": "No",
   "lines.editor.journeyPatterns.table.deleteConfirmDialogConfirmButtonText": "Yes",
   "lines.editor.journeyPatterns.table.deleteConfirmDialogMessage": "Are you sure you want to delete this journey pattern?",

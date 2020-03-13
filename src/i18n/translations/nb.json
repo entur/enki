@@ -179,6 +179,7 @@
   "lines.editor.journeyPatterns.editor.general.directionLabel": "Retning",
   "lines.editor.journeyPatterns.editor.general.nameLabel": "* Navn",
   "lines.editor.journeyPatterns.editor.general.privateCodeLabel": "Privat kode",
+  "lines.editor.journeyPatterns.editor.general.validationName": "Navn må fylles inn.",
   "lines.editor.journeyPatterns.table.deleteConfirmDialogCancelButtonText": "Nei",
   "lines.editor.journeyPatterns.table.deleteConfirmDialogConfirmButtonText": "Ja",
   "lines.editor.journeyPatterns.table.deleteConfirmDialogMessage": "Er du sikker på at du ønsker å slette dette journey patternet?",

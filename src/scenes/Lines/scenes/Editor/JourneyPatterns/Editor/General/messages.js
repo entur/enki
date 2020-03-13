@@ -16,5 +16,9 @@ export default defineMessages({
   directionLabel: {
     id: 'lines.editor.journeyPatterns.editor.general.directionLabel',
     defaultMessage: 'Retning'
+  },
+  validationName: {
+    id: 'lines.editor.journeyPatterns.editor.general.validationName',
+    defaultMessage: 'Navn må fylles inn.'
   }
 });
