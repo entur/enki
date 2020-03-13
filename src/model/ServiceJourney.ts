@@ -36,9 +36,7 @@ class ServiceJourney extends Versioned {
     this.publicCode = data.publicCode;
     this.operatorRef = data.operatorRef;
     this.bookingArrangement = data.bookingArrangement;
-    this.passingTimes = (data.passingTimes || []).map(
-      pt => new PassingTime(pt)
-    );
+    this.passingTimes = data.passingTimes ?? [];
     this.dayTypes = data.dayTypes || [];
     this.notices = (data.notices || []).map(n => ({ ...n }));
   }

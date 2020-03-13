@@ -11,3 +11,4 @@ export { default as Provider } from './Provider';
 export { default as ServiceJourney } from './ServiceJourney';
 export { default as StopPoint } from './StopPoint';
 export { default as PassingTime } from './PassingTime';
+export { default as VersionedType } from './base/VersionedType';

@@ -6,3 +6,5 @@ export type VersionedType = {
   changed?: string;
   changedBy?: string;
 };
+
+export default VersionedType;

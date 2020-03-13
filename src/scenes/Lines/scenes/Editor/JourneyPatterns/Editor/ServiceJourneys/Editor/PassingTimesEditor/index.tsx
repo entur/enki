@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
-import * as R from 'ramda';
 import { TextField } from '@entur/form';
 import {
   Table,
@@ -22,9 +21,23 @@ import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedIt
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlState } from 'react-intl-redux';
 
+type TimeKeys = Pick<
+  PassingTime,
+  | 'departureTime'
+  | 'arrivalTime'
+  | 'earliestDepartureTime'
+  | 'latestArrivalTime'
+>;
+type OffsetKeys = Pick<
+  PassingTime,
+  | 'departureDayOffset'
+  | 'arrivalDayOffset'
+  | 'earliestDepartureDayOffset'
+  | 'latestArrivalDayOffset'
+>;
 const passingTimesKeys: {
-  time: keyof PassingTime;
-  offset: keyof PassingTime;
+  time: keyof TimeKeys;
+  offset: keyof OffsetKeys;
 }[] = [
   { time: 'departureTime', offset: 'departureDayOffset' },
   { time: 'latestArrivalTime', offset: 'latestArrivalDayOffset' },
@@ -34,11 +47,8 @@ const passingTimesKeys: {
 
 const getPassingTimeKeys = (
   passingTime: PassingTime
-): { time: keyof PassingTime; offset: keyof PassingTime } => {
-  const keys = passingTimesKeys.find(
-    ({ time, offset }) =>
-      passingTime[time] && R.props([time, offset], passingTime)
-  );
+): { time: keyof TimeKeys; offset: keyof OffsetKeys } => {
+  const keys = passingTimesKeys.find(({ time }) => passingTime[time]);
 
   if (!keys) return { time: 'departureTime', offset: 'departureDayOffset' };
   return keys;
@@ -80,14 +90,14 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     field: keyof PassingTime,
     value: PassingTime[keyof PassingTime]
   ) => {
-    const passingTime = passingTimes[index].withFieldChange(field, value);
+    const passingTime = { ...passingTimes[index], [field]: value };
     const { time, offset } = getPassingTimeKeys(passingTime);
-    const newPassingTime = new PassingTime({
+    const newPassingTime: PassingTime = {
       departureTime: passingTime[time],
       arrivalTime: passingTime[time],
       departureDayOffset: passingTime[offset],
       arrivalDayOffset: passingTime[offset]
-    });
+    };
     const newPassingTimes = replaceElement(passingTimes, index, newPassingTime);
 
     onChange(newPassingTimes);
@@ -95,8 +105,8 @@ const PassingTimesEditor = (props: Props & StateProps) => {
 
   const handleDayOffsetChange = (
     index: number,
-    field: keyof PassingTime,
-    value: PassingTime[keyof PassingTime]
+    field: keyof OffsetKeys,
+    value: string
   ) => {
     const parsedValue = parseInt(value);
     onFieldChange(index, field, parsedValue !== 0 ? value : undefined);
@@ -105,7 +115,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const getDayOffsetDropdown = (
     tpt: PassingTime,
     index: number,
-    field: keyof PassingTime
+    field: keyof OffsetKeys
   ) => (
     <Dropdown
       items={[...Array(10).keys()].map(i => ({
@@ -129,7 +139,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const getTimePicker = (
     tpt: PassingTime,
     index: number,
-    field: keyof PassingTime
+    field: keyof TimeKeys
   ) => {
     const currentValue = tpt[field];
 

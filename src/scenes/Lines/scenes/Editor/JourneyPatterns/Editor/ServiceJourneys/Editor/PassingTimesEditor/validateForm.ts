@@ -1,7 +1,7 @@
 import moment from 'moment';
 import messages from './messages';
 import { getIntl } from 'i18n';
-import PassingTime from 'model/PassingTime';
+import { PassingTime } from 'model';
 import { IntlState } from 'react-intl-redux';
 import StopPoint from 'model/StopPoint';
 
