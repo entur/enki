@@ -20,6 +20,7 @@
     "@entur/chip": "^0.3.4",
     "@entur/datepicker": "^0.3.7",
     "@entur/dropdown": "^0.6.0",
+    "@entur/fonts": "git+ssh://git@bitbucket.org/enturas/entur-fonts.git#master",
     "@entur/form": "^2.3.4",
     "@entur/icons": "^0.9.0",
     "@entur/layout": "^1.2.3",
