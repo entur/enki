@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { DestinationDisplay, StopPoint } from 'model';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
-import BookingArrangementEditor from 'scenes/Lines/scenes/Editor/BookingArrangementEditor';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { getIntl } from 'i18n';
 import { DeleteIcon } from '@entur/icons';
