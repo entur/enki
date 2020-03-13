@@ -42,7 +42,6 @@ export const getInternationalizedUttuError = (
       | UttuCode
       | CombinedUttuCode;
 
-    console.log(messageCode);
     const errorMessage = messages[messageCode] ?? messages.UNKNOWN;
 
     return intl.formatMessage(errorMessage, metaData as any);
