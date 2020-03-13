@@ -22,9 +22,8 @@ export enum UttuSubCode {
 }
 
 export enum CombinedUttuCode {
-  CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME = UttuCode.CONSTRAINT_VIOLATION +
-    '_' +
-    UttuSubCode.FLEXIBLE_LINE_UNIQUE_NAME
+  CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME = 'CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME',
+  CONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME = 'CONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME'
 }
 
 export type UttuMessage = {
@@ -72,6 +71,11 @@ const uttuMessages: UttuMessage = {
   [CombinedUttuCode.CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME]: {
     id: 'helpers.uttu.uttuError.CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME',
     defaultMessage: 'Linjen må ha et unikt navn'
+  },
+  [CombinedUttuCode.CONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME]: {
+    id:
+      'helpers.uttu.uttuError.CONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME',
+    defaultMessage: 'Service journeyen må ha et unikt navn'
   }
 };
 

@@ -87,6 +87,7 @@
   "exports.viewer.nameLabel": "Navn",
   "exports.viewer.statusLabel": "Status",
   "exports.viewer.toDateLabel": "Til dato",
+  "helpers.uttu.uttuError.CONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME": "Service journeyen må ha et unikt navn",
   "helpers.uttu.uttuError.CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME": "Linjen må ha et unikt navn",
   "helpers.uttu.uttuError.ENTITY_IS_REFERENCED": "Entiteten kan ikke slettes fordi {noOfLines, number} {noOfLines, plural, one {en annen entitet} other {andre entiteter}} refererer til den.",
   "helpers.uttu.uttuError.FROM_DATE_AFTER_TO_DATE": "Fra dato kan ikke være etter til dato",

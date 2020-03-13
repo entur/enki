@@ -87,6 +87,7 @@
   "exports.viewer.nameLabel": "Name",
   "exports.viewer.statusLabel": "Status",
   "exports.viewer.toDateLabel": "To date",
+  "helpers.uttu.uttuError.CONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME": "Service journey must have a unique name",
   "helpers.uttu.uttuError.CONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME": "Flexible line must have a unique name",
   "helpers.uttu.uttuError.ENTITY_IS_REFERENCED": "Entity cannot be deleted because {noOfLines, number} other {noOfLines, plural, one {entity has a reference} other {entities have references}} to it.",
   "helpers.uttu.uttuError.FROM_DATE_AFTER_TO_DATE": "From date cannot be after to date",
