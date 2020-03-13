@@ -3,7 +3,6 @@ import messages from './messages';
 import { getIntl } from 'i18n';
 import PassingTime from 'model/PassingTime';
 import { IntlState } from 'react-intl-redux';
-import StopPoint from 'model/StopPoint';
 
 const isBefore = (
   passingTime: string | undefined,
