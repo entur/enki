@@ -21,14 +21,14 @@ import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedIt
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlState } from 'react-intl-redux';
 
-type TimeKeys = Pick<
+type TimeKeys = keyof Pick<
   PassingTime,
   | 'departureTime'
   | 'arrivalTime'
   | 'earliestDepartureTime'
   | 'latestArrivalTime'
 >;
-type OffsetKeys = Pick<
+type OffsetKeys = keyof Pick<
   PassingTime,
   | 'departureDayOffset'
   | 'arrivalDayOffset'
@@ -36,8 +36,8 @@ type OffsetKeys = Pick<
   | 'latestArrivalDayOffset'
 >;
 const passingTimesKeys: {
-  time: keyof TimeKeys;
-  offset: keyof OffsetKeys;
+  time: TimeKeys;
+  offset: OffsetKeys;
 }[] = [
   { time: 'departureTime', offset: 'departureDayOffset' },
   { time: 'latestArrivalTime', offset: 'latestArrivalDayOffset' },
@@ -47,7 +47,7 @@ const passingTimesKeys: {
 
 const getPassingTimeKeys = (
   passingTime: PassingTime
-): { time: keyof TimeKeys; offset: keyof OffsetKeys } => {
+): { time: TimeKeys; offset: OffsetKeys } => {
   const keys = passingTimesKeys.find(({ time }) => passingTime[time]);
 
   if (!keys) return { time: 'departureTime', offset: 'departureDayOffset' };
@@ -105,7 +105,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
 
   const handleDayOffsetChange = (
     index: number,
-    field: keyof OffsetKeys,
+    field: OffsetKeys,
     value: string
   ) => {
     const parsedValue = parseInt(value);
@@ -115,7 +115,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const getDayOffsetDropdown = (
     tpt: PassingTime,
     index: number,
-    field: keyof OffsetKeys
+    field: OffsetKeys
   ) => (
     <Dropdown
       items={[...Array(10).keys()].map(i => ({
@@ -136,11 +136,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     return time + ':00';
   };
 
-  const getTimePicker = (
-    tpt: PassingTime,
-    index: number,
-    field: keyof TimeKeys
-  ) => {
+  const getTimePicker = (tpt: PassingTime, index: number, field: TimeKeys) => {
     const currentValue = tpt[field];
 
     const shownValue =
