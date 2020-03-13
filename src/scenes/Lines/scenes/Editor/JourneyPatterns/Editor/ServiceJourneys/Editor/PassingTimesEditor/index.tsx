@@ -75,11 +75,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     setValidPassingTimes,
     flexibleStopPlaces
   } = props;
-  const { isValid, errorMessage } = validateTimes(
-    stopPoints,
-    passingTimes,
-    intl
-  );
+  const { isValid, errorMessage } = validateTimes(passingTimes, intl);
 
   useEffect(() => {
     setValidPassingTimes(isValid);
