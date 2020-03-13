@@ -91,7 +91,11 @@ function useLoadDependencies(match, history) {
 }
 
 const useFlexibleLine = match => {
-  const savedLine = useSelector(state => selectFlexibleLine(state, match));
+  const { savedLine, isSaved } = useSelector(state => ({
+    savedLine: selectFlexibleLine(state, match),
+    isSaved: state.editor.isSaved
+  }));
+  const dispatch = useDispatch();
   const [flexibleLine, setFlexibleLine] = useState(null);
   useEffect(() => {
     setFlexibleLine(savedLine);
@@ -112,8 +116,11 @@ const useFlexibleLine = match => {
   const onFieldChange = useCallback(
     (field, value, multi = false) => {
       setFlexibleLine(flexibleLine.withFieldChange(field, value, multi));
+      if (isSaved) {
+        dispatch(setSavedChanges(false));
+      }
     },
-    [flexibleLine]
+    [flexibleLine, dispatch, isSaved]
   );
 
   return {
