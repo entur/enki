@@ -3,7 +3,6 @@ import messages from './messages';
 import { getIntl } from 'i18n';
 import PassingTime from 'model/PassingTime';
 import { IntlState } from 'react-intl-redux';
-import StopPoint from 'model/StopPoint';
 
 const isBefore = (
   passingTime: string | undefined,
@@ -34,22 +33,15 @@ const hasAtleastOneFieldSet = (passingTime: PassingTime) => {
 };
 
 export const validateTimes = (
-  stopPoints: StopPoint[],
   passingTimes: PassingTime[],
   intlState: IntlState
 ): { isValid: boolean; errorMessage: string } => {
   const intl = getIntl({ intl: intlState });
 
-  if (stopPoints.length < 2)
+  if (passingTimes.length < 2)
     return {
       isValid: false,
       errorMessage: intl.formatMessage(messages.stopPointsInfo)
-    };
-
-  if (stopPoints.length > passingTimes.length)
-    return {
-      isValid: false,
-      errorMessage: intl.formatMessage(messages.aRowIsMissingData)
     };
 
   const firstError = passingTimes

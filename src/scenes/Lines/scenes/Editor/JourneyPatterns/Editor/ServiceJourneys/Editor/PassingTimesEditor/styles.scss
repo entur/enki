@@ -9,6 +9,10 @@
 .timepicker {
   width: 9.5rem;
   height: 3rem;
+
+  input[type='time']::-webkit-clear-button {
+    display: none;
+  }
 }
 
 .hourpicker {
