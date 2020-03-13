@@ -11,7 +11,8 @@ import {
   DataCell
 } from '@entur/table';
 import { ClockIcon } from '@entur/icons';
-import { PassingTime, StopPoint } from 'model';
+import StopPoint from 'model/StopPoint';
+import PassingTime from 'model/PassingTime';
 import { replaceElement } from 'helpers/arrays';
 import { SmallAlertBox } from '@entur/alert';
 import { validateTimes } from './validateForm';
