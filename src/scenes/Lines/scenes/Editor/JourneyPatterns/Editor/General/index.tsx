@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Dropdown } from '@entur/dropdown';
@@ -8,13 +8,21 @@ import { DIRECTION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
 import messages from './messages';
 import { selectIntl } from 'i18n';
+import JourneyPattern from 'model/JourneyPattern';
+
+type Props = {
+  journeyPattern: JourneyPattern;
+  directionSelection: any;
+  onFieldChange: (field: string, value: any) => void;
+  handleDirectionSelectionChange: (value: any) => void;
+};
 
 const General = ({
   journeyPattern,
   directionSelection,
   onFieldChange,
   handleDirectionSelectionChange
-}) => {
+}: Props) => {
   const [nameHolder, setNameHolder] = useState(journeyPattern.name);
   const { formatMessage } = useSelector(selectIntl);
 
@@ -28,8 +36,12 @@ const General = ({
       >
         <TextField
           defaultValue={nameHolder}
-          onChange={e => setNameHolder(e.target.value)}
-          onBlur={e => onFieldChange('name', e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setNameHolder(e.target.value)
+          }
+          onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+            onFieldChange('name', e.target.value)
+          }
         />
       </InputGroup>
 
@@ -39,7 +51,9 @@ const General = ({
       >
         <TextField
           value={journeyPattern.description || ''}
-          onChange={e => onFieldChange('description', e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onFieldChange('description', e.target.value)
+          }
         />
       </InputGroup>
 
@@ -49,7 +63,9 @@ const General = ({
       >
         <TextField
           value={journeyPattern.privateCode || ''}
-          onChange={e => onFieldChange('privateCode', e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onFieldChange('privateCode', e.target.value)
+          }
         />
       </InputGroup>
 
@@ -57,7 +73,7 @@ const General = ({
         label={formatMessage(messages.directionLabel)}
         items={[...Object.values(DIRECTION_TYPE)]}
         value={directionSelection}
-        onChange={({ value }) => handleDirectionSelectionChange(value)}
+        onChange={value => handleDirectionSelectionChange(value)}
       />
     </div>
   );
