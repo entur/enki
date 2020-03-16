@@ -1,7 +1,7 @@
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import messages from './validateForm.messages';
-import { StopPoint } from 'model';
 import { StopPointsFormError } from './index';
+import StopPoint from 'model/StopPoint';
 
 export const validateStopPoints = (stopPoints: StopPoint[]): boolean =>
   getStopPointsErrors(stopPoints).every(stopPointErrors =>
@@ -19,12 +19,17 @@ export const validateStopPoint = (
   stopPoint: StopPoint,
   isFirst: boolean
 ): StopPointsFormError => {
-  const { quayRef, flexibleStopPlaceRef, destinationDisplay } = stopPoint;
+  const {
+    quayRef,
+    flexibleStopPlace,
+    flexibleStopPlaceRef,
+    destinationDisplay
+  } = stopPoint;
 
   const getFlexibleStopPlaceRefAndQuayRefError = () => {
-    if (isBlank(quayRef) && !flexibleStopPlaceRef)
+    if (isBlank(quayRef) && !(flexibleStopPlaceRef ?? flexibleStopPlace?.id))
       return messages.errorFlexibleStopPlaceRefAndQuayRefNoValues;
-    if (!isBlank(quayRef) && flexibleStopPlaceRef)
+    if (!isBlank(quayRef) && (flexibleStopPlaceRef ?? flexibleStopPlace?.id))
       return messages.errorFlexibleStopPlaceRefAndQuayRefBothValues;
     return undefined;
   };

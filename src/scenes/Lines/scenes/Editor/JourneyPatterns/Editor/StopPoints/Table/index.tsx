@@ -3,7 +3,7 @@ import { selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
-import { StopPoint } from 'model';
+import StopPoint from 'model/StopPoint';
 import {
   Table,
   TableBody,
@@ -14,7 +14,6 @@ import {
 } from '@entur/table';
 import ConfirmDialog from 'components/ConfirmDialog';
 import messages from './messages';
-
 import './styles.scss';
 
 type Props = {

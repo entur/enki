@@ -8,4 +8,3 @@ export { default as HailAndRideArea } from './HailAndRideArea';
 export { default as JourneyPattern } from './JourneyPattern';
 export { default as Message } from './Message';
 export { default as Provider } from './Provider';
-export { default as StopPoint } from './StopPoint';

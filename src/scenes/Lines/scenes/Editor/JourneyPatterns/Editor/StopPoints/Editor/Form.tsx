@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, useCallback, useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
   Checkbox,
@@ -10,23 +10,19 @@ import {
 } from '@entur/form';
 import StopPlaceSelection from './StopPlaceSelection';
 import messages from './Form.messages';
-import { isBlank } from 'helpers/forms';
-import { StopPoint, FlexibleStopPlace } from 'model';
-import { StopPlaceSelectionType, StopPointsFormError } from './index';
+import { FlexibleStopPlace } from 'model';
+import { StopPointsFormError } from './index';
 import { QuaySearch } from './searchForQuay';
 import { quaySearchResults } from './quaySearchResults';
+import StopPoint from 'model/StopPoint';
+import debounce from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/debounce';
+import { isBlank } from 'helpers/forms';
+import searchForQuay from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/searchForQuay';
 
 interface Props extends WrappedComponentProps {
   flexibleStopPlaces: FlexibleStopPlace[];
-  stopPlaceSelection: StopPlaceSelectionType;
-  quaySearch: QuaySearch | undefined;
   errors: StopPointsFormError;
-  handleStopPlaceSelectionChange: (
-    stopPlaceSelection: StopPlaceSelectionType
-  ) => void;
-  handleFieldChange: (field: string, value: any) => void;
-  debouncedSearchForQuay: (quayRef: string) => void;
-  handleFrontTextChange: (frontText: string) => void;
+  onChange: (stopPoint: StopPoint) => void;
   stopPoint: StopPoint;
   frontTextRequired: boolean;
 }
@@ -34,41 +30,47 @@ interface Props extends WrappedComponentProps {
 const Form = ({
   flexibleStopPlaces,
   intl: { formatMessage },
-  stopPlaceSelection,
-  quaySearch,
   errors,
-  handleStopPlaceSelectionChange,
-  handleFieldChange,
-  debouncedSearchForQuay,
-  handleFrontTextChange,
+  onChange,
   stopPoint,
   frontTextRequired
 }: Props) => {
-  let frontTextValue =
-    stopPoint.destinationDisplay && stopPoint.destinationDisplay.frontText
-      ? stopPoint.destinationDisplay.frontText
-      : '';
-  const [selectMode, setSelectMode] = useState<string | null>(
+  const [selectMode, setSelectMode] = useState<'nsr' | 'custom'>(
     stopPoint.quayRef ? 'nsr' : 'custom'
   );
 
+  const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
+    undefined
+  );
+
   useEffect(() => {
-    if (selectMode === 'custom') {
-      handleFieldChange('quayRef', null);
-      setSelectMode('custom');
-    } else if (selectMode === 'nsr') {
-      handleStopPlaceSelectionChange(null);
-      setSelectMode('nsr');
+    const quayRef = stopPoint.quayRef;
+    if (quayRef) {
+      const search = async () => {
+        const result = await searchForQuay(quayRef);
+        setQuaySearch(result);
+      };
+      search();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectMode]);
+    // eslint-disable-next-line
+  }, []);
+
+  const debouncedSearchForQuay = useCallback(
+    debounce(async (quayRef: string) => {
+      if (isBlank(quayRef)) return setQuaySearch({});
+
+      const quaySearch = await searchForQuay(quayRef);
+      setQuaySearch(quaySearch);
+    }, 1000),
+    []
+  );
 
   return (
     <div className="tab-style">
       <div style={{ marginBottom: '1rem' }}>
         <SegmentedControl
-          onChange={selectedValue => setSelectMode(selectedValue)}
           selectedValue={selectMode}
+          onChange={value => setSelectMode(value as 'nsr' | 'custom')}
         >
           <SegmentedChoice value="custom">
             {formatMessage(messages.selectCustom)}
@@ -81,10 +83,18 @@ const Form = ({
 
       {selectMode === 'custom' ? (
         <StopPlaceSelection
-          stopPlaceSelection={stopPlaceSelection}
+          stopPlaceSelection={
+            stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id
+          }
           error={errors.flexibleStopPlaceRefAndQuayRef}
           flexibleStopPlaces={flexibleStopPlaces}
-          handleStopPlaceSelectionChange={handleStopPlaceSelectionChange}
+          handleStopPlaceSelectionChange={(stopPlaceRef: string) =>
+            onChange({
+              ...stopPoint,
+              flexibleStopPlaceRef: stopPlaceRef,
+              quayRef: undefined
+            })
+          }
         />
       ) : (
         <InputGroup
@@ -103,10 +113,11 @@ const Form = ({
               debouncedSearchForQuay(e.target.value)
             }
             onBlur={(e: ChangeEvent<HTMLInputElement>) =>
-              handleFieldChange(
-                'quayRef',
-                isBlank(e.target.value) ? null : e.target.value
-              )
+              onChange({
+                ...stopPoint,
+                quayRef: e.target.value,
+                flexibleStopPlaceRef: undefined
+              })
             }
           />
         </InputGroup>
@@ -119,9 +130,12 @@ const Form = ({
         }
       >
         <TextField
-          value={frontTextValue}
+          defaultValue={stopPoint.destinationDisplay?.frontText ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            handleFrontTextChange(e.target.value)
+            onChange({
+              ...stopPoint,
+              destinationDisplay: { frontText: e.target.value }
+            })
           }
           variant={errors.frontText ? 'error' : undefined}
           feedback={
@@ -135,7 +149,7 @@ const Form = ({
           value={'1'}
           checked={stopPoint.forBoarding === true}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            handleFieldChange('forBoarding', e.target.checked)
+            onChange({ ...stopPoint, forBoarding: e.target.checked })
           }
         >
           {formatMessage(messages.labelForBoarding)}
@@ -145,7 +159,7 @@ const Form = ({
           value={'1'}
           checked={stopPoint.forAlighting === true}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            handleFieldChange('forAlighting', e.target.checked)
+            onChange({ ...stopPoint, forAlighting: e.target.checked })
           }
         >
           {formatMessage(messages.labelForAlighting)}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { StopPoint } from 'model';
 import { replaceElement, useUniqueKeys } from 'helpers/arrays';
 import StopPointEditor from './Editor';
 import messages from '../messages';
@@ -9,6 +8,7 @@ import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { GlobalState } from 'reducers';
 import { validateStopPoint } from './Editor/validateForm';
 import AddButton from 'components/AddButton/AddButton';
+import StopPoint from 'model/StopPoint';
 
 type Props = {
   stopPoints: StopPoint[];

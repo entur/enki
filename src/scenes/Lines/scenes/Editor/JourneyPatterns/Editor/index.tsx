@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { ValidationInfoIcon } from '@entur/icons';
-import { StopPoint } from 'model';
 import StopPointsEditor from './StopPoints';
 import messages from './messages';
 
@@ -81,7 +80,6 @@ const JourneyPatternEditor = ({
   };
 
   const addStopPoint = () => {
-    const updatedPoints = pointsInSequence.concat(new StopPoint());
     const newServiceJourneys = serviceJourneys.map(serviceJourney => ({
       ...serviceJourney,
       passingTimes: [...(serviceJourney.passingTimes ?? []), {}]
@@ -89,7 +87,7 @@ const JourneyPatternEditor = ({
 
     onSave(
       journeyPattern
-        .withFieldChange('pointsInSequence', updatedPoints)
+        .withFieldChange('pointsInSequence', [...pointsInSequence, {}])
         .withFieldChange('serviceJourneys', newServiceJourneys),
       index
     );

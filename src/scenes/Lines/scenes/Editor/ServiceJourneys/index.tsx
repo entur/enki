@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { StopPoint } from 'model';
+import StopPoint from 'model/StopPoint';
 import ServiceJourneyEditor from './Editor';
 import { selectIntl } from 'i18n';
 import {
