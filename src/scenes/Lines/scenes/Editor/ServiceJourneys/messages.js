@@ -1,18 +1,6 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  journeyPattern: {
-    id: 'lines.editor.journeyPatternsTabLabel',
-    defaultMessage: 'Journey patterns'
-  },
-  enterInformation: {
-    id: 'lines.editor.journeyPatterns.editor.fillInformation',
-    defaultMessage: 'Fyll inn informasjon om Journey Pattern.'
-  },
-  stopPoints: {
-    id: 'lines.editor.journeyPatterns.editor.stopPoints',
-    defaultMessage: 'Legg til stoppepunkter for Journey Pattern'
-  },
   serviceJourneys: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys',
     defaultMessage: 'Service Journeys'
@@ -29,22 +17,9 @@ export default defineMessages({
     id: 'lines.editor.journeyPatterns.editor.save',
     defaultMessage: 'Lagre'
   },
-  addStopPoint: {
-    id: 'lines.editor.journeyPatterns.editor.addStopPoint',
-    defaultMessage: 'Legg til stoppepunkt'
-  },
   addServiceJourneys: {
     id: 'lines.editor.journeyPatterns.editor.addServiceJourneys',
-    defaultMessage: 'Legg til service journey'
-  },
-  atleastTwoPoints: {
-    id: 'lines.editor.journeyPatterns.editor.stopPoints.atleastTwoPoints',
-    defaultMessage: 'Minst to stoppepunkter'
-  },
-  atleastTwoPointsDetailed: {
-    id:
-      'lines.editor.journeyPatterns.editor.stopPoints.atleastTwoPointsDetailed',
-    defaultMessage: 'Et journey pattern krever minst to stoppepunkter.'
+    defaultMessage: 'Legg til flere Service Journeys'
   },
   availability: {
     id: 'lines.journeyPatterns.serviceJourney.availability',
@@ -140,7 +115,7 @@ export default defineMessages({
   serviceJourneysInfo: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',
     defaultMessage:
-      'Opprett ulike Service Journeys for ulike åpningstider. For eksempel én for hverdag og én for helg.'
+      'Du kan opprette ulike Service Journeys for ulike åpningstider. For eksempel ett for hverdag og ett for helg. '
   },
   delete: {
     id: 'lines.editor.deleteButtonText',

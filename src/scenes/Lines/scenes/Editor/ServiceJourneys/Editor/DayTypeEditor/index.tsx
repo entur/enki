@@ -5,7 +5,7 @@ import { Label } from '@entur/typography';
 import DayTypeAssignmentsEditor from './DayTypeAssignments';
 import WeekdayPicker from 'components/WeekdayPicker';
 import './styles.scss';
-import messages from '../../../messages';
+import messages from '../../messages';
 import DayType, { dayTypeIsEmpty } from 'model/DayType';
 
 type Props = {

@@ -2,33 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { ValidationInfoIcon } from '@entur/icons';
-import { StopPoint, ServiceJourney } from 'model';
+import { StopPoint } from 'model';
 import StopPointsEditor from './StopPoints';
-import ServiceJourneysEditor from './ServiceJourneys';
 import messages from './messages';
 
 import './styles.scss';
 import General from './General';
 
 import { JourneyPattern } from 'model';
+import { Paragraph, SubParagraph } from '@entur/typography';
+import { isBlank } from 'helpers/forms';
+import { validateStopPoints } from './StopPoints/Editor/validateForm';
+import { removeElementByIndex } from 'helpers/arrays';
+import { DIRECTION_TYPE } from 'model/enums';
 
 type Props = {
   journeyPattern: JourneyPattern;
-  onSave: (journeyPattern: any, index: number) => void;
-  setIsValidServiceJourney: (isValid: boolean) => void;
-  setIsValidStopPoints: (isValid: boolean) => void;
+  onSave: (journeyPattern: JourneyPattern, index: number) => void;
+  setIsValidJourneyPattern: (isValid: boolean) => void;
   index: number;
 };
 
 const JourneyPatternEditor = ({
   journeyPattern,
   onSave,
-  setIsValidServiceJourney,
-  setIsValidStopPoints,
+  setIsValidJourneyPattern,
   index
 }: Props) => {
   const [directionSelection, setDirectionSelection] = useState<
-    string | undefined
+    DIRECTION_TYPE | undefined
   >(undefined);
   const { pointsInSequence, directionType, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
@@ -37,13 +39,25 @@ const JourneyPatternEditor = ({
     setDirectionSelection(directionType);
   }, [directionType]);
 
+  useEffect(() => {
+    setIsValidJourneyPattern(
+      !isBlank(journeyPattern.name) &&
+        validateStopPoints(journeyPattern.pointsInSequence)
+    );
+  }, [
+    journeyPattern.pointsInSequence,
+    journeyPattern.name,
+    setIsValidJourneyPattern
+  ]);
+
   const onFieldChange = (field: string, value: any) => {
     onSave(journeyPattern.withFieldChange(field, value), index);
   };
 
-  const handleDirectionSelectionChange = (directionSelection: any) => {
-    const newDirectionValue = directionSelection;
-    onFieldChange('directionType', newDirectionValue);
+  const handleDirectionSelectionChange = (
+    directionSelection: DIRECTION_TYPE | undefined
+  ) => {
+    onFieldChange('directionType', directionSelection);
     setDirectionSelection(directionSelection);
   };
 
@@ -51,12 +65,12 @@ const JourneyPatternEditor = ({
     const copy = pointsInSequence.slice();
     copy.splice(stopPointIndex, 1);
 
-    const newServiceJourneys = serviceJourneys.map(sj => {
-      const copyOfPassingTimes = sj.passingTimes.slice();
-      copyOfPassingTimes.splice(stopPointIndex, 1);
-
-      return sj.withFieldChange('passingTimes', copyOfPassingTimes);
-    });
+    const newServiceJourneys = serviceJourneys.map(serviceJourney => ({
+      ...serviceJourney,
+      passingTimes: serviceJourney.passingTimes
+        ? removeElementByIndex(serviceJourney.passingTimes, stopPointIndex)
+        : []
+    }));
 
     onSave(
       journeyPattern
@@ -68,13 +82,10 @@ const JourneyPatternEditor = ({
 
   const addStopPoint = () => {
     const updatedPoints = pointsInSequence.concat(new StopPoint());
-    const newServiceJourneys = serviceJourneys.length
-      ? serviceJourneys.map(sj => {
-          const updatedPassingTimes = sj.passingTimes.concat({});
-
-          return sj.withFieldChange('passingTimes', updatedPassingTimes);
-        })
-      : [new ServiceJourney({ passingTimes: [{}] })];
+    const newServiceJourneys = serviceJourneys.map(serviceJourney => ({
+      ...serviceJourney,
+      passingTimes: [...(serviceJourney.passingTimes ?? []), {}]
+    }));
 
     onSave(
       journeyPattern
@@ -87,7 +98,8 @@ const JourneyPatternEditor = ({
   return (
     <div className="journey-pattern-editor">
       <section>
-        <h3> {formatMessage(messages.general)} </h3>
+        <h2>{formatMessage(messages.journeyPattern)}</h2>
+        <Paragraph>{formatMessage(messages.enterInformation)}</Paragraph>
         <General
           journeyPattern={journeyPattern}
           directionSelection={directionSelection}
@@ -96,31 +108,17 @@ const JourneyPatternEditor = ({
         />
       </section>
 
-      <section>
-        <h3> {formatMessage(messages.stopPoints)} </h3>
-        <p>
-          <ValidationInfoIcon inline /> {formatMessage(messages.stopPointsInfo)}{' '}
-        </p>
+      <section style={{ marginTop: '5rem' }}>
+        <h3>{formatMessage(messages.stopPoints)}</h3>
+        <SubParagraph>
+          <ValidationInfoIcon inline />
+          {formatMessage(messages.stopPointsInfo)}
+        </SubParagraph>
         <StopPointsEditor
           stopPoints={pointsInSequence}
           deleteStopPoint={deleteStopPoint}
           addStopPoint={addStopPoint}
           onChange={pis => onFieldChange('pointsInSequence', pis)}
-          setIsValidStopPoints={setIsValidStopPoints}
-        />
-      </section>
-
-      <section>
-        <h3> {formatMessage(messages.serviceJourneys)} </h3>
-        <p>
-          <ValidationInfoIcon inline />{' '}
-          {formatMessage(messages.serviceJourneysInfo)}{' '}
-        </p>
-        <ServiceJourneysEditor
-          serviceJourneys={serviceJourneys}
-          stopPoints={pointsInSequence}
-          onChange={sjs => onFieldChange('serviceJourneys', sjs)}
-          setIsValidServiceJourney={setIsValidServiceJourney}
         />
       </section>
     </div>

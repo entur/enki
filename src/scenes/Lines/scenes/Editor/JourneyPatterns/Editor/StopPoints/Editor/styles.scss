@@ -1,4 +1,7 @@
 .stop-point-editor {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5rem;
   .entur-radio-checkbox-group input {
     margin-bottom: 0;
   }

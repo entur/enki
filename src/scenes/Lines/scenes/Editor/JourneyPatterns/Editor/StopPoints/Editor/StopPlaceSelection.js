@@ -6,12 +6,11 @@ import messages from './Form.messages';
 
 export default function StopPlaceSelection({
   stopPlaceSelection,
-  flexibleStopPlaceRefAndQuayRefErrors,
+  error,
   flexibleStopPlaces,
   handleStopPlaceSelectionChange
 }) {
   const { formatMessage } = useSelector(selectIntl);
-  const error = flexibleStopPlaceRefAndQuayRefErrors[0];
 
   return (
     <Dropdown

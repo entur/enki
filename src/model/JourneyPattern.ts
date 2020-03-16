@@ -2,12 +2,13 @@ import Versioned from './base/Versioned';
 import StopPoint from './StopPoint';
 import ServiceJourney from './ServiceJourney';
 import Notice from './Notice';
+import { DIRECTION_TYPE } from 'model/enums';
 
 type Data = {
   name?: string;
   description?: string;
   privateCode?: string;
-  directionType?: string;
+  directionType?: DIRECTION_TYPE;
   pointsInSequence?: StopPoint[];
   serviceJourneys?: ServiceJourney[];
   notices?: Notice[];
@@ -17,7 +18,7 @@ class JourneyPattern extends Versioned {
   name: string | undefined;
   description: string | undefined;
   privateCode: string | undefined;
-  directionType: string | undefined;
+  directionType: DIRECTION_TYPE | undefined;
   pointsInSequence: StopPoint[];
   serviceJourneys: ServiceJourney[];
   notices: Notice[];
@@ -29,12 +30,10 @@ class JourneyPattern extends Versioned {
     this.description = data.description;
     this.privateCode = data.privateCode;
     this.directionType = data.directionType;
-    this.pointsInSequence = (data.pointsInSequence || []).map(
-      p => new StopPoint(p)
-    );
-    this.serviceJourneys = (data.serviceJourneys || []).map(
-      sj => new ServiceJourney(sj)
-    );
+    this.pointsInSequence = (
+      data.pointsInSequence || [new StopPoint(), new StopPoint()]
+    ).map(p => new StopPoint(p));
+    this.serviceJourneys = data.serviceJourneys || [{ passingTimes: [{}, {}] }];
     this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 
