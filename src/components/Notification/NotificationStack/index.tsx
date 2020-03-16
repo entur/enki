@@ -11,12 +11,11 @@ const DEFAULT_DISMISS_TIME = 5000;
 type Props = {
   notifications: Notification[];
   onDismiss: (notification: Notification) => void;
-  onRequestClose: (notification: Notification) => void;
-  action?: string;
+  onRequestClose?: (notification: Notification) => void;
 };
 
 const NotificationStack = (props: Props) => {
-  const { notifications, onRequestClose, onDismiss, action } = props;
+  const { notifications, onDismiss } = props;
   const numberOfNotifications = notifications.length - 1;
 
   return (
@@ -35,11 +34,8 @@ const NotificationStack = (props: Props) => {
           <StackedNotification
             {...notification}
             key={notification.key}
-            isLast={isLast}
-            action={action}
             dismissAfter={dismissAfter}
             onDismiss={() => onDismiss(notification)}
-            onRequestClose={() => onRequestClose(notification)}
             notificationStyle={notificationStyle}
           />
         );
