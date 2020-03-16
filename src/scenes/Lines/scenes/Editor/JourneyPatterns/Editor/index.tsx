@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { ValidationInfoIcon } from '@entur/icons';
-import { StopPoint, ServiceJourney } from 'model';
+import { StopPoint } from 'model';
 import StopPointsEditor from './StopPoints';
 import messages from './messages';
 
@@ -13,6 +13,7 @@ import { JourneyPattern } from 'model';
 import { Paragraph, SubParagraph } from '@entur/typography';
 import { isBlank } from 'helpers/forms';
 import { validateStopPoints } from './StopPoints/Editor/validateForm';
+import { removeElementByIndex } from 'helpers/arrays';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -42,7 +43,11 @@ const JourneyPatternEditor = ({
       !isBlank(journeyPattern.name) &&
         validateStopPoints(journeyPattern.pointsInSequence)
     );
-  }, [journeyPattern.pointsInSequence, journeyPattern.name]);
+  }, [
+    journeyPattern.pointsInSequence,
+    journeyPattern.name,
+    setIsValidJourneyPattern
+  ]);
 
   const onFieldChange = (field: string, value: any) => {
     onSave(journeyPattern.withFieldChange(field, value), index);
@@ -58,12 +63,12 @@ const JourneyPatternEditor = ({
     const copy = pointsInSequence.slice();
     copy.splice(stopPointIndex, 1);
 
-    const newServiceJourneys = serviceJourneys.map(sj => {
-      const copyOfPassingTimes = sj.passingTimes.slice();
-      copyOfPassingTimes.splice(stopPointIndex, 1);
-
-      return sj.withFieldChange('passingTimes', copyOfPassingTimes);
-    });
+    const newServiceJourneys = serviceJourneys.map(serviceJourney => ({
+      ...serviceJourney,
+      passingTimes: serviceJourney.passingTimes
+        ? removeElementByIndex(serviceJourney.passingTimes, stopPointIndex)
+        : []
+    }));
 
     onSave(
       journeyPattern
@@ -75,13 +80,10 @@ const JourneyPatternEditor = ({
 
   const addStopPoint = () => {
     const updatedPoints = pointsInSequence.concat(new StopPoint());
-    const newServiceJourneys = serviceJourneys.length
-      ? serviceJourneys.map(sj => {
-          const updatedPassingTimes = sj.passingTimes.concat({});
-
-          return sj.withFieldChange('passingTimes', updatedPassingTimes);
-        })
-      : [new ServiceJourney({ passingTimes: [{}] })];
+    const newServiceJourneys = serviceJourneys.map(serviceJourney => ({
+      ...serviceJourney,
+      passingTimes: [...(serviceJourney.passingTimes ?? []), {}]
+    }));
 
     onSave(
       journeyPattern
@@ -117,20 +119,6 @@ const JourneyPatternEditor = ({
           onChange={pis => onFieldChange('pointsInSequence', pis)}
         />
       </section>
-
-      {/*<section>*/}
-      {/*  <h3> {formatMessage(messages.serviceJourneys)} </h3>*/}
-      {/*  <p>*/}
-      {/*    <ValidationInfoIcon inline />{' '}*/}
-      {/*    {formatMessage(messages.serviceJourneysInfo)}{' '}*/}
-      {/*  </p>*/}
-      {/*  <ServiceJourneysEditor*/}
-      {/*    serviceJourneys={serviceJourneys}*/}
-      {/*    stopPoints={pointsInSequence}*/}
-      {/*    onChange={sjs => onFieldChange('serviceJourneys', sjs)}*/}
-      {/*    setIsValidServiceJourney={setIsValidServiceJourney}*/}
-      {/*  />*/}
-      {/*</section>*/}
     </div>
   );
 };

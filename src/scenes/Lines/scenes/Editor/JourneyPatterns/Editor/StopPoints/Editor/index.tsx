@@ -85,15 +85,6 @@ const StopPointEditor = (props: Props & StateProps) => {
 
   return (
     <div className="stop-point-editor" style={{ marginTop: '2rem' }}>
-      {deleteStopPoint && (
-        <SecondaryButton
-          className="delete-button"
-          onClick={() => setDeleteDialogOpen(true)}
-        >
-          <DeleteIcon inline /> {translations.formatMessage(messages.delete)}
-        </SecondaryButton>
-      )}
-
       <Form
         frontTextRequired={isFirst}
         flexibleStopPlaces={flexibleStopPlaces}
@@ -106,6 +97,14 @@ const StopPointEditor = (props: Props & StateProps) => {
         handleFrontTextChange={handleFrontTextChange}
         stopPoint={stopPoint}
       />
+      {deleteStopPoint && (
+        <SecondaryButton
+          className="delete-button"
+          onClick={() => setDeleteDialogOpen(true)}
+        >
+          <DeleteIcon inline /> {translations.formatMessage(messages.delete)}
+        </SecondaryButton>
+      )}
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}

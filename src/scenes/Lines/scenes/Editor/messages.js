@@ -67,7 +67,11 @@ export default defineMessages({
   },
   stepperJourneyPattern: {
     id: 'lines.editor.journeyPatterns.editor.stepper.journeyPattern',
-    defaultMessage: 'Journey patterns'
+    defaultMessage: 'Journey Pattern'
+  },
+  stepperServiceJourney: {
+    id: 'lines.editor.journeyPatterns.editor.stepper.serviceJourney',
+    defaultMessage: 'Service Journey'
   },
   stepperBooking: {
     id: 'lines.editor.journeyPatterns.editor.stepper.booking',

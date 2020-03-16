@@ -32,9 +32,7 @@ class JourneyPattern extends Versioned {
     this.pointsInSequence = (
       data.pointsInSequence || [new StopPoint(), new StopPoint()]
     ).map(p => new StopPoint(p));
-    this.serviceJourneys = (data.serviceJourneys || []).map(
-      sj => new ServiceJourney(sj)
-    );
+    this.serviceJourneys = data.serviceJourneys || [{ passingTimes: [{}, {}] }];
     this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 

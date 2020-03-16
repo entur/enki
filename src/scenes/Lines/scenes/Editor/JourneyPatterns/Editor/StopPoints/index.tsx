@@ -1,17 +1,14 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { AddIcon } from '@entur/icons';
-import { SecondarySquareButton } from '@entur/button';
 import { StopPoint } from 'model';
 import { replaceElement, useUniqueKeys } from 'helpers/arrays';
 import StopPointEditor from './Editor';
 import messages from '../messages';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { GlobalState } from 'reducers';
-import searchForQuay from './Editor/searchForQuay';
-import { Paragraph } from '@entur/typography';
 import { validateStopPoint } from './Editor/validateForm';
+import AddButton from 'components/AddButton/AddButton';
 
 type Props = {
   stopPoints: StopPoint[];
@@ -22,20 +19,6 @@ type Props = {
 
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[] | null;
-};
-
-const Title = ({ quayRef }: { quayRef: string }): ReactElement => {
-  const [title, setTitle] = useState(quayRef);
-
-  useEffect(() => {
-    const fetchTitle = async () =>
-      await searchForQuay(quayRef).then(response =>
-        setTitle(response.stopPlace?.name.value ?? quayRef)
-      );
-    fetchTitle();
-  }, [quayRef]);
-
-  return <div>{title}</div>;
 };
 
 const StopPointsEditor = ({
@@ -50,17 +33,6 @@ const StopPointsEditor = ({
   const updateStopPoint = (index: number, stopPlace: StopPoint) => {
     onChange(replaceElement(stopPoints, index, stopPlace));
   };
-
-  const getFetchedTitle = (stopPoint: StopPoint): ReactElement =>
-    stopPoint.quayRef ? (
-      <Title quayRef={stopPoint.quayRef} />
-    ) : (
-      <div>
-        {flexibleStopPlaces?.find(
-          stop => stop.id === stopPoint.flexibleStopPlaceRef
-        )?.name ?? ''}
-      </div>
-    );
 
   const keys = useUniqueKeys(stopPoints);
 
@@ -79,17 +51,10 @@ const StopPointsEditor = ({
           flexibleStopPlaces={flexibleStopPlaces ?? []}
         />
       ))}
-      <div
-        style={{ display: 'flex', alignItems: 'baseline', marginTop: '3rem' }}
-      >
-        <SecondarySquareButton
-          onClick={addStopPoint}
-          style={{ marginRight: '1rem' }}
-        >
-          <AddIcon />
-        </SecondarySquareButton>
-        <Paragraph>{formatMessage(messages.addStopPoint)}</Paragraph>
-      </div>
+      <AddButton
+        onClick={addStopPoint}
+        buttonTitle={formatMessage(messages.addStopPoint)}
+      />
     </>
   );
 };

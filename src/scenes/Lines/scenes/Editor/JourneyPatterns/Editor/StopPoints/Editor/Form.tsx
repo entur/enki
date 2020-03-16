@@ -8,13 +8,13 @@ import {
   SegmentedControl,
   SegmentedChoice
 } from '@entur/form';
-import StopPlaceSelection from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/StopPlaceSelection';
+import StopPlaceSelection from './StopPlaceSelection';
 import messages from './Form.messages';
 import { isBlank } from 'helpers/forms';
 import { StopPoint, FlexibleStopPlace } from 'model';
 import { StopPlaceSelectionType, StopPointsFormError } from './index';
 import { QuaySearch } from './searchForQuay';
-import { quaySearchResults } from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/quaySearchResults';
+import { quaySearchResults } from './quaySearchResults';
 
 interface Props extends WrappedComponentProps {
   flexibleStopPlaces: FlexibleStopPlace[];

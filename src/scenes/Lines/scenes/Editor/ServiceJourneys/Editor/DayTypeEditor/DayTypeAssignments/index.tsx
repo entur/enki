@@ -7,7 +7,7 @@ import { SecondaryButton } from '@entur/button';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import DayTypeAssignmentEditor from './Editor';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
-import messages from '../../../../messages';
+import messages from '../../../messages';
 
 import './styles.scss';
 
