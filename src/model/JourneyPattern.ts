@@ -2,12 +2,13 @@ import Versioned from './base/Versioned';
 import StopPoint from './StopPoint';
 import ServiceJourney from './ServiceJourney';
 import Notice from './Notice';
+import { DIRECTION_TYPE } from 'model/enums';
 
 type Data = {
   name?: string;
   description?: string;
   privateCode?: string;
-  directionType?: string;
+  directionType?: DIRECTION_TYPE;
   pointsInSequence?: StopPoint[];
   serviceJourneys?: ServiceJourney[];
   notices?: Notice[];
@@ -17,7 +18,7 @@ class JourneyPattern extends Versioned {
   name: string | undefined;
   description: string | undefined;
   privateCode: string | undefined;
-  directionType: string | undefined;
+  directionType: DIRECTION_TYPE | undefined;
   pointsInSequence: StopPoint[];
   serviceJourneys: ServiceJourney[];
   notices: Notice[];

@@ -53,7 +53,9 @@ const ServiceJourneyEditor = (props: Props) => {
   );
   const { formatMessage } = useSelector(selectIntl);
 
-  const handleOperatorSelectionChange = (operatorSelection: any) => {
+  const handleOperatorSelectionChange = (
+    operatorSelection: string | undefined
+  ) => {
     onFieldChange('operatorRef', operatorSelection);
     setOperatorSelection(operatorSelection);
   };

@@ -119,13 +119,13 @@ const useFlexibleLine = (
     setFlexibleLine(getFlexibleLineFromPath(flexibleLines, match));
   }, [loadDependencies, flexibleLines, match]);
 
-  const handleNetworkSelectionChange = (networkSelection: any) => {
+  const handleNetworkSelectionChange = (networkSelection: string) => {
     setFlexibleLine(
       flexibleLine.withFieldChange('networkRef', networkSelection)
     );
   };
 
-  const handleOperatorSelectionChange = (operatorSelection: any) => {
+  const handleOperatorSelectionChange = (operatorSelection: string) => {
     setFlexibleLine(
       flexibleLine.withFieldChange('operatorRef', operatorSelection)
     );
@@ -210,7 +210,7 @@ const FlexibleLineEditor = ({
 
   const operators = filterNetexOperators(organisations ?? []);
   const isLoadingLine = !flexibleLine;
-  const isEdit = isBlank(match.params.id);
+  const isEdit = !isBlank(match.params.id);
   const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
 
   const onStepClicked = (stepIndexClicked: number, isInEditMode: boolean) => {

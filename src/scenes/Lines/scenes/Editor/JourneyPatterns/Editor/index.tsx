@@ -14,6 +14,7 @@ import { Paragraph, SubParagraph } from '@entur/typography';
 import { isBlank } from 'helpers/forms';
 import { validateStopPoints } from './StopPoints/Editor/validateForm';
 import { removeElementByIndex } from 'helpers/arrays';
+import { DIRECTION_TYPE } from 'model/enums';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -29,7 +30,7 @@ const JourneyPatternEditor = ({
   index
 }: Props) => {
   const [directionSelection, setDirectionSelection] = useState<
-    string | undefined
+    DIRECTION_TYPE | undefined
   >(undefined);
   const { pointsInSequence, directionType, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
@@ -53,9 +54,10 @@ const JourneyPatternEditor = ({
     onSave(journeyPattern.withFieldChange(field, value), index);
   };
 
-  const handleDirectionSelectionChange = (directionSelection: any) => {
-    const newDirectionValue = directionSelection;
-    onFieldChange('directionType', newDirectionValue);
+  const handleDirectionSelectionChange = (
+    directionSelection: DIRECTION_TYPE | undefined
+  ) => {
+    onFieldChange('directionType', directionSelection);
     setDirectionSelection(directionSelection);
   };
 

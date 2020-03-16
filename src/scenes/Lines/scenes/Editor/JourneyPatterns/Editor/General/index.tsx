@@ -12,9 +12,9 @@ import JourneyPattern from 'model/JourneyPattern';
 
 type Props = {
   journeyPattern: JourneyPattern;
-  directionSelection: any;
+  directionSelection?: DIRECTION_TYPE;
   onFieldChange: (field: string, value: any) => void;
-  handleDirectionSelectionChange: (value: any) => void;
+  handleDirectionSelectionChange: (value: DIRECTION_TYPE | undefined) => void;
 };
 
 const General = ({
@@ -71,9 +71,11 @@ const General = ({
 
       <Dropdown
         label={formatMessage(messages.directionLabel)}
-        items={[...Object.values(DIRECTION_TYPE)]}
+        items={Object.values(DIRECTION_TYPE)}
         value={directionSelection}
-        onChange={value => handleDirectionSelectionChange(value)}
+        onChange={e =>
+          handleDirectionSelectionChange(e?.value as DIRECTION_TYPE)
+        }
       />
     </div>
   );
