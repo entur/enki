@@ -6,6 +6,9 @@ import {
   showSuccessNotification
 } from 'actions/notification';
 import { getStyledUttuError } from 'helpers/uttu';
+import { Network } from 'model/Network';
+import { Dispatch } from 'redux';
+import { GlobalState } from 'reducers';
 
 export const REQUEST_NETWORKS = 'REQUEST_NETWORKS';
 export const RECEIVE_NETWORKS = 'RECEIVE_NETWORKS';
@@ -19,44 +22,20 @@ export const SAVED_NETWORK = 'SAVED_NETWORK';
 export const DELETE_NETWORK = 'DELETE_NETWORK';
 export const DELETED_NETWORK = 'DELETED_NETWORK';
 
-const requestNetworksActionCreator = () => ({
-  type: REQUEST_NETWORKS
-});
-
-const requestNetworkActionCreator = () => ({
-  type: REQUEST_NETWORK
-});
-
-const receiveNetworksActionCreator = networks => ({
+const receiveNetworksActionCreator = (networks: Network[]) => ({
   type: RECEIVE_NETWORKS,
   networks
 });
 
-const receiveNetworkActionCreator = network => ({
+const receiveNetworkActionCreator = (network: Network) => ({
   type: RECEIVE_NETWORK,
   network
 });
 
-const saveNetworkActionCreator = () => ({
-  type: SAVE_NETWORK
-});
-
-const savedNetworkActionCreator = () => ({
-  type: SAVED_NETWORK
-});
-
-const deleteNetworkActionCreator = () => ({
-  type: DELETE_NETWORK
-});
-
-const deletedNetworkActionCreator = id => ({
-  type: DELETED_NETWORK,
-  id
-});
-
-export const loadNetworks = () => async (dispatch, getState) => {
-  dispatch(requestNetworksActionCreator());
-
+export const loadNetworks = () => async (
+  dispatch: Dispatch<GlobalState>,
+  getState: () => GlobalState
+) => {
   try {
     const data = await UttuQuery(
       getState().providers.active,
@@ -79,9 +58,10 @@ export const loadNetworks = () => async (dispatch, getState) => {
   }
 };
 
-export const loadNetworkById = id => async (dispatch, getState) => {
-  dispatch(requestNetworkActionCreator());
-
+export const loadNetworkById = (id: string) => async (
+  dispatch: Dispatch<GlobalState>,
+  getState: () => GlobalState
+) => {
   try {
     const data = await UttuQuery(
       getState().providers.active,
@@ -104,19 +84,18 @@ export const loadNetworkById = id => async (dispatch, getState) => {
   }
 };
 
-export const saveNetwork = network => async (dispatch, getState) => {
-  dispatch(saveNetworkActionCreator());
-
+export const saveNetwork = (network: Network) => async (
+  dispatch: Dispatch<GlobalState>,
+  getState: () => GlobalState
+) => {
   try {
     await UttuQuery(getState().providers.active, networkMutation, {
       input: network
     });
-    dispatch(savedNetworkActionCreator());
     dispatch(
       showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')
     );
   } catch (e) {
-    dispatch(savedNetworkActionCreator(null));
     dispatch(
       showErrorNotification(
         'Lagre nettverk',
@@ -131,17 +110,18 @@ export const saveNetwork = network => async (dispatch, getState) => {
   }
 };
 
-export const deleteNetworkById = id => async (dispatch, getState) => {
-  dispatch(deleteNetworkActionCreator());
+export const deleteNetworkById = (id: string | undefined) => async (
+  dispatch: Dispatch<GlobalState>,
+  getState: () => GlobalState
+) => {
+  if (!id) return;
 
   try {
     await UttuQuery(getState().providers.active, deleteNetwork, { id });
-    dispatch(deletedNetworkActionCreator(id));
     dispatch(
       showSuccessNotification('Slette nettverk', 'Nettverket ble slettet.')
     );
   } catch (e) {
-    dispatch(deletedNetworkActionCreator());
     dispatch(
       showErrorNotification(
         'Slette nettverk',
