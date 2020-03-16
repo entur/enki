@@ -23,7 +23,8 @@
     "jsx": "react",
     "sourceMap": true,
     "inlineSources": true,
-    "sourceRoot": "./src"
+    "sourceRoot": "./src",
+    "isolatedModules": true
   },
   "include": [
     "src"
