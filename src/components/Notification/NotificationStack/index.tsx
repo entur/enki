@@ -19,7 +19,7 @@ const NotificationStack = (props: Props) => {
   const numberOfNotifications = notifications.length - 1;
 
   return (
-    <div className="notification-list">
+    <div>
       {notifications.map((notification, index) => {
         const isLast = numberOfNotifications === index;
         const notificationStyle = getNotificationStyle(index);
@@ -35,7 +35,7 @@ const NotificationStack = (props: Props) => {
             <ModalNote
               title={notification.title}
               message={notification.message}
-              type={notification.type}
+              onDismiss={() => onDismiss(notification)}
             />
           );
         }
