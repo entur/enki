@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Notification } from 'reducers/notification';
+import ModalNote from './StackedNotification/Note/ModalNote';
 import StackedNotification from './StackedNotification';
 
 const getNotificationStyle = (index: number) => ({
@@ -30,6 +30,16 @@ const NotificationStack = (props: Props) => {
           dismissAfter += index * 1000;
         }
 
+        if (notification.showModal) {
+          return (
+            <ModalNote
+              title={notification.title}
+              message={notification.message}
+              type={notification.type}
+            />
+          );
+        }
+
         return (
           <StackedNotification
             {...notification}
@@ -42,14 +52,6 @@ const NotificationStack = (props: Props) => {
       })}
     </div>
   );
-};
-
-NotificationStack.propTypes = {
-  notifications: PropTypes.array.isRequired,
-  onDismiss: PropTypes.func.isRequired,
-  onRequestClose: PropTypes.func,
-  action: PropTypes.string,
-  dismissAfter: PropTypes.number
 };
 
 export default NotificationStack;

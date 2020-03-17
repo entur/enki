@@ -11,7 +11,8 @@ export type Notification = {
   title: string;
   message: string;
   dismissAfter: NotificationDuration;
-  type: NotificationTypes | null;
+  type: NotificationTypes;
+  showModal: boolean;
 };
 
 export type NotificationState = Notification | null;
@@ -20,7 +21,8 @@ const defaultNotification: Notification = {
   title: '',
   message: '',
   dismissAfter: NotificationDuration.LONG,
-  type: null
+  type: NotificationTypes.SUCCESS,
+  showModal: false
 };
 
 const notificationReducer = (
@@ -35,7 +37,8 @@ const notificationReducer = (
         message: action.payload.message,
         dismissAfter: action.payload.duration,
         type: action.payload.type,
-        key: createUuid()
+        key: createUuid(),
+        showModal: action.payload.showModal
       };
     default:
       return state;

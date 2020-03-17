@@ -102,7 +102,10 @@ export const saveFlexibleLine = flexibleLine => async (dispatch, getState) => {
     dispatch(
       showSuccessNotification(
         intl.formatMessage(messages.saveLineSuccessHeader),
-        intl.formatMessage(messages.saveLineSuccessMessage)
+        `${flexibleLine.name} ${intl.formatMessage(
+          messages.saveLineSuccessMessage
+        )}`,
+        true
       )
     );
   } catch (e) {
