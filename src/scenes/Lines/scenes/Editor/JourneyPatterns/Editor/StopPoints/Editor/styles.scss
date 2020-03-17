@@ -2,6 +2,8 @@
 
 .stop-point-element {
   display: flex;
+  margin-top: 1rem;
+  padding-bottom: 0.7rem;
   border-bottom: 2px solid $colors-greys-grey20;
 
   .stop-point-key-info {

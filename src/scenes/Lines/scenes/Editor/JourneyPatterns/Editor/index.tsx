@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { ValidationInfoIcon } from '@entur/icons';
-import StopPointsEditor from './StopPoints';
 import messages from './messages';
-
-import './styles.scss';
 import General from './General';
-
 import { JourneyPattern } from 'model';
 import { Paragraph, SubParagraph } from '@entur/typography';
 import { isBlank } from 'helpers/forms';
-import { validateStopPoints } from './StopPoints/Editor/validateForm';
-import { removeElementByIndex } from 'helpers/arrays';
+import {
+  validateStopPoint,
+  validateStopPoints
+} from './StopPoints/Editor/validateForm';
+import {
+  removeElementByIndex,
+  replaceElement,
+  useUniqueKeys
+} from 'helpers/arrays';
 import { DIRECTION_TYPE } from 'model/enums';
+import StopPointEditor from './StopPoints/Editor';
+import StopPoint from 'model/StopPoint';
+import AddButton from 'components/AddButton/AddButton';
+import { GlobalState } from 'reducers';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
+import './styles.scss';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -22,12 +31,17 @@ type Props = {
   index: number;
 };
 
+type StateProps = {
+  flexibleStopPlaces: FlexibleStopPlace[] | null;
+};
+
 const JourneyPatternEditor = ({
   journeyPattern,
   onSave,
   setIsValidJourneyPattern,
-  index
-}: Props) => {
+  index,
+  flexibleStopPlaces
+}: Props & StateProps) => {
   const [directionSelection, setDirectionSelection] = useState<
     DIRECTION_TYPE | undefined
   >(undefined);
@@ -93,6 +107,15 @@ const JourneyPatternEditor = ({
     );
   };
 
+  const updateStopPoint = (index: number, stopPlace: StopPoint) => {
+    onFieldChange(
+      'pointsInSequence',
+      replaceElement(pointsInSequence, index, stopPlace)
+    );
+  };
+
+  const keys = useUniqueKeys(pointsInSequence);
+
   return (
     <div className="journey-pattern-editor">
       <section>
@@ -108,19 +131,39 @@ const JourneyPatternEditor = ({
 
       <section style={{ marginTop: '5rem' }}>
         <h3>{formatMessage(messages.stopPoints)}</h3>
-        <SubParagraph>
+        <SubParagraph className="stop-point-info">
           <ValidationInfoIcon inline />
           {formatMessage(messages.stopPointsInfo)}
         </SubParagraph>
-        <StopPointsEditor
-          stopPoints={pointsInSequence}
-          deleteStopPoint={deleteStopPoint}
-          addStopPoint={addStopPoint}
-          onChange={pis => onFieldChange('pointsInSequence', pis)}
+        {pointsInSequence.map((stopPoint, index) => (
+          <StopPointEditor
+            key={keys[index]}
+            index={index}
+            frontTextRequired={index === 0}
+            stopPoint={stopPoint}
+            errors={validateStopPoint(stopPoint, index === 0)}
+            deleteStopPoint={
+              pointsInSequence.length > 2
+                ? () => deleteStopPoint(index)
+                : undefined
+            }
+            onChange={(stopPoint: StopPoint) =>
+              updateStopPoint(index, stopPoint)
+            }
+            flexibleStopPlaces={flexibleStopPlaces ?? []}
+          />
+        ))}
+        <AddButton
+          onClick={addStopPoint}
+          buttonTitle={formatMessage(messages.addStopPoint)}
         />
       </section>
     </div>
   );
 };
 
-export default JourneyPatternEditor;
+const mapStateToProps = ({ flexibleStopPlaces }: GlobalState): StateProps => ({
+  flexibleStopPlaces
+});
+
+export default connect(mapStateToProps)(JourneyPatternEditor);
