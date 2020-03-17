@@ -87,12 +87,12 @@ export const GEOMETRY_TYPE = Object.freeze({
   GEOMETRY_COLLECTION: 'GeometryCollection'
 });
 
-export const DIRECTION_TYPE = Object.freeze({
-  INBOUND: 'inbound',
-  OUTBOUND: 'outbound',
-  CLOCKWISE: 'clockwise',
-  ANTICLOCKWISE: 'anticlockwise'
-});
+export enum DIRECTION_TYPE {
+  INBOUND = 'inbound',
+  OUTBOUND = 'outbound',
+  CLOCKWISE = 'clockwise',
+  ANTICLOCKWISE = 'anticlockwise'
+}
 
 export const EXPORT_STATUS = Object.freeze({
   IN_PROGRESS: 'in_progress',

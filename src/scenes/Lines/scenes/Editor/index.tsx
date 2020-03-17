@@ -28,22 +28,22 @@ import General from './General';
 import { setSavedChanges } from 'actions/editor';
 import { withRouter } from 'react-router-dom';
 import { selectIntl } from 'i18n';
-import { createSelector } from 'reselect';
 import messages from './messages';
-import { filterNetexOperators } from 'reducers/organisations';
+import {
+  filterNetexOperators,
+  OrganisationState
+} from 'reducers/organisations';
+import { GlobalState } from 'reducers';
+import { RouteComponentProps } from 'react-router';
+import { MatchParams } from 'http/http';
+import { isBlank } from 'helpers/forms';
+import ServiceJourneysEditor from 'scenes/Lines/scenes/Editor/ServiceJourneys';
+import { FlexibleLinesState } from 'reducers/flexibleLines';
 
-const selectFlexibleLine = createSelector(
-  state => state.flexibleLines,
-  (_, match) => match,
-  (flexibleLines, match) =>
-    (match.params.id && flexibleLines?.find(l => l.id === match.params.id)) ||
-    new FlexibleLine({
-      transportMode: VEHICLE_MODE.BUS,
-      transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS
-    })
-);
-
-function useLoadDependencies(match, history) {
+const useLoadDependencies = ({
+  match,
+  history
+}: RouteComponentProps<MatchParams>) => {
   const [networksIsLoading, setNetworksIsLoading] = useState(true);
   const [flexibleLineIsLoading, setFlexibleLineIsLoading] = useState(true);
   const [
@@ -51,7 +51,7 @@ function useLoadDependencies(match, history) {
     setFlexibleStopPlacesIsLoading
   ] = useState(true);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const dispatchLoadFlexibleStopPlaces = useCallback(
     () =>
@@ -88,26 +88,49 @@ function useLoadDependencies(match, history) {
   return (
     networksIsLoading || flexibleLineIsLoading || flexibleStopPlacesIsLoading
   );
-}
+};
 
-const useFlexibleLine = match => {
-  const { savedLine, isSaved } = useSelector(state => ({
-    savedLine: selectFlexibleLine(state, match),
-    isSaved: state.editor.isSaved
-  }));
+const getFlexibleLineFromPath = (
+  flexibleLines: FlexibleLinesState,
+  match: { params: MatchParams }
+) =>
+  flexibleLines?.find(flexibleLine => flexibleLine.id === match.params.id) ??
+  new FlexibleLine({
+    transportMode: VEHICLE_MODE.BUS,
+    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS
+  });
+
+const useFlexibleLine = (
+  match: { params: MatchParams },
+  loadDependencies: boolean
+) => {
+  const [flexibleLine, setFlexibleLine] = useState<FlexibleLine>(
+    new FlexibleLine({
+      transportMode: VEHICLE_MODE.BUS,
+      transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS
+    })
+  );
+
+  const {
+    flexibleLines,
+    editor: { isSaved }
+  } = useSelector<
+    GlobalState,
+    { flexibleLines: FlexibleLinesState; editor: { isSaved: boolean } }
+  >(state => ({ flexibleLines: state.flexibleLines, editor: state.editor }));
   const dispatch = useDispatch();
-  const [flexibleLine, setFlexibleLine] = useState(null);
-  useEffect(() => {
-    setFlexibleLine(savedLine);
-  }, [savedLine]);
 
-  const handleNetworkSelectionChange = networkSelection => {
+  useEffect(() => {
+    setFlexibleLine(getFlexibleLineFromPath(flexibleLines, match));
+  }, [loadDependencies, flexibleLines, match]);
+
+  const handleNetworkSelectionChange = (networkSelection: string) => {
     setFlexibleLine(
       flexibleLine.withFieldChange('networkRef', networkSelection)
     );
   };
 
-  const handleOperatorSelectionChange = operatorSelection => {
+  const handleOperatorSelectionChange = (operatorSelection: string) => {
     setFlexibleLine(
       flexibleLine.withFieldChange('operatorRef', operatorSelection)
     );
@@ -131,30 +154,41 @@ const useFlexibleLine = match => {
   };
 };
 
-const FlexibleLineEditor = ({ match, history }) => {
+const FlexibleLineEditor = ({
+  match,
+  history
+}: RouteComponentProps<MatchParams>) => {
   const { formatMessage } = useSelector(selectIntl);
-  const organisations = useSelector(({ organisations }) => organisations);
-  const networks = useSelector(({ networks }) => networks);
+  const organisations = useSelector<GlobalState, OrganisationState>(
+    state => state.organisations
+  );
+  const networks = useSelector((state: GlobalState) => state.networks);
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
   const FLEXIBLE_LINE_STEPS = [
     formatMessage(messages.stepperAbout),
     formatMessage(messages.stepperJourneyPattern),
+    formatMessage(messages.stepperServiceJourney),
     formatMessage(messages.stepperBooking)
   ];
+
+  const isLoadingDependencies = useLoadDependencies({
+    match: match,
+    history: history
+  } as RouteComponentProps<MatchParams>);
 
   const {
     handleNetworkSelectionChange,
     handleOperatorSelectionChange,
     onFieldChange,
     flexibleLine
-  } = useFlexibleLine(match);
+  } = useFlexibleLine(match, isLoadingDependencies);
 
   const [isSaving, setSaving] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
   const [errors, setErrors] = useState(validateForm(flexibleLine));
   const [isValidServiceJourney, setIsValidServiceJourney] = useState(true);
-  const [isValidStopPoints, setIsValidStopPoints] = useState(true);
+  const [isValidJourneyPattern, setIsValidJourneyPattern] = useState(true);
 
   useEffect(() => {
     setErrors(validateForm(flexibleLine));
@@ -162,8 +196,7 @@ const FlexibleLineEditor = ({ match, history }) => {
 
   const goToLines = () => history.push('/lines');
 
-  const dispatch = useDispatch();
-  const isLoadingDependencies = useLoadDependencies(match, history);
+  const dispatch = useDispatch<any>();
 
   const handleOnSaveClick = () => {
     const valid = validateForm(flexibleLine).isValid;
@@ -183,12 +216,12 @@ const FlexibleLineEditor = ({ match, history }) => {
     dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() => goToLines());
   };
 
-  const operators = filterNetexOperators(organisations);
+  const operators = filterNetexOperators(organisations ?? []);
   const isLoadingLine = !flexibleLine;
-  const isEdit = match.params.id;
+  const isEdit = !isBlank(match.params.id);
   const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
 
-  const onStepClicked = (stepIndexClicked, isInEditMode) => {
+  const onStepClicked = (stepIndexClicked: number, isInEditMode: boolean) => {
     const allowPreviousStepClick = activeStepperIndex > stepIndexClicked;
     if (isInEditMode || allowPreviousStepClick) {
       setActiveStepperIndex(stepIndexClicked);
@@ -220,6 +253,7 @@ const FlexibleLineEditor = ({ match, history }) => {
 
       {!isLoadingLine && !isLoadingDependencies ? (
         <OverlayLoader
+          className=""
           isLoading={isSaving || isDeleting}
           text={
             isSaving
@@ -227,58 +261,85 @@ const FlexibleLineEditor = ({ match, history }) => {
               : formatMessage(messages.deleteLineLoadingText)
           }
         >
-          {activeStepperIndex === 0 && (
-            <section className="general-line-info">
-              <General
-                flexibleLine={flexibleLine}
-                networks={networks}
-                operators={operators}
-                errors={errors}
-                networkSelection={flexibleLine.networkRef}
-                operatorSelection={flexibleLine.operatorRef}
-                handleFieldChange={onFieldChange}
-                handleNetworkSelectionChange={handleNetworkSelectionChange}
-                handleOperatorSelectionChange={handleOperatorSelectionChange}
-              />
+          <div className="editor-pages">
+            {activeStepperIndex === 0 && (
+              <section className="general-line-info">
+                <General
+                  flexibleLine={flexibleLine}
+                  networks={networks}
+                  operators={operators}
+                  errors={errors}
+                  networkSelection={flexibleLine.networkRef}
+                  operatorSelection={flexibleLine.operatorRef}
+                  handleFieldChange={onFieldChange}
+                  handleNetworkSelectionChange={handleNetworkSelectionChange}
+                  handleOperatorSelectionChange={handleOperatorSelectionChange}
+                />
 
-              <PrimaryButton
-                onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                disabled={!errors.isValid}
-                className="next-button"
-              >
-                {formatMessage(messages.saveAndContinue)}
-              </PrimaryButton>
-            </section>
-          )}
+                <PrimaryButton
+                  onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
+                  disabled={!errors.isValid}
+                  className="next-button"
+                >
+                  {formatMessage(messages.saveAndContinue)}
+                </PrimaryButton>
+              </section>
+            )}
 
-          {activeStepperIndex === 1 && (
-            <section>
-              <JourneyPatternsEditor
-                journeyPatterns={flexibleLine.journeyPatterns}
-                onChange={jps => onFieldChange('journeyPatterns', jps)}
-                setIsValidServiceJourney={setIsValidServiceJourney}
-                setIsValidStopPoints={setIsValidStopPoints}
-              />
+            {activeStepperIndex === 1 && (
+              <section>
+                <JourneyPatternsEditor
+                  journeyPatterns={flexibleLine.journeyPatterns}
+                  onChange={jps => onFieldChange('journeyPatterns', jps)}
+                  setIsValidJourneyPattern={setIsValidJourneyPattern}
+                />
 
-              <PrimaryButton
-                onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                disabled={!isValidStopPoints || !isValidServiceJourney}
-                className="next-button"
-              >
-                {formatMessage(messages.saveAndContinue)}
-              </PrimaryButton>
-            </section>
-          )}
+                <PrimaryButton
+                  onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
+                  disabled={!isValidJourneyPattern || !isValidServiceJourney}
+                  className="next-button"
+                >
+                  {formatMessage(messages.saveAndContinue)}
+                </PrimaryButton>
+              </section>
+            )}
 
-          {activeStepperIndex === 2 && (
-            <section>
-              <BookingArrangementEditor
-                bookingArrangement={flexibleLine.bookingArrangement ?? {}}
-                onChange={b => onFieldChange('bookingArrangement', b)}
-              />
-            </section>
-          )}
+            {activeStepperIndex === 2 && (
+              <section>
+                <ServiceJourneysEditor
+                  serviceJourneys={
+                    flexibleLine.journeyPatterns[0].serviceJourneys
+                  }
+                  stopPoints={flexibleLine.journeyPatterns[0].pointsInSequence}
+                  onChange={sjs => {
+                    const newJourneyPattern = flexibleLine.journeyPatterns[0].withFieldChange(
+                      'serviceJourneys',
+                      sjs
+                    );
+                    onFieldChange('journeyPatterns', [newJourneyPattern]);
+                  }}
+                  setIsValidServiceJourney={setIsValidServiceJourney}
+                />
 
+                <PrimaryButton
+                  onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
+                  disabled={!isValidJourneyPattern || !isValidServiceJourney}
+                  className="next-button"
+                >
+                  {formatMessage(messages.saveAndContinue)}
+                </PrimaryButton>
+              </section>
+            )}
+
+            {activeStepperIndex === 3 && (
+              <section>
+                <BookingArrangementEditor
+                  bookingArrangement={flexibleLine.bookingArrangement ?? {}}
+                  onChange={b => onFieldChange('bookingArrangement', b)}
+                />
+              </section>
+            )}
+          </div>
           {activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1 && (
             <div className="buttons">
               {isEdit && (
@@ -291,7 +352,7 @@ const FlexibleLineEditor = ({ match, history }) => {
               )}
               <PrimaryButton
                 onClick={handleOnSaveClick}
-                disabled={!isValidServiceJourney || !isValidStopPoints}
+                disabled={!isValidServiceJourney || !isValidJourneyPattern}
               >
                 {formatMessage(messages.saveButtonText)}
               </PrimaryButton>
@@ -300,6 +361,8 @@ const FlexibleLineEditor = ({ match, history }) => {
         </OverlayLoader>
       ) : (
         <Loading
+          className=""
+          children={null}
           text={
             isLoadingLine
               ? formatMessage(messages.loadingLineText)

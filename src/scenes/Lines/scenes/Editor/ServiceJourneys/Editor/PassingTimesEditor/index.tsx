@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
@@ -21,6 +21,7 @@ import './styles.scss';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlState } from 'react-intl-redux';
+import searchForQuay from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/searchForQuay';
 
 type TimeKeys = keyof Pick<
   PassingTime,
@@ -55,6 +56,20 @@ const getPassingTimeKeys = (
   return keys;
 };
 
+const Title = ({ quayRef }: { quayRef: string }): ReactElement => {
+  const [title, setTitle] = useState(quayRef);
+
+  useEffect(() => {
+    const fetchTitle = async () =>
+      await searchForQuay(quayRef).then(response =>
+        setTitle(response.stopPlace?.name.value ?? quayRef)
+      );
+    fetchTitle();
+  }, [quayRef]);
+
+  return <div>{title}</div>;
+};
+
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
   intl: IntlState;
@@ -64,7 +79,6 @@ type Props = {
   passingTimes: PassingTime[];
   stopPoints: StopPoint[];
   onChange: (pts: PassingTime[]) => void;
-  setValidPassingTimes: (isTrue: boolean) => void;
 };
 
 const PassingTimesEditor = (props: Props & StateProps) => {
@@ -73,14 +87,9 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     passingTimes,
     intl,
     onChange,
-    setValidPassingTimes,
     flexibleStopPlaces
   } = props;
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
-
-  useEffect(() => {
-    setValidPassingTimes(isValid);
-  }, [setValidPassingTimes, isValid]);
 
   const onFieldChange = (
     index: number,
@@ -158,18 +167,24 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   };
 
   const renderRow = (sp: StopPoint, i: number) => {
-    const stopPlace = flexibleStopPlaces.find(
-      fsp => fsp.id === sp.flexibleStopPlaceRef
-    );
-
-    const stopPlaceName = stopPlace?.name ?? sp.quayRef;
     const passingTime = passingTimes[i];
     const { time, offset } = getPassingTimeKeys(passingTime);
+
+    const getFetchedTitle = (stopPoint: StopPoint): ReactElement =>
+      stopPoint.quayRef ? (
+        <Title quayRef={stopPoint.quayRef} />
+      ) : (
+        <div>
+          {flexibleStopPlaces?.find(
+            stop => stop.id === stopPoint.flexibleStopPlaceRef
+          )?.name ?? ''}
+        </div>
+      );
 
     return (
       <TableRow key={i}>
         <DataCell>{i}</DataCell>
-        <DataCell>{stopPlaceName}</DataCell>
+        <DataCell>{getFetchedTitle(sp)}</DataCell>
         <DataCell>
           <div style={{ display: 'flex' }}>
             {getTimePicker(passingTime, i, time)}
