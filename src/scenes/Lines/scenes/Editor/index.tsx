@@ -111,9 +111,14 @@ const useFlexibleLine = (
     })
   );
 
-  const flexibleLines = useSelector<GlobalState, FlexibleLinesState>(
-    state => state.flexibleLines
-  );
+  const {
+    flexibleLines,
+    editor: { isSaved }
+  } = useSelector<
+    GlobalState,
+    { flexibleLines: FlexibleLinesState; editor: { isSaved: boolean } }
+  >(state => ({ flexibleLines: state.flexibleLines, editor: state.editor }));
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setFlexibleLine(getFlexibleLineFromPath(flexibleLines, match));
@@ -134,8 +139,11 @@ const useFlexibleLine = (
   const onFieldChange = useCallback(
     (field, value, multi = false) => {
       setFlexibleLine(flexibleLine.withFieldChange(field, value, multi));
+      if (isSaved) {
+        dispatch(setSavedChanges(false));
+      }
     },
-    [flexibleLine]
+    [flexibleLine, dispatch, isSaved]
   );
 
   return {
