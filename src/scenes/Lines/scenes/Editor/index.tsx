@@ -288,7 +288,7 @@ const FlexibleLineEditor = ({
 
                 <PrimaryButton
                   onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                  disabled={!isValidJourneyPattern || !isValidServiceJourney}
+                  disabled={!isValidJourneyPattern}
                   className="next-button"
                 >
                   {formatMessage(messages.saveAndContinue)}
@@ -315,7 +315,7 @@ const FlexibleLineEditor = ({
 
                 <PrimaryButton
                   onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                  disabled={!isValidJourneyPattern || !isValidServiceJourney}
+                  disabled={!isValidServiceJourney}
                   className="next-button"
                 >
                   {formatMessage(messages.saveAndContinue)}
