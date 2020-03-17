@@ -1,14 +1,6 @@
 import React, { useState, ChangeEvent, useCallback, useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import {
-  Checkbox,
-  Fieldset,
-  InputGroup,
-  TextField,
-  SegmentedControl,
-  SegmentedChoice
-} from '@entur/form';
-import StopPlaceSelection from './StopPlaceSelection';
+import { InputGroup, TextField, RadioGroup, Radio } from '@entur/form';
 import messages from './Form.messages';
 import { FlexibleStopPlace } from 'model';
 import { StopPointsFormError } from './index';
@@ -18,27 +10,37 @@ import StopPoint from 'model/StopPoint';
 import debounce from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/debounce';
 import { isBlank } from 'helpers/forms';
 import searchForQuay from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/searchForQuay';
+import { Dropdown } from '@entur/dropdown';
+import { Label, Paragraph } from '@entur/typography';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import { DeleteIcon } from '@entur/icons';
+import ConfirmDialog from 'components/ConfirmDialog';
+import './styles.scss';
 
 interface Props extends WrappedComponentProps {
+  index: number;
   flexibleStopPlaces: FlexibleStopPlace[];
   errors: StopPointsFormError;
   onChange: (stopPoint: StopPoint) => void;
   stopPoint: StopPoint;
   frontTextRequired: boolean;
+  deleteStopPoint?: () => void;
 }
 
 const Form = ({
+  index,
   flexibleStopPlaces,
   intl: { formatMessage },
   errors,
   onChange,
   stopPoint,
-  frontTextRequired
+  frontTextRequired,
+  deleteStopPoint
 }: Props) => {
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectMode, setSelectMode] = useState<'nsr' | 'custom'>(
     stopPoint.quayRef ? 'nsr' : 'custom'
   );
-
   const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
     undefined
   );
@@ -65,106 +67,138 @@ const Form = ({
     []
   );
 
-  return (
-    <div className="tab-style">
-      <div style={{ marginBottom: '1rem' }}>
-        <SegmentedControl
-          selectedValue={selectMode}
-          onChange={value => setSelectMode(value as 'nsr' | 'custom')}
-        >
-          <SegmentedChoice value="custom">
-            {formatMessage(messages.selectCustom)}
-          </SegmentedChoice>
-          <SegmentedChoice value="nsr">
-            {formatMessage(messages.selectNSR)}
-          </SegmentedChoice>
-        </SegmentedControl>
-      </div>
+  const stopPlaceError = errors.flexibleStopPlaceRefAndQuayRef;
+  const frontTextError = errors.frontText;
 
-      {selectMode === 'custom' ? (
-        <StopPlaceSelection
-          stopPlaceSelection={
-            stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id
-          }
-          error={errors.flexibleStopPlaceRefAndQuayRef}
-          flexibleStopPlaces={flexibleStopPlaces}
-          handleStopPlaceSelectionChange={(stopPlaceRef: string) =>
-            onChange({
-              ...stopPoint,
-              flexibleStopPlaceRef: stopPlaceRef,
-              quayRef: undefined
-            })
-          }
-        />
-      ) : (
-        <InputGroup
-          label={formatMessage(messages.labelQuayRef)}
-          feedback={
-            errors.flexibleStopPlaceRefAndQuayRef
-              ? formatMessage(errors.flexibleStopPlaceRefAndQuayRef)
-              : undefined
-          }
-          variant={errors.flexibleStopPlaceRefAndQuayRef ? 'error' : undefined}
-          {...quaySearchResults(quaySearch)}
+  const convertBoardingToDropdown = (
+    sp: StopPoint
+  ): '0' | '1' | '2' | undefined => {
+    if (sp.forBoarding && sp.forAlighting) return '2';
+    else if (sp.forBoarding) return '0';
+    else if (sp.forAlighting) return '1';
+    else return undefined;
+  };
+
+  return (
+    <div className="stop-point-element">
+      <div className="stop-point-key-info">
+        <Paragraph>{index + 1}</Paragraph>
+        <RadioGroup
+          name="stopPointMode"
+          value={selectMode}
+          onChange={e => console.log(e.target.value)}
         >
-          <TextField
-            defaultValue={stopPoint.quayRef ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              debouncedSearchForQuay(e.target.value)
+          <Radio value="custom">{formatMessage(messages.selectCustom)}</Radio>
+          <Radio value="nsr">{formatMessage(messages.selectNSR)}</Radio>
+        </RadioGroup>
+      </div>
+      <div className="stop-point-info">
+        {selectMode === 'custom' && (
+          <Dropdown
+            label={formatMessage(messages.stopPlace)}
+            value={
+              stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id
             }
-            onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+            items={flexibleStopPlaces.map(fsp => ({
+              value: fsp.id,
+              label: fsp.name ?? ''
+            }))}
+            onChange={e =>
               onChange({
                 ...stopPoint,
-                quayRef: e.target.value,
-                flexibleStopPlaceRef: undefined
+                flexibleStopPlaceRef: e?.value,
+                quayRef: undefined
+              })
+            }
+            variant={stopPlaceError ? 'error' : undefined}
+            feedback={
+              stopPlaceError ? formatMessage(stopPlaceError) : undefined
+            }
+          />
+        )}
+
+        {selectMode === 'nsr' && (
+          <InputGroup
+            label={formatMessage(messages.labelQuayRef)}
+            feedback={
+              stopPlaceError ? formatMessage(stopPlaceError) : undefined
+            }
+            variant={stopPlaceError ? 'error' : undefined}
+            {...quaySearchResults(quaySearch)}
+          >
+            <TextField
+              defaultValue={stopPoint.quayRef ?? ''}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                debouncedSearchForQuay(e.target.value)
+              }
+              onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+                onChange({
+                  ...stopPoint,
+                  quayRef: e.target.value,
+                  flexibleStopPlaceRef: undefined
+                })
+              }
+            />
+          </InputGroup>
+        )}
+
+        <InputGroup
+          label={`${frontTextRequired ? '* ' : ''}${formatMessage(
+            messages.labelFrontText
+          )}`}
+          variant={frontTextError ? 'error' : undefined}
+          feedback={frontTextError ? formatMessage(frontTextError) : undefined}
+        >
+          <TextField
+            defaultValue={stopPoint.destinationDisplay?.frontText ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange({
+                ...stopPoint,
+                destinationDisplay: { frontText: e.target.value }
               })
             }
           />
         </InputGroup>
-      )}
-
-      <InputGroup
-        label={
-          (frontTextRequired ? '* ' : '') +
-          formatMessage(messages.labelFrontText)
-        }
-      >
-        <TextField
-          defaultValue={stopPoint.destinationDisplay?.frontText ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+        <Dropdown
+          label={formatMessage(messages.labelBoarding)}
+          value={convertBoardingToDropdown(stopPoint)}
+          onChange={value =>
             onChange({
               ...stopPoint,
-              destinationDisplay: { frontText: e.target.value }
+              forBoarding: value?.value === '0' || value?.value === '2',
+              forAlighting: value?.value === '1' || value?.value === '2'
             })
           }
-          variant={errors.frontText ? 'error' : undefined}
-          feedback={
-            errors.frontText ? formatMessage(errors.frontText) : undefined
-          }
+          items={[
+            { value: '0', label: formatMessage(messages.labelForBoarding) },
+            { value: '1', label: formatMessage(messages.labelForAlighting) },
+            { value: '2', label: formatMessage(messages.labelForBoth) }
+          ]}
         />
-      </InputGroup>
-
-      <Fieldset label="På og/eller av-stigning" style={{ marginTop: '0.5rem' }}>
-        <Checkbox
-          value={'1'}
-          checked={stopPoint.forBoarding === true}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange({ ...stopPoint, forBoarding: e.target.checked })
-          }
+      </div>
+      {deleteStopPoint && (
+        <SecondaryButton
+          className="delete-button"
+          onClick={() => setDeleteDialogOpen(true)}
         >
-          {formatMessage(messages.labelForBoarding)}
-        </Checkbox>
+          <DeleteIcon inline /> {formatMessage(messages.delete)}
+        </SecondaryButton>
+      )}
 
-        <Checkbox
-          value={'1'}
-          checked={stopPoint.forAlighting === true}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange({ ...stopPoint, forAlighting: e.target.checked })
-          }
-        >
-          {formatMessage(messages.labelForAlighting)}
-        </Checkbox>
-      </Fieldset>
+      <ConfirmDialog
+        isOpen={isDeleteDialogOpen}
+        title={formatMessage(messages.stopPointDeleteTitle)}
+        message={formatMessage(messages.stopPointDeleteMessage)}
+        buttons={[
+          <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+            {formatMessage(messages.no)}
+          </SecondaryButton>,
+          <SuccessButton key={1} onClick={deleteStopPoint}>
+            {formatMessage(messages.yes)}
+          </SuccessButton>
+        ]}
+        onDismiss={() => setDeleteDialogOpen(false)}
+      />
     </div>
   );
 };

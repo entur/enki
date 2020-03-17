@@ -4,7 +4,7 @@ export default defineMessages({
   errorFlexibleStopPlaceRefAndQuayRefNoValues: {
     id:
       'lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.noValues',
-    defaultMessage: 'Du må velge enten stoppested eller plattform'
+    defaultMessage: 'Du må velge et sted'
   },
   errorFlexibleStopPlaceRefAndQuayRefBothValues: {
     id:

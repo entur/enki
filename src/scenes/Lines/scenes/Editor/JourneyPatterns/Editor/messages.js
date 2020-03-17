@@ -135,16 +135,12 @@ export default defineMessages({
   stopPointsInfo: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.info',
     defaultMessage:
-      'Du må opprette minst to stoppepunkter. Et for påstigning og et for avstigning.'
+      'Du må opprette minst to stoppepunkter. Velg fra liste over allerede eksisterende stoppesteder, lag nytt stoppested, eller benytt plattform-ID fra NSR.'
   },
   serviceJourneysInfo: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',
     defaultMessage:
       'Opprett ulike Service Journeys for ulike åpningstider. For eksempel én for hverdag og én for helg.'
-  },
-  delete: {
-    id: 'lines.editor.deleteButtonText',
-    defaultMessage: 'Slett'
   },
   deleteMessage: {
     id: 'lines.journeyPatterns.serviceJourney.delete.message',
@@ -154,21 +150,5 @@ export default defineMessages({
   deleteTitle: {
     id: 'lines.journeyPatterns.serviceJourney.delete.title',
     defaultMessage: 'Slette service journey'
-  },
-  yes: {
-    id: 'lines.journeyPatterns.stopPoints.table.yes',
-    defaultMessage: 'Ja'
-  },
-  no: {
-    id: 'lines.journeyPatterns.stopPoints.table.no',
-    defaultMessage: 'Nei'
-  },
-  stopPointDeleteMessage: {
-    id: 'lines.editor.journeyPatterns.editor.stopPoints.delete.message',
-    defaultMessage: 'Er du sikker på at du ønsker å slette dette stoppepunktet?'
-  },
-  stopPointDeleteTitle: {
-    id: 'lines.editor.journeyPatterns.editor.stopPoints.delete.title',
-    defaultMessage: 'Slette stoppepunkt'
   }
 });

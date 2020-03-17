@@ -41,6 +41,7 @@ const StopPointsEditor = ({
       {stopPoints.map((stopPoint, index) => (
         <StopPointEditor
           key={keys[index]}
+          index={index}
           isFirst={index === 0}
           stopPoint={stopPoint}
           errors={validateStopPoint(stopPoint, index === 0)}
