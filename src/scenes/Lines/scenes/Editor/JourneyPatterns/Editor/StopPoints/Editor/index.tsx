@@ -169,11 +169,11 @@ const StopPointEditor = ({
         <Dropdown
           label={formatMessage(messages.labelBoarding)}
           value={convertBoardingToDropdown(stopPoint)}
-          onChange={value =>
+          onChange={element =>
             stopPointChange({
               ...stopPoint,
-              forBoarding: value?.value === '0' || value?.value === '2',
-              forAlighting: value?.value === '1' || value?.value === '2'
+              forBoarding: element?.value === '0' || element?.value === '2',
+              forAlighting: element?.value === '1' || element?.value === '2'
             })
           }
           items={[
