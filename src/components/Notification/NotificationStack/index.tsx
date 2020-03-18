@@ -25,12 +25,6 @@ const NotificationStack = (props: Props) => {
         const isLast = numberOfNotifications === index;
         const topOffset = getTopOffset(index);
 
-        let dismissAfter = notification.dismissAfter ?? DEFAULT_DISMISS_TIME;
-
-        if (!isLast) {
-          dismissAfter += index * 1000;
-        }
-
         if (notification.showModal) {
           return (
             <ModalNote
@@ -39,6 +33,11 @@ const NotificationStack = (props: Props) => {
               onDismiss={() => onDismiss(notification)}
             />
           );
+        }
+
+        let dismissAfter = notification.dismissAfter ?? DEFAULT_DISMISS_TIME;
+        if (!isLast) {
+          dismissAfter += index * 1000;
         }
 
         return (
