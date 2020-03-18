@@ -176,7 +176,10 @@ const PassingTimesEditor = (props: Props & StateProps) => {
       ) : (
         <div>
           {flexibleStopPlaces?.find(
-            stop => stop.id === stopPoint.flexibleStopPlaceRef
+            stop =>
+              stop.id ===
+              (stopPoint.flexibleStopPlace?.id ??
+                stopPoint.flexibleStopPlaceRef)
           )?.name ?? ''}
         </div>
       );

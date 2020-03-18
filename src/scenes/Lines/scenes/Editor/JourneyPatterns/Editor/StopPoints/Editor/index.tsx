@@ -1,75 +1,67 @@
-import React, { useState, useCallback } from 'react';
-import { connect } from 'react-redux';
-import { DestinationDisplay, StopPoint } from 'model';
-import { isBlank } from 'helpers/forms';
-import ConfirmDialog from 'components/ConfirmDialog';
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { getIntl } from 'i18n';
-import { DeleteIcon } from '@entur/icons';
-import './styles.scss';
-import searchForQuay, { QuaySearch } from './searchForQuay';
+import React, { useState, ChangeEvent, useCallback, useEffect } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { InputGroup, TextField, RadioGroup, Radio } from '@entur/form';
+import messages from './Form.messages';
+import { FlexibleStopPlace } from 'model';
+import { QuaySearch } from './searchForQuay';
+import { quaySearchResults } from './quaySearchResults';
+import StopPoint from 'model/StopPoint';
 import debounce from './debounce';
-import Form from './Form';
-import FlexibleStopPlace from 'model/FlexibleStopPlace';
-import messages from '../../messages';
-import { GlobalState } from 'reducers';
+import { isBlank } from 'helpers/forms';
+import searchForQuay from './searchForQuay';
+import { Dropdown } from '@entur/dropdown';
+import { Paragraph } from '@entur/typography';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import { DeleteIcon } from '@entur/icons';
+import ConfirmDialog from 'components/ConfirmDialog';
+import './styles.scss';
 
-export type StopPlaceSelectionType = string | null;
+type StopPlaceMode = 'nsr' | 'custom';
+
 export type StopPointsFormError = {
   flexibleStopPlaceRefAndQuayRef: any;
   frontText: any;
 };
 
-type Props = {
-  isFirst: boolean;
-  stopPoint: StopPoint;
-  onChange: (stopPoint: any) => void;
-  deleteStopPoint?: () => void;
-  errors: StopPointsFormError;
+interface Props extends WrappedComponentProps {
+  index: number;
   flexibleStopPlaces: FlexibleStopPlace[];
-};
+  errors: StopPointsFormError;
+  stopPointChange: (stopPoint: StopPoint) => void;
+  stopPoint: StopPoint;
+  frontTextRequired: boolean;
+  deleteStopPoint?: () => void;
+}
 
-type StateProps = {
-  intl: any;
-};
-
-const StopPointEditor = (props: Props & StateProps) => {
-  const {
-    flexibleStopPlaces,
-    stopPoint,
-    isFirst,
-    intl,
-    onChange,
-    errors,
-    deleteStopPoint
-  } = props;
-
-  const [stopPlaceSelection, setStopPlaceSelection] = useState<
-    StopPlaceSelectionType
-  >(stopPoint.flexibleStopPlaceRef ?? null);
+const StopPointEditor = ({
+  index,
+  flexibleStopPlaces,
+  intl: { formatMessage },
+  errors,
+  stopPointChange,
+  stopPoint,
+  frontTextRequired,
+  deleteStopPoint
+}: Props) => {
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectMode, setSelectMode] = useState<StopPlaceMode>(
+    stopPoint.quayRef ? 'nsr' : 'custom'
+  );
   const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
     undefined
   );
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  const onFieldChange = (field: string, value: any) => {
-    const newStopPoint = stopPoint.withFieldChange(field, value);
-    onChange(newStopPoint);
-  };
-
-  const handleStopPlaceSelectionChange = (
-    selectedStopPlace: StopPlaceSelectionType
-  ) => {
-    onFieldChange('flexibleStopPlaceRef', selectedStopPlace);
-    setStopPlaceSelection(selectedStopPlace);
-  };
-
-  const handleFrontTextChange = (frontText: string) => {
-    const destinationDisplay = stopPoint.destinationDisplay
-      ? stopPoint.destinationDisplay.withFieldChange('frontText', frontText)
-      : new DestinationDisplay({ frontText });
-    onFieldChange('destinationDisplay', destinationDisplay);
-  };
+  useEffect(() => {
+    const quayRef = stopPoint.quayRef;
+    if (quayRef) {
+      const search = async () => {
+        const result = await searchForQuay(quayRef);
+        setQuaySearch(result);
+      };
+      search();
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const debouncedSearchForQuay = useCallback(
     debounce(async (quayRef: string) => {
@@ -81,41 +73,135 @@ const StopPointEditor = (props: Props & StateProps) => {
     []
   );
 
-  const translations = getIntl({ intl });
+  const stopPlaceError = errors.flexibleStopPlaceRefAndQuayRef;
+  const frontTextError = errors.frontText;
+
+  const convertBoardingToDropdown = (
+    sp: StopPoint
+  ): '0' | '1' | '2' | undefined => {
+    if (sp.forBoarding && sp.forAlighting) return '2';
+    else if (sp.forBoarding) return '0';
+    else if (sp.forAlighting) return '1';
+    else return undefined;
+  };
 
   return (
-    <div className="stop-point-editor" style={{ marginTop: '2rem' }}>
-      <Form
-        frontTextRequired={isFirst}
-        flexibleStopPlaces={flexibleStopPlaces}
-        stopPlaceSelection={stopPlaceSelection}
-        quaySearch={quaySearch}
-        errors={errors}
-        handleStopPlaceSelectionChange={handleStopPlaceSelectionChange}
-        handleFieldChange={onFieldChange}
-        debouncedSearchForQuay={debouncedSearchForQuay}
-        handleFrontTextChange={handleFrontTextChange}
-        stopPoint={stopPoint}
-      />
+    <div className="stop-point-element">
+      <div className="stop-point-key-info">
+        <Paragraph>{index + 1}</Paragraph>
+        <RadioGroup
+          name={`stopPointMode-${index}`}
+          value={selectMode}
+          onChange={e => {
+            setSelectMode(e.target.value as StopPlaceMode);
+            setQuaySearch(undefined);
+            stopPointChange({
+              ...stopPoint,
+              quayRef: undefined,
+              flexibleStopPlaceRef: undefined,
+              flexibleStopPlace: undefined
+            });
+          }}
+        >
+          <Radio value="custom">{formatMessage(messages.selectCustom)}</Radio>
+          <Radio value="nsr">{formatMessage(messages.selectNSR)}</Radio>
+        </RadioGroup>
+      </div>
+      <div className="stop-point-info">
+        {selectMode === 'custom' && (
+          <Dropdown
+            label={formatMessage(messages.stopPlace)}
+            value={
+              stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id
+            }
+            items={flexibleStopPlaces.map(fsp => ({
+              value: fsp.id,
+              label: fsp.name ?? ''
+            }))}
+            onChange={e =>
+              stopPointChange({ ...stopPoint, flexibleStopPlaceRef: e?.value })
+            }
+            variant={stopPlaceError ? 'error' : undefined}
+            feedback={
+              stopPlaceError ? formatMessage(stopPlaceError) : undefined
+            }
+          />
+        )}
+
+        {selectMode === 'nsr' && (
+          <InputGroup
+            label={formatMessage(messages.labelQuayRef)}
+            feedback={
+              stopPlaceError ? formatMessage(stopPlaceError) : undefined
+            }
+            variant={stopPlaceError ? 'error' : undefined}
+            {...quaySearchResults(quaySearch)}
+          >
+            <TextField
+              defaultValue={stopPoint.quayRef ?? ''}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                debouncedSearchForQuay(e.target.value)
+              }
+              onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+                stopPointChange({ ...stopPoint, quayRef: e.target.value })
+              }
+            />
+          </InputGroup>
+        )}
+
+        <InputGroup
+          label={`${frontTextRequired ? '* ' : ''}${formatMessage(
+            messages.labelFrontText
+          )}`}
+          variant={frontTextError ? 'error' : undefined}
+          feedback={frontTextError ? formatMessage(frontTextError) : undefined}
+        >
+          <TextField
+            defaultValue={stopPoint.destinationDisplay?.frontText ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              stopPointChange({
+                ...stopPoint,
+                destinationDisplay: { frontText: e.target.value }
+              })
+            }
+          />
+        </InputGroup>
+        <Dropdown
+          label={formatMessage(messages.labelBoarding)}
+          value={convertBoardingToDropdown(stopPoint)}
+          onChange={element =>
+            stopPointChange({
+              ...stopPoint,
+              forBoarding: element?.value === '0' || element?.value === '2',
+              forAlighting: element?.value === '1' || element?.value === '2'
+            })
+          }
+          items={[
+            { value: '0', label: formatMessage(messages.labelForBoarding) },
+            { value: '1', label: formatMessage(messages.labelForAlighting) },
+            { value: '2', label: formatMessage(messages.labelForBoth) }
+          ]}
+        />
+      </div>
       {deleteStopPoint && (
         <SecondaryButton
           className="delete-button"
           onClick={() => setDeleteDialogOpen(true)}
         >
-          <DeleteIcon inline /> {translations.formatMessage(messages.delete)}
+          <DeleteIcon inline /> {formatMessage(messages.delete)}
         </SecondaryButton>
       )}
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title={translations.formatMessage(messages.stopPointDeleteTitle)}
-        message={translations.formatMessage(messages.stopPointDeleteMessage)}
+        title={formatMessage(messages.stopPointDeleteTitle)}
+        message={formatMessage(messages.stopPointDeleteMessage)}
         buttons={[
-          <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-            {translations.formatMessage(messages.no)}
+          <SecondaryButton key="no" onClick={() => setDeleteDialogOpen(false)}>
+            {formatMessage(messages.no)}
           </SecondaryButton>,
-          <SuccessButton key={1} onClick={deleteStopPoint}>
-            {translations.formatMessage(messages.yes)}
+          <SuccessButton key="yes" onClick={deleteStopPoint}>
+            {formatMessage(messages.yes)}
           </SuccessButton>
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}
@@ -124,8 +210,4 @@ const StopPointEditor = (props: Props & StateProps) => {
   );
 };
 
-const mapStateToProps = ({ intl }: GlobalState): StateProps => ({
-  intl
-});
-
-export default connect(mapStateToProps)(StopPointEditor);
+export default injectIntl(StopPointEditor);

@@ -1,23 +1,52 @@
-.stop-point-editor {
+@import '~@entur/tokens/dist/styles.scss';
+
+.stop-point-element {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 5rem;
-  .entur-radio-checkbox-group input {
-    margin-bottom: 0;
-  }
+  margin-top: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 2px solid $colors-greys-grey20;
 
-  .eds-button--variant-secondary {
-    display: block;
-    margin-left: auto;
-  }
-
-  .header {
+  .stop-point-key-info {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    min-width: fit-content;
 
-    .header-buttons button:last-of-type {
-      margin-left: 30px;
+    > :first-child {
+      margin: auto 2rem auto 0;
+    }
+
+    > fieldset {
+      margin: auto 0;
+      min-width: fit-content;
+    }
+  }
+
+  .stop-point-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 700px;
+    flex-basis: 100%;
+    margin: 0 1rem;
+
+    .eds-input-group + .eds-input-group {
+      margin-top: 0;
+    }
+
+    > div {
+      min-width: 200px;
+      max-width: 100%;
+
+      margin-bottom: 1rem;
+    }
+  }
+
+  .delete-button {
+    margin: auto 0 auto auto;
+    padding: 0 0.5rem;
+    min-width: fit-content;
+
+    svg {
+      margin-right: 0;
     }
   }
 }

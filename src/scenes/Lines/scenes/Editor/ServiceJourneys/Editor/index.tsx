@@ -7,7 +7,7 @@ import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import PassingTimesEditor from './PassingTimesEditor';
 import DayTypeEditor from './DayTypeEditor';
-import { StopPoint } from 'model';
+import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
 import messages from '../messages';
@@ -16,10 +16,9 @@ import {
   OrganisationState
 } from 'reducers/organisations';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
-
-import './styles.scss';
 import { GlobalState } from 'reducers';
 import ServiceJourney from 'model/ServiceJourney';
+import './styles.scss';
 
 type Props = {
   serviceJourney: ServiceJourney;

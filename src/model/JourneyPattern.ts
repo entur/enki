@@ -1,5 +1,5 @@
 import Versioned from './base/Versioned';
-import StopPoint from './StopPoint';
+import StopPoint, { stopPointToPayload } from './StopPoint';
 import ServiceJourney from './ServiceJourney';
 import Notice from './Notice';
 import { DIRECTION_TYPE } from 'model/enums';
@@ -30,16 +30,16 @@ class JourneyPattern extends Versioned {
     this.description = data.description;
     this.privateCode = data.privateCode;
     this.directionType = data.directionType;
-    this.pointsInSequence = (
-      data.pointsInSequence || [new StopPoint(), new StopPoint()]
-    ).map(p => new StopPoint(p));
+    this.pointsInSequence = data.pointsInSequence || [{}, {}];
     this.serviceJourneys = data.serviceJourneys || [{ passingTimes: [{}, {}] }];
     this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 
   toPayload() {
     return this.withChanges({
-      pointsInSequence: this.pointsInSequence.map(pis => pis.toPayload())
+      pointsInSequence: this.pointsInSequence.map(pis =>
+        stopPointToPayload(pis)
+      )
     });
   }
 }
