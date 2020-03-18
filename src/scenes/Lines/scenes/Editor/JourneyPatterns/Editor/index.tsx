@@ -22,6 +22,7 @@ import StopPoint from 'model/StopPoint';
 import AddButton from 'components/AddButton/AddButton';
 import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
+import { colors } from '@entur/tokens';
 import './styles.scss';
 
 type Props = {
@@ -132,7 +133,7 @@ const JourneyPatternEditor = ({
       <section style={{ marginTop: '5rem' }}>
         <h3>{formatMessage(messages.stopPoints)}</h3>
         <SubParagraph className="stop-point-info">
-          <ValidationInfoIcon inline />
+          <ValidationInfoIcon inline color={colors.validation.sky} />
           {formatMessage(messages.stopPointsInfo)}
         </SubParagraph>
         {pointsInSequence.map((stopPoint, index) => (
