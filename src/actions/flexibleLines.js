@@ -80,19 +80,25 @@ export const loadFlexibleLineById = id => async (dispatch, getState) => {
 export const saveFlexibleLine = flexibleLine => async (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   const intl = getIntl(getState());
+  const isNewLine = flexibleLine.id === undefined;
+
+  const { header, message } = isNewLine
+    ? {
+        header: intl.formatMessage(messages.modalSaveLineSuccessHeader),
+        message: `${flexibleLine.name} ${intl.formatMessage(
+          messages.modalSaveLineSuccessMessage
+        )}`
+      }
+    : {
+        header: intl.formatMessage(messages.saveLineSuccessHeader),
+        message: intl.formatMessage(messages.saveLineSuccessMessage)
+      };
+
   try {
     await UttuQuery(activeProvider, flexibleLineMutation, {
       input: flexibleLine.toPayload()
     });
-    dispatch(
-      showSuccessNotification(
-        intl.formatMessage(messages.saveLineSuccessHeader),
-        `${flexibleLine.name} ${intl.formatMessage(
-          messages.saveLineSuccessMessage
-        )}`,
-        true
-      )
-    );
+    dispatch(showSuccessNotification(header, message, isNewLine));
   } catch (e) {
     dispatch(
       showErrorNotification(
