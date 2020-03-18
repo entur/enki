@@ -1,6 +1,6 @@
 import Versioned from './base/Versioned';
 import BookingArrangement from './BookingArrangement';
-import JourneyPattern from './JourneyPattern';
+import JourneyPattern, { journeyPatternToPayload } from './JourneyPattern';
 import { replaceElement } from 'helpers/arrays';
 import Notice from './Notice';
 import { Network } from './Network';
@@ -50,9 +50,7 @@ class FlexibleLine extends Versioned {
     this.networkRef = data.networkRef ?? data.network?.id;
     this.operatorRef = data.operatorRef;
     this.bookingArrangement = data.bookingArrangement;
-    this.journeyPatterns = (data.journeyPatterns || []).map(
-      jp => new JourneyPattern(jp)
-    );
+    this.journeyPatterns = data.journeyPatterns || [];
     this.notices = (data.notices || []).map(n => ({ ...n }));
   }
 
@@ -79,7 +77,9 @@ class FlexibleLine extends Versioned {
 
   toPayload() {
     let payload = this.withChanges({
-      journeyPatterns: this.journeyPatterns.map(jp => jp.toPayload())
+      journeyPatterns: this.journeyPatterns.map(jp =>
+        journeyPatternToPayload(jp)
+      )
     });
     // The network property is only present when loading.
     delete payload.network;

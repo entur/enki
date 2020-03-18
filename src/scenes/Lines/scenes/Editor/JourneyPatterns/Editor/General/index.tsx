@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
 
@@ -12,17 +11,10 @@ import JourneyPattern from 'model/JourneyPattern';
 
 type Props = {
   journeyPattern: JourneyPattern;
-  directionSelection?: DIRECTION_TYPE;
-  onFieldChange: (field: string, value: any) => void;
-  handleDirectionSelectionChange: (value: DIRECTION_TYPE | undefined) => void;
+  onFieldChange: (journeyPattern: JourneyPattern) => void;
 };
 
-const General = ({
-  journeyPattern,
-  directionSelection,
-  onFieldChange,
-  handleDirectionSelectionChange
-}: Props) => {
+const General = ({ journeyPattern, onFieldChange }: Props) => {
   const [nameHolder, setNameHolder] = useState(journeyPattern.name);
   const { formatMessage } = useSelector(selectIntl);
 
@@ -40,7 +32,7 @@ const General = ({
             setNameHolder(e.target.value)
           }
           onBlur={(e: ChangeEvent<HTMLInputElement>) =>
-            onFieldChange('name', e.target.value)
+            onFieldChange({ ...journeyPattern, name: e.target.value })
           }
         />
       </InputGroup>
@@ -52,7 +44,7 @@ const General = ({
         <TextField
           value={journeyPattern.description || ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onFieldChange('description', e.target.value)
+            onFieldChange({ ...journeyPattern, description: e.target.value })
           }
         />
       </InputGroup>
@@ -64,7 +56,7 @@ const General = ({
         <TextField
           value={journeyPattern.privateCode || ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onFieldChange('privateCode', e.target.value)
+            onFieldChange({ ...journeyPattern, privateCode: e.target.value })
           }
         />
       </InputGroup>
@@ -72,20 +64,16 @@ const General = ({
       <Dropdown
         label={formatMessage(messages.directionLabel)}
         items={Object.values(DIRECTION_TYPE)}
-        value={directionSelection}
+        value={journeyPattern.directionType}
         onChange={e =>
-          handleDirectionSelectionChange(e?.value as DIRECTION_TYPE)
+          onFieldChange({
+            ...journeyPattern,
+            directionType: e?.value as DIRECTION_TYPE
+          })
         }
       />
     </div>
   );
-};
-
-General.propTypes = {
-  journeyPattern: PropTypes.object.isRequired,
-  directionSelection: PropTypes.string,
-  onFieldChange: PropTypes.func.isRequired,
-  handleDirectionSelectionChange: PropTypes.func.isRequired
 };
 
 export default General;

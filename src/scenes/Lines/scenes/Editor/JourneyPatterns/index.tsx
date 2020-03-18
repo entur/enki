@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { JourneyPattern } from 'model';
 import { ExpandablePanel } from '@entur/expand';
 import { replaceElement, useUniqueKeys } from 'helpers/arrays';
 import JourneyPatternEditor from './Editor';
 import './styles.scss';
+import JourneyPattern from 'model/JourneyPattern';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
-  onChange: (journeyPatterns: any[]) => void;
+  onChange: (journeyPatterns: JourneyPattern[]) => void;
   setIsValidJourneyPattern: (isValid: boolean) => void;
 };
 
@@ -18,7 +18,12 @@ const JourneyPatternsEditor = ({
 }: Props) => {
   useEffect(() => {
     if (!journeyPatterns.length)
-      onChange(journeyPatterns.concat(new JourneyPattern()));
+      onChange([
+        {
+          pointsInSequence: [{}, {}],
+          serviceJourneys: [{ passingTimes: [{}, {}] }]
+        }
+      ]);
   }, [journeyPatterns, onChange]);
 
   const handleSave = (journeyPattern: JourneyPattern, index: number) => {

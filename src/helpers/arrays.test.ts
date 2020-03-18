@@ -1,4 +1,9 @@
-import { addOrRemove, removeElementByIndex, replaceElement } from './arrays';
+import {
+  addOrRemove,
+  changeElementAtIndex,
+  removeElementByIndex,
+  replaceElement
+} from './arrays';
 
 describe('arrays', () => {
   describe('replaceElement', () => {
@@ -43,6 +48,20 @@ describe('arrays', () => {
         'other value',
         'add me'
       ]);
+    });
+  });
+
+  describe('changeElementAtIndex', () => {
+    it('should replace an element in the given position', () => {
+      expect(
+        changeElementAtIndex(['old value', 'second value'], 'new value', 0)
+      ).toEqual(['new value', 'second value']);
+    });
+
+    it('should do nothing if the index is out of range', () => {
+      expect(
+        changeElementAtIndex(['old value', 'second value'], 'new value', 10)
+      ).toEqual(['old value', 'second value']);
     });
   });
 });

@@ -311,13 +311,14 @@ const FlexibleLineEditor = ({
                     flexibleLine.journeyPatterns[0].serviceJourneys
                   }
                   stopPoints={flexibleLine.journeyPatterns[0].pointsInSequence}
-                  onChange={sjs => {
-                    const newJourneyPattern = flexibleLine.journeyPatterns[0].withFieldChange(
-                      'serviceJourneys',
-                      sjs
-                    );
-                    onFieldChange('journeyPatterns', [newJourneyPattern]);
-                  }}
+                  onChange={sjs =>
+                    onFieldChange('journeyPatterns', [
+                      {
+                        ...flexibleLine.journeyPatterns[0],
+                        serviceJourneys: sjs
+                      }
+                    ])
+                  }
                   setIsValidServiceJourney={setIsValidServiceJourney}
                 />
 

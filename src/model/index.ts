@@ -5,6 +5,5 @@ export { default as FlexibleLine } from './FlexibleLine';
 export { default as FlexibleStopPlace } from './FlexibleStopPlace';
 export { default as GeoJSON } from './GeoJSON';
 export { default as HailAndRideArea } from './HailAndRideArea';
-export { default as JourneyPattern } from './JourneyPattern';
 export { default as Message } from './Message';
 export { default as Provider } from './Provider';
