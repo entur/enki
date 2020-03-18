@@ -106,3 +106,13 @@
 .notification-active {
   right: 1rem;
 }
+
+.notification-modal {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.notification-modal-message {
+  padding-bottom: 2rem;
+}

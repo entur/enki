@@ -25,6 +25,14 @@ export default defineMessages({
     id: 'actions.flexibleLines.saveLineSuccessMessage',
     defaultMessage: 'Linjen ble lagret'
   },
+  modalSaveLineSuccessHeader: {
+    id: 'actions.flexibleLines.modal.saveLineSuccessHeader',
+    defaultMessage: 'Lagre linje'
+  },
+  modalSaveLineSuccessMessage: {
+    id: 'actions.flexibleLines.modal.saveLineSuccessMessage',
+    defaultMessage: 'Linjen ble lagret'
+  },
   saveLineErrorHeader: {
     id: 'actions.flexibleLines.saveLineErrorHeader',
     defaultMessage: 'Lagre linje'

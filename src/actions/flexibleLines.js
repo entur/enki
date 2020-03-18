@@ -16,23 +16,12 @@ import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import messages from './flexibleLines.messages';
 
-export const REQUEST_FLEXIBLE_LINES = 'REQUEST_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
-
-export const REQUEST_FLEXIBLE_LINE = 'REQUEST_FLEXIBLE_LINE';
 export const RECEIVE_FLEXIBLE_LINE = 'RECEIVE_FLEXIBLE_LINE';
-
-const requestFlexibleLinesActionCreator = () => ({
-  type: REQUEST_FLEXIBLE_LINES
-});
 
 const receiveFlexibleLinesActionCreator = lines => ({
   type: RECEIVE_FLEXIBLE_LINES,
   lines
-});
-
-const requestFlexibleLineActionCreator = () => ({
-  type: REQUEST_FLEXIBLE_LINE
 });
 
 const receiveFlexibleLineActionCreator = line => ({
@@ -41,8 +30,6 @@ const receiveFlexibleLineActionCreator = line => ({
 });
 
 export const loadFlexibleLines = () => async (dispatch, getState) => {
-  dispatch(requestFlexibleLinesActionCreator());
-
   try {
     const data = await UttuQuery(
       getState().providers.active,
@@ -66,8 +53,6 @@ export const loadFlexibleLines = () => async (dispatch, getState) => {
 };
 
 export const loadFlexibleLineById = id => async (dispatch, getState) => {
-  dispatch(requestFlexibleLineActionCreator());
-
   try {
     const data = await UttuQuery(
       getState().providers.active,
@@ -95,16 +80,25 @@ export const loadFlexibleLineById = id => async (dispatch, getState) => {
 export const saveFlexibleLine = flexibleLine => async (dispatch, getState) => {
   const activeProvider = getState().providers.active;
   const intl = getIntl(getState());
+  const isNewLine = flexibleLine.id === undefined;
+
+  const { header, message } = isNewLine
+    ? {
+        header: intl.formatMessage(messages.modalSaveLineSuccessHeader),
+        message: `${flexibleLine.name} ${intl.formatMessage(
+          messages.modalSaveLineSuccessMessage
+        )}`
+      }
+    : {
+        header: intl.formatMessage(messages.saveLineSuccessHeader),
+        message: intl.formatMessage(messages.saveLineSuccessMessage)
+      };
+
   try {
     await UttuQuery(activeProvider, flexibleLineMutation, {
       input: flexibleLine.toPayload()
     });
-    dispatch(
-      showSuccessNotification(
-        intl.formatMessage(messages.saveLineSuccessHeader),
-        intl.formatMessage(messages.saveLineSuccessMessage)
-      )
-    );
+    dispatch(showSuccessNotification(header, message, isNewLine));
   } catch (e) {
     dispatch(
       showErrorNotification(

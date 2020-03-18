@@ -18,23 +18,30 @@ export const showNotification = (
   title: string,
   message: string,
   type: NotificationTypes,
-  duration: NotificationDuration
+  duration: NotificationDuration,
+  showModal?: boolean
 ) => ({
   type: SHOW_NOTIFICATION,
   payload: {
     message,
     title,
     type,
-    duration
+    duration,
+    showModal: showModal ?? false
   }
 });
 
-export const showSuccessNotification = (title: string, message: string) =>
+export const showSuccessNotification = (
+  title: string,
+  message: string,
+  showModal?: boolean
+) =>
   showNotification(
     title,
     message,
     NotificationTypes.SUCCESS,
-    NotificationDuration.SHORT
+    NotificationDuration.SHORT,
+    showModal
   );
 
 export const showErrorNotification = (title: string, message: string) =>
