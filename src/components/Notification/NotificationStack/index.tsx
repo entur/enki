@@ -1,12 +1,13 @@
 import React from 'react';
 import { Notification } from 'reducers/notification';
+import { NotificationDuration } from 'actions/notification';
 import ModalNote from './StackedNotification/Note/ModalNote';
 import StackedNotification from './StackedNotification';
 
-const getNotificationStyle = (index: number) => ({
+const getTopOffset = (index: number) => ({
   top: `${2 + index * 8}rem`
 });
-const DEFAULT_DISMISS_TIME = 5000;
+const DEFAULT_DISMISS_TIME = NotificationDuration.LONG;
 
 type Props = {
   notifications: Notification[];
@@ -22,7 +23,7 @@ const NotificationStack = (props: Props) => {
     <div>
       {notifications.map((notification, index) => {
         const isLast = numberOfNotifications === index;
-        const notificationStyle = getNotificationStyle(index);
+        const topOffset = getTopOffset(index);
 
         let dismissAfter = notification.dismissAfter ?? DEFAULT_DISMISS_TIME;
 
@@ -46,7 +47,7 @@ const NotificationStack = (props: Props) => {
             key={notification.key}
             dismissAfter={dismissAfter}
             onDismiss={() => onDismiss(notification)}
-            notificationStyle={notificationStyle}
+            topOffset={topOffset}
           />
         );
       })}

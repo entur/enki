@@ -8,7 +8,7 @@ type Props = Notification & {
   title: string;
   message: string;
   onDismiss: () => void;
-  notificationStyle?: Object;
+  topOffset: { top: string };
   dismissAfter: NotificationDuration;
   type: NotificationTypes | null;
 };
@@ -34,7 +34,7 @@ const StackedNotification = (props: Props) => {
       message={props.message}
       title={props.title}
       type={props.type}
-      notificationStyle={props.notificationStyle}
+      topOffset={props.topOffset}
       dismissAfter={props.dismissAfter}
     />
   );

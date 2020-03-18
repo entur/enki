@@ -57,7 +57,7 @@ class Note extends Component {
   }
 
   render() {
-    const { title, message, isActive, type, notificationStyle } = this.props;
+    const { title, message, isActive, type, topOffset } = this.props;
 
     const wrapperClassNames = cx(
       'notification-default',
@@ -70,7 +70,7 @@ class Note extends Component {
     const titleClassNames = cx('notification-bar-label', type);
 
     return (
-      <div className={wrapperClassNames} style={notificationStyle}>
+      <div className={wrapperClassNames} style={topOffset}>
         <div className="notification-close">
           <CloseIcon onClick={this.onRequestClose.bind(this)} />
         </div>
@@ -92,7 +92,7 @@ Note.propTypes = {
   onRequestClose: PropTypes.func,
   onDismiss: PropTypes.func.isRequired,
   dismissAfter: PropTypes.number,
-  notificationStyle: PropTypes.object,
+  topOffset: PropTypes.object,
   isActive: PropTypes.bool,
   type: PropTypes.oneOf(['success', 'error', 'warning', 'info']).isRequired
 };

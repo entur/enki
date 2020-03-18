@@ -8,7 +8,7 @@ import messages from './messages';
 type Props = {
   title: string;
   message: string;
-  notificationStyle?: Object;
+  topOffset?: Object;
   onDismiss: () => void;
 };
 
