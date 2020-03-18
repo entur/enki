@@ -16,6 +16,8 @@ import { DeleteIcon } from '@entur/icons';
 import ConfirmDialog from 'components/ConfirmDialog';
 import './styles.scss';
 
+type StopPlaceMode = 'nsr' | 'custom';
+
 export type StopPointsFormError = {
   flexibleStopPlaceRefAndQuayRef: any;
   frontText: any;
@@ -25,7 +27,7 @@ interface Props extends WrappedComponentProps {
   index: number;
   flexibleStopPlaces: FlexibleStopPlace[];
   errors: StopPointsFormError;
-  onChange: (stopPoint: StopPoint) => void;
+  stopPointChange: (stopPoint: StopPoint) => void;
   stopPoint: StopPoint;
   frontTextRequired: boolean;
   deleteStopPoint?: () => void;
@@ -36,13 +38,13 @@ const StopPointEditor = ({
   flexibleStopPlaces,
   intl: { formatMessage },
   errors,
-  onChange,
+  stopPointChange,
   stopPoint,
   frontTextRequired,
   deleteStopPoint
 }: Props) => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectMode, setSelectMode] = useState<'nsr' | 'custom'>(
+  const [selectMode, setSelectMode] = useState<StopPlaceMode>(
     stopPoint.quayRef ? 'nsr' : 'custom'
   );
   const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
@@ -88,9 +90,18 @@ const StopPointEditor = ({
       <div className="stop-point-key-info">
         <Paragraph>{index + 1}</Paragraph>
         <RadioGroup
-          name="stopPointMode"
+          name={`stopPointMode-${index}`}
           value={selectMode}
-          onChange={e => console.log(e.target.value)}
+          onChange={e => {
+            setSelectMode(e.target.value as StopPlaceMode);
+            setQuaySearch(undefined);
+            stopPointChange({
+              ...stopPoint,
+              quayRef: undefined,
+              flexibleStopPlaceRef: undefined,
+              flexibleStopPlace: undefined
+            });
+          }}
         >
           <Radio value="custom">{formatMessage(messages.selectCustom)}</Radio>
           <Radio value="nsr">{formatMessage(messages.selectNSR)}</Radio>
@@ -108,11 +119,7 @@ const StopPointEditor = ({
               label: fsp.name ?? ''
             }))}
             onChange={e =>
-              onChange({
-                ...stopPoint,
-                flexibleStopPlaceRef: e?.value,
-                quayRef: undefined
-              })
+              stopPointChange({ ...stopPoint, flexibleStopPlaceRef: e?.value })
             }
             variant={stopPlaceError ? 'error' : undefined}
             feedback={
@@ -136,11 +143,7 @@ const StopPointEditor = ({
                 debouncedSearchForQuay(e.target.value)
               }
               onBlur={(e: ChangeEvent<HTMLInputElement>) =>
-                onChange({
-                  ...stopPoint,
-                  quayRef: e.target.value,
-                  flexibleStopPlaceRef: undefined
-                })
+                stopPointChange({ ...stopPoint, quayRef: e.target.value })
               }
             />
           </InputGroup>
@@ -156,7 +159,7 @@ const StopPointEditor = ({
           <TextField
             defaultValue={stopPoint.destinationDisplay?.frontText ?? ''}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onChange({
+              stopPointChange({
                 ...stopPoint,
                 destinationDisplay: { frontText: e.target.value }
               })
@@ -167,7 +170,7 @@ const StopPointEditor = ({
           label={formatMessage(messages.labelBoarding)}
           value={convertBoardingToDropdown(stopPoint)}
           onChange={value =>
-            onChange({
+            stopPointChange({
               ...stopPoint,
               forBoarding: value?.value === '0' || value?.value === '2',
               forAlighting: value?.value === '1' || value?.value === '2'
@@ -194,10 +197,10 @@ const StopPointEditor = ({
         title={formatMessage(messages.stopPointDeleteTitle)}
         message={formatMessage(messages.stopPointDeleteMessage)}
         buttons={[
-          <SecondaryButton onClick={() => setDeleteDialogOpen(false)}>
+          <SecondaryButton key="no" onClick={() => setDeleteDialogOpen(false)}>
             {formatMessage(messages.no)}
           </SecondaryButton>,
-          <SuccessButton onClick={deleteStopPoint}>
+          <SuccessButton key="yes" onClick={deleteStopPoint}>
             {formatMessage(messages.yes)}
           </SuccessButton>
         ]}

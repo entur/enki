@@ -147,7 +147,7 @@ const JourneyPatternEditor = ({
                 ? () => deleteStopPoint(index)
                 : undefined
             }
-            onChange={(stopPoint: StopPoint) =>
+            stopPointChange={(stopPoint: StopPoint) =>
               updateStopPoint(index, stopPoint)
             }
             flexibleStopPlaces={flexibleStopPlaces ?? []}
