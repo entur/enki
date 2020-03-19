@@ -3,7 +3,6 @@ import {
   getFlexibleLineByIdQuery,
   getFlexibleLinesQuery
 } from 'graphql/uttu/queries';
-import { FlexibleLine } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
@@ -15,28 +14,34 @@ import {
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import messages from './flexibleLines.messages';
+import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
+import { Dispatch } from 'react';
+import { GlobalState } from 'reducers';
 
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINE = 'RECEIVE_FLEXIBLE_LINE';
 
-const receiveFlexibleLinesActionCreator = lines => ({
+const receiveFlexibleLinesActionCreator = (lines: FlexibleLine[]) => ({
   type: RECEIVE_FLEXIBLE_LINES,
   lines
 });
 
-const receiveFlexibleLineActionCreator = line => ({
+const receiveFlexibleLineActionCreator = (line: FlexibleLine) => ({
   type: RECEIVE_FLEXIBLE_LINE,
   line
 });
 
-export const loadFlexibleLines = () => async (dispatch, getState) => {
+export const loadFlexibleLines = () => async (
+  dispatch: Dispatch<any>,
+  getState: () => GlobalState
+) => {
   try {
     const data = await UttuQuery(
       getState().providers.active,
       getFlexibleLinesQuery,
       {}
     );
-    const flexibleLines = data.flexibleLines.map(fl => new FlexibleLine(fl));
+    const flexibleLines = data.flexibleLines;
     dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
   } catch (e) {
     const intl = getIntl(getState());
@@ -52,7 +57,10 @@ export const loadFlexibleLines = () => async (dispatch, getState) => {
   }
 };
 
-export const loadFlexibleLineById = id => async (dispatch, getState) => {
+export const loadFlexibleLineById = (id: string) => async (
+  dispatch: Dispatch<any>,
+  getState: () => GlobalState
+) => {
   try {
     const data = await UttuQuery(
       getState().providers.active,
@@ -60,9 +68,7 @@ export const loadFlexibleLineById = id => async (dispatch, getState) => {
       { id }
     );
 
-    dispatch(
-      receiveFlexibleLineActionCreator(new FlexibleLine(data.flexibleLine))
-    );
+    dispatch(receiveFlexibleLineActionCreator(data.flexibleLine ?? {}));
   } catch (e) {
     const intl = getIntl(getState());
     dispatch(
@@ -77,7 +83,10 @@ export const loadFlexibleLineById = id => async (dispatch, getState) => {
   }
 };
 
-export const saveFlexibleLine = flexibleLine => async (dispatch, getState) => {
+export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
+  dispatch: Dispatch<any>,
+  getState: () => GlobalState
+) => {
   const activeProvider = getState().providers.active;
   const intl = getIntl(getState());
   const isNewLine = flexibleLine.id === undefined;
@@ -96,7 +105,7 @@ export const saveFlexibleLine = flexibleLine => async (dispatch, getState) => {
 
   try {
     await UttuQuery(activeProvider, flexibleLineMutation, {
-      input: flexibleLine.toPayload()
+      input: flexibleLineToPayload(flexibleLine)
     });
     dispatch(showSuccessNotification(header, message, isNewLine));
   } catch (e) {
@@ -112,7 +121,10 @@ export const saveFlexibleLine = flexibleLine => async (dispatch, getState) => {
   }
 };
 
-export const deleteFlexibleLineById = id => async (dispatch, getState) => {
+export const deleteFlexibleLineById = (id: string) => async (
+  dispatch: Dispatch<any>,
+  getState: () => GlobalState
+) => {
   const activeProvider = getState().providers.active;
   const intl = getIntl(getState());
 

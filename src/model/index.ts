@@ -1,7 +1,6 @@
 export { default as Codespace } from './Codespace';
 export { default as DestinationDisplay } from './DestinationDisplay';
 export { default as FlexibleArea } from './FlexibleArea';
-export { default as FlexibleLine } from './FlexibleLine';
 export { default as FlexibleStopPlace } from './FlexibleStopPlace';
 export { default as GeoJSON } from './GeoJSON';
 export { default as HailAndRideArea } from './HailAndRideArea';

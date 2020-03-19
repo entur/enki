@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextField, InputGroup } from '@entur/form';
@@ -7,18 +7,25 @@ import { selectIntl } from 'i18n';
 import messages from './messages';
 import validationMessages from '../validateForm.messages';
 import './styles.scss';
+import FlexibleLine from 'model/FlexibleLine';
+import { Network } from 'model/Network';
+import { Organisation } from 'reducers/organisations';
+
+type Props = {
+  flexibleLine: FlexibleLine;
+  networks: Network[];
+  errors: any;
+  operators: Organisation[];
+  flexibleLineChange: (flexibleLine: FlexibleLine) => void;
+};
 
 export default ({
   flexibleLine,
   networks,
   errors,
   operators,
-  networkSelection,
-  operatorSelection,
-  handleFieldChange,
-  handleNetworkSelectionChange,
-  handleOperatorSelectionChange
-}) => {
+  flexibleLineChange
+}: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const {
     errors: {
@@ -41,8 +48,10 @@ export default ({
           feedback={nameError ?? undefined}
         >
           <TextField
-            defaultValue={flexibleLine.name}
-            onChange={e => handleFieldChange('name', e.target.value)}
+            defaultValue={flexibleLine.name ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              flexibleLineChange({ ...flexibleLine, name: e.target.value })
+            }
           />
         </InputGroup>
 
@@ -51,8 +60,13 @@ export default ({
           label={formatMessage(messages.descriptionFormGroupTitle)}
         >
           <TextField
-            value={flexibleLine.description || ''}
-            onChange={e => handleFieldChange('description', e.target.value)}
+            value={flexibleLine.description ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              flexibleLineChange({
+                ...flexibleLine,
+                description: e.target.value
+              })
+            }
           />
         </InputGroup>
 
@@ -62,8 +76,13 @@ export default ({
         >
           <TextField
             type="text"
-            value={flexibleLine.privateCode || ''}
-            onChange={e => handleFieldChange('privateCode', e.target.value)}
+            value={flexibleLine.privateCode ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              flexibleLineChange({
+                ...flexibleLine,
+                privateCode: e.target.value
+              })
+            }
           />
         </InputGroup>
 
@@ -75,8 +94,13 @@ export default ({
         >
           <TextField
             type="text"
-            defaultValue={flexibleLine.publicCode}
-            onChange={e => handleFieldChange('publicCode', e.target.value)}
+            defaultValue={flexibleLine.publicCode ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              flexibleLineChange({
+                ...flexibleLine,
+                publicCode: e.target.value
+              })
+            }
           />
         </InputGroup>
 
@@ -86,20 +110,30 @@ export default ({
             ...operators.map(({ id, name }) => ({ value: id, label: name }))
           ]}
           label={formatMessage(messages.operatorFormGroupTitle)}
-          onChange={({ value }) => handleOperatorSelectionChange(value)}
+          onChange={element =>
+            flexibleLineChange({ ...flexibleLine, operatorRef: element?.value })
+          }
           feedback={formatMessage(
             validationMessages.errorFlexibleLineOperatorRefEmpty
           )}
           variant={operatorError ? 'error' : undefined}
-          value={operatorSelection}
+          value={flexibleLine.operatorRef}
         />
 
         <Dropdown
           className="form-section"
-          items={[...networks.map(n => ({ value: n.id, label: n.name }))]}
+          items={networks.map(n => ({
+            value: n.id ?? '',
+            label: n.name ?? ''
+          }))}
           label={formatMessage(messages.networkFormGroupTitle)}
-          onChange={({ value }) => handleNetworkSelectionChange(value)}
-          value={networkSelection}
+          onChange={element =>
+            flexibleLineChange({
+              ...flexibleLine,
+              networkRef: element?.value
+            })
+          }
+          value={flexibleLine.network?.id}
           feedback={formatMessage(
             validationMessages.errorFlexibleLineNetworkRefEmpty
           )}
@@ -115,7 +149,12 @@ export default ({
             }))
           ]}
           label={formatMessage(messages.typeFormGroupTitle)}
-          onChange={({ value }) => handleFieldChange('flexibleLineType', value)}
+          onChange={element =>
+            flexibleLineChange({
+              ...flexibleLine,
+              flexibleLineType: element?.value
+            })
+          }
           value={flexibleLine.flexibleLineType}
           feedback={formatMessage(
             validationMessages.errorFlexibleLineFlexibleLineTypeEmpty
