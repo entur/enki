@@ -40,6 +40,10 @@ const ServiceJourneysEditor = ({
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     setIsValidServiceJourney(
       serviceJourneys.every(sj => validateServiceJourney(sj))
     );

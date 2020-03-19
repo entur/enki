@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ContactFields from 'scenes/Lines/scenes/Editor/BookingArrangementEditor/contactFields';
 import BookingLimitFields from './bookingLimitFields';
 import BookingMethodSelection from 'scenes/Lines/scenes/Editor/BookingArrangementEditor/bookingMethodSelection';
@@ -20,6 +20,10 @@ type Props = {
 
 const BookingArrangementEditor = (props: Props) => {
   const { bookingArrangement, onChange } = props;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const onFieldChange = useCallback(
     (bookingArrangement: BookingArrangement) => {
