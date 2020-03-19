@@ -92,15 +92,12 @@ export const useFlexibleLine = (
     setFlexibleLine(getFlexibleLineFromPath(flexibleLines, match));
   }, [loadDependencies, flexibleLines, match]);
 
-  const onFieldChange = useCallback(
-    (flexibleLine: FlexibleLine) => {
-      setFlexibleLine(flexibleLine);
-      if (isSaved) {
-        dispatch(setSavedChanges(false));
-      }
-    },
-    [flexibleLine, dispatch, isSaved]
-  );
+  const onFieldChange = (flexibleLine: FlexibleLine) => {
+    setFlexibleLine(flexibleLine);
+    if (isSaved) {
+      dispatch(setSavedChanges(false));
+    }
+  };
 
   return {
     onFieldChange,
