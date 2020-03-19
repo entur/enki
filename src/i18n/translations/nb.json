@@ -159,7 +159,7 @@
   "lines.editor.generalTabLabel": "Generelt",
   "lines.editor.journeyPatterns.addJourneyPatternIconButtonLabel": "Legg til journey pattern",
   "lines.editor.journeyPatterns.unsavedChanges": "Du har endringer som ikke er lagret.",
-  "lines.editor.journeyPatterns.saveAndContinue": "Lagre og gå videre.",
+  "lines.editor.journeyPatterns.saveAndContinue": "Lagre og gå videre",
   "lines.editor.journeyPatterns.editor.about": "Om linjen",
   "lines.editor.journeyPatterns.editor.fillInformation": "Fyll inn informasjon om Journey Pattern.",
   "lines.editor.journeyPatterns.editor.stepper.about": "Om linjen",
