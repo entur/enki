@@ -18,8 +18,9 @@ import {
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { GlobalState } from 'reducers';
 import ServiceJourney from 'model/ServiceJourney';
-import './styles.scss';
+import { Paragraph } from '@entur/typography';
 import ScrollToTop from 'components/ScrollToTop';
+import './styles.scss';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -141,7 +142,7 @@ const ServiceJourneyEditor = (props: Props) => {
           </div>
 
           <div className="input-group">
-            <h4> {formatMessage(messages.availability)} </h4>
+            <h4>{formatMessage(messages.availability)}</h4>
 
             <DayTypeEditor
               dayType={
@@ -151,8 +152,9 @@ const ServiceJourneyEditor = (props: Props) => {
             />
           </div>
 
-          <h4> {formatMessage(messages.passingTimes)} </h4>
-          <PassingTimesEditor
+          <h4>{formatMessage(messages.passingTimes)}</h4>
+          <Paragraph>{formatMessage(messages.passingTimesInfo)}</Paragraph>
+        <PassingTimesEditor
             passingTimes={passingTimes ?? []}
             stopPoints={stopPoints}
             onChange={pts => onFieldChange('passingTimes', pts)}

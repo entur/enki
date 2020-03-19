@@ -1,27 +1,20 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
-import { TextField } from '@entur/form';
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  HeaderCell,
-  DataCell
-} from '@entur/table';
+import { InputGroup, TextField } from '@entur/form';
 import { ClockIcon } from '@entur/icons';
 import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
 import { replaceElement } from 'helpers/arrays';
 import { SmallAlertBox } from '@entur/alert';
 import { validateTimes } from './validateForm';
-
-import './styles.scss';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlState } from 'react-intl-redux';
-import searchForQuay from 'scenes/Lines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/searchForQuay';
+import messages from './messages';
+import { selectIntl } from 'i18n';
+import PassingTimeTitle from './PassingTimeTitle';
+import './styles.scss';
 
 type TimeKeys = keyof Pick<
   PassingTime,
@@ -56,20 +49,6 @@ const getPassingTimeKeys = (
   return keys;
 };
 
-const Title = ({ quayRef }: { quayRef: string }): ReactElement => {
-  const [title, setTitle] = useState(quayRef);
-
-  useEffect(() => {
-    const fetchTitle = async () =>
-      await searchForQuay(quayRef).then(response =>
-        setTitle(response.stopPlace?.name.value ?? quayRef)
-      );
-    fetchTitle();
-  }, [quayRef]);
-
-  return <div>{title}</div>;
-};
-
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
   intl: IntlState;
@@ -90,6 +69,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     flexibleStopPlaces
   } = props;
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
+  const { formatMessage } = useSelector(selectIntl);
 
   const onFieldChange = (
     index: number,
@@ -123,18 +103,22 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     index: number,
     field: OffsetKeys
   ) => (
-    <Dropdown
-      items={[...Array(10).keys()].map(i => ({
-        value: String(i),
-        label: String(i)
-      }))}
-      onChange={(e: NormalizedDropdownItemType | null) => {
-        if (!e?.value) return;
-        handleDayOffsetChange(index, field, e.value);
-      }}
-      className="hourpicker"
-      value={tpt[field]?.toString() ?? '0'}
-    />
+    <InputGroup
+      label={formatMessage(messages.dayTimeOffset)}
+      className="dayoffset"
+    >
+      <Dropdown
+        items={[...Array(10).keys()].map(i => ({
+          value: String(i),
+          label: String(i)
+        }))}
+        onChange={(e: NormalizedDropdownItemType | null) => {
+          if (!e?.value) return;
+          handleDayOffsetChange(index, field, e.value);
+        }}
+        value={tpt[field]?.toString() ?? '0'}
+      />
+    </InputGroup>
   );
 
   const padTimePickerInput = (time: string): string | undefined => {
@@ -145,56 +129,25 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const getTimePicker = (tpt: PassingTime, index: number, field: TimeKeys) => {
     const currentValue = tpt[field];
 
-    const shownValue =
-      currentValue
-        ?.split(':')
-        .slice(0, 2)
-        .join(':') || undefined;
+    const shownValue = currentValue
+      ?.split(':')
+      .slice(0, 2)
+      .join(':');
 
     return (
-      <div>
+      <InputGroup
+        label={formatMessage(messages.passingTime)}
+        className="timepicker"
+      >
         <TextField
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             onFieldChange(index, field, padTimePickerInput(e.target.value))
           }
           prepend={<ClockIcon inline />}
           type="time"
-          className="timepicker"
           defaultValue={shownValue}
         />
-      </div>
-    );
-  };
-
-  const renderRow = (sp: StopPoint, i: number) => {
-    const passingTime = passingTimes[i];
-    const { time, offset } = getPassingTimeKeys(passingTime);
-
-    const getFetchedTitle = (stopPoint: StopPoint): ReactElement =>
-      stopPoint.quayRef ? (
-        <Title quayRef={stopPoint.quayRef} />
-      ) : (
-        <div>
-          {flexibleStopPlaces?.find(
-            stop =>
-              stop.id ===
-              (stopPoint.flexibleStopPlace?.id ??
-                stopPoint.flexibleStopPlaceRef)
-          )?.name ?? ''}
-        </div>
-      );
-
-    return (
-      <TableRow key={i}>
-        <DataCell>{i}</DataCell>
-        <DataCell>{getFetchedTitle(sp)}</DataCell>
-        <DataCell>
-          <div style={{ display: 'flex' }}>
-            {getTimePicker(passingTime, i, time)}
-            {getDayOffsetDropdown(passingTime, i, offset)}
-          </div>
-        </DataCell>
-      </TableRow>
+      </InputGroup>
     );
   };
 
@@ -203,16 +156,23 @@ const PassingTimesEditor = (props: Props & StateProps) => {
       {!isValid && (
         <SmallAlertBox variant="error"> {errorMessage} </SmallAlertBox>
       )}
-      <Table>
-        <TableHead>
-          <TableRow>
-            <HeaderCell>#</HeaderCell>
-            <HeaderCell>Stoppested</HeaderCell>
-            <HeaderCell>Passeringstid</HeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>{stopPoints.map((sp, i) => renderRow(sp, i))}</TableBody>
-      </Table>
+      <div className="passing-times-editor">
+        {stopPoints.map((stopPoint, index) => {
+          const passingTime = passingTimes[index];
+          const { time, offset } = getPassingTimeKeys(passingTime);
+          return (
+            <div className="passing-time">
+              <div className="time-number">{index + 1}</div>
+              <PassingTimeTitle
+                flexibleStopPlaces={flexibleStopPlaces}
+                stopPoint={stopPoint}
+              />
+              {getTimePicker(passingTime, index, time)}
+              {getDayOffsetDropdown(passingTime, index, offset)}
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 };

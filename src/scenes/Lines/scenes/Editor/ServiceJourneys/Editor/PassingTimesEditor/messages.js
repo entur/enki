@@ -1,6 +1,14 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  passingTime: {
+    id: 'passingTimes.passingTime',
+    defaultMessage: '*Passeringstid'
+  },
+  dayTimeOffset: {
+    id: 'passingTimes.dayTimeOffset',
+    defaultMessage: 'Daytime offset'
+  },
   atleastOneField: {
     id: 'passingTimes.error.atleastOneField',
     defaultMessage: 'Minst ett felt må være fylt ut.'
