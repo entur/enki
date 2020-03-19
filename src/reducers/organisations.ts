@@ -12,7 +12,7 @@ type ContactInfo = {
 
 export type OrganisationState = Organisation[] | null;
 
-type Organisation = {
+export type Organisation = {
   id: string;
   name: string;
   legalName: string | null;
