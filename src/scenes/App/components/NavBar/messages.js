@@ -5,6 +5,10 @@ export default defineMessages({
     id: 'app.navBar.rootLinkLogoAltText',
     defaultMessage: 'Logo for Entur Bestillingstransport'
   },
+  HomeMenuItemLabel: {
+    id: 'app.navBar.introduction',
+    defaultMessage: 'Introduksjon'
+  },
   networksMenuItemLabel: {
     id: 'app.navBar.networksMenuItemLabel',
     defaultMessage: 'Nettverk'

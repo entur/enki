@@ -75,6 +75,11 @@ const NavBar = () => {
         <UserPreference />
 
         <NavBarItem
+          text={formatMessage(messages.HomeMenuItemLabel)}
+          path="/"
+          setRedirect={setRedirect}
+        />
+        <NavBarItem
           text={formatMessage(messages.networksMenuItemLabel)}
           path="/networks"
           setRedirect={setRedirect}

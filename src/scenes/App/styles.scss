@@ -1,3 +1,5 @@
+@import '~@entur/tokens/dist/styles.scss';
+
 .app {
   .navbar-and-routes {
     display: flex;
@@ -25,5 +27,29 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+}
+
+.home {
+  .tagline {
+    margin: 0;
+  }
+
+  .color-blue {
+    color: $colors-blues-blue40;
+  }
+
+  .lead {
+    font-size: $font-sizes-extra-large;
+    line-height: $line-heights-extra-large4;
+    color: $colors-brand-blue;
+  }
+
+  header {
+    margin-bottom: $space-extra-large2;
+  }
+
+  section:not(:last-child) {
+    margin-bottom: $space-extra-large6;
   }
 }
