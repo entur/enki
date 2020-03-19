@@ -124,9 +124,13 @@ const JourneyPatternEditor = ({
           <StopPointEditor
             key={keys[index]}
             index={index}
-            frontTextRequired={index === 0}
+            isFirstStop={index === 0}
             stopPoint={stopPoint}
-            errors={validateStopPoint(stopPoint, index === 0)}
+            errors={validateStopPoint(
+              stopPoint,
+              index === 0,
+              index === pointsInSequence.length - 1
+            )}
             deleteStopPoint={
               pointsInSequence.length > 2
                 ? () => deleteStopPoint(index)

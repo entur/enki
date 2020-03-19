@@ -12,18 +12,21 @@ export const getStopPointsErrors = (
   stopPoints: StopPoint[]
 ): StopPointsFormError[] =>
   stopPoints.map((stopPoint, index) =>
-    validateStopPoint(stopPoint, index === 0)
+    validateStopPoint(stopPoint, index === 0, index === stopPoints.length - 1)
   );
 
 export const validateStopPoint = (
   stopPoint: StopPoint,
-  isFirst: boolean
+  isFirst: boolean,
+  isLast: boolean
 ): StopPointsFormError => {
   const {
     quayRef,
     flexibleStopPlace,
     flexibleStopPlaceRef,
-    destinationDisplay
+    destinationDisplay,
+    forAlighting,
+    forBoarding
   } = stopPoint;
 
   const getFlexibleStopPlaceRefAndQuayRefError = () => {
@@ -40,8 +43,15 @@ export const validateStopPoint = (
     return undefined;
   };
 
+  const getBoardingError = () => {
+    if (isFirst && forAlighting) return messages.errorAlighting;
+    if (isLast && forBoarding) return messages.errorBoarding;
+    return undefined;
+  };
+
   return {
     flexibleStopPlaceRefAndQuayRef: getFlexibleStopPlaceRefAndQuayRefError(),
-    frontText: getFrontTextError()
+    frontText: getFrontTextError(),
+    boarding: getBoardingError()
   };
 };

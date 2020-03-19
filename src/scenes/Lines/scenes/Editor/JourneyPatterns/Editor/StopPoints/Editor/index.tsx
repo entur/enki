@@ -21,6 +21,7 @@ type StopPlaceMode = 'nsr' | 'custom';
 export type StopPointsFormError = {
   flexibleStopPlaceRefAndQuayRef: any;
   frontText: any;
+  boarding: any;
 };
 
 interface Props extends WrappedComponentProps {
@@ -29,7 +30,7 @@ interface Props extends WrappedComponentProps {
   errors: StopPointsFormError;
   stopPointChange: (stopPoint: StopPoint) => void;
   stopPoint: StopPoint;
-  frontTextRequired: boolean;
+  isFirstStop: boolean;
   deleteStopPoint?: () => void;
 }
 
@@ -40,7 +41,7 @@ const StopPointEditor = ({
   errors,
   stopPointChange,
   stopPoint,
-  frontTextRequired,
+  isFirstStop,
   deleteStopPoint
 }: Props) => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -150,7 +151,7 @@ const StopPointEditor = ({
         )}
 
         <InputGroup
-          label={`${frontTextRequired ? '* ' : ''}${formatMessage(
+          label={`${isFirstStop ? '* ' : ''}${formatMessage(
             messages.labelFrontText
           )}`}
           variant={frontTextError ? 'error' : undefined}
@@ -181,6 +182,8 @@ const StopPointEditor = ({
             { value: '1', label: formatMessage(messages.labelForAlighting) },
             { value: '2', label: formatMessage(messages.labelForBoth) }
           ]}
+          feedback={errors.boarding && formatMessage(errors.boarding)}
+          variant={errors.boarding ? 'error' : undefined}
         />
       </div>
       {deleteStopPoint && (
