@@ -5,10 +5,9 @@ import { InputGroup, TextField } from '@entur/form';
 import { ClockIcon } from '@entur/icons';
 import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
-import { replaceElement } from 'helpers/arrays';
+import { changeElementAtIndex } from 'helpers/arrays';
 import { SmallAlertBox } from '@entur/alert';
 import { validateTimes } from './validateForm';
-import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlState } from 'react-intl-redux';
 import messages from './messages';
@@ -16,38 +15,17 @@ import { selectIntl } from 'i18n';
 import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
 
-type TimeKeys = keyof Pick<
-  PassingTime,
-  | 'departureTime'
-  | 'arrivalTime'
-  | 'earliestDepartureTime'
-  | 'latestArrivalTime'
->;
-type OffsetKeys = keyof Pick<
-  PassingTime,
-  | 'departureDayOffset'
-  | 'arrivalDayOffset'
-  | 'earliestDepartureDayOffset'
-  | 'latestArrivalDayOffset'
->;
-const passingTimesKeys: {
-  time: TimeKeys;
-  offset: OffsetKeys;
-}[] = [
-  { time: 'departureTime', offset: 'departureDayOffset' },
-  { time: 'latestArrivalTime', offset: 'latestArrivalDayOffset' },
-  { time: 'arrivalTime', offset: 'arrivalDayOffset' },
-  { time: 'earliestDepartureTime', offset: 'earliestDepartureDayOffset' }
-];
+const getPassingTime = (pt: PassingTime): string | undefined =>
+  pt.departureTime ??
+  pt.latestArrivalTime ??
+  pt.arrivalTime ??
+  pt.earliestDepartureTime;
 
-const getPassingTimeKeys = (
-  passingTime: PassingTime
-): { time: TimeKeys; offset: OffsetKeys } => {
-  const keys = passingTimesKeys.find(({ time }) => passingTime[time]);
-
-  if (!keys) return { time: 'departureTime', offset: 'departureDayOffset' };
-  return keys;
-};
+const getDayOffset = (pt: PassingTime): number | undefined =>
+  pt.departureDayOffset ??
+  pt.arrivalDayOffset ??
+  pt.earliestDepartureDayOffset ??
+  pt.latestArrivalDayOffset;
 
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
@@ -71,54 +49,27 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
   const { formatMessage } = useSelector(selectIntl);
 
-  const onFieldChange = (
-    index: number,
-    field: keyof PassingTime,
-    value: PassingTime[keyof PassingTime]
-  ) => {
-    const passingTime = { ...passingTimes[index], [field]: value };
-    const { time, offset } = getPassingTimeKeys(passingTime);
-    const newPassingTime: PassingTime = {
-      departureTime: passingTime[time],
-      arrivalTime: passingTime[time],
-      departureDayOffset: passingTime[offset],
-      arrivalDayOffset: passingTime[offset]
-    };
-    const newPassingTimes = replaceElement(passingTimes, index, newPassingTime);
-
-    onChange(newPassingTimes);
-  };
-
-  const handleDayOffsetChange = (
-    index: number,
-    field: OffsetKeys,
-    value: string
-  ) => {
-    const parsedValue = parseInt(value);
-    onFieldChange(index, field, parsedValue !== 0 ? value : undefined);
-  };
-
-  const getDayOffsetDropdown = (
-    tpt: PassingTime,
-    index: number,
-    field: OffsetKeys
-  ) => (
-    <InputGroup
+  const getDayOffsetDropdown = (tpt: PassingTime, index: number) => (
+    <Dropdown
       label={formatMessage(messages.dayTimeOffset)}
-      className="dayoffset"
-    >
-      <Dropdown
-        items={[...Array(10).keys()].map(i => ({
-          value: String(i),
-          label: String(i)
-        }))}
-        onChange={(e: NormalizedDropdownItemType | null) => {
-          if (!e?.value) return;
-          handleDayOffsetChange(index, field, e.value);
-        }}
-        value={tpt[field]?.toString() ?? '0'}
-      />
-    </InputGroup>
+      value={getDayOffset(tpt)?.toString() ?? '0'}
+      items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map(i => ({
+        value: i,
+        label: i
+      }))}
+      onChange={e =>
+        onChange(
+          changeElementAtIndex(
+            passingTimes,
+            {
+              ...passingTimes[index],
+              departureDayOffset: e?.value as number | undefined
+            },
+            index
+          )
+        )
+      }
+    />
   );
 
   const padTimePickerInput = (time: string): string | undefined => {
@@ -126,8 +77,8 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     return time + ':00';
   };
 
-  const getTimePicker = (tpt: PassingTime, index: number, field: TimeKeys) => {
-    const currentValue = tpt[field];
+  const getTimePicker = (tpt: PassingTime, index: number) => {
+    const currentValue = getPassingTime(tpt);
 
     const shownValue = currentValue
       ?.split(':')
@@ -141,7 +92,17 @@ const PassingTimesEditor = (props: Props & StateProps) => {
       >
         <TextField
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onFieldChange(index, field, padTimePickerInput(e.target.value))
+            onChange(
+              changeElementAtIndex(
+                passingTimes,
+                {
+                  ...passingTimes[index],
+                  departureTime: padTimePickerInput(e.target.value),
+                  arrivalTime: padTimePickerInput(e.target.value)
+                },
+                index
+              )
+            )
           }
           prepend={<ClockIcon inline />}
           type="time"
@@ -157,21 +118,17 @@ const PassingTimesEditor = (props: Props & StateProps) => {
         <SmallAlertBox variant="error"> {errorMessage} </SmallAlertBox>
       )}
       <div className="passing-times-editor">
-        {stopPoints.map((stopPoint, index) => {
-          const passingTime = passingTimes[index];
-          const { time, offset } = getPassingTimeKeys(passingTime);
-          return (
-            <div className="passing-time">
-              <div className="time-number">{index + 1}</div>
-              <PassingTimeTitle
-                flexibleStopPlaces={flexibleStopPlaces}
-                stopPoint={stopPoint}
-              />
-              {getTimePicker(passingTime, index, time)}
-              {getDayOffsetDropdown(passingTime, index, offset)}
-            </div>
-          );
-        })}
+        {passingTimes.map((passingTime, index) => (
+          <div key={index} className="passing-time">
+            <div className="time-number">{index + 1}</div>
+            <PassingTimeTitle
+              flexibleStopPlaces={flexibleStopPlaces}
+              stopPoint={stopPoints[index]}
+            />
+            {getTimePicker(passingTime, index)}
+            {getDayOffsetDropdown(passingTime, index)}
+          </div>
+        ))}
       </div>
     </>
   );
