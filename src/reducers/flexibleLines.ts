@@ -17,8 +17,12 @@ const flexibleLines = (
 
     case RECEIVE_FLEXIBLE_LINE:
       return lines
-        ? lines.map(l => (l.id === action.line.id ? action.line : l))
-        : [action.line];
+        ? lines.map(l =>
+            l.id === action.line.id
+              ? { ...action.line, networkRef: action.line.network?.id }
+              : l
+          )
+        : [{ ...action.line, networkRef: action.line.network?.id }];
 
     default:
       return lines;

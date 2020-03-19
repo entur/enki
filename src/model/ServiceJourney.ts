@@ -11,7 +11,7 @@ type ServiceJourney = VersionedType & {
   publicCode?: string;
   operatorRef?: string;
   bookingArrangement?: BookingArrangement;
-  passingTimes?: PassingTime[];
+  passingTimes: PassingTime[];
   dayTypes?: DayType[];
   notices?: Notice[];
 };

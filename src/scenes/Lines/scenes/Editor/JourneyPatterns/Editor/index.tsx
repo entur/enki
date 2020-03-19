@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { ValidationInfoIcon } from '@entur/icons';
 import messages from './messages';
 import General from './General';
-import { JourneyPattern } from 'model';
 import { Paragraph, SubParagraph } from '@entur/typography';
 import { isBlank } from 'helpers/forms';
 import {
@@ -12,11 +11,10 @@ import {
   validateStopPoints
 } from './StopPoints/Editor/validateForm';
 import {
+  changeElementAtIndex,
   removeElementByIndex,
-  replaceElement,
   useUniqueKeys
 } from 'helpers/arrays';
-import { DIRECTION_TYPE } from 'model/enums';
 import StopPointEditor from './StopPoints/Editor';
 import StopPoint from 'model/StopPoint';
 import AddButton from 'components/AddButton/AddButton';
@@ -24,6 +22,7 @@ import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { colors } from '@entur/tokens';
 import './styles.scss';
+import JourneyPattern from 'model/JourneyPattern';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -43,15 +42,8 @@ const JourneyPatternEditor = ({
   index,
   flexibleStopPlaces
 }: Props & StateProps) => {
-  const [directionSelection, setDirectionSelection] = useState<
-    DIRECTION_TYPE | undefined
-  >(undefined);
-  const { pointsInSequence, directionType, serviceJourneys } = journeyPattern;
+  const { pointsInSequence, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
-
-  useEffect(() => {
-    setDirectionSelection(directionType);
-  }, [directionType]);
 
   useEffect(() => {
     setIsValidJourneyPattern(
@@ -64,21 +56,11 @@ const JourneyPatternEditor = ({
     setIsValidJourneyPattern
   ]);
 
-  const onFieldChange = (field: string, value: any) => {
-    onSave(journeyPattern.withFieldChange(field, value), index);
-  };
-
-  const handleDirectionSelectionChange = (
-    directionSelection: DIRECTION_TYPE | undefined
-  ) => {
-    onFieldChange('directionType', directionSelection);
-    setDirectionSelection(directionSelection);
+  const onJourneyPatternChange = (journeyPattern: JourneyPattern) => {
+    onSave(journeyPattern, index);
   };
 
   const deleteStopPoint = (stopPointIndex: number) => {
-    const copy = pointsInSequence.slice();
-    copy.splice(stopPointIndex, 1);
-
     const newServiceJourneys = serviceJourneys.map(serviceJourney => ({
       ...serviceJourney,
       passingTimes: serviceJourney.passingTimes
@@ -86,34 +68,38 @@ const JourneyPatternEditor = ({
         : []
     }));
 
-    onSave(
-      journeyPattern
-        .withFieldChange('pointsInSequence', copy)
-        .withFieldChange('serviceJourneys', newServiceJourneys),
-      index
-    );
+    onJourneyPatternChange({
+      ...journeyPattern,
+      serviceJourneys: newServiceJourneys,
+      pointsInSequence: removeElementByIndex(
+        journeyPattern.pointsInSequence,
+        stopPointIndex
+      )
+    });
   };
 
   const addStopPoint = () => {
     const newServiceJourneys = serviceJourneys.map(serviceJourney => ({
       ...serviceJourney,
-      passingTimes: [...(serviceJourney.passingTimes ?? []), {}]
+      passingTimes: [...serviceJourney.passingTimes, {}]
     }));
 
-    onSave(
-      journeyPattern
-        .withFieldChange('pointsInSequence', [...pointsInSequence, {}])
-        .withFieldChange('serviceJourneys', newServiceJourneys),
-      index
-    );
+    onJourneyPatternChange({
+      ...journeyPattern,
+      pointsInSequence: [...journeyPattern.pointsInSequence, {}],
+      serviceJourneys: newServiceJourneys
+    });
   };
 
-  const updateStopPoint = (index: number, stopPlace: StopPoint) => {
-    onFieldChange(
-      'pointsInSequence',
-      replaceElement(pointsInSequence, index, stopPlace)
-    );
-  };
+  const updateStopPoint = (index: number, stopPlace: StopPoint) =>
+    onJourneyPatternChange({
+      ...journeyPattern,
+      pointsInSequence: changeElementAtIndex(
+        journeyPattern.pointsInSequence,
+        stopPlace,
+        index
+      )
+    });
 
   const keys = useUniqueKeys(pointsInSequence);
 
@@ -124,9 +110,7 @@ const JourneyPatternEditor = ({
         <Paragraph>{formatMessage(messages.enterInformation)}</Paragraph>
         <General
           journeyPattern={journeyPattern}
-          directionSelection={directionSelection}
-          onFieldChange={onFieldChange}
-          handleDirectionSelectionChange={handleDirectionSelectionChange}
+          onFieldChange={onJourneyPatternChange}
         />
       </section>
 
