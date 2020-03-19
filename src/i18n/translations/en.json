@@ -209,6 +209,8 @@
   "lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.bothValues": "Choose either stop place or platform, not both.",
   "lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.noValues": "You must a place",
   "lines.journeyPatterns.stopPoints.validateForm.error.frontText.noValue": "You must enter a front text",
+  "lines.journeyPatterns.stopPoints.validateForm.error.frontText.alighting": "First stop can only be for boarding",
+  "lines.journeyPatterns.stopPoints.validateForm.error.frontText.boarding": "Last stop can only be for alighting",
   "lines.journeyPatterns.stopPoints.validateForm.error.quayRef.invalid": "Invalid platform ID",
   "lines.journeyPatterns.stopPoints.table.yes": "Yes",
   "lines.journeyPatterns.stopPoints.table.no": "No",

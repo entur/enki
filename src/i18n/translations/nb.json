@@ -219,6 +219,8 @@
   "lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.bothValues": "Velg enten stoppested eller plattform, ikke begge.",
   "lines.journeyPatterns.stopPoints.validateForm.error.flexibleStopPlaceRefAndQuayRef.noValues": "Du må velge et sted",
   "lines.journeyPatterns.stopPoints.validateForm.error.frontText.noValue": "Du må oppgi fronttekst",
+  "lines.journeyPatterns.stopPoints.validateForm.error.frontText.alighting": "Første stopp kan kun ha påstigning",
+  "lines.journeyPatterns.stopPoints.validateForm.error.frontText.boarding": "Siste stopp kan kun ha avstigning",
   "lines.journeyPatterns.stopPoints.validateForm.error.quayRef.invalid": "Ugyldig plattform-ID",
   "lines.journeyPatterns.serviceJourney.availability": "Tilgjengelighet",
   "lines.journeyPatterns.serviceJourney.passingTimes": "Passeringstider",

@@ -18,5 +18,13 @@ export default defineMessages({
   errorFrontTextNoValue: {
     id: 'lines.journeyPatterns.stopPoints.validateForm.error.frontText.noValue',
     defaultMessage: 'Du må oppgi fronttekst'
+  },
+  errorAlighting: {
+    id: 'lines.journeyPatterns.stopPoints.validateForm.error.alighting',
+    defaultMessage: 'Første stopp kan kun ha påstigning'
+  },
+  errorBoarding: {
+    id: 'lines.journeyPatterns.stopPoints.validateForm.error.boarding',
+    defaultMessage: 'Siste stopp kan kun ha avstigning'
   }
 });
