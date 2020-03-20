@@ -15,18 +15,6 @@ import { selectIntl } from 'i18n';
 import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
 
-const getPassingTime = (pt: PassingTime): string | undefined =>
-  pt.departureTime ??
-  pt.latestArrivalTime ??
-  pt.arrivalTime ??
-  pt.earliestDepartureTime;
-
-const getDayOffset = (pt: PassingTime): number | undefined =>
-  pt.departureDayOffset ??
-  pt.arrivalDayOffset ??
-  pt.earliestDepartureDayOffset ??
-  pt.latestArrivalDayOffset;
-
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
   intl: IntlState;
@@ -49,10 +37,10 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
   const { formatMessage } = useSelector(selectIntl);
 
-  const getDayOffsetDropdown = (tpt: PassingTime, index: number) => (
+  const getDayOffsetDropdown = (passingTime: PassingTime, index: number) => (
     <Dropdown
       label={formatMessage(messages.dayTimeOffset)}
-      value={getDayOffset(tpt)?.toString() ?? '0'}
+      value={passingTime.departureDayOffset?.toString() ?? '0'}
       items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map(i => ({
         value: i,
         label: i
@@ -63,7 +51,8 @@ const PassingTimesEditor = (props: Props & StateProps) => {
             passingTimes,
             {
               ...passingTimes[index],
-              departureDayOffset: e?.value as number | undefined
+              departureDayOffset: e?.value as number | undefined,
+              arrivalDayOffset: e?.value as number | undefined
             },
             index
           )
@@ -77,10 +66,8 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     return time + ':00';
   };
 
-  const getTimePicker = (tpt: PassingTime, index: number) => {
-    const currentValue = getPassingTime(tpt);
-
-    const shownValue = currentValue
+  const getTimePicker = (passingTime: PassingTime, index: number) => {
+    const shownValue = passingTime.departureTime
       ?.split(':')
       .slice(0, 2)
       .join(':');
