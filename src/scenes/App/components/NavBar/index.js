@@ -85,13 +85,13 @@ const NavBar = () => {
           setRedirect={setRedirect}
         />
         <NavBarItem
-          text={formatMessage(messages.linesMenuItemLabel)}
-          path="/lines"
+          text={formatMessage(messages.stopPlacesMenuItemLabel)}
+          path="/stop-places"
           setRedirect={setRedirect}
         />
         <NavBarItem
-          text={formatMessage(messages.stopPlacesMenuItemLabel)}
-          path="/stop-places"
+          text={formatMessage(messages.linesMenuItemLabel)}
+          path="/lines"
           setRedirect={setRedirect}
         />
         <NavBarItem
