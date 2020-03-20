@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import ContactFields from 'scenes/Lines/scenes/Editor/BookingArrangementEditor/contactFields';
 import BookingLimitFields from './bookingLimitFields';
 import BookingMethodSelection from 'scenes/Lines/scenes/Editor/BookingArrangementEditor/bookingMethodSelection';
