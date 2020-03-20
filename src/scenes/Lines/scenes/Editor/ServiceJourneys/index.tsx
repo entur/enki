@@ -13,6 +13,7 @@ import AddButton from 'components/AddButton/AddButton';
 import ServiceJourney from 'model/ServiceJourney';
 import { Heading2, Paragraph } from '@entur/typography';
 import { validateServiceJourney } from 'scenes/Lines/scenes/Editor/ServiceJourneys/Editor/validate';
+import ScrollToTop from 'components/ScrollToTop';
 
 type Props = {
   serviceJourneys: ServiceJourney[];
@@ -40,10 +41,6 @@ const ServiceJourneysEditor = ({
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     setIsValidServiceJourney(
       serviceJourneys.every(sj => validateServiceJourney(sj))
     );
@@ -52,30 +49,32 @@ const ServiceJourneysEditor = ({
   const keys = useUniqueKeys(serviceJourneys);
 
   return (
-    <div className="service-journeys-editor">
-      <Heading2>{formatMessage(messages.serviceJourneys)}</Heading2>
-      <Paragraph>{formatMessage(messages.serviceJourneysInfo)}</Paragraph>
-      {serviceJourneys.map((sj, index) => (
-        <ServiceJourneyEditor
-          key={keys[index]}
-          serviceJourney={sj}
-          stopPoints={stopPoints}
-          onChange={serviceJourney =>
-            updateServiceJourney(index, serviceJourney)
-          }
-          deleteServiceJourney={
-            serviceJourneys.length > 1
-              ? () => deleteServiceJourney(index)
-              : undefined
-          }
-        />
-      ))}
+    <ScrollToTop>
+      <div className="service-journeys-editor">
+        <Heading2>{formatMessage(messages.serviceJourneys)}</Heading2>
+        <Paragraph>{formatMessage(messages.serviceJourneysInfo)}</Paragraph>
+        {serviceJourneys.map((sj, index) => (
+          <ServiceJourneyEditor
+            key={keys[index]}
+            serviceJourney={sj}
+            stopPoints={stopPoints}
+            onChange={serviceJourney =>
+              updateServiceJourney(index, serviceJourney)
+            }
+            deleteServiceJourney={
+              serviceJourneys.length > 1
+                ? () => deleteServiceJourney(index)
+                : undefined
+            }
+          />
+        ))}
 
-      <AddButton
-        onClick={addNewServiceJourney}
-        buttonTitle={formatMessage(messages.addServiceJourneys)}
-      />
-    </div>
+        <AddButton
+          onClick={addNewServiceJourney}
+          buttonTitle={formatMessage(messages.addServiceJourneys)}
+        />
+      </div>
+    </ScrollToTop>
   );
 };
 

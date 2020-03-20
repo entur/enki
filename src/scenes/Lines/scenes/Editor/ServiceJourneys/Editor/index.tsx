@@ -19,6 +19,7 @@ import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedIt
 import { GlobalState } from 'reducers';
 import ServiceJourney from 'model/ServiceJourney';
 import './styles.scss';
+import ScrollToTop from 'components/ScrollToTop';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -68,121 +69,126 @@ const ServiceJourneyEditor = (props: Props) => {
   };
 
   return (
-    <div className="service-journey-editor">
-      <div className="service-journey-editor-form">
-        <div className="input-group">
-          <div className="input-fields">
-            <InputGroup
-              className="form-section"
-              label={formatMessage(messages.nameLabel)}
-              feedback={
-                isBlankName ? formatMessage(messages.nameRequired) : undefined
+    <ScrollToTop>
+      <div className="service-journey-editor">
+        <div className="service-journey-editor-form">
+          <div className="input-group">
+            <div className="input-fields">
+              <InputGroup
+                className="form-section"
+                label={formatMessage(messages.nameLabel)}
+                feedback={
+                  isBlankName ? formatMessage(messages.nameRequired) : undefined
+                }
+                variant={isBlankName ? 'error' : undefined}
+              >
+                <TextField
+                  defaultValue={name}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange('name', e.target.value)
+                  }
+                />
+              </InputGroup>
+
+              <InputGroup
+                label={formatMessage(messages.description)}
+                className="form-section"
+              >
+                <TextField
+                  defaultValue={description}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange('description', e.target.value)
+                  }
+                />
+              </InputGroup>
+
+              <InputGroup label={'Private code'} className="form-section">
+                <TextField
+                  defaultValue={privateCode}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange('privateCode', e.target.value)
+                  }
+                />
+              </InputGroup>
+
+              <InputGroup
+                label={formatMessage(messages.publicCode)}
+                className="form-section"
+              >
+                <TextField
+                  defaultValue={publicCode}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange('publicCode', e.target.value)
+                  }
+                />
+              </InputGroup>
+            </div>
+
+            <Dropdown
+              className="form-section operator-selector"
+              label={formatMessage(messages.operator)}
+              items={[
+                ...operators.map(({ name, id }) => ({
+                  label: name,
+                  value: id
+                }))
+              ]}
+              value={operatorSelection}
+              onChange={(e: NormalizedDropdownItemType | null) =>
+                handleOperatorSelectionChange(e?.value)
               }
-              variant={isBlankName ? 'error' : undefined}
-            >
-              <TextField
-                defaultValue={name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('name', e.target.value)
-                }
-              />
-            </InputGroup>
-
-            <InputGroup
-              label={formatMessage(messages.description)}
-              className="form-section"
-            >
-              <TextField
-                defaultValue={description}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('description', e.target.value)
-                }
-              />
-            </InputGroup>
-
-            <InputGroup label={'Private code'} className="form-section">
-              <TextField
-                defaultValue={privateCode}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('privateCode', e.target.value)
-                }
-              />
-            </InputGroup>
-
-            <InputGroup
-              label={formatMessage(messages.publicCode)}
-              className="form-section"
-            >
-              <TextField
-                defaultValue={publicCode}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('publicCode', e.target.value)
-                }
-              />
-            </InputGroup>
+            />
           </div>
 
-          <Dropdown
-            className="form-section operator-selector"
-            label={formatMessage(messages.operator)}
-            items={[
-              ...operators.map(({ name, id }) => ({
-                label: name,
-                value: id
-              }))
+          <div className="input-group">
+            <h4> {formatMessage(messages.availability)} </h4>
+
+            <DayTypeEditor
+              dayType={
+                dayTypes?.[0] ?? { daysOfWeek: [], dayTypeAssignments: [] }
+              }
+              onChange={dt => onFieldChange('dayTypes', [dt])}
+            />
+          </div>
+
+          <h4> {formatMessage(messages.passingTimes)} </h4>
+          <PassingTimesEditor
+            passingTimes={passingTimes ?? []}
+            stopPoints={stopPoints}
+            onChange={pts => onFieldChange('passingTimes', pts)}
+          />
+        </div>
+
+        {deleteServiceJourney && (
+          <SecondaryButton
+            className="delete-button"
+            onClick={() => setShowDeleteDialog(true)}
+          >
+            <DeleteIcon inline /> {formatMessage(messages.delete)}
+          </SecondaryButton>
+        )}
+
+        {showDeleteDialog && deleteServiceJourney && (
+          <ConfirmDialog
+            isOpen={showDeleteDialog}
+            title={formatMessage(messages.deleteTitle)}
+            message={formatMessage(messages.deleteMessage)}
+            buttons={[
+              <SecondaryButton
+                key={2}
+                onClick={() => setShowDeleteDialog(false)}
+              >
+                {formatMessage(messages.no)}
+              </SecondaryButton>,
+              <SuccessButton key={1} onClick={deleteServiceJourney}>
+                {formatMessage(messages.yes)}
+              </SuccessButton>
             ]}
-            value={operatorSelection}
-            onChange={(e: NormalizedDropdownItemType | null) =>
-              handleOperatorSelectionChange(e?.value)
-            }
+            onDismiss={() => setShowDeleteDialog(false)}
           />
-        </div>
-
-        <div className="input-group">
-          <h4> {formatMessage(messages.availability)} </h4>
-
-          <DayTypeEditor
-            dayType={
-              dayTypes?.[0] ?? { daysOfWeek: [], dayTypeAssignments: [] }
-            }
-            onChange={dt => onFieldChange('dayTypes', [dt])}
-          />
-        </div>
-
-        <h4> {formatMessage(messages.passingTimes)} </h4>
-        <PassingTimesEditor
-          passingTimes={passingTimes ?? []}
-          stopPoints={stopPoints}
-          onChange={pts => onFieldChange('passingTimes', pts)}
-        />
+        )}
       </div>
-
-      {deleteServiceJourney && (
-        <SecondaryButton
-          className="delete-button"
-          onClick={() => setShowDeleteDialog(true)}
-        >
-          <DeleteIcon inline /> {formatMessage(messages.delete)}
-        </SecondaryButton>
-      )}
-
-      {showDeleteDialog && deleteServiceJourney && (
-        <ConfirmDialog
-          isOpen={showDeleteDialog}
-          title={formatMessage(messages.deleteTitle)}
-          message={formatMessage(messages.deleteMessage)}
-          buttons={[
-            <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
-              {formatMessage(messages.no)}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={deleteServiceJourney}>
-              {formatMessage(messages.yes)}
-            </SuccessButton>
-          ]}
-          onDismiss={() => setShowDeleteDialog(false)}
-        />
-      )}
-    </div>
+    </ScrollToTop>
   );
 };
 
