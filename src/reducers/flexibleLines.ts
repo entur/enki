@@ -1,28 +1,75 @@
 import {
   RECEIVE_FLEXIBLE_LINES,
-  RECEIVE_FLEXIBLE_LINE
+  RECEIVE_FLEXIBLE_LINE,
+  FlexibleLinesAction
 } from 'actions/flexibleLines';
 import FlexibleLine from '../model/FlexibleLine';
-import { AnyAction } from 'redux';
+import PassingTime from 'model/PassingTime';
+import JourneyPattern from 'model/JourneyPattern';
 
 export type FlexibleLinesState = FlexibleLine[] | null;
 
+const cleanUpPassingTimes = (pt: PassingTime): PassingTime => {
+  if (pt.departureTime)
+    return {
+      departureTime: pt.departureTime,
+      arrivalTime: pt.departureTime,
+      departureDayOffset: pt.departureDayOffset,
+      arrivalDayOffset: pt.departureDayOffset
+    };
+  else if (pt.latestArrivalTime)
+    return {
+      departureTime: pt.latestArrivalTime,
+      arrivalTime: pt.latestArrivalTime,
+      departureDayOffset: pt.latestArrivalDayOffset,
+      arrivalDayOffset: pt.latestArrivalDayOffset
+    };
+  else if (pt.arrivalTime)
+    return {
+      departureTime: pt.arrivalTime,
+      arrivalTime: pt.arrivalTime,
+      departureDayOffset: pt.arrivalDayOffset,
+      arrivalDayOffset: pt.arrivalDayOffset
+    };
+  else if (pt.earliestDepartureTime)
+    return {
+      departureTime: pt.earliestDepartureTime,
+      arrivalTime: pt.earliestDepartureTime,
+      departureDayOffset: pt.earliestDepartureDayOffset,
+      arrivalDayOffset: pt.earliestDepartureDayOffset
+    };
+  else return {};
+};
+
 const flexibleLines = (
   lines: FlexibleLinesState = null,
-  action: AnyAction
+  action: FlexibleLinesAction
 ): FlexibleLinesState => {
   switch (action.type) {
     case RECEIVE_FLEXIBLE_LINES:
       return action.lines;
 
     case RECEIVE_FLEXIBLE_LINE:
-      return lines
-        ? lines.map(l =>
-            l.id === action.line.id
-              ? { ...action.line, networkRef: action.line.network?.id }
-              : l
-          )
-        : [{ ...action.line, networkRef: action.line.network?.id }];
+      const newJourneyPatterns: JourneyPattern[] =
+        action.line?.journeyPatterns?.map(jp => ({
+          ...jp,
+          serviceJourneys: jp.serviceJourneys.map(sj => ({
+            ...sj,
+            passingTimes: sj.passingTimes.map(pt => cleanUpPassingTimes(pt))
+          }))
+        })) ?? [];
+
+      const newFlexibleLine: FlexibleLine = {
+        ...action.line,
+        networkRef: action.line.network?.id,
+        journeyPatterns: newJourneyPatterns
+      };
+
+      return (
+        lines?.map(l => (l.id === action.line.id ? newFlexibleLine : l)) ?? [
+          newFlexibleLine
+        ]
+      );
 
     default:
       return lines;

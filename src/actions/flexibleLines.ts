@@ -21,12 +21,30 @@ import { GlobalState } from 'reducers';
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINE = 'RECEIVE_FLEXIBLE_LINE';
 
-const receiveFlexibleLinesActionCreator = (lines: FlexibleLine[]) => ({
+type ReceiveFlexibleLinesAction = {
+  type: typeof RECEIVE_FLEXIBLE_LINES;
+  lines: FlexibleLine[];
+};
+
+type ReceiveFlexibleLineAction = {
+  type: typeof RECEIVE_FLEXIBLE_LINE;
+  line: FlexibleLine;
+};
+
+export type FlexibleLinesAction =
+  | ReceiveFlexibleLineAction
+  | ReceiveFlexibleLinesAction;
+
+const receiveFlexibleLinesActionCreator = (
+  lines: FlexibleLine[]
+): ReceiveFlexibleLinesAction => ({
   type: RECEIVE_FLEXIBLE_LINES,
   lines
 });
 
-const receiveFlexibleLineActionCreator = (line: FlexibleLine) => ({
+const receiveFlexibleLineActionCreator = (
+  line: FlexibleLine
+): ReceiveFlexibleLineAction => ({
   type: RECEIVE_FLEXIBLE_LINE,
   line
 });
