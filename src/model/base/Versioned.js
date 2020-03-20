@@ -1,9 +1,5 @@
-import Base from './Base';
-
-class Versioned extends Base {
+class Versioned {
   constructor(data = {}) {
-    super();
-
     // If ID is set UTTU will do an update, otherwise a create.
     this.id = data.id;
 

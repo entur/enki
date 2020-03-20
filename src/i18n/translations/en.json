@@ -288,6 +288,7 @@
   "stopPlaces.editor.deletingOverlayLoaderText": "Deleting stop place...",
   "stopPlaces.editor.descriptionFormLabelText": "Description",
   "stopPlaces.editor.editHeader": "Edit stop place",
+  "stopPlaces.editor.error.coordinates": "The coordinates are in an invalid format",
   "stopPlaces.editor.loadingDependenciesText": "Loading dependencies",
   "stopPlaces.editor.loadingStopPlaceText": "Loading stop place",
   "stopPlaces.editor.nameFormLabelText": "* Name",
