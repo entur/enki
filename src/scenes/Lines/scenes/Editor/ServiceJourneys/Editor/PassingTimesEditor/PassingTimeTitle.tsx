@@ -32,8 +32,8 @@ const PassingTimeTitle = ({
         : flexibleStopPlaces?.find(
             stop =>
               stop.id ===
-              (stopPoint.flexibleStopPlace?.id ??
-                stopPoint.flexibleStopPlaceRef)
+              (stopPoint.flexibleStopPlaceRef ??
+                stopPoint.flexibleStopPlace?.id)
           )?.name ?? ''}
     </div>
   );
