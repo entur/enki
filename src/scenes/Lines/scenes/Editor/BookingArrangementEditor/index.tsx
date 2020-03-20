@@ -6,6 +6,7 @@ import BookingTimeSelection from 'scenes/Lines/scenes/Editor/BookingArrangementE
 import PaymentTimeSelection from 'scenes/Lines/scenes/Editor/BookingArrangementEditor/paymentTimeSelection';
 import BookingAccessSelection from './bookingAccessSelection';
 import BookingNoteField from './bookingNoteField';
+import ScrollToTop from 'components/ScrollToTop';
 import './styles.scss';
 import BookingArrangement, {
   bookingArrangementIsEmpty
@@ -44,71 +45,73 @@ const BookingArrangementEditor = (props: Props) => {
   } = bookingArrangement;
 
   return (
-    <div className="booking-editor tab-style">
-      <ContactFields
-        contact={bookingContact}
-        onContactChange={contact =>
-          onFieldChange({ ...bookingArrangement, bookingContact: contact })
-        }
-      />
+    <ScrollToTop>
+      <div className="booking-editor tab-style">
+        <ContactFields
+          contact={bookingContact}
+          onContactChange={contact =>
+            onFieldChange({ ...bookingArrangement, bookingContact: contact })
+          }
+        />
 
-      <BookingMethodSelection
-        bookingMethods={bookingMethods ?? []}
-        onChange={(bookingMethod: BOOKING_METHOD) =>
-          onFieldChange({
+        <BookingMethodSelection
+          bookingMethods={bookingMethods ?? []}
+          onChange={(bookingMethod: BOOKING_METHOD) =>
+            onFieldChange({
+              ...bookingArrangement,
+              bookingMethods: addOrRemove(bookingMethod, bookingMethods ?? [])
+            })
+          }
+        />
+
+        <BookingTimeSelection
+          bookWhen={bookWhen}
+          onChange={(bookWhen: any) =>
+            onFieldChange({ ...bookingArrangement, bookWhen })
+          }
+        />
+
+        <BookingLimitFields
+          latestBookingTime={latestBookingTime}
+          minimumBookingPeriod={minimumBookingPeriod}
+          onLatestBookingTimeChange={(latestBookingTime: any) =>
+            onFieldChange({ ...bookingArrangement, latestBookingTime })
+          }
+          onMinimumBookingPeriodChange={(minimumBookingPeriod: any) =>
+            onFieldChange({ ...bookingArrangement, minimumBookingPeriod })
+          }
+          resetBookingLimit={() => ({
             ...bookingArrangement,
-            bookingMethods: addOrRemove(bookingMethod, bookingMethods ?? [])
-          })
-        }
-      />
+            minimumBookingPeriod: undefined,
+            latestBookingTime: undefined
+          })}
+        />
 
-      <BookingTimeSelection
-        bookWhen={bookWhen}
-        onChange={(bookWhen: any) =>
-          onFieldChange({ ...bookingArrangement, bookWhen })
-        }
-      />
+        <PaymentTimeSelection
+          buyWhen={buyWhen ?? []}
+          onChange={(purchaseMoment: PURCHASE_MOMENT) =>
+            onFieldChange({
+              ...bookingArrangement,
+              buyWhen: addOrRemove(purchaseMoment, buyWhen ?? [])
+            })
+          }
+        />
 
-      <BookingLimitFields
-        latestBookingTime={latestBookingTime}
-        minimumBookingPeriod={minimumBookingPeriod}
-        onLatestBookingTimeChange={(latestBookingTime: any) =>
-          onFieldChange({ ...bookingArrangement, latestBookingTime })
-        }
-        onMinimumBookingPeriodChange={(minimumBookingPeriod: any) =>
-          onFieldChange({ ...bookingArrangement, minimumBookingPeriod })
-        }
-        resetBookingLimit={() => ({
-          ...bookingArrangement,
-          minimumBookingPeriod: undefined,
-          latestBookingTime: undefined
-        })}
-      />
+        <BookingAccessSelection
+          bookingAccess={bookingAccess}
+          onChange={(bookingAccess: any) =>
+            onFieldChange({ ...bookingArrangement, bookingAccess })
+          }
+        />
 
-      <PaymentTimeSelection
-        buyWhen={buyWhen ?? []}
-        onChange={(purchaseMoment: PURCHASE_MOMENT) =>
-          onFieldChange({
-            ...bookingArrangement,
-            buyWhen: addOrRemove(purchaseMoment, buyWhen ?? [])
-          })
-        }
-      />
-
-      <BookingAccessSelection
-        bookingAccess={bookingAccess}
-        onChange={(bookingAccess: any) =>
-          onFieldChange({ ...bookingArrangement, bookingAccess })
-        }
-      />
-
-      <BookingNoteField
-        bookingNote={bookingNote}
-        onChange={(bookingNote: any) =>
-          onFieldChange({ ...bookingArrangement, bookingNote })
-        }
-      />
-    </div>
+        <BookingNoteField
+          bookingNote={bookingNote}
+          onChange={(bookingNote: any) =>
+            onFieldChange({ ...bookingArrangement, bookingNote })
+          }
+        />
+      </div>
+    </ScrollToTop>
   );
 };
 
