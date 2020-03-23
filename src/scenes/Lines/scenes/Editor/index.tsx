@@ -101,14 +101,20 @@ const FlexibleLineEditor = ({
     }
   };
 
+  const getMaxAllowedStepIndex = () => {
+    if (!errors.isValid) return 0;
+    else if (!isValidJourneyPattern) return 1;
+    else if (!isValidServiceJourney) return 2;
+    else return 3;
+  };
+
   const operators = filterNetexOperators(organisations ?? []);
   const isLoadingLine = !flexibleLine;
   const isEdit = !isBlank(match.params.id);
   const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
 
-  const onStepClicked = (stepIndexClicked: number, isInEditMode: boolean) => {
-    const allowPreviousStepClick = activeStepperIndex > stepIndexClicked;
-    if (isInEditMode || allowPreviousStepClick) {
+  const onStepClicked = (stepIndexClicked: number) => {
+    if (getMaxAllowedStepIndex() >= stepIndexClicked) {
       setActiveStepperIndex(stepIndexClicked);
     }
   };
@@ -132,7 +138,7 @@ const FlexibleLineEditor = ({
         <Stepper
           steps={FLEXIBLE_LINE_STEPS}
           activeIndex={activeStepperIndex}
-          onStepClick={index => onStepClicked(index, isEdit)}
+          onStepClick={index => onStepClicked(index)}
         />
       </div>
 
