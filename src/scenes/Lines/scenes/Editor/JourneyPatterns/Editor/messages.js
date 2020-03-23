@@ -7,7 +7,8 @@ export default defineMessages({
   },
   enterInformation: {
     id: 'lines.editor.journeyPatterns.editor.fillInformation',
-    defaultMessage: 'Fyll inn informasjon om Journey Pattern.'
+    defaultMessage:
+      'Et Journey Pattern definerer mønsteret til linjen, og består av stoppene langs ruten.'
   },
   stopPoints: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints',
@@ -135,7 +136,7 @@ export default defineMessages({
   stopPointsInfo: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.info',
     defaultMessage:
-      'Du må opprette minst to stoppepunkter. Velg fra liste over allerede eksisterende stoppesteder, lag nytt stoppested, eller benytt plattform-ID fra NSR.'
+      'Du må opprette minst to stoppesteder. Ett for start og ett for slutt. Hvis du lager en sonebasert linje, og du bare har én sone, må du legge til samme sone to ganger.'
   },
   serviceJourneysInfo: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',

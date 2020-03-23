@@ -13,6 +13,11 @@ export default defineMessages({
     id: 'lines.editor.journeyPatterns.editor.general.privateCodeLabel',
     defaultMessage: 'Privat kode'
   },
+  privateCodeLabelTooltip: {
+    id: 'lines.editor.journeyPatterns.editor.general.privateCodeLabelTooltip',
+    defaultMessage:
+      'Privat kode er det som kjennetegner journey patternet internt hos en operatør'
+  },
   directionLabel: {
     id: 'lines.editor.journeyPatterns.editor.general.directionLabel',
     defaultMessage: 'Retning'

@@ -50,6 +50,7 @@ const General = ({ journeyPattern, onFieldChange }: Props) => {
       <InputGroup
         className="form-section"
         label={formatMessage(messages.privateCodeLabel)}
+        labelTooltip={formatMessage(messages.privateCodeLabelTooltip)}
       >
         <TextField
           value={journeyPattern.privateCode || ''}

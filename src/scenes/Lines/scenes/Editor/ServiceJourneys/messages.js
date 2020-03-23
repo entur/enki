@@ -54,9 +54,23 @@ export default defineMessages({
     id: 'lines.journeyPatterns.serviceJourney.general.availability',
     defaultMessage: 'Tilgjengelighet'
   },
+  privateCode: {
+    id: 'lines.journeyPatterns.serviceJourney.general.privateCode',
+    defaultMessage: 'Privat kode'
+  },
+  privateCodeTooltip: {
+    id: 'lines.journeyPatterns.serviceJourney.general.privateCodeTooltip',
+    defaultMessage:
+      'Privat kode er det som kjennetegner service journeyen internt hos en operatør'
+  },
   publicCode: {
     id: 'lines.journeyPatterns.serviceJourney.general.publicCode',
     defaultMessage: 'Offentlig kode'
+  },
+  publicCodeTooltip: {
+    id: 'lines.journeyPatterns.serviceJourney.general.publicCodeTooltip',
+    defaultMessage:
+      'Offentlig kode er det som kjennetegner service journeyen ut mot publikum'
   },
   operator: {
     id: 'lines.journeyPatterns.serviceJourney.general.operator',

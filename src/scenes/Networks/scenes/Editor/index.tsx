@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
 import { SuccessButton, NegativeButton, SecondaryButton } from '@entur/button';
+import { Paragraph } from '@entur/typography';
 import { RouteComponentProps } from 'react-router';
 import { isBlank } from 'helpers/forms';
 import { ORGANISATION_TYPE } from 'model/enums';
@@ -132,6 +133,8 @@ const NetworkEditor = ({
           }
         />
       </div>
+
+      <Paragraph>{formatMessage(messages.networkDescription)}</Paragraph>
 
       {network && lines ? (
         <OverlayLoader

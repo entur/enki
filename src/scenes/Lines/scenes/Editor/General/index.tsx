@@ -73,6 +73,7 @@ export default ({
         <InputGroup
           className="form-section"
           label={formatMessage(messages.privateCodeFormGroupTitle)}
+          labelTooltip={formatMessage(messages.privateCodeInputLabelTooltip)}
         >
           <TextField
             type="text"
@@ -89,6 +90,7 @@ export default ({
         <InputGroup
           className="form-section"
           label={formatMessage(messages.publicCodeFormGroupTitle)}
+          labelTooltip={formatMessage(messages.publicCodeInputLabelTooltip)}
           variant={publicCodeError ? 'error' : undefined}
           feedback={publicCodeError ?? undefined}
         >
