@@ -1,9 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
 
-import { DIRECTION_TYPE } from 'model/enums';
 import { isBlank } from 'helpers/forms';
 import messages from './messages';
 import { selectIntl } from 'i18n';
@@ -60,18 +58,6 @@ const General = ({ journeyPattern, onFieldChange }: Props) => {
           }
         />
       </InputGroup>
-
-      <Dropdown
-        label={formatMessage(messages.directionLabel)}
-        items={Object.values(DIRECTION_TYPE)}
-        value={journeyPattern.directionType}
-        onChange={e =>
-          onFieldChange({
-            ...journeyPattern,
-            directionType: e?.value as DIRECTION_TYPE
-          })
-        }
-      />
     </div>
   );
 };
