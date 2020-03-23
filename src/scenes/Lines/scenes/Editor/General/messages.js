@@ -13,9 +13,19 @@ export default defineMessages({
     id: 'lines.editor.general.privateCodeFormGroupTitle',
     defaultMessage: 'Privat kode'
   },
+  privateCodeInputLabelTooltip: {
+    id: 'lines.editor.general.privateCodeInputLabelTooltip',
+    defaultMessage:
+      'Privat kode er det som kjennetegner linjen internt hos en operatør'
+  },
   publicCodeFormGroupTitle: {
     id: 'lines.editor.general.publicCodeFormGroupTitle',
     defaultMessage: '* Offentlig kode'
+  },
+  publicCodeInputLabelTooltip: {
+    id: 'lines.editor.general.publicCodeInputLabelTooltip',
+    defaultMessage:
+      'Offentlig kode er det som kjennetegner linjen ut mot publikum'
   },
   operatorFormGroupTitle: {
     id: 'lines.editor.general.operatorFormGroupTitle',

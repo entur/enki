@@ -9,6 +9,11 @@ export default defineMessages({
     id: 'networks.editor.createNetworkHeaderText',
     defaultMessage: 'Opprett nettverk'
   },
+  networkDescription: {
+    id: 'networks.editor.networkDescription',
+    defaultMessage:
+      'Minst ett nettverk er påkrevd. Nettverk kan brukes til å gruppere linjer.'
+  },
   saveButtonText: {
     id: 'networks.editor.saveButtonText',
     defaultMessage: 'Lagre'

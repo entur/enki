@@ -103,7 +103,11 @@ const ServiceJourneyEditor = (props: Props) => {
                 />
               </InputGroup>
 
-              <InputGroup label={'Private code'} className="form-section">
+              <InputGroup
+                label={formatMessage(messages.privateCode)}
+                labelTooltip={formatMessage(messages.privateCodeTooltip)}
+                className="form-section"
+              >
                 <TextField
                   defaultValue={privateCode}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -114,6 +118,7 @@ const ServiceJourneyEditor = (props: Props) => {
 
               <InputGroup
                 label={formatMessage(messages.publicCode)}
+                labelTooltip={formatMessage(messages.publicCodeTooltip)}
                 className="form-section"
               >
                 <TextField
@@ -154,7 +159,7 @@ const ServiceJourneyEditor = (props: Props) => {
 
           <h4>{formatMessage(messages.passingTimes)}</h4>
           <Paragraph>{formatMessage(messages.passingTimesInfo)}</Paragraph>
-        <PassingTimesEditor
+          <PassingTimesEditor
             passingTimes={passingTimes ?? []}
             stopPoints={stopPoints}
             onChange={pts => onFieldChange('passingTimes', pts)}
