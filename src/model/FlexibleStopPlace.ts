@@ -1,6 +1,6 @@
 import FlexibleArea from './FlexibleArea';
 import HailAndRideArea from './HailAndRideArea';
-import VersionedType from 'model/base/VersionedType';
+import VersionedType from 'model/VersionedType';
 
 type FlexibleStopPlace = VersionedType & {
   name?: string;

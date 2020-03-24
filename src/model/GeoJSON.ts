@@ -29,7 +29,9 @@ export const removeLastCoordinate = (
 
 const coordinateListRegEx = /^\[(\[\d+(\.\d*)?,\d+(\.\d*)?\])?(,\[\d+(\.\d*)?,\d+(\.\d*)?\])*\]$/;
 
-export const stringIsValidCoordinates = (s: string) =>
-  coordinateListRegEx.test(s);
+export const stringIsValidCoordinates = (s: string) => {
+  const strippedString = s.replace(/\s/g, '');
+  return coordinateListRegEx.test(strippedString);
+};
 
 export default GeoJSON;

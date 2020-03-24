@@ -2,7 +2,7 @@ import BookingArrangement from './BookingArrangement';
 import JourneyPattern, { journeyPatternToPayload } from './JourneyPattern';
 import Notice from './Notice';
 import { Network } from './Network';
-import VersionedType from 'model/base/VersionedType';
+import VersionedType from 'model/VersionedType';
 
 type FlexibleLine = VersionedType & {
   name?: string;

@@ -37,7 +37,7 @@ import {
 import { objectValuesAreEmpty } from 'helpers/forms';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { SmallAlertBox } from '@entur/alert';
-import {
+import GeoJSON, {
   removeLastCoordinate,
   addCoordinate,
   Coordinate,
@@ -50,6 +50,10 @@ const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
   polygonCoordinates.length === 0
     ? ''
     : JSON.stringify(polygonCoordinates.map(([x, y]) => [y, x]));
+
+// Transform input coordinates from GeoJson order [Long, Lat] to [Lat, Long]
+const transformTextToCoordinates = (text: string): Coordinate[] =>
+  JSON.parse(text).map(([x, y]: Coordinate) => [y, x]);
 
 const FlexibleStopPlaceEditor = ({
   match,
@@ -134,9 +138,15 @@ const FlexibleStopPlaceEditor = ({
   }, [dispatch, history, flexibleStopPlace]);
 
   const handleMapOnClick = (e: any) => {
-    changeCoordinates(
-      addCoordinate(polygonCoordinates, [e.latlng.lat, e.latlng.lng])
-    );
+    const newCoordinates = addCoordinate(polygonCoordinates, [
+      e.latlng.lat,
+      e.latlng.lng
+    ]);
+    changePolygon({
+      type: GEOMETRY_TYPE.POLYGON,
+      coordinates: newCoordinates
+    });
+    setCoordinateHolder(coordinatesToText(newCoordinates));
   };
 
   const handleDrawPolygonClick = () => {
@@ -145,32 +155,31 @@ const FlexibleStopPlaceEditor = ({
       coordinatesToText(polygonCoordinates)
     ).map(([x, y]: Coordinate) => [y, x]);
 
-    setFlexibleStopPlace({
-      ...flexibleStopPlace,
-      flexibleArea: {
-        ...flexibleStopPlace?.flexibleArea,
-        polygon: {
-          type: GEOMETRY_TYPE.POLYGON,
-          coordinates: coords
-        }
-      }
+    changePolygon({
+      type: GEOMETRY_TYPE.POLYGON,
+      coordinates: coords
     });
   };
 
-  const changeCoordinates = (coordinates: Coordinate[]) =>
+  const changePolygon = (polygon: GeoJSON) =>
     setFlexibleStopPlace({
       ...flexibleStopPlace,
       flexibleArea: {
         ...flexibleStopPlace?.flexibleArea,
-        polygon: {
-          ...flexibleStopPlace?.flexibleArea?.polygon,
-          coordinates
-        }
+        polygon: polygon
       }
     });
 
+  const changeCoordinates = (coordinates: Coordinate[]) =>
+    changePolygon({
+      ...flexibleStopPlace?.flexibleArea?.polygon,
+      coordinates
+    });
+
   const handleUndoClick = () => {
-    changeCoordinates(removeLastCoordinate(polygonCoordinates));
+    const newCoordinates = removeLastCoordinate(polygonCoordinates);
+    changeCoordinates(newCoordinates);
+    setCoordinateHolder(coordinatesToText(newCoordinates));
   };
 
   const isDeleteDisabled: boolean =
@@ -288,18 +297,11 @@ const FlexibleStopPlaceEditor = ({
                       setCoordinateHolder(e.target.value)
                     }
                     onBlur={(e: ChangeEvent<HTMLInputElement>) =>
-                      stringIsValidCoordinates(coordinateHolder) &&
-                      setFlexibleStopPlace({
-                        ...flexibleStopPlace,
-                        flexibleArea: {
-                          ...flexibleStopPlace?.flexibleArea,
-                          polygon: {
-                            ...flexibleStopPlace?.flexibleArea?.polygon,
-                            coordinates: ((e.target.value ??
-                              []) as unknown) as Coordinate[]
-                          }
-                        }
-                      })
+                      stringIsValidCoordinates(coordinateHolder)
+                        ? changeCoordinates(
+                            transformTextToCoordinates(e.target.value)
+                          )
+                        : undefined
                     }
                     placeholder={coordinatesPlaceholder}
                   />

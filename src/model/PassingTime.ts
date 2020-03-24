@@ -1,4 +1,4 @@
-import { VersionedType } from './base/VersionedType';
+import { VersionedType } from 'model/VersionedType';
 import Notice from './Notice';
 
 type PassingTime = VersionedType & {

@@ -2,7 +2,7 @@ import StopPoint, { stopPointToPayload } from './StopPoint';
 import ServiceJourney from './ServiceJourney';
 import Notice from './Notice';
 import { DIRECTION_TYPE } from 'model/enums';
-import VersionedType from 'model/base/VersionedType';
+import VersionedType from 'model/VersionedType';
 
 export type JourneyPattern = VersionedType & {
   name?: string;

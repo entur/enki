@@ -1,17 +1,7 @@
-import Versioned from './base/Versioned';
+import VersionedType from 'model/VersionedType';
 
-type Data = {
+type DestinationDisplay = VersionedType & {
   frontText?: string;
 };
-
-class DestinationDisplay extends Versioned {
-  frontText: string | undefined;
-
-  constructor(data: Data = {}) {
-    super(data);
-
-    this.frontText = data.frontText;
-  }
-}
 
 export default DestinationDisplay;
