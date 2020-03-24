@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
-import { TextField, InputGroup } from '@entur/form';
+import { InputGroup, TextField } from '@entur/form';
 import { FLEXIBLE_LINE_TYPE } from 'model/enums';
 import { selectIntl } from 'i18n';
 import messages from './messages';
@@ -10,6 +10,7 @@ import './styles.scss';
 import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import { Organisation } from 'reducers/organisations';
+import { usePristineFeedback } from 'scenes/Lines/scenes/Editor/hooks';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -17,6 +18,7 @@ type Props = {
   errors: any;
   operators: Organisation[];
   flexibleLineChange: (flexibleLine: FlexibleLine) => void;
+  nextStepClicked: boolean;
 };
 
 export default ({
@@ -24,7 +26,8 @@ export default ({
   networks,
   errors,
   operators,
-  flexibleLineChange
+  flexibleLineChange,
+  nextStepClicked
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const {
@@ -37,6 +40,37 @@ export default ({
     }
   } = errors;
 
+  const nameErr = usePristineFeedback(
+    flexibleLine.name,
+    !nameError,
+    nameError,
+    nextStepClicked
+  );
+  const publicCodeErr = usePristineFeedback(
+    flexibleLine.publicCode,
+    !publicCodeError,
+    publicCodeError,
+    nextStepClicked
+  );
+  const networkErr = usePristineFeedback(
+    flexibleLine.network?.id,
+    networkError === undefined,
+    formatMessage(validationMessages.errorFlexibleLineNetworkRefEmpty),
+    nextStepClicked
+  );
+  const operatorErr = usePristineFeedback(
+    flexibleLine.operatorRef,
+    operatorError === undefined,
+    formatMessage(validationMessages.errorFlexibleLineOperatorRefEmpty),
+    nextStepClicked
+  );
+  const lineTypeErr = usePristineFeedback(
+    flexibleLine.flexibleLineType,
+    flexibleLineTypeError === undefined,
+    formatMessage(validationMessages.errorFlexibleLineNetworkRefEmpty),
+    nextStepClicked
+  );
+
   return (
     <div className="lines-editor-general">
       <h4 className="header"> {formatMessage(messages.about)}</h4>
@@ -44,8 +78,7 @@ export default ({
         <InputGroup
           className="form-section"
           label={formatMessage(messages.nameFormGroupTitle)}
-          variant={nameError ? 'error' : undefined}
-          feedback={nameError ?? undefined}
+          {...nameErr}
         >
           <TextField
             defaultValue={flexibleLine.name ?? ''}
@@ -91,8 +124,7 @@ export default ({
           className="form-section"
           label={formatMessage(messages.publicCodeFormGroupTitle)}
           labelTooltip={formatMessage(messages.publicCodeInputLabelTooltip)}
-          variant={publicCodeError ? 'error' : undefined}
-          feedback={publicCodeError ?? undefined}
+          {...publicCodeErr}
         >
           <TextField
             type="text"
@@ -108,6 +140,7 @@ export default ({
 
         <Dropdown
           className="form-section"
+          value={flexibleLine.operatorRef}
           items={[
             ...operators.map(({ id, name }) => ({ value: id, label: name }))
           ]}
@@ -115,15 +148,12 @@ export default ({
           onChange={element =>
             flexibleLineChange({ ...flexibleLine, operatorRef: element?.value })
           }
-          feedback={formatMessage(
-            validationMessages.errorFlexibleLineOperatorRefEmpty
-          )}
-          variant={operatorError ? 'error' : undefined}
-          value={flexibleLine.operatorRef}
+          {...operatorErr}
         />
 
         <Dropdown
           className="form-section"
+          value={flexibleLine.network?.id}
           items={networks.map(n => ({
             value: n.id ?? '',
             label: n.name ?? ''
@@ -135,15 +165,12 @@ export default ({
               networkRef: element?.value
             })
           }
-          value={flexibleLine.network?.id}
-          feedback={formatMessage(
-            validationMessages.errorFlexibleLineNetworkRefEmpty
-          )}
-          variant={networkError ? 'error' : undefined}
+          {...networkErr}
         />
 
         <Dropdown
           className="form-section"
+          value={flexibleLine.flexibleLineType}
           items={[
             ...Object.values(FLEXIBLE_LINE_TYPE).map(type => ({
               value: type,
@@ -157,11 +184,7 @@ export default ({
               flexibleLineType: element?.value
             })
           }
-          value={flexibleLine.flexibleLineType}
-          feedback={formatMessage(
-            validationMessages.errorFlexibleLineFlexibleLineTypeEmpty
-          )}
-          variant={flexibleLineTypeError ? 'error' : undefined}
+          {...lineTypeErr}
         />
       </section>
     </div>

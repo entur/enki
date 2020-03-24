@@ -10,6 +10,29 @@ import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 import FlexibleLine from 'model/FlexibleLine';
 import { GlobalState } from 'reducers';
 import { setSavedChanges } from 'actions/editor';
+import { InputGroupProps } from '@entur/form';
+
+type ErrorHandling = Pick<InputGroupProps, 'variant' | 'feedback'>;
+
+export const usePristineFeedback = (
+  value: any,
+  isValid: boolean,
+  errorMessage: string,
+  forceFeedback: boolean
+): ErrorHandling => {
+  const [isPristine, setIsPristine] = useState<boolean>(true);
+  const [initValue, _] = useState<any>(value);
+
+  useEffect(() => {
+    if (initValue != value) setIsPristine(false);
+  }, [value]);
+
+  const error: ErrorHandling = { feedback: errorMessage, variant: 'error' };
+
+  if (forceFeedback && !isValid) return error;
+
+  return isPristine || isValid ? {} : error;
+};
 
 export const useLoadDependencies = ({
   match,
