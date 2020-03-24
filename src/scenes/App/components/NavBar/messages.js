@@ -19,7 +19,7 @@ export default defineMessages({
   },
   stopPlacesMenuItemLabel: {
     id: 'app.navBar.stopPlacesMenuItemLabel',
-    defaultMessage: 'Stoppesteder'
+    defaultMessage: 'Stoppesteder og Områder'
   },
   exportsMenuItemLabel: {
     id: 'app.navBar.exportsMenuItemLabel',
