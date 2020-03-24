@@ -1,6 +1,11 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  description: {
+    id: 'stopPlaces.editor.description',
+    defaultMessage:
+      'Opprett et stoppested eller område, enten ved å fylle inn en liste med koordinater på GeoJSON-format, eller ved å klikke i kartet.'
+  },
   createHeader: {
     id: 'stopPlaces.editor.createHeader',
     defaultMessage: 'Opprett stoppested'
@@ -19,7 +24,7 @@ export default defineMessages({
   },
   drawPolygonButtonText: {
     id: 'stopPlaces.editor.drawPolygonButtonText',
-    defaultMessage: 'Tegn polygon fra koordinatliste'
+    defaultMessage: 'Tegn koordinater i kart'
   },
   savingOverlayLoaderText: {
     id: 'stopPlaces.editor.savingOverlayLoaderText',

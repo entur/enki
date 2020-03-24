@@ -3,16 +3,17 @@ import { RouteComponentProps } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { InputGroup, TextArea, TextField } from '@entur/form';
-import ConfirmDialog from 'components/ConfirmDialog';
 import {
+  PrimaryButton,
   NegativeButton,
   SecondaryButton,
-  SuccessButton,
-  TertiaryButton
+  SuccessButton
 } from '@entur/button';
-
 import { MapIcon } from '@entur/icons';
+import { SmallAlertBox } from '@entur/alert';
+import { Paragraph } from '@entur/typography';
 
+import ConfirmDialog from 'components/ConfirmDialog';
 import { GEOMETRY_TYPE, VEHICLE_MODE } from 'model/enums';
 import {
   deleteFlexibleStopPlaceById,
@@ -36,7 +37,6 @@ import {
 } from 'scenes/StopPlaces/scenes/Editor/validateForm';
 import { objectValuesAreEmpty } from 'helpers/forms';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
-import { SmallAlertBox } from '@entur/alert';
 import GeoJSON, {
   removeLastCoordinate,
   addCoordinate,
@@ -221,6 +221,8 @@ const FlexibleStopPlaceEditor = ({
         />
       </div>
 
+      <Paragraph>{formatMessage(messages.description)}</Paragraph>
+
       {flexibleStopPlace && !isLoading ? (
         <OverlayLoader
           className=""
@@ -306,14 +308,14 @@ const FlexibleStopPlaceEditor = ({
                     placeholder={coordinatesPlaceholder}
                   />
                 </InputGroup>
-                <TertiaryButton
+                <PrimaryButton
                   className="draw-polygon-button"
                   onClick={handleDrawPolygonClick}
                   disabled={!stringIsValidCoordinates(coordinateHolder)}
                 >
-                  <MapIcon />
                   {formatMessage(messages.drawPolygonButtonText)}
-                </TertiaryButton>
+                  <MapIcon />
+                </PrimaryButton>
               </div>
 
               <div>
