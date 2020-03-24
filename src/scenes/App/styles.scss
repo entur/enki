@@ -31,6 +31,7 @@
 }
 
 .home {
+  max-width: 54rem;
   .tagline {
     margin: 0;
   }
@@ -46,10 +47,13 @@
   }
 
   header {
-    margin-bottom: $space-extra-large2;
+    margin-bottom: $space-extra-large5;
   }
 
   section:not(:last-child) {
     margin-bottom: $space-extra-large6;
+  }
+  .point {
+    margin: 0 0 $space-extra-large 0;
   }
 }
