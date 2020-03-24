@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, useCallback, useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { InputGroup, TextField, RadioGroup, Radio } from '@entur/form';
 import messages from './Form.messages';
-import { FlexibleStopPlace } from 'model';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { QuaySearch } from './searchForQuay';
 import { quaySearchResults } from './quaySearchResults';
 import StopPoint from 'model/StopPoint';

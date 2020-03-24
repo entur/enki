@@ -294,6 +294,7 @@
   "stopPlaces.editor.deletingOverlayLoaderText": "Sletter stoppestedet...",
   "stopPlaces.editor.descriptionFormLabelText": "Beskrivelse",
   "stopPlaces.editor.editHeader": "Rediger stoppested",
+  "stopPlaces.editor.error.coordinates": "Koordinatene er ikke på rett format",
   "stopPlaces.editor.loadingDependenciesText": "Laster inn avhengigheter",
   "stopPlaces.editor.loadingStopPlaceText": "Laster inn stoppestedet",
   "stopPlaces.editor.nameFormLabelText": "* Navn",

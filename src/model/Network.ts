@@ -1,4 +1,4 @@
-import { VersionedType } from './base/VersionedType';
+import { VersionedType } from 'model/VersionedType';
 
 export type Network = VersionedType & {
   id?: string;

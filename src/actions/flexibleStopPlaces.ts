@@ -3,7 +3,6 @@ import {
   getFlexibleStopPlacesQuery
 } from 'graphql/uttu/queries';
 import { UttuQuery } from 'graphql';
-import { FlexibleStopPlace } from 'model';
 import {
   showErrorNotification,
   showSuccessNotification
@@ -15,6 +14,9 @@ import {
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import messages from './flexibleStopPlaces.messages';
+import { Dispatch } from 'react';
+import { GlobalState } from 'reducers';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
 export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
@@ -25,7 +27,9 @@ const requestFlexibleStopPlacesActionCreator = () => ({
   type: REQUEST_FLEXIBLE_STOP_PLACES
 });
 
-const receiveFlexibleStopPlacesActionCreator = stopPlaces => ({
+const receiveFlexibleStopPlacesActionCreator = (
+  stopPlaces: FlexibleStopPlace[]
+) => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACES,
   stopPlaces
 });
@@ -34,12 +38,17 @@ const requestFlexibleStopPlaceActionCreator = () => ({
   type: REQUEST_FLEXIBLE_STOP_PLACE
 });
 
-const receiveFlexibleStopPlaceActionCreator = stopPlace => ({
+const receiveFlexibleStopPlaceActionCreator = (
+  stopPlace: FlexibleStopPlace
+) => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACE,
   stopPlace
 });
 
-export const loadFlexibleStopPlaces = () => async (dispatch, getState) => {
+export const loadFlexibleStopPlaces = () => async (
+  dispatch: Dispatch<any>,
+  getState: () => GlobalState
+) => {
   dispatch(requestFlexibleStopPlacesActionCreator());
 
   const activeProvider = getState().providers.active;
@@ -51,9 +60,7 @@ export const loadFlexibleStopPlaces = () => async (dispatch, getState) => {
       getFlexibleStopPlacesQuery,
       {}
     );
-    const flexibleStopPlaces = data.flexibleStopPlaces.map(
-      fsp => new FlexibleStopPlace(fsp)
-    );
+    const flexibleStopPlaces = data.flexibleStopPlaces;
     dispatch(receiveFlexibleStopPlacesActionCreator(flexibleStopPlaces));
   } catch (e) {
     dispatch(
@@ -68,7 +75,10 @@ export const loadFlexibleStopPlaces = () => async (dispatch, getState) => {
   }
 };
 
-export const loadFlexibleStopPlaceById = id => async (dispatch, getState) => {
+export const loadFlexibleStopPlaceById = (id: string) => async (
+  dispatch: Dispatch<any>,
+  getState: () => GlobalState
+) => {
   dispatch(requestFlexibleStopPlaceActionCreator());
 
   const activeProvider = getState().providers.active;
@@ -80,11 +90,7 @@ export const loadFlexibleStopPlaceById = id => async (dispatch, getState) => {
       getFlexibleStopPlaceByIdQuery,
       { id }
     );
-    dispatch(
-      receiveFlexibleStopPlaceActionCreator(
-        new FlexibleStopPlace(data.flexibleStopPlace)
-      )
-    );
+    dispatch(receiveFlexibleStopPlaceActionCreator(data.flexibleStopPlace));
   } catch (e) {
     dispatch(
       showErrorNotification(
@@ -98,10 +104,9 @@ export const loadFlexibleStopPlaceById = id => async (dispatch, getState) => {
   }
 };
 
-export const saveFlexibleStopPlace = flexibleStopPlace => async (
-  dispatch,
-  getState
-) => {
+export const saveFlexibleStopPlace = (
+  flexibleStopPlace: FlexibleStopPlace
+) => async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
   const activeProvider = getState().providers.active;
   const intl = getIntl(getState());
 
@@ -128,7 +133,10 @@ export const saveFlexibleStopPlace = flexibleStopPlace => async (
   }
 };
 
-export const deleteFlexibleStopPlaceById = id => async (dispatch, getState) => {
+export const deleteFlexibleStopPlaceById = (id: string) => async (
+  dispatch: Dispatch<any>,
+  getState: () => GlobalState
+) => {
   const activeProvider = getState().providers.active;
   const intl = getIntl(getState());
   try {

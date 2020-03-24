@@ -23,8 +23,7 @@ export const setActiveProvider = (provider: Provider) => ({
 export const getProviders = () => (dispatch: Dispatch<GlobalState>) => {
   return UttuQuery('providers', getProvidersQuery, {})
     .then(data => {
-      const providers = data.providers.map((p: Provider) => new Provider(p));
-      dispatch(receiveProviders(providers));
+      dispatch(receiveProviders(data.providers));
       return Promise.resolve();
     })
     .catch(e => {

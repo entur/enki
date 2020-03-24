@@ -2,7 +2,7 @@ import Message from './Message';
 import http from 'http/http';
 import { saveAs } from 'file-saver';
 import token from 'http/token';
-import { VersionedType } from './base/VersionedType';
+import { VersionedType } from 'model/VersionedType';
 
 type exportStatus = 'inProgress' | 'failed' | 'success';
 

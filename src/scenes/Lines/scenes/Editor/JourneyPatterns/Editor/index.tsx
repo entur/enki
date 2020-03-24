@@ -32,7 +32,7 @@ type Props = {
 };
 
 type StateProps = {
-  flexibleStopPlaces: FlexibleStopPlace[] | null;
+  flexibleStopPlaces: FlexibleStopPlace[];
 };
 
 const JourneyPatternEditor = ({
@@ -139,7 +139,7 @@ const JourneyPatternEditor = ({
             stopPointChange={(stopPoint: StopPoint) =>
               updateStopPoint(index, stopPoint)
             }
-            flexibleStopPlaces={flexibleStopPlaces ?? []}
+            flexibleStopPlaces={flexibleStopPlaces}
           />
         ))}
         <AddButton
@@ -152,7 +152,7 @@ const JourneyPatternEditor = ({
 };
 
 const mapStateToProps = ({ flexibleStopPlaces }: GlobalState): StateProps => ({
-  flexibleStopPlaces
+  flexibleStopPlaces: flexibleStopPlaces ?? []
 });
 
 export default connect(mapStateToProps)(JourneyPatternEditor);

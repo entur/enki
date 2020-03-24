@@ -45,6 +45,10 @@ export default defineMessages({
     id: 'stopPlaces.editor.coordinatesFormLabelText',
     defaultMessage: 'Koordinater i GeoJson-rekkefølge [Long, Lat]'
   },
+  invalidCoordinates: {
+    id: 'stopPlaces.editor.error.coordinates',
+    defaultMessage: 'Koordinatene er ikke på rett format'
+  },
   loadingStopPlaceText: {
     id: 'stopPlaces.editor.loadingStopPlaceText',
     defaultMessage: 'Laster inn stoppestedet'
