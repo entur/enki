@@ -20,13 +20,15 @@ type Props = {
   onChange: (sj: ServiceJourney[]) => void;
   stopPoints: StopPoint[];
   setIsValidServiceJourney: (isValid: boolean) => void;
+  spoilPristine: boolean;
 };
 
 const ServiceJourneysEditor = ({
   serviceJourneys,
   onChange,
   stopPoints,
-  setIsValidServiceJourney
+  setIsValidServiceJourney,
+  spoilPristine
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
@@ -58,6 +60,7 @@ const ServiceJourneysEditor = ({
             key={keys[index]}
             serviceJourney={sj}
             stopPoints={stopPoints}
+            spoilPristine={spoilPristine}
             onChange={serviceJourney =>
               updateServiceJourney(index, serviceJourney)
             }

@@ -15,6 +15,8 @@ import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import ConfirmDialog from 'components/ConfirmDialog';
 import './styles.scss';
+import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import { getErrorFeedback } from 'helpers/errorHandling';
 
 type StopPlaceMode = 'nsr' | 'custom';
 
@@ -32,6 +34,7 @@ interface Props extends WrappedComponentProps {
   stopPoint: StopPoint;
   isFirstStop: boolean;
   deleteStopPoint?: () => void;
+  spoilPristine: boolean;
 }
 
 const StopPointEditor = ({
@@ -42,7 +45,8 @@ const StopPointEditor = ({
   stopPointChange,
   stopPoint,
   isFirstStop,
-  deleteStopPoint
+  deleteStopPoint,
+  spoilPristine
 }: Props) => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectMode, setSelectMode] = useState<StopPlaceMode>(
@@ -51,6 +55,14 @@ const StopPointEditor = ({
   const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
     undefined
   );
+
+  const stopPointValue =
+    stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id;
+  const frontTextValue = stopPoint.destinationDisplay?.frontText;
+
+  const stopPlacePristine = usePristine(stopPointValue, spoilPristine);
+  const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
+  const frontTextPristine = usePristine(frontTextValue, spoilPristine);
 
   useEffect(() => {
     const quayRef = stopPoint.quayRef;
@@ -112,9 +124,7 @@ const StopPointEditor = ({
         {selectMode === 'custom' && (
           <Dropdown
             label={formatMessage(messages.stopPlace)}
-            value={
-              stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id
-            }
+            value={stopPointValue}
             items={flexibleStopPlaces.map(fsp => ({
               value: fsp.id,
               label: fsp.name ?? ''
@@ -122,24 +132,26 @@ const StopPointEditor = ({
             onChange={e =>
               stopPointChange({ ...stopPoint, flexibleStopPlaceRef: e?.value })
             }
-            variant={stopPlaceError ? 'error' : undefined}
-            feedback={
-              stopPlaceError ? formatMessage(stopPlaceError) : undefined
-            }
+            {...getErrorFeedback(
+              stopPlaceError ? formatMessage(stopPlaceError) : '',
+              !stopPlaceError,
+              stopPlacePristine
+            )}
           />
         )}
 
         {selectMode === 'nsr' && (
           <InputGroup
             label={formatMessage(messages.labelQuayRef)}
-            feedback={
-              stopPlaceError ? formatMessage(stopPlaceError) : undefined
-            }
-            variant={stopPlaceError ? 'error' : undefined}
+            {...getErrorFeedback(
+              stopPlaceError ? formatMessage(stopPlaceError) : '',
+              !stopPlaceError,
+              quayRefPristine
+            )}
             {...quaySearchResults(quaySearch)}
           >
             <TextField
-              defaultValue={stopPoint.quayRef ?? ''}
+              defaultValue={stopPoint.quayRef}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 debouncedSearchForQuay(e.target.value)
               }
@@ -154,11 +166,14 @@ const StopPointEditor = ({
           label={`${isFirstStop ? '* ' : ''}${formatMessage(
             messages.labelFrontText
           )}`}
-          variant={frontTextError ? 'error' : undefined}
-          feedback={frontTextError ? formatMessage(frontTextError) : undefined}
+          {...getErrorFeedback(
+            frontTextError ? formatMessage(frontTextError) : '',
+            !frontTextError,
+            frontTextPristine
+          )}
         >
           <TextField
-            defaultValue={stopPoint.destinationDisplay?.frontText ?? ''}
+            defaultValue={frontTextValue}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               stopPointChange({
                 ...stopPoint,

@@ -31,10 +31,7 @@ import { selectIntl } from 'i18n';
 import { GlobalState } from 'reducers';
 import FlexibleLine from 'model/FlexibleLine';
 import { MatchParams } from 'http/http';
-import {
-  FlexibleStopPlaceErrors,
-  validateFlexibleStopPlace
-} from 'scenes/StopPlaces/scenes/Editor/validateForm';
+import { validateFlexibleStopPlace } from './validateForm';
 import { objectValuesAreEmpty } from 'helpers/forms';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import GeoJSON, {
@@ -44,6 +41,8 @@ import GeoJSON, {
   stringIsValidCoordinates
 } from 'model/GeoJSON';
 import { equals } from 'ramda';
+import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import { getErrorFeedback } from 'helpers/errorHandling';
 
 // Show coordinates in GeoJson order [Long, Lat]
 const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
@@ -82,13 +81,17 @@ const FlexibleStopPlaceEditor = ({
   const [isSaving, setSaving] = useState<boolean>(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const [isDeleting, setDeleting] = useState<boolean>(false);
+  const [saveClicked, setSaveClicked] = useState<boolean>(false);
   const [coordinateHolder, setCoordinateHolder] = useState<string>(
     coordinatesToText(polygonCoordinates)
   );
-  const [errors, setErrors] = useState<FlexibleStopPlaceErrors>({
-    name: undefined,
-    flexibleArea: undefined
-  });
+
+  const { name, flexibleArea } = flexibleStopPlace ?? {};
+
+  const namePristine = usePristine(name, saveClicked);
+  const areaPristine = usePristine(flexibleArea, saveClicked);
+
+  const errors = validateFlexibleStopPlace(flexibleStopPlace ?? {});
 
   useEffect(() => {
     if (!isLoading && !equals(currentFlexibleStopPlace, flexibleStopPlace))
@@ -116,16 +119,14 @@ const FlexibleStopPlaceEditor = ({
   }, [dispatch, match.params.id, history]);
 
   const handleOnSaveClick = useCallback(() => {
-    const errors = validateFlexibleStopPlace(flexibleStopPlace ?? {});
-    if (!objectValuesAreEmpty(errors)) {
-      setErrors(errors);
-    } else {
+    if (objectValuesAreEmpty(errors)) {
       setSaving(true);
       dispatch(saveFlexibleStopPlace(flexibleStopPlace ?? {}))
         .then(() => history.push('/stop-places'))
         .finally(() => setSaving(false));
     }
-  }, [dispatch, history, flexibleStopPlace]);
+    setSaveClicked(true);
+  }, [dispatch, history, flexibleStopPlace, errors]);
 
   const handleDelete = useCallback(() => {
     setDeleteDialogOpen(false);
@@ -208,6 +209,12 @@ const FlexibleStopPlaceEditor = ({
     ]
   ]`;
 
+  const areaError = getErrorFeedback(
+    errors.flexibleArea ? formatMessage(errors.flexibleArea) : '',
+    !errors.flexibleArea,
+    areaPristine
+  );
+
   return (
     <div className="stop-place-editor">
       <div className="header">
@@ -238,13 +245,14 @@ const FlexibleStopPlaceEditor = ({
               <div>
                 <InputGroup
                   label={formatMessage(messages.nameFormLabelText)}
-                  variant={errors.name ? 'error' : undefined}
-                  feedback={
-                    errors.name ? formatMessage(errors.name) : undefined
-                  }
+                  {...getErrorFeedback(
+                    errors.name ? formatMessage(errors.name) : '',
+                    !errors.name,
+                    namePristine
+                  )}
                 >
                   <TextField
-                    defaultValue={flexibleStopPlace.name}
+                    defaultValue={name}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setFlexibleStopPlace({
                         ...flexibleStopPlace,
@@ -337,9 +345,9 @@ const FlexibleStopPlaceEditor = ({
             </div>
 
             <div className="stop-place-flexible-area">
-              {errors.flexibleArea && (
+              {areaError.feedback && (
                 <SmallAlertBox variant="error">
-                  {formatMessage(errors.flexibleArea)}
+                  {areaError.feedback}
                 </SmallAlertBox>
               )}
               <PolygonMap
