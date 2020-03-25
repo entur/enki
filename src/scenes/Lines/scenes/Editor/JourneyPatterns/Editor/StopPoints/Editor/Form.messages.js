@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   stopPlace: {
     id: 'stopPlace',
-    defaultMessage: 'Stoppested'
+    defaultMessage: 'Stoppested *'
   },
   labelBoarding: {
     id: 'lines.journeyPatterns.stopPoints.form.label.boarding',
@@ -11,7 +11,7 @@ export default defineMessages({
   },
   labelQuayRef: {
     id: 'lines.journeyPatterns.stopPoints.form.label.quayRef',
-    defaultMessage: 'Plattform-ID (fra NSR)'
+    defaultMessage: 'Plattform-ID (fra NSR) *'
   },
   labelFrontText: {
     id: 'lines.journeyPatterns.stopPoints.form.label.frontText',
