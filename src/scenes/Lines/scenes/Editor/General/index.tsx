@@ -10,6 +10,7 @@ import './styles.scss';
 import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import { Organisation } from 'reducers/organisations';
+import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -164,6 +165,8 @@ export default ({
           variant={flexibleLineTypeError ? 'error' : undefined}
         />
       </section>
+
+      <FlexibleLineTypeDrawer open title="Fleksible linjetyper" />
     </div>
   );
 };

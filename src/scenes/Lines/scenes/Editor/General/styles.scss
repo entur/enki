@@ -22,4 +22,16 @@
       margin-right: $space-large;
     }
   }
+
+  header.flexible-line-type-drawer {
+    margin-bottom: 36px;
+  }
+
+  section.flexible-line-type-drawer {
+    margin-bottom: 24px;
+  }
+
+  section.flexible-line-type-drawer > h4 {
+    margin: 0;
+  }
 }
