@@ -178,7 +178,7 @@ const FlexibleLineEditor = ({
                   operators={operators}
                   errors={errors}
                   flexibleLineChange={onFieldChange}
-                  nextStepClicked={nextClicked}
+                  spoilPristine={nextClicked}
                 />
               </section>
             )}

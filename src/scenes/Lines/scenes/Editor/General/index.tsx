@@ -10,7 +10,8 @@ import './styles.scss';
 import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import { Organisation } from 'reducers/organisations';
-import { usePristineFeedback } from 'scenes/Lines/scenes/Editor/hooks';
+import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import { getErrorFeedback } from 'helpers/errorHandling';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -18,7 +19,7 @@ type Props = {
   errors: any;
   operators: Organisation[];
   flexibleLineChange: (flexibleLine: FlexibleLine) => void;
-  nextStepClicked: boolean;
+  spoilPristine: boolean;
 };
 
 export default ({
@@ -27,9 +28,10 @@ export default ({
   errors,
   operators,
   flexibleLineChange,
-  nextStepClicked
+  spoilPristine
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
+  const { publicCode, flexibleLineType } = flexibleLine;
   const {
     errors: {
       name: nameError,
@@ -40,36 +42,11 @@ export default ({
     }
   } = errors;
 
-  const nameErr = usePristineFeedback(
-    flexibleLine.name,
-    !nameError,
-    nameError,
-    nextStepClicked
-  );
-  const publicCodeErr = usePristineFeedback(
-    flexibleLine.publicCode,
-    !publicCodeError,
-    publicCodeError,
-    nextStepClicked
-  );
-  const networkErr = usePristineFeedback(
-    flexibleLine.network?.id,
-    networkError === undefined,
-    formatMessage(validationMessages.errorFlexibleLineNetworkRefEmpty),
-    nextStepClicked
-  );
-  const operatorErr = usePristineFeedback(
-    flexibleLine.operatorRef,
-    operatorError === undefined,
-    formatMessage(validationMessages.errorFlexibleLineOperatorRefEmpty),
-    nextStepClicked
-  );
-  const lineTypeErr = usePristineFeedback(
-    flexibleLine.flexibleLineType,
-    flexibleLineTypeError === undefined,
-    formatMessage(validationMessages.errorFlexibleLineNetworkRefEmpty),
-    nextStepClicked
-  );
+  const namePristine = usePristine(flexibleLine.name, spoilPristine);
+  const publicCodePristine = usePristine(publicCode, spoilPristine);
+  const networkPristine = usePristine(flexibleLine.network?.id, spoilPristine);
+  const operatorPristine = usePristine(flexibleLine.operatorRef, spoilPristine);
+  const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
 
   return (
     <div className="lines-editor-general">
@@ -78,7 +55,7 @@ export default ({
         <InputGroup
           className="form-section"
           label={formatMessage(messages.nameFormGroupTitle)}
-          {...nameErr}
+          {...getErrorFeedback(nameError, !nameError, namePristine)}
         >
           <TextField
             defaultValue={flexibleLine.name ?? ''}
@@ -124,7 +101,11 @@ export default ({
           className="form-section"
           label={formatMessage(messages.publicCodeFormGroupTitle)}
           labelTooltip={formatMessage(messages.publicCodeInputLabelTooltip)}
-          {...publicCodeErr}
+          {...getErrorFeedback(
+            publicCodeError,
+            !publicCodeError,
+            publicCodePristine
+          )}
         >
           <TextField
             type="text"
@@ -148,7 +129,11 @@ export default ({
           onChange={element =>
             flexibleLineChange({ ...flexibleLine, operatorRef: element?.value })
           }
-          {...operatorErr}
+          {...getErrorFeedback(
+            formatMessage(validationMessages.errorFlexibleLineOperatorRefEmpty),
+            !operatorError,
+            operatorPristine
+          )}
         />
 
         <Dropdown
@@ -165,7 +150,11 @@ export default ({
               networkRef: element?.value
             })
           }
-          {...networkErr}
+          {...getErrorFeedback(
+            formatMessage(validationMessages.errorFlexibleLineNetworkRefEmpty),
+            !networkError,
+            networkPristine
+          )}
         />
 
         <Dropdown
@@ -184,7 +173,11 @@ export default ({
               flexibleLineType: element?.value
             })
           }
-          {...lineTypeErr}
+          {...getErrorFeedback(
+            formatMessage(validationMessages.errorFlexibleLineNetworkRefEmpty),
+            !flexibleLineTypeError,
+            lineTypePristine
+          )}
         />
       </section>
     </div>
