@@ -21,10 +21,13 @@ import ServiceJourney from 'model/ServiceJourney';
 import { Paragraph } from '@entur/typography';
 import ScrollToTop from 'components/ScrollToTop';
 import './styles.scss';
+import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import { getErrorFeedback } from 'helpers/errorHandling';
 
 type Props = {
   serviceJourney: ServiceJourney;
   stopPoints: StopPoint[];
+  spoilPristine: boolean;
   onChange: (serviceJourney: any) => void;
   deleteServiceJourney?: (index: number) => void;
 };
@@ -39,6 +42,7 @@ const ServiceJourneyEditor = (props: Props) => {
       passingTimes,
       dayTypes
     },
+    spoilPristine,
     onChange,
     stopPoints,
     serviceJourney,
@@ -63,11 +67,11 @@ const ServiceJourneyEditor = (props: Props) => {
 
   const operators = filterNetexOperators(organisations ?? []);
 
-  const isBlankName = isBlank(name);
-
   const onFieldChange = (field: keyof ServiceJourney, value: any) => {
     onChange({ ...serviceJourney, [field]: value });
   };
+
+  const namePristine = usePristine(name, spoilPristine);
 
   return (
     <ScrollToTop>
@@ -78,10 +82,11 @@ const ServiceJourneyEditor = (props: Props) => {
               <InputGroup
                 className="form-section"
                 label={formatMessage(messages.nameLabel)}
-                feedback={
-                  isBlankName ? formatMessage(messages.nameRequired) : undefined
-                }
-                variant={isBlankName ? 'error' : undefined}
+                {...getErrorFeedback(
+                  formatMessage(messages.nameRequired),
+                  !isBlank(name),
+                  namePristine
+                )}
               >
                 <TextField
                   defaultValue={name}
@@ -154,6 +159,7 @@ const ServiceJourneyEditor = (props: Props) => {
                 dayTypes?.[0] ?? { daysOfWeek: [], dayTypeAssignments: [] }
               }
               onChange={dt => onFieldChange('dayTypes', [dt])}
+              spoilPristine={spoilPristine}
             />
           </div>
 
@@ -163,6 +169,7 @@ const ServiceJourneyEditor = (props: Props) => {
             passingTimes={passingTimes ?? []}
             stopPoints={stopPoints}
             onChange={pts => onFieldChange('passingTimes', pts)}
+            spoilPristine={spoilPristine}
           />
         </div>
 

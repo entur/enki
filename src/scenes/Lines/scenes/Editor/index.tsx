@@ -72,6 +72,7 @@ const FlexibleLineEditor = ({
   const [errors, setErrors] = useState(validateForm(flexibleLine));
   const [isValidServiceJourney, setIsValidServiceJourney] = useState(true);
   const [isValidJourneyPattern, setIsValidJourneyPattern] = useState(true);
+  const [nextClicked, setNextClicked] = useState<boolean>(false);
 
   useEffect(() => {
     setErrors(validateForm(flexibleLine));
@@ -119,6 +120,22 @@ const FlexibleLineEditor = ({
     }
   };
 
+  const currentStepIsValid = (currentStep: number) => {
+    if (currentStep === 0) return errors.isValid;
+    else if (currentStep === 1) return isValidJourneyPattern;
+    else if (currentStep === 2) return isValidServiceJourney;
+    else return currentStep === 3;
+  };
+
+  const onNextClicked = () => {
+    if (currentStepIsValid(activeStepperIndex)) {
+      setActiveStepperIndex(activeStepperIndex + 1);
+      setNextClicked(false);
+    } else {
+      setNextClicked(true);
+    }
+  };
+
   return (
     <div className="line-editor">
       <div className="header">
@@ -161,15 +178,8 @@ const FlexibleLineEditor = ({
                   operators={operators}
                   errors={errors}
                   flexibleLineChange={onFieldChange}
+                  spoilPristine={nextClicked}
                 />
-
-                <PrimaryButton
-                  onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                  disabled={!errors.isValid}
-                  className="next-button"
-                >
-                  {formatMessage(messages.saveAndContinue)}
-                </PrimaryButton>
               </section>
             )}
 
@@ -181,15 +191,8 @@ const FlexibleLineEditor = ({
                     onFieldChange({ ...flexibleLine, journeyPatterns: jps })
                   }
                   setIsValidJourneyPattern={setIsValidJourneyPattern}
+                  spoilPristine={nextClicked}
                 />
-
-                <PrimaryButton
-                  onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                  disabled={!isValidJourneyPattern}
-                  className="next-button"
-                >
-                  {formatMessage(messages.saveAndContinue)}
-                </PrimaryButton>
               </section>
             )}
 
@@ -201,6 +204,7 @@ const FlexibleLineEditor = ({
                   }
                   stopPoints={flexibleLine.journeyPatterns[0].pointsInSequence}
                   setIsValidServiceJourney={setIsValidServiceJourney}
+                  spoilPristine={nextClicked}
                   onChange={sjs =>
                     onFieldChange({
                       ...flexibleLine,
@@ -215,14 +219,6 @@ const FlexibleLineEditor = ({
                     })
                   }
                 />
-
-                <PrimaryButton
-                  onClick={() => setActiveStepperIndex(activeStepperIndex + 1)}
-                  disabled={!isValidServiceJourney}
-                  className="next-button"
-                >
-                  {formatMessage(messages.saveAndContinue)}
-                </PrimaryButton>
               </section>
             )}
 
@@ -237,7 +233,7 @@ const FlexibleLineEditor = ({
               </section>
             )}
           </div>
-          {activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1 && (
+          {activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1 ? (
             <div className="buttons">
               {isEdit && (
                 <NegativeButton
@@ -247,13 +243,14 @@ const FlexibleLineEditor = ({
                   {formatMessage(messages.deleteButtonText)}
                 </NegativeButton>
               )}
-              <PrimaryButton
-                onClick={handleOnSaveClick}
-                disabled={!isValidServiceJourney || !isValidJourneyPattern}
-              >
+              <PrimaryButton onClick={handleOnSaveClick}>
                 {formatMessage(messages.saveButtonText)}
               </PrimaryButton>
             </div>
+          ) : (
+            <PrimaryButton onClick={onNextClicked} className="next-button">
+              {formatMessage(messages.saveAndContinue)}
+            </PrimaryButton>
           )}
         </OverlayLoader>
       ) : (

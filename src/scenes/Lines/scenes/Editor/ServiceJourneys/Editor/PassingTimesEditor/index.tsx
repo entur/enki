@@ -14,6 +14,8 @@ import messages from './messages';
 import { selectIntl } from 'i18n';
 import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
@@ -24,6 +26,7 @@ type Props = {
   passingTimes: PassingTime[];
   stopPoints: StopPoint[];
   onChange: (pts: PassingTime[]) => void;
+  spoilPristine: boolean;
 };
 
 const PassingTimesEditor = (props: Props & StateProps) => {
@@ -32,10 +35,13 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     passingTimes,
     intl,
     onChange,
-    flexibleStopPlaces
+    flexibleStopPlaces,
+    spoilPristine
   } = props;
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
   const { formatMessage } = useSelector(selectIntl);
+
+  const passingTimesPristine = usePristine(passingTimes, spoilPristine);
 
   const getDayOffsetDropdown = (passingTime: PassingTime, index: number) => (
     <Dropdown
@@ -99,10 +105,12 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     );
   };
 
+  const error = getErrorFeedback(errorMessage, isValid, passingTimesPristine);
+
   return (
     <>
-      {!isValid && (
-        <SmallAlertBox variant="error"> {errorMessage} </SmallAlertBox>
+      {error.feedback && (
+        <SmallAlertBox variant="error">{error.feedback}</SmallAlertBox>
       )}
       <div className="passing-times-editor">
         {passingTimes.map((passingTime, index) => (
