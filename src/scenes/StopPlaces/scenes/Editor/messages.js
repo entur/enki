@@ -31,7 +31,7 @@ export default defineMessages({
   },
   nameFormLabelText: {
     id: 'stopPlaces.editor.nameFormLabelText',
-    defaultMessage: '* Navn'
+    defaultMessage: 'Navn *'
   },
   descriptionFormLabelText: {
     id: 'stopPlaces.editor.descriptionFormLabelText',

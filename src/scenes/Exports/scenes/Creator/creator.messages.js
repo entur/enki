@@ -15,15 +15,15 @@ export default defineMessages({
   },
   nameFormLabel: {
     id: 'exports.creator.nameFormLabel',
-    defaultMessage: '* Navn'
+    defaultMessage: 'Navn *'
   },
   fromDateFormLabel: {
     id: 'exports.creator.fromDateFormLabel',
-    defaultMessage: '* Fra dato'
+    defaultMessage: 'Fra dato *'
   },
   toDateFormLabel: {
     id: 'exports.creator.toDateFormLabel',
-    defaultMessage: '* Til dato'
+    defaultMessage: 'Til dato *'
   },
   dryRunFormLabel: {
     id: 'exports.creator.dryRunFormLabel',

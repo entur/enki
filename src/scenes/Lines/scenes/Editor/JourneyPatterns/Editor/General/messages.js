@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   nameLabel: {
     id: 'lines.editor.journeyPatterns.editor.general.nameLabel',
-    defaultMessage: '* Navn'
+    defaultMessage: 'Navn *'
   },
   descriptionLabel: {
     id: 'lines.editor.journeyPatterns.editor.general.descriptionLabel',
