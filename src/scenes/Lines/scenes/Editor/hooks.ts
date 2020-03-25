@@ -10,14 +10,15 @@ import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 import FlexibleLine from 'model/FlexibleLine';
 import { GlobalState } from 'reducers';
 import { setSavedChanges } from 'actions/editor';
+import { equals } from 'ramda';
 
 export const usePristine = (value: any, spoil: boolean): boolean => {
   const [isPristine, setIsPristine] = useState<boolean>(true);
-  const [initValue, _] = useState<any>(value);
+  const [initValue] = useState<any>(value);
 
   useEffect(() => {
-    if (initValue != value) setIsPristine(false);
-  }, [value]);
+    if (!equals(initValue, value)) setIsPristine(false);
+  }, [value, initValue]);
 
   return isPristine && !spoil;
 };

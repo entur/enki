@@ -7,14 +7,19 @@ import WeekdayPicker from 'components/WeekdayPicker';
 import './styles.scss';
 import messages from '../../messages';
 import DayType, { dayTypeIsEmpty } from 'model/DayType';
+import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import { getErrorFeedback } from 'helpers/errorHandling';
 
 type Props = {
   dayType: DayType;
   onChange: (dayType: DayType | undefined) => void;
+  spoilPristine: boolean;
 };
 
-const DayTypeEditor = ({ dayType, onChange }: Props) => {
+const DayTypeEditor = ({ dayType, onChange, spoilPristine }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
+
+  const weekdayPristine = usePristine(dayType.daysOfWeek, spoilPristine);
 
   return (
     <div className="day-type-editor">
@@ -28,7 +33,13 @@ const DayTypeEditor = ({ dayType, onChange }: Props) => {
           };
           onChange(dayTypeIsEmpty(updatedDayType) ? undefined : updatedDayType);
         }}
-        feedbackMessage={formatMessage(messages.availabilityMustBeFilled)}
+        feedbackMessage={
+          getErrorFeedback(
+            formatMessage(messages.availabilityMustBeFilled),
+            dayType.daysOfWeek.length !== 0,
+            weekdayPristine
+          ).feedback
+        }
       />
       <Label>{formatMessage(messages.dates)}</Label>
       <DayTypeAssignmentsEditor

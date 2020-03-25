@@ -9,12 +9,14 @@ type Props = {
   journeyPatterns: JourneyPattern[];
   onChange: (journeyPatterns: JourneyPattern[]) => void;
   setIsValidJourneyPattern: (isValid: boolean) => void;
+  spoilPristine: boolean;
 };
 
 const JourneyPatternsEditor = ({
   journeyPatterns,
   onChange,
-  setIsValidJourneyPattern
+  setIsValidJourneyPattern,
+  spoilPristine
 }: Props) => {
   useEffect(() => {
     if (!journeyPatterns.length)
@@ -40,6 +42,7 @@ const JourneyPatternsEditor = ({
           onSave={handleSave}
           index={0}
           setIsValidJourneyPattern={setIsValidJourneyPattern}
+          spoilPristine={spoilPristine}
         />
       ) : (
         journeyPatterns.map((jp: JourneyPattern, index: number) => (
@@ -53,6 +56,7 @@ const JourneyPatternsEditor = ({
               onSave={handleSave}
               index={index}
               setIsValidJourneyPattern={setIsValidJourneyPattern}
+              spoilPristine={spoilPristine}
             />
           </ExpandablePanel>
         ))

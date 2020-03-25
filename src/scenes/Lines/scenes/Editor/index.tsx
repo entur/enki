@@ -191,6 +191,7 @@ const FlexibleLineEditor = ({
                     onFieldChange({ ...flexibleLine, journeyPatterns: jps })
                   }
                   setIsValidJourneyPattern={setIsValidJourneyPattern}
+                  spoilPristine={nextClicked}
                 />
               </section>
             )}
@@ -203,6 +204,7 @@ const FlexibleLineEditor = ({
                   }
                   stopPoints={flexibleLine.journeyPatterns[0].pointsInSequence}
                   setIsValidServiceJourney={setIsValidServiceJourney}
+                  spoilPristine={nextClicked}
                   onChange={sjs =>
                     onFieldChange({
                       ...flexibleLine,
