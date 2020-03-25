@@ -40,7 +40,7 @@ export default defineMessages({
   },
   nameLabel: {
     id: 'lines.journeyPatterns.serviceJourney.general.name',
-    defaultMessage: '* Navn'
+    defaultMessage: 'Navn *'
   },
   nameRequired: {
     id: 'lines.journeyPatterns.serviceJourney.general.name.isRequired',

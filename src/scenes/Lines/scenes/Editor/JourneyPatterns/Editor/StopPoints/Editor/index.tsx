@@ -163,9 +163,9 @@ const StopPointEditor = ({
         )}
 
         <InputGroup
-          label={`${isFirstStop ? '* ' : ''}${formatMessage(
-            messages.labelFrontText
-          )}`}
+          label={`${formatMessage(messages.labelFrontText)}${
+            isFirstStop ? ' *' : ''
+          }`}
           {...getErrorFeedback(
             frontTextError ? formatMessage(frontTextError) : '',
             !frontTextError,

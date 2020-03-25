@@ -40,7 +40,7 @@ export default defineMessages({
   },
   nameLabelText: {
     id: 'networks.editor.nameLabelText',
-    defaultMessage: '* Navn'
+    defaultMessage: 'Navn *'
   },
   descriptionLabelText: {
     id: 'networks.editor.descriptionLabelText',
@@ -52,7 +52,7 @@ export default defineMessages({
   },
   authorityLabelText: {
     id: 'networks.editor.authorityLabelText',
-    defaultMessage: '* Autoritet'
+    defaultMessage: 'Autoritet *'
   },
   loadingNetworkText: {
     id: 'networks.editor.loadingNetworkText',
