@@ -100,16 +100,14 @@ const ServiceJourneysEditor = ({
               onClick={() => setShowModal(false)}
               className="margin-right"
             >
-              {' '}
-              {formatMessage(messages.modalCancel)}{' '}
+              {formatMessage(messages.modalCancel)}
             </SecondaryButton>
             <PrimaryButton
               onClick={() =>
                 addNewServiceJourney(textFieldRef?.current?.value ?? '')
               }
             >
-              {' '}
-              {formatMessage(messages.modalCreate)}{' '}
+              {formatMessage(messages.modalCreate)}
             </PrimaryButton>
           </div>
         </div>
