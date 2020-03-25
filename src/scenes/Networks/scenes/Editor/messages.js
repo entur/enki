@@ -14,6 +14,14 @@ export default defineMessages({
     defaultMessage:
       'Minst ett nettverk er påkrevd. Nettverk kan brukes til å gruppere linjer.'
   },
+  validationName: {
+    id: 'networks.editor.validationName',
+    defaultMessage: 'Navn må fylles inn'
+  },
+  validationAuthority: {
+    id: 'networks.editor.validationAuthority',
+    defaultMessage: 'Autoritet må velges'
+  },
   saveButtonText: {
     id: 'networks.editor.saveButtonText',
     defaultMessage: 'Lagre'
