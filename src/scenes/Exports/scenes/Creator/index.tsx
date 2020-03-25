@@ -41,7 +41,6 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
   const toDatePristine = usePristine(theExport.toDate, saveClicked);
 
   const handleOnSaveClick = () => {
-    console.log(exportIsValid(theExport), theExport);
     if (exportIsValid(theExport)) {
       setSaving(true);
       dispatch(saveExport(theExport))
