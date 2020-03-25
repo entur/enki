@@ -58,7 +58,11 @@ const ServiceJourneysEditor = ({
         serviceJourney={sj}
         stopPoints={stopPoints}
         onChange={serviceJourney => updateServiceJourney(index, serviceJourney)}
-        deleteServiceJourney={() => deleteServiceJourney(index)}
+        deleteServiceJourney={
+          serviceJourneys.length > 1
+            ? () => deleteServiceJourney(index)
+            : undefined
+        }
       />
     );
   };
