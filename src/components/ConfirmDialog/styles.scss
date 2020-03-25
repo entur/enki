@@ -1,7 +1,15 @@
 .buttons {
+  display: flex;
   margin-top: 2rem;
+  max-width: 100%;
+  justify-content: space-between;
 
   button {
-    margin-right: 1rem;
+    width: 100%;
+    max-width: 20rem;
+  }
+
+  :first-child {
+    margin-right: 2rem;
   }
 }
