@@ -84,5 +84,22 @@ export default defineMessages({
   linesMenuItemLabel: {
     id: 'app.navBar.linesMenuItemLabel',
     defaultMessage: 'Linjer'
+  },
+  title: {
+    id: 'app.navBar.redirect.title',
+    defaultMessage: 'Endringer er ikke lagret!'
+  },
+  message: {
+    id: 'app.navBar.redirect.message',
+    defaultMessage:
+      'Du har gjort endringer som vil gå tapt hvis du forlater siden. Ønsker du å forlate siden?  '
+  },
+  yes: {
+    id: 'app.navBar.redirect.yes',
+    defaultMessage: 'Ja, forlat siden'
+  },
+  no: {
+    id: 'app.navBar.redirect.no',
+    defaultMessage: 'Nei, bli på siden'
   }
 });
