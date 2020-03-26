@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
@@ -10,6 +10,9 @@ import './styles.scss';
 import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import { Organisation } from 'reducers/organisations';
+import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
+import { IconButton } from '@entur/button';
+import { ValidationInfoIcon } from '@entur/icons';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 
@@ -41,6 +44,7 @@ export default ({
       flexibleLineType: flexibleLineTypeError
     }
   } = errors;
+  const [showDrawer, setDrawer] = useState<boolean>(false);
 
   const namePristine = usePristine(flexibleLine.name, spoilPristine);
   const publicCodePristine = usePristine(publicCode, spoilPristine);
@@ -157,29 +161,46 @@ export default ({
           )}
         />
 
-        <Dropdown
-          className="form-section"
-          value={flexibleLine.flexibleLineType}
-          items={[
-            ...Object.values(FLEXIBLE_LINE_TYPE).map(type => ({
-              value: type,
-              label: type
-            }))
-          ]}
-          label={formatMessage(messages.typeFormGroupTitle)}
-          onChange={element =>
-            flexibleLineChange({
-              ...flexibleLine,
-              flexibleLineType: element?.value
-            })
-          }
-          {...getErrorFeedback(
-            formatMessage(validationMessages.errorFlexibleLineNetworkRefEmpty),
-            !flexibleLineTypeError,
-            lineTypePristine
-          )}
-        />
+        <div className="line-type-dropdown">
+          <IconButton
+            className="line-type-dropdown-icon"
+            aria-label={'Les mer om de ulike linjetyperna'}
+            onClick={() => setDrawer(true)}
+          >
+            <ValidationInfoIcon />
+          </IconButton>
+          <Dropdown
+            className="form-section"
+            value={flexibleLine.flexibleLineType}
+            items={[
+              ...Object.values(FLEXIBLE_LINE_TYPE).map(type => ({
+                value: type,
+                label: type
+              }))
+            ]}
+            label={formatMessage(messages.typeFormGroupTitle)}
+            onChange={element =>
+              flexibleLineChange({
+                ...flexibleLine,
+                flexibleLineType: element?.value
+              })
+            }
+            {...getErrorFeedback(
+              formatMessage(
+                validationMessages.errorFlexibleLineNetworkRefEmpty
+              ),
+              !flexibleLineTypeError,
+              lineTypePristine
+            )}
+          />
+        </div>
       </section>
+
+      <FlexibleLineTypeDrawer
+        open={showDrawer}
+        onDismiss={() => setDrawer(false)}
+        title="Fleksible linjetyper"
+      />
     </div>
   );
 };

@@ -22,4 +22,27 @@
       margin-right: $space-large;
     }
   }
+
+  .line-type-dropdown {
+    position: relative;
+    flex: 1;
+
+    &-icon {
+      position: absolute;
+      left: 125px;
+      top: -5px;
+    }
+  }
+
+  header.flexible-line-type-drawer {
+    margin-bottom: $space-extra-large;
+  }
+
+  section.flexible-line-type-drawer {
+    margin-bottom: $space-large;
+  }
+
+  section.flexible-line-type-drawer > h4 {
+    margin: 0;
+  }
 }
