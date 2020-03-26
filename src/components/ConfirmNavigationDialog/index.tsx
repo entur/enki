@@ -7,7 +7,6 @@ import { PrimaryButton, SecondaryButton } from '@entur/button';
 import React from 'react';
 
 type NavigateConfirmProps = RouteComponentProps & {
-  showDialog: boolean;
   hideDialog: () => void;
   redirectTo: string;
   title: string;
@@ -25,30 +24,26 @@ const NavigateConfirmBox = (props: NavigateConfirmProps) => {
   };
 
   return (
-    <>
-      {props.showDialog && (
-        <ConfirmDialog
-          isOpen
-          title={props.title}
-          message={props.description}
-          buttons={[
-            <SecondaryButton
-              key={1}
-              onClick={() => {
-                props.hideDialog();
-                RedirectHandler();
-              }}
-            >
-              {props.confirmText}
-            </SecondaryButton>,
-            <PrimaryButton key={2} onClick={() => props.hideDialog()}>
-              {props.cancelText}
-            </PrimaryButton>
-          ]}
-          onDismiss={() => props.hideDialog()}
-        />
-      )}
-    </>
+    <ConfirmDialog
+      isOpen
+      title={props.title}
+      message={props.description}
+      buttons={[
+        <SecondaryButton
+          key={1}
+          onClick={() => {
+            props.hideDialog();
+            RedirectHandler();
+          }}
+        >
+          {props.confirmText}
+        </SecondaryButton>,
+        <PrimaryButton key={2} onClick={() => props.hideDialog()}>
+          {props.cancelText}
+        </PrimaryButton>
+      ]}
+      onDismiss={() => props.hideDialog()}
+    />
   );
 };
 

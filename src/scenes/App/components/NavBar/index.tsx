@@ -104,15 +104,16 @@ const NavBar = () => {
           setRedirect={setRedirect}
         />
       </SideNavigation>
-      <NavigateConfirmBox
-        showDialog={redirect.showConfirm}
-        hideDialog={() => setRedirect({ ...redirect, showConfirm: false })}
-        redirectTo={redirect.path}
-        title={formatMessage(messages.title)}
-        description={formatMessage(messages.message)}
-        confirmText={formatMessage(messages.yes)}
-        cancelText={formatMessage(messages.no)}
-      />
+      {redirect.showConfirm && (
+        <NavigateConfirmBox
+          hideDialog={() => setRedirect({ ...redirect, showConfirm: false })}
+          redirectTo={redirect.path}
+          title={formatMessage(messages.title)}
+          description={formatMessage(messages.message)}
+          confirmText={formatMessage(messages.yes)}
+          cancelText={formatMessage(messages.no)}
+        />
+      )}
     </Contrast>
   );
 };

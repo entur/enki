@@ -193,15 +193,16 @@ const FlexibleLineEditor = ({
                     spoilPristine={nextClicked}
                   />
                 </section>
-                <NavigateConfirmBox
-                  showDialog={showConfirm}
-                  hideDialog={() => setShowConfirm(false)}
-                  redirectTo="/lines"
-                  title={formatMessage(messages.title)}
-                  description={formatMessage(messages.message)}
-                  confirmText={formatMessage(messages.yes)}
-                  cancelText={formatMessage(messages.no)}
-                />
+                {showConfirm && (
+                  <NavigateConfirmBox
+                    hideDialog={() => setShowConfirm(false)}
+                    redirectTo="/lines"
+                    title={formatMessage(messages.title)}
+                    description={formatMessage(messages.message)}
+                    confirmText={formatMessage(messages.yes)}
+                    cancelText={formatMessage(messages.no)}
+                  />
+                )}
               </>
             )}
 
