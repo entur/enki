@@ -1,5 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Drawer } from '@entur/modal';
+import { selectIntl } from 'i18n';
+import messages from './messages';
 
 type Props = {
   open: boolean;
@@ -7,42 +10,37 @@ type Props = {
   onDismiss: () => void;
 };
 const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
+  const { formatMessage } = useSelector(selectIntl);
+
   return (
     <Drawer title={title} onDismiss={onDismiss} open={open}>
       <header className="flexible-line-type-drawer">
-        Her er en kort beskrivelse av de ulike linjetypene.
+        {formatMessage(messages.drawerSubTitle)}
       </header>
 
       <section className="flexible-line-type-drawer">
         <h4>fixed</h4>
-        Fast rute til faste tider, men må forhåndsbestilles for at ruten skal
-        kjøres.
+        {formatMessage(messages.fixed)}
       </section>
 
       <section className="flexible-line-type-drawer">
         <h4>mainRouteWithFlexibleEnds</h4>
-        Fast rute til faste tider, med mulighet for på-/avstigning på
-        stoppesteder utenfor oppsatt kjøremønster ved bestilling.
+        {formatMessage(messages.mainRouteWithFlexibleEnds)}
       </section>
 
       <section className="flexible-line-type-drawer">
         <h4>fixedStopAreaWide</h4>
-        Fleksibel rute definert av ett eller flere områder, der hvert område kan
-        ha ulike forhåndsbestemte stopp (møteplass, knutepunkt, kommune-senter,
-        holdeplasser).
+        {formatMessage(messages.fixedStopAreaWide)}
       </section>
 
       <section className="flexible-line-type-drawer">
         <h4>flexibleAreasOnly</h4>
-        Hentes og kjøres til/fra valgfritt sted innenfor et definert område og
-        gitte åpningstider.
+        {formatMessage(messages.flexibleAreasOnly)}
       </section>
 
       <section className="flexible-line-type-drawer">
         <h4>hailAndRideSections</h4>
-        Ruten er definert og har noen faste holdeplasser. Langs bestemte
-        strekninger på ruten kan på-/avstigning skje hvor som helst ved signal
-        til sjåfør.
+        {formatMessage(messages.hailAndRideSections)}
       </section>
     </Drawer>
   );
