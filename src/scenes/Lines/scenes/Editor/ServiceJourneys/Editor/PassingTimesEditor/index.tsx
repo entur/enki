@@ -36,7 +36,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     intl,
     onChange,
     flexibleStopPlaces,
-    spoilPristine
+    spoilPristine,
   } = props;
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
   const { formatMessage } = useSelector(selectIntl);
@@ -48,18 +48,18 @@ const PassingTimesEditor = (props: Props & StateProps) => {
       label={formatMessage(messages.dayTimeOffset)}
       labelTooltip={formatMessage(messages.dayTimeOffsetTooltip)}
       value={passingTime.departureDayOffset?.toString() ?? '0'}
-      items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map(i => ({
+      items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map((i) => ({
         value: i,
-        label: i
+        label: i,
       }))}
-      onChange={e =>
+      onChange={(e) =>
         onChange(
           changeElementAtIndex(
             passingTimes,
             {
               ...passingTimes[index],
               departureDayOffset: e?.value as number | undefined,
-              arrivalDayOffset: e?.value as number | undefined
+              arrivalDayOffset: e?.value as number | undefined,
             },
             index
           )
@@ -92,7 +92,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
                 {
                   ...passingTimes[index],
                   departureTime: padTimePickerInput(e.target.value),
-                  arrivalTime: padTimePickerInput(e.target.value)
+                  arrivalTime: padTimePickerInput(e.target.value),
                 },
                 index
               )
@@ -132,7 +132,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
 
 const mapStateToProps = ({ flexibleStopPlaces, intl }: StateProps) => ({
   flexibleStopPlaces,
-  intl
+  intl,
 });
 
 export default connect(mapStateToProps)(PassingTimesEditor);
