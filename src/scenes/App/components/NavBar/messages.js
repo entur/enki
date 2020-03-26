@@ -31,19 +31,19 @@ export default defineMessages({
   },
   title: {
     id: 'app.navBar.redirect.title',
-    defaultMessage: 'Endringer er ikke lagret'
+    defaultMessage: 'Endringer er ikke lagret!'
   },
   message: {
     id: 'app.navBar.redirect.message',
     defaultMessage:
-      'Du har gjort endringer som ikke er lagret. Disse vil gå tapt hvis du forlater siden.'
+      'Du har gjort endringer som vil gå tapt hvis du forlater siden. Ønsker du å forlate siden?  '
   },
   yes: {
     id: 'app.navBar.redirect.yes',
-    defaultMessage: 'Fortsett likevel'
+    defaultMessage: 'Ja, forlat siden'
   },
   no: {
     id: 'app.navBar.redirect.no',
-    defaultMessage: 'Bli på denne siden'
+    defaultMessage: 'Nei, bli på siden'
   }
 });

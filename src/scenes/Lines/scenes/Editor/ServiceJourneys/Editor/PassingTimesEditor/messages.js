@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   passingTime: {
     id: 'passingTimes.passingTime',
-    defaultMessage: '*Passeringstid'
+    defaultMessage: 'Passeringstid *'
   },
   dayTimeOffset: {
     id: 'passingTimes.dayTimeOffset',

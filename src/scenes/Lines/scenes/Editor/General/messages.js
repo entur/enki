@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   nameFormGroupTitle: {
     id: 'lines.editor.general.nameFormGroupTitle',
-    defaultMessage: '* Navn'
+    defaultMessage: 'Navn *'
   },
   descriptionFormGroupTitle: {
     id: 'lines.editor.general.descriptionFormGroupTitle',
@@ -20,7 +20,7 @@ export default defineMessages({
   },
   publicCodeFormGroupTitle: {
     id: 'lines.editor.general.publicCodeFormGroupTitle',
-    defaultMessage: '* Offentlig kode'
+    defaultMessage: 'Offentlig kode *'
   },
   publicCodeInputLabelTooltip: {
     id: 'lines.editor.general.publicCodeInputLabelTooltip',
@@ -29,15 +29,15 @@ export default defineMessages({
   },
   operatorFormGroupTitle: {
     id: 'lines.editor.general.operatorFormGroupTitle',
-    defaultMessage: '* Operatør'
+    defaultMessage: 'Operatør *'
   },
   networkFormGroupTitle: {
     id: 'lines.editor.general.networkFormGroupTitle',
-    defaultMessage: '* Nettverk'
+    defaultMessage: 'Nettverk *'
   },
   typeFormGroupTitle: {
     id: 'lines.editor.general.typeFormGroupTitle',
-    defaultMessage: '* Flexible line type'
+    defaultMessage: 'Flexible line type *'
   },
   about: {
     id: 'lines.editor.journeyPatterns.editor.about',

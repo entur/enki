@@ -29,6 +29,7 @@ type Props = {
   onSave: (journeyPattern: JourneyPattern, index: number) => void;
   setIsValidJourneyPattern: (isValid: boolean) => void;
   index: number;
+  spoilPristine: boolean;
 };
 
 type StateProps = {
@@ -40,7 +41,8 @@ const JourneyPatternEditor = ({
   onSave,
   setIsValidJourneyPattern,
   index,
-  flexibleStopPlaces
+  flexibleStopPlaces,
+  spoilPristine
 }: Props & StateProps) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
@@ -111,6 +113,7 @@ const JourneyPatternEditor = ({
         <General
           journeyPattern={journeyPattern}
           onFieldChange={onJourneyPatternChange}
+          spoilPristine={spoilPristine}
         />
       </section>
 
@@ -140,6 +143,7 @@ const JourneyPatternEditor = ({
               updateStopPoint(index, stopPoint)
             }
             flexibleStopPlaces={flexibleStopPlaces}
+            spoilPristine={spoilPristine}
           />
         ))}
         <AddButton

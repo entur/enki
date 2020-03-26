@@ -30,6 +30,8 @@ import { IntlState } from 'react-intl-redux';
 import { IntlFormatters } from 'react-intl';
 import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
+import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import { getErrorFeedback } from 'helpers/errorHandling';
 
 const getCurrentNetwork = (
   state: GlobalState,
@@ -57,6 +59,10 @@ const NetworkEditor = ({
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const [isDeleting, setDeleting] = useState<boolean>(false);
   const [network, setNetwork] = useState<Network>(currentNetwork);
+  const [saveClicked, setSaveClicked] = useState<boolean>(false);
+
+  const namePristine = usePristine(network.name, saveClicked);
+  const authorityPristine = usePristine(network.authorityRef, saveClicked);
 
   const dispatch = useDispatch<any>();
 
@@ -83,10 +89,13 @@ const NetworkEditor = ({
   }, [dispatchLoadFlexibleLines, dispatchLoadNetwork]);
 
   const handleOnSaveClick = () => {
-    setSaving(true);
-    dispatch(saveNetwork(network))
-      .then(() => history.push('/networks'))
-      .finally(() => setSaving(false));
+    if (network.name && network.authorityRef) {
+      setSaving(true);
+      dispatch(saveNetwork(network))
+        .then(() => history.push('/networks'))
+        .finally(() => setSaving(false));
+    }
+    setSaveClicked(true);
   };
 
   const handleAuthoritySelectionChange = (
@@ -119,8 +128,6 @@ const NetworkEditor = ({
     !!lines.find(l => l.networkRef === network.id) ||
     isDeleting;
 
-  const isSaveDisabled = !network || !network.name || !network.authorityRef;
-
   return (
     <div className="network-editor">
       <div className="header">
@@ -150,10 +157,11 @@ const NetworkEditor = ({
             <InputGroup
               className="form-section"
               label={formatMessage(messages.nameLabelText)}
-              variant={isBlank(network.name) ? 'error' : undefined}
-              feedback={
-                isBlank(network.name) ? 'Navn må fylles inn.' : undefined
-              }
+              {...getErrorFeedback(
+                formatMessage(messages.validationName),
+                !isBlank(network.name),
+                namePristine
+              )}
             >
               <TextField
                 defaultValue={network.name ?? ''}
@@ -189,6 +197,7 @@ const NetworkEditor = ({
 
             <Dropdown
               className="form-section"
+              value={network.authorityRef}
               label={formatMessage(messages.authorityLabelText)}
               items={[
                 ...authorities.map(org => ({
@@ -196,10 +205,14 @@ const NetworkEditor = ({
                   value: org.id
                 }))
               ]}
-              value={network.authorityRef}
               onChange={organisation =>
                 handleAuthoritySelectionChange(organisation?.value)
               }
+              {...getErrorFeedback(
+                formatMessage(messages.validationAuthority),
+                !isBlank(network.authorityRef),
+                authorityPristine
+              )}
             />
 
             <div className="buttons">
@@ -212,10 +225,7 @@ const NetworkEditor = ({
                 </NegativeButton>
               )}
 
-              <SuccessButton
-                onClick={handleOnSaveClick}
-                disabled={isSaveDisabled}
-              >
+              <SuccessButton onClick={handleOnSaveClick}>
                 {formatMessage(messages.saveButtonText)}
               </SuccessButton>
             </div>

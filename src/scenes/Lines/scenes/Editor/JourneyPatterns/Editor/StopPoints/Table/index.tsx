@@ -79,10 +79,7 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
       ))
     ) : (
       <TableRow className="row-no-lines disabled">
-        <DataCell colSpan={3}>
-          {' '}
-          {formatMessage(messages.noStopPoints)}{' '}
-        </DataCell>
+        <DataCell colSpan={3}>{formatMessage(messages.noStopPoints)}</DataCell>
       </TableRow>
     );
 

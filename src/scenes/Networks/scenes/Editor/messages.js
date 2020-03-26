@@ -14,6 +14,14 @@ export default defineMessages({
     defaultMessage:
       'Minst ett nettverk er påkrevd. Nettverk kan brukes til å gruppere linjer.'
   },
+  validationName: {
+    id: 'networks.editor.validationName',
+    defaultMessage: 'Navn må fylles inn'
+  },
+  validationAuthority: {
+    id: 'networks.editor.validationAuthority',
+    defaultMessage: 'Autoritet må velges'
+  },
   saveButtonText: {
     id: 'networks.editor.saveButtonText',
     defaultMessage: 'Lagre'
@@ -32,7 +40,7 @@ export default defineMessages({
   },
   nameLabelText: {
     id: 'networks.editor.nameLabelText',
-    defaultMessage: '* Navn'
+    defaultMessage: 'Navn *'
   },
   descriptionLabelText: {
     id: 'networks.editor.descriptionLabelText',
@@ -44,7 +52,7 @@ export default defineMessages({
   },
   authorityLabelText: {
     id: 'networks.editor.authorityLabelText',
-    defaultMessage: '* Autoritet'
+    defaultMessage: 'Autoritet *'
   },
   loadingNetworkText: {
     id: 'networks.editor.loadingNetworkText',

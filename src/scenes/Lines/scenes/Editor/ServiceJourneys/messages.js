@@ -40,7 +40,7 @@ export default defineMessages({
   },
   nameLabel: {
     id: 'lines.journeyPatterns.serviceJourney.general.name',
-    defaultMessage: '* Navn'
+    defaultMessage: 'Navn *'
   },
   nameRequired: {
     id: 'lines.journeyPatterns.serviceJourney.general.name.isRequired',
@@ -164,5 +164,29 @@ export default defineMessages({
   stopPointDeleteTitle: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.delete.title',
     defaultMessage: 'Slette stoppepunkt'
+  },
+  modalTitle: {
+    id: 'lines.editor.journeyPatterns.editor.serviceJourneys.modal.title',
+    defaultMessage: 'Ny service journey'
+  },
+  modalSubTitle: {
+    id: 'lines.editor.journeyPatterns.editor.serviceJourneys.modal.subTitle',
+    defaultMessage: 'Fyll in navn og trykk deretter Opprett'
+  },
+  modalCancel: {
+    id: 'lines.editor.journeyPatterns.editor.serviceJourneys.modal.cancel',
+    defaultMessage: 'Avbryt'
+  },
+  modalCreate: {
+    id: 'lines.editor.journeyPatterns.editor.serviceJourneys.modal.create',
+    defaultMessage: 'Opprett'
+  },
+  modalLabel: {
+    id: 'lines.editor.journeyPatterns.editor.serviceJourneys.modal.label',
+    defaultMessage: 'Navn'
+  },
+  modalPlaceholder: {
+    id: 'lines.editor.journeyPatterns.editor.serviceJourneys.modal.placeholder',
+    defaultMessage: 'Eks. "Melkeruta ettermiddag"'
   }
 });
