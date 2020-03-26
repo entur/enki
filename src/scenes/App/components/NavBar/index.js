@@ -3,7 +3,7 @@ import { Link, withRouter, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import UserPreference from './UserPreference';
 import { Contrast } from '@entur/layout';
-import { SecondaryButton, NegativeButton } from '@entur/button';
+import { SecondaryButton, PrimaryButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
 
 import logo from '../../../../static/img/logo.png';
@@ -108,18 +108,18 @@ const NavBar = () => {
           title={formatMessage(messages.title)}
           message={formatMessage(messages.message)}
           buttons={[
-            <NegativeButton
+            <SecondaryButton
               key={1}
               onClick={() => setRedirect({ ...redirect, shouldRedirect: true })}
             >
               {formatMessage(messages.yes)}
-            </NegativeButton>,
-            <SecondaryButton
+            </SecondaryButton>,
+            <PrimaryButton
               key={2}
               onClick={() => setRedirect({ ...redirect, showConfirm: false })}
             >
               {formatMessage(messages.no)}
-            </SecondaryButton>
+            </PrimaryButton>
           ]}
           onDismiss={() => setRedirect({ ...redirect, showConfirm: false })}
         />

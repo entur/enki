@@ -21,7 +21,7 @@ const ConfirmDialog = ({
   return (
     <Modal open={isOpen} title={title} onDismiss={onDismiss} size="medium">
       <Paragraph>{message}</Paragraph>
-      <div className="buttons">{buttons}</div>
+      <div className="confirm-dialog-buttons">{buttons}</div>
     </Modal>
   );
 };
