@@ -38,6 +38,7 @@ import {
   useLoadDependencies
 } from 'scenes/Lines/scenes/Editor/hooks';
 import { changeElementAtIndex } from 'helpers/arrays';
+import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 
 const FlexibleLineEditor = ({
   match,
@@ -47,6 +48,9 @@ const FlexibleLineEditor = ({
   const networks = useSelector((state: GlobalState) => state.networks);
   const organisations = useSelector<GlobalState, OrganisationState>(
     state => state.organisations
+  );
+  const isSaved = useSelector<GlobalState, boolean>(
+    state => state.editor.isSaved
   );
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
   const FLEXIBLE_LINE_STEPS = [
@@ -73,12 +77,19 @@ const FlexibleLineEditor = ({
   const [isValidServiceJourney, setIsValidServiceJourney] = useState(true);
   const [isValidJourneyPattern, setIsValidJourneyPattern] = useState(true);
   const [nextClicked, setNextClicked] = useState<boolean>(false);
+  const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   useEffect(() => {
     setErrors(validateForm(flexibleLine));
   }, [flexibleLine]);
 
-  const goToLines = () => history.push('/lines');
+  const goToLines = () => {
+    if (!isSaved) {
+      setShowConfirm(true);
+    } else {
+      history.push('/lines');
+    }
+  };
 
   const dispatch = useDispatch<any>();
 
@@ -171,16 +182,28 @@ const FlexibleLineEditor = ({
         >
           <div className="editor-pages">
             {activeStepperIndex === 0 && (
-              <section className="general-line-info">
-                <General
-                  flexibleLine={flexibleLine}
-                  networks={networks ?? []}
-                  operators={operators}
-                  errors={errors}
-                  flexibleLineChange={onFieldChange}
-                  spoilPristine={nextClicked}
-                />
-              </section>
+              <>
+                <section className="general-line-info">
+                  <General
+                    flexibleLine={flexibleLine}
+                    networks={networks ?? []}
+                    operators={operators}
+                    errors={errors}
+                    flexibleLineChange={onFieldChange}
+                    spoilPristine={nextClicked}
+                  />
+                </section>
+                {showConfirm && (
+                  <NavigateConfirmBox
+                    hideDialog={() => setShowConfirm(false)}
+                    redirectTo="/lines"
+                    title={formatMessage(messages.title)}
+                    description={formatMessage(messages.message)}
+                    confirmText={formatMessage(messages.yes)}
+                    cancelText={formatMessage(messages.no)}
+                  />
+                )}
+              </>
             )}
 
             {activeStepperIndex === 1 && (

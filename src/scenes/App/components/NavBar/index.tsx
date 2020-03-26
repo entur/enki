@@ -1,31 +1,43 @@
 import React, { useState } from 'react';
-import { Link, withRouter, Redirect } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import UserPreference from './UserPreference';
 import { Contrast } from '@entur/layout';
-import { SecondaryButton, PrimaryButton } from '@entur/button';
-import ConfirmDialog from 'components/ConfirmDialog';
-
-import logo from '../../../../static/img/logo.png';
-
-import './styles.scss';
+import { RouteComponentProps } from 'react-router';
 import { selectIntl } from 'i18n';
 import messages from './messages';
 import appMessages from '../../messages';
 import { SideNavigation, SideNavigationItem } from '@entur/menu';
-import { setSavedChanges } from 'actions/editor';
+import { GlobalState } from 'reducers';
+import { IntlShape } from 'react-intl';
+import logo from 'static/img/logo.png';
+import './styles.scss';
+import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 
-const isActive = (pathname, path) => {
-  return pathname.split('/')[1] === path.split('/')[1];
+const isActive = (pathname: string, path: string) =>
+  pathname.split('/')[1] === path.split('/')[1];
+
+type RedirectType = {
+  showConfirm: boolean;
+  path: string;
+};
+
+type NavBarItemProps = RouteComponentProps & {
+  text: string;
+  path: string;
+  className?: string;
+  setRedirect: (redirect: RedirectType) => void;
 };
 
 const NavBarItem = withRouter(
-  ({ location, text, path, className, setRedirect }) => {
-    const { isSaved } = useSelector(state => state.editor);
-    const handleOnClick = e => {
+  ({ location, text, path, className, setRedirect }: NavBarItemProps) => {
+    const isSaved = useSelector<GlobalState, boolean>(
+      state => state.editor.isSaved
+    );
+    const handleOnClick = (e: React.MouseEvent) => {
       if (isSaved) return;
       e.preventDefault();
-      setRedirect({ showConfirm: true, path, shouldRedirect: false });
+      setRedirect({ showConfirm: true, path });
     };
 
     return (
@@ -43,20 +55,11 @@ const NavBarItem = withRouter(
 );
 
 const NavBar = () => {
-  const { formatMessage } = useSelector(selectIntl);
-  const [redirect, setRedirect] = useState({
+  const { formatMessage } = useSelector<GlobalState, IntlShape>(selectIntl);
+  const [redirect, setRedirect] = useState<RedirectType>({
     showConfirm: false,
-    path: '',
-    shouldRedirect: false
+    path: ''
   });
-  const { showConfirm, shouldRedirect, path } = redirect;
-  const dispatch = useDispatch();
-
-  const RedirectHandler = () => {
-    setRedirect({ showConfirm: false, shouldRedirect: false, path: '' });
-    dispatch(setSavedChanges(true));
-    return <Redirect to={path} />;
-  };
 
   return (
     <Contrast as="nav" className="navbar-wrapper">
@@ -101,31 +104,16 @@ const NavBar = () => {
           setRedirect={setRedirect}
         />
       </SideNavigation>
-
-      {showConfirm && (
-        <ConfirmDialog
-          isOpen
+      {redirect.showConfirm && (
+        <NavigateConfirmBox
+          hideDialog={() => setRedirect({ ...redirect, showConfirm: false })}
+          redirectTo={redirect.path}
           title={formatMessage(messages.title)}
-          message={formatMessage(messages.message)}
-          buttons={[
-            <SecondaryButton
-              key={1}
-              onClick={() => setRedirect({ ...redirect, shouldRedirect: true })}
-            >
-              {formatMessage(messages.yes)}
-            </SecondaryButton>,
-            <PrimaryButton
-              key={2}
-              onClick={() => setRedirect({ ...redirect, showConfirm: false })}
-            >
-              {formatMessage(messages.no)}
-            </PrimaryButton>
-          ]}
-          onDismiss={() => setRedirect({ ...redirect, showConfirm: false })}
+          description={formatMessage(messages.message)}
+          confirmText={formatMessage(messages.yes)}
+          cancelText={formatMessage(messages.no)}
         />
       )}
-
-      {shouldRedirect && <RedirectHandler />}
     </Contrast>
   );
 };
