@@ -1,0 +1,17 @@
+@import '~@entur/tokens/dist/styles.scss';
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-input {
+  margin-top: $space-extra-large3;
+  margin-bottom: $space-extra-large5;
+}
+
+.margin-right {
+  margin-right: $space-default;
+}
