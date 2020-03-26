@@ -11,7 +11,7 @@ const OverlayLoader = ({
   isLoading,
   text,
   seeThrough,
-  children
+  children,
 }) => {
   const classNames = cx('overlay-loader', className);
   const overlayClassNames = cx('overlay', { seeThrough });
@@ -37,11 +37,11 @@ const OverlayLoader = ({
 OverlayLoader.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   seeThrough: PropTypes.bool,
-  text: PropTypes.string
+  text: PropTypes.string,
 };
 OverlayLoader.defaultProps = {
   isLoading: true,
-  seeThrough: true
+  seeThrough: true,
 };
 
 export default OverlayLoader;

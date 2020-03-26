@@ -11,7 +11,7 @@ class ErrorBoundary extends Component<ErrorProps> {
   componentDidCatch(error: Error, info: object) {
     const { sentry } = this.props;
     this.setState({ error });
-    sentry.withScope(scope => {
+    sentry.withScope((scope) => {
       scope.setExtra('extra', info);
       sentry.captureException(error);
     });

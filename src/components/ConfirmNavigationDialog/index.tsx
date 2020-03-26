@@ -40,7 +40,7 @@ const NavigateConfirmBox = (props: NavigateConfirmProps) => {
         </SecondaryButton>,
         <PrimaryButton key={2} onClick={() => props.hideDialog()}>
           {props.cancelText}
-        </PrimaryButton>
+        </PrimaryButton>,
       ]}
       onDismiss={() => props.hideDialog()}
     />

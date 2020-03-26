@@ -9,7 +9,7 @@ import {
   Table,
   TableBody,
   TableHead,
-  TableRow
+  TableRow,
 } from '@entur/table';
 import Loading from 'components/Loading';
 import PageHeader from 'components/PageHeader';
@@ -25,10 +25,10 @@ import { FlexibleLinesState } from 'reducers/flexibleLines';
 const Lines = ({ history }: RouteComponentProps) => {
   const { formatMessage } = useSelector(selectIntl);
   const lines = useSelector<GlobalState, FlexibleLinesState>(
-    state => state.flexibleLines
+    (state) => state.flexibleLines
   );
   const operator = useSelector<GlobalState, OrganisationState>(
-    state => state.organisations
+    (state) => state.organisations
   );
   const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ const Lines = ({ history }: RouteComponentProps) => {
   const renderTableRows = () => {
     if (lines) {
       return lines.length > 0 ? (
-        lines.map(line => (
+        lines.map((line) => (
           <TableRow
             key={line.id}
             onClick={() => handleOnRowClick(line.id ?? '')}
@@ -49,7 +49,7 @@ const Lines = ({ history }: RouteComponentProps) => {
             <DataCell title={line.description}>{line.name}</DataCell>
             <DataCell>{line.privateCode}</DataCell>
             <DataCell>
-              {operator?.find(op => op.id === line.id)?.name ?? '-'}
+              {operator?.find((op) => op.id === line.id)?.name ?? '-'}
             </DataCell>
           </TableRow>
         ))

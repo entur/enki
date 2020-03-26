@@ -1,7 +1,7 @@
 import { SET_SAVED_CHANGES, EditorActionTypes } from 'actions/editor';
 
 const initialState: EditorState = {
-  isSaved: true
+  isSaved: true,
 };
 
 export type EditorState = {

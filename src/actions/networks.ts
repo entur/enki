@@ -3,7 +3,7 @@ import { deleteNetwork, networkMutation } from 'graphql/uttu/mutations';
 import { getNetworkByIdQuery, getNetworksQuery } from 'graphql/uttu/queries';
 import {
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 } from 'actions/notification';
 import { getStyledUttuError } from 'helpers/uttu';
 import { Network } from 'model/Network';
@@ -24,12 +24,12 @@ export const DELETED_NETWORK = 'DELETED_NETWORK';
 
 const receiveNetworksActionCreator = (networks: Network[]) => ({
   type: RECEIVE_NETWORKS,
-  networks
+  networks,
 });
 
 const receiveNetworkActionCreator = (network: Network) => ({
   type: RECEIVE_NETWORK,
-  network
+  network,
 });
 
 export const loadNetworks = () => async (
@@ -90,7 +90,7 @@ export const saveNetwork = (network: Network) => async (
 ) => {
   try {
     await UttuQuery(getState().providers.active, networkMutation, {
-      input: network
+      input: network,
     });
     dispatch(
       showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')

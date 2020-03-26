@@ -17,7 +17,7 @@ export const toggleDay = (
   dayToToggle: DAY_OF_WEEK
 ): DAY_OF_WEEK[] =>
   days.includes(dayToToggle)
-    ? days.filter(day => day !== dayToToggle)
+    ? days.filter((day) => day !== dayToToggle)
     : days.concat(dayToToggle);
 
 const WeekdayPicker = ({ days, onDaysChange, feedbackMessage }: Props) => (

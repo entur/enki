@@ -12,7 +12,7 @@ describe('WeekdayPicker utils', () => {
       ).toEqual([
         DAY_OF_WEEK.MONDAY,
         DAY_OF_WEEK.FRIDAY,
-        DAY_OF_WEEK.WEDNESDAY
+        DAY_OF_WEEK.WEDNESDAY,
       ]);
     });
 

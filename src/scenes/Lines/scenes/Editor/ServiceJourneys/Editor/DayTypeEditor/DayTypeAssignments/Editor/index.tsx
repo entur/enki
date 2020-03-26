@@ -21,7 +21,7 @@ type Props = {
 const DayTypeAssignmentEditor = ({
   dayTypeAssignment,
   onChange,
-  onDelete
+  onDelete,
 }: Props) => {
   const [useDateRange, setUseDateRange] = useState(
     Boolean(dayTypeAssignment.operatingPeriod)
@@ -35,7 +35,7 @@ const DayTypeAssignmentEditor = ({
       ? { date: today, operatingPeriod: null }
       : {
           date: undefined,
-          operatingPeriod: { fromDate: today, toDate: today }
+          operatingPeriod: { fromDate: today, toDate: today },
         };
 
     onChange({ ...dayTypeAssignment, ...dateFields });
@@ -52,8 +52,8 @@ const DayTypeAssignmentEditor = ({
       ...dayTypeAssignment,
       operatingPeriod: {
         ...dayTypeAssignment.operatingPeriod,
-        [field]: dateToString(date)
-      }
+        [field]: dateToString(date),
+      },
     };
 
     onChange(newOperatingPeriod);
@@ -89,7 +89,7 @@ const DayTypeAssignmentEditor = ({
                 onChange={(date: Date | null) =>
                   onChange({
                     ...dayTypeAssignment,
-                    date: date !== null ? dateToString(date) : undefined
+                    date: date !== null ? dateToString(date) : undefined,
                   })
                 }
               />

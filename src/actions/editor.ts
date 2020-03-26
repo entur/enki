@@ -9,7 +9,7 @@ type SetSavedChanges = {
 export function setSavedChanges(isSaved: boolean): SetSavedChanges {
   return {
     type: SET_SAVED_CHANGES,
-    payload: { isSaved }
+    payload: { isSaved },
   };
 }
 

@@ -31,7 +31,7 @@ export default ({
   errors,
   operators,
   flexibleLineChange,
-  spoilPristine
+  spoilPristine,
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const { publicCode, flexibleLineType } = flexibleLine;
@@ -41,8 +41,8 @@ export default ({
       publicCode: publicCodeError,
       networkRef: networkError,
       operatorRef: operatorError,
-      flexibleLineType: flexibleLineTypeError
-    }
+      flexibleLineType: flexibleLineTypeError,
+    },
   } = errors;
   const [showDrawer, setDrawer] = useState<boolean>(false);
 
@@ -78,7 +78,7 @@ export default ({
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               flexibleLineChange({
                 ...flexibleLine,
-                description: e.target.value
+                description: e.target.value,
               })
             }
           />
@@ -95,7 +95,7 @@ export default ({
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               flexibleLineChange({
                 ...flexibleLine,
-                privateCode: e.target.value
+                privateCode: e.target.value,
               })
             }
           />
@@ -117,7 +117,7 @@ export default ({
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               flexibleLineChange({
                 ...flexibleLine,
-                publicCode: e.target.value
+                publicCode: e.target.value,
               })
             }
           />
@@ -127,10 +127,10 @@ export default ({
           className="form-section"
           value={flexibleLine.operatorRef}
           items={[
-            ...operators.map(({ id, name }) => ({ value: id, label: name }))
+            ...operators.map(({ id, name }) => ({ value: id, label: name })),
           ]}
           label={formatMessage(messages.operatorFormGroupTitle)}
-          onChange={element =>
+          onChange={(element) =>
             flexibleLineChange({ ...flexibleLine, operatorRef: element?.value })
           }
           {...getErrorFeedback(
@@ -143,15 +143,15 @@ export default ({
         <Dropdown
           className="form-section"
           value={flexibleLine.network?.id}
-          items={networks.map(n => ({
+          items={networks.map((n) => ({
             value: n.id ?? '',
-            label: n.name ?? ''
+            label: n.name ?? '',
           }))}
           label={formatMessage(messages.networkFormGroupTitle)}
-          onChange={element =>
+          onChange={(element) =>
             flexibleLineChange({
               ...flexibleLine,
-              networkRef: element?.value
+              networkRef: element?.value,
             })
           }
           {...getErrorFeedback(
@@ -173,16 +173,16 @@ export default ({
             className="form-section"
             value={flexibleLine.flexibleLineType}
             items={[
-              ...Object.values(FLEXIBLE_LINE_TYPE).map(type => ({
+              ...Object.values(FLEXIBLE_LINE_TYPE).map((type) => ({
                 value: type,
-                label: type
-              }))
+                label: type,
+              })),
             ]}
             label={formatMessage(messages.typeFormGroupTitle)}
-            onChange={element =>
+            onChange={(element) =>
               flexibleLineChange({
                 ...flexibleLine,
-                flexibleLineType: element?.value
+                flexibleLineType: element?.value,
               })
             }
             {...getErrorFeedback(

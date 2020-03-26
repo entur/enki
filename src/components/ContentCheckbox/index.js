@@ -32,7 +32,7 @@ class ContentCheckbox extends React.Component {
 ContentCheckbox.propTypes = {
   isChecked: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 export default ContentCheckbox;

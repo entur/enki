@@ -4,7 +4,7 @@ import { StopPointsFormError } from './index';
 import StopPoint from 'model/StopPoint';
 
 export const validateStopPoints = (stopPoints: StopPoint[]): boolean =>
-  getStopPointsErrors(stopPoints).every(stopPointErrors =>
+  getStopPointsErrors(stopPoints).every((stopPointErrors) =>
     objectValuesAreEmpty(stopPointErrors)
   );
 
@@ -26,7 +26,7 @@ export const validateStopPoint = (
     flexibleStopPlaceRef,
     destinationDisplay,
     forAlighting,
-    forBoarding
+    forBoarding,
   } = stopPoint;
 
   const getFlexibleStopPlaceRefAndQuayRefError = () => {
@@ -52,6 +52,6 @@ export const validateStopPoint = (
   return {
     flexibleStopPlaceRefAndQuayRef: getFlexibleStopPlaceRefAndQuayRefError(),
     frontText: getFrontTextError(),
-    boarding: getBoardingError()
+    boarding: getBoardingError(),
   };
 };

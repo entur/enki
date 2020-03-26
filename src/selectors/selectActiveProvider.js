@@ -1,4 +1,4 @@
 export default () => {
   return ({ providers }) =>
-    providers.providers.find(p => p.code === providers.active);
+    providers.providers.find((p) => p.code === providers.active);
 };

@@ -32,8 +32,8 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
       isAvailable: false,
       operatingPeriod: {
         fromDate: today,
-        toDate: today
-      }
+        toDate: today,
+      },
     };
     onChange(dayTypeAssignments.concat(dayTypeAssignment));
   };
@@ -54,7 +54,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
           <DayTypeAssignmentEditor
             key={Math.random()}
             dayTypeAssignment={dta}
-            onChange={dta => updateDayTypeAssignment(i, dta)}
+            onChange={(dta) => updateDayTypeAssignment(i, dta)}
             onDelete={() => deleteDayTypeAssignment(i)}
           />
         ))

@@ -16,15 +16,15 @@ const JourneyPatternsEditor = ({
   journeyPatterns,
   onChange,
   setIsValidJourneyPattern,
-  spoilPristine
+  spoilPristine,
 }: Props) => {
   useEffect(() => {
     if (!journeyPatterns.length)
       onChange([
         {
           pointsInSequence: [{}, {}],
-          serviceJourneys: [{ passingTimes: [{}, {}] }]
-        }
+          serviceJourneys: [{ passingTimes: [{}, {}] }],
+        },
       ]);
   }, [journeyPatterns, onChange]);
 

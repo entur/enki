@@ -16,7 +16,7 @@ const ConfirmDialog = ({
   title,
   message,
   buttons = [],
-  onDismiss
+  onDismiss,
 }: Props): ReactElement => {
   return (
     <Modal open={isOpen} title={title} onDismiss={onDismiss} size="medium">

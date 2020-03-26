@@ -9,7 +9,7 @@ import './styles.scss';
 Modal.setAppElement('#root');
 
 const customStyles = {
-  overlay: { zIndex: 1001 }
+  overlay: { zIndex: 1001 },
 };
 
 type Props = {

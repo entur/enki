@@ -57,7 +57,7 @@ const initAuth = () => {
         // @ts-ignore
         username: kc.idTokenParsed.preferred_username,
         // @ts-ignore
-        isAdmin: isAdmin(kc.tokenParsed)
+        isAdmin: isAdmin(kc.tokenParsed),
       };
       renderIndex(userInfo);
     } else {

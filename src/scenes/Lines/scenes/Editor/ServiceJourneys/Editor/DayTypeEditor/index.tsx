@@ -26,10 +26,10 @@ const DayTypeEditor = ({ dayType, onChange, spoilPristine }: Props) => {
       <Label> {formatMessage(messages.weekdays)} </Label>
       <WeekdayPicker
         days={dayType.daysOfWeek}
-        onDaysChange={daysOfWeek => {
+        onDaysChange={(daysOfWeek) => {
           const updatedDayType: DayType = {
             ...dayType,
-            daysOfWeek
+            daysOfWeek,
           };
           onChange(dayTypeIsEmpty(updatedDayType) ? undefined : updatedDayType);
         }}
@@ -44,10 +44,10 @@ const DayTypeEditor = ({ dayType, onChange, spoilPristine }: Props) => {
       <Label>{formatMessage(messages.dates)}</Label>
       <DayTypeAssignmentsEditor
         dayTypeAssignments={dayType.dayTypeAssignments}
-        onChange={dayTypeAssignments => {
+        onChange={(dayTypeAssignments) => {
           const updatedDayType: DayType = {
             ...dayType,
-            dayTypeAssignments
+            dayTypeAssignments,
           };
           onChange(dayTypeIsEmpty(updatedDayType) ? undefined : updatedDayType);
         }}

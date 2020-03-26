@@ -1,7 +1,7 @@
 import {
   REQUEST_EXPORTS,
   RECEIVE_EXPORTS,
-  RECEIVE_EXPORT
+  RECEIVE_EXPORT,
 } from 'actions/exports';
 import { AnyAction } from 'redux';
 import { Export } from 'model/Export';
@@ -18,7 +18,7 @@ const exportsReducer = (exports: ExportsState = null, action: AnyAction) => {
 
     case RECEIVE_EXPORT:
       return exports
-        ? exports.map(e => (e.id === action.export.id ? action.export : e))
+        ? exports.map((e) => (e.id === action.export.id ? action.export : e))
         : [action.export];
 
     default:

@@ -12,7 +12,7 @@ export const receiveOrganisations = (
   organisations: OrganisationState
 ): ReceiveOrganisations => ({
   type: RECEIVE_ORGANISATIONS,
-  organisations
+  organisations,
 });
 
 export const getOrganisations = (types: any) => (
@@ -21,7 +21,7 @@ export const getOrganisations = (types: any) => (
   let typesQuery = types
     ? '?types' + (Array.isArray(types) ? types.join(',') : types)
     : '';
-  return http.get(`/organisations${typesQuery}`).then(response => {
+  return http.get(`/organisations${typesQuery}`).then((response) => {
     dispatch(receiveOrganisations(response.data));
     return Promise.resolve(response.data);
   });

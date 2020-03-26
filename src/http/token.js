@@ -2,7 +2,7 @@ const token = {};
 
 export const TOKEN_ID = 'OT::jwt';
 
-token.save = token => {
+token.save = (token) => {
   localStorage.setItem(TOKEN_ID, token);
 };
 

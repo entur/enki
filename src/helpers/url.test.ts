@@ -7,11 +7,11 @@ describe('normalizeAllUrls', () => {
         values: [
           {
             stacktrace: {
-              frames: [{ filename: '/chunk.js' }, { filename: 'http://local' }]
-            }
-          }
-        ]
-      }
+              frames: [{ filename: '/chunk.js' }, { filename: 'http://local' }],
+            },
+          },
+        ],
+      },
     });
     const expected = {
       exception: {
@@ -20,12 +20,12 @@ describe('normalizeAllUrls', () => {
             stacktrace: {
               frames: [
                 { filename: 'app:////chunk.js' },
-                { filename: 'http://local' }
-              ]
-            }
-          }
-        ]
-      }
+                { filename: 'http://local' },
+              ],
+            },
+          },
+        ],
+      },
     };
     expect(actual).toStrictEqual(expected);
   });
@@ -38,12 +38,12 @@ describe('normalizeAllUrls', () => {
             stacktrace: {
               frames: [
                 { filename: 'http://chunk.js' },
-                { filename: 'http://local' }
-              ]
-            }
-          }
-        ]
-      }
+                { filename: 'http://local' },
+              ],
+            },
+          },
+        ],
+      },
     });
     const expected = {
       exception: {
@@ -52,22 +52,22 @@ describe('normalizeAllUrls', () => {
             stacktrace: {
               frames: [
                 { filename: 'http://chunk.js' },
-                { filename: 'http://local' }
-              ]
-            }
-          }
-        ]
-      }
+                { filename: 'http://local' },
+              ],
+            },
+          },
+        ],
+      },
     };
     expect(actual).toStrictEqual(expected);
   });
 
   it('should do nothing if some values are missing', () => {
     const actual = normalizeAllUrls({
-      exception: { values: [] }
+      exception: { values: [] },
     });
     const expected = {
-      exception: { values: [] }
+      exception: { values: [] },
     };
     expect(actual).toStrictEqual(expected);
   });

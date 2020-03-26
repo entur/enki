@@ -8,12 +8,12 @@ export enum ORGANISATION_TYPE {
   TRAVEL_AGENT = 'travelAgent',
   SERVICED_ORGANISATION = 'servicedOrganisation',
   RETAIL_CONSORTIUM = 'retailConsortium',
-  OTHER = 'other'
+  OTHER = 'other',
 }
 
 export const VEHICLE_MODE = Object.freeze({
   BUS: 'bus',
-  WATER: 'water'
+  WATER: 'water',
 });
 
 export const VEHICLE_SUBMODE = Object.freeze({
@@ -27,7 +27,7 @@ export const VEHICLE_SUBMODE = Object.freeze({
   SHUTTLE_BUS: 'shuttleBus',
   SIGHTSEEING_BUS: 'sightseeingBus',
   LOCAL_PASSENGER_FERRY: 'localPassengerFerry',
-  SIGHTSEEING_SERVICE: 'sightseeingService'
+  SIGHTSEEING_SERVICE: 'sightseeingService',
 });
 
 export const FLEXIBLE_LINE_TYPE = Object.freeze({
@@ -36,7 +36,7 @@ export const FLEXIBLE_LINE_TYPE = Object.freeze({
   FIXED_STOP_AREA_WIDE: 'fixedStopAreaWide',
   FLEXIBLE_AREAS_ONLY: 'flexibleAreasOnly',
   HAIL_AND_RIDE_SECTIONS: 'hailAndRideSections',
-  MIXED_FLEXIBLE: 'mixedFlexible'
+  MIXED_FLEXIBLE: 'mixedFlexible',
 });
 
 export enum DAY_OF_WEEK {
@@ -46,7 +46,7 @@ export enum DAY_OF_WEEK {
   THURSDAY = 'thursday',
   FRIDAY = 'friday',
   SATURDAY = 'saturday',
-  SUNDAY = 'sunday'
+  SUNDAY = 'sunday',
 }
 
 export enum BOOKING_METHOD {
@@ -54,27 +54,27 @@ export enum BOOKING_METHOD {
   CALL_OFFICE = 'callOffice',
   ONLINE = 'online',
   PHONE_AT_STOP = 'phoneAtStop',
-  TEXT = 'text'
+  TEXT = 'text',
 }
 
 export const BOOKING_ACCESS = Object.freeze({
   PUBLIC: 'public',
   AUTHORISED_PUBLIC: 'authorisedPublic',
-  STAFF: 'staff'
+  STAFF: 'staff',
 });
 
 export const PURCHASE_WHEN = Object.freeze({
   TIME_OF_TRAVEL_ONLY: 'timeOfTravelOnly',
   DAY_OF_TRAVEL_ONLY: 'dayOfTravelOnly',
   UNTIL_PREVIOUS_DAY: 'untilPreviousDay',
-  ADVANCE_AND_DAY_OF_TRAVEL: 'advanceAndDayOfTravel'
+  ADVANCE_AND_DAY_OF_TRAVEL: 'advanceAndDayOfTravel',
 });
 
 export enum PURCHASE_MOMENT {
   ON_RESERVATION = 'onReservation',
   BEFORE_BOARDING = 'beforeBoarding',
   AFTER_BOARDING = 'afterBoarding',
-  ON_CHECK_OUT = 'onCheckOut'
+  ON_CHECK_OUT = 'onCheckOut',
 }
 
 export const GEOMETRY_TYPE = Object.freeze({
@@ -84,24 +84,24 @@ export const GEOMETRY_TYPE = Object.freeze({
   MULTI_POINT: 'MultiPoint',
   MULTI_LINE_STRING: 'MultiLineString',
   MULTI_POLYGON: 'MultiPolygon',
-  GEOMETRY_COLLECTION: 'GeometryCollection'
+  GEOMETRY_COLLECTION: 'GeometryCollection',
 });
 
 export enum DIRECTION_TYPE {
   INBOUND = 'inbound',
   OUTBOUND = 'outbound',
   CLOCKWISE = 'clockwise',
-  ANTICLOCKWISE = 'anticlockwise'
+  ANTICLOCKWISE = 'anticlockwise',
 }
 
 export const EXPORT_STATUS = Object.freeze({
   IN_PROGRESS: 'in_progress',
   FAILED: 'failed',
-  SUCCESS: 'success'
+  SUCCESS: 'success',
 });
 
 export const SEVERITY = Object.freeze({
   INFO: 'info',
   WARN: 'warn',
-  ERROR: 'error'
+  ERROR: 'error',
 });

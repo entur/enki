@@ -23,9 +23,9 @@ class UserPreference extends React.Component {
     const translations = getIntl({ intl });
 
     const items = providers
-      ? providers.map(p => ({
+      ? providers.map((p) => ({
           value: p.code,
-          label: p.name
+          label: p.name,
         }))
       : [];
 
@@ -39,7 +39,7 @@ class UserPreference extends React.Component {
               items={items}
               label={translations.formatMessage(messages.dataProvider)}
               value={activeProvider || ''}
-              onChange={e => this.handleActiveProviderChange(e.value)}
+              onChange={(e) => this.handleActiveProviderChange(e.value)}
             />
           </Contrast>
         )}
@@ -51,7 +51,7 @@ class UserPreference extends React.Component {
 const mapStateToProps = ({ intl, providers }) => ({
   providers: providers.providers,
   activeProvider: providers.active,
-  intl: intl
+  intl: intl,
 });
 
 export default compose(withRouter, connect(mapStateToProps))(UserPreference);

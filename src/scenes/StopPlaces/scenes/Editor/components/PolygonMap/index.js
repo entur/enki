@@ -9,10 +9,10 @@ class PolygonMap extends Component {
   state = {
     center: {
       lat: 59.91,
-      lng: 10.76
+      lng: 10.76,
     },
     bounds: undefined,
-    zoom: 14
+    zoom: 14,
   };
 
   map = createRef();

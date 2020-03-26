@@ -16,9 +16,9 @@ export type JourneyPattern = VersionedType & {
 
 export const journeyPatternToPayload = (journeyPattern: JourneyPattern) => ({
   ...journeyPattern,
-  pointsInSequence: journeyPattern.pointsInSequence.map(pis =>
+  pointsInSequence: journeyPattern.pointsInSequence.map((pis) =>
     stopPointToPayload(pis)
-  )
+  ),
 });
 
 export default JourneyPattern;

@@ -22,7 +22,7 @@ const UserMenu = () => {
   const dispatch = useDispatch();
 
   const handleChangeLocale = useCallback(
-    locale => {
+    (locale) => {
       const messages = getMessages(locale);
       dispatch(updateIntl({ locale, messages }));
       localStorage.setItem(LOCALE_KEY, locale);
@@ -63,7 +63,7 @@ const UserMenu = () => {
                   <Checkbox checked={locale === 'en'} readOnly />
                   <span>{formatMessage(messages.menuItemTextEnglish)}</span>
                 </div>
-              </MenuItem>
+              </MenuItem>,
             ]}
           >
             {formatMessage(messages.menuItemTextLanguage)}

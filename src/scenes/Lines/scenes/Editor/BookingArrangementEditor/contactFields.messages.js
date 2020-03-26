@@ -4,23 +4,23 @@ export default defineMessages({
   contactPersonTitle: {
     id:
       'lines.editor.bookingArrangementEditor.contactFields.contactPersonTitle',
-    defaultMessage: 'Kontaktperson'
+    defaultMessage: 'Kontaktperson',
   },
   phoneTitle: {
     id: 'lines.editor.bookingArrangementEditor.contactFields.phoneTitle',
-    defaultMessage: 'Telefon'
+    defaultMessage: 'Telefon',
   },
   emailTitle: {
     id: 'lines.editor.bookingArrangementEditor.contactFields.emailTitle',
-    defaultMessage: 'E-post'
+    defaultMessage: 'E-post',
   },
   urlTitle: {
     id: 'lines.editor.bookingArrangementEditor.contactFields.urlTitle',
-    defaultMessage: 'URL'
+    defaultMessage: 'URL',
   },
   furtherDetailsTitle: {
     id:
       'lines.editor.bookingArrangementEditor.contactFields.furtherDetailsTitle',
-    defaultMessage: 'Detaljer'
-  }
+    defaultMessage: 'Detaljer',
+  },
 });

@@ -1,15 +1,15 @@
 import {
   getFlexibleStopPlaceByIdQuery,
-  getFlexibleStopPlacesQuery
+  getFlexibleStopPlacesQuery,
 } from 'graphql/uttu/queries';
 import { UttuQuery } from 'graphql';
 import {
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 } from 'actions/notification';
 import {
   deleteFlexibleStopPlace,
-  flexibleStopPlaceMutation
+  flexibleStopPlaceMutation,
 } from 'graphql/uttu/mutations';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
@@ -24,25 +24,25 @@ export const REQUEST_FLEXIBLE_STOP_PLACE = 'REQUEST_FLEXIBLE_STOP_PLACE';
 export const RECEIVE_FLEXIBLE_STOP_PLACE = 'RECEIVE_FLEXIBLE_STOP_PLACE';
 
 const requestFlexibleStopPlacesActionCreator = () => ({
-  type: REQUEST_FLEXIBLE_STOP_PLACES
+  type: REQUEST_FLEXIBLE_STOP_PLACES,
 });
 
 const receiveFlexibleStopPlacesActionCreator = (
   stopPlaces: FlexibleStopPlace[]
 ) => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACES,
-  stopPlaces
+  stopPlaces,
 });
 
 const requestFlexibleStopPlaceActionCreator = () => ({
-  type: REQUEST_FLEXIBLE_STOP_PLACE
+  type: REQUEST_FLEXIBLE_STOP_PLACE,
 });
 
 const receiveFlexibleStopPlaceActionCreator = (
   stopPlace: FlexibleStopPlace
 ) => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACE,
-  stopPlace
+  stopPlace,
 });
 
 export const loadFlexibleStopPlaces = () => async (
@@ -67,7 +67,7 @@ export const loadFlexibleStopPlaces = () => async (
       showErrorNotification(
         intl.formatMessage(messages.loadStopPlacesErrorHeader),
         intl.formatMessage(messages.loadStopPlacesErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );
@@ -96,7 +96,7 @@ export const loadFlexibleStopPlaceById = (id: string) => async (
       showErrorNotification(
         intl.formatMessage(messages.loadStopPlaceErrorHeader),
         intl.formatMessage(messages.loadStopPlaceErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );
@@ -112,7 +112,7 @@ export const saveFlexibleStopPlace = (
 
   try {
     await UttuQuery(activeProvider, flexibleStopPlaceMutation, {
-      input: flexibleStopPlace
+      input: flexibleStopPlace,
     });
     dispatch(
       showSuccessNotification(
@@ -125,7 +125,7 @@ export const saveFlexibleStopPlace = (
       showErrorNotification(
         intl.formatMessage(messages.saveStopPlaceErrorHeader),
         intl.formatMessage(messages.saveStopPlaceErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );
@@ -152,7 +152,7 @@ export const deleteFlexibleStopPlaceById = (id: string) => async (
       showErrorNotification(
         intl.formatMessage(messages.deleteStopPlaceErrorHeader),
         intl.formatMessage(messages.deleteStopPlaceErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );

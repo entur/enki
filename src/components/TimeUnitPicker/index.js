@@ -60,7 +60,7 @@ class TimeUnitPicker extends React.Component {
       showSeconds,
       textValue,
       position,
-      className
+      className,
     } = this.props;
     const { open } = this.state;
 
@@ -69,18 +69,21 @@ class TimeUnitPicker extends React.Component {
 
     return (
       <div className={classNames}>
-        <div ref={div => (this.trigger = div)}>
+        <div ref={(div) => (this.trigger = div)}>
           <TextField value={textValue} readOnly={true} />
         </div>
 
         {open && (
-          <div className={containerClassNames} ref={div => (this.picker = div)}>
+          <div
+            className={containerClassNames}
+            ref={(div) => (this.picker = div)}
+          >
             <div className="pickers">
               {showYears && (
                 <Picker
                   label="År"
                   value={years}
-                  onChange={value => onUnitChange('years', value)}
+                  onChange={(value) => onUnitChange('years', value)}
                   nrOfOptions={10}
                 />
               )}
@@ -89,7 +92,7 @@ class TimeUnitPicker extends React.Component {
                 <Picker
                   label="Måneder"
                   value={months}
-                  onChange={value => onUnitChange('months', value)}
+                  onChange={(value) => onUnitChange('months', value)}
                   nrOfOptions={12}
                 />
               )}
@@ -98,7 +101,7 @@ class TimeUnitPicker extends React.Component {
                 <Picker
                   label="Dager"
                   value={days}
-                  onChange={value => onUnitChange('days', value)}
+                  onChange={(value) => onUnitChange('days', value)}
                   nrOfOptions={31}
                 />
               )}
@@ -107,7 +110,7 @@ class TimeUnitPicker extends React.Component {
                 <Picker
                   label="Timer"
                   value={hours}
-                  onChange={value => onUnitChange('hours', value)}
+                  onChange={(value) => onUnitChange('hours', value)}
                   nrOfOptions={24}
                 />
               )}
@@ -116,7 +119,7 @@ class TimeUnitPicker extends React.Component {
                 <Picker
                   label="Minutter"
                   value={minutes}
-                  onChange={value => onUnitChange('minutes', value)}
+                  onChange={(value) => onUnitChange('minutes', value)}
                   nrOfOptions={60}
                 />
               )}
@@ -125,7 +128,7 @@ class TimeUnitPicker extends React.Component {
                 <Picker
                   label="Sekunder"
                   value={seconds}
-                  onChange={value => onUnitChange('seconds', value)}
+                  onChange={(value) => onUnitChange('seconds', value)}
                   nrOfOptions={60}
                 />
               )}
@@ -173,7 +176,7 @@ TimeUnitPicker.propTypes = {
   textValue: PropTypes.string,
   position: PropTypes.oneOf(['above', 'below']),
   disabled: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 TimeUnitPicker.defaultProps = {
@@ -184,13 +187,13 @@ TimeUnitPicker.defaultProps = {
   minutes: 0,
   seconds: 0,
   textValue: '',
-  position: 'below'
+  position: 'below',
 };
 
 const Picker = ({ label, value, onChange, nrOfOptions }) => {
-  const options = [...Array(nrOfOptions).keys()].map(i => ({
+  const options = [...Array(nrOfOptions).keys()].map((i) => ({
     value: i,
-    label: i < 10 ? '0' + i : i
+    label: i < 10 ? '0' + i : i,
   }));
 
   return (
@@ -199,7 +202,7 @@ const Picker = ({ label, value, onChange, nrOfOptions }) => {
         items={options}
         label={label}
         value={value.toString()}
-        onChange={e => onChange(e.value)}
+        onChange={(e) => onChange(e.value)}
         placeholder={value.toString()}
       />
     </div>
@@ -209,7 +212,7 @@ const Picker = ({ label, value, onChange, nrOfOptions }) => {
 Picker.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  nrOfOptions: PropTypes.number.isRequired
+  nrOfOptions: PropTypes.number.isRequired,
 };
 
 export default TimeUnitPicker;

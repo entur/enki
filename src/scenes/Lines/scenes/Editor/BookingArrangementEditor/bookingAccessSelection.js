@@ -4,7 +4,7 @@ import { Dropdown } from '@entur/dropdown';
 import { BOOKING_ACCESS } from 'model/enums';
 import { selectIntl } from 'i18n';
 import messages, {
-  bookingAccessMessages
+  bookingAccessMessages,
 } from './bookingAccessSelection.messages';
 
 export default ({ bookingAccess, onChange }) => {
@@ -15,10 +15,10 @@ export default ({ bookingAccess, onChange }) => {
       label={formatMessage(messages.title)}
       value={bookingAccess}
       items={[
-        ...Object.values(BOOKING_ACCESS).map(v => ({
+        ...Object.values(BOOKING_ACCESS).map((v) => ({
           value: v,
-          label: formatMessage(bookingAccessMessages[v])
-        }))
+          label: formatMessage(bookingAccessMessages[v]),
+        })),
       ]}
       onChange={({ value }) => onChange(value)}
     />

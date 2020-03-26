@@ -32,7 +32,7 @@ type NavBarItemProps = RouteComponentProps & {
 const NavBarItem = withRouter(
   ({ location, text, path, className, setRedirect }: NavBarItemProps) => {
     const isSaved = useSelector<GlobalState, boolean>(
-      state => state.editor.isSaved
+      (state) => state.editor.isSaved
     );
     const handleOnClick = (e: React.MouseEvent) => {
       if (isSaved) return;
@@ -58,7 +58,7 @@ const NavBar = () => {
   const { formatMessage } = useSelector<GlobalState, IntlShape>(selectIntl);
   const [redirect, setRedirect] = useState<RedirectType>({
     showConfirm: false,
-    path: ''
+    path: '',
   });
 
   return (

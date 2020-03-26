@@ -3,153 +3,153 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   journeyPattern: {
     id: 'lines.editor.journeyPatternsTabLabel',
-    defaultMessage: 'Journey patterns'
+    defaultMessage: 'Journey patterns',
   },
   enterInformation: {
     id: 'lines.editor.journeyPatterns.editor.fillInformation',
     defaultMessage:
-      'Et Journey Pattern definerer mønsteret til linjen, og består av stoppene langs ruten.'
+      'Et Journey Pattern definerer mønsteret til linjen, og består av stoppene langs ruten.',
   },
   stopPoints: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints',
-    defaultMessage: 'Legg til stoppepunkter for Journey Pattern'
+    defaultMessage: 'Legg til stoppepunkter for Journey Pattern',
   },
   serviceJourneys: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys',
-    defaultMessage: 'Service Journeys'
+    defaultMessage: 'Service Journeys',
   },
   edit: {
     id: 'lines.editor.journeyPatterns.editor.edit',
-    defaultMessage: 'Rediger'
+    defaultMessage: 'Rediger',
   },
   create: {
     id: 'lines.editor.journeyPatterns.editor.create',
-    defaultMessage: 'Opprett'
+    defaultMessage: 'Opprett',
   },
   save: {
     id: 'lines.editor.journeyPatterns.editor.save',
-    defaultMessage: 'Lagre'
+    defaultMessage: 'Lagre',
   },
   addStopPoint: {
     id: 'lines.editor.journeyPatterns.editor.addStopPoint',
-    defaultMessage: 'Legg til stoppepunkt'
+    defaultMessage: 'Legg til stoppepunkt',
   },
   addServiceJourneys: {
     id: 'lines.editor.journeyPatterns.editor.addServiceJourneys',
-    defaultMessage: 'Legg til service journey'
+    defaultMessage: 'Legg til service journey',
   },
   atleastTwoPoints: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.atleastTwoPoints',
-    defaultMessage: 'Minst to stoppepunkter'
+    defaultMessage: 'Minst to stoppepunkter',
   },
   atleastTwoPointsDetailed: {
     id:
       'lines.editor.journeyPatterns.editor.stopPoints.atleastTwoPointsDetailed',
-    defaultMessage: 'Et journey pattern krever minst to stoppepunkter.'
+    defaultMessage: 'Et journey pattern krever minst to stoppepunkter.',
   },
   availability: {
     id: 'lines.journeyPatterns.serviceJourney.availability',
-    defaultMessage: 'Tilgjengelighet'
+    defaultMessage: 'Tilgjengelighet',
   },
   passingTimes: {
     id: 'lines.journeyPatterns.serviceJourney.passingTimes',
-    defaultMessage: 'Passeringstider'
+    defaultMessage: 'Passeringstider',
   },
   booking: {
     id: 'lines.journeyPatterns.serviceJourney.booking',
-    defaultMessage: 'Bestilling'
+    defaultMessage: 'Bestilling',
   },
   nameLabel: {
     id: 'lines.journeyPatterns.serviceJourney.general.name',
-    defaultMessage: 'Navn *'
+    defaultMessage: 'Navn *',
   },
   nameRequired: {
     id: 'lines.journeyPatterns.serviceJourney.general.name.isRequired',
-    defaultMessage: 'Navn må fylles inn.'
+    defaultMessage: 'Navn må fylles inn.',
   },
   description: {
     id: 'lines.journeyPatterns.serviceJourney.general.description',
-    defaultMessage: 'Beskrivelse'
+    defaultMessage: 'Beskrivelse',
   },
   serviceAvailability: {
     id: 'lines.journeyPatterns.serviceJourney.general.availability',
-    defaultMessage: 'Tilgjengelighet'
+    defaultMessage: 'Tilgjengelighet',
   },
   publicCode: {
     id: 'lines.journeyPatterns.serviceJourney.general.publicCode',
-    defaultMessage: 'Offentlig kode'
+    defaultMessage: 'Offentlig kode',
   },
   operator: {
     id: 'lines.journeyPatterns.serviceJourney.general.operator',
-    defaultMessage: 'Operatør'
+    defaultMessage: 'Operatør',
   },
   weekdays: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays',
-    defaultMessage: 'Ukedager'
+    defaultMessage: 'Ukedager',
   },
   availabilityMustBeFilled: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays.error',
-    defaultMessage: 'Du må fylle ut tilgjengeligheten.'
+    defaultMessage: 'Du må fylle ut tilgjengeligheten.',
   },
   passingTimesMustBeFilled: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.passingTimesEditor.error',
-    defaultMessage: 'Du må ha gyldige passeringstider.'
+    defaultMessage: 'Du må ha gyldige passeringstider.',
   },
   dates: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dates',
-    defaultMessage: 'Datoer'
+    defaultMessage: 'Datoer',
   },
   addDayTypeAssignment: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.addDayTypeAssignment',
-    defaultMessage: 'Legg til dato'
+    defaultMessage: 'Legg til dato',
   },
   noDayTypeAssignments: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.noDayTypeAssignments',
-    defaultMessage: 'Ingen datoer er definert.'
+    defaultMessage: 'Ingen datoer er definert.',
   },
   date: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.date',
-    defaultMessage: 'Dato'
+    defaultMessage: 'Dato',
   },
   fromAndToDate: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.fromAndToDate',
-    defaultMessage: 'Bruk fra- og til-dato'
+    defaultMessage: 'Bruk fra- og til-dato',
   },
   fromDate: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.fromDate',
-    defaultMessage: 'Fra dato'
+    defaultMessage: 'Fra dato',
   },
   toDate: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.toDate',
-    defaultMessage: 'Til dato'
+    defaultMessage: 'Til dato',
   },
   stopPointsInfo: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.info',
     defaultMessage:
-      'Du må opprette minst to stoppesteder. Ett for start og ett for slutt. Hvis du lager en sonebasert linje, og du bare har én sone, må du legge til samme sone to ganger.'
+      'Du må opprette minst to stoppesteder. Ett for start og ett for slutt. Hvis du lager en sonebasert linje, og du bare har én sone, må du legge til samme sone to ganger.',
   },
   serviceJourneysInfo: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',
     defaultMessage:
-      'Opprett ulike Service Journeys for ulike åpningstider. For eksempel én for hverdag og én for helg.'
+      'Opprett ulike Service Journeys for ulike åpningstider. For eksempel én for hverdag og én for helg.',
   },
   deleteMessage: {
     id: 'lines.journeyPatterns.serviceJourney.delete.message',
     defaultMessage:
-      'Er du sikker på at du ænsker å slette denne service journeyen?'
+      'Er du sikker på at du ænsker å slette denne service journeyen?',
   },
   deleteTitle: {
     id: 'lines.journeyPatterns.serviceJourney.delete.title',
-    defaultMessage: 'Slette service journey'
-  }
+    defaultMessage: 'Slette service journey',
+  },
 });

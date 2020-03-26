@@ -2,7 +2,7 @@ import {
   addOrRemove,
   changeElementAtIndex,
   removeElementByIndex,
-  replaceElement
+  replaceElement,
 } from './arrays';
 
 describe('arrays', () => {
@@ -30,7 +30,7 @@ describe('arrays', () => {
     it('should do nothing if index does not exist', () => {
       expect(removeElementByIndex(['first value', 'other value'], 10)).toEqual([
         'first value',
-        'other value'
+        'other value',
       ]);
     });
   });
@@ -46,7 +46,7 @@ describe('arrays', () => {
       expect(addOrRemove('add me', ['first value', 'other value'])).toEqual([
         'first value',
         'other value',
-        'add me'
+        'add me',
       ]);
     });
   });

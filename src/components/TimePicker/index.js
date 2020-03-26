@@ -26,7 +26,7 @@ class TimePicker extends React.Component {
       defaultTime,
       showSeconds,
       position,
-      className
+      className,
     } = this.props;
 
     const t = moment(time || '00:00:00', moment.HTML5_FMT.TIME_SECONDS);
@@ -74,13 +74,13 @@ TimePicker.propTypes = {
   defaultTime: PropTypes.string,
   showSeconds: PropTypes.bool,
   position: PropTypes.oneOf(['above', 'below']),
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 TimePicker.defaultProps = {
   defaultTime: '--:--:--',
   showSeconds: true,
-  position: 'below'
+  position: 'below',
 };
 
 export default TimePicker;

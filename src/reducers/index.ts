@@ -6,7 +6,7 @@ import exports, { ExportsState } from './exports';
 import networks, { NetworksState } from './networks';
 import flexibleLines, { FlexibleLinesState } from './flexibleLines';
 import flexibleStopPlaces, {
-  FlexibleStopPlacesState
+  FlexibleStopPlacesState,
 } from './flexibleStopPlaces';
 import editor, { EditorState } from './editor';
 import { IntlState } from 'react-intl-redux';
@@ -33,7 +33,7 @@ const reducers = {
   networks,
   flexibleLines,
   flexibleStopPlaces,
-  editor
+  editor,
 };
 
 export default reducers;

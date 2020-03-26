@@ -8,7 +8,7 @@ const staticHeaders = { 'et-client-name': 'OT' };
 export const UttuQuery = (provider, query, variables) => {
   const endpoint = API_BASE + '/uttu/' + provider;
   const client = new GraphQLClient(endpoint, {
-    headers: { ...staticHeaders, authorization: token.getBearer() }
+    headers: { ...staticHeaders, authorization: token.getBearer() },
   });
   return client.request(query, variables);
 };

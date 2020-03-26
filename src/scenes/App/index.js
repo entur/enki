@@ -24,7 +24,7 @@ delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
 class App extends Component {
@@ -37,7 +37,7 @@ class App extends Component {
     const {
       providers,
       organisations,
-      intl: { formatMessage }
+      intl: { formatMessage },
     } = this.props;
 
     const basename = '';
@@ -72,7 +72,7 @@ class App extends Component {
 
 const mapStateToProps = ({ providers, organisations }) => ({
   providers: providers.providers,
-  organisations
+  organisations,
 });
 
 const hoc = R.compose(injectIntl, connect(mapStateToProps));

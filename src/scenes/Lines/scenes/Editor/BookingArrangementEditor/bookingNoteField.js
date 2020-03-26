@@ -10,7 +10,7 @@ export default ({ bookingNote, onChange }) => {
     <InputGroup className="form-section" label={formatMessage(messages.title)}>
       <TextArea
         value={bookingNote ?? ''}
-        onChange={e => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
       />
     </InputGroup>
   );

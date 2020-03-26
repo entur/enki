@@ -11,7 +11,7 @@ import { ORGANISATION_TYPE } from 'model/enums';
 import {
   deleteNetworkById,
   loadNetworkById,
-  saveNetwork
+  saveNetwork,
 } from 'actions/networks';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
@@ -37,11 +37,11 @@ const getCurrentNetwork = (
   state: GlobalState,
   match: { params: MatchParams }
 ): Network =>
-  state.networks?.find(network => network.id === match.params.id) ?? {};
+  state.networks?.find((network) => network.id === match.params.id) ?? {};
 
 const NetworkEditor = ({
   match,
-  history
+  history,
 }: RouteComponentProps<MatchParams>) => {
   const { formatMessage } = useSelector<IntlState, IntlFormatters>(selectIntl);
   const activeProvider = useSelector(selectActiveProvider());
@@ -51,7 +51,7 @@ const NetworkEditor = ({
   const lines = useSelector<GlobalState, FlexibleLinesState>(
     ({ flexibleLines }) => flexibleLines
   );
-  const currentNetwork = useSelector<GlobalState, Network>(state =>
+  const currentNetwork = useSelector<GlobalState, Network>((state) =>
     getCurrentNetwork(state, match)
   );
 
@@ -103,7 +103,7 @@ const NetworkEditor = ({
   ) => {
     setNetwork({
       ...network,
-      authorityRef: authoritySelection
+      authorityRef: authoritySelection,
     });
   };
 
@@ -116,7 +116,7 @@ const NetworkEditor = ({
   };
 
   const authorities = (organisations ?? []).filter(
-    org =>
+    (org) =>
       org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
       org.references.netexAuthorityId &&
       org.references.codeSpace === activeProvider.codespace.xmlns
@@ -125,7 +125,7 @@ const NetworkEditor = ({
   const isDeleteDisabled =
     !network ||
     !lines ||
-    !!lines.find(l => l.networkRef === network.id) ||
+    !!lines.find((l) => l.networkRef === network.id) ||
     isDeleting;
 
   return (
@@ -200,12 +200,12 @@ const NetworkEditor = ({
               value={network.authorityRef}
               label={formatMessage(messages.authorityLabelText)}
               items={[
-                ...authorities.map(org => ({
+                ...authorities.map((org) => ({
                   label: org.name,
-                  value: org.id
-                }))
+                  value: org.id,
+                })),
               ]}
-              onChange={organisation =>
+              onChange={(organisation) =>
                 handleAuthoritySelectionChange(organisation?.value)
               }
               {...getErrorFeedback(
@@ -255,7 +255,7 @@ const NetworkEditor = ({
           </SecondaryButton>,
           <SuccessButton key={1} onClick={handleDelete}>
             {formatMessage(messages.deleteNetworkConfirmDialogConfirmText)}
-          </SuccessButton>
+          </SuccessButton>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}
       />

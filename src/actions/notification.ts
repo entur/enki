@@ -4,14 +4,14 @@ export enum NotificationTypes {
   SUCCESS = 'success',
   ERROR = 'error',
   WARNING = 'warning',
-  INFO = 'info'
+  INFO = 'info',
 }
 
 /* Values are in ms */
 export enum NotificationDuration {
   SHORT = 2000,
   LONG = 5000,
-  VERY_LONG = 600000
+  VERY_LONG = 600000,
 }
 
 export const showNotification = (
@@ -27,8 +27,8 @@ export const showNotification = (
     title,
     type,
     duration,
-    showModal: showModal ?? false
-  }
+    showModal: showModal ?? false,
+  },
 });
 
 export const showSuccessNotification = (

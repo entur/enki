@@ -14,7 +14,7 @@ export default ({ buyWhen, onChange }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   return (
     <Fieldset className="form-section" label={formatMessage(messages.title)}>
-      {Object.values(PURCHASE_MOMENT).map(v => (
+      {Object.values(PURCHASE_MOMENT).map((v) => (
         <Checkbox
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onChange(e.target.value as PURCHASE_MOMENT)

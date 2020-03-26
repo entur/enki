@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
   HeaderCell,
-  DataCell
+  DataCell,
 } from '@entur/table';
 import Loading from 'components/Loading';
 import PageHeader from 'components/PageHeader';
@@ -24,7 +24,7 @@ const Networks = ({ history }) => {
     ({ providers, organisations, networks }) => ({
       activeProvider: providers.active,
       organisations,
-      networks
+      networks,
     })
   );
 
@@ -35,7 +35,7 @@ const Networks = ({ history }) => {
   }, [dispatch, activeProvider]);
 
   const handleOnRowClick = useCallback(
-    id => {
+    (id) => {
       history.push(`/networks/edit/${id}`);
     },
     [history]
@@ -44,7 +44,7 @@ const Networks = ({ history }) => {
   const renderTableRows = () => {
     if (networks) {
       return networks.length > 0 ? (
-        networks.map(n => (
+        networks.map((n) => (
           <TableRow
             key={n.id}
             onClick={() => handleOnRowClick(n.id)}
@@ -53,7 +53,7 @@ const Networks = ({ history }) => {
             <DataCell>{n.name}</DataCell>
             <DataCell>{n.privateCode}</DataCell>
             <DataCell>
-              {organisations.find(o => o.id === n.authorityRef).name}
+              {organisations.find((o) => o.id === n.authorityRef).name}
             </DataCell>
           </TableRow>
         ))

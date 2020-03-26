@@ -6,7 +6,7 @@ import { selectIntl } from 'i18n';
 import {
   removeElementByIndex,
   replaceElement,
-  useUniqueKeys
+  useUniqueKeys,
 } from 'helpers/arrays';
 import messages from './messages';
 import AddButton from 'components/AddButton/AddButton';
@@ -33,7 +33,7 @@ const ServiceJourneysEditor = ({
   onChange,
   stopPoints,
   setIsValidServiceJourney,
-  spoilPristine
+  spoilPristine,
 }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { formatMessage } = useSelector(selectIntl);
@@ -48,7 +48,7 @@ const ServiceJourneysEditor = ({
   const addNewServiceJourney = (name: string) => {
     onChange([
       ...serviceJourneys,
-      { name, passingTimes: stopPoints.map(_ => ({})) }
+      { name, passingTimes: stopPoints.map((_) => ({})) },
     ]);
     setShowModal(false);
   };
@@ -59,7 +59,9 @@ const ServiceJourneysEditor = ({
         key={keys[index]}
         serviceJourney={sj}
         stopPoints={stopPoints}
-        onChange={serviceJourney => updateServiceJourney(index, serviceJourney)}
+        onChange={(serviceJourney) =>
+          updateServiceJourney(index, serviceJourney)
+        }
         spoilPristine={spoilPristine}
         deleteServiceJourney={
           serviceJourneys.length > 1
@@ -72,7 +74,7 @@ const ServiceJourneysEditor = ({
 
   useEffect(() => {
     setIsValidServiceJourney(
-      serviceJourneys.every(sj => validateServiceJourney(sj))
+      serviceJourneys.every((sj) => validateServiceJourney(sj))
     );
   }, [serviceJourneys, setIsValidServiceJourney]);
 

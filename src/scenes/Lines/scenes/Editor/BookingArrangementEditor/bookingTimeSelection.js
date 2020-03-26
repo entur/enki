@@ -14,10 +14,10 @@ export default ({ bookWhen, onChange }) => {
       label={formatMessage(messages.title)}
       value={bookWhen}
       items={[
-        ...Object.values(PURCHASE_WHEN).map(v => ({
+        ...Object.values(PURCHASE_WHEN).map((v) => ({
           value: v,
-          label: formatMessage(bookingTimeMessages[v])
-        }))
+          label: formatMessage(bookingTimeMessages[v]),
+        })),
       ]}
       onChange={({ value }) => onChange(value)}
     />

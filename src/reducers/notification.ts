@@ -1,7 +1,7 @@
 import {
   NotificationDuration,
   NotificationTypes,
-  SHOW_NOTIFICATION
+  SHOW_NOTIFICATION,
 } from 'actions/notification';
 import { createUuid } from 'helpers/generators';
 import { AnyAction } from 'redux';
@@ -22,7 +22,7 @@ const defaultNotification: Notification = {
   message: '',
   dismissAfter: NotificationDuration.LONG,
   type: NotificationTypes.SUCCESS,
-  showModal: false
+  showModal: false,
 };
 
 const notificationReducer = (
@@ -38,7 +38,7 @@ const notificationReducer = (
         dismissAfter: action.payload.duration,
         type: action.payload.type,
         key: createUuid(),
-        showModal: action.payload.showModal
+        showModal: action.payload.showModal,
       };
     default:
       return state;

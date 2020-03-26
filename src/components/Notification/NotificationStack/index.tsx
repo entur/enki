@@ -5,7 +5,7 @@ import ModalNote from './StackedNotification/Note/ModalNote';
 import StackedNotification from './StackedNotification';
 
 const getTopOffset = (index: number) => ({
-  top: `${2 + index * 8}rem`
+  top: `${2 + index * 8}rem`,
 });
 const DEFAULT_DISMISS_TIME = NotificationDuration.LONG;
 

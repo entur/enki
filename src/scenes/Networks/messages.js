@@ -3,30 +3,30 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   headerText: {
     id: 'networks.headerText',
-    defaultMessage: 'Nettverk'
+    defaultMessage: 'Nettverk',
   },
   createNetworkIconButtonLabel: {
     id: 'networks.createNetworkIconButtonLabel',
-    defaultMessage: 'Opprett nettverk'
+    defaultMessage: 'Opprett nettverk',
   },
   nameTableHeaderLabel: {
     id: 'networks.nameTableHeaderLabel',
-    defaultMessage: 'Navn'
+    defaultMessage: 'Navn',
   },
   privateCodeTableHeaderLabel: {
     id: 'networks.privateCodeTableHeaderLabel',
-    defaultMessage: 'Privat kode'
+    defaultMessage: 'Privat kode',
   },
   authorityTableHeaderLabel: {
     id: 'networks.authorityTableHeaderLabel',
-    defaultMessage: 'Autoritet'
+    defaultMessage: 'Autoritet',
   },
   noNetworksFoundText: {
     id: 'networks.noNetworksFoundText',
-    defaultMessage: 'Ingen nettverk ble funnet'
+    defaultMessage: 'Ingen nettverk ble funnet',
   },
   loadingNetworksText: {
     id: 'networks.loadingNetworksText',
-    defaultMessage: 'Laster inn nettverk...'
-  }
+    defaultMessage: 'Laster inn nettverk...',
+  },
 });

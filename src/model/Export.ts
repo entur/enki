@@ -30,8 +30,8 @@ export const download = async (selectedExport: Export) => {
     const { data } = await http.get(`/uttu/${selectedExport.downloadUrl}`, {
       responseType: 'blob',
       headers: {
-        Authorization: token.getBearer()
-      }
+        Authorization: token.getBearer(),
+      },
     });
 
     const id = selectedExport.id ?? 'EXPORT_ID';

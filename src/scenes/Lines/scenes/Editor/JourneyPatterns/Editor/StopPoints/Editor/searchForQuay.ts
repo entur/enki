@@ -58,7 +58,7 @@ export default async function search(quayRef: string): Promise<QuaySearch> {
   `;
 
   const variables = {
-    quayRef
+    quayRef,
   };
 
   const data: null | SearchForQuayResponse = await request(
@@ -69,8 +69,8 @@ export default async function search(quayRef: string): Promise<QuaySearch> {
   let foundQuay = undefined,
     foundStopPlace = undefined;
 
-  data?.stopPlace?.forEach(stop => {
-    (stop.quays || []).forEach(quay => {
+  data?.stopPlace?.forEach((stop) => {
+    (stop.quays || []).forEach((quay) => {
       if (quay.id === quayRef) {
         foundStopPlace = stop;
         foundQuay = quay;
