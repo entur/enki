@@ -164,7 +164,7 @@ export default ({
         <div className="line-type-dropdown">
           <IconButton
             className="line-type-dropdown-icon"
-            aria-label={'Les mer om de ulike linjetyperna'}
+            aria-label={formatMessage(messages.drawerAria)}
             onClick={() => setDrawer(true)}
           >
             <ValidationInfoIcon />
@@ -199,7 +199,7 @@ export default ({
       <FlexibleLineTypeDrawer
         open={showDrawer}
         onDismiss={() => setDrawer(false)}
-        title="Fleksible linjetyper"
+        title={formatMessage(messages.drawerTitle)}
       />
     </div>
   );

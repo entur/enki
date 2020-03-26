@@ -42,5 +42,42 @@ export default defineMessages({
   about: {
     id: 'lines.editor.journeyPatterns.editor.about',
     defaultMessage: 'Om linjen'
+  },
+  drawerTitle: {
+    id: 'lines.editor.general.drawerTitle',
+    defaultMessage: 'Fleksible linjetyper'
+  },
+  drawerSubTitle: {
+    id: 'lines.editor.general.drawer',
+    defaultMessage: 'Her er en kort beskrivelse av de ulike linjetypene.'
+  },
+  drawerAria: {
+    id: 'lines.editor.general.drawer.aria',
+    defaultMessage: 'Les mer om de ulike linjetyperna.'
+  },
+  fixed: {
+    id: 'lines.editor.general.drawer.fixed',
+    defaultMessage:
+      'Fast rute til faste tider, men må forhåndsbestilles for at ruten skal kjøres.'
+  },
+  mainRouteWithFlexibleEnds: {
+    id: 'lines.editor.general.drawer.fixed',
+    defaultMessage:
+      'Fast rute til faste tider, med mulighet for på-/avstigning på stoppesteder utenfor oppsatt kjøremønster ved bestilling.'
+  },
+  fixedStopAreaWide: {
+    id: 'lines.editor.general.drawer.fixedStopAreaWide',
+    defaultMessage:
+      'Fleksibel rute definert av ett eller flere områder, der hvert område kan ha ulike forhåndsbestemte stopp (møteplass, knutepunkt, kommune-senter, holdeplasser).'
+  },
+  flexibleAreasOnly: {
+    id: 'lines.editor.general.drawer.flexibleAreasOnly',
+    defaultMessage:
+      'Hentes og kjøres til/fra valgfritt sted innenfor et definert område og gitte åpningstider.'
+  },
+  hailAndRideSections: {
+    id: 'lines.editor.general.drawer.hailAndRideSections',
+    defaultMessage:
+      'Ruten er definert og har noen faste holdeplasser. Langs bestemte strekninger på ruten kan på-/avstigning skje hvor som helst ved signal til sjåfør.'
   }
 });
