@@ -152,7 +152,7 @@
   "lines.editor.general.publicCodeInputLabelTooltip": "Public code is what identifies the line externally towards travellers",
   "lines.editor.general.typeFormGroupTitle": "Flexible line type *",
   "lines.editor.generalTabLabel": "General",
-  "lines.editor.general.drawer": "Here is a short description of each line type.",
+  "lines.editor.general.drawer": "Underneath is a short description of each line type.",
   "lines.editor.general.drawer.aria": "Read more about the different line types.",
   "lines.editor.general.drawerTitle": "Flexible line types.",
   "lines.editor.general.drawer.fixed": "Fixed route at fixed times, has to be booked beforehand for the bus to drive.",
