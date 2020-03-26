@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextField, InputGroup } from '@entur/form';
@@ -11,6 +11,8 @@ import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import { Organisation } from 'reducers/organisations';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
+import { IconButton } from '@entur/button';
+import { ValidationInfoIcon } from '@entur/icons';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -37,6 +39,7 @@ export default ({
       flexibleLineType: flexibleLineTypeError
     }
   } = errors;
+  const [showDrawer, setDrawer] = useState<boolean>(false);
 
   return (
     <div className="lines-editor-general">
@@ -143,30 +146,43 @@ export default ({
           variant={networkError ? 'error' : undefined}
         />
 
-        <Dropdown
-          className="form-section"
-          items={[
-            ...Object.values(FLEXIBLE_LINE_TYPE).map(type => ({
-              value: type,
-              label: type
-            }))
-          ]}
-          label={formatMessage(messages.typeFormGroupTitle)}
-          onChange={element =>
-            flexibleLineChange({
-              ...flexibleLine,
-              flexibleLineType: element?.value
-            })
-          }
-          value={flexibleLine.flexibleLineType}
-          feedback={formatMessage(
-            validationMessages.errorFlexibleLineFlexibleLineTypeEmpty
-          )}
-          variant={flexibleLineTypeError ? 'error' : undefined}
-        />
+        <div className="line-type-dropdown">
+          <IconButton
+            className="line-type-dropdown-icon"
+            aria-label={'Les mer om de ulike linjetyperna'}
+            onClick={() => setDrawer(true)}
+          >
+            <ValidationInfoIcon />
+          </IconButton>
+          <Dropdown
+            className="form-section"
+            items={[
+              ...Object.values(FLEXIBLE_LINE_TYPE).map(type => ({
+                value: type,
+                label: type
+              }))
+            ]}
+            label={formatMessage(messages.typeFormGroupTitle)}
+            onChange={element =>
+              flexibleLineChange({
+                ...flexibleLine,
+                flexibleLineType: element?.value
+              })
+            }
+            value={flexibleLine.flexibleLineType}
+            feedback={formatMessage(
+              validationMessages.errorFlexibleLineFlexibleLineTypeEmpty
+            )}
+            variant={flexibleLineTypeError ? 'error' : undefined}
+          />
+        </div>
       </section>
 
-      <FlexibleLineTypeDrawer open title="Fleksible linjetyper" />
+      <FlexibleLineTypeDrawer
+        open={showDrawer}
+        onDismiss={() => setDrawer(false)}
+        title="Fleksible linjetyper"
+      />
     </div>
   );
 };

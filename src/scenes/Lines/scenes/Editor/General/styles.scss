@@ -23,6 +23,17 @@
     }
   }
 
+  .line-type-dropdown {
+    position: relative;
+    flex: 1;
+
+    &-icon {
+      position: absolute;
+      left: 125px;
+      top: -5px;
+    }
+  }
+
   header.flexible-line-type-drawer {
     margin-bottom: 36px;
   }

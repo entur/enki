@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Drawer } from '@entur/modal';
 
 type Props = {
   open: boolean;
   title: string;
+  onDismiss: () => void;
 };
-const FlexibleLineTypeDrawer = ({ open, title }: Props) => {
-  const [isOpen, setOpen] = useState<boolean>(open);
+const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
   return (
-    <Drawer title={title} onDismiss={() => setOpen(false)} open={isOpen}>
+    <Drawer title={title} onDismiss={onDismiss} open={open}>
       <header className="flexible-line-type-drawer">
         Her er en kort beskrivelse av de ulike linjetypene.
       </header>
