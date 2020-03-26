@@ -3,72 +3,72 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'exports.viewer.header',
-    defaultMessage: 'Vis eksport'
+    defaultMessage: 'Vis eksport',
   },
   nameLabel: {
     id: 'exports.viewer.nameLabel',
-    defaultMessage: 'Navn'
+    defaultMessage: 'Navn',
   },
   fromDateLabel: {
     id: 'exports.viewer.fromDateLabel',
-    defaultMessage: 'Fra dato'
+    defaultMessage: 'Fra dato',
   },
   toDateLabel: {
     id: 'exports.viewer.toDateLabel',
-    defaultMessage: 'Til data'
+    defaultMessage: 'Til data',
   },
   dryRunLabel: {
     id: 'exports.viewer.dryRunLabel',
-    defaultMessage: 'Tørrkjøring'
+    defaultMessage: 'Tørrkjøring',
   },
   dryRunYes: {
     id: 'exports.viewer.dryRunYes',
-    defaultMessage: 'Ja'
+    defaultMessage: 'Ja',
   },
   dryRunNo: {
     id: 'exports.viewer.dryRunNo',
-    defaultMessage: 'Nei'
+    defaultMessage: 'Nei',
   },
   statusLabel: {
     id: 'exports.viewer.statusLabel',
-    defaultMessage: 'Status'
+    defaultMessage: 'Status',
   },
   downloadLabel: {
     id: 'exports.viewer.downloadLabel',
-    defaultMessage: 'Last ned eksporterte filer'
+    defaultMessage: 'Last ned eksporterte filer',
   },
   downloadLinkText: {
     id: 'exports.viewer.downloadLinkText',
-    defaultMessage: 'Last ned'
+    defaultMessage: 'Last ned',
   },
   messagesLabel: {
     id: 'exports.viewer.messagesLabel',
-    defaultMessage: 'Meldinger'
+    defaultMessage: 'Meldinger',
   },
   loadingText: {
     id: 'exports.viewer.loadingText',
-    defaultMessage: 'Laster inn eksport...'
-  }
+    defaultMessage: 'Laster inn eksport...',
+  },
 });
 
 export const exportStatuses = defineMessages({
   inProgress: {
     id: 'exports.viewer.exportStatuses.inProgress',
-    defaultMessage: 'Pågår'
+    defaultMessage: 'Pågår',
   },
   failed: {
     id: 'exports.viewer.exportStatuses.failed',
-    defaultMessage: 'Feilet'
+    defaultMessage: 'Feilet',
   },
   success: {
     id: 'exports.viewer.exportStatuses.success',
-    defaultMessage: 'Ferdig'
-  }
+    defaultMessage: 'Ferdig',
+  },
 });
 
 export const exportMessages = defineMessages({
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE: {
     id: 'exports.viewer.exportMessages.NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE',
-    defaultMessage: 'Ingen gyldig linjer i datagrunnlaget'
-  }
+    defaultMessage: 'Ingen gyldig linjer i datagrunnlaget',
+  },
 });

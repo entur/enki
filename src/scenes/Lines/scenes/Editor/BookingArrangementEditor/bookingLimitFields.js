@@ -7,10 +7,10 @@ import messages from './bookingLimitFields.messages';
 
 const BOOKING_LIMIT_TYPE = Object.freeze({
   TIME: 'time',
-  PERIOD: 'period'
+  PERIOD: 'period',
 });
 
-export default props => {
+export default (props) => {
   const { formatMessage } = useSelector(selectIntl);
 
   const {
@@ -18,7 +18,7 @@ export default props => {
     minimumBookingPeriod,
     onLatestBookingTimeChange,
     onMinimumBookingPeriodChange,
-    resetBookingLimit
+    resetBookingLimit,
   } = props;
 
   const [bookingLimitType, setBookingLimitType] = useState(
@@ -26,7 +26,7 @@ export default props => {
   );
 
   const handleBookingLimitChange = useCallback(
-    type => {
+    (type) => {
       setBookingLimitType(type);
       resetBookingLimit();
     },
@@ -37,7 +37,7 @@ export default props => {
     <div className="form-section">
       <RadioGroup
         label={formatMessage(messages.headerLabel)}
-        onChange={e => handleBookingLimitChange(e.target.value)}
+        onChange={(e) => handleBookingLimitChange(e.target.value)}
         value={bookingLimitType}
       >
         <Radio className="booking-limit-radio" value={BOOKING_LIMIT_TYPE.TIME}>
@@ -47,7 +47,7 @@ export default props => {
           type="time"
           className="latest-time-picker"
           defaultValue={latestBookingTime || undefined}
-          onChange={e => onLatestBookingTimeChange(e.target.value)}
+          onChange={(e) => onLatestBookingTimeChange(e.target.value)}
           disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
         />
 
@@ -62,7 +62,7 @@ export default props => {
           className="mimimum-booking-period-picker"
           duration={minimumBookingPeriod}
           resetOnZero
-          onChange={period => onMinimumBookingPeriodChange(period)}
+          onChange={(period) => onMinimumBookingPeriodChange(period)}
           disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
           position="above"
           showYears={false}

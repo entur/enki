@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
   HeaderCell,
-  DataCell
+  DataCell,
 } from '@entur/table';
 import PageHeader from 'components/PageHeader';
 import Loading from 'components/Loading';
@@ -31,7 +31,7 @@ const StopPlaces = ({ history }) => {
   }, [dispatch]);
 
   const handleOnRowClick = useCallback(
-    id => {
+    (id) => {
       history.push(`/stop-places/edit/${id}`);
     },
     [history]
@@ -40,7 +40,7 @@ const StopPlaces = ({ history }) => {
   const renderTableRows = () => {
     if (stopPlaces) {
       return stopPlaces.length > 0 ? (
-        stopPlaces.map(sp => (
+        stopPlaces.map((sp) => (
           <TableRow
             key={sp.id}
             onClick={() => handleOnRowClick(sp.id)}

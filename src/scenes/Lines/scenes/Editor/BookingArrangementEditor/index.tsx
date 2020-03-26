@@ -9,7 +9,7 @@ import BookingNoteField from './bookingNoteField';
 import ScrollToTop from 'components/ScrollToTop';
 import './styles.scss';
 import BookingArrangement, {
-  bookingArrangementIsEmpty
+  bookingArrangementIsEmpty,
 } from 'model/BookingArrangement';
 import { addOrRemove } from 'helpers/arrays';
 import { BOOKING_METHOD, PURCHASE_MOMENT } from 'model/enums';
@@ -41,7 +41,7 @@ const BookingArrangementEditor = (props: Props) => {
     minimumBookingPeriod = null,
     buyWhen,
     bookingAccess,
-    bookingNote
+    bookingNote,
   } = bookingArrangement;
 
   return (
@@ -49,7 +49,7 @@ const BookingArrangementEditor = (props: Props) => {
       <div className="booking-editor tab-style">
         <ContactFields
           contact={bookingContact}
-          onContactChange={contact =>
+          onContactChange={(contact) =>
             onFieldChange({ ...bookingArrangement, bookingContact: contact })
           }
         />
@@ -59,7 +59,7 @@ const BookingArrangementEditor = (props: Props) => {
           onChange={(bookingMethod: BOOKING_METHOD) =>
             onFieldChange({
               ...bookingArrangement,
-              bookingMethods: addOrRemove(bookingMethod, bookingMethods ?? [])
+              bookingMethods: addOrRemove(bookingMethod, bookingMethods ?? []),
             })
           }
         />
@@ -83,7 +83,7 @@ const BookingArrangementEditor = (props: Props) => {
           resetBookingLimit={() => ({
             ...bookingArrangement,
             minimumBookingPeriod: undefined,
-            latestBookingTime: undefined
+            latestBookingTime: undefined,
           })}
         />
 
@@ -92,7 +92,7 @@ const BookingArrangementEditor = (props: Props) => {
           onChange={(purchaseMoment: PURCHASE_MOMENT) =>
             onFieldChange({
               ...bookingArrangement,
-              buyWhen: addOrRemove(purchaseMoment, buyWhen ?? [])
+              buyWhen: addOrRemove(purchaseMoment, buyWhen ?? []),
             })
           }
         />

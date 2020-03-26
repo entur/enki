@@ -1,15 +1,15 @@
 import { UttuQuery } from 'graphql';
 import {
   getFlexibleLineByIdQuery,
-  getFlexibleLinesQuery
+  getFlexibleLinesQuery,
 } from 'graphql/uttu/queries';
 import {
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 } from 'actions/notification';
 import {
   deleteFlexibleLine,
-  flexibleLineMutation
+  flexibleLineMutation,
 } from 'graphql/uttu/mutations';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
@@ -39,14 +39,14 @@ const receiveFlexibleLinesActionCreator = (
   lines: FlexibleLine[]
 ): ReceiveFlexibleLinesAction => ({
   type: RECEIVE_FLEXIBLE_LINES,
-  lines
+  lines,
 });
 
 const receiveFlexibleLineActionCreator = (
   line: FlexibleLine
 ): ReceiveFlexibleLineAction => ({
   type: RECEIVE_FLEXIBLE_LINE,
-  line
+  line,
 });
 
 export const loadFlexibleLines = () => async (
@@ -67,7 +67,7 @@ export const loadFlexibleLines = () => async (
       showErrorNotification(
         intl.formatMessage(messages.loadLinesErrorHeader),
         intl.formatMessage(messages.loadLinesErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );
@@ -93,7 +93,7 @@ export const loadFlexibleLineById = (id: string) => async (
       showErrorNotification(
         intl.formatMessage(messages.loadLineByIdErrorHeader),
         intl.formatMessage(messages.loadLineByIdErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );
@@ -114,16 +114,16 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
         header: intl.formatMessage(messages.modalSaveLineSuccessHeader),
         message: `${flexibleLine.name} ${intl.formatMessage(
           messages.modalSaveLineSuccessMessage
-        )}`
+        )}`,
       }
     : {
         header: intl.formatMessage(messages.saveLineSuccessHeader),
-        message: intl.formatMessage(messages.saveLineSuccessMessage)
+        message: intl.formatMessage(messages.saveLineSuccessMessage),
       };
 
   try {
     await UttuQuery(activeProvider, flexibleLineMutation, {
-      input: flexibleLineToPayload(flexibleLine)
+      input: flexibleLineToPayload(flexibleLine),
     });
     dispatch(showSuccessNotification(header, message, isNewLine));
   } catch (e) {
@@ -131,7 +131,7 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
       showErrorNotification(
         intl.formatMessage(messages.saveLineErrorHeader),
         intl.formatMessage(messages.saveLineErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );
@@ -159,7 +159,7 @@ export const deleteFlexibleLineById = (id: string) => async (
       showErrorNotification(
         intl.formatMessage(messages.deleteLineErrorHeader),
         intl.formatMessage(messages.deleteLineErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );

@@ -11,7 +11,7 @@ import {
   TableHead,
   TableRow,
   HeaderCell,
-  DataCell
+  DataCell,
 } from '@entur/table';
 import Loading from 'components/Loading';
 import PageHeader from 'components/PageHeader';
@@ -29,7 +29,7 @@ import { download } from 'model/Export';
 
 const Exports = ({ history }: RouteComponentProps) => {
   const exports = useSelector<GlobalState, ExportsState>(
-    state => state.exports
+    (state) => state.exports
   );
   const { formatMessage } = useSelector<GlobalState, IntlFormatters>(
     selectIntl
@@ -47,7 +47,7 @@ const Exports = ({ history }: RouteComponentProps) => {
   const renderTableRows = () => {
     if (exports) {
       return exports.length > 0 ? (
-        exports.map(e => (
+        exports.map((e) => (
           <TableRow key={e.id} onClick={() => handleOnRowClick(e.id ?? '')}>
             <DataCell>{e.name}</DataCell>
             <DataCell>{getIconForStatus(e.exportStatus)}</DataCell>

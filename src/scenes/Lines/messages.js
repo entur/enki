@@ -3,30 +3,30 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'lines.header',
-    defaultMessage: 'Linjer'
+    defaultMessage: 'Linjer',
   },
   createLineIconButtonLabel: {
     id: 'lines.createLineIconButtonLabel',
-    defaultMessage: 'Opprett linje'
+    defaultMessage: 'Opprett linje',
   },
   nameTableHeaderLabel: {
     id: 'lines.nameTableHeaderLabel',
-    defaultMessage: 'Navn'
+    defaultMessage: 'Navn',
   },
   privateCodeTableHeaderLabel: {
     id: 'lines.privateCodeTableHeaderLabel',
-    defaultMessage: 'Privat kode'
+    defaultMessage: 'Privat kode',
   },
   operatorTableHeader: {
     id: 'lines.operatorTableHeader',
-    defaultMessage: 'Operatør'
+    defaultMessage: 'Operatør',
   },
   noLinesFoundText: {
     id: 'lines.noLinesFoundText',
-    defaultMessage: 'Ingen linjer ble funnet.'
+    defaultMessage: 'Ingen linjer ble funnet.',
   },
   loadingText: {
     id: 'lines.loadingText',
-    defaultMessage: 'Laster inn linjer...'
-  }
+    defaultMessage: 'Laster inn linjer...',
+  },
 });

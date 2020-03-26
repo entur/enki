@@ -16,7 +16,7 @@ const PageHeader = ({
   title,
   withBackButton,
   backButtonTitle,
-  onBackButtonClick
+  onBackButtonClick,
 }: PageHeaderProps) => {
   const history = useHistory();
   return (

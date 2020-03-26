@@ -4,7 +4,7 @@ import { Checkbox, Fieldset } from '@entur/form';
 import { BOOKING_METHOD } from 'model/enums';
 import { selectIntl } from 'i18n';
 import messages, {
-  bookingMethodMessages
+  bookingMethodMessages,
 } from './bookingMethodSelection.messages';
 
 type Props = {
@@ -17,7 +17,7 @@ export default ({ bookingMethods, onChange }: Props) => {
 
   return (
     <Fieldset className="form-section" label={formatMessage(messages.title)}>
-      {Object.values(BOOKING_METHOD).map(v => (
+      {Object.values(BOOKING_METHOD).map((v) => (
         <Checkbox
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onChange(e.target.value as BOOKING_METHOD)

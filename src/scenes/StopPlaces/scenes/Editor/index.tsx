@@ -7,7 +7,7 @@ import {
   PrimaryButton,
   NegativeButton,
   SecondaryButton,
-  SuccessButton
+  SuccessButton,
 } from '@entur/button';
 import { MapIcon } from '@entur/icons';
 import { SmallAlertBox } from '@entur/alert';
@@ -18,7 +18,7 @@ import { GEOMETRY_TYPE, VEHICLE_MODE } from 'model/enums';
 import {
   deleteFlexibleStopPlaceById,
   loadFlexibleStopPlaceById,
-  saveFlexibleStopPlace
+  saveFlexibleStopPlace,
 } from 'actions/flexibleStopPlaces';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
@@ -38,7 +38,7 @@ import GeoJSON, {
   removeLastCoordinate,
   addCoordinate,
   Coordinate,
-  stringIsValidCoordinates
+  stringIsValidCoordinates,
 } from 'model/GeoJSON';
 import { equals } from 'ramda';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
@@ -56,17 +56,17 @@ const transformTextToCoordinates = (text: string): Coordinate[] =>
 
 const FlexibleStopPlaceEditor = ({
   match,
-  history
+  history,
 }: RouteComponentProps<MatchParams>) => {
   const { formatMessage } = useSelector(selectIntl);
   const dispatch = useDispatch<any>();
   const lines = useSelector<GlobalState, FlexibleLine[]>(
-    state => state.flexibleLines ?? []
+    (state) => state.flexibleLines ?? []
   );
   const currentFlexibleStopPlace = useSelector<GlobalState, FlexibleStopPlace>(
-    state =>
-      state.flexibleStopPlaces?.find(fsp => fsp.id === match.params.id) ?? {
-        transportMode: VEHICLE_MODE.BUS
+    (state) =>
+      state.flexibleStopPlaces?.find((fsp) => fsp.id === match.params.id) ?? {
+        transportMode: VEHICLE_MODE.BUS,
       }
   );
 
@@ -141,11 +141,11 @@ const FlexibleStopPlaceEditor = ({
   const handleMapOnClick = (e: any) => {
     const newCoordinates = addCoordinate(polygonCoordinates, [
       e.latlng.lat,
-      e.latlng.lng
+      e.latlng.lng,
     ]);
     changePolygon({
       type: GEOMETRY_TYPE.POLYGON,
-      coordinates: newCoordinates
+      coordinates: newCoordinates,
     });
     setCoordinateHolder(coordinatesToText(newCoordinates));
   };
@@ -158,7 +158,7 @@ const FlexibleStopPlaceEditor = ({
 
     changePolygon({
       type: GEOMETRY_TYPE.POLYGON,
-      coordinates: coords
+      coordinates: coords,
     });
   };
 
@@ -167,14 +167,14 @@ const FlexibleStopPlaceEditor = ({
       ...flexibleStopPlace,
       flexibleArea: {
         ...flexibleStopPlace?.flexibleArea,
-        polygon: polygon
-      }
+        polygon: polygon,
+      },
     });
 
   const changeCoordinates = (coordinates: Coordinate[]) =>
     changePolygon({
       ...flexibleStopPlace?.flexibleArea?.polygon,
-      coordinates
+      coordinates,
     });
 
   const handleUndoClick = () => {
@@ -186,9 +186,9 @@ const FlexibleStopPlaceEditor = ({
   const isDeleteDisabled: boolean =
     isDeleting ||
     !!lines
-      .filter(l => l.journeyPatterns?.length ?? false)
+      .filter((l) => l.journeyPatterns?.length ?? false)
       .find(
-        l =>
+        (l) =>
           l.journeyPatterns?.[0].pointsInSequence[0].flexibleStopPlaceRef ===
           flexibleStopPlace?.id
       );
@@ -256,7 +256,7 @@ const FlexibleStopPlaceEditor = ({
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setFlexibleStopPlace({
                         ...flexibleStopPlace,
-                        name: e.target.value
+                        name: e.target.value,
                       })
                     }
                   />
@@ -270,7 +270,7 @@ const FlexibleStopPlaceEditor = ({
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setFlexibleStopPlace({
                         ...flexibleStopPlace,
-                        description: e.target.value
+                        description: e.target.value,
                       })
                     }
                   />
@@ -284,7 +284,7 @@ const FlexibleStopPlaceEditor = ({
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setFlexibleStopPlace({
                         ...flexibleStopPlace,
-                        privateCode: e.target.value
+                        privateCode: e.target.value,
                       })
                     }
                   />
@@ -380,7 +380,7 @@ const FlexibleStopPlaceEditor = ({
           </SecondaryButton>,
           <SuccessButton key={1} onClick={handleDelete}>
             {formatMessage(messages.deleteStopPlaceDialogConfirmButtonText)}
-          </SuccessButton>
+          </SuccessButton>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}
       />

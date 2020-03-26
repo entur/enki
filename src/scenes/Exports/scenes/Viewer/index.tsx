@@ -3,7 +3,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  ChangeEvent
+  ChangeEvent,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -31,16 +31,16 @@ import { download, Export } from 'model/Export';
 const getCurrentExport = (
   state: GlobalState,
   match: { params: MatchParams }
-): Export | undefined => state.exports?.find(e => e.id === match.params.id);
+): Export | undefined => state.exports?.find((e) => e.id === match.params.id);
 
 const ExportsViewer = ({
   match,
-  history
+  history,
 }: RouteComponentProps<MatchParams>) => {
   const { formatMessage } = useSelector<GlobalState, IntlFormatters>(
     selectIntl
   );
-  const currentExport = useSelector<GlobalState, Export | undefined>(state =>
+  const currentExport = useSelector<GlobalState, Export | undefined>((state) =>
     getCurrentExport(state, match)
   );
   const [theExport, setTheExport] = useState(currentExport);

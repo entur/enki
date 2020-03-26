@@ -11,22 +11,22 @@ export const SET_ACTIVE_PROVIDER = 'SET_ACTIVE_PROVIDER';
 
 const receiveProviders = (providers: Provider[]) => ({
   type: RECEIVE_PROVIDERS,
-  providers
+  providers,
 });
 const failedReceivingProviders = { type: FAILED_RECEIVING_PROVIDERS };
 
 export const setActiveProvider = (provider: Provider) => ({
   type: SET_ACTIVE_PROVIDER,
-  provider
+  provider,
 });
 
 export const getProviders = () => (dispatch: Dispatch<GlobalState>) => {
   return UttuQuery('providers', getProvidersQuery, {})
-    .then(data => {
+    .then((data) => {
       dispatch(receiveProviders(data.providers));
       return Promise.resolve();
     })
-    .catch(e => {
+    .catch((e) => {
       console.log(e);
       dispatch(failedReceivingProviders);
       return Promise.reject();

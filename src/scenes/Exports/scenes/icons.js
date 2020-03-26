@@ -3,12 +3,12 @@ import React from 'react';
 import {
   ValidationCheckIcon,
   ValidationErrorIcon,
-  ValidationExclamationIcon
+  ValidationExclamationIcon,
 } from '@entur/icons';
 import './styles.scss';
 import { EXPORT_STATUS, SEVERITY } from 'model/enums';
 
-export const getIconForStatus = status => {
+export const getIconForStatus = (status) => {
   switch (status) {
     case EXPORT_STATUS.SUCCESS:
       return <ValidationCheckIcon className="success-icon" />;
@@ -21,7 +21,7 @@ export const getIconForStatus = status => {
   }
 };
 
-export const getIconForSeverity = severity => {
+export const getIconForSeverity = (severity) => {
   switch (severity) {
     case SEVERITY.INFO:
       return <ValidationExclamationIcon className="exlamation-icon" />;

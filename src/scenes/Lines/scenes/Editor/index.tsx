@@ -4,12 +4,12 @@ import {
   NegativeButton,
   PrimaryButton,
   SecondaryButton,
-  SuccessButton
+  SuccessButton,
 } from '@entur/button';
 import { Stepper } from '@entur/menu';
 import {
   deleteFlexibleLineById,
-  saveFlexibleLine
+  saveFlexibleLine,
 } from 'actions/flexibleLines';
 import Loading from 'components/Loading';
 import PageHeader from 'components/PageHeader';
@@ -26,7 +26,7 @@ import { selectIntl } from 'i18n';
 import messages from './messages';
 import {
   filterNetexOperators,
-  OrganisationState
+  OrganisationState,
 } from 'reducers/organisations';
 import { GlobalState } from 'reducers';
 import { RouteComponentProps } from 'react-router';
@@ -35,34 +35,34 @@ import { isBlank } from 'helpers/forms';
 import ServiceJourneysEditor from 'scenes/Lines/scenes/Editor/ServiceJourneys';
 import {
   useFlexibleLine,
-  useLoadDependencies
+  useLoadDependencies,
 } from 'scenes/Lines/scenes/Editor/hooks';
 import { changeElementAtIndex } from 'helpers/arrays';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 
 const FlexibleLineEditor = ({
   match,
-  history
+  history,
 }: RouteComponentProps<MatchParams>) => {
   const { formatMessage } = useSelector(selectIntl);
   const networks = useSelector((state: GlobalState) => state.networks);
   const organisations = useSelector<GlobalState, OrganisationState>(
-    state => state.organisations
+    (state) => state.organisations
   );
   const isSaved = useSelector<GlobalState, boolean>(
-    state => state.editor.isSaved
+    (state) => state.editor.isSaved
   );
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
   const FLEXIBLE_LINE_STEPS = [
     formatMessage(messages.stepperAbout),
     formatMessage(messages.stepperJourneyPattern),
     formatMessage(messages.stepperServiceJourney),
-    formatMessage(messages.stepperBooking)
+    formatMessage(messages.stepperBooking),
   ];
 
   const isLoadingDependencies = useLoadDependencies({
     match: match,
-    history: history
+    history: history,
   } as RouteComponentProps<MatchParams>);
 
   const { onFieldChange, flexibleLine } = useFlexibleLine(
@@ -166,7 +166,7 @@ const FlexibleLineEditor = ({
         <Stepper
           steps={FLEXIBLE_LINE_STEPS}
           activeIndex={activeStepperIndex}
-          onStepClick={index => onStepClicked(index)}
+          onStepClick={(index) => onStepClicked(index)}
         />
       </div>
 
@@ -210,7 +210,7 @@ const FlexibleLineEditor = ({
               <section>
                 <JourneyPatternsEditor
                   journeyPatterns={flexibleLine.journeyPatterns ?? []}
-                  onChange={jps =>
+                  onChange={(jps) =>
                     onFieldChange({ ...flexibleLine, journeyPatterns: jps })
                   }
                   setIsValidJourneyPattern={setIsValidJourneyPattern}
@@ -228,17 +228,17 @@ const FlexibleLineEditor = ({
                   stopPoints={flexibleLine.journeyPatterns[0].pointsInSequence}
                   setIsValidServiceJourney={setIsValidServiceJourney}
                   spoilPristine={nextClicked}
-                  onChange={sjs =>
+                  onChange={(sjs) =>
                     onFieldChange({
                       ...flexibleLine,
                       journeyPatterns: changeElementAtIndex(
                         flexibleLine.journeyPatterns!,
                         {
                           ...flexibleLine.journeyPatterns![0],
-                          serviceJourneys: sjs
+                          serviceJourneys: sjs,
                         },
                         0
-                      )
+                      ),
                     })
                   }
                 />
@@ -249,7 +249,7 @@ const FlexibleLineEditor = ({
               <section>
                 <BookingArrangementEditor
                   bookingArrangement={flexibleLine.bookingArrangement ?? {}}
-                  onChange={b =>
+                  onChange={(b) =>
                     onFieldChange({ ...flexibleLine, bookingArrangement: b })
                   }
                 />
@@ -298,7 +298,7 @@ const FlexibleLineEditor = ({
           </SecondaryButton>,
           <SuccessButton key={1} onClick={handleDelete}>
             {formatMessage(messages.deleteConfirmationDialogConfirmButtonText)}
-          </SuccessButton>
+          </SuccessButton>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}
       />

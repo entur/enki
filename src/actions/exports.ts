@@ -3,7 +3,7 @@ import { exportMutation } from 'graphql/uttu/mutations';
 import { getExportByIdQuery, getExportsQuery } from 'graphql/uttu/queries';
 import {
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 } from 'actions/notification';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
@@ -22,17 +22,17 @@ export const SAVE_EXPORT = 'SAVE_EXPORT';
 export const SAVED_EXPORT = 'SAVED_EXPORT';
 
 const requestExportsActionCreator = () => ({
-  type: REQUEST_EXPORTS
+  type: REQUEST_EXPORTS,
 });
 
 const receiveExportsActionCreator = (exports: Export[]) => ({
   type: RECEIVE_EXPORTS,
-  exports
+  exports,
 });
 
 const receiveExportActionCreator = (receivedExport: Export) => ({
   type: RECEIVE_EXPORT,
-  export: receivedExport
+  export: receivedExport,
 });
 
 export const loadExports = () => async (
@@ -46,7 +46,7 @@ export const loadExports = () => async (
 
   try {
     const data = await UttuQuery(activeProvider, getExportsQuery, {
-      historicDays: 30
+      historicDays: 30,
     });
     dispatch(receiveExportsActionCreator(data.exports));
   } catch (e) {
@@ -54,7 +54,7 @@ export const loadExports = () => async (
       showErrorNotification(
         intl.formatMessage(messages.loadExportsErrorHeader),
         intl.formatMessage(messages.loadExportsErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );
@@ -77,7 +77,7 @@ export const loadExportById = (id: string) => async (
       showErrorNotification(
         intl.formatMessage(messages.loadExportByIdErrorHeader),
         intl.formatMessage(messages.loadExportByIdErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );
@@ -94,7 +94,7 @@ export const saveExport = (theExport: Export) => async (
 
   try {
     await UttuQuery(activeProvider, exportMutation, {
-      input: toPayload(theExport)
+      input: toPayload(theExport),
     });
     dispatch(
       showSuccessNotification(
@@ -107,7 +107,7 @@ export const saveExport = (theExport: Export) => async (
       showErrorNotification(
         intl.formatMessage(messages.saveExportErrorHeader),
         intl.formatMessage(messages.saveExportErrorMessage, {
-          details: getInternationalizedUttuError(intl, e)
+          details: getInternationalizedUttuError(intl, e),
         })
       )
     );

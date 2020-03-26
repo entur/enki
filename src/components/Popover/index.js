@@ -49,7 +49,7 @@ Popover.propTypes = {
   open: propTypes.bool.isRequired,
   onRequestClose: propTypes.func,
   style: propTypes.object,
-  className: propTypes.string
+  className: propTypes.string,
 };
 
 export default Popover;

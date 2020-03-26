@@ -33,7 +33,7 @@ function validatePublicCode(publicCode) {
   }
 }
 
-export default function(flexibleLine) {
+export default function (flexibleLine) {
   if (!flexibleLine) {
     return {
       isValid: true,
@@ -41,8 +41,8 @@ export default function(flexibleLine) {
         networkRef: undefined,
         name: undefined,
         publicCode: undefined,
-        operatorRef: undefined
-      }
+        operatorRef: undefined,
+      },
     };
   }
   let errors = {
@@ -50,11 +50,11 @@ export default function(flexibleLine) {
     name: validateName(flexibleLine.name),
     publicCode: validatePublicCode(flexibleLine.publicCode),
     operatorRef: validateOperatorRef(flexibleLine.operatorRef),
-    flexibleLineType: validateFlexibleLineType(flexibleLine.flexibleLineType)
+    flexibleLineType: validateFlexibleLineType(flexibleLine.flexibleLineType),
   };
 
   return {
     isValid: Object.values(errors).filter(Boolean).length === 0,
-    errors: errors
+    errors: errors,
   };
 }

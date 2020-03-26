@@ -8,12 +8,12 @@ import { Paragraph, SubParagraph } from '@entur/typography';
 import { isBlank } from 'helpers/forms';
 import {
   validateStopPoint,
-  validateStopPoints
+  validateStopPoints,
 } from './StopPoints/Editor/validateForm';
 import {
   changeElementAtIndex,
   removeElementByIndex,
-  useUniqueKeys
+  useUniqueKeys,
 } from 'helpers/arrays';
 import StopPointEditor from './StopPoints/Editor';
 import StopPoint from 'model/StopPoint';
@@ -42,7 +42,7 @@ const JourneyPatternEditor = ({
   setIsValidJourneyPattern,
   index,
   flexibleStopPlaces,
-  spoilPristine
+  spoilPristine,
 }: Props & StateProps) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
@@ -55,7 +55,7 @@ const JourneyPatternEditor = ({
   }, [
     journeyPattern.pointsInSequence,
     journeyPattern.name,
-    setIsValidJourneyPattern
+    setIsValidJourneyPattern,
   ]);
 
   const onJourneyPatternChange = (journeyPattern: JourneyPattern) => {
@@ -63,11 +63,11 @@ const JourneyPatternEditor = ({
   };
 
   const deleteStopPoint = (stopPointIndex: number) => {
-    const newServiceJourneys = serviceJourneys.map(serviceJourney => ({
+    const newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
       ...serviceJourney,
       passingTimes: serviceJourney.passingTimes
         ? removeElementByIndex(serviceJourney.passingTimes, stopPointIndex)
-        : []
+        : [],
     }));
 
     onJourneyPatternChange({
@@ -76,20 +76,20 @@ const JourneyPatternEditor = ({
       pointsInSequence: removeElementByIndex(
         journeyPattern.pointsInSequence,
         stopPointIndex
-      )
+      ),
     });
   };
 
   const addStopPoint = () => {
-    const newServiceJourneys = serviceJourneys.map(serviceJourney => ({
+    const newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
       ...serviceJourney,
-      passingTimes: [...serviceJourney.passingTimes, {}]
+      passingTimes: [...serviceJourney.passingTimes, {}],
     }));
 
     onJourneyPatternChange({
       ...journeyPattern,
       pointsInSequence: [...journeyPattern.pointsInSequence, {}],
-      serviceJourneys: newServiceJourneys
+      serviceJourneys: newServiceJourneys,
     });
   };
 
@@ -100,7 +100,7 @@ const JourneyPatternEditor = ({
         journeyPattern.pointsInSequence,
         stopPlace,
         index
-      )
+      ),
     });
 
   const keys = useUniqueKeys(pointsInSequence);
@@ -156,7 +156,7 @@ const JourneyPatternEditor = ({
 };
 
 const mapStateToProps = ({ flexibleStopPlaces }: GlobalState): StateProps => ({
-  flexibleStopPlaces: flexibleStopPlaces ?? []
+  flexibleStopPlaces: flexibleStopPlaces ?? [],
 });
 
 export default connect(mapStateToProps)(JourneyPatternEditor);

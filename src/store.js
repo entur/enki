@@ -23,26 +23,26 @@ const getMiddlewares = () => {
       environment: process.env.NODE_ENV,
       beforeSend(e) {
         return normalizeAllUrls(e);
-      }
+      },
     });
     middlewares.push(createSentryMiddleware(Sentry));
   }
   return middlewares;
 };
 
-export const configureStore = user => {
+export const configureStore = (user) => {
   const combinedReducers = combineReducers({
     ...reducers,
-    intl
+    intl,
   });
   const { locale, messages } = geti18n();
 
   const initialState = {
     intl: {
       locale,
-      messages
+      messages,
     },
-    user
+    user,
   };
 
   const middlewares = getMiddlewares();
@@ -54,6 +54,6 @@ export const configureStore = user => {
       initialState,
       composeWithDevTools(enhancer)
     ),
-    sentry: Sentry
+    sentry: Sentry,
   };
 };

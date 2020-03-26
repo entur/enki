@@ -3,79 +3,79 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   editNetworkHeaderText: {
     id: 'networks.editor.editNetworkHeaderText',
-    defaultMessage: 'Rediger nettverk'
+    defaultMessage: 'Rediger nettverk',
   },
   createNetworkHeaderText: {
     id: 'networks.editor.createNetworkHeaderText',
-    defaultMessage: 'Opprett nettverk'
+    defaultMessage: 'Opprett nettverk',
   },
   networkDescription: {
     id: 'networks.editor.networkDescription',
     defaultMessage:
-      'Minst ett nettverk er påkrevd. Nettverk kan brukes til å gruppere linjer.'
+      'Minst ett nettverk er påkrevd. Nettverk kan brukes til å gruppere linjer.',
   },
   validationName: {
     id: 'networks.editor.validationName',
-    defaultMessage: 'Navn må fylles inn'
+    defaultMessage: 'Navn må fylles inn',
   },
   validationAuthority: {
     id: 'networks.editor.validationAuthority',
-    defaultMessage: 'Autoritet må velges'
+    defaultMessage: 'Autoritet må velges',
   },
   saveButtonText: {
     id: 'networks.editor.saveButtonText',
-    defaultMessage: 'Lagre'
+    defaultMessage: 'Lagre',
   },
   deleteButtonText: {
     id: 'networks.editor.deleteButtonText',
-    defaultMessage: 'Slett'
+    defaultMessage: 'Slett',
   },
   savingNetworkLoadingText: {
     id: 'networks.editor.savingNetworkLoadingText',
-    defaultMessage: 'Lagrer nettverket...'
+    defaultMessage: 'Lagrer nettverket...',
   },
   deletingNetworkLoadingText: {
     id: 'networks.editor.deletingNetworkLoadingText',
-    defaultMessage: 'Sletter nettverket...'
+    defaultMessage: 'Sletter nettverket...',
   },
   nameLabelText: {
     id: 'networks.editor.nameLabelText',
-    defaultMessage: 'Navn *'
+    defaultMessage: 'Navn *',
   },
   descriptionLabelText: {
     id: 'networks.editor.descriptionLabelText',
-    defaultMessage: 'Beskrivelse'
+    defaultMessage: 'Beskrivelse',
   },
   privateCodeLabelText: {
     id: 'networks.editor.privateCodeLabelText',
-    defaultMessage: 'Privat kode'
+    defaultMessage: 'Privat kode',
   },
   authorityLabelText: {
     id: 'networks.editor.authorityLabelText',
-    defaultMessage: 'Autoritet *'
+    defaultMessage: 'Autoritet *',
   },
   loadingNetworkText: {
     id: 'networks.editor.loadingNetworkText',
-    defaultMessage: 'Laster inn nettverket...'
+    defaultMessage: 'Laster inn nettverket...',
   },
   loadingDependenciesText: {
     id: 'networks.editor.loadingDependenciesText',
-    defaultMessage: 'Laster inn avhengigheter...'
+    defaultMessage: 'Laster inn avhengigheter...',
   },
   deleteNetworkConfirmDialogTitle: {
     id: 'networks.editor.deleteNetworkConfirmDialogTitle',
-    defaultMessage: 'Slette nettverk'
+    defaultMessage: 'Slette nettverk',
   },
   deleteNetworkConfirmDialogMessage: {
     id: 'networks.editor.deleteNetworkConfirmDialogMessage',
-    defaultMessage: 'Er du sikker på at du ønsker å slette dette nettverket?'
+    defaultMessage: 'Er du sikker på at du ønsker å slette dette nettverket?',
   },
   deleteNetworkConfirmDialogCancelText: {
     id: 'networks.editor.deleteNetworkConfirmDialogCancelText',
-    defaultMessage: 'Nei'
+    defaultMessage: 'Nei',
   },
   deleteNetworkConfirmDialogConfirmText: {
     id: 'networks.editor.deleteNetworkConfirmDialogConfirmText',
-    defaultMessage: 'Ja'
-  }
+    defaultMessage: 'Ja',
+  },
 });

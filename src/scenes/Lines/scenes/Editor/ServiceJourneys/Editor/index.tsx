@@ -13,7 +13,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import messages from '../messages';
 import {
   filterNetexOperators,
-  OrganisationState
+  OrganisationState,
 } from 'reducers/organisations';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { GlobalState } from 'reducers';
@@ -40,13 +40,13 @@ const ServiceJourneyEditor = (props: Props) => {
       privateCode,
       publicCode,
       passingTimes,
-      dayTypes
+      dayTypes,
     },
     spoilPristine,
     onChange,
     stopPoints,
     serviceJourney,
-    deleteServiceJourney
+    deleteServiceJourney,
   } = props;
 
   const [operatorSelection, setOperatorSelection] = useState(
@@ -54,7 +54,7 @@ const ServiceJourneyEditor = (props: Props) => {
   );
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const organisations = useSelector<GlobalState, OrganisationState>(
-    state => state.organisations
+    (state) => state.organisations
   );
   const { formatMessage } = useSelector(selectIntl);
 
@@ -141,8 +141,8 @@ const ServiceJourneyEditor = (props: Props) => {
               items={[
                 ...operators.map(({ name, id }) => ({
                   label: name,
-                  value: id
-                }))
+                  value: id,
+                })),
               ]}
               value={operatorSelection}
               onChange={(e: NormalizedDropdownItemType | null) =>
@@ -158,7 +158,7 @@ const ServiceJourneyEditor = (props: Props) => {
               dayType={
                 dayTypes?.[0] ?? { daysOfWeek: [], dayTypeAssignments: [] }
               }
-              onChange={dt => onFieldChange('dayTypes', [dt])}
+              onChange={(dt) => onFieldChange('dayTypes', [dt])}
               spoilPristine={spoilPristine}
             />
           </div>
@@ -168,7 +168,7 @@ const ServiceJourneyEditor = (props: Props) => {
           <PassingTimesEditor
             passingTimes={passingTimes ?? []}
             stopPoints={stopPoints}
-            onChange={pts => onFieldChange('passingTimes', pts)}
+            onChange={(pts) => onFieldChange('passingTimes', pts)}
             spoilPristine={spoilPristine}
           />
         </div>
@@ -196,7 +196,7 @@ const ServiceJourneyEditor = (props: Props) => {
               </SecondaryButton>,
               <SuccessButton key={1} onClick={deleteServiceJourney}>
                 {formatMessage(messages.yes)}
-              </SuccessButton>
+              </SuccessButton>,
             ]}
             onDismiss={() => setShowDeleteDialog(false)}
           />

@@ -9,11 +9,11 @@ export type FlexibleStopPlaceErrors = {
 
 export const validateFlexibleStopPlace = ({
   name,
-  flexibleArea
+  flexibleArea,
 }: FlexibleStopPlace): FlexibleStopPlaceErrors => ({
   name: isBlank(name) ? messages.errorNameEmpty : undefined,
   flexibleArea:
     (flexibleArea?.polygon?.coordinates?.length ?? 0) < 4
       ? messages.errorFlexibleAreaNotEnoughPolygons
-      : undefined
+      : undefined,
 });

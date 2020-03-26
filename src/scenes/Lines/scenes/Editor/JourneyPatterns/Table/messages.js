@@ -3,46 +3,46 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   nameTableHeaderCellLabel: {
     id: 'lines.editor.journeyPatterns.table.nameTableHeaderCellLabel',
-    defaultMessage: 'Navn'
+    defaultMessage: 'Navn',
   },
   directionTableHeaderCellLabel: {
     id: 'lines.editor.journeyPatterns.table.directionTableHeaderCellLabel',
-    defaultMessage: 'Retning'
+    defaultMessage: 'Retning',
   },
   stopPlacesTableHeaderCellLabel: {
     id: 'lines.editor.journeyPatterns.table.stopPlacesTableHeaderCellLabel',
-    defaultMessage: 'Stoppesteder'
+    defaultMessage: 'Stoppesteder',
   },
   serviceJourneysTableHeaderCellLabel: {
     id:
       'lines.editor.journeyPatterns.table.serviceJourneysTableHeaderCellLabel',
-    defaultMessage: 'Service journeys'
+    defaultMessage: 'Service journeys',
   },
   newJourneyPatternDefaultText: {
     id: 'lines.editor.journeyPatterns.table.newJourneyPatternDefaultText',
-    defaultMessage: '- Nytt journey pattern -'
+    defaultMessage: '- Nytt journey pattern -',
   },
   noJourneyPatternsText: {
     id: 'lines.editor.journeyPatterns.table.noJourneyPatternsText',
-    defaultMessage: 'Ingen journey patterns.'
+    defaultMessage: 'Ingen journey patterns.',
   },
   deleteConfirmDialogTitle: {
     id: 'lines.editor.journeyPatterns.table.deleteConfirmDialogTitle',
-    defaultMessage: 'Slette journey pattern'
+    defaultMessage: 'Slette journey pattern',
   },
   deleteConfirmDialogMessage: {
     id: 'lines.editor.journeyPatterns.table.deleteConfirmDialogMessage',
     defaultMessage:
-      'Er du sikker på at du ønsker å slette dette journey patternet?'
+      'Er du sikker på at du ønsker å slette dette journey patternet?',
   },
   deleteConfirmDialogCancelButtonText: {
     id:
       'lines.editor.journeyPatterns.table.deleteConfirmDialogCancelButtonText',
-    defaultMessage: 'Nei'
+    defaultMessage: 'Nei',
   },
   deleteConfirmDialogConfirmButtonText: {
     id:
       'lines.editor.journeyPatterns.table.deleteConfirmDialogConfirmButtonText',
-    defaultMessage: 'Ja'
-  }
+    defaultMessage: 'Ja',
+  },
 });

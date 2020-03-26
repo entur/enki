@@ -25,7 +25,7 @@ const hasAtleastOneFieldSet = (passingTime: PassingTime) => {
     departureTime,
     earliestDepartureTime,
     arrivalTime,
-    latestArrivalTime
+    latestArrivalTime,
   } = passingTime;
   return Boolean(
     departureTime || earliestDepartureTime || arrivalTime || latestArrivalTime
@@ -43,7 +43,7 @@ export const validateTimes = (
   if (passingTimes.length < 2)
     return {
       isValid: false,
-      errorMessage: getMessage(messages.stopPointsInfo)
+      errorMessage: getMessage(messages.stopPointsInfo),
     };
 
   const firstError = passingTimes
@@ -56,13 +56,13 @@ export const validateTimes = (
         departureDayOffset,
         arrivalDayOffset,
         latestArrivalDayOffset,
-        earliestDepartureDayOffset
+        earliestDepartureDayOffset,
       } = passingTime;
 
       if (!hasAtleastOneFieldSet(passingTime))
         return {
           isValid: false,
-          errorMessage: getMessage(messages.atleastOneField)
+          errorMessage: getMessage(messages.atleastOneField),
         };
       if (
         isBefore(
@@ -74,7 +74,7 @@ export const validateTimes = (
       )
         return {
           isValid: false,
-          errorMessage: getMessage(messages.departureAfterArrival)
+          errorMessage: getMessage(messages.departureAfterArrival),
         };
       if (
         isBefore(
@@ -86,7 +86,7 @@ export const validateTimes = (
       )
         return {
           isValid: false,
-          errorMessage: getMessage(messages.departureAfterEarliest)
+          errorMessage: getMessage(messages.departureAfterEarliest),
         };
       if (
         isBefore(
@@ -98,7 +98,7 @@ export const validateTimes = (
       )
         return {
           isValid: false,
-          errorMessage: getMessage(messages.arrivalBeforeLatest)
+          errorMessage: getMessage(messages.arrivalBeforeLatest),
         };
       if (index === 0) return { isValid: true, errorMessage: '' };
       if (
@@ -108,7 +108,7 @@ export const validateTimes = (
       ) {
         return {
           isValid: false,
-          errorMessage: getMessage(messages.lastArrivalMustBeSet)
+          errorMessage: getMessage(messages.lastArrivalMustBeSet),
         };
       }
 
@@ -142,15 +142,15 @@ export const validateTimes = (
       ) {
         return {
           isValid: false,
-          errorMessage: getMessage(messages.laterThanPrevious)
+          errorMessage: getMessage(messages.laterThanPrevious),
         };
       }
       return {
         isValid: true,
-        errorMessage: ''
+        errorMessage: '',
       };
     })
-    .find(e => !e.isValid);
+    .find((e) => !e.isValid);
 
   return firstError || { isValid: true, errorMessage: '' };
 };

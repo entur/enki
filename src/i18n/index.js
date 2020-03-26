@@ -9,10 +9,10 @@ export const SUPPORTED_LOCALES = ['nb', 'en'];
 
 export const LOCALE_KEY = 'OT::locale';
 
-const removeRegionCode = locale =>
+const removeRegionCode = (locale) =>
   locale ? locale.toLowerCase().split(/[_-]+/)[0] : defaultLocale;
 
-export const isLocaleSupported = locale =>
+export const isLocaleSupported = (locale) =>
   locale ? SUPPORTED_LOCALES.indexOf(locale) > -1 : false;
 
 const getLocale = () => {
@@ -32,7 +32,7 @@ const getLocale = () => {
   return defaultLocale;
 };
 
-export const getMessages = locale => require('./translations/' + locale);
+export const getMessages = (locale) => require('./translations/' + locale);
 
 /* Basic support for i18n based on default browser language */
 export const geti18n = () => {
@@ -40,7 +40,7 @@ export const geti18n = () => {
   const messages = getMessages(locale);
   return {
     messages,
-    locale
+    locale,
   };
 };
 
@@ -56,6 +56,6 @@ export const getIntl = ({ intl: { locale, messages } }) => {
 };
 
 export const selectIntl = createSelector(
-  state => state.intl,
-  intl => getIntl({ intl })
+  (state) => state.intl,
+  (intl) => getIntl({ intl })
 );

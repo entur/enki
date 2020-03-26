@@ -31,10 +31,10 @@ const Loading = ({ className, isLoading, isFullScreen, text, children }) => {
 Loading.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isFullScreen: PropTypes.bool,
-  text: PropTypes.string
+  text: PropTypes.string,
 };
 Loading.defaultProps = {
-  isLoading: true
+  isLoading: true,
 };
 
 export default Loading;

@@ -14,7 +14,7 @@ class DurationPicker extends React.Component {
       hours: unit === 'hours' ? value : duration.hours(),
       days: unit === 'days' ? value : duration.days(),
       months: unit === 'months' ? value : duration.months(),
-      years: unit === 'years' ? value : duration.years()
+      years: unit === 'years' ? value : duration.years(),
     });
     this.props.onChange(
       this.props.resetOnZero && newDuration.asSeconds() === 0
@@ -39,7 +39,7 @@ class DurationPicker extends React.Component {
       showDays,
       position,
       className,
-      disabled
+      disabled,
     } = this.props;
 
     const d = moment.duration(duration);
@@ -125,7 +125,7 @@ DurationPicker.propTypes = {
   showHours: PropTypes.bool,
   position: PropTypes.oneOf(['above', 'below']),
   className: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 DurationPicker.defaultProps = {
   duration: '',
@@ -135,7 +135,7 @@ DurationPicker.defaultProps = {
   position: 'below',
   showYears: true,
   showMonths: true,
-  showDays: true
+  showDays: true,
 };
 
 export default DurationPicker;

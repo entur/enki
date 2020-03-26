@@ -10,7 +10,7 @@ import {
   TableHead,
   TableRow,
   HeaderCell,
-  DataCell
+  DataCell,
 } from '@entur/table';
 import ConfirmDialog from 'components/ConfirmDialog';
 import messages from './messages';
@@ -67,7 +67,7 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
           </DataCell>
           <DataCell>
             <div
-              onClick={e => {
+              onClick={(e) => {
                 setRemoveDialogOpenFor(i);
                 e.stopPropagation();
               }}
@@ -108,7 +108,7 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
           </SecondaryButton>,
           <SuccessButton key={1} onClick={() => doDelete()}>
             {formatMessage(messages.yes)}
-          </SuccessButton>
+          </SuccessButton>,
         ]}
         onDismiss={() => setRemoveDialogOpenFor(null)}
       />

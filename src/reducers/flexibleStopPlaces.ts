@@ -2,7 +2,7 @@ import {
   RECEIVE_FLEXIBLE_STOP_PLACES,
   REQUEST_FLEXIBLE_STOP_PLACES,
   REQUEST_FLEXIBLE_STOP_PLACE,
-  RECEIVE_FLEXIBLE_STOP_PLACE
+  RECEIVE_FLEXIBLE_STOP_PLACE,
 } from 'actions/flexibleStopPlaces';
 import FlexibleStopPlace from '../model/FlexibleStopPlace';
 import { AnyAction } from 'redux';
@@ -25,7 +25,7 @@ const flexibleStopPlaces = (
 
     case RECEIVE_FLEXIBLE_STOP_PLACE:
       return stopPlaces
-        ? stopPlaces.map(sp =>
+        ? stopPlaces.map((sp) =>
             sp.id === action.stopPlace.id ? action.stopPlace : sp
           )
         : [action.stopPlace];

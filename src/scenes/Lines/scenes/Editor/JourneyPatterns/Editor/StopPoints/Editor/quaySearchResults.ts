@@ -16,12 +16,12 @@ export function quaySearchResults(
 
     return {
       feedback: name + ' ' + publicCode,
-      variant: 'success'
+      variant: 'success',
     };
   } else {
     return {
       feedback: 'Fant ikke plattform.',
-      variant: 'warning'
+      variant: 'warning',
     };
   }
 }

@@ -24,9 +24,9 @@ export const flexibleLineToPayload = (flexibleLine: FlexibleLine) => {
   const { network, ...rest } = flexibleLine;
   return {
     ...rest,
-    journeyPatterns: flexibleLine.journeyPatterns?.map(journeyPattern =>
+    journeyPatterns: flexibleLine.journeyPatterns?.map((journeyPattern) =>
       journeyPatternToPayload(journeyPattern)
-    )
+    ),
   };
 };
 

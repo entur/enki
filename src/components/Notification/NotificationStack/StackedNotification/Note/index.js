@@ -7,7 +7,7 @@ import {
   CloseIcon,
   ValidationErrorIcon,
   WarningIcon,
-  ValidationInfoIcon
+  ValidationInfoIcon,
 } from '@entur/icons';
 
 import '../../../styles.scss';
@@ -94,13 +94,13 @@ Note.propTypes = {
   dismissAfter: PropTypes.number,
   topOffset: PropTypes.object,
   isActive: PropTypes.bool,
-  type: PropTypes.oneOf(['success', 'error', 'warning', 'info']).isRequired
+  type: PropTypes.oneOf(['success', 'error', 'warning', 'info']).isRequired,
 };
 
 Note.defaultProps = {
   isActive: false,
   activeClassName: 'notification-bar-active',
-  dismissAfter: 0
+  dismissAfter: 0,
 };
 
 export default Note;

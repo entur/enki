@@ -8,12 +8,12 @@ import './styles.scss';
 class MenuItem extends React.Component {
   state = {
     active: false,
-    position: null
+    position: null,
   };
 
   toggleActive() {
-    this.setState(state => ({
-      active: !state.active
+    this.setState((state) => ({
+      active: !state.active,
     }));
   }
 
@@ -30,7 +30,7 @@ class MenuItem extends React.Component {
       active,
       disabled,
       'space-between': hasMenuItems,
-      'bold-text': hasMenuItems
+      'bold-text': hasMenuItems,
     });
 
     const xOffSet = 15;
@@ -42,7 +42,7 @@ class MenuItem extends React.Component {
 
     const childPositionStyle = {
       left: left * (childrenLeft ? -1 : 1),
-      bottom
+      bottom,
     };
 
     return (
@@ -50,10 +50,10 @@ class MenuItem extends React.Component {
         <div
           className={menuItemClasses}
           onClick={handleOnClick}
-          ref={el => {
+          ref={(el) => {
             if (el && position === null) {
               this.setState({
-                position: el.getBoundingClientRect()
+                position: el.getBoundingClientRect(),
               });
             }
           }}
@@ -79,11 +79,11 @@ MenuItem.propTypes = {
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   menuItems: PropTypes.arrayOf(PropTypes.node),
-  childrenLeft: PropTypes.bool
+  childrenLeft: PropTypes.bool,
 };
 
 MenuItem.defaultProps = {
-  childrenLeft: false
+  childrenLeft: false,
 };
 
 MenuItem.displayName = 'MenuItem';

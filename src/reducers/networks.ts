@@ -11,7 +11,7 @@ const networksReducer = (networks: NetworksState = null, action: AnyAction) => {
 
     case RECEIVE_NETWORK:
       return networks
-        ? networks.map(n => (n.id === action.network.id ? action.network : n))
+        ? networks.map((n) => (n.id === action.network.id ? action.network : n))
         : [action.network];
 
     default:

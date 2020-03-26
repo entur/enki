@@ -1,6 +1,6 @@
 import {
   RECEIVE_ORGANISATIONS,
-  ReceiveOrganisations
+  ReceiveOrganisations,
 } from 'actions/organisations';
 import { ORGANISATION_TYPE } from 'model/enums';
 
@@ -41,7 +41,7 @@ export const filterNetexOperators = (
   organisations: Organisation[]
 ): Organisation[] =>
   organisations.filter(
-    org =>
+    (org) =>
       org.types.includes(ORGANISATION_TYPE.OPERATOR) &&
       org.references.netexOperatorId
   );

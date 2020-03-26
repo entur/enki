@@ -1,7 +1,7 @@
 import {
   RECEIVE_FLEXIBLE_LINES,
   RECEIVE_FLEXIBLE_LINE,
-  FlexibleLinesAction
+  FlexibleLinesAction,
 } from 'actions/flexibleLines';
 import FlexibleLine from '../model/FlexibleLine';
 import PassingTime from 'model/PassingTime';
@@ -15,28 +15,28 @@ const cleanUpPassingTimes = (pt: PassingTime): PassingTime => {
       departureTime: pt.departureTime,
       arrivalTime: pt.departureTime,
       departureDayOffset: pt.departureDayOffset,
-      arrivalDayOffset: pt.departureDayOffset
+      arrivalDayOffset: pt.departureDayOffset,
     };
   else if (pt.latestArrivalTime)
     return {
       departureTime: pt.latestArrivalTime,
       arrivalTime: pt.latestArrivalTime,
       departureDayOffset: pt.latestArrivalDayOffset,
-      arrivalDayOffset: pt.latestArrivalDayOffset
+      arrivalDayOffset: pt.latestArrivalDayOffset,
     };
   else if (pt.arrivalTime)
     return {
       departureTime: pt.arrivalTime,
       arrivalTime: pt.arrivalTime,
       departureDayOffset: pt.arrivalDayOffset,
-      arrivalDayOffset: pt.arrivalDayOffset
+      arrivalDayOffset: pt.arrivalDayOffset,
     };
   else if (pt.earliestDepartureTime)
     return {
       departureTime: pt.earliestDepartureTime,
       arrivalTime: pt.earliestDepartureTime,
       departureDayOffset: pt.earliestDepartureDayOffset,
-      arrivalDayOffset: pt.earliestDepartureDayOffset
+      arrivalDayOffset: pt.earliestDepartureDayOffset,
     };
   else return {};
 };
@@ -51,23 +51,23 @@ const flexibleLines = (
 
     case RECEIVE_FLEXIBLE_LINE:
       const newJourneyPatterns: JourneyPattern[] =
-        action.line?.journeyPatterns?.map(jp => ({
+        action.line?.journeyPatterns?.map((jp) => ({
           ...jp,
-          serviceJourneys: jp.serviceJourneys.map(sj => ({
+          serviceJourneys: jp.serviceJourneys.map((sj) => ({
             ...sj,
-            passingTimes: sj.passingTimes.map(pt => cleanUpPassingTimes(pt))
-          }))
+            passingTimes: sj.passingTimes.map((pt) => cleanUpPassingTimes(pt)),
+          })),
         })) ?? [];
 
       const newFlexibleLine: FlexibleLine = {
         ...action.line,
         networkRef: action.line.network?.id,
-        journeyPatterns: newJourneyPatterns
+        journeyPatterns: newJourneyPatterns,
       };
 
       return (
-        lines?.map(l => (l.id === action.line.id ? newFlexibleLine : l)) ?? [
-          newFlexibleLine
+        lines?.map((l) => (l.id === action.line.id ? newFlexibleLine : l)) ?? [
+          newFlexibleLine,
         ]
       );
 

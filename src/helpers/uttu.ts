@@ -1,7 +1,7 @@
 import messages, {
   UttuCode,
   UttuSubCode,
-  CombinedUttuCode
+  CombinedUttuCode,
 } from './uttu.messages';
 import { IntlFormatters } from 'react-intl';
 

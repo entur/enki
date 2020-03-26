@@ -22,13 +22,13 @@ const Notification = ({ notification }: Props) => {
 
   const handleOnRequestClose = (note: NotificationType) => {
     if (note?.key) {
-      setNotifications(notifications.filter(n => n.key !== note.key));
+      setNotifications(notifications.filter((n) => n.key !== note.key));
     }
   };
 
   const handleOnDismiss = ({ key }: NotificationType) => {
     setNotifications(
-      notifications.filter(notification => notification.key !== key)
+      notifications.filter((notification) => notification.key !== key)
     );
   };
 
@@ -42,7 +42,7 @@ const Notification = ({ notification }: Props) => {
 };
 
 const mapStateToProps = ({ notification }: GlobalState) => ({
-  notification
+  notification,
 });
 
 export default connect(mapStateToProps)(Notification);

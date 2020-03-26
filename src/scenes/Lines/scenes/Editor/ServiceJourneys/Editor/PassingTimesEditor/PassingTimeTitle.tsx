@@ -10,7 +10,7 @@ type Props = {
 
 const PassingTimeTitle = ({
   flexibleStopPlaces,
-  stopPoint
+  stopPoint,
 }: Props): ReactElement => {
   const quayRef = stopPoint.quayRef;
   const [title, setTitle] = useState(quayRef);
@@ -18,7 +18,7 @@ const PassingTimeTitle = ({
   useEffect(() => {
     if (quayRef) {
       const fetchTitle = async () =>
-        await searchForQuay(quayRef).then(response =>
+        await searchForQuay(quayRef).then((response) =>
           setTitle(response.stopPlace?.name.value ?? quayRef)
         );
       fetchTitle();
@@ -30,7 +30,7 @@ const PassingTimeTitle = ({
       {quayRef
         ? title
         : flexibleStopPlaces?.find(
-            stop =>
+            (stop) =>
               stop.id ===
               (stopPoint.flexibleStopPlaceRef ??
                 stopPoint.flexibleStopPlace?.id)

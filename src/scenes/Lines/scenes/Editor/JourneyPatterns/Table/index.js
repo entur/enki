@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
   HeaderCell,
-  DataCell
+  DataCell,
 } from '@entur/table';
 import { JourneyPattern } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -21,12 +21,12 @@ import messages from './messages';
 const JourneyPatternsTable = ({
   journeyPatterns,
   onRowClick,
-  onDeleteClick
+  onDeleteClick,
 }) => {
   const { formatMessage } = useSelector(selectIntl);
   const [removeDialogOpenFor, setRemoveDialogOpenFor] = useState(null);
 
-  const showDeleteDialogFor = journeyPattern => {
+  const showDeleteDialogFor = (journeyPattern) => {
     setRemoveDialogOpenFor(journeyPattern);
   };
 
@@ -49,7 +49,7 @@ const JourneyPatternsTable = ({
           <DataCell>{jp.serviceJourneys.length}</DataCell>
           <DataCell>
             <div
-              onClick={e => {
+              onClick={(e) => {
                 showDeleteDialogFor(i);
                 e.stopPropagation();
               }}
@@ -99,7 +99,7 @@ const JourneyPatternsTable = ({
           </SecondaryButton>,
           <SuccessButton key={1} onClick={doDelete}>
             {formatMessage(messages.deleteConfirmDialogConfirmButtonText)}
-          </SuccessButton>
+          </SuccessButton>,
         ]}
         onDismiss={() => showDeleteDialogFor(null)}
       />
@@ -111,7 +111,7 @@ JourneyPatternsTable.propTypes = {
   journeyPatterns: PropTypes.arrayOf(PropTypes.instanceOf(JourneyPattern))
     .isRequired,
   onRowClick: PropTypes.func.isRequired,
-  onDeleteClick: PropTypes.func.isRequired
+  onDeleteClick: PropTypes.func.isRequired,
 };
 
 export default JourneyPatternsTable;

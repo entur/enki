@@ -3,30 +3,30 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'exports.creator.header',
-    defaultMessage: 'Opprett eksport'
+    defaultMessage: 'Opprett eksport',
   },
   saveButtonLabelText: {
     id: 'exports.creator.saveButtonLabelText',
-    defaultMessage: 'Lagre'
+    defaultMessage: 'Lagre',
   },
   savingOverlayLoaderText: {
     id: 'exports.creator.savingOverlayLoaderText',
-    defaultMessage: 'Lagrer eksporten...'
+    defaultMessage: 'Lagrer eksporten...',
   },
   nameFormLabel: {
     id: 'exports.creator.nameFormLabel',
-    defaultMessage: 'Navn *'
+    defaultMessage: 'Navn *',
   },
   fromDateFormLabel: {
     id: 'exports.creator.fromDateFormLabel',
-    defaultMessage: 'Fra dato *'
+    defaultMessage: 'Fra dato *',
   },
   toDateFormLabel: {
     id: 'exports.creator.toDateFormLabel',
-    defaultMessage: 'Til dato *'
+    defaultMessage: 'Til dato *',
   },
   dryRunFormLabel: {
     id: 'exports.creator.dryRunFormLabel',
-    defaultMessage: 'Tørrkjøring'
-  }
+    defaultMessage: 'Tørrkjøring',
+  },
 });

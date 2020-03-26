@@ -25,13 +25,13 @@ export const usePristine = (value: any, spoil: boolean): boolean => {
 
 export const useLoadDependencies = ({
   match,
-  history
+  history,
 }: RouteComponentProps<MatchParams>) => {
   const [networksIsLoading, setNetworksIsLoading] = useState(true);
   const [flexibleLineIsLoading, setFlexibleLineIsLoading] = useState(true);
   const [
     flexibleStopPlacesIsLoading,
-    setFlexibleStopPlacesIsLoading
+    setFlexibleStopPlacesIsLoading,
   ] = useState(true);
 
   const dispatch = useDispatch<any>();
@@ -66,7 +66,7 @@ export const useLoadDependencies = ({
   }, [
     dispatchLoadNetworks,
     dispatchLoadFlexibleStopPlaces,
-    dispatchLoadFlexibleLineById
+    dispatchLoadFlexibleLineById,
   ]);
   return (
     networksIsLoading || flexibleLineIsLoading || flexibleStopPlacesIsLoading
@@ -77,9 +77,11 @@ export const getFlexibleLineFromPath = (
   flexibleLines: FlexibleLinesState,
   match: { params: MatchParams }
 ) =>
-  flexibleLines?.find(flexibleLine => flexibleLine.id === match.params.id) ?? {
+  flexibleLines?.find(
+    (flexibleLine) => flexibleLine.id === match.params.id
+  ) ?? {
     transportMode: VEHICLE_MODE.BUS,
-    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS
+    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
   };
 
 export const useFlexibleLine = (
@@ -88,16 +90,16 @@ export const useFlexibleLine = (
 ) => {
   const [flexibleLine, setFlexibleLine] = useState<FlexibleLine>({
     transportMode: VEHICLE_MODE.BUS,
-    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS
+    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
   });
 
   const {
     flexibleLines,
-    editor: { isSaved }
+    editor: { isSaved },
   } = useSelector<
     GlobalState,
     { flexibleLines: FlexibleLinesState; editor: { isSaved: boolean } }
-  >(state => ({ flexibleLines: state.flexibleLines, editor: state.editor }));
+  >((state) => ({ flexibleLines: state.flexibleLines, editor: state.editor }));
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -113,6 +115,6 @@ export const useFlexibleLine = (
 
   return {
     onFieldChange,
-    flexibleLine
+    flexibleLine,
   };
 };
