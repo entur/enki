@@ -18,6 +18,12 @@
       margin: auto 0;
       min-width: fit-content;
     }
+
+    .radio-buttons {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 
   .stop-point-info {

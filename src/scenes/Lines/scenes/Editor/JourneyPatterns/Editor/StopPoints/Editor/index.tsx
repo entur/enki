@@ -46,7 +46,7 @@ const StopPointEditor = ({
   stopPoint,
   isFirstStop,
   deleteStopPoint,
-  spoilPristine
+  spoilPristine,
 }: Props) => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectMode, setSelectMode] = useState<StopPlaceMode>(
@@ -105,19 +105,21 @@ const StopPointEditor = ({
         <RadioGroup
           name={`stopPointMode-${index}`}
           value={selectMode}
-          onChange={e => {
+          onChange={(e) => {
             setSelectMode(e.target.value as StopPlaceMode);
             setQuaySearch(undefined);
             stopPointChange({
               ...stopPoint,
               quayRef: undefined,
               flexibleStopPlaceRef: undefined,
-              flexibleStopPlace: undefined
+              flexibleStopPlace: undefined,
             });
           }}
         >
-          <Radio value="custom">{formatMessage(messages.selectCustom)}</Radio>
-          <Radio value="nsr">{formatMessage(messages.selectNSR)}</Radio>
+          <div className="radio-buttons">
+            <Radio value="custom">{formatMessage(messages.selectCustom)}</Radio>
+            <Radio value="nsr">{formatMessage(messages.selectNSR)}</Radio>
+          </div>
         </RadioGroup>
       </div>
       <div className="stop-point-info">
@@ -125,11 +127,11 @@ const StopPointEditor = ({
           <Dropdown
             label={formatMessage(messages.stopPlace)}
             value={stopPointValue}
-            items={flexibleStopPlaces.map(fsp => ({
+            items={flexibleStopPlaces.map((fsp) => ({
               value: fsp.id,
-              label: fsp.name ?? ''
+              label: fsp.name ?? '',
             }))}
-            onChange={e =>
+            onChange={(e) =>
               stopPointChange({ ...stopPoint, flexibleStopPlaceRef: e?.value })
             }
             {...getErrorFeedback(
@@ -177,7 +179,7 @@ const StopPointEditor = ({
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               stopPointChange({
                 ...stopPoint,
-                destinationDisplay: { frontText: e.target.value }
+                destinationDisplay: { frontText: e.target.value },
               })
             }
           />
@@ -185,17 +187,17 @@ const StopPointEditor = ({
         <Dropdown
           label={formatMessage(messages.labelBoarding)}
           value={convertBoardingToDropdown(stopPoint)}
-          onChange={element =>
+          onChange={(element) =>
             stopPointChange({
               ...stopPoint,
               forBoarding: element?.value === '0' || element?.value === '2',
-              forAlighting: element?.value === '1' || element?.value === '2'
+              forAlighting: element?.value === '1' || element?.value === '2',
             })
           }
           items={[
             { value: '0', label: formatMessage(messages.labelForBoarding) },
             { value: '1', label: formatMessage(messages.labelForAlighting) },
-            { value: '2', label: formatMessage(messages.labelForBoth) }
+            { value: '2', label: formatMessage(messages.labelForBoth) },
           ]}
           feedback={errors.boarding && formatMessage(errors.boarding)}
           variant={errors.boarding ? 'error' : undefined}
@@ -220,7 +222,7 @@ const StopPointEditor = ({
           </SecondaryButton>,
           <SuccessButton key="yes" onClick={deleteStopPoint}>
             {formatMessage(messages.yes)}
-          </SuccessButton>
+          </SuccessButton>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}
       />
