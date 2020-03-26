@@ -98,16 +98,6 @@ export default defineMessages({
       'lines.editor.journeyPatterns.editor.serviceJourneys.passingTimesEditor.error',
     defaultMessage: 'Du må ha gyldige passeringstider.',
   },
-  dates: {
-    id:
-      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dates',
-    defaultMessage: 'Datoer',
-  },
-  addDayTypeAssignment: {
-    id:
-      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.addDayTypeAssignment',
-    defaultMessage: 'Legg til dato',
-  },
   noDayTypeAssignments: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.noDayTypeAssignments',
@@ -122,16 +112,6 @@ export default defineMessages({
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.fromAndToDate',
     defaultMessage: 'Bruk fra- og til-dato',
-  },
-  fromDate: {
-    id:
-      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.fromDate',
-    defaultMessage: 'Fra dato',
-  },
-  toDate: {
-    id:
-      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.toDate',
-    defaultMessage: 'Til dato',
   },
   stopPointsInfo: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.info',

@@ -1,10 +1,39 @@
-.day-type-assignments-editor {
-  .day-type-assignment-editor {
-    margin-top: 20px;
-  }
+@import '~@entur/tokens/dist/styles.scss';
 
-  .no-day-types {
-    margin-top: 20px;
-    font-style: italic;
+.day-type-assignments {
+  margin-top: 3.5rem;
+
+  .day-type-assignments-editor {
+    margin-bottom: 1.25rem;
+
+    .no-day-types {
+      margin-top: 1.25rem;
+      font-style: italic;
+    }
+
+    .day-type-assignment {
+      display: flex;
+      padding: 1rem 0;
+      border-bottom: 2px solid $colors-greys-grey20;
+
+      .eds-input-group {
+        margin-right: 1rem;
+        max-width: 9.5rem;
+
+        .eds-form-control {
+          margin-bottom: 0;
+        }
+      }
+
+      .delete-button {
+        margin: auto 0 0 auto;
+        padding: 0 0.5rem;
+        min-width: fit-content;
+
+        svg {
+          margin-right: 0;
+        }
+      }
+    }
   }
 }

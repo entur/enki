@@ -41,7 +41,6 @@ const DayTypeEditor = ({ dayType, onChange, spoilPristine }: Props) => {
           ).feedback
         }
       />
-      <Label>{formatMessage(messages.dates)}</Label>
       <DayTypeAssignmentsEditor
         dayTypeAssignments={dayType.dayTypeAssignments}
         onChange={(dayTypeAssignments) => {
