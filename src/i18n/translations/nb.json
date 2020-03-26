@@ -324,6 +324,7 @@
   "stopPlaces.privateCodeTableHeaderLabelText": "Privat kode",
   "passingTimes.passingTime": "Passeringstid *",
   "passingTimes.dayTimeOffset": "Daytime offset",
+  "passingTimes.dayTimeOffsetTooltip": "Sett offset dersom passeringstiden er én eller flere dager senere enn tilbudets avreise",
   "passingTimes.error.atleastOneField": "Minst ett felt må være fylt ut.",
   "passingTimes.error.departureAfterArrival": "Avgangstid kan ikke være før ankomsttid.",
   "passingTimes.error.departureAfterEarliest": "Avgangstid kan ikke være før tidligst avgangstid.",

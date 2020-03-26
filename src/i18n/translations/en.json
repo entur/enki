@@ -324,6 +324,7 @@
   "stopPlaces.privateCodeTableHeaderLabelText": "Private code",
   "passingTimes.passingTime": "Passing time *",
   "passingTimes.dayTimeOffset": "Daytime offset",
+  "passingTimes.dayTimeOffsetTooltip": "Set offset if the passing time is a day or more after the departure of the service",
   "passingTimes.error.atleastOneField": "At least one field must be set.",
   "passingTimes.error.departureAfterArrival": "Departure time cannot be before arrival time.",
   "passingTimes.error.departureAfterEarliest": "Departure time cannot be before earliest departure time.",
