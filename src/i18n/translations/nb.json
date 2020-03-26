@@ -153,7 +153,7 @@
   "lines.editor.general.typeFormGroupTitle": "Flexible line type *",
   "lines.editor.generalTabLabel": "Generelt",
   "lines.editor.general.drawer": "Her er en kort beskrivelse av de ulike linjetypene.",
-  "lines.editor.general.aria": "Les mer om de ulike linjetyperna.",
+  "lines.editor.general.drawer.aria": "Les mer om de ulike linjetypene.",
   "lines.editor.general.drawerTitle": "Fleksible linjetyper.",
   "lines.editor.general.drawer.fixed": "Fast rute til faste tider, men må forhåndsbestilles for at ruten skal kjøres.",
   "lines.editor.general.drawer.mainRouteWithFlexibleEnds": "Fast rute til faste tider, med mulighet for på-/avstigning på stoppesteder utenfor oppsatt kjøremønster ved bestilling.",
