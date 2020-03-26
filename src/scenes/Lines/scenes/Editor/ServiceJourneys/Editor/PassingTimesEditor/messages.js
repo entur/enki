@@ -9,6 +9,11 @@ export default defineMessages({
     id: 'passingTimes.dayTimeOffset',
     defaultMessage: 'Daytime offset'
   },
+  dayTimeOffsetTooltip: {
+    id: 'passingTimes.dayTimeOffsetTooltip',
+    defaultMessage:
+      'Sett offset dersom passeringstiden er én eller flere dager senere enn tilbudets avreise'
+  },
   atleastOneField: {
     id: 'passingTimes.error.atleastOneField',
     defaultMessage: 'Minst ett felt må være fylt ut.'
