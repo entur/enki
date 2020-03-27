@@ -8,7 +8,7 @@ export default defineMessages({
   },
   createHeader: {
     id: 'stopPlaces.editor.createHeader',
-    defaultMessage: 'Opprett stoppested',
+    defaultMessage: 'Opprett stoppested/område',
   },
   editHeader: {
     id: 'stopPlaces.editor.editHeader',

@@ -136,7 +136,7 @@ export default defineMessages({
   stopPointsInfo: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.info',
     defaultMessage:
-      'Du må opprette minst to stoppesteder. Ett for start og ett for slutt. Hvis du lager en sonebasert linje, og du bare har én sone, må du legge til samme sone to ganger.',
+      'Du må opprette minst to stoppesteder; ett for start og ett for slutt. Hvis du lager et områdebasert tilbud, og du bare har ett område, må du legge til samme område to ganger.',
   },
   serviceJourneysInfo: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',

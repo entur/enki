@@ -11,7 +11,7 @@ export default defineMessages({
   },
   stopPlacesTableHeaderCellLabel: {
     id: 'lines.editor.journeyPatterns.table.stopPlacesTableHeaderCellLabel',
-    defaultMessage: 'Stoppesteder',
+    defaultMessage: 'Stoppesteder og områder',
   },
   serviceJourneysTableHeaderCellLabel: {
     id:

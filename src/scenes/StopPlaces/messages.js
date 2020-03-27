@@ -3,11 +3,11 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'stopPlaces.header',
-    defaultMessage: 'Stoppesteder',
+    defaultMessage: 'Stoppesteder og områder',
   },
   createStopPlaceLinkIconLabelText: {
     id: 'stopPlaces.createStopPlaceLinkIconLabelText',
-    defaultMessage: 'Opprett stoppested',
+    defaultMessage: 'Opprett stoppested eller område',
   },
   nameTableHeaderLabelText: {
     id: 'stopPlaces.nameTableHeaderLabelText',
