@@ -22,9 +22,7 @@
 
   .buttons {
     display: flex;
-    justify-content: flex-end;
-    margin-right: 30px;
-    margin-left: auto;
+    margin-top: 3rem;
 
     button:last-of-type {
       margin-left: 30px;
@@ -44,12 +42,5 @@
 
   .no-error {
     opacity: 0;
-  }
-
-  .next-button {
-    margin-top: 1rem;
-    margin-right: $space-large;
-    display: block;
-    margin-left: auto;
   }
 }

@@ -255,26 +255,27 @@ const FlexibleLineEditor = ({
                 />
               </section>
             )}
-          </div>
-          {activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1 ? (
-            <div className="buttons">
-              {isEdit && (
-                <NegativeButton
-                  onClick={() => setDeleteDialogOpen(true)}
-                  disabled={isDeleteDisabled}
-                >
-                  {formatMessage(messages.deleteButtonText)}
-                </NegativeButton>
-              )}
-              <PrimaryButton onClick={handleOnSaveClick}>
-                {formatMessage(messages.saveButtonText)}
+
+            {activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1 ? (
+              <div className="buttons">
+                {isEdit && (
+                  <NegativeButton
+                    onClick={() => setDeleteDialogOpen(true)}
+                    disabled={isDeleteDisabled}
+                  >
+                    {formatMessage(messages.deleteButtonText)}
+                  </NegativeButton>
+                )}
+                <PrimaryButton onClick={handleOnSaveClick}>
+                  {formatMessage(messages.saveButtonText)}
+                </PrimaryButton>
+              </div>
+            ) : (
+              <PrimaryButton onClick={onNextClicked} className="buttons">
+                {formatMessage(messages.saveAndContinue)}
               </PrimaryButton>
-            </div>
-          ) : (
-            <PrimaryButton onClick={onNextClicked} className="next-button">
-              {formatMessage(messages.saveAndContinue)}
-            </PrimaryButton>
-          )}
+            )}
+          </div>
         </OverlayLoader>
       ) : (
         <Loading
