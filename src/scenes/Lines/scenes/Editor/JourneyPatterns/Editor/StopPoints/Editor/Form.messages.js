@@ -58,4 +58,8 @@ export default defineMessages({
     id: 'lines.editor.deleteButtonText',
     defaultMessage: 'Slett',
   },
+  tooltip: {
+    id: 'lines.journeyPatterns.stopPoints.table.frontText.tooltip',
+    defaultMessage: 'Teksten som skal vises foran på kjøretøyet',
+  },
 });

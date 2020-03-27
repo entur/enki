@@ -39,6 +39,10 @@ export default defineMessages({
     id: 'lines.editor.general.typeFormGroupTitle',
     defaultMessage: 'Flexible line type *',
   },
+  typeFormGroupTitleTooltip: {
+    id: 'lines.editor.general.typeFormGroupTitle.tooltip',
+    defaultMessage: 'Les mer om linjetypene',
+  },
   about: {
     id: 'lines.editor.journeyPatterns.editor.about',
     defaultMessage: 'Om linjen',
