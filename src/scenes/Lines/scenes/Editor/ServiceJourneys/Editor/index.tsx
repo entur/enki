@@ -4,9 +4,8 @@ import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import { DeleteIcon } from '@entur/icons';
+import { DeleteIcon, QuestionIcon } from '@entur/icons';
 import PassingTimesEditor from './PassingTimesEditor';
-import DayTypeEditor from './DayTypeEditor';
 import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -18,17 +17,21 @@ import {
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { GlobalState } from 'reducers';
 import ServiceJourney from 'model/ServiceJourney';
-import { Paragraph } from '@entur/typography';
+import { Heading4, Paragraph } from '@entur/typography';
 import ScrollToTop from 'components/ScrollToTop';
 import './styles.scss';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import WeekdayPicker from 'components/WeekdayPicker';
+import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
+import { newDayTypeAssignment } from 'model/DayTypeAssignment';
+import { Tooltip } from '@entur/tooltip';
 
 type Props = {
   serviceJourney: ServiceJourney;
   stopPoints: StopPoint[];
   spoilPristine: boolean;
-  onChange: (serviceJourney: any) => void;
+  onChange: (serviceJourney: ServiceJourney) => void;
   deleteServiceJourney?: (index: number) => void;
 };
 
@@ -151,26 +154,64 @@ const ServiceJourneyEditor = (props: Props) => {
             />
           </div>
 
-          <div className="input-group">
-            <h4>{formatMessage(messages.availability)}</h4>
-
-            <DayTypeEditor
-              dayType={
-                dayTypes?.[0] ?? { daysOfWeek: [], dayTypeAssignments: [] }
+          <section className="weekday-section">
+            <Heading4>{formatMessage(messages.weekdaysAvailability)}</Heading4>
+            <WeekdayPicker
+              days={dayTypes?.[0].daysOfWeek ?? []}
+              onChange={(dow) =>
+                onChange({
+                  ...serviceJourney,
+                  dayTypes: [
+                    { ...serviceJourney.dayTypes?.[0]!, daysOfWeek: dow },
+                  ],
+                })
               }
-              onChange={(dt) => onFieldChange('dayTypes', [dt])}
               spoilPristine={spoilPristine}
             />
-          </div>
+          </section>
 
-          <h4>{formatMessage(messages.passingTimes)}</h4>
-          <Paragraph>{formatMessage(messages.passingTimesInfo)}</Paragraph>
-          <PassingTimesEditor
-            passingTimes={passingTimes ?? []}
-            stopPoints={stopPoints}
-            onChange={(pts) => onFieldChange('passingTimes', pts)}
-            spoilPristine={spoilPristine}
-          />
+          <section className="day-type-section">
+            <Heading4>
+              {formatMessage(messages.dateAvailability)}
+              <Tooltip
+                content={formatMessage(messages.dateTooltip)}
+                placement="right"
+              >
+                <span className="question-icon">
+                  <QuestionIcon />
+                </span>
+              </Tooltip>
+            </Heading4>
+            <DayTypeAssignmentsEditor
+              dayTypeAssignments={
+                dayTypes?.[0].dayTypeAssignments?.length
+                  ? dayTypes[0].dayTypeAssignments
+                  : [newDayTypeAssignment()]
+              }
+              onChange={(dta) =>
+                onChange({
+                  ...serviceJourney,
+                  dayTypes: [
+                    {
+                      ...serviceJourney.dayTypes?.[0]!,
+                      dayTypeAssignments: dta,
+                    },
+                  ],
+                })
+              }
+            />
+          </section>
+
+          <section className="passing-times-section">
+            <h4>{formatMessage(messages.passingTimes)}</h4>
+            <Paragraph>{formatMessage(messages.passingTimesInfo)}</Paragraph>
+            <PassingTimesEditor
+              passingTimes={passingTimes ?? []}
+              stopPoints={stopPoints}
+              onChange={(pts) => onFieldChange('passingTimes', pts)}
+              spoilPristine={spoilPristine}
+            />
+          </section>
         </div>
 
         {deleteServiceJourney && (
