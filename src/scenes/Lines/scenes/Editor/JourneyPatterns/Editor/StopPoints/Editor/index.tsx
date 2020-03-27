@@ -173,6 +173,7 @@ const StopPointEditor = ({
             !frontTextError,
             frontTextPristine
           )}
+          labelTooltip={formatMessage(messages.tooltip)}
         >
           <TextField
             defaultValue={frontTextValue}

@@ -15,7 +15,7 @@
 
     .eds-input-group {
       margin: 0 $space-large $space-large 0;
-      flex: 1 0 40%;
+      flex: 1 45%;
     }
 
     .eds-input-group:nth-child(even) {
@@ -25,12 +25,16 @@
 
   .line-type-dropdown {
     position: relative;
+    font-size: 14px;
     flex: 1;
+    cursor: pointer;
 
-    &-icon {
+    &-tooltip {
       position: absolute;
-      left: 125px;
-      top: -5px;
+      left: 135px;
+      top: -1px;
+
+      text-decoration: underline;
     }
   }
 

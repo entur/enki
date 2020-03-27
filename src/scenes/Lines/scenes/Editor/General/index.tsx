@@ -11,8 +11,6 @@ import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import { Organisation } from 'reducers/organisations';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
-import { IconButton } from '@entur/button';
-import { ValidationInfoIcon } from '@entur/icons';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 
@@ -162,13 +160,13 @@ export default ({
         />
 
         <div className="line-type-dropdown">
-          <IconButton
-            className="line-type-dropdown-icon"
+          <div
+            className="line-type-dropdown-tooltip"
             aria-label={formatMessage(messages.drawerAria)}
             onClick={() => setDrawer(true)}
           >
-            <ValidationInfoIcon />
-          </IconButton>
+            {formatMessage(messages.typeFormGroupTitleTooltip)}
+          </div>
           <Dropdown
             className="form-section"
             value={flexibleLine.flexibleLineType}
