@@ -50,6 +50,14 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
   const uniqueKeys = useUniqueKeys(dayTypeAssignments);
   const operatingPeriods = dayTypeAssignments.map((dta) => dta.operatingPeriod);
 
+  const dateJsToIso = (date: Date | null): string => {
+    const dateOrNow = date ?? new Date();
+    const y = dateOrNow.getFullYear();
+    const m = dateOrNow?.getMonth() + 1;
+    const d = dateOrNow?.getDate();
+    return `${y}-${m! < 10 ? '0' + m : m}-${d! < 10 ? '0' + d : d}`;
+  };
+
   return (
     <>
       <div className="day-type-assignments-editor">
@@ -59,7 +67,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
               <DatePicker
                 selectedDate={moment(op.fromDate).toDate()}
                 onChange={(date: Date | null) =>
-                  changeDay({ ...op, fromDate: date?.toString() ?? '' }, index)
+                  changeDay({ ...op, fromDate: dateJsToIso(date) }, index)
                 }
               />
             </InputGroup>
@@ -74,7 +82,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
               <DatePicker
                 selectedDate={moment(op.toDate).toDate()}
                 onChange={(date: Date | null) =>
-                  changeDay({ ...op, toDate: date?.toString() ?? '' }, index)
+                  changeDay({ ...op, toDate: dateJsToIso(date) }, index)
                 }
               />
             </InputGroup>

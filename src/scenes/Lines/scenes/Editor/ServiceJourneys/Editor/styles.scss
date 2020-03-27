@@ -22,6 +22,39 @@
     }
   }
 
+  .day-type-section {
+    margin-top: 4rem;
+  }
+
+  .weekday-section {
+    margin-top: 4rem;
+
+    input:not(.entur-radio-checkbox__input),
+    textarea,
+    select {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .header-buttons button:last-of-type {
+        margin-left: 30px;
+      }
+    }
+
+    .weekday-picker {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .passing-times-section {
+    margin-top: 4rem;
+  }
+
   .delete-button {
     display: block;
     margin-left: auto;

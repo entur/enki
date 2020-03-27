@@ -12,7 +12,7 @@ import './styles.scss';
 
 type Props = {
   days: DAY_OF_WEEK[];
-  onDaysChange: (days: DAY_OF_WEEK[]) => void;
+  onChange: (days: DAY_OF_WEEK[]) => void;
   spoilPristine: boolean;
 };
 
@@ -22,11 +22,10 @@ export const toggleDay = (
 ): DAY_OF_WEEK[] =>
   days.includes(dayToToggle)
     ? days.filter((day) => day !== dayToToggle)
-    : days.concat(dayToToggle);
+    : [...days, dayToToggle];
 
-const WeekdayPicker = ({ days, onDaysChange, spoilPristine }: Props) => {
+const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
-
   const weekdayPristine = usePristine(days, spoilPristine);
 
   return (
@@ -41,49 +40,49 @@ const WeekdayPicker = ({ days, onDaysChange, spoilPristine }: Props) => {
       <div className="checkboxes">
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.MONDAY)}
-          onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.MONDAY))}
+          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.MONDAY))}
           value="M"
         >
           {formatMessage(messages.monday)}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.TUESDAY)}
-          onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.TUESDAY))}
+          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.TUESDAY))}
           value="T"
         >
           {formatMessage(messages.tuesday)}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.WEDNESDAY)}
-          onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.WEDNESDAY))}
+          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.WEDNESDAY))}
           value="O"
         >
           {formatMessage(messages.wednesday)}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.THURSDAY)}
-          onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.THURSDAY))}
+          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.THURSDAY))}
           value="T"
         >
           {formatMessage(messages.thursday)}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.FRIDAY)}
-          onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.FRIDAY))}
+          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.FRIDAY))}
           value="F"
         >
           {formatMessage(messages.friday)}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.SATURDAY)}
-          onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.SATURDAY))}
+          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.SATURDAY))}
           value="L"
         >
           {formatMessage(messages.saturday)}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.SUNDAY)}
-          onChange={() => onDaysChange(toggleDay(days, DAY_OF_WEEK.SUNDAY))}
+          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.SUNDAY))}
           value="S"
         >
           {formatMessage(messages.sunday)}
