@@ -3,11 +3,7 @@ import { useSelector } from 'react-redux';
 import StopPoint from 'model/StopPoint';
 import ServiceJourneyEditor from './Editor';
 import { selectIntl } from 'i18n';
-import {
-  removeElementByIndex,
-  replaceElement,
-  useUniqueKeys,
-} from 'helpers/arrays';
+import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import messages from './messages';
 import AddButton from 'components/AddButton/AddButton';
 import ServiceJourney from 'model/ServiceJourney';
@@ -36,6 +32,7 @@ const ServiceJourneysEditor = ({
   spoilPristine,
 }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [keys, setKeys] = useState<number[]>(serviceJourneys.map(Math.random));
   const { formatMessage } = useSelector(selectIntl);
   const textFieldRef = useRef<HTMLInputElement>(null);
 
@@ -46,11 +43,20 @@ const ServiceJourneysEditor = ({
     onChange(removeElementByIndex(serviceJourneys, index));
   };
   const addNewServiceJourney = (name: string) => {
-    onChange([
+    const newServiceJourneys = [
       ...serviceJourneys,
-      { name, passingTimes: stopPoints.map((_) => ({})) },
-    ]);
+      {
+        name,
+        passingTimes: stopPoints.map((_) => ({})),
+      },
+    ];
+    onChange(newServiceJourneys);
+    setKeys(newServiceJourneys.map(Math.random));
     setShowModal(false);
+    setTimeout(
+      () => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }),
+      100
+    );
   };
 
   const renderServiceJourneyEditor = (sj: ServiceJourney, index: number) => {
@@ -77,8 +83,6 @@ const ServiceJourneysEditor = ({
       serviceJourneys.every((sj) => validateServiceJourney(sj))
     );
   }, [serviceJourneys, setIsValidServiceJourney]);
-
-  const keys = useUniqueKeys(serviceJourneys);
 
   return (
     <>
@@ -128,7 +132,7 @@ const ServiceJourneysEditor = ({
                 <ExpandablePanel
                   key={keys[index]}
                   title={sj.name}
-                  defaultOpen={!sj.id}
+                  defaultOpen={!sj.id && index === serviceJourneys.length - 1}
                 >
                   {renderServiceJourneyEditor(sj, index)}
                 </ExpandablePanel>
