@@ -15,7 +15,6 @@ import Loading from 'components/Loading';
 import PageHeader from 'components/PageHeader';
 import { loadNetworks } from 'actions/networks';
 import { selectIntl } from 'i18n';
-import messages from './messages';
 import './styles.scss';
 
 const Networks = ({ history }) => {
@@ -60,7 +59,7 @@ const Networks = ({ history }) => {
       ) : (
         <TableRow className="row-no-networks disabled">
           <DataCell colSpan={3}>
-            {formatMessage(messages.noNetworksFoundText)}
+            {formatMessage('networksNoNetworksFoundText')}
           </DataCell>
         </TableRow>
       );
@@ -68,7 +67,7 @@ const Networks = ({ history }) => {
       return (
         <TableRow className="disabled">
           <DataCell colSpan={3}>
-            <Loading text={formatMessage(messages.loadingNetworksText)} />
+            <Loading text={formatMessage('networksLoadingNetworksText')} />
           </DataCell>
         </TableRow>
       );
@@ -77,7 +76,7 @@ const Networks = ({ history }) => {
 
   return (
     <div className="networks">
-      <PageHeader title={formatMessage(messages.headerText)} />
+      <PageHeader title={formatMessage('networksHeaderText')} />
 
       <SecondaryButton
         as={Link}
@@ -85,20 +84,20 @@ const Networks = ({ history }) => {
         className="new-network-button"
       >
         <AddIcon />
-        {formatMessage(messages.createNetworkIconButtonLabel)}
+        {formatMessage('networksCreateNetworkIconButtonLabel')}
       </SecondaryButton>
 
       <Table>
         <TableHead>
           <TableRow>
             <HeaderCell>
-              {formatMessage(messages.nameTableHeaderLabel)}
+              {formatMessage('networksNameTableHeaderLabel')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.privateCodeTableHeaderLabel)}
+              {formatMessage('networksPrivateCodeTableHeaderLabel')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.authorityTableHeaderLabel)}
+              {formatMessage('networksAuthorityTableHeaderLabel')}
             </HeaderCell>
           </TableRow>
         </TableHead>

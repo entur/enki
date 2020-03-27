@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Modal } from '@entur/modal';
 import { PrimaryButton } from '@entur/button';
 import { selectIntl } from 'i18n';
-import messages from './messages';
 
 type Props = {
   title: string;
@@ -28,7 +27,7 @@ const ModalNote = (props: Props) => {
         <div className="notification-modal-message">{message}</div>
 
         <PrimaryButton onClick={handleDismiss}>
-          {formatMessage(messages.button)}
+          {formatMessage('flexibleLinesSaveLineSuccessButton')}
         </PrimaryButton>
       </div>
     </Modal>

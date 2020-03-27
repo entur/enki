@@ -11,12 +11,11 @@ import {
   deleteFlexibleStopPlace,
   flexibleStopPlaceMutation,
 } from 'graphql/uttu/mutations';
-import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
-import messages from './flexibleStopPlaces.messages';
 import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
+import { getInternationalizedUttuError } from 'helpers/uttu';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
 export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
@@ -65,10 +64,11 @@ export const loadFlexibleStopPlaces = () => async (
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage(messages.loadStopPlacesErrorHeader),
-        intl.formatMessage(messages.loadStopPlacesErrorMessage, {
-          details: getInternationalizedUttuError(intl, e),
-        })
+        intl.formatMessage('flexibleStopPlacesLoadStopPlacesErrorHeader'),
+        intl.formatMessage(
+          'flexibleStopPlacesLoadStopPlacesErrorMessage',
+          getInternationalizedUttuError(intl, e)
+        )
       )
     );
     throw e;
@@ -94,10 +94,11 @@ export const loadFlexibleStopPlaceById = (id: string) => async (
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage(messages.loadStopPlaceErrorHeader),
-        intl.formatMessage(messages.loadStopPlaceErrorMessage, {
-          details: getInternationalizedUttuError(intl, e),
-        })
+        intl.formatMessage('flexibleStopPlacesLoadStopPlaceErrorHeader'),
+        intl.formatMessage(
+          'flexibleStopPlacesLoadStopPlaceErrorMessage',
+          getInternationalizedUttuError(intl, e)
+        )
       )
     );
     throw e;
@@ -116,17 +117,18 @@ export const saveFlexibleStopPlace = (
     });
     dispatch(
       showSuccessNotification(
-        intl.formatMessage(messages.saveStopPlaceSuccessHeader),
-        intl.formatMessage(messages.saveStopPlaceSuccessMessage)
+        intl.formatMessage('flexibleStopPlacesSaveStopPlaceSuccessHeader'),
+        intl.formatMessage('flexibleStopPlacesSaveStopPlaceSuccessMessage')
       )
     );
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage(messages.saveStopPlaceErrorHeader),
-        intl.formatMessage(messages.saveStopPlaceErrorMessage, {
-          details: getInternationalizedUttuError(intl, e),
-        })
+        intl.formatMessage('flexibleStopPlacesSaveStopPlaceErrorHeader'),
+        intl.formatMessage(
+          'flexibleStopPlacesSaveStopPlaceErrorMessage',
+          getInternationalizedUttuError(intl, e)
+        )
       )
     );
     throw e;
@@ -143,17 +145,18 @@ export const deleteFlexibleStopPlaceById = (id: string) => async (
     await UttuQuery(activeProvider, deleteFlexibleStopPlace, { id });
     dispatch(
       showSuccessNotification(
-        intl.formatMessage(messages.deleteStopPlaceSuccessHeader),
-        intl.formatMessage(messages.deleteStopPlaceSuccessMessage)
+        intl.formatMessage('flexibleStopPlacesDeleteStopPlaceSuccessHeader'),
+        intl.formatMessage('flexibleStopPlacesDeleteStopPlaceSuccessMessage')
       )
     );
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage(messages.deleteStopPlaceErrorHeader),
-        intl.formatMessage(messages.deleteStopPlaceErrorMessage, {
-          details: getInternationalizedUttuError(intl, e),
-        })
+        intl.formatMessage('flexibleStopPlacesDeleteStopPlaceErrorHeader'),
+        intl.formatMessage(
+          'flexibleStopPlacesDeleteStopPlaceErrorMessage',
+          getInternationalizedUttuError(intl, e)
+        )
       )
     );
     throw e;

@@ -1,23 +1,21 @@
 import { isNil, isEmpty } from 'ramda';
 import { isBlank } from 'helpers/forms';
 
-import messages from './validateForm.messages';
-
 function validateNetworkRef(networkRef) {
   if (isNil(networkRef) || isEmpty(networkRef)) {
-    return messages.errorFlexibleLineNetworkRefEmpty;
+    return 'networkRefEmpty';
   }
 }
 
 function validateOperatorRef(operatorRef) {
   if (isNil(operatorRef) || isEmpty(operatorRef)) {
-    return messages.errorFlexibleLineOperatorRefEmpty;
+    return 'operatorRefEmpty';
   }
 }
 
 function validateFlexibleLineType(flexibleLineType) {
   if (isNil(flexibleLineType) || isEmpty(flexibleLineType)) {
-    return messages.errorFlexibleLineFlexibleLineTypeEmpty;
+    return 'flexibleLineTypeEmpty';
   }
 }
 

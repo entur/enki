@@ -1,39 +1,35 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import moment from 'moment';
 import { AddIcon, DownloadIcon } from '@entur/icons';
-import { FormattedDate, IntlFormatters } from 'react-intl';
+import { FormattedDate } from 'react-intl';
 import {
+  DataCell,
+  HeaderCell,
   Table,
   TableBody,
   TableHead,
   TableRow,
-  HeaderCell,
-  DataCell,
 } from '@entur/table';
 import Loading from 'components/Loading';
 import PageHeader from 'components/PageHeader';
 import { SecondaryButton, SecondarySquareButton } from '@entur/button';
 import { loadExports } from 'actions/exports';
 import { EXPORT_STATUS } from 'model/enums';
-
-import './styles.scss';
 import { getIconForStatus } from './scenes/icons';
-import { selectIntl } from 'i18n';
-import messages from './exports.messages';
+import { AppIntlState, selectIntl } from 'i18n';
 import { GlobalState } from 'reducers';
 import { ExportsState } from 'reducers/exports';
 import { download } from 'model/Export';
+import './styles.scss';
 
 const Exports = ({ history }: RouteComponentProps) => {
   const exports = useSelector<GlobalState, ExportsState>(
     (state) => state.exports
   );
-  const { formatMessage } = useSelector<GlobalState, IntlFormatters>(
-    selectIntl
-  );
+  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,8 +61,8 @@ const Exports = ({ history }: RouteComponentProps) => {
             </DataCell>
             <DataCell>
               {e.dryRun
-                ? formatMessage(messages.dryRunYes)
-                : formatMessage(messages.dryRunNo)}
+                ? formatMessage('exportsDryRunYes')
+                : formatMessage('exportsDryRunNo')}
             </DataCell>
             <DataCell>
               <FormattedDate value={moment(e.fromDate).toDate()} />
@@ -79,7 +75,7 @@ const Exports = ({ history }: RouteComponentProps) => {
       ) : (
         <TableRow className="row-no-exports disabled">
           <DataCell colSpan={6}>
-            {formatMessage(messages.noExportsFoundText)}
+            {formatMessage('exportsNoExportsFoundText')}
           </DataCell>
         </TableRow>
       );
@@ -88,7 +84,7 @@ const Exports = ({ history }: RouteComponentProps) => {
         <TableRow className="disabled">
           <DataCell colSpan={6}>
             <Loading
-              text={formatMessage(messages.loadingExportsText)}
+              text={formatMessage('exportsLoadingExportsText')}
               isLoading={!exports}
               children={null}
               className=""
@@ -102,7 +98,7 @@ const Exports = ({ history }: RouteComponentProps) => {
   return (
     <div className="exports">
       <PageHeader
-        title={formatMessage(messages.header)}
+        title={formatMessage('exportsHeader')}
         withBackButton={false}
       />
 
@@ -112,29 +108,29 @@ const Exports = ({ history }: RouteComponentProps) => {
         className="create-export-button"
       >
         <AddIcon />
-        {formatMessage(messages.createExportButtonLabel)}
+        {formatMessage('exportsCreateExportButtonLabel')}
       </SecondaryButton>
 
       <Table>
         <TableHead>
           <TableRow>
             <HeaderCell>
-              {formatMessage(messages.tableHeaderLabelName)}
+              {formatMessage('exportsTableHeaderLabelName')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.tableHeaderLabelStatus)}
+              {formatMessage('exportsTableHeaderLabelStatus')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.tableHeaderLabelDownload)}
+              {formatMessage('exportsTableHeaderLabelDownload')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.tableHeaderLabelDryrun)}
+              {formatMessage('exportsTableHeaderLabelDryrun')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.tableHeaderLabelFromDate)}
+              {formatMessage('exportsTableHeaderLabelFromDate')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.tableHeaderLabelToDate)}
+              {formatMessage('exportsTableHeaderLabelToDate')}
             </HeaderCell>
           </TableRow>
         </TableHead>

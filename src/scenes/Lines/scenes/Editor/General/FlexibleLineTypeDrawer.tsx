@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Drawer } from '@entur/modal';
 import { selectIntl } from 'i18n';
-import messages from './messages';
 
 type Props = {
   open: boolean;
@@ -15,32 +14,32 @@ const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
   return (
     <Drawer title={title} onDismiss={onDismiss} open={open}>
       <header className="flexible-line-type-drawer">
-        {formatMessage(messages.drawerSubTitle)}
+        {formatMessage('generalDrawer')}
       </header>
 
       <section className="flexible-line-type-drawer">
         <h4>fixed</h4>
-        {formatMessage(messages.fixed)}
+        {formatMessage('drawerFixed')}
       </section>
 
       <section className="flexible-line-type-drawer">
         <h4>mainRouteWithFlexibleEnds</h4>
-        {formatMessage(messages.mainRouteWithFlexibleEnds)}
+        {formatMessage('drawerMainRouteWithFlexibleEnds')}
       </section>
 
       <section className="flexible-line-type-drawer">
         <h4>fixedStopAreaWide</h4>
-        {formatMessage(messages.fixedStopAreaWide)}
+        {formatMessage('drawerFixedStopAreaWide')}
       </section>
 
       <section className="flexible-line-type-drawer">
         <h4>flexibleAreasOnly</h4>
-        {formatMessage(messages.flexibleAreasOnly)}
+        {formatMessage('drawerFlexibleAreasOnly')}
       </section>
 
       <section className="flexible-line-type-drawer">
         <h4>hailAndRideSections</h4>
-        {formatMessage(messages.hailAndRideSections)}
+        {formatMessage('drawerHailAndRideSections')}
       </section>
     </Drawer>
   );

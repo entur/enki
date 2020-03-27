@@ -21,13 +21,11 @@ import PageHeader from 'components/PageHeader';
 
 import './styles.scss';
 import selectActiveProvider from 'selectors/selectActiveProvider';
-import { selectIntl } from 'i18n';
-import messages from './messages';
+import { AppIntlState, selectIntl } from 'i18n';
 import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
 import { IntlState } from 'react-intl-redux';
-import { IntlFormatters } from 'react-intl';
 import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
@@ -43,7 +41,7 @@ const NetworkEditor = ({
   match,
   history,
 }: RouteComponentProps<MatchParams>) => {
-  const { formatMessage } = useSelector<IntlState, IntlFormatters>(selectIntl);
+  const { formatMessage } = useSelector<IntlState, AppIntlState>(selectIntl);
   const activeProvider = useSelector(selectActiveProvider());
   const organisations = useSelector<GlobalState, OrganisationState>(
     ({ organisations }) => organisations
@@ -135,13 +133,13 @@ const NetworkEditor = ({
           withBackButton
           title={
             match.params.id
-              ? formatMessage(messages.editNetworkHeaderText)
-              : formatMessage(messages.createNetworkHeaderText)
+              ? formatMessage('editorEditNetworkHeaderText')
+              : formatMessage('editorCreateNetworkHeaderText')
           }
         />
       </div>
 
-      <Paragraph>{formatMessage(messages.networkDescription)}</Paragraph>
+      <Paragraph>{formatMessage('editorNetworkDescription')}</Paragraph>
 
       {network && lines ? (
         <OverlayLoader
@@ -149,16 +147,16 @@ const NetworkEditor = ({
           isLoading={isSaving || isDeleting}
           text={
             isSaving
-              ? formatMessage(messages.savingNetworkLoadingText)
-              : formatMessage(messages.deletingNetworkLoadingText)
+              ? formatMessage('editorSavingNetworkLoadingText')
+              : formatMessage('editorDeletingNetworkLoadingText')
           }
         >
           <div className="network-form">
             <InputGroup
               className="form-section"
-              label={formatMessage(messages.nameLabelText)}
+              label={formatMessage('editorNameLabelText')}
               {...getErrorFeedback(
-                formatMessage(messages.validationName),
+                formatMessage('editorValidationName'),
                 !isBlank(network.name),
                 namePristine
               )}
@@ -173,7 +171,7 @@ const NetworkEditor = ({
 
             <InputGroup
               className="form-section"
-              label={formatMessage(messages.descriptionLabelText)}
+              label={formatMessage('editorDescriptionLabelText')}
             >
               <TextArea
                 value={network.description ?? ''}
@@ -185,7 +183,7 @@ const NetworkEditor = ({
 
             <InputGroup
               className="form-section"
-              label={formatMessage(messages.privateCodeLabelText)}
+              label={formatMessage('editorPrivateCodeLabelText')}
             >
               <TextField
                 value={network.privateCode ?? ''}
@@ -198,7 +196,7 @@ const NetworkEditor = ({
             <Dropdown
               className="form-section"
               value={network.authorityRef}
-              label={formatMessage(messages.authorityLabelText)}
+              label={formatMessage('editorAuthorityLabelText')}
               items={[
                 ...authorities.map((org) => ({
                   label: org.name,
@@ -209,7 +207,7 @@ const NetworkEditor = ({
                 handleAuthoritySelectionChange(organisation?.value)
               }
               {...getErrorFeedback(
-                formatMessage(messages.validationAuthority),
+                formatMessage('editorValidationAuthority'),
                 !isBlank(network.authorityRef),
                 authorityPristine
               )}
@@ -221,12 +219,12 @@ const NetworkEditor = ({
                   onClick={() => setDeleteDialogOpen(true)}
                   disabled={isDeleteDisabled}
                 >
-                  {formatMessage(messages.deleteButtonText)}
+                  {formatMessage('editorDeleteButtonText')}
                 </NegativeButton>
               )}
 
               <SuccessButton onClick={handleOnSaveClick}>
-                {formatMessage(messages.saveButtonText)}
+                {formatMessage('editorSaveButtonText')}
               </SuccessButton>
             </div>
           </div>
@@ -239,22 +237,22 @@ const NetworkEditor = ({
           children={null}
           text={
             !network
-              ? formatMessage(messages.loadingNetworkText)
-              : formatMessage(messages.loadingDependenciesText)
+              ? formatMessage('editorLoadingNetworkText')
+              : formatMessage('editorLoadingDependenciesText')
           }
         />
       )}
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title={formatMessage(messages.deleteNetworkConfirmDialogTitle)}
-        message={formatMessage(messages.deleteNetworkConfirmDialogMessage)}
+        title={formatMessage('editorDeleteNetworkConfirmDialogTitle')}
+        message={formatMessage('editorDeleteNetworkConfirmDialogMessage')}
         buttons={[
           <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-            {formatMessage(messages.deleteNetworkConfirmDialogCancelText)}
+            {formatMessage('editorDeleteNetworkConfirmDialogCancelText')}
           </SecondaryButton>,
           <SuccessButton key={1} onClick={handleDelete}>
-            {formatMessage(messages.deleteNetworkConfirmDialogConfirmText)}
+            {formatMessage('editorDeleteNetworkConfirmDialogConfirmText')}
           </SuccessButton>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}

@@ -16,7 +16,6 @@ import ConfirmDialog from 'components/ConfirmDialog';
 
 import './styles.scss';
 import { selectIntl } from 'i18n';
-import messages from './messages';
 
 const JourneyPatternsTable = ({
   journeyPatterns,
@@ -42,7 +41,7 @@ const JourneyPatternsTable = ({
           <DataCell>
             {jp.name
               ? jp.name
-              : formatMessage(messages.newJourneyPatternDefaultText)}
+              : formatMessage('tableNewJourneyPatternDefaultText')}
           </DataCell>
           <DataCell>{jp.directionType || ''}</DataCell>
           <DataCell>{jp.pointsInSequence.length}</DataCell>
@@ -62,7 +61,7 @@ const JourneyPatternsTable = ({
     ) : (
       <TableRow className="row-no-lines disabled">
         <DataCell colSpan={3}>
-          {formatMessage(messages.noJourneyPatternsText)}
+          {formatMessage('tableNoJourneyPatternsText')}
         </DataCell>
       </TableRow>
     );
@@ -73,16 +72,16 @@ const JourneyPatternsTable = ({
         <TableHead>
           <TableRow>
             <HeaderCell>
-              {formatMessage(messages.nameTableHeaderCellLabel)}
+              {formatMessage('tableNameTableHeaderCellLabel')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.directionTableHeaderCellLabel)}
+              {formatMessage('tableDirectionTableHeaderCellLabel')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.stopPlacesTableHeaderCellLabel)}
+              {formatMessage('tableStopPlacesTableHeaderCellLabel')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.serviceJourneysTableHeaderCellLabel)}
+              {formatMessage('tableServiceJourneysTableHeaderCellLabel')}
             </HeaderCell>
           </TableRow>
         </TableHead>
@@ -91,14 +90,14 @@ const JourneyPatternsTable = ({
 
       <ConfirmDialog
         isOpen={removeDialogOpenFor !== null}
-        title={formatMessage(messages.deleteConfirmDialogTitle)}
-        message={formatMessage(messages.deleteConfirmDialogMessage)}
+        title={formatMessage('tableDeleteConfirmDialogTitle')}
+        message={formatMessage('tableDeleteConfirmDialogMessage')}
         buttons={[
           <SecondaryButton key={2} onClick={() => showDeleteDialogFor(null)}>
-            {formatMessage(messages.deleteConfirmDialogCancelButtonText)}
+            {formatMessage('tableDeleteConfirmDialogCancelButtonText')}
           </SecondaryButton>,
           <SuccessButton key={1} onClick={doDelete}>
-            {formatMessage(messages.deleteConfirmDialogConfirmButtonText)}
+            {formatMessage('tableDeleteConfirmDialogConfirmButtonText')}
           </SuccessButton>,
         ]}
         onDismiss={() => showDeleteDialogFor(null)}

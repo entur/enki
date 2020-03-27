@@ -17,7 +17,6 @@ import { SecondaryButton } from '@entur/button';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import { selectIntl } from 'i18n';
 import './styles.scss';
-import messages from './messages';
 
 const StopPlaces = ({ history }) => {
   const stopPlaces = useSelector(
@@ -56,7 +55,7 @@ const StopPlaces = ({ history }) => {
       ) : (
         <TableRow className="row-no-stop-places disabled">
           <DataCell colSpan={3}>
-            {formatMessage(messages.noStopPlacesFoundText)}
+            {formatMessage('stopPlacesNoStopPlacesFoundText')}
           </DataCell>
         </TableRow>
       );
@@ -64,7 +63,7 @@ const StopPlaces = ({ history }) => {
       return (
         <TableRow className="disabled">
           <DataCell colSpan={3}>
-            <Loading text={formatMessage(messages.loadingStopPlacesText)} />
+            <Loading text={formatMessage('stopPlacesLoadingStopPlacesText')} />
           </DataCell>
         </TableRow>
       );
@@ -73,7 +72,7 @@ const StopPlaces = ({ history }) => {
 
   return (
     <div className="stop-places">
-      <PageHeader title={formatMessage(messages.header)} />
+      <PageHeader title={formatMessage('stopPlacesHeader')} />
 
       <SecondaryButton
         as={Link}
@@ -81,20 +80,20 @@ const StopPlaces = ({ history }) => {
         className="new-stopplace-button"
       >
         <AddIcon />
-        {formatMessage(messages.createStopPlaceLinkIconLabelText)}
+        {formatMessage('stopPlacesCreateStopPlaceLinkIconLabelText')}
       </SecondaryButton>
 
       <Table>
         <TableHead>
           <TableRow>
             <HeaderCell>
-              {formatMessage(messages.nameTableHeaderLabelText)}
+              {formatMessage('stopPlacesNameTableHeaderLabelText')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.privateCodeTableHeaderLabelText)}
+              {formatMessage('stopPlacesPrivateCodeTableHeaderLabelText')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.numberOfPointsTableHeaderLabelText)}
+              {formatMessage('stopPlacesNumberOfPointsTableHeaderLabelText')}
             </HeaderCell>
           </TableRow>
         </TableHead>

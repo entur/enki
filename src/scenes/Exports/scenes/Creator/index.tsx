@@ -9,14 +9,11 @@ import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
 import PageHeader from 'components/PageHeader';
 import OverlayLoader from 'components/OverlayLoader';
-import { selectIntl } from 'i18n';
+import { AppIntlState, selectIntl } from 'i18n';
 import { RouteComponentProps } from 'react-router';
-import messages from './creator.messages';
-import validatorMessages from './validateForm.messages';
 import { exportIsValid, toDateIsAfterFromDate } from './validateForm';
 import { Export } from 'model/Export';
 import { GlobalState } from 'reducers';
-import { IntlFormatters } from 'react-intl';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
@@ -28,9 +25,7 @@ const newExport = (): Export => {
 };
 
 const ExportsCreator = ({ history }: RouteComponentProps) => {
-  const { formatMessage } = useSelector<GlobalState, IntlFormatters>(
-    selectIntl
-  );
+  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const [saveClicked, setSaveClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState<boolean>(false);
   const [theExport, setTheExport] = useState<Export>(newExport());
@@ -57,11 +52,11 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
   return (
     <div className="export-editor">
       <div className="header">
-        <PageHeader withBackButton title={formatMessage(messages.header)} />
+        <PageHeader withBackButton title={formatMessage('creatorHeader')} />
 
         <div className="buttons">
           <SuccessButton onClick={handleOnSaveClick}>
-            {formatMessage(messages.saveButtonLabelText)}
+            {formatMessage('creatorSaveButtonLabelText')}
           </SuccessButton>
         </div>
       </div>
@@ -69,13 +64,13 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
       <OverlayLoader
         className=""
         isLoading={isSaving}
-        text={formatMessage(messages.savingOverlayLoaderText)}
+        text={formatMessage('creatorSavingOverlayLoaderText')}
       >
         <div className="export-form">
           <InputGroup
-            label={formatMessage(messages.nameFormLabel)}
+            label={formatMessage('creatorNameFormLabel')}
             {...getErrorFeedback(
-              formatMessage(validatorMessages.errorExportNameIsEmpty),
+              formatMessage('validateFormErrorExportNameIsEmpty'),
               !isBlank(theExport.name),
               namePristine
             )}
@@ -88,7 +83,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
             />
           </InputGroup>
 
-          <InputGroup label={formatMessage(messages.fromDateFormLabel)}>
+          <InputGroup label={formatMessage('creatorFromDateFormLabel')}>
             <DatePicker
               selectedDate={moment(theExport.fromDate).toDate()}
               onChange={(date: Date | null) =>
@@ -98,9 +93,9 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           </InputGroup>
 
           <InputGroup
-            label={formatMessage(messages.toDateFormLabel)}
+            label={formatMessage('creatorToDateFormLabel')}
             {...getErrorFeedback(
-              formatMessage(validatorMessages.errorExportFromDateIsAfterToDate),
+              formatMessage('validateFormErrorExportFromDateIsAfterToDate'),
               toDateIsAfterFromDate(theExport.fromDate, theExport.toDate),
               toDatePristine
             )}
@@ -113,7 +108,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
             />
           </InputGroup>
 
-          <InputGroup label={formatMessage(messages.dryRunFormLabel)}>
+          <InputGroup label={formatMessage('creatorDryRunFormLabel')}>
             <Checkbox
               value="1"
               checked={theExport.dryRun}

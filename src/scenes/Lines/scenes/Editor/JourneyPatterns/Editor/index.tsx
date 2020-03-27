@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import messages from './messages';
 import General from './General';
 import { Paragraph } from '@entur/typography';
 import { isBlank } from 'helpers/forms';
@@ -106,8 +105,8 @@ const JourneyPatternEditor = ({
   return (
     <div className="journey-pattern-editor">
       <section>
-        <h2>{formatMessage(messages.journeyPattern)}</h2>
-        <Paragraph>{formatMessage(messages.enterInformation)}</Paragraph>
+        <h2>{formatMessage('editorJourneyPatternsTabLabel')}</h2>
+        <Paragraph>{formatMessage('editorFillInformation')}</Paragraph>
         <General
           journeyPattern={journeyPattern}
           onFieldChange={onJourneyPatternChange}
@@ -116,8 +115,8 @@ const JourneyPatternEditor = ({
       </section>
 
       <section style={{ marginTop: '5rem' }}>
-        <h3>{formatMessage(messages.stopPoints)}</h3>
-        <Paragraph>{formatMessage(messages.stopPointsInfo)}</Paragraph>
+        <h3>{formatMessage('editorStopPoints')}</h3>
+        <Paragraph>{formatMessage('stopPointsInfo')}</Paragraph>
         {pointsInSequence.map((stopPoint, index) => (
           <StopPointEditor
             key={keys[index]}
@@ -143,7 +142,7 @@ const JourneyPatternEditor = ({
         ))}
         <AddButton
           onClick={addStopPoint}
-          buttonTitle={formatMessage(messages.addStopPoint)}
+          buttonTitle={formatMessage('editorAddStopPoint')}
         />
       </section>
     </div>

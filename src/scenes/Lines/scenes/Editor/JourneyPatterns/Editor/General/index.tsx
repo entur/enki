@@ -1,9 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { InputGroup, TextField } from '@entur/form';
-
 import { isBlank } from 'helpers/forms';
-import messages from './messages';
 import { selectIntl } from 'i18n';
 import JourneyPattern from 'model/JourneyPattern';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
@@ -24,9 +22,9 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
     <div className="journey-pattern-inputs">
       <InputGroup
         className="form-section"
-        label={formatMessage(messages.nameLabel)}
+        label={formatMessage('generalNameLabel')}
         {...getErrorFeedback(
-          formatMessage(messages.validationName),
+          formatMessage('generalValidationName'),
           !isBlank(journeyPattern.name),
           namePristine
         )}
@@ -40,7 +38,7 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
       </InputGroup>
 
       <InputGroup
-        label={formatMessage(messages.descriptionLabel)}
+        label={formatMessage('generalDescriptionLabel')}
         className="form-section"
       >
         <TextField
@@ -53,8 +51,8 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
 
       <InputGroup
         className="form-section"
-        label={formatMessage(messages.privateCodeLabel)}
-        labelTooltip={formatMessage(messages.privateCodeLabelTooltip)}
+        label={formatMessage('generalPrivateCodeLabel')}
+        labelTooltip={formatMessage('generalPrivateCodeLabelTooltip')}
       >
         <TextField
           value={journeyPattern.privateCode || ''}

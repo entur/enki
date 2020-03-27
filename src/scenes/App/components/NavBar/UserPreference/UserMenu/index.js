@@ -8,7 +8,6 @@ import MenuItem from 'components/Menu/MenuItem';
 import Popover from 'components/Popover';
 import { Checkbox } from '@entur/form';
 import { getMessages, LOCALE_KEY, selectIntl } from 'i18n';
-import messages from './messages';
 
 import './styles.scss';
 
@@ -23,7 +22,7 @@ const UserMenu = () => {
 
   const handleChangeLocale = useCallback(
     (locale) => {
-      const messages = getMessages(locale);
+      const { messages } = getMessages(locale);
       dispatch(updateIntl({ locale, messages }));
       localStorage.setItem(LOCALE_KEY, locale);
     },
@@ -50,7 +49,7 @@ const UserMenu = () => {
               >
                 <div className="locale">
                   <Checkbox checked={locale === 'nb'} readOnly />
-                  <span>{formatMessage(messages.menuItemTextNorwegian)}</span>
+                  <span>{formatMessage('userMenuMenuItemTextNorwegian')}</span>
                 </div>
               </MenuItem>,
               <MenuItem
@@ -61,15 +60,15 @@ const UserMenu = () => {
               >
                 <div className="locale">
                   <Checkbox checked={locale === 'en'} readOnly />
-                  <span>{formatMessage(messages.menuItemTextEnglish)}</span>
+                  <span>{formatMessage('userMenuMenuItemTextEnglish')}</span>
                 </div>
               </MenuItem>,
             ]}
           >
-            {formatMessage(messages.menuItemTextLanguage)}
+            {formatMessage('userMenuMenuItemTextLanguage')}
           </MenuItem>
           <a href={logoutUrl} className="log-out-link">
-            <MenuItem>{formatMessage(messages.logoutLinkText)}</MenuItem>
+            <MenuItem>{formatMessage('userMenuLogoutLinkText')}</MenuItem>
           </a>
         </Menu>
       </Popover>

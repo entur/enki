@@ -10,7 +10,6 @@ import {
   replaceElement,
   useUniqueKeys,
 } from 'helpers/arrays';
-import messages from './messages';
 import { DatePicker } from '@entur/datepicker';
 import { InputGroup } from '@entur/form';
 import OperatingPeriod from 'model/OperatingPeriod';
@@ -63,7 +62,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
       <div className="day-type-assignments-editor">
         {operatingPeriods.map((op, index) => (
           <div key={uniqueKeys[index]} className="day-type-assignment">
-            <InputGroup label={formatMessage(messages.fromDate)}>
+            <InputGroup label={formatMessage('dayTypeEditorFromDate')}>
               <DatePicker
                 selectedDate={moment(op.fromDate).toDate()}
                 onChange={(date: Date | null) =>
@@ -72,9 +71,9 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
               />
             </InputGroup>
             <InputGroup
-              label={formatMessage(messages.toDate)}
+              label={formatMessage('dayTypeEditorToDate')}
               {...getErrorFeedback(
-                formatMessage(messages.toDateValidation),
+                formatMessage('dayTypeEditorToDateValidation'),
                 isNotBefore(op.toDate ?? '', op.fromDate ?? ''),
                 false
               )}
@@ -93,7 +92,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                   onChange(removeElementByIndex(dayTypeAssignments, index))
                 }
               >
-                <DeleteIcon inline /> {formatMessage(messages.delete)}
+                <DeleteIcon inline /> {formatMessage('delete')}
               </SecondaryButton>
             )}
           </div>
@@ -101,7 +100,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
       </div>
       <SecondaryButton onClick={() => addNewDayTypeAssignment()}>
         <AddIcon />
-        {formatMessage(messages.addDayTypeAssignment)}
+        {formatMessage('dayTypeEditorAddDayTypeAssignment')}
       </SecondaryButton>
     </>
   );

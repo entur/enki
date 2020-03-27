@@ -1,19 +1,19 @@
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { isBlank } from 'helpers/forms';
-import messages from './validateForm.messages';
+import { MessagesKey } from 'i18n/translations/translationKeys';
 
 export type FlexibleStopPlaceErrors = {
-  name: any | undefined;
-  flexibleArea: any | undefined;
+  name?: keyof MessagesKey;
+  flexibleArea?: keyof MessagesKey;
 };
 
 export const validateFlexibleStopPlace = ({
   name,
   flexibleArea,
 }: FlexibleStopPlace): FlexibleStopPlaceErrors => ({
-  name: isBlank(name) ? messages.errorNameEmpty : undefined,
+  name: isBlank(name) ? 'validateFormErrorNameEmpty' : undefined,
   flexibleArea:
     (flexibleArea?.polygon?.coordinates?.length ?? 0) < 4
-      ? messages.errorFlexibleAreaNotEnoughPolygons
+      ? 'validateFormErrorFlexibleAreaNotEnoughPolygons'
       : undefined,
 });

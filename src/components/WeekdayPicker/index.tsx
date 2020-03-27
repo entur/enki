@@ -5,7 +5,6 @@ import { FilterChip } from '@entur/chip';
 import { DAY_OF_WEEK } from 'model/enums';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import messages from './messages';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import './styles.scss';
@@ -32,7 +31,7 @@ const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
     <InputGroup
       className="weekday-picker"
       {...getErrorFeedback(
-        formatMessage(messages.availabilityMustBeFilled),
+        formatMessage('weekdaysError'),
         days.length !== 0,
         weekdayPristine
       )}
@@ -43,49 +42,49 @@ const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
           onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.MONDAY))}
           value="M"
         >
-          {formatMessage(messages.monday)}
+          {formatMessage('weekdaysMonday')}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.TUESDAY)}
           onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.TUESDAY))}
           value="T"
         >
-          {formatMessage(messages.tuesday)}
+          {formatMessage('weekdaysTuesday')}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.WEDNESDAY)}
           onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.WEDNESDAY))}
           value="O"
         >
-          {formatMessage(messages.wednesday)}
+          {formatMessage('weekdaysWednesday')}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.THURSDAY)}
           onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.THURSDAY))}
           value="T"
         >
-          {formatMessage(messages.thursday)}
+          {formatMessage('weekdaysThursday')}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.FRIDAY)}
           onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.FRIDAY))}
           value="F"
         >
-          {formatMessage(messages.friday)}
+          {formatMessage('weekdaysFriday')}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.SATURDAY)}
           onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.SATURDAY))}
           value="L"
         >
-          {formatMessage(messages.saturday)}
+          {formatMessage('weekdaysSaturday')}
         </FilterChip>
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.SUNDAY)}
           onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.SUNDAY))}
           value="S"
         >
-          {formatMessage(messages.sunday)}
+          {formatMessage('weekdaysSunday')}
         </FilterChip>
       </div>
     </InputGroup>

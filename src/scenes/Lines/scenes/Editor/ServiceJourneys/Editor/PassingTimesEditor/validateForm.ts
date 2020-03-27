@@ -1,8 +1,8 @@
 import moment from 'moment';
-import messages from './messages';
 import { getIntl } from 'i18n';
 import PassingTime from 'model/PassingTime';
 import { IntlState } from 'react-intl-redux';
+import { MessagesKey } from 'i18n/translations/translationKeys';
 
 const isBefore = (
   passingTime: string | undefined,
@@ -37,13 +37,13 @@ export const validateTimes = (
   intlState?: IntlState
 ): { isValid: boolean; errorMessage: string } => {
   const intl = intlState && getIntl({ intl: intlState });
-  const getMessage = (message: any) =>
-    intlState ? intl.formatMessage(message) : '';
+  const getMessage = (message: keyof MessagesKey) =>
+    intl ? intl.formatMessage(message) : '';
 
   if (passingTimes.length < 2)
     return {
       isValid: false,
-      errorMessage: getMessage(messages.stopPointsInfo),
+      errorMessage: getMessage('errorStopPoints'),
     };
 
   const firstError = passingTimes
@@ -62,7 +62,7 @@ export const validateTimes = (
       if (!hasAtleastOneFieldSet(passingTime))
         return {
           isValid: false,
-          errorMessage: getMessage(messages.atleastOneField),
+          errorMessage: getMessage('errorAtleastOneField'),
         };
       if (
         isBefore(
@@ -74,7 +74,7 @@ export const validateTimes = (
       )
         return {
           isValid: false,
-          errorMessage: getMessage(messages.departureAfterArrival),
+          errorMessage: getMessage('errorDepartureAfterArrival'),
         };
       if (
         isBefore(
@@ -86,7 +86,7 @@ export const validateTimes = (
       )
         return {
           isValid: false,
-          errorMessage: getMessage(messages.departureAfterEarliest),
+          errorMessage: getMessage('errorDepartureAfterEarliest'),
         };
       if (
         isBefore(
@@ -98,7 +98,7 @@ export const validateTimes = (
       )
         return {
           isValid: false,
-          errorMessage: getMessage(messages.arrivalBeforeLatest),
+          errorMessage: getMessage('errorArrivalBeforeLatest'),
         };
       if (index === 0) return { isValid: true, errorMessage: '' };
       if (
@@ -108,7 +108,7 @@ export const validateTimes = (
       ) {
         return {
           isValid: false,
-          errorMessage: getMessage(messages.lastArrivalMustBeSet),
+          errorMessage: getMessage('errorLastArrivalMustBeSet'),
         };
       }
 
@@ -142,7 +142,7 @@ export const validateTimes = (
       ) {
         return {
           isValid: false,
-          errorMessage: getMessage(messages.laterThanPrevious),
+          errorMessage: getMessage('errorLaterThanPrevious'),
         };
       }
       return {

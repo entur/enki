@@ -8,7 +8,6 @@ import { getIntl } from 'i18n';
 
 import UserMenu from './UserMenu/';
 import { setActiveProvider } from 'actions/providers';
-import messages from '../messages';
 import './styles.scss';
 
 class UserPreference extends React.Component {
@@ -37,7 +36,7 @@ class UserPreference extends React.Component {
             <Dropdown
               className="provider-wrapper"
               items={items}
-              label={translations.formatMessage(messages.dataProvider)}
+              label={translations.formatMessage('navBarDataProvider')}
               value={activeProvider || ''}
               onChange={(e) => this.handleActiveProviderChange(e.value)}
             />

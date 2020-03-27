@@ -3,7 +3,14 @@ import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { PURCHASE_WHEN } from 'model/enums';
 import { selectIntl } from 'i18n';
-import messages, { bookingTimeMessages } from './bookingTimeSelection.messages';
+
+export const bookingTimeMessages = {
+  [PURCHASE_WHEN.TIME_OF_TRAVEL_ONLY]: 'purchaseWhenTimeOfTravelOnly',
+  [PURCHASE_WHEN.DAY_OF_TRAVEL_ONLY]: 'purchaseWhenDayOfTravelOnly',
+  [PURCHASE_WHEN.UNTIL_PREVIOUS_DAY]: 'purchaseWhenUntilPreviousDay',
+  [PURCHASE_WHEN.ADVANCE_AND_DAY_OF_TRAVEL]:
+    'purchaseWhenAdvanceAndDayOfTravel',
+};
 
 export default ({ bookWhen, onChange }) => {
   const { formatMessage } = useSelector(selectIntl);
@@ -11,7 +18,7 @@ export default ({ bookWhen, onChange }) => {
   return (
     <Dropdown
       className="form-section"
-      label={formatMessage(messages.title)}
+      label={formatMessage('bookingTimeSelectionTitle')}
       value={bookWhen}
       items={[
         ...Object.values(PURCHASE_WHEN).map((v) => ({

@@ -1,14 +1,11 @@
-import React, { useState, ChangeEvent, useCallback, useEffect } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { InputGroup, TextField, RadioGroup, Radio } from '@entur/form';
-import messages from './Form.messages';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { InputGroup, Radio, RadioGroup, TextField } from '@entur/form';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
-import { QuaySearch } from './searchForQuay';
+import searchForQuay, { QuaySearch } from './searchForQuay';
 import { quaySearchResults } from './quaySearchResults';
 import StopPoint from 'model/StopPoint';
 import debounce from './debounce';
 import { isBlank } from 'helpers/forms';
-import searchForQuay from './searchForQuay';
 import { Dropdown } from '@entur/dropdown';
 import { Paragraph } from '@entur/typography';
 import { SecondaryButton, SuccessButton } from '@entur/button';
@@ -17,6 +14,9 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import './styles.scss';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import { AppIntlState, selectIntl } from 'i18n';
+import { useSelector } from 'react-redux';
+import { GlobalState } from 'reducers';
 
 type StopPlaceMode = 'nsr' | 'custom';
 
@@ -26,7 +26,7 @@ export type StopPointsFormError = {
   boarding: any;
 };
 
-interface Props extends WrappedComponentProps {
+type Props = {
   index: number;
   flexibleStopPlaces: FlexibleStopPlace[];
   errors: StopPointsFormError;
@@ -35,12 +35,11 @@ interface Props extends WrappedComponentProps {
   isFirstStop: boolean;
   deleteStopPoint?: () => void;
   spoilPristine: boolean;
-}
+};
 
 const StopPointEditor = ({
   index,
   flexibleStopPlaces,
-  intl: { formatMessage },
   errors,
   stopPointChange,
   stopPoint,
@@ -55,6 +54,8 @@ const StopPointEditor = ({
   const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
     undefined
   );
+
+  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
   const stopPointValue =
     stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id;
@@ -117,15 +118,15 @@ const StopPointEditor = ({
           }}
         >
           <div className="radio-buttons">
-            <Radio value="custom">{formatMessage(messages.selectCustom)}</Radio>
-            <Radio value="nsr">{formatMessage(messages.selectNSR)}</Radio>
+            <Radio value="custom">{formatMessage('selectCustom')}</Radio>
+            <Radio value="nsr">{formatMessage('selectNsr')}</Radio>
           </div>
         </RadioGroup>
       </div>
       <div className="stop-point-info">
         {selectMode === 'custom' && (
           <Dropdown
-            label={formatMessage(messages.stopPlace)}
+            label={formatMessage('stopPlace')}
             value={stopPointValue}
             items={flexibleStopPlaces.map((fsp) => ({
               value: fsp.id,
@@ -144,7 +145,7 @@ const StopPointEditor = ({
 
         {selectMode === 'nsr' && (
           <InputGroup
-            label={formatMessage(messages.labelQuayRef)}
+            label={formatMessage('labelQuayRef')}
             {...getErrorFeedback(
               stopPlaceError ? formatMessage(stopPlaceError) : '',
               !stopPlaceError,
@@ -165,15 +166,13 @@ const StopPointEditor = ({
         )}
 
         <InputGroup
-          label={`${formatMessage(messages.labelFrontText)}${
-            isFirstStop ? ' *' : ''
-          }`}
+          label={`${formatMessage('labelFrontText')}${isFirstStop ? ' *' : ''}`}
           {...getErrorFeedback(
             frontTextError ? formatMessage(frontTextError) : '',
             !frontTextError,
             frontTextPristine
           )}
-          labelTooltip={formatMessage(messages.tooltip)}
+          labelTooltip={formatMessage('frontTextTooltip')}
         >
           <TextField
             defaultValue={frontTextValue}
@@ -186,7 +185,7 @@ const StopPointEditor = ({
           />
         </InputGroup>
         <Dropdown
-          label={formatMessage(messages.labelBoarding)}
+          label={formatMessage('labelBoarding')}
           value={convertBoardingToDropdown(stopPoint)}
           onChange={(element) =>
             stopPointChange({
@@ -196,9 +195,12 @@ const StopPointEditor = ({
             })
           }
           items={[
-            { value: '0', label: formatMessage(messages.labelForBoarding) },
-            { value: '1', label: formatMessage(messages.labelForAlighting) },
-            { value: '2', label: formatMessage(messages.labelForBoth) },
+            { value: '0', label: formatMessage('labelForBoarding') },
+            { value: '1', label: formatMessage('labelForAlighting') },
+            {
+              value: '2',
+              label: formatMessage('labelForBoardingAndAlighting'),
+            },
           ]}
           feedback={errors.boarding && formatMessage(errors.boarding)}
           variant={errors.boarding ? 'error' : undefined}
@@ -209,20 +211,20 @@ const StopPointEditor = ({
           className="delete-button"
           onClick={() => setDeleteDialogOpen(true)}
         >
-          <DeleteIcon inline /> {formatMessage(messages.delete)}
+          <DeleteIcon inline /> {formatMessage('editorDeleteButtonText')}
         </SecondaryButton>
       )}
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title={formatMessage(messages.stopPointDeleteTitle)}
-        message={formatMessage(messages.stopPointDeleteMessage)}
+        title={formatMessage('deleteTitle')}
+        message={formatMessage('deleteMessage')}
         buttons={[
           <SecondaryButton key="no" onClick={() => setDeleteDialogOpen(false)}>
-            {formatMessage(messages.no)}
+            {formatMessage('tableNo')}
           </SecondaryButton>,
           <SuccessButton key="yes" onClick={deleteStopPoint}>
-            {formatMessage(messages.yes)}
+            {formatMessage('tableYes')}
           </SuccessButton>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}
@@ -231,4 +233,4 @@ const StopPointEditor = ({
   );
 };
 
-export default injectIntl(StopPointEditor);
+export default StopPointEditor;

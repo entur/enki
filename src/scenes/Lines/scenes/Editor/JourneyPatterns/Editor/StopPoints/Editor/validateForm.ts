@@ -1,7 +1,7 @@
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
-import messages from './validateForm.messages';
 import { StopPointsFormError } from './index';
 import StopPoint from 'model/StopPoint';
+import { MessagesKey } from 'i18n/translations/translationKeys';
 
 export const validateStopPoints = (stopPoints: StopPoint[]): boolean =>
   getStopPointsErrors(stopPoints).every((stopPointErrors) =>
@@ -29,23 +29,25 @@ export const validateStopPoint = (
     forBoarding,
   } = stopPoint;
 
-  const getFlexibleStopPlaceRefAndQuayRefError = () => {
+  const getFlexibleStopPlaceRefAndQuayRefError = ():
+    | keyof MessagesKey
+    | undefined => {
     if (isBlank(quayRef) && !(flexibleStopPlaceRef ?? flexibleStopPlace?.id))
-      return messages.errorFlexibleStopPlaceRefAndQuayRefNoValues;
+      return 'flexibleStopPlaceRefAndQuayRefNoValues';
     if (!isBlank(quayRef) && (flexibleStopPlaceRef ?? flexibleStopPlace?.id))
-      return messages.errorFlexibleStopPlaceRefAndQuayRefBothValues;
+      return 'flexibleStopPlaceRefAndQuayRefBothValues';
     return undefined;
   };
 
-  const getFrontTextError = () => {
+  const getFrontTextError = (): keyof MessagesKey | undefined => {
     if (isFirst && isBlank(destinationDisplay?.frontText))
-      return messages.errorFrontTextNoValue;
+      return 'frontTextNoValue';
     return undefined;
   };
 
-  const getBoardingError = () => {
-    if (isFirst && forAlighting) return messages.errorAlighting;
-    if (isLast && forBoarding) return messages.errorBoarding;
+  const getBoardingError = (): keyof MessagesKey | undefined => {
+    if (isFirst && forAlighting) return 'frontTextAlighting';
+    if (isLast && forBoarding) return 'frontTextBoarding';
     return undefined;
   };
 

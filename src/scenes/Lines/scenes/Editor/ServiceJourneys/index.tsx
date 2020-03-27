@@ -4,7 +4,6 @@ import StopPoint from 'model/StopPoint';
 import ServiceJourneyEditor from './Editor';
 import { selectIntl } from 'i18n';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
-import messages from './messages';
 import AddButton from 'components/AddButton/AddButton';
 import ServiceJourney from 'model/ServiceJourney';
 import { Heading2, Paragraph } from '@entur/typography';
@@ -89,18 +88,18 @@ const ServiceJourneysEditor = ({
       <Modal
         size="small"
         open={showModal}
-        title={formatMessage(messages.modalTitle)}
+        title={formatMessage('modalTitle')}
         onDismiss={() => setShowModal(false)}
         className="modal"
       >
-        {formatMessage(messages.modalSubTitle)}
+        {formatMessage('modalSubTitle')}
         <div className="modal-content">
           <InputGroup
-            label={formatMessage(messages.modalLabel)}
+            label={formatMessage('modalLabel')}
             className="modal-input"
           >
             <TextField
-              placeholder={formatMessage(messages.modalPlaceholder)}
+              placeholder={formatMessage('modalPlaceholder')}
               ref={textFieldRef}
             />
           </InputGroup>
@@ -109,14 +108,14 @@ const ServiceJourneysEditor = ({
               onClick={() => setShowModal(false)}
               className="margin-right"
             >
-              {formatMessage(messages.modalCancel)}
+              {formatMessage('modalCancel')}
             </SecondaryButton>
             <PrimaryButton
               onClick={() =>
                 addNewServiceJourney(textFieldRef?.current?.value ?? '')
               }
             >
-              {formatMessage(messages.modalCreate)}
+              {formatMessage('modalCreate')}
             </PrimaryButton>
           </div>
         </div>
@@ -124,8 +123,8 @@ const ServiceJourneysEditor = ({
 
       <ScrollToTop>
         <div className="service-journeys-editor">
-          <Heading2>{formatMessage(messages.serviceJourneys)}</Heading2>
-          <Paragraph>{formatMessage(messages.serviceJourneysInfo)}</Paragraph>
+          <Heading2>{formatMessage('editorServiceJourneys')}</Heading2>
+          <Paragraph>{formatMessage('serviceJourneysInfo')}</Paragraph>
           {serviceJourneys.length === 1
             ? renderServiceJourneyEditor(serviceJourneys[0], 0)
             : serviceJourneys.map((sj, index) => (
@@ -140,7 +139,7 @@ const ServiceJourneysEditor = ({
 
           <AddButton
             onClick={() => setShowModal(true)}
-            buttonTitle={formatMessage(messages.addServiceJourneys)}
+            buttonTitle={formatMessage('editorAddServiceJourneys')}
           />
         </div>
       </ScrollToTop>

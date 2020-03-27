@@ -1,9 +1,9 @@
 import messages, {
+  CombinedUttuCode,
   UttuCode,
   UttuSubCode,
-  CombinedUttuCode,
 } from './uttu.messages';
-import { IntlFormatters } from 'react-intl';
+import { AppIntlState } from 'i18n';
 
 type Extensions = {
   code: UttuCode;
@@ -32,7 +32,7 @@ export const getStyledUttuError = (
     : `${generalMessage}. ${fallback}`;
 
 export const getInternationalizedUttuError = (
-  intl: IntlFormatters,
+  intl: AppIntlState,
   e: UttuError
 ) => {
   const error = e.response?.errors?.[0];
@@ -42,7 +42,7 @@ export const getInternationalizedUttuError = (
       | UttuCode
       | CombinedUttuCode;
 
-    const errorMessage = messages[messageCode] ?? messages.UNKNOWN;
+    const errorMessage = messages[messageCode] ?? 'UNKNOWN';
 
     return intl.formatMessage(errorMessage, metaData as any);
   }
