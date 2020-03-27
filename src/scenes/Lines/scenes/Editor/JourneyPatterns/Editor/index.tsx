@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { ValidationInfoIcon } from '@entur/icons';
 import messages from './messages';
 import General from './General';
-import { Paragraph, SubParagraph } from '@entur/typography';
+import { Paragraph } from '@entur/typography';
 import { isBlank } from 'helpers/forms';
 import {
   validateStopPoint,
@@ -20,7 +19,6 @@ import StopPoint from 'model/StopPoint';
 import AddButton from 'components/AddButton/AddButton';
 import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
-import { colors } from '@entur/tokens';
 import './styles.scss';
 import JourneyPattern from 'model/JourneyPattern';
 
@@ -119,10 +117,7 @@ const JourneyPatternEditor = ({
 
       <section style={{ marginTop: '5rem' }}>
         <h3>{formatMessage(messages.stopPoints)}</h3>
-        <SubParagraph className="stop-point-info">
-          <ValidationInfoIcon inline color={colors.validation.sky} />
-          {formatMessage(messages.stopPointsInfo)}
-        </SubParagraph>
+        <Paragraph>{formatMessage(messages.stopPointsInfo)}</Paragraph>
         {pointsInSequence.map((stopPoint, index) => (
           <StopPointEditor
             key={keys[index]}

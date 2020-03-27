@@ -8,7 +8,7 @@ export default defineMessages({
   enterInformation: {
     id: 'lines.editor.journeyPatterns.editor.fillInformation',
     defaultMessage:
-      'Et Journey Pattern definerer mønsteret til linjen, og består av stoppene langs ruten.',
+      'Et journey pattern definerer linjen eller området for tjenesten, og består av stoppene langs ruten eller området tjenesten opererer innenfor.',
   },
   stopPoints: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints',
@@ -136,7 +136,7 @@ export default defineMessages({
   stopPointsInfo: {
     id: 'lines.editor.journeyPatterns.editor.stopPoints.info',
     defaultMessage:
-      'Du må opprette minst to stoppesteder; ett for start og ett for slutt. Hvis du lager et områdebasert tilbud, og du bare har ett område, må du legge til samme område to ganger.',
+      'Du må opprette minst to stoppesteder; ett for start og ett for slutt. Hvis du lager et områdebasert tilbud, og du kun har ett område, må du legge til samme område to ganger.',
   },
   serviceJourneysInfo: {
     id: 'lines.editor.journeyPatterns.editor.serviceJourneys.info',
