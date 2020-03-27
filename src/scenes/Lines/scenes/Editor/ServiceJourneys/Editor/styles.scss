@@ -24,6 +24,15 @@
 
   .day-type-section {
     margin-top: 4rem;
+
+    .question-icon {
+      margin-left: 0.25rem;
+      cursor: help;
+
+      svg {
+        color: $colors-validation-sky;
+      }
+    }
   }
 
   .weekday-section {

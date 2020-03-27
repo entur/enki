@@ -4,7 +4,7 @@ import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import { DeleteIcon } from '@entur/icons';
+import { DeleteIcon, QuestionIcon } from '@entur/icons';
 import PassingTimesEditor from './PassingTimesEditor';
 import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
@@ -25,6 +25,7 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import WeekdayPicker from 'components/WeekdayPicker';
 import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
 import { newDayTypeAssignment } from 'model/DayTypeAssignment';
+import { Tooltip } from '@entur/tooltip';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -170,10 +171,20 @@ const ServiceJourneyEditor = (props: Props) => {
           </section>
 
           <section className="day-type-section">
-            <Heading4>{formatMessage(messages.dateAvailability)}</Heading4>
+            <Heading4>
+              {formatMessage(messages.dateAvailability)}
+              <Tooltip
+                content={formatMessage(messages.dateTooltip)}
+                placement="right"
+              >
+                <span className="question-icon">
+                  <QuestionIcon />
+                </span>
+              </Tooltip>
+            </Heading4>
             <DayTypeAssignmentsEditor
               dayTypeAssignments={
-                dayTypes?.[0].dayTypeAssignments.length
+                dayTypes?.[0].dayTypeAssignments?.length
                   ? dayTypes[0].dayTypeAssignments
                   : [newDayTypeAssignment()]
               }

@@ -186,6 +186,7 @@
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays": "Weekdays for availability",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays.error": "Please fill in the availability.",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dateAvailability": "Availability for the service",
+  "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dateTooltip": "Specify the validity of the service",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.addDayTypeAssignment": "Add date",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.noDayTypeAssignments": "No dates are defined.",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.date": "Date",

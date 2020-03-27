@@ -186,6 +186,7 @@
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays": "Ukedager for tilgjengelighet",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays.error": "Du må fylle ut tilgjengeligheten.",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dateAvailability": "Gyldighet for tilbudet",
+  "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dateTooltip": "Legg til dato for når tilbudet er tilgjengelig",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.addDayTypeAssignment": "Legg til dato",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.noDayTypeAssignments": "Ingen datoer er definert.",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.date": "Dato",

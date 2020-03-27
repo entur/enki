@@ -96,6 +96,11 @@ export default defineMessages({
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dateAvailability',
     defaultMessage: 'Gyldighet for tilbudet',
   },
+  dateTooltip: {
+    id:
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dateTooltip',
+    defaultMessage: 'Legg til dato for når tilbudet er tilgjengelig',
+  },
   fromAndToDate: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.fromAndToDate',
