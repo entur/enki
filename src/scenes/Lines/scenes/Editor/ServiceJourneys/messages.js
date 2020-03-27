@@ -76,15 +76,10 @@ export default defineMessages({
     id: 'lines.journeyPatterns.serviceJourney.general.operator',
     defaultMessage: 'Operatør',
   },
-  weekdays: {
+  weekdaysAvailability: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays',
-    defaultMessage: 'Ukedager',
-  },
-  availabilityMustBeFilled: {
-    id:
-      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays.error',
-    defaultMessage: 'Du må fylle ut tilgjengeligheten.',
+    defaultMessage: 'Ukedager for tilgjengelighet',
   },
   passingTimesMustBeFilled: {
     id:
@@ -96,10 +91,10 @@ export default defineMessages({
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.noDayTypeAssignments',
     defaultMessage: 'Ingen datoer er definert.',
   },
-  date: {
+  dateAvailability: {
     id:
-      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.date',
-    defaultMessage: 'Dato',
+      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dateAvailability',
+    defaultMessage: 'Gyldighet for tilbudet',
   },
   fromAndToDate: {
     id:

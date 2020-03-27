@@ -15,7 +15,6 @@ import { DatePicker } from '@entur/datepicker';
 import { InputGroup } from '@entur/form';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { Heading4 } from '@entur/typography';
 import './styles.scss';
 
 type Props = {
@@ -52,8 +51,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
   const operatingPeriods = dayTypeAssignments.map((dta) => dta.operatingPeriod);
 
   return (
-    <div className="day-type-assignments">
-      <Heading4>{formatMessage(messages.dateAvailability)}</Heading4>
+    <>
       <div className="day-type-assignments-editor">
         {operatingPeriods.map((op, index) => (
           <div key={uniqueKeys[index]} className="day-type-assignment">
@@ -97,7 +95,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
         <AddIcon />
         {formatMessage(messages.addDayTypeAssignment)}
       </SecondaryButton>
-    </div>
+    </>
   );
 };
 

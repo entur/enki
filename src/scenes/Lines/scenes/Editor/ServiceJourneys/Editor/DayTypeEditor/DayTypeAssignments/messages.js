@@ -1,11 +1,6 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  dateAvailability: {
-    id:
-      'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dateAvailability',
-    defaultMessage: 'Gyldighet for tilbudet',
-  },
   addDayTypeAssignment: {
     id:
       'lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.addDayTypeAssignment',

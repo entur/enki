@@ -183,7 +183,7 @@
   "lines.editor.journeyPatterns.editor.serviceJourneys.modal.label": "Navn",
   "lines.editor.journeyPatterns.editor.serviceJourneys.modal.placeholder": "Eks. \"Melkeruta ettermiddag\"",
   "lines.editor.journeyPatterns.editor.serviceJourneys.info": "Du kan opprette ulike Service Journeys for ulike åpningstider. For eksempel ett for hverdag og ett for helg.",
-  "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays": "Ukedager",
+  "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays": "Ukedager for tilgjengelighet",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.weekdays.error": "Du må fylle ut tilgjengeligheten.",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.dateAvailability": "Gyldighet for tilbudet",
   "lines.editor.journeyPatterns.editor.serviceJourneys.dayTypeEditor.addDayTypeAssignment": "Legg til dato",
@@ -333,5 +333,12 @@
   "passingTimes.error.laterThanPrevious": "Tidspunktene må være senere enn forrige stoppesteds tidspunkt.",
   "passingTimes.error.lastArrivalMustBeSet": "Ankomsttid eller seneste ankomsttid for siste stoppested må være satt.",
   "passingTimes.error.stopPoints": "Du må opprette minst to stoppepunkter.",
-  "passingTimes.error.aRowIsMissingData": "Minst èn av radene mangler tidspunkter."
+  "passingTimes.error.aRowIsMissingData": "Minst èn av radene mangler tidspunkter.",
+  "weekdays.monday": "Mandag",
+  "weekdays.tuesday": "Tirsdag",
+  "weekdays.wednesday": "Onsdag",
+  "weekdays.thursday": "Torsdag",
+  "weekdays.friday": "Fredag",
+  "weekdays.saturday": "Lørdag",
+  "weekdays.sunday": "Søndag"
 }

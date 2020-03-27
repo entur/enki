@@ -151,17 +151,13 @@ const ServiceJourneyEditor = (props: Props) => {
             />
           </div>
 
-          <div className="input-group">
-            <h4>{formatMessage(messages.availability)}</h4>
-
-            <DayTypeEditor
-              dayType={
-                dayTypes?.[0] ?? { daysOfWeek: [], dayTypeAssignments: [] }
-              }
-              onChange={(dt) => onFieldChange('dayTypes', [dt])}
-              spoilPristine={spoilPristine}
-            />
-          </div>
+          <DayTypeEditor
+            dayType={
+              dayTypes?.[0] ?? { daysOfWeek: [], dayTypeAssignments: [] }
+            }
+            onChange={(dt) => onFieldChange('dayTypes', [dt])}
+            spoilPristine={spoilPristine}
+          />
 
           <h4>{formatMessage(messages.passingTimes)}</h4>
           <Paragraph>{formatMessage(messages.passingTimesInfo)}</Paragraph>
