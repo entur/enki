@@ -27,7 +27,7 @@ export default defineMessages({
   summaryStopPoints: {
     id: 'app.home.main.section.1.summary.item.2',
     defaultMessage:
-      '2. Lag stoppested eller sone under ’Stoppesteder’ i menyen til venstre ',
+      '2. Lag stoppested eller område under ’Stoppesteder og områder’ i menyen til venstre ',
   },
   summaryLine: {
     id: 'app.home.main.section.1.summary.item.3',

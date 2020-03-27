@@ -32,7 +32,7 @@ export default defineMessages({
   passingTimesInfo: {
     id: 'lines.journeyPatterns.serviceJourney.passingTimes.info',
     defaultMessage:
-      'Fyll inn passeringstider for de ulike stoppene. Hvis du lager en sonebasert linje  fyller du inn åpningstidene. Eks. 08.00 - 15.00  for formiddag.',
+      'Fyll inn passeringstider for de ulike stoppene. Hvis du lager en områdebasert linje fyller du inn åpningstidene. Eks. 08:00 - 15:00  for formiddag.',
   },
   booking: {
     id: 'lines.journeyPatterns.serviceJourney.booking',
