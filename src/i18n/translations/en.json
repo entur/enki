@@ -239,7 +239,7 @@
   "lines.journeyPatterns.stopPoints.table.no": "No",
   "lines.journeyPatterns.stopPoints.table.name": "Name",
   "lines.journeyPatterns.stopPoints.table.frontText": "Front text",
-  "lines.journeyPatterns.stopPoints.table.frontText.tooltip": "The text that is shown at the front of the bus",
+  "lines.journeyPatterns.stopPoints.table.frontText.tooltip": "The text that is shown at the front of the vehicle",
   "lines.journeyPatterns.stopPoints.table.boarding": "Boarding",
   "lines.journeyPatterns.stopPoints.table.alighting": "Alighting",
   "lines.journeyPatterns.stopPoints.table.defaultValue": "- New stop point -",

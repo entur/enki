@@ -233,7 +233,7 @@
   "lines.journeyPatterns.stopPoints.table.no": "Nei",
   "lines.journeyPatterns.stopPoints.table.name": "Navn",
   "lines.journeyPatterns.stopPoints.table.frontText": "Fronttekst",
-  "lines.journeyPatterns.stopPoints.table.frontText.tooltip": "Teksten som skal vises foran på bussen",
+  "lines.journeyPatterns.stopPoints.table.frontText.tooltip": "Teksten som skal vises foran på kjøretøyet",
   "lines.journeyPatterns.stopPoints.table.boarding": "Påstigning",
   "lines.journeyPatterns.stopPoints.table.alighting": "Avstigning",
   "lines.journeyPatterns.stopPoints.table.defaultValue": "- Nytt stoppepunkt -",

@@ -60,6 +60,6 @@ export default defineMessages({
   },
   tooltip: {
     id: 'lines.journeyPatterns.stopPoints.table.frontText.tooltip',
-    defaultMessage: 'Teksten som skal vises foran på bussen',
+    defaultMessage: 'Teksten som skal vises foran på kjøretøyet',
   },
 });
