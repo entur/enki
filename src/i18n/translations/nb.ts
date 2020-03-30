@@ -376,7 +376,7 @@ export const messages = {
   passingTimesDayTimeOffset: 'Daytime offset',
   passingTimesDayTimeOffsetTooltip:
     'Sett offset dersom passeringstiden er én eller flere dager senere enn tilbudets avreise',
-  errorAtleastOneField: 'Minst ett felt må være fylt ut.',
+  errorAllPassingTimesMustBeFilled: 'Alle passeringstidene må være fylt ut.',
   errorDepartureAfterArrival: 'Avgangstid kan ikke være før ankomsttid.',
   errorDepartureAfterEarliest:
     'Avgangstid kan ikke være før tidligst avgangstid.',

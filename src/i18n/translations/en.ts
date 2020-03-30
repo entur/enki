@@ -377,7 +377,7 @@ export const messages: MessagesKey = {
   passingTimesDayTimeOffset: 'Daytime offset',
   passingTimesDayTimeOffsetTooltip:
     'Set offset if the passing time is a day or more after the departure of the service',
-  errorAtleastOneField: 'At least one field must be set.',
+  errorAllPassingTimesMustBeFilled: 'All passing times must be set.',
   errorDepartureAfterArrival: 'Departure time cannot be before arrival time.',
   errorDepartureAfterEarliest:
     'Departure time cannot be before earliest departure time.',

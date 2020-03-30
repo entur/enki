@@ -14,7 +14,6 @@ import { selectIntl } from 'i18n';
 import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
@@ -39,8 +38,6 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   } = props;
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
   const { formatMessage } = useSelector(selectIntl);
-
-  const passingTimesPristine = usePristine(passingTimes, spoilPristine);
 
   const getDayOffsetDropdown = (passingTime: PassingTime, index: number) => (
     <Dropdown
@@ -105,7 +102,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     );
   };
 
-  const error = getErrorFeedback(errorMessage, isValid, passingTimesPristine);
+  const error = getErrorFeedback(errorMessage, isValid, !spoilPristine);
 
   return (
     <>
