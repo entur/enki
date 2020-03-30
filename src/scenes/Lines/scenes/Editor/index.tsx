@@ -267,7 +267,7 @@ const FlexibleLineEditor = ({
                 )}
                 <PrimaryButton onClick={handleOnSaveClick}>
                   {formatMessage(
-                    isEdit ? 'editorSaveButtonText' : 'editorSaveAndStoreLine'
+                    isEdit ? 'editorSaveButtonText' : 'editorSaveAndCreateLine'
                   )}
                 </PrimaryButton>
               </div>

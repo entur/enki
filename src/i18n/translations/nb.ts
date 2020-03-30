@@ -259,7 +259,7 @@ export const messages = {
   editorLoadingLineText: 'Laster inn linje',
   editorLoadingNetworkAndStopsText: 'Laster inn nettverk og stoppesteder',
   editorSaveButtonText: 'Lagre',
-  editorSaveAndStoreLine: 'Lagre og opprett linjen',
+  editorSaveAndCreateLine: 'Lagre og opprett linjen',
   editorSaveLineLoadingText: 'Lagrer linjen...',
   linesHeader: 'Linjer',
   labelForAlighting: 'For avstigning',

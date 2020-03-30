@@ -262,7 +262,7 @@ export const messages: MessagesKey = {
   editorLoadingLineText: 'Loading line',
   editorLoadingNetworkAndStopsText: 'Loading network and stop places',
   editorSaveButtonText: 'Save',
-  editorSaveAndStoreLine: 'Save and store the line',
+  editorSaveAndCreateLine: 'Save and create the line',
   editorSaveLineLoadingText: 'Saving line...',
   linesHeader: 'Lines',
   labelForAlighting: 'For alighting',
