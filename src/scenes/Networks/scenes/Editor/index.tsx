@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
-import { SuccessButton, NegativeButton, SecondaryButton } from '@entur/button';
+import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { Paragraph } from '@entur/typography';
 import { RouteComponentProps } from 'react-router';
 import { isBlank } from 'helpers/forms';
@@ -25,7 +25,6 @@ import { AppIntlState, selectIntl } from 'i18n';
 import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
-import { IntlState } from 'react-intl-redux';
 import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
@@ -41,7 +40,7 @@ const NetworkEditor = ({
   match,
   history,
 }: RouteComponentProps<MatchParams>) => {
-  const { formatMessage } = useSelector<IntlState, AppIntlState>(selectIntl);
+  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const activeProvider = useSelector(selectActiveProvider());
   const organisations = useSelector<GlobalState, OrganisationState>(
     ({ organisations }) => organisations
