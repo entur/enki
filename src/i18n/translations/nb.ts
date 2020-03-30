@@ -263,6 +263,7 @@ export const messages = {
   editorSaveButtonText: 'Lagre',
   editorSaveAndCreateLine: 'Lagre og opprett linjen',
   editorSaveLineLoadingText: 'Lagrer linjen...',
+  navigationNext: 'Neste',
   linesHeader: 'Linjer',
   labelForAlighting: 'For avstigning',
   labelForBoarding: 'For påstigning',

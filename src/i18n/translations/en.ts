@@ -266,6 +266,7 @@ export const messages: MessagesKey = {
   editorSaveButtonText: 'Save',
   editorSaveAndCreateLine: 'Save and create the line',
   editorSaveLineLoadingText: 'Saving line...',
+  navigationNext: 'Next',
   linesHeader: 'Lines',
   labelForAlighting: 'For alighting',
   labelForBoarding: 'For boarding',
