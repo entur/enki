@@ -62,7 +62,7 @@ export const validateTimes = (
       if (!hasAtleastOneFieldSet(passingTime))
         return {
           isValid: false,
-          errorMessage: getMessage('errorAtleastOneField'),
+          errorMessage: getMessage('errorAllPassingTimesMustBeFilled'),
         };
       if (
         isBefore(

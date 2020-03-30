@@ -40,8 +40,6 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
   const { formatMessage } = useSelector(selectIntl);
 
-  const passingTimesPristine = usePristine(passingTimes, spoilPristine);
-
   const getDayOffsetDropdown = (passingTime: PassingTime, index: number) => (
     <Dropdown
       label={formatMessage('passingTimesDayTimeOffset')}
@@ -105,7 +103,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     );
   };
 
-  const error = getErrorFeedback(errorMessage, isValid, passingTimesPristine);
+  const error = getErrorFeedback(errorMessage, isValid, !spoilPristine);
 
   return (
     <>
