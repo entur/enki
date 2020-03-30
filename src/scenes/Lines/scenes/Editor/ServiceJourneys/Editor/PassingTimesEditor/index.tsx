@@ -14,7 +14,6 @@ import { selectIntl } from 'i18n';
 import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
