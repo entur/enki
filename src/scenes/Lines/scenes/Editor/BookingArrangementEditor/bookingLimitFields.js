@@ -1,9 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RadioGroup, TextField, Radio } from '@entur/form';
+import { Radio, RadioGroup, TextField } from '@entur/form';
 import DurationPicker from 'components/DurationPicker';
 import { selectIntl } from 'i18n';
-import messages from './bookingLimitFields.messages';
 
 const BOOKING_LIMIT_TYPE = Object.freeze({
   TIME: 'time',
@@ -36,12 +35,14 @@ export default (props) => {
   return (
     <div className="form-section">
       <RadioGroup
-        label={formatMessage(messages.headerLabel)}
+        label={formatMessage('bookingLimitFieldsHeaderLabel')}
         onChange={(e) => handleBookingLimitChange(e.target.value)}
         value={bookingLimitType}
       >
         <Radio className="booking-limit-radio" value={BOOKING_LIMIT_TYPE.TIME}>
-          {formatMessage(messages.bookingLimitTypeTimeRadioButtonLabel)}
+          {formatMessage(
+            'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'
+          )}
         </Radio>
         <TextField
           type="time"
@@ -55,7 +56,9 @@ export default (props) => {
           className="booking-limit-radio"
           value={BOOKING_LIMIT_TYPE.PERIOD}
         >
-          {formatMessage(messages.bookingLimitTypePeriodRadioButtonLabel)}
+          {formatMessage(
+            'bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel'
+          )}
         </Radio>
 
         <DurationPicker

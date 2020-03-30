@@ -9,7 +9,7 @@ import flexibleStopPlaces, {
   FlexibleStopPlacesState,
 } from './flexibleStopPlaces';
 import editor, { EditorState } from './editor';
-import { IntlState } from 'react-intl-redux';
+import { AppIntlState } from 'i18n';
 
 export type GlobalState = {
   notification: NotificationState;
@@ -21,7 +21,7 @@ export type GlobalState = {
   flexibleLines: FlexibleLinesState;
   flexibleStopPlaces: FlexibleStopPlacesState;
   editor: EditorState;
-  intl: IntlState;
+  intl: AppIntlState;
 };
 
 const reducers = {

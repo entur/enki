@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { ExpandablePanel } from '@entur/expand';
 import { replaceElement, useUniqueKeys } from 'helpers/arrays';
 import JourneyPatternEditor from './Editor';
-import './styles.scss';
 import JourneyPattern from 'model/JourneyPattern';
+import './styles.scss';
 
 type Props = {
   journeyPatterns: JourneyPattern[];

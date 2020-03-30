@@ -13,7 +13,6 @@ import {
   DataCell,
 } from '@entur/table';
 import ConfirmDialog from 'components/ConfirmDialog';
-import messages from './messages';
 import './styles.scss';
 
 type Props = {
@@ -50,20 +49,20 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
               //@ts-ignore: 27.02.2020 - Checka vad sp.Ref skal vara
               sp.Ref
               ? sp.quayRef
-              : formatMessage(messages.defaultValue)}
+              : formatMessage('tableDefaultValue')}
           </DataCell>
           <DataCell>
             {sp.destinationDisplay ? sp.destinationDisplay.frontText : ''}
           </DataCell>
           <DataCell>
             {sp.forBoarding
-              ? formatMessage(messages.yes)
-              : formatMessage(messages.no)}
+              ? formatMessage('tableYes')
+              : formatMessage('tableNo')}
           </DataCell>
           <DataCell>
             {sp.forAlighting
-              ? formatMessage(messages.yes)
-              : formatMessage(messages.no)}
+              ? formatMessage('tableYes')
+              : formatMessage('tableNo')}
           </DataCell>
           <DataCell>
             <div
@@ -79,7 +78,7 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
       ))
     ) : (
       <TableRow className="row-no-lines disabled">
-        <DataCell colSpan={3}>{formatMessage(messages.noStopPoints)}</DataCell>
+        <DataCell colSpan={3}>{formatMessage('tableNoStopPoints')}</DataCell>
       </TableRow>
     );
 
@@ -89,10 +88,10 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
         <TableHead>
           <TableRow>
             <HeaderCell>#</HeaderCell>
-            <HeaderCell>{formatMessage(messages.name)}</HeaderCell>
-            <HeaderCell>{formatMessage(messages.frontText)}</HeaderCell>
-            <HeaderCell>{formatMessage(messages.boarding)}</HeaderCell>
-            <HeaderCell>{formatMessage(messages.alighting)}</HeaderCell>
+            <HeaderCell>{formatMessage('tableName')}</HeaderCell>
+            <HeaderCell>{formatMessage('tableFrontText')}</HeaderCell>
+            <HeaderCell>{formatMessage('tableBoarding')}</HeaderCell>
+            <HeaderCell>{formatMessage('tableAlighting')}</HeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>{tableRows}</TableBody>
@@ -100,14 +99,14 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
 
       <ConfirmDialog
         isOpen={removeDialogOpenFor !== null}
-        title={formatMessage(messages.deleteTitle)}
-        message={formatMessage(messages.deleteMessage)}
+        title={formatMessage('tableDeleteTitle')}
+        message={formatMessage('tableDeleteMessage')}
         buttons={[
           <SecondaryButton key={2} onClick={() => setRemoveDialogOpenFor(null)}>
-            {formatMessage(messages.no)}
+            {formatMessage('tableNo')}
           </SecondaryButton>,
           <SuccessButton key={1} onClick={() => doDelete()}>
-            {formatMessage(messages.yes)}
+            {formatMessage('tableYes')}
           </SuccessButton>,
         ]}
         onDismiss={() => setRemoveDialogOpenFor(null)}

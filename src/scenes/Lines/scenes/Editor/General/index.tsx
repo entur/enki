@@ -4,8 +4,6 @@ import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
 import { FLEXIBLE_LINE_TYPE } from 'model/enums';
 import { selectIntl } from 'i18n';
-import messages from './messages';
-import validationMessages from '../validateForm.messages';
 import './styles.scss';
 import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
@@ -52,11 +50,11 @@ export default ({
 
   return (
     <div className="lines-editor-general">
-      <h4 className="header"> {formatMessage(messages.about)}</h4>
+      <h4 className="header"> {formatMessage('editorAbout')}</h4>
       <section className="inputs">
         <InputGroup
           className="form-section"
-          label={formatMessage(messages.nameFormGroupTitle)}
+          label={formatMessage('generalNameFormGroupTitle')}
           {...getErrorFeedback(nameError, !nameError, namePristine)}
         >
           <TextField
@@ -69,7 +67,7 @@ export default ({
 
         <InputGroup
           className="form-section"
-          label={formatMessage(messages.descriptionFormGroupTitle)}
+          label={formatMessage('generalDescriptionFormGroupTitle')}
         >
           <TextField
             value={flexibleLine.description ?? ''}
@@ -84,8 +82,8 @@ export default ({
 
         <InputGroup
           className="form-section"
-          label={formatMessage(messages.privateCodeFormGroupTitle)}
-          labelTooltip={formatMessage(messages.privateCodeInputLabelTooltip)}
+          label={formatMessage('generalPrivateCodeFormGroupTitle')}
+          labelTooltip={formatMessage('generalPrivateCodeInputLabelTooltip')}
         >
           <TextField
             type="text"
@@ -101,8 +99,8 @@ export default ({
 
         <InputGroup
           className="form-section"
-          label={formatMessage(messages.publicCodeFormGroupTitle)}
-          labelTooltip={formatMessage(messages.publicCodeInputLabelTooltip)}
+          label={formatMessage('generalPublicCodeFormGroupTitle')}
+          labelTooltip={formatMessage('generalPublicCodeInputLabelTooltip')}
           {...getErrorFeedback(
             publicCodeError,
             !publicCodeError,
@@ -127,12 +125,12 @@ export default ({
           items={[
             ...operators.map(({ id, name }) => ({ value: id, label: name })),
           ]}
-          label={formatMessage(messages.operatorFormGroupTitle)}
+          label={formatMessage('generalOperatorFormGroupTitle')}
           onChange={(element) =>
             flexibleLineChange({ ...flexibleLine, operatorRef: element?.value })
           }
           {...getErrorFeedback(
-            formatMessage(validationMessages.errorFlexibleLineOperatorRefEmpty),
+            formatMessage('operatorRefEmpty'),
             !operatorError,
             operatorPristine
           )}
@@ -145,7 +143,7 @@ export default ({
             value: n.id ?? '',
             label: n.name ?? '',
           }))}
-          label={formatMessage(messages.networkFormGroupTitle)}
+          label={formatMessage('generalNetworkFormGroupTitle')}
           onChange={(element) =>
             flexibleLineChange({
               ...flexibleLine,
@@ -153,7 +151,7 @@ export default ({
             })
           }
           {...getErrorFeedback(
-            formatMessage(validationMessages.errorFlexibleLineNetworkRefEmpty),
+            formatMessage('networkRefEmpty'),
             !networkError,
             networkPristine
           )}
@@ -162,10 +160,10 @@ export default ({
         <div className="line-type-dropdown">
           <div
             className="line-type-dropdown-tooltip"
-            aria-label={formatMessage(messages.drawerAria)}
+            aria-label={formatMessage('drawerAria')}
             onClick={() => setDrawer(true)}
           >
-            {formatMessage(messages.typeFormGroupTitleTooltip)}
+            {formatMessage('typeFormGroupTitleTooltip')}
           </div>
           <Dropdown
             className="form-section"
@@ -176,7 +174,7 @@ export default ({
                 label: type,
               })),
             ]}
-            label={formatMessage(messages.typeFormGroupTitle)}
+            label={formatMessage('generalTypeFormGroupTitle')}
             onChange={(element) =>
               flexibleLineChange({
                 ...flexibleLine,
@@ -184,9 +182,7 @@ export default ({
               })
             }
             {...getErrorFeedback(
-              formatMessage(
-                validationMessages.errorFlexibleLineNetworkRefEmpty
-              ),
+              formatMessage('networkRefEmpty'),
               !flexibleLineTypeError,
               lineTypePristine
             )}
@@ -197,7 +193,7 @@ export default ({
       <FlexibleLineTypeDrawer
         open={showDrawer}
         onDismiss={() => setDrawer(false)}
-        title={formatMessage(messages.drawerTitle)}
+        title={formatMessage('generalDrawerTitle')}
       />
     </div>
   );

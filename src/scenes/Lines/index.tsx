@@ -17,7 +17,6 @@ import { loadFlexibleLines } from 'actions/flexibleLines';
 import { RouteComponentProps } from 'react-router';
 import './styles.scss';
 import { selectIntl } from 'i18n';
-import messages from './messages';
 import { GlobalState } from 'reducers';
 import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
@@ -56,7 +55,7 @@ const Lines = ({ history }: RouteComponentProps) => {
       ) : (
         <TableRow className="row-no-lines disabled">
           <DataCell colSpan={3}>
-            {formatMessage(messages.noLinesFoundText)}
+            {formatMessage('linesNoLinesFoundText')}
           </DataCell>
         </TableRow>
       );
@@ -66,7 +65,7 @@ const Lines = ({ history }: RouteComponentProps) => {
           <DataCell colSpan={3}>
             <Loading
               className=""
-              text={formatMessage(messages.loadingText)}
+              text={formatMessage('linesLoadingText')}
               children={null}
             />
           </DataCell>
@@ -77,28 +76,23 @@ const Lines = ({ history }: RouteComponentProps) => {
 
   return (
     <div className="lines">
-      <PageHeader
-        title={formatMessage(messages.header)}
-        withBackButton={false}
-      />
+      <PageHeader title={formatMessage('linesHeader')} withBackButton={false} />
 
       <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
         <AddIcon />
-        {formatMessage(messages.createLineIconButtonLabel)}
+        {formatMessage('linesCreateLineIconButtonLabel')}
       </SecondaryButton>
 
       <Table>
         <TableHead>
           <TableRow>
             <HeaderCell>
-              {formatMessage(messages.nameTableHeaderLabel)}
+              {formatMessage('linesNameTableHeaderLabel')}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage(messages.privateCodeTableHeaderLabel)}
+              {formatMessage('linesPrivateCodeTableHeaderLabel')}
             </HeaderCell>
-            <HeaderCell>
-              {formatMessage(messages.operatorTableHeader)}
-            </HeaderCell>
+            <HeaderCell>{formatMessage('linesOperatorTableHeader')}</HeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>{renderTableRows()}</TableBody>

@@ -5,12 +5,11 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
-import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
-import messages from './exports.messages';
 import { Export, toPayload } from 'model/Export';
 import { Dispatch } from 'redux';
 import { GlobalState } from 'reducers';
+import { getInternationalizedUttuError } from 'helpers/uttu';
 
 export const REQUEST_EXPORTS = 'REQUEST_EXPORTS';
 export const RECEIVE_EXPORTS = 'RECEIVE_EXPORTS';
@@ -52,10 +51,11 @@ export const loadExports = () => async (
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage(messages.loadExportsErrorHeader),
-        intl.formatMessage(messages.loadExportsErrorMessage, {
-          details: getInternationalizedUttuError(intl, e),
-        })
+        intl.formatMessage('exportsLoadExportsErrorHeader'),
+        intl.formatMessage(
+          'exportsLoadExportsErrorMessage',
+          getInternationalizedUttuError(intl, e)
+        )
       )
     );
     throw e;
@@ -75,10 +75,11 @@ export const loadExportById = (id: string) => async (
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage(messages.loadExportByIdErrorHeader),
-        intl.formatMessage(messages.loadExportByIdErrorMessage, {
-          details: getInternationalizedUttuError(intl, e),
-        })
+        intl.formatMessage('exportsLoadExportByIdErrorHeader'),
+        intl.formatMessage(
+          'exportsLoadExportByIdErrorMessage',
+          getInternationalizedUttuError(intl, e)
+        )
       )
     );
     throw e;
@@ -98,17 +99,18 @@ export const saveExport = (theExport: Export) => async (
     });
     dispatch(
       showSuccessNotification(
-        intl.formatMessage(messages.saveExportSuccessHeader),
-        intl.formatMessage(messages.saveExportSuccessMessage)
+        intl.formatMessage('exportsSaveExportSuccessHeader'),
+        intl.formatMessage('exportsSaveExportSuccessMessage')
       )
     );
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage(messages.saveExportErrorHeader),
-        intl.formatMessage(messages.saveExportErrorMessage, {
-          details: getInternationalizedUttuError(intl, e),
-        })
+        intl.formatMessage('exportsSaveExportErrorHeader'),
+        intl.formatMessage(
+          'exportsSaveExportErrorMessage',
+          getInternationalizedUttuError(intl, e)
+        )
       )
     );
     throw e;

@@ -4,12 +4,9 @@ import { useSelector } from 'react-redux';
 import UserPreference from './UserPreference';
 import { Contrast } from '@entur/layout';
 import { RouteComponentProps } from 'react-router';
-import { selectIntl } from 'i18n';
-import messages from './messages';
-import appMessages from '../../messages';
+import { AppIntlState, selectIntl } from 'i18n';
 import { SideNavigation, SideNavigationItem } from '@entur/menu';
 import { GlobalState } from 'reducers';
-import { IntlShape } from 'react-intl';
 import logo from 'static/img/logo.png';
 import './styles.scss';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
@@ -55,7 +52,7 @@ const NavBarItem = withRouter(
 );
 
 const NavBar = () => {
-  const { formatMessage } = useSelector<GlobalState, IntlShape>(selectIntl);
+  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const [redirect, setRedirect] = useState<RedirectType>({
     showConfirm: false,
     path: '',
@@ -69,36 +66,36 @@ const NavBar = () => {
             <img
               className="logo"
               src={logo}
-              alt={formatMessage(messages.rootLinkLogoAltText)}
+              alt={formatMessage('navBarRootLinkLogoAltText')}
             />
-            <span>{formatMessage(appMessages.title)}</span>
+            <span>{formatMessage('redirectTitle')}</span>
           </div>
         </Link>
 
         <UserPreference />
 
         <NavBarItem
-          text={formatMessage(messages.HomeMenuItemLabel)}
+          text={formatMessage('navBarIntroduction')}
           path="/"
           setRedirect={setRedirect}
         />
         <NavBarItem
-          text={formatMessage(messages.networksMenuItemLabel)}
+          text={formatMessage('navBarNetworksMenuItemLabel')}
           path="/networks"
           setRedirect={setRedirect}
         />
         <NavBarItem
-          text={formatMessage(messages.stopPlacesMenuItemLabel)}
+          text={formatMessage('navBarStopPlacesMenuItemLabel')}
           path="/stop-places"
           setRedirect={setRedirect}
         />
         <NavBarItem
-          text={formatMessage(messages.linesMenuItemLabel)}
+          text={formatMessage('navBarLinesMenuItemLabel')}
           path="/lines"
           setRedirect={setRedirect}
         />
         <NavBarItem
-          text={formatMessage(messages.exportsMenuItemLabel)}
+          text={formatMessage('navBarExportsMenuItemLabel')}
           path="/exports"
           className="exports"
           setRedirect={setRedirect}
@@ -108,10 +105,10 @@ const NavBar = () => {
         <NavigateConfirmBox
           hideDialog={() => setRedirect({ ...redirect, showConfirm: false })}
           redirectTo={redirect.path}
-          title={formatMessage(messages.title)}
-          description={formatMessage(messages.message)}
-          confirmText={formatMessage(messages.yes)}
-          cancelText={formatMessage(messages.no)}
+          title={formatMessage('redirectTitle')}
+          description={formatMessage('redirectMessage')}
+          confirmText={formatMessage('redirectYes')}
+          cancelText={formatMessage('redirectNo')}
         />
       )}
     </Contrast>

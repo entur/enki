@@ -2,17 +2,19 @@ import { IntlProvider } from 'react-intl';
 import 'moment/locale/nb';
 import '@formatjs/intl-pluralrules/polyfill';
 import '@formatjs/intl-pluralrules/dist/locale-data/nb';
-import { createSelector } from 'reselect';
+import { MessagesKey } from 'i18n/translations/translationKeys';
+import { IntlState } from 'react-intl-redux';
+import { GlobalState } from 'reducers';
 
 export const defaultLocale = 'nb';
 export const SUPPORTED_LOCALES = ['nb', 'en'];
 
 export const LOCALE_KEY = 'OT::locale';
 
-const removeRegionCode = (locale) =>
+const removeRegionCode = (locale: string) =>
   locale ? locale.toLowerCase().split(/[_-]+/)[0] : defaultLocale;
 
-export const isLocaleSupported = (locale) =>
+export const isLocaleSupported = (locale: string) =>
   locale ? SUPPORTED_LOCALES.indexOf(locale) > -1 : false;
 
 const getLocale = () => {
@@ -20,9 +22,7 @@ const getLocale = () => {
     process.env.NODE_ENV !== 'test' && localStorage.getItem(LOCALE_KEY);
   const navigatorLang =
     process.env.NODE_ENV !== 'test' &&
-    ((navigator.languages && navigator.languages[0]) ||
-      navigator.language ||
-      navigator.userLanguage);
+    ((navigator.languages && navigator.languages[0]) || navigator.language);
   const locale = savedLocale || navigatorLang || defaultLocale;
   const localeWithoutRegionCode = removeRegionCode(locale);
 
@@ -32,30 +32,39 @@ const getLocale = () => {
   return defaultLocale;
 };
 
-export const getMessages = (locale) => require('./translations/' + locale);
+export const getMessages = (locale: string) =>
+  require('./translations/' + locale + '.ts');
 
 /* Basic support for i18n based on default browser language */
 export const geti18n = () => {
   const locale = getLocale();
-  const messages = getMessages(locale);
+  const { messages } = getMessages(locale);
   return {
     messages,
     locale,
   };
 };
 
-let cachedIntl = null;
+export type AppIntlState = IntlState & {
+  formatMessage: (messageId: keyof MessagesKey, details?: string) => string;
+};
+
+let cachedIntl: any = null;
 let prevLocale = '';
 
-export const getIntl = ({ intl: { locale, messages } }) => {
+export const getIntl = ({ intl: { locale, messages } }: any): AppIntlState => {
   if (!cachedIntl || locale !== prevLocale) {
-    cachedIntl = new IntlProvider({ locale, messages }).state.intl;
+    const intlProvider = new IntlProvider({ locale, messages }).state.intl;
+    cachedIntl = {
+      ...intlProvider,
+      formatMessage: (messageId: keyof MessagesKey, details?: string) =>
+        details
+          ? intlProvider!.formatMessage({ id: messageId }, { details: details })
+          : intlProvider!.formatMessage({ id: messageId }),
+    };
     prevLocale = locale;
   }
   return cachedIntl;
 };
 
-export const selectIntl = createSelector(
-  (state) => state.intl,
-  (intl) => getIntl({ intl })
-);
+export const selectIntl = (state: GlobalState) => getIntl({ intl: state.intl });

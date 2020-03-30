@@ -2,7 +2,6 @@ import React, { ChangeEvent, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { InputGroup, TextField } from '@entur/form';
 import { selectIntl } from 'i18n';
-import messages from './contactFields.messages';
 import Contact from 'model/Contact';
 
 type Props = {
@@ -18,7 +17,7 @@ const ContactFields = (props: Props) => {
     <Fragment>
       <InputGroup
         className="form-section"
-        label={formatMessage(messages.contactPersonTitle)}
+        label={formatMessage('contactFieldsContactPersonTitle')}
       >
         <TextField
           defaultValue={contact.contactPerson ?? ''}
@@ -30,7 +29,7 @@ const ContactFields = (props: Props) => {
 
       <InputGroup
         className="form-section"
-        label={formatMessage(messages.phoneTitle)}
+        label={formatMessage('contactFieldsPhoneTitle')}
       >
         <TextField
           defaultValue={contact.phone ?? ''}
@@ -42,7 +41,7 @@ const ContactFields = (props: Props) => {
 
       <InputGroup
         className="form-section"
-        label={formatMessage(messages.emailTitle)}
+        label={formatMessage('contactFieldsEmailTitle')}
       >
         <TextField
           defaultValue={contact.email ?? ''}
@@ -54,7 +53,7 @@ const ContactFields = (props: Props) => {
 
       <InputGroup
         className="form-section"
-        label={formatMessage(messages.urlTitle)}
+        label={formatMessage('contactFieldsUrlTitle')}
       >
         <TextField
           defaultValue={contact.url ?? ''}
@@ -66,7 +65,7 @@ const ContactFields = (props: Props) => {
 
       <InputGroup
         className="form-section"
-        label={formatMessage(messages.furtherDetailsTitle)}
+        label={formatMessage('contactFieldsFurtherDetailsTitle')}
       >
         <TextField
           defaultValue={contact.furtherDetails ?? ''}

@@ -9,7 +9,6 @@ import PassingTimesEditor from './PassingTimesEditor';
 import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
-import messages from '../messages';
 import {
   filterNetexOperators,
   OrganisationState,
@@ -84,9 +83,9 @@ const ServiceJourneyEditor = (props: Props) => {
             <div className="input-fields">
               <InputGroup
                 className="form-section"
-                label={formatMessage(messages.nameLabel)}
+                label={formatMessage('generalNameLabel')}
                 {...getErrorFeedback(
-                  formatMessage(messages.nameRequired),
+                  formatMessage('nameIsRequired'),
                   !isBlank(name),
                   namePristine
                 )}
@@ -100,7 +99,7 @@ const ServiceJourneyEditor = (props: Props) => {
               </InputGroup>
 
               <InputGroup
-                label={formatMessage(messages.description)}
+                label={formatMessage('generalDescription')}
                 className="form-section"
               >
                 <TextField
@@ -112,8 +111,8 @@ const ServiceJourneyEditor = (props: Props) => {
               </InputGroup>
 
               <InputGroup
-                label={formatMessage(messages.privateCode)}
-                labelTooltip={formatMessage(messages.privateCodeTooltip)}
+                label={formatMessage('generalPrivateCode')}
+                labelTooltip={formatMessage('generalPrivateCodeTooltip')}
                 className="form-section"
               >
                 <TextField
@@ -125,8 +124,8 @@ const ServiceJourneyEditor = (props: Props) => {
               </InputGroup>
 
               <InputGroup
-                label={formatMessage(messages.publicCode)}
-                labelTooltip={formatMessage(messages.publicCodeTooltip)}
+                label={formatMessage('generalPublicCode')}
+                labelTooltip={formatMessage('generalPublicCodeTooltip')}
                 className="form-section"
               >
                 <TextField
@@ -140,7 +139,7 @@ const ServiceJourneyEditor = (props: Props) => {
 
             <Dropdown
               className="form-section operator-selector"
-              label={formatMessage(messages.operator)}
+              label={formatMessage('generalOperator')}
               items={[
                 ...operators.map(({ name, id }) => ({
                   label: name,
@@ -155,7 +154,7 @@ const ServiceJourneyEditor = (props: Props) => {
           </div>
 
           <section className="weekday-section">
-            <Heading4>{formatMessage(messages.weekdaysAvailability)}</Heading4>
+            <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
             <WeekdayPicker
               days={dayTypes?.[0].daysOfWeek ?? []}
               onChange={(dow) =>
@@ -172,9 +171,9 @@ const ServiceJourneyEditor = (props: Props) => {
 
           <section className="day-type-section">
             <Heading4>
-              {formatMessage(messages.dateAvailability)}
+              {formatMessage('dayTypeEditorDateAvailability')}
               <Tooltip
-                content={formatMessage(messages.dateTooltip)}
+                content={formatMessage('dayTypeEditorDateTooltip')}
                 placement="right"
               >
                 <span className="question-icon">
@@ -203,8 +202,8 @@ const ServiceJourneyEditor = (props: Props) => {
           </section>
 
           <section className="passing-times-section">
-            <h4>{formatMessage(messages.passingTimes)}</h4>
-            <Paragraph>{formatMessage(messages.passingTimesInfo)}</Paragraph>
+            <h4>{formatMessage('serviceJourneyPassingTimes')}</h4>
+            <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
             <PassingTimesEditor
               passingTimes={passingTimes ?? []}
               stopPoints={stopPoints}
@@ -219,24 +218,24 @@ const ServiceJourneyEditor = (props: Props) => {
             className="delete-button"
             onClick={() => setShowDeleteDialog(true)}
           >
-            <DeleteIcon inline /> {formatMessage(messages.delete)}
+            <DeleteIcon inline /> {formatMessage('editorDeleteButtonText')}
           </SecondaryButton>
         )}
 
         {showDeleteDialog && deleteServiceJourney && (
           <ConfirmDialog
             isOpen={showDeleteDialog}
-            title={formatMessage(messages.deleteTitle)}
-            message={formatMessage(messages.deleteMessage)}
+            title={formatMessage('deleteTitle')}
+            message={formatMessage('deleteMessage')}
             buttons={[
               <SecondaryButton
                 key={2}
                 onClick={() => setShowDeleteDialog(false)}
               >
-                {formatMessage(messages.no)}
+                {formatMessage('tableNo')}
               </SecondaryButton>,
               <SuccessButton key={1} onClick={deleteServiceJourney}>
-                {formatMessage(messages.yes)}
+                {formatMessage('tableYes')}
               </SuccessButton>,
             ]}
             onDismiss={() => setShowDeleteDialog(false)}

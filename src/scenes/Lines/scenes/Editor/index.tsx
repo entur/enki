@@ -23,7 +23,6 @@ import General from 'scenes/Lines/scenes/Editor/General';
 import { setSavedChanges } from 'actions/editor';
 import { withRouter } from 'react-router-dom';
 import { selectIntl } from 'i18n';
-import messages from './messages';
 import {
   filterNetexOperators,
   OrganisationState,
@@ -54,10 +53,10 @@ const FlexibleLineEditor = ({
   );
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
   const FLEXIBLE_LINE_STEPS = [
-    formatMessage(messages.stepperAbout),
-    formatMessage(messages.stepperJourneyPattern),
-    formatMessage(messages.stepperServiceJourney),
-    formatMessage(messages.stepperBooking),
+    formatMessage('stepperAbout'),
+    formatMessage('stepperJourneyPattern'),
+    formatMessage('stepperServiceJourney'),
+    formatMessage('stepperBooking'),
   ];
 
   const isLoadingDependencies = useLoadDependencies({
@@ -159,7 +158,7 @@ const FlexibleLineEditor = ({
           }
           backButtonTitle={
             activeStepperIndex === 0
-              ? formatMessage(messages.linesMenuItemLabel)
+              ? formatMessage('navBarLinesMenuItemLabel')
               : FLEXIBLE_LINE_STEPS[activeStepperIndex - 1]
           }
         />
@@ -176,8 +175,8 @@ const FlexibleLineEditor = ({
           isLoading={isSaving || isDeleting}
           text={
             isSaving
-              ? formatMessage(messages.saveLineLoadingText)
-              : formatMessage(messages.deleteLineLoadingText)
+              ? formatMessage('editorSaveLineLoadingText')
+              : formatMessage('editorDeleteLineLoadingText')
           }
         >
           <div className="editor-pages">
@@ -197,10 +196,10 @@ const FlexibleLineEditor = ({
                   <NavigateConfirmBox
                     hideDialog={() => setShowConfirm(false)}
                     redirectTo="/lines"
-                    title={formatMessage(messages.title)}
-                    description={formatMessage(messages.message)}
-                    confirmText={formatMessage(messages.yes)}
-                    cancelText={formatMessage(messages.no)}
+                    title={formatMessage('redirectTitle')}
+                    description={formatMessage('redirectMessage')}
+                    confirmText={formatMessage('redirectYes')}
+                    cancelText={formatMessage('redirectNo')}
                   />
                 )}
               </>
@@ -263,16 +262,16 @@ const FlexibleLineEditor = ({
                     onClick={() => setDeleteDialogOpen(true)}
                     disabled={isDeleteDisabled}
                   >
-                    {formatMessage(messages.deleteButtonText)}
+                    {formatMessage('editorDeleteButtonText')}
                   </NegativeButton>
                 )}
                 <PrimaryButton onClick={handleOnSaveClick}>
-                  {formatMessage(messages.saveButtonText)}
+                  {formatMessage('editorSaveButtonText')}
                 </PrimaryButton>
               </div>
             ) : (
               <PrimaryButton onClick={onNextClicked} className="buttons">
-                {formatMessage(messages.saveAndContinue)}
+                {formatMessage('journeyPatternsSaveAndContinue')}
               </PrimaryButton>
             )}
           </div>
@@ -283,22 +282,22 @@ const FlexibleLineEditor = ({
           children={null}
           text={
             isLoadingLine
-              ? formatMessage(messages.loadingLineText)
-              : formatMessage(messages.loadingNetworkAndStopsText)
+              ? formatMessage('editorLoadingLineText')
+              : formatMessage('editorLoadingNetworkAndStopsText')
           }
         />
       )}
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title={formatMessage(messages.deleteConfirmationDialogTitle)}
-        message={formatMessage(messages.deleteConfirmationDialogMessage)}
+        title={formatMessage('editorDeleteConfirmationDialogTitle')}
+        message={formatMessage('editorDeleteConfirmationDialogMessage')}
         buttons={[
           <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-            {formatMessage(messages.deleteConfirmationDialogCancelButtonText)}
+            {formatMessage('editorDeleteConfirmationDialogCancelButtonText')}
           </SecondaryButton>,
           <SuccessButton key={1} onClick={handleDelete}>
-            {formatMessage(messages.deleteConfirmationDialogConfirmButtonText)}
+            {formatMessage('editorDeleteConfirmationDialogConfirmButtonText')}
           </SuccessButton>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}

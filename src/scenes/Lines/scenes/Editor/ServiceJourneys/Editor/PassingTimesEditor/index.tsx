@@ -10,7 +10,6 @@ import { SmallAlertBox } from '@entur/alert';
 import { validateTimes } from './validateForm';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlState } from 'react-intl-redux';
-import messages from './messages';
 import { selectIntl } from 'i18n';
 import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
@@ -45,8 +44,8 @@ const PassingTimesEditor = (props: Props & StateProps) => {
 
   const getDayOffsetDropdown = (passingTime: PassingTime, index: number) => (
     <Dropdown
-      label={formatMessage(messages.dayTimeOffset)}
-      labelTooltip={formatMessage(messages.dayTimeOffsetTooltip)}
+      label={formatMessage('passingTimesDayTimeOffset')}
+      labelTooltip={formatMessage('passingTimesDayTimeOffsetTooltip')}
       value={passingTime.departureDayOffset?.toString() ?? '0'}
       items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map((i) => ({
         value: i,
@@ -81,7 +80,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
 
     return (
       <InputGroup
-        label={formatMessage(messages.passingTime)}
+        label={formatMessage('passingTimesPassingTime')}
         className="timepicker"
       >
         <TextField
