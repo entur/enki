@@ -1,6 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
+import {
+  Heading1,
+  LeadParagraph,
+  Heading2,
+  NumberedList,
+  ListItem,
+} from '@entur/typography';
 
 const Home = () => {
   const { formatMessage } = useSelector(selectIntl);
@@ -11,15 +18,17 @@ const Home = () => {
         <h4 className="tagline color-blue">
           {formatMessage('navBarIntroduction')}
         </h4>
-        <h1>{formatMessage('homeHeader')}</h1>
-        <p className="lead">{formatMessage('headerParagraph')}</p>
+        <Heading1>{formatMessage('homeHeader')}</Heading1>
+        <LeadParagraph>{formatMessage('headerParagraph')}</LeadParagraph>
       </header>
       <main>
         <section>
-          <h3>{formatMessage('intropageTitle')}</h3>
-          <p className="point">{formatMessage('item1')}</p>
-          <p className="point">{formatMessage('item2')}</p>
-          <p className="point">{formatMessage('item3')}</p>
+          <Heading2>{formatMessage('intropageTitle')}</Heading2>
+          <NumberedList>
+            <ListItem>{formatMessage('item1')}</ListItem>
+            <ListItem>{formatMessage('item2')}</ListItem>
+            <ListItem>{formatMessage('item3')}</ListItem>
+          </NumberedList>
         </section>
       </main>
     </div>

@@ -2,7 +2,12 @@ import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import General from './General';
-import { Paragraph } from '@entur/typography';
+import {
+  Paragraph,
+  Heading2,
+  LeadParagraph,
+  Heading3,
+} from '@entur/typography';
 import { isBlank } from 'helpers/forms';
 import {
   validateStopPoint,
@@ -105,8 +110,8 @@ const JourneyPatternEditor = ({
   return (
     <div className="journey-pattern-editor">
       <section>
-        <h2>{formatMessage('editorJourneyPatternsTabLabel')}</h2>
-        <Paragraph>{formatMessage('editorFillInformation')}</Paragraph>
+        <Heading2>{formatMessage('editorJourneyPatternsTabLabel')}</Heading2>
+        <LeadParagraph>{formatMessage('editorFillInformation')}</LeadParagraph>
         <General
           journeyPattern={journeyPattern}
           onFieldChange={onJourneyPatternChange}
@@ -115,7 +120,7 @@ const JourneyPatternEditor = ({
       </section>
 
       <section style={{ marginTop: '5rem' }}>
-        <h3>{formatMessage('editorStopPoints')}</h3>
+        <Heading3>{formatMessage('editorStopPoints')}</Heading3>
         <Paragraph>{formatMessage('stopPointsInfo')}</Paragraph>
         {pointsInSequence.map((stopPoint, index) => (
           <StopPointEditor
