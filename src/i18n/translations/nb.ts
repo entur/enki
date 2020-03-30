@@ -68,10 +68,10 @@ export const messages = {
   headerParagraph:
     'Velkommen til Entur fleksibel transport. Dette er et verktøy for at aktører selv skal kunne legge inn fleksible linjetilbud som synliggjøres i våre kanaler.',
   intropageTitle: 'Kom i gang!',
-  item1: '1. Lag et nytt nettverk under ‘Nettverk’ i menyen til venstre ',
+  item1: 'Lag et nytt nettverk under ‘Nettverk’ i menyen til venstre ',
   item2:
-    '2. Lag stoppested eller sone under ’Stoppesteder og områder’ i menyen til venstre ',
-  item3: '3. Opprett en ny linje under ‘Linjer’ i menyen til venstre',
+    'Lag stoppested eller sone under ’Stoppesteder og områder’ i menyen til venstre ',
+  item3: 'Opprett en ny linje under ‘Linjer’ i menyen til venstre',
   exportsCreateExportButtonLabel: 'Opprett eksport',
   creatorDryRunFormLabel: 'Tørrkjøring',
   creatorFromDateFormLabel: 'Fra dato *',
@@ -125,6 +125,8 @@ export const messages = {
   uttuErrorORGANISATION_NOT_VALID_OPERATOR: 'Ugyldig operatør',
   uttuErrorUNKNOWN: 'Ukjent feil',
   linesCreateLineIconButtonLabel: 'Opprett linje',
+  bookingInfoHeader: 'Bestillingsinfo',
+  bookingInfoText: 'Informasjon om hvordan tilbudet kan bestilles',
   bookingAccessAuthorisedPublic: 'Forhåndsgodkjent',
   bookingAccessPublic: 'Åpen',
   bookingAccessStaff: 'Ansatte',

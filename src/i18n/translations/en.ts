@@ -70,10 +70,10 @@ export const messages: MessagesKey = {
   headerParagraph:
     'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',
   intropageTitle: 'Get started!',
-  item1: "1. Create a network in 'Networks', in the menu to the left",
+  item1: "Create a network in 'Networks', in the menu to the left",
   item2:
-    "2. Create a stop place or a zone in 'Stop places and Areas', in the menu to the left",
-  item3: "3. Create a new line in 'Flexible lines', in the menu to the left",
+    "Create a stop place or a zone in 'Stop places and Areas', in the menu to the left",
+  item3: "Create a new line in 'Flexible lines', in the menu to the left",
   exportsCreateExportButtonLabel: 'Create export',
   creatorDryRunFormLabel: 'Dry run',
   creatorFromDateFormLabel: 'From date *',
@@ -128,6 +128,8 @@ export const messages: MessagesKey = {
   uttuErrorORGANISATION_NOT_VALID_OPERATOR: 'Invalid operator',
   uttuErrorUNKNOWN: 'Unknown error',
   linesCreateLineIconButtonLabel: 'Create line',
+  bookingInfoHeader: 'Booking info',
+  bookingInfoText: 'Information about how the service can be booked',
   bookingAccessAuthorisedPublic: 'Authorised public',
   bookingAccessPublic: 'Public',
   bookingAccessStaff: 'Staff',

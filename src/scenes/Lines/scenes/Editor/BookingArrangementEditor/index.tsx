@@ -1,4 +1,6 @@
 import React, { useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import { selectIntl } from 'i18n';
 import ContactFields from 'scenes/Lines/scenes/Editor/BookingArrangementEditor/contactFields';
 import BookingLimitFields from './bookingLimitFields';
 import BookingMethodSelection from 'scenes/Lines/scenes/Editor/BookingArrangementEditor/bookingMethodSelection';
@@ -13,6 +15,7 @@ import BookingArrangement, {
 } from 'model/BookingArrangement';
 import { addOrRemove } from 'helpers/arrays';
 import { BOOKING_METHOD, PURCHASE_MOMENT } from 'model/enums';
+import { Heading2, LeadParagraph } from '@entur/typography';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -33,6 +36,8 @@ const BookingArrangementEditor = (props: Props) => {
     [onChange]
   );
 
+  const { formatMessage } = useSelector(selectIntl);
+
   const {
     bookingContact = {},
     bookingMethods,
@@ -47,6 +52,9 @@ const BookingArrangementEditor = (props: Props) => {
   return (
     <ScrollToTop>
       <div className="booking-editor tab-style">
+        <Heading2>{formatMessage('bookingInfoHeader')}</Heading2>
+        <LeadParagraph>{formatMessage('bookingInfoText')}</LeadParagraph>
+
         <ContactFields
           contact={bookingContact}
           onContactChange={(contact) =>

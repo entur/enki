@@ -6,7 +6,7 @@ import { selectIntl } from 'i18n';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import AddButton from 'components/AddButton/AddButton';
 import ServiceJourney from 'model/ServiceJourney';
-import { Heading2, Paragraph } from '@entur/typography';
+import { Heading2, LeadParagraph } from '@entur/typography';
 import { validateServiceJourney } from 'scenes/Lines/scenes/Editor/ServiceJourneys/Editor/validate';
 import { ExpandablePanel } from '@entur/expand';
 import ScrollToTop from 'components/ScrollToTop';
@@ -124,7 +124,7 @@ const ServiceJourneysEditor = ({
       <ScrollToTop>
         <div className="service-journeys-editor">
           <Heading2>{formatMessage('editorServiceJourneys')}</Heading2>
-          <Paragraph>{formatMessage('serviceJourneysInfo')}</Paragraph>
+          <LeadParagraph>{formatMessage('serviceJourneysInfo')}</LeadParagraph>
           {serviceJourneys.length === 1
             ? renderServiceJourneyEditor(serviceJourneys[0], 0)
             : serviceJourneys.map((sj, index) => (
