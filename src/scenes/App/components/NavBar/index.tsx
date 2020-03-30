@@ -68,7 +68,7 @@ const NavBar = () => {
               src={logo}
               alt={formatMessage('navBarRootLinkLogoAltText')}
             />
-            <span>{formatMessage('redirectTitle')}</span>
+            <span>{formatMessage('appTitle')}</span>
           </div>
         </Link>
 
