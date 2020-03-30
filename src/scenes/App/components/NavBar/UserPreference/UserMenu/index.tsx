@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateIntl } from 'react-intl-redux';
 import { RightArrowIcon, UserIcon } from '@entur/icons';
 
@@ -10,13 +10,16 @@ import { Checkbox } from '@entur/form';
 import { getMessages, LOCALE_KEY, selectIntl } from 'i18n';
 
 import './styles.scss';
+import { GlobalState } from 'reducers';
+import { User } from 'reducers/user';
 
 const UserMenu = () => {
   const [open, setOpen] = useState(false);
 
-  const { familyName, givenName, logoutUrl } = useSelector(({ user }) => user);
-  const locale = useSelector(({ intl }) => intl.locale);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage, locale } = useSelector(selectIntl);
+  const { familyName, givenName, logoutUrl } = useSelector<GlobalState, User>(
+    (state) => state.user as User
+  );
 
   const dispatch = useDispatch();
 
