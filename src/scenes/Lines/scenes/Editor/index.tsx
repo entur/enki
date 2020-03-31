@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  NegativeButton,
-  PrimaryButton,
-  SecondaryButton,
-  SuccessButton,
-} from '@entur/button';
 import { Stepper } from '@entur/menu';
 import {
   deleteFlexibleLineById,
@@ -14,12 +8,11 @@ import {
 import Loading from 'components/Loading';
 import PageHeader from 'components/PageHeader';
 import OverlayLoader from 'components/OverlayLoader';
-import ConfirmDialog from 'components/ConfirmDialog';
 import BookingArrangementEditor from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
 import validateForm from './validateForm';
 import './styles.scss';
-import General from 'scenes/Lines/scenes/Editor/General';
+import General from './General';
 import { setSavedChanges } from 'actions/editor';
 import { withRouter } from 'react-router-dom';
 import { selectIntl } from 'i18n';
@@ -31,13 +24,11 @@ import { GlobalState } from 'reducers';
 import { RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
 import { isBlank } from 'helpers/forms';
-import ServiceJourneysEditor from 'scenes/Lines/scenes/Editor/ServiceJourneys';
-import {
-  useFlexibleLine,
-  useLoadDependencies,
-} from 'scenes/Lines/scenes/Editor/hooks';
+import ServiceJourneysEditor from './ServiceJourneys';
+import { useFlexibleLine, useLoadDependencies } from './hooks';
 import { changeElementAtIndex } from 'helpers/arrays';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
+import NavigationButtons from './NavigationButtons';
 
 const FlexibleLineEditor = ({
   match,
@@ -70,7 +61,6 @@ const FlexibleLineEditor = ({
   );
 
   const [isSaving, setSaving] = useState(false);
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
   const [errors, setErrors] = useState(validateForm(flexibleLine));
   const [isValidServiceJourney, setIsValidServiceJourney] = useState(true);
@@ -82,13 +72,7 @@ const FlexibleLineEditor = ({
     setErrors(validateForm(flexibleLine));
   }, [flexibleLine]);
 
-  const goToLines = () => {
-    if (!isSaved) {
-      setShowConfirm(true);
-    } else {
-      history.push('/lines');
-    }
-  };
+  const goToLines = () => history.push('/lines');
 
   const dispatch = useDispatch<any>();
 
@@ -106,7 +90,6 @@ const FlexibleLineEditor = ({
 
   const handleDelete = () => {
     if (flexibleLine.id) {
-      setDeleteDialogOpen(false);
       setDeleting(true);
       dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() => goToLines());
     }
@@ -122,7 +105,6 @@ const FlexibleLineEditor = ({
   const operators = filterNetexOperators(organisations ?? []);
   const isLoadingLine = !flexibleLine;
   const isEdit = !isBlank(match.params.id);
-  const isDeleteDisabled = isLoadingLine || isLoadingDependencies || isDeleting;
 
   const onStepClicked = (stepIndexClicked: number) => {
     if (getMaxAllowedStepIndex() >= stepIndexClicked) {
@@ -146,16 +128,19 @@ const FlexibleLineEditor = ({
     }
   };
 
+  const onBackButtonClicked = () =>
+    activeStepperIndex === 0
+      ? () => {
+          isSaved ? goToLines() : setShowConfirm(true);
+        }
+      : () => setActiveStepperIndex(activeStepperIndex - 1);
+
   return (
     <div className="line-editor">
       <div className="header">
         <PageHeader
           withBackButton
-          onBackButtonClick={
-            activeStepperIndex === 0
-              ? () => goToLines()
-              : () => setActiveStepperIndex(activeStepperIndex - 1)
-          }
+          onBackButtonClick={onBackButtonClicked}
           backButtonTitle={
             activeStepperIndex === 0
               ? formatMessage('navBarLinesMenuItemLabel')
@@ -255,27 +240,13 @@ const FlexibleLineEditor = ({
               </section>
             )}
 
-            {activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1 ? (
-              <div className="buttons">
-                {isEdit && (
-                  <NegativeButton
-                    onClick={() => setDeleteDialogOpen(true)}
-                    disabled={isDeleteDisabled}
-                  >
-                    {formatMessage('editorDeleteButtonText')}
-                  </NegativeButton>
-                )}
-                <PrimaryButton onClick={handleOnSaveClick}>
-                  {formatMessage(
-                    isEdit ? 'editorSaveButtonText' : 'editorSaveAndCreateLine'
-                  )}
-                </PrimaryButton>
-              </div>
-            ) : (
-              <PrimaryButton onClick={onNextClicked} className="buttons">
-                {formatMessage('journeyPatternsSaveAndContinue')}
-              </PrimaryButton>
-            )}
+            <NavigationButtons
+              editMode={isEdit}
+              lastStep={activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1}
+              onDelete={handleDelete}
+              onSave={handleOnSaveClick}
+              onNext={onNextClicked}
+            />
           </div>
         </OverlayLoader>
       ) : (
@@ -289,21 +260,6 @@ const FlexibleLineEditor = ({
           }
         />
       )}
-
-      <ConfirmDialog
-        isOpen={isDeleteDialogOpen}
-        title={formatMessage('editorDeleteConfirmationDialogTitle')}
-        message={formatMessage('editorDeleteConfirmationDialogMessage')}
-        buttons={[
-          <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-            {formatMessage('editorDeleteConfirmationDialogCancelButtonText')}
-          </SecondaryButton>,
-          <SuccessButton key={1} onClick={handleDelete}>
-            {formatMessage('editorDeleteConfirmationDialogConfirmButtonText')}
-          </SuccessButton>,
-        ]}
-        onDismiss={() => setDeleteDialogOpen(false)}
-      />
     </div>
   );
 };

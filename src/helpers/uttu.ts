@@ -37,14 +37,14 @@ export const getInternationalizedUttuError = (
 ) => {
   const error = e.response?.errors?.[0];
   if (error?.extensions?.code) {
-    const { code, subCode, metaData = {} } = error.extensions;
+    const { code, subCode } = error.extensions;
     const messageCode = (subCode ? `${code}_${subCode}` : code) as
       | UttuCode
       | CombinedUttuCode;
 
     const errorMessage = messages[messageCode] ?? 'UNKNOWN';
 
-    return intl.formatMessage(errorMessage, metaData as any);
+    return intl.formatMessage(errorMessage);
   }
 
   return error?.message || intl.formatMessage(messages[UttuCode.UNKNOWN]);
