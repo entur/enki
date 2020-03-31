@@ -161,7 +161,12 @@ const ServiceJourneyEditor = (props: Props) => {
                 onChange({
                   ...serviceJourney,
                   dayTypes: [
-                    { ...serviceJourney.dayTypes?.[0]!, daysOfWeek: dow },
+                    {
+                      ...(serviceJourney.dayTypes?.[0] ?? {
+                        dayTypeAssignments: [newDayTypeAssignment()],
+                      }),
+                      daysOfWeek: dow,
+                    },
                   ],
                 })
               }
