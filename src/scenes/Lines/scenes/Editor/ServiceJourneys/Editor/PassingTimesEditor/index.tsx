@@ -119,8 +119,16 @@ const PassingTimesEditor = (props: Props & StateProps) => {
             flexibleStopPlaces={flexibleStopPlaces}
             stopPoints={stopPoints}
           >
-            {getTimePicker(passingTimes[0], 0, 'fra')}
-            {getTimePicker(passingTimes[1], 1, 'til')}
+            {getTimePicker(
+              passingTimes[0],
+              0,
+              formatMessage('dayTypeEditorFromDate')
+            )}
+            {getTimePicker(
+              passingTimes[1],
+              1,
+              formatMessage('dayTypeEditorToDate')
+            )}
           </FlexibleAreasPassingTime>
         ) : (
           passingTimes.map((passingTime, index) => (

@@ -279,6 +279,7 @@ export const messages: MessagesKey = {
   flexibleStopPlaceRefAndQuayRefBothValues:
     'Choose either stop place or platform, not both.',
   flexibleStopPlaceRefAndQuayRefNoValues: 'You must a place',
+  flexibleStopPlaceNoValue: 'You must select a stop place',
   frontTextNoValue: 'You must enter a front text',
   frontTextAlighting: 'First stop can only be for boarding',
   frontTextBoarding: 'Last stop can only be for alighting',

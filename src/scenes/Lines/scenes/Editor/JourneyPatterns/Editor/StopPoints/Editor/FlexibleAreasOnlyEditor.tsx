@@ -66,7 +66,7 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
             })
           }
           {...getErrorFeedback(
-            'no stopPlace',
+            formatMessage('flexibleStopPlaceNoValue'),
             Boolean(stopPointValue),
             stopPlacePristine
           )}
@@ -76,7 +76,7 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
       <InputGroup
         label={formatMessage('labelFrontText')}
         {...getErrorFeedback(
-          'no frontText',
+          formatMessage('frontTextNoValue'),
           !isBlank(frontText),
           frontTextPristine
         )}
