@@ -119,6 +119,8 @@ export const messages: MessagesKey = {
     'Service journey must have a unique name',
   uttuErrorCONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME:
     'Flexible line must have a unique name',
+  uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
+    'The journey pattern must have a unique name',
   uttuErrorENTITY_IS_REFERENCED:
     'Entity cannot be deleted because {noOfLines, number} other {noOfLines, plural, one {entity has a reference} other {entities have references}} to it.',
   uttuErrorFROM_DATE_AFTER_TO_DATE: 'From date cannot be after to date',

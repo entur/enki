@@ -116,6 +116,8 @@ export const messages = {
     'Service journeyen må ha et unikt navn',
   uttuErrorCONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME:
     'Linjen må ha et unikt navn',
+  uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
+    'Journey patternet må ha et unikt navn',
   uttuErrorENTITY_IS_REFERENCED:
     'Entiteten kan ikke slettes fordi {noOfLines, number} {noOfLines, plural, one {en annen entitet} other {andre entiteter}} refererer til den.',
   uttuErrorFROM_DATE_AFTER_TO_DATE: 'Fra dato kan ikke være etter til dato',

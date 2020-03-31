@@ -72,13 +72,7 @@ const FlexibleLineEditor = ({
     setErrors(validateForm(flexibleLine));
   }, [flexibleLine]);
 
-  const goToLines = () => {
-    if (!isSaved) {
-      setShowConfirm(true);
-    } else {
-      history.push('/lines');
-    }
-  };
+  const goToLines = () => history.push('/lines');
 
   const dispatch = useDispatch<any>();
 
@@ -134,16 +128,19 @@ const FlexibleLineEditor = ({
     }
   };
 
+  const onBackButtonClicked = () =>
+    activeStepperIndex === 0
+      ? () => {
+          isSaved ? goToLines() : setShowConfirm(true);
+        }
+      : () => setActiveStepperIndex(activeStepperIndex - 1);
+
   return (
     <div className="line-editor">
       <div className="header">
         <PageHeader
           withBackButton
-          onBackButtonClick={
-            activeStepperIndex === 0
-              ? () => goToLines()
-              : () => setActiveStepperIndex(activeStepperIndex - 1)
-          }
+          onBackButtonClick={onBackButtonClicked}
           backButtonTitle={
             activeStepperIndex === 0
               ? formatMessage('navBarLinesMenuItemLabel')

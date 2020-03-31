@@ -26,10 +26,15 @@ const NavigationButtons = (props: Props) => {
   return (
     <>
       <div className="buttons">
-        {!props.lastStep && (
+        {props.editMode && !props.lastStep && (
           <SecondaryButton onClick={props.onNext}>
             {formatMessage('navigationNext')}
           </SecondaryButton>
+        )}
+        {!props.editMode && !props.lastStep && (
+          <PrimaryButton onClick={props.onNext}>
+            {formatMessage('navigationNext')}
+          </PrimaryButton>
         )}
         {(props.editMode || props.lastStep) && (
           <PrimaryButton onClick={props.onSave}>
