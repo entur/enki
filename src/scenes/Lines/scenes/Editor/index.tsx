@@ -72,31 +72,7 @@ const FlexibleLineEditor = ({
     setErrors(validateForm(flexibleLine));
   }, [flexibleLine]);
 
-<<<<<<< HEAD
   const goToLines = () => history.push('/lines');
-=======
-  useEffect(() => {
-    if (!flexibleLine.journeyPatterns) {
-      const journeyPattern = {
-        pointsInSequence: [{}, {}],
-        serviceJourneys: [{ passingTimes: [{}, {}] }],
-      };
-
-      onFieldChange({
-        ...flexibleLine,
-        journeyPatterns: [journeyPattern],
-      });
-    }
-  }, [flexibleLine, onFieldChange]);
-
-  const goToLines = () => {
-    if (!isSaved) {
-      setShowConfirm(true);
-    } else {
-      history.push('/lines');
-    }
-  };
->>>>>>> FlexibleAreasOnly now only has one input field
 
   const dispatch = useDispatch<any>();
 

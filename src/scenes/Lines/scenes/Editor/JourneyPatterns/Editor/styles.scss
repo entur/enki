@@ -2,11 +2,11 @@
 
 .journey-pattern-inputs {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  max-width: 40%;
 
   .eds-input-group {
     flex: 40% 0;
-    margin-right: 2rem;
   }
 
   .eds-input-group + .eds-input-group {
