@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import moment from 'moment/moment';
 import { AddIcon, DeleteIcon } from '@entur/icons';
-import { SecondaryButton } from '@entur/button';
+import { TertiaryButton } from '@entur/button';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import {
   removeElementByIndex,
@@ -86,22 +86,22 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
               />
             </InputGroup>
             {dayTypeAssignments.length > 1 && (
-              <SecondaryButton
+              <TertiaryButton
                 className="delete-button"
                 onClick={() =>
                   onChange(removeElementByIndex(dayTypeAssignments, index))
                 }
               >
                 <DeleteIcon inline /> {formatMessage('delete')}
-              </SecondaryButton>
+              </TertiaryButton>
             )}
           </div>
         ))}
       </div>
-      <SecondaryButton onClick={() => addNewDayTypeAssignment()}>
+      <TertiaryButton onClick={() => addNewDayTypeAssignment()}>
         <AddIcon />
         {formatMessage('dayTypeEditorAddDayTypeAssignment')}
-      </SecondaryButton>
+      </TertiaryButton>
     </>
   );
 };

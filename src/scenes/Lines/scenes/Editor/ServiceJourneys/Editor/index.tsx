@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { SecondaryButton, SuccessButton, TertiaryButton } from '@entur/button';
 import { DeleteIcon, QuestionIcon } from '@entur/icons';
 import PassingTimesEditor from './PassingTimesEditor';
 import StopPoint from 'model/StopPoint';
@@ -219,12 +219,12 @@ const ServiceJourneyEditor = (props: Props) => {
         </div>
 
         {deleteServiceJourney && (
-          <SecondaryButton
+          <TertiaryButton
             className="delete-button"
             onClick={() => setShowDeleteDialog(true)}
           >
             <DeleteIcon inline /> {formatMessage('editorDeleteButtonText')}
-          </SecondaryButton>
+          </TertiaryButton>
         )}
 
         {showDeleteDialog && deleteServiceJourney && (

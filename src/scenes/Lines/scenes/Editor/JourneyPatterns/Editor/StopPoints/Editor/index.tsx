@@ -8,7 +8,7 @@ import debounce from './debounce';
 import { isBlank } from 'helpers/forms';
 import { Dropdown } from '@entur/dropdown';
 import { Paragraph } from '@entur/typography';
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { SecondaryButton, SuccessButton, TertiaryButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import ConfirmDialog from 'components/ConfirmDialog';
 import './styles.scss';
@@ -207,12 +207,12 @@ const StopPointEditor = ({
         />
       </div>
       {deleteStopPoint && (
-        <SecondaryButton
+        <TertiaryButton
           className="delete-button"
           onClick={() => setDeleteDialogOpen(true)}
         >
           <DeleteIcon inline /> {formatMessage('editorDeleteButtonText')}
-        </SecondaryButton>
+        </TertiaryButton>
       )}
 
       <ConfirmDialog
