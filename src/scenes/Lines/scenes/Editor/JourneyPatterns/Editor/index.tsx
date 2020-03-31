@@ -121,7 +121,6 @@ const JourneyPatternEditor = ({
   };
 
   const keys = useUniqueKeys(pointsInSequence);
-  console.log({ pointsInSequence });
 
   return (
     <div className="journey-pattern-editor">
