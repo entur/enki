@@ -65,7 +65,7 @@ export const messages: MessagesKey = {
     'You have unsaved changes which will be lost if you navigate away. Do you want to proceed?',
   redirectYes: 'Yes, leave this page',
   redirectNo: 'No, stay on this page',
-  appTitle: 'Flexible transport',
+  appTitle: 'Flex editor',
   homeHeader: 'Entur Flexible transport',
   headerParagraph:
     'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',

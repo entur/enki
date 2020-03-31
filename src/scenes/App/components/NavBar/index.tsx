@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import UserPreference from './UserPreference';
+import UserPreference from 'scenes/App/components/NavBar/UserPreference';
 import { Contrast } from '@entur/layout';
 import { RouteComponentProps } from 'react-router';
 import { AppIntlState, selectIntl } from 'i18n';
@@ -68,7 +68,7 @@ const NavBar = () => {
               src={logo}
               alt={formatMessage('navBarRootLinkLogoAltText')}
             />
-            <span>{formatMessage('redirectTitle')}</span>
+            <span>{formatMessage('appTitle')}</span>
           </div>
         </Link>
 

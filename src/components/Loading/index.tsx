@@ -1,12 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import cx from 'classnames';
 
 import LoadingIcon from '../icons/Loading';
 
 import './styles.scss';
 
-const Loading = ({ className, isLoading, isFullScreen, text, children }) => {
+type Props = {
+  isLoading?: boolean;
+  isFullScreen?: boolean;
+  text: string;
+  className?: string;
+  children: ReactElement | null;
+};
+
+const Loading = ({
+  className,
+  isLoading = true,
+  isFullScreen,
+  text,
+  children,
+}: Props) => {
   if (!isLoading) {
     return children;
   }
@@ -26,15 +39,6 @@ const Loading = ({ className, isLoading, isFullScreen, text, children }) => {
       <div className="text">{text}</div>
     </div>
   );
-};
-
-Loading.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  isFullScreen: PropTypes.bool,
-  text: PropTypes.string,
-};
-Loading.defaultProps = {
-  isLoading: true,
 };
 
 export default Loading;

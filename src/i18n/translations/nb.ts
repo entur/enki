@@ -63,7 +63,7 @@ export const messages = {
     'Du har gjort endringer som vil gå tapt hvis du forlater siden. Ønsker du å forlate siden?  ',
   redirectYes: 'Ja, forlat siden',
   redirectNo: 'Nei, bli på siden',
-  appTitle: 'Bestillingstransport',
+  appTitle: 'Flex editor',
   homeHeader: 'Entur Fleksibel transport',
   headerParagraph:
     'Velkommen til Entur fleksibel transport. Dette er et verktøy for at aktører selv skal kunne legge inn fleksible linjetilbud som synliggjøres i våre kanaler.',
