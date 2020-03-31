@@ -55,3 +55,11 @@
     }
   }
 }
+
+.flexible-areas-stop-points {
+  max-width: 40%;
+
+  > div {
+    margin-bottom: 16px;
+  }
+}

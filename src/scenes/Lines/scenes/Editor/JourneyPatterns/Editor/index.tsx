@@ -25,6 +25,7 @@ import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import './styles.scss';
 import JourneyPattern from 'model/JourneyPattern';
+import FlexibleAreasOnlyEditor from './StopPoints/Editor/FlexibleAreasOnlyEditor';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -32,6 +33,7 @@ type Props = {
   setIsValidJourneyPattern: (isValid: boolean) => void;
   index: number;
   spoilPristine: boolean;
+  flexibleLineType: string | undefined;
 };
 
 type StateProps = {
@@ -45,6 +47,7 @@ const JourneyPatternEditor = ({
   index,
   flexibleStopPlaces,
   spoilPristine,
+  flexibleLineType,
 }: Props & StateProps) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
@@ -58,6 +61,7 @@ const JourneyPatternEditor = ({
     journeyPattern.pointsInSequence,
     journeyPattern.name,
     setIsValidJourneyPattern,
+    flexibleLineType,
   ]);
 
   const onJourneyPatternChange = (journeyPattern: JourneyPattern) => {
@@ -105,7 +109,19 @@ const JourneyPatternEditor = ({
       ),
     });
 
+  const updateStopPoints = (stopPoints: StopPoint[]) => {
+    onJourneyPatternChange({
+      ...journeyPattern,
+      pointsInSequence: stopPoints,
+      serviceJourneys: serviceJourneys.map((serviceJourney) => {
+        const [firstTime, secondTime] = serviceJourney.passingTimes;
+        return { ...serviceJourney, passingTimes: [firstTime, secondTime] };
+      }),
+    });
+  };
+
   const keys = useUniqueKeys(pointsInSequence);
+  console.log({ pointsInSequence });
 
   return (
     <div className="journey-pattern-editor">
@@ -122,33 +138,45 @@ const JourneyPatternEditor = ({
       <section style={{ marginTop: '5rem' }}>
         <Heading3>{formatMessage('editorStopPoints')}</Heading3>
         <Paragraph>{formatMessage('stopPointsInfo')}</Paragraph>
-        {pointsInSequence.map((stopPoint, index) => (
-          <StopPointEditor
-            key={keys[index]}
-            index={index}
-            isFirstStop={index === 0}
-            stopPoint={stopPoint}
-            errors={validateStopPoint(
-              stopPoint,
-              index === 0,
-              index === pointsInSequence.length - 1
-            )}
-            deleteStopPoint={
-              pointsInSequence.length > 2
-                ? () => deleteStopPoint(index)
-                : undefined
-            }
-            stopPointChange={(stopPoint: StopPoint) =>
-              updateStopPoint(index, stopPoint)
-            }
+        {flexibleLineType === 'flexibleAreasOnly' ? (
+          <FlexibleAreasOnlyEditor
+            stopPoints={pointsInSequence}
+            updateStopPoints={updateStopPoints}
             flexibleStopPlaces={flexibleStopPlaces}
             spoilPristine={spoilPristine}
           />
-        ))}
-        <AddButton
-          onClick={addStopPoint}
-          buttonTitle={formatMessage('editorAddStopPoint')}
-        />
+        ) : (
+          pointsInSequence.map((stopPoint, index) => (
+            <StopPointEditor
+              key={keys[index]}
+              index={index}
+              isFirstStop={index === 0}
+              stopPoint={stopPoint}
+              errors={validateStopPoint(
+                stopPoint,
+                index === 0,
+                index === pointsInSequence.length - 1
+              )}
+              deleteStopPoint={
+                pointsInSequence.length > 2
+                  ? () => deleteStopPoint(index)
+                  : undefined
+              }
+              stopPointChange={(stopPoint: StopPoint) =>
+                updateStopPoint(index, stopPoint)
+              }
+              flexibleStopPlaces={flexibleStopPlaces}
+              spoilPristine={spoilPristine}
+              flexibleLineType={flexibleLineType}
+            />
+          ))
+        )}
+        {flexibleLineType !== 'flexibleAreasOnly' && (
+          <AddButton
+            onClick={addStopPoint}
+            buttonTitle={formatMessage('editorAddStopPoint')}
+          />
+        )}
       </section>
     </div>
   );

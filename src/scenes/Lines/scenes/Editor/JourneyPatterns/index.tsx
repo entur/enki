@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ExpandablePanel } from '@entur/expand';
 import { replaceElement, useUniqueKeys } from 'helpers/arrays';
 import JourneyPatternEditor from './Editor';
@@ -9,6 +9,7 @@ type Props = {
   journeyPatterns: JourneyPattern[];
   onChange: (journeyPatterns: JourneyPattern[]) => void;
   setIsValidJourneyPattern: (isValid: boolean) => void;
+  flexibleLineType: string | undefined;
   spoilPristine: boolean;
 };
 
@@ -17,21 +18,11 @@ const JourneyPatternsEditor = ({
   onChange,
   setIsValidJourneyPattern,
   spoilPristine,
+  flexibleLineType,
 }: Props) => {
-  useEffect(() => {
-    if (!journeyPatterns.length)
-      onChange([
-        {
-          pointsInSequence: [{}, {}],
-          serviceJourneys: [{ passingTimes: [{}, {}] }],
-        },
-      ]);
-  }, [journeyPatterns, onChange]);
-
   const handleSave = (journeyPattern: JourneyPattern, index: number) => {
     onChange(replaceElement(journeyPatterns, index, journeyPattern));
   };
-
   const keys = useUniqueKeys(journeyPatterns);
 
   return (
@@ -43,6 +34,7 @@ const JourneyPatternsEditor = ({
           index={0}
           setIsValidJourneyPattern={setIsValidJourneyPattern}
           spoilPristine={spoilPristine}
+          flexibleLineType={flexibleLineType}
         />
       ) : (
         journeyPatterns.map((jp: JourneyPattern, index: number) => (
@@ -57,6 +49,7 @@ const JourneyPatternsEditor = ({
               index={index}
               setIsValidJourneyPattern={setIsValidJourneyPattern}
               spoilPristine={spoilPristine}
+              flexibleLineType={flexibleLineType}
             />
           </ExpandablePanel>
         ))

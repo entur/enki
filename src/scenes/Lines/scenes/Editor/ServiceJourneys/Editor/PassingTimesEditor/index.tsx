@@ -14,6 +14,7 @@ import { selectIntl } from 'i18n';
 import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import FlexibleAreasPassingTime from './FlexibleAreasPassingTime';
 
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
@@ -25,6 +26,7 @@ type Props = {
   stopPoints: StopPoint[];
   onChange: (pts: PassingTime[]) => void;
   spoilPristine: boolean;
+  flexibleLineType: string | undefined;
 };
 
 const PassingTimesEditor = (props: Props & StateProps) => {
@@ -35,6 +37,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     onChange,
     flexibleStopPlaces,
     spoilPristine,
+    flexibleLineType,
   } = props;
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
   const { formatMessage } = useSelector(selectIntl);
@@ -69,17 +72,18 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     return time + ':00';
   };
 
-  const getTimePicker = (passingTime: PassingTime, index: number) => {
+  const getTimePicker = (
+    passingTime: PassingTime,
+    index: number,
+    label: string
+  ) => {
     const shownValue = passingTime.departureTime
       ?.split(':')
       .slice(0, 2)
       .join(':');
 
     return (
-      <InputGroup
-        label={formatMessage('passingTimesPassingTime')}
-        className="timepicker"
-      >
+      <InputGroup label={label} className="timepicker">
         <TextField
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             onChange(
@@ -110,17 +114,31 @@ const PassingTimesEditor = (props: Props & StateProps) => {
         <SmallAlertBox variant="error">{error.feedback}</SmallAlertBox>
       )}
       <div className="passing-times-editor">
-        {passingTimes.map((passingTime, index) => (
-          <div key={index} className="passing-time">
-            <div className="time-number">{index + 1}</div>
-            <PassingTimeTitle
-              flexibleStopPlaces={flexibleStopPlaces}
-              stopPoint={stopPoints[index]}
-            />
-            {getTimePicker(passingTime, index)}
-            {getDayOffsetDropdown(passingTime, index)}
-          </div>
-        ))}
+        {flexibleLineType === 'flexibleAreasOnly' ? (
+          <FlexibleAreasPassingTime
+            flexibleStopPlaces={flexibleStopPlaces}
+            stopPoints={stopPoints}
+          >
+            {getTimePicker(passingTimes[0], 0, 'fra')}
+            {getTimePicker(passingTimes[1], 1, 'til')}
+          </FlexibleAreasPassingTime>
+        ) : (
+          passingTimes.map((passingTime, index) => (
+            <div key={index} className="passing-time">
+              <div className="time-number">{index + 1}</div>
+              <PassingTimeTitle
+                flexibleStopPlaces={flexibleStopPlaces}
+                stopPoint={stopPoints[index]}
+              />
+              {getTimePicker(
+                passingTime,
+                index,
+                formatMessage('passingTimesPassingTime')
+              )}
+              {getDayOffsetDropdown(passingTime, index)}
+            </div>
+          ))
+        )}
       </div>
     </>
   );

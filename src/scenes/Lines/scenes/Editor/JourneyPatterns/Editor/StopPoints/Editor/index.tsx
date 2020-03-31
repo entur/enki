@@ -35,6 +35,7 @@ type Props = {
   isFirstStop: boolean;
   deleteStopPoint?: () => void;
   spoilPristine: boolean;
+  flexibleLineType: string | undefined;
 };
 
 const StopPointEditor = ({
