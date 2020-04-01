@@ -7,10 +7,20 @@ import { loadNetworks } from 'actions/networks';
 import { loadFlexibleLineById } from 'actions/flexibleLines';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
 import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
+import { JourneyPattern } from 'model/JourneyPattern';
 import FlexibleLine from 'model/FlexibleLine';
 import { GlobalState } from 'reducers';
 import { setSavedChanges } from 'actions/editor';
 import { equals } from 'ramda';
+
+const initJourneyPatterns = (): JourneyPattern[] => {
+  return [
+    {
+      serviceJourneys: [{ passingTimes: [{}, {}] }],
+      pointsInSequence: [{}, {}],
+    },
+  ];
+};
 
 export const usePristine = (value: any, spoil: boolean): boolean => {
   const [isPristine, setIsPristine] = useState<boolean>(true);
@@ -82,6 +92,7 @@ export const getFlexibleLineFromPath = (
   ) ?? {
     transportMode: VEHICLE_MODE.BUS,
     transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
+    journeyPatterns: initJourneyPatterns(),
   };
 
 export const useFlexibleLine = (
@@ -91,6 +102,7 @@ export const useFlexibleLine = (
   const [flexibleLine, setFlexibleLine] = useState<FlexibleLine>({
     transportMode: VEHICLE_MODE.BUS,
     transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
+    journeyPatterns: initJourneyPatterns(),
   });
 
   const {
