@@ -402,5 +402,5 @@ export const messages: MessagesKey = {
   weekdaysFriday: 'Friday',
   weekdaysSaturday: 'Saturday',
   weekdaysSunday: 'Sunday',
-  requiredInputMarker: 'The fields marked with an * are required',
+  requiredInputMarker: 'The fields marked with * are required',
 };
