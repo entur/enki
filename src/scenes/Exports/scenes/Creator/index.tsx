@@ -9,6 +9,7 @@ import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
 import PageHeader from 'components/PageHeader';
 import OverlayLoader from 'components/OverlayLoader';
+import { Label } from '@entur/typography';
 import { AppIntlState, selectIntl } from 'i18n';
 import { RouteComponentProps } from 'react-router';
 import { exportIsValid, toDateIsAfterFromDate } from './validateForm';
@@ -67,6 +68,9 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
         text={formatMessage('creatorSavingOverlayLoaderText')}
       >
         <div className="export-form">
+          <Label className="required-marker">
+            <i> {formatMessage('requiredInputMarker')} </i>
+          </Label>
           <InputGroup
             label={formatMessage('creatorNameFormLabel')}
             {...getErrorFeedback(
@@ -82,7 +86,6 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               }
             />
           </InputGroup>
-
           <InputGroup label={formatMessage('creatorFromDateFormLabel')}>
             <DatePicker
               selectedDate={moment(theExport.fromDate).toDate()}
@@ -91,7 +94,6 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               }
             />
           </InputGroup>
-
           <InputGroup
             label={formatMessage('creatorToDateFormLabel')}
             {...getErrorFeedback(
@@ -107,7 +109,6 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               }
             />
           </InputGroup>
-
           <InputGroup label={formatMessage('creatorDryRunFormLabel')}>
             <Checkbox
               value="1"

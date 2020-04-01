@@ -11,7 +11,7 @@ import {
 } from '@entur/button';
 import { MapIcon } from '@entur/icons';
 import { SmallAlertBox } from '@entur/alert';
-import { Paragraph } from '@entur/typography';
+import { Paragraph, Label } from '@entur/typography';
 
 import ConfirmDialog from 'components/ConfirmDialog';
 import { GEOMETRY_TYPE, VEHICLE_MODE } from 'model/enums';
@@ -241,6 +241,9 @@ const FlexibleStopPlaceEditor = ({
         >
           <div className="stop-place-form-container">
             <div className="stop-place-form">
+              <Label className="required-marker">
+                <i>{formatMessage('requiredInputMarker')}</i>
+              </Label>
               <div>
                 <InputGroup
                   label={formatMessage('editorNameFormLabelText')}
@@ -324,7 +327,6 @@ const FlexibleStopPlaceEditor = ({
                   <MapIcon />
                 </PrimaryButton>
               </div>
-
               <div>
                 <div className="buttons">
                   {match.params.id && (

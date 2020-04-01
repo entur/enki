@@ -401,4 +401,5 @@ export const messages = {
   weekdaysFriday: 'Fredag',
   weekdaysSaturday: 'Lørdag',
   weekdaysSunday: 'Søndag',
+  requiredInputMarker: 'Feltene markert med * er obligtoriske',
 };

@@ -70,24 +70,20 @@ const ExportsViewer = ({
         <div className="export-view">
           <Label>{formatMessage('viewerNameLabel')}</Label>
           <div className="value">{theExport.name}</div>
-
           <Label>{formatMessage('viewerFromDateLabel')}</Label>
           <div className="value">
             <FormattedDate value={moment(theExport.fromDate).toDate()} />
           </div>
-
           <Label>{formatMessage('viewerToDateLabel')}</Label>
           <div className="value">
             <FormattedDate value={moment(theExport.toDate).toDate()} />
           </div>
-
           <Label>{formatMessage('viewerDryRunLabel')}</Label>
           <div className="value">
             {theExport.dryRun
               ? formatMessage('viewerDryRunYes')
               : formatMessage('viewerDryRunNo')}
           </div>
-
           <Label>{formatMessage('viewerStatusLabel')}</Label>
           <div className="value status">
             <div className="icon">
@@ -97,7 +93,6 @@ const ExportsViewer = ({
               {theExport.exportStatus && formatMessage(theExport.exportStatus)}
             </div>
           </div>
-
           {theExport.exportStatus === EXPORT_STATUS.SUCCESS && (
             <Fragment>
               <Label>{formatMessage('viewerDownloadLabel')}</Label>
@@ -114,7 +109,6 @@ const ExportsViewer = ({
               </div>
             </Fragment>
           )}
-
           {(theExport?.messages ?? []).length > 0 && (
             <Fragment>
               <Label>{formatMessage('viewerMessagesLabel')}</Label>

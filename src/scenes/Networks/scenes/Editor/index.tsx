@@ -5,6 +5,7 @@ import { InputGroup, TextArea, TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
 import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { Paragraph } from '@entur/typography';
+import { Label } from '@entur/typography';
 import { RouteComponentProps } from 'react-router';
 import { isBlank } from 'helpers/forms';
 import { ORGANISATION_TYPE } from 'model/enums';
@@ -151,6 +152,9 @@ const NetworkEditor = ({
           }
         >
           <div className="network-form">
+            <Label className="required-marker">
+              <i> {formatMessage('requiredInputMarker')}</i>
+            </Label>
             <InputGroup
               className="form-section"
               label={formatMessage('editorNameLabelText')}
@@ -167,7 +171,6 @@ const NetworkEditor = ({
                 }
               />
             </InputGroup>
-
             <InputGroup
               className="form-section"
               label={formatMessage('editorDescriptionLabelText')}
@@ -179,7 +182,6 @@ const NetworkEditor = ({
                 }
               />
             </InputGroup>
-
             <InputGroup
               className="form-section"
               label={formatMessage('editorPrivateCodeLabelText')}
@@ -191,7 +193,6 @@ const NetworkEditor = ({
                 }
               />
             </InputGroup>
-
             <Dropdown
               className="form-section"
               value={network.authorityRef}
@@ -211,7 +212,6 @@ const NetworkEditor = ({
                 authorityPristine
               )}
             />
-
             <div className="buttons">
               {match.params.id && (
                 <NegativeButton
