@@ -67,6 +67,16 @@ export const messages: MessagesKey = {
   redirectNo: 'No, stay on this page',
   appTitle: 'Flex editor',
   homeHeader: 'Entur Flexible transport',
+  homeShortcut: 'Shortcuts',
+  homeCardsGetStarted: 'Get started',
+  homeCardsGetStartedDescription:
+    'Click here if you are creating a line for the first time.',
+  homeCardsLinesDescription:
+    'See the overview of lines. This is where you can view and edit existing lines, or create new ones.',
+  homeCardsNetworkDescription:
+    'See the overview of your networks add new ones.',
+  homeCardsStopPlacesDescription:
+    'See the over of stop places and areas, or create new ones.',
   headerParagraph:
     'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',
   intropageTitle: 'Get started!',

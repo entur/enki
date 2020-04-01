@@ -76,7 +76,7 @@ const NavBar = () => {
 
         <NavBarItem
           text={formatMessage('navBarIntroduction')}
-          path="/"
+          path="/get-started"
           setRedirect={setRedirect}
         />
         <NavBarItem

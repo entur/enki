@@ -65,6 +65,16 @@ export const messages = {
   redirectNo: 'Nei, bli på siden',
   appTitle: 'Flex editor',
   homeHeader: 'Entur Fleksibel transport',
+  homeShortcut: 'Snarveier',
+  homeCardsGetStarted: 'Kom i gang',
+  homeCardsGetStartedDescription:
+    'Klikk her hvis du oppretter en linje for første gang.',
+  homeCardsLinesDescription:
+    'Se oversikt over linjer. Her kan du se og redigere linjer eller opprette ny.',
+  homeCardsNetworkDescription:
+    'Se oversikt over dine nettverk eller legg till nytt.',
+  homeCardsStopPlacesDescription:
+    'Se oversikt over stoppesteder og områder eller opprett nye.',
   headerParagraph:
     'Velkommen til Entur fleksibel transport. Dette er et verktøy for at aktører selv skal kunne legge inn fleksible linjetilbud som synliggjøres i våre kanaler.',
   intropageTitle: 'Kom i gang!',

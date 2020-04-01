@@ -12,30 +12,40 @@ const Home = () => {
   return (
     <div className="home">
       <header>
-        <h4 className="tagline color-blue">
-          {formatMessage('navBarIntroduction')}
-        </h4>
         <Heading1>{formatMessage('homeHeader')}</Heading1>
         <LeadParagraph>{formatMessage('headerParagraph')}</LeadParagraph>
       </header>
       <main>
-        <Heading2>Snarveier</Heading2>
+        <Heading2>{formatMessage('homeShortcut')}</Heading2>
         <section className="cards">
           <NavigationCard
-            title="Kom i gang"
+            title={formatMessage('homeCardsGetStarted')}
             titleIcon={<DesktopIcon />}
-            href="#"
+            href="/get-started"
           >
-            Se all dataen vår
+            {formatMessage('homeCardsGetStartedDescription')}
           </NavigationCard>
-          <NavigationCard title="Linjer" titleIcon={<DesktopIcon />} href="#">
-            Se all dataen vår
+
+          <NavigationCard
+            title={formatMessage('navBarLinesMenuItemLabel')}
+            titleIcon={<DesktopIcon />}
+            href="/lines"
+          >
+            {formatMessage('homeCardsLinesDescription')}
           </NavigationCard>
-          <NavigationCard title="Data" titleIcon={<DesktopIcon />} href="#">
-            Se all dataen vår
+          <NavigationCard
+            title={formatMessage('navBarNetworksMenuItemLabel')}
+            titleIcon={<DesktopIcon />}
+            href="/networks"
+          >
+            {formatMessage('homeCardsNetworkDescription')}
           </NavigationCard>
-          <NavigationCard title="Data" titleIcon={<DesktopIcon />} href="#">
-            Se all dataen vår
+          <NavigationCard
+            title={formatMessage('navBarStopPlacesMenuItemLabel')}
+            titleIcon={<DesktopIcon />}
+            href="/stop-places"
+          >
+            {formatMessage('homeCardsStopPlacesDescription')}
           </NavigationCard>
         </section>
       </main>

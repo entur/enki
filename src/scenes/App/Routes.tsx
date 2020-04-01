@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Home from './Home';
+import GetStarted from './GetStarted';
 import NetworksOverview from '../Networks';
 import NetworkEditor from '../Networks/scenes/Editor';
 import LinesOverview from '../Lines';
@@ -16,6 +17,7 @@ const Routes = () => (
   <div className="routes">
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route exact path="/get-started" component={GetStarted} />
       <Route exact path="/networks" component={NetworksOverview} />
       <Route exact path="/networks/create" component={NetworkEditor} />
       <Route exact path="/networks/edit/:id" component={NetworkEditor} />
