@@ -14,6 +14,13 @@ export type JourneyPattern = VersionedType & {
   notices?: Notice[];
 };
 
+export const initJourneyPatterns = (): JourneyPattern[] => [
+  {
+    serviceJourneys: [{ passingTimes: [{}, {}] }],
+    pointsInSequence: [{}, {}],
+  },
+];
+
 export const journeyPatternToPayload = (journeyPattern: JourneyPattern) => ({
   ...journeyPattern,
   pointsInSequence: journeyPattern.pointsInSequence.map((pis) =>

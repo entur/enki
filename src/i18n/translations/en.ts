@@ -319,6 +319,8 @@ export const messages: MessagesKey = {
   linesNoLinesFoundText: 'No lines found.',
   linesOperatorTableHeader: 'Operator',
   linesPrivateCodeTableHeaderLabel: 'Private code',
+  nameEmpty: 'Name is required.',
+  publicCodeEmpty: 'Public code is required.',
   networkRefEmpty: 'You must select a network.',
   operatorRefEmpty: 'You must select an operator.',
   flexibleLineTypeEmpty: 'You must select a type.',

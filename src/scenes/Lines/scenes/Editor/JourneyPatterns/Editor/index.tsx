@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import General from './General';
@@ -8,11 +8,7 @@ import {
   LeadParagraph,
   Heading3,
 } from '@entur/typography';
-import { isBlank } from 'helpers/forms';
-import {
-  validateStopPoint,
-  validateStopPoints,
-} from './StopPoints/Editor/validateForm';
+import { validateStopPoint } from './StopPoints/Editor/validateForm';
 import {
   changeElementAtIndex,
   removeElementByIndex,
@@ -30,7 +26,6 @@ import FlexibleAreasOnlyEditor from './StopPoints/Editor/FlexibleAreasOnlyEditor
 type Props = {
   journeyPattern: JourneyPattern;
   onSave: (journeyPattern: JourneyPattern, index: number) => void;
-  setIsValidJourneyPattern: (isValid: boolean) => void;
   index: number;
   spoilPristine: boolean;
   flexibleLineType: string | undefined;
@@ -43,7 +38,6 @@ type StateProps = {
 const JourneyPatternEditor = ({
   journeyPattern,
   onSave,
-  setIsValidJourneyPattern,
   index,
   flexibleStopPlaces,
   spoilPristine,
@@ -51,18 +45,6 @@ const JourneyPatternEditor = ({
 }: Props & StateProps) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
-
-  useEffect(() => {
-    setIsValidJourneyPattern(
-      !isBlank(journeyPattern.name) &&
-        validateStopPoints(journeyPattern.pointsInSequence)
-    );
-  }, [
-    journeyPattern.pointsInSequence,
-    journeyPattern.name,
-    setIsValidJourneyPattern,
-    flexibleLineType,
-  ]);
 
   const onJourneyPatternChange = (journeyPattern: JourneyPattern) => {
     onSave(journeyPattern, index);

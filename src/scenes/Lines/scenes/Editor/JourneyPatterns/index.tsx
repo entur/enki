@@ -8,7 +8,6 @@ import './styles.scss';
 type Props = {
   journeyPatterns: JourneyPattern[];
   onChange: (journeyPatterns: JourneyPattern[]) => void;
-  setIsValidJourneyPattern: (isValid: boolean) => void;
   flexibleLineType: string | undefined;
   spoilPristine: boolean;
 };
@@ -16,7 +15,6 @@ type Props = {
 const JourneyPatternsEditor = ({
   journeyPatterns,
   onChange,
-  setIsValidJourneyPattern,
   spoilPristine,
   flexibleLineType,
 }: Props) => {
@@ -32,7 +30,6 @@ const JourneyPatternsEditor = ({
           journeyPattern={journeyPatterns[0]}
           onSave={handleSave}
           index={0}
-          setIsValidJourneyPattern={setIsValidJourneyPattern}
           spoilPristine={spoilPristine}
           flexibleLineType={flexibleLineType}
         />
@@ -47,7 +44,6 @@ const JourneyPatternsEditor = ({
               journeyPattern={jp}
               onSave={handleSave}
               index={index}
-              setIsValidJourneyPattern={setIsValidJourneyPattern}
               spoilPristine={spoilPristine}
               flexibleLineType={flexibleLineType}
             />

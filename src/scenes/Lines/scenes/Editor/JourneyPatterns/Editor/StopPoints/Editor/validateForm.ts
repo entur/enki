@@ -2,6 +2,12 @@ import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import { StopPointsFormError } from './index';
 import StopPoint from 'model/StopPoint';
 import { MessagesKey } from 'i18n/translations/translationKeys';
+import JourneyPattern from 'model/JourneyPattern';
+
+export const validJourneyPattern = (journeyPatterns?: JourneyPattern[]) =>
+  journeyPatterns &&
+  !isBlank(journeyPatterns[0].name) &&
+  validateStopPoints(journeyPatterns[0].pointsInSequence ?? []);
 
 export const validateStopPoints = (stopPoints: StopPoint[]): boolean =>
   getStopPointsErrors(stopPoints).every((stopPointErrors) =>

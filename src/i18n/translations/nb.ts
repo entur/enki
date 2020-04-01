@@ -317,6 +317,8 @@ export const messages = {
   linesNoLinesFoundText: 'Ingen linjer ble funnet.',
   linesOperatorTableHeader: 'Operatør',
   linesPrivateCodeTableHeaderLabel: 'Privat kode',
+  nameEmpty: 'Navn må fylles inn.',
+  publicCodeEmpty: 'Public code må fylles inn.',
   networkRefEmpty: 'Du må velge et nettverk.',
   operatorRefEmpty: 'Du må velge en operatør.',
   flexibleLineTypeEmpty: 'Du må velge en type.',

@@ -1,26 +1,11 @@
 import { RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import { loadNetworks } from 'actions/networks';
 import { loadFlexibleLineById } from 'actions/flexibleLines';
-import { FlexibleLinesState } from 'reducers/flexibleLines';
-import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
-import { JourneyPattern } from 'model/JourneyPattern';
-import FlexibleLine from 'model/FlexibleLine';
-import { GlobalState } from 'reducers';
-import { setSavedChanges } from 'actions/editor';
 import { equals } from 'ramda';
-
-const initJourneyPatterns = (): JourneyPattern[] => {
-  return [
-    {
-      serviceJourneys: [{ passingTimes: [{}, {}] }],
-      pointsInSequence: [{}, {}],
-    },
-  ];
-};
 
 export const usePristine = (value: any, spoil: boolean): boolean => {
   const [isPristine, setIsPristine] = useState<boolean>(true);
@@ -81,52 +66,4 @@ export const useLoadDependencies = ({
   return (
     networksIsLoading || flexibleLineIsLoading || flexibleStopPlacesIsLoading
   );
-};
-
-export const getFlexibleLineFromPath = (
-  flexibleLines: FlexibleLinesState,
-  match: { params: MatchParams }
-) =>
-  flexibleLines?.find(
-    (flexibleLine) => flexibleLine.id === match.params.id
-  ) ?? {
-    transportMode: VEHICLE_MODE.BUS,
-    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
-    journeyPatterns: initJourneyPatterns(),
-  };
-
-export const useFlexibleLine = (
-  match: { params: MatchParams },
-  loadDependencies: boolean
-) => {
-  const [flexibleLine, setFlexibleLine] = useState<FlexibleLine>({
-    transportMode: VEHICLE_MODE.BUS,
-    transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
-    journeyPatterns: initJourneyPatterns(),
-  });
-
-  const {
-    flexibleLines,
-    editor: { isSaved },
-  } = useSelector<
-    GlobalState,
-    { flexibleLines: FlexibleLinesState; editor: { isSaved: boolean } }
-  >((state) => ({ flexibleLines: state.flexibleLines, editor: state.editor }));
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    setFlexibleLine(getFlexibleLineFromPath(flexibleLines, match));
-  }, [loadDependencies, flexibleLines, match]);
-
-  const onFieldChange = (flexibleLine: FlexibleLine) => {
-    setFlexibleLine(flexibleLine);
-    if (isSaved) {
-      dispatch(setSavedChanges(false));
-    }
-  };
-
-  return {
-    onFieldChange,
-    flexibleLine,
-  };
 };

@@ -38,6 +38,10 @@
     }
   }
 
+  .flexible-line-type {
+    min-width: 19rem;
+  }
+
   header.flexible-line-type-drawer {
     margin-bottom: $space-extra-large;
   }
