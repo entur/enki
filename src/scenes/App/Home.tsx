@@ -1,13 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import {
-  Heading1,
-  LeadParagraph,
-  Heading2,
-  NumberedList,
-  ListItem,
-} from '@entur/typography';
+import { Heading1, LeadParagraph, Heading2 } from '@entur/typography';
+import { NavigationCard } from '@entur/layout';
+import { DesktopIcon } from '@entur/icons';
+import './styles.scss';
 
 const Home = () => {
   const { formatMessage } = useSelector(selectIntl);
@@ -22,13 +19,24 @@ const Home = () => {
         <LeadParagraph>{formatMessage('headerParagraph')}</LeadParagraph>
       </header>
       <main>
-        <section>
-          <Heading2>{formatMessage('intropageTitle')}</Heading2>
-          <NumberedList>
-            <ListItem>{formatMessage('item1')}</ListItem>
-            <ListItem>{formatMessage('item2')}</ListItem>
-            <ListItem>{formatMessage('item3')}</ListItem>
-          </NumberedList>
+        <Heading2>Snarveier</Heading2>
+        <section className="cards">
+          <NavigationCard
+            title="Kom i gang"
+            titleIcon={<DesktopIcon />}
+            href="#"
+          >
+            Se all dataen vår
+          </NavigationCard>
+          <NavigationCard title="Linjer" titleIcon={<DesktopIcon />} href="#">
+            Se all dataen vår
+          </NavigationCard>
+          <NavigationCard title="Data" titleIcon={<DesktopIcon />} href="#">
+            Se all dataen vår
+          </NavigationCard>
+          <NavigationCard title="Data" titleIcon={<DesktopIcon />} href="#">
+            Se all dataen vår
+          </NavigationCard>
         </section>
       </main>
     </div>

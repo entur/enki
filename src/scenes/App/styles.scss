@@ -30,7 +30,7 @@
   }
 }
 
-.home {
+.get-started {
   max-width: 54rem;
   .tagline {
     margin: 0;
@@ -56,4 +56,10 @@
   .point {
     margin: 0 0 $space-extra-large 0;
   }
+}
+
+.cards {
+  display: grid;
+  grid-gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
 }
