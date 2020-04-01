@@ -37,4 +37,16 @@
       width: fit-content;
     }
   }
+
+  .flexible-areas-passing-time {
+    display: flex;
+
+    .eds-form-control-wrapper {
+      width: 9.5rem;
+    }
+
+    > div:not(:last-child) {
+      margin-right: 16px;
+    }
+  }
 }

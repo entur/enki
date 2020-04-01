@@ -288,6 +288,7 @@ export const messages = {
   flexibleStopPlaceRefAndQuayRefBothValues:
     'Velg enten stoppested eller plattform, ikke begge.',
   flexibleStopPlaceRefAndQuayRefNoValues: 'Du må velge et sted',
+  flexibleStopPlaceNoValue: 'Du må velge et stoppested',
   frontTextNoValue: 'Du må oppgi fronttekst',
   frontTextAlighting: 'Første stopp kan kun ha påstigning',
   frontTextBoarding: 'Siste stopp kan kun ha avstigning',

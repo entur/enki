@@ -32,6 +32,7 @@ type Props = {
   spoilPristine: boolean;
   onChange: (serviceJourney: ServiceJourney) => void;
   deleteServiceJourney?: (index: number) => void;
+  flexibleLineType: string | undefined;
 };
 
 const ServiceJourneyEditor = (props: Props) => {
@@ -49,6 +50,7 @@ const ServiceJourneyEditor = (props: Props) => {
     stopPoints,
     serviceJourney,
     deleteServiceJourney,
+    flexibleLineType,
   } = props;
 
   const [operatorSelection, setOperatorSelection] = useState(
@@ -214,6 +216,7 @@ const ServiceJourneyEditor = (props: Props) => {
               stopPoints={stopPoints}
               onChange={(pts) => onFieldChange('passingTimes', pts)}
               spoilPristine={spoilPristine}
+              flexibleLineType={flexibleLineType}
             />
           </section>
         </div>

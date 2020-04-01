@@ -21,6 +21,7 @@ type Props = {
   stopPoints: StopPoint[];
   setIsValidServiceJourney: (isValid: boolean) => void;
   spoilPristine: boolean;
+  flexibleLineType: string | undefined;
 };
 
 const ServiceJourneysEditor = ({
@@ -29,6 +30,7 @@ const ServiceJourneysEditor = ({
   stopPoints,
   setIsValidServiceJourney,
   spoilPristine,
+  flexibleLineType,
 }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [keys, setKeys] = useState<number[]>(serviceJourneys.map(Math.random));
@@ -73,6 +75,7 @@ const ServiceJourneysEditor = ({
             ? () => deleteServiceJourney(index)
             : undefined
         }
+        flexibleLineType={flexibleLineType}
       />
     );
   };
@@ -136,7 +139,6 @@ const ServiceJourneysEditor = ({
                   {renderServiceJourneyEditor(sj, index)}
                 </ExpandablePanel>
               ))}
-
           <AddButton
             onClick={() => setShowModal(true)}
             buttonTitle={formatMessage('editorAddServiceJourneys')}

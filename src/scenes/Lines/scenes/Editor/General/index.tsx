@@ -12,6 +12,8 @@ import { Organisation } from 'reducers/organisations';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import ServiceJourney from 'model/ServiceJourney';
+import JourneyPattern from 'model/JourneyPattern';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -48,6 +50,34 @@ export default ({
   const networkPristine = usePristine(flexibleLine.network?.id, spoilPristine);
   const operatorPristine = usePristine(flexibleLine.operatorRef, spoilPristine);
   const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
+
+  const onFlexibleLineTypeChange = (flexibleLineType: string | undefined) => {
+    if (flexibleLineType !== 'flexibleAreasOnly') {
+      return flexibleLineChange({ ...flexibleLine, flexibleLineType });
+    }
+
+    const journeyPatterns = flexibleLine.journeyPatterns ?? [];
+    const { serviceJourneys } = journeyPatterns[0];
+
+    flexibleLineChange({
+      ...flexibleLine,
+      journeyPatterns: journeyPatterns.map((journeyPattern: JourneyPattern) => {
+        return {
+          ...journeyPattern,
+          serviceJourneys: serviceJourneys.map(
+            (serviceJourney: ServiceJourney) => {
+              return {
+                ...serviceJourney,
+                passingTimes: [{}, {}],
+              };
+            }
+          ),
+          pointsInSequence: [{}, {}],
+        };
+      }),
+      flexibleLineType,
+    });
+  };
 
   return (
     <div className="lines-editor-general">
@@ -176,12 +206,7 @@ export default ({
               })),
             ]}
             label={formatMessage('generalTypeFormGroupTitle')}
-            onChange={(element) =>
-              flexibleLineChange({
-                ...flexibleLine,
-                flexibleLineType: element?.value,
-              })
-            }
+            onChange={(element) => onFlexibleLineTypeChange(element?.value)}
             {...getErrorFeedback(
               formatMessage('networkRefEmpty'),
               !flexibleLineTypeError,

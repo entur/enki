@@ -6,5 +6,5 @@ export const getErrorFeedback = (
   isValid: boolean,
   isPristine: boolean
 ): ErrorHandling => {
-  return isPristine || isValid ? {} : { feedback: feedback, variant: 'error' };
+  return isPristine || isValid ? {} : { feedback, variant: 'error' };
 };
