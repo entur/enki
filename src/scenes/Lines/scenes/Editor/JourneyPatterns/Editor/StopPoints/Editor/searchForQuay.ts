@@ -1,4 +1,4 @@
-import { request } from 'graphql-request';
+import { StopPlacesQuery } from 'graphql';
 
 export type Quay = {
   id: string;
@@ -61,7 +61,7 @@ export default async function search(quayRef: string): Promise<QuaySearch> {
     quayRef,
   };
 
-  const data: null | SearchForQuayResponse = await request(
+  const data: null | SearchForQuayResponse = await StopPlacesQuery(
     endpoint,
     query,
     variables
