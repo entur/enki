@@ -9,7 +9,6 @@ import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
 import PageHeader from 'components/PageHeader';
 import OverlayLoader from 'components/OverlayLoader';
-import { Label } from '@entur/typography';
 import { AppIntlState, selectIntl } from 'i18n';
 import { RouteComponentProps } from 'react-router';
 import { exportIsValid, toDateIsAfterFromDate } from './validateForm';

@@ -11,7 +11,7 @@ import {
 } from '@entur/button';
 import { MapIcon } from '@entur/icons';
 import { SmallAlertBox } from '@entur/alert';
-import { Paragraph, Label } from '@entur/typography';
+import { Paragraph } from '@entur/typography';
 
 import ConfirmDialog from 'components/ConfirmDialog';
 import { GEOMETRY_TYPE, VEHICLE_MODE } from 'model/enums';

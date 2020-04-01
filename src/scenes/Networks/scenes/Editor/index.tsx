@@ -5,7 +5,6 @@ import { InputGroup, TextArea, TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
 import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { Paragraph } from '@entur/typography';
-import { Label } from '@entur/typography';
 import { RouteComponentProps } from 'react-router';
 import { isBlank } from 'helpers/forms';
 import { ORGANISATION_TYPE } from 'model/enums';
