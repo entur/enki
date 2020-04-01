@@ -50,7 +50,6 @@ export default ({
   const networkPristine = usePristine(flexibleLine.network?.id, spoilPristine);
   const operatorPristine = usePristine(flexibleLine.operatorRef, spoilPristine);
   const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
-  console.log({ flexibleLine });
 
   const onFlexibleLineTypeChange = (flexibleLineType: string | undefined) => {
     if (flexibleLineType !== 'flexibleAreasOnly') {
