@@ -48,7 +48,7 @@ const Lines = ({ history }: RouteComponentProps) => {
             <DataCell title={line.description}>{line.name}</DataCell>
             <DataCell>{line.privateCode}</DataCell>
             <DataCell>
-              {operator?.find((op) => op.id === line.id)?.name ?? '-'}
+              {operator?.find((op) => op.id === line.operatorRef)?.name ?? '-'}
             </DataCell>
           </TableRow>
         ))
