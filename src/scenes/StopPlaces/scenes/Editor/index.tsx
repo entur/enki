@@ -42,6 +42,7 @@ import GeoJSON, {
 import { equals } from 'ramda';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 
 // Show coordinates in GeoJson order [Long, Lat]
 const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
@@ -241,6 +242,7 @@ const FlexibleStopPlaceEditor = ({
         >
           <div className="stop-place-form-container">
             <div className="stop-place-form">
+              <RequiredInputMarker />
               <div>
                 <InputGroup
                   label={formatMessage('editorNameFormLabelText')}
@@ -324,7 +326,6 @@ const FlexibleStopPlaceEditor = ({
                   <MapIcon />
                 </PrimaryButton>
               </div>
-
               <div>
                 <div className="buttons">
                   {match.params.id && (

@@ -26,6 +26,7 @@ import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import './styles.scss';
 import JourneyPattern from 'model/JourneyPattern';
 import FlexibleAreasOnlyEditor from './StopPoints/Editor/FlexibleAreasOnlyEditor';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -127,6 +128,7 @@ const JourneyPatternEditor = ({
       <section>
         <Heading2>{formatMessage('editorJourneyPatternsTabLabel')}</Heading2>
         <LeadParagraph>{formatMessage('editorFillInformation')}</LeadParagraph>
+        <RequiredInputMarker />
         <General
           journeyPattern={journeyPattern}
           onFieldChange={onJourneyPatternChange}

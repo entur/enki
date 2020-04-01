@@ -18,6 +18,7 @@ import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import './styles.scss';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 
 const newExport = (): Export => {
   const today = moment().format('YYYY-MM-DD');
@@ -67,6 +68,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
         text={formatMessage('creatorSavingOverlayLoaderText')}
       >
         <div className="export-form">
+          <RequiredInputMarker />
           <InputGroup
             label={formatMessage('creatorNameFormLabel')}
             {...getErrorFeedback(
@@ -82,7 +84,6 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               }
             />
           </InputGroup>
-
           <InputGroup label={formatMessage('creatorFromDateFormLabel')}>
             <DatePicker
               selectedDate={moment(theExport.fromDate).toDate()}
@@ -91,7 +92,6 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               }
             />
           </InputGroup>
-
           <InputGroup
             label={formatMessage('creatorToDateFormLabel')}
             {...getErrorFeedback(
@@ -107,7 +107,6 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               }
             />
           </InputGroup>
-
           <InputGroup label={formatMessage('creatorDryRunFormLabel')}>
             <Checkbox
               value="1"

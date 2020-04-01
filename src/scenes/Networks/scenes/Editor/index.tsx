@@ -29,6 +29,7 @@ import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 
 const getCurrentNetwork = (
   state: GlobalState,
@@ -151,6 +152,7 @@ const NetworkEditor = ({
           }
         >
           <div className="network-form">
+            <RequiredInputMarker />
             <InputGroup
               className="form-section"
               label={formatMessage('editorNameLabelText')}
@@ -167,7 +169,6 @@ const NetworkEditor = ({
                 }
               />
             </InputGroup>
-
             <InputGroup
               className="form-section"
               label={formatMessage('editorDescriptionLabelText')}
@@ -179,7 +180,6 @@ const NetworkEditor = ({
                 }
               />
             </InputGroup>
-
             <InputGroup
               className="form-section"
               label={formatMessage('editorPrivateCodeLabelText')}
@@ -191,7 +191,6 @@ const NetworkEditor = ({
                 }
               />
             </InputGroup>
-
             <Dropdown
               className="form-section"
               value={network.authorityRef}
@@ -211,7 +210,6 @@ const NetworkEditor = ({
                 authorityPristine
               )}
             />
-
             <div className="buttons">
               {match.params.id && (
                 <NegativeButton

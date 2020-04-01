@@ -25,6 +25,7 @@ import WeekdayPicker from 'components/WeekdayPicker';
 import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
 import { newDayTypeAssignment } from 'model/DayTypeAssignment';
 import { Tooltip } from '@entur/tooltip';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -81,6 +82,7 @@ const ServiceJourneyEditor = (props: Props) => {
     <ScrollToTop>
       <div className="service-journey-editor">
         <div className="service-journey-editor-form">
+          <RequiredInputMarker />
           <div className="input-group">
             <div className="input-fields">
               <InputGroup
@@ -154,7 +156,6 @@ const ServiceJourneyEditor = (props: Props) => {
               }
             />
           </div>
-
           <section className="weekday-section">
             <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
             <WeekdayPicker
@@ -175,7 +176,6 @@ const ServiceJourneyEditor = (props: Props) => {
               spoilPristine={spoilPristine}
             />
           </section>
-
           <section className="day-type-section">
             <Heading4>
               {formatMessage('dayTypeEditorDateAvailability')}
@@ -207,7 +207,6 @@ const ServiceJourneyEditor = (props: Props) => {
               }
             />
           </section>
-
           <section className="passing-times-section">
             <h4>{formatMessage('serviceJourneyPassingTimes')}</h4>
             <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
@@ -220,7 +219,6 @@ const ServiceJourneyEditor = (props: Props) => {
             />
           </section>
         </div>
-
         {deleteServiceJourney && (
           <TertiaryButton
             className="delete-button"
@@ -229,7 +227,6 @@ const ServiceJourneyEditor = (props: Props) => {
             <DeleteIcon inline /> {formatMessage('editorDeleteButtonText')}
           </TertiaryButton>
         )}
-
         {showDeleteDialog && deleteServiceJourney && (
           <ConfirmDialog
             isOpen={showDeleteDialog}
