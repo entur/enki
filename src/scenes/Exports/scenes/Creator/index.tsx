@@ -19,6 +19,7 @@ import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import './styles.scss';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 
 const newExport = (): Export => {
   const today = moment().format('YYYY-MM-DD');
@@ -68,9 +69,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
         text={formatMessage('creatorSavingOverlayLoaderText')}
       >
         <div className="export-form">
-          <Label className="required-marker">
-            <i> {formatMessage('requiredInputMarker')} </i>
-          </Label>
+          <RequiredInputMarker />
           <InputGroup
             label={formatMessage('creatorNameFormLabel')}
             {...getErrorFeedback(

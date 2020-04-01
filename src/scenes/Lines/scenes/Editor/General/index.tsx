@@ -14,6 +14,7 @@ import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import ServiceJourney from 'model/ServiceJourney';
 import JourneyPattern from 'model/JourneyPattern';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -82,6 +83,7 @@ export default ({
   return (
     <div className="lines-editor-general">
       <Heading2> {formatMessage('editorAbout')}</Heading2>
+      <RequiredInputMarker />
       <section className="inputs">
         <InputGroup
           className="form-section"
