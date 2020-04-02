@@ -6,7 +6,7 @@ import GetStarted from './GetStarted';
 import NetworksOverview from '../Networks';
 import NetworkEditor from '../Networks/scenes/Editor';
 import LinesOverview from '../Lines';
-import LinesEditor from '../Lines/scenes/Editor';
+import EditorFrame from '../Lines/scenes/Editor/EditorFrame';
 import StopPlacesOverview from '../StopPlaces';
 import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import ExportsOverview from '../Exports';
@@ -22,8 +22,8 @@ const Routes = () => (
       <Route exact path="/networks/create" component={NetworkEditor} />
       <Route exact path="/networks/edit/:id" component={NetworkEditor} />
       <Route exact path="/lines" component={LinesOverview} />
-      <Route exact path="/lines/create" component={LinesEditor} />
-      <Route exact path="/lines/edit/:id" component={LinesEditor} />
+      <Route exact path="/lines/create" component={EditorFrame} />
+      <Route exact path="/lines/edit/:id" component={EditorFrame} />
       <Route exact path="/stop-places" component={StopPlacesOverview} />
       <Route exact path="/stop-places/create" component={StopPlacesEditor} />
       <Route exact path="/stop-places/edit/:id" component={StopPlacesEditor} />

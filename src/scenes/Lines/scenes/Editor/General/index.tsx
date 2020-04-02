@@ -12,6 +12,7 @@ import { Organisation } from 'reducers/organisations';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import { isBlank } from 'helpers/forms';
 import ServiceJourney from 'model/ServiceJourney';
 import JourneyPattern from 'model/JourneyPattern';
 import RequiredInputMarker from 'components/RequiredInputMarker';
@@ -19,7 +20,6 @@ import RequiredInputMarker from 'components/RequiredInputMarker';
 type Props = {
   flexibleLine: FlexibleLine;
   networks: Network[];
-  errors: any;
   operators: Organisation[];
   flexibleLineChange: (flexibleLine: FlexibleLine) => void;
   spoilPristine: boolean;
@@ -28,27 +28,17 @@ type Props = {
 export default ({
   flexibleLine,
   networks,
-  errors,
   operators,
   flexibleLineChange,
   spoilPristine,
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const { publicCode, flexibleLineType } = flexibleLine;
-  const {
-    errors: {
-      name: nameError,
-      publicCode: publicCodeError,
-      networkRef: networkError,
-      operatorRef: operatorError,
-      flexibleLineType: flexibleLineTypeError,
-    },
-  } = errors;
   const [showDrawer, setDrawer] = useState<boolean>(false);
 
   const namePristine = usePristine(flexibleLine.name, spoilPristine);
   const publicCodePristine = usePristine(publicCode, spoilPristine);
-  const networkPristine = usePristine(flexibleLine.network?.id, spoilPristine);
+  const networkPristine = usePristine(flexibleLine.networkRef, spoilPristine);
   const operatorPristine = usePristine(flexibleLine.operatorRef, spoilPristine);
   const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
 
@@ -88,7 +78,11 @@ export default ({
         <InputGroup
           className="form-section"
           label={formatMessage('generalNameFormGroupTitle')}
-          {...getErrorFeedback(nameError, !nameError, namePristine)}
+          {...getErrorFeedback(
+            formatMessage('nameEmpty'),
+            !isBlank(flexibleLine.name),
+            namePristine
+          )}
         >
           <TextField
             defaultValue={flexibleLine.name ?? ''}
@@ -135,8 +129,8 @@ export default ({
           label={formatMessage('generalPublicCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPublicCodeInputLabelTooltip')}
           {...getErrorFeedback(
-            publicCodeError,
-            !publicCodeError,
+            formatMessage('publicCodeEmpty'),
+            !isBlank(flexibleLine.publicCode),
             publicCodePristine
           )}
         >
@@ -164,14 +158,14 @@ export default ({
           }
           {...getErrorFeedback(
             formatMessage('operatorRefEmpty'),
-            !operatorError,
+            !isBlank(flexibleLine.operatorRef),
             operatorPristine
           )}
         />
 
         <Dropdown
           className="form-section"
-          value={flexibleLine.network?.id}
+          value={flexibleLine.networkRef ?? flexibleLine.network?.id}
           items={networks.map((n) => ({
             value: n.id ?? '',
             label: n.name ?? '',
@@ -185,7 +179,7 @@ export default ({
           }
           {...getErrorFeedback(
             formatMessage('networkRefEmpty'),
-            !networkError,
+            !isBlank(flexibleLine.networkRef ?? flexibleLine.network?.id),
             networkPristine
           )}
         />
@@ -199,7 +193,7 @@ export default ({
             {formatMessage('typeFormGroupTitleTooltip')}
           </div>
           <Dropdown
-            className="form-section"
+            className="form-section flexible-line-type"
             value={flexibleLine.flexibleLineType}
             items={[
               ...Object.values(FLEXIBLE_LINE_TYPE).map((type) => ({
@@ -210,8 +204,8 @@ export default ({
             label={formatMessage('generalTypeFormGroupTitle')}
             onChange={(element) => onFlexibleLineTypeChange(element?.value)}
             {...getErrorFeedback(
-              formatMessage('networkRefEmpty'),
-              !flexibleLineTypeError,
+              formatMessage('flexibleLineTypeEmpty'),
+              !isBlank(flexibleLine.flexibleLineType),
               lineTypePristine
             )}
           />

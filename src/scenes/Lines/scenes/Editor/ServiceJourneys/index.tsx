@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import StopPoint from 'model/StopPoint';
 import ServiceJourneyEditor from './Editor';
@@ -7,7 +7,6 @@ import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import AddButton from 'components/AddButton/AddButton';
 import ServiceJourney from 'model/ServiceJourney';
 import { Heading2, LeadParagraph } from '@entur/typography';
-import { validateServiceJourney } from 'scenes/Lines/scenes/Editor/ServiceJourneys/Editor/validate';
 import { ExpandablePanel } from '@entur/expand';
 import ScrollToTop from 'components/ScrollToTop';
 import { Modal } from '@entur/modal';
@@ -19,7 +18,6 @@ type Props = {
   serviceJourneys: ServiceJourney[];
   onChange: (sj: ServiceJourney[]) => void;
   stopPoints: StopPoint[];
-  setIsValidServiceJourney: (isValid: boolean) => void;
   spoilPristine: boolean;
   flexibleLineType: string | undefined;
 };
@@ -28,7 +26,6 @@ const ServiceJourneysEditor = ({
   serviceJourneys,
   onChange,
   stopPoints,
-  setIsValidServiceJourney,
   spoilPristine,
   flexibleLineType,
 }: Props) => {
@@ -79,12 +76,6 @@ const ServiceJourneysEditor = ({
       />
     );
   };
-
-  useEffect(() => {
-    setIsValidServiceJourney(
-      serviceJourneys.every((sj) => validateServiceJourney(sj))
-    );
-  }, [serviceJourneys, setIsValidServiceJourney]);
 
   return (
     <>
