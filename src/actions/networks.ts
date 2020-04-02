@@ -43,6 +43,7 @@ export const loadNetworks = () => async (
       {}
     );
     dispatch(receiveNetworksActionCreator(data.networks));
+    return data.networks;
   } catch (e) {
     dispatch(
       showErrorNotification(

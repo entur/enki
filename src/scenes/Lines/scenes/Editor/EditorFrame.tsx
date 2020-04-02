@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import FlexibleLineEditor from './index';
 import { GlobalState } from 'reducers';
-import FlexibleLine from 'model/FlexibleLine';
+import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
 import { filterNetexOperators } from 'reducers/organisations';
 import { aboutLineStepIsValid } from './validateForm';
 import { isBlank } from 'helpers/forms';
@@ -20,17 +20,46 @@ import PageHeader from 'components/PageHeader';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 import Loading from 'components/Loading';
 import { setSavedChanges } from 'actions/editor';
+import { loadNetworks, saveNetwork } from 'actions/networks';
+import { Network } from 'model/Network';
+
+const findNetworkIdByProvider = (
+  provider: string,
+  networks: Network[]
+): string | undefined =>
+  networks.find(
+    (network) => network.id?.split(':')?.[0]?.toLowerCase() === provider
+  )?.id;
+
+const createAndGetNetwork = (
+  dispatch: any,
+  authorityRef: string,
+  activeProvider: string
+): Promise<string> =>
+  dispatch(
+    saveNetwork({
+      name: activeProvider!,
+      authorityRef: authorityRef,
+    })
+  )
+    .then(() => dispatch(loadNetworks()))
+    .then((newNetworks: Network[]) =>
+      findNetworkIdByProvider(activeProvider, newNetworks)
+    );
 
 const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const [flexibleLine, setFlexibleLine] = useState<FlexibleLine>({});
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   const { formatMessage } = useSelector(selectIntl);
-  const dispatch = useDispatch();
-  const { flexibleLines, organisations, networks, editor } = useSelector<
-    GlobalState,
-    GlobalState
-  >((s) => s);
+  const dispatch = useDispatch<any>();
+  const {
+    flexibleLines,
+    organisations,
+    networks,
+    editor,
+    providers,
+  } = useSelector<GlobalState, GlobalState>((s) => s);
 
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
   const FLEXIBLE_LINE_STEPS = [
@@ -46,8 +75,34 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   } as RouteComponentProps<MatchParams>);
 
   useEffect(() => {
-    if (!isLoadingDependencies) {
-      setFlexibleLine(getFlexibleLineFromPath(flexibleLines, props.match));
+    if (
+      !isLoadingDependencies &&
+      providers.active &&
+      organisations &&
+      networks
+    ) {
+      if (!isBlank(props.match.params.id)) {
+        setFlexibleLine(
+          getFlexibleLineFromPath(flexibleLines ?? [], props.match)
+        );
+      } else if (filterNetexOperators(organisations).length === 0) {
+        console.log('NO AUTHORITIES');
+      } else {
+        const networkId = findNetworkIdByProvider(providers.active, networks);
+        if (networkId) {
+          console.log({ networkId });
+          setFlexibleLine(initFlexibleLine(networkId));
+        } else {
+          createAndGetNetwork(
+            dispatch,
+            filterNetexOperators(organisations)[0].id,
+            providers.active
+          ).then((networkId) => {
+            console.log('createAndGetNetwork');
+            setFlexibleLine(initFlexibleLine(networkId));
+          });
+        }
+      }
     }
     // eslint-disable-next-line
   }, [flexibleLines, isLoadingDependencies]);
@@ -85,27 +140,29 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         onBackButtonClick={onBackButtonClicked}
         backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
       />
-      <Stepper
-        className="editor-frame"
-        steps={FLEXIBLE_LINE_STEPS}
-        activeIndex={activeStepperIndex}
-        onStepClick={(index) => onStepClicked(index)}
-      />
       <Loading
         className=""
         isLoading={isLoadingDependencies || isEmpty(flexibleLine)}
         text={formatMessage('editorLoadingLineText')}
       >
-        <FlexibleLineEditor
-          isEdit={!isBlank(props.match.params.id)}
-          lastStep={FLEXIBLE_LINE_STEPS.length - 1 === activeStepperIndex}
-          activeStep={activeStepperIndex}
-          setActiveStep={setActiveStepperIndex}
-          flexibleLine={flexibleLine}
-          networks={networks ?? []}
-          changeFlexibleLine={onFlexibleLineChange}
-          operators={filterNetexOperators(organisations ?? [])}
-        />
+        <>
+          <Stepper
+            className="editor-frame"
+            steps={FLEXIBLE_LINE_STEPS}
+            activeIndex={activeStepperIndex}
+            onStepClick={(index) => onStepClicked(index)}
+          />
+          <FlexibleLineEditor
+            isEdit={!isBlank(props.match.params.id)}
+            lastStep={FLEXIBLE_LINE_STEPS.length - 1 === activeStepperIndex}
+            activeStep={activeStepperIndex}
+            setActiveStep={setActiveStepperIndex}
+            flexibleLine={flexibleLine}
+            networks={networks ?? []}
+            changeFlexibleLine={onFlexibleLineChange}
+            operators={filterNetexOperators(organisations ?? [])}
+          />
+        </>
       </Loading>
       {showConfirm && (
         <NavigateConfirmBox
