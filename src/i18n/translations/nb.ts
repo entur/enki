@@ -337,7 +337,6 @@ export const messages = {
   networkAuthorityMissingDetails:
     'Det finnes ingen autoriteter for denne dataleverandøren. Vennligst ta kontakt med administratorene for å opprette dette.',
   networksAuthorityTableHeaderLabel: 'Autoritet',
-  networksCreateNetworkIconButtonLabel: 'Opprett nettverk',
   editorAuthorityLabelText: 'Autoritet *',
   editorCreateNetworkHeaderText: 'Opprett nettverk',
   editorNetworkDescription:

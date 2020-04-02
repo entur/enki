@@ -339,7 +339,6 @@ export const messages: MessagesKey = {
   networkAuthorityMissingDetails:
     'There are no authorities created for this data provider. Please contact the administrators for help.',
   networksAuthorityTableHeaderLabel: 'Authority',
-  networksCreateNetworkIconButtonLabel: 'Create network',
   editorAuthorityLabelText: 'Authority *',
   editorCreateNetworkHeaderText: 'Create network',
   editorNetworkDescription:

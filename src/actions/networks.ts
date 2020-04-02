@@ -85,7 +85,7 @@ export const loadNetworkById = (id: string) => async (
   }
 };
 
-export const saveNetwork = (network: Network) => async (
+export const saveNetwork = (network: Network, showConfirm = true) => async (
   dispatch: Dispatch<GlobalState>,
   getState: () => GlobalState
 ) => {
@@ -93,9 +93,11 @@ export const saveNetwork = (network: Network) => async (
     await UttuQuery(getState().providers.active?.code, networkMutation, {
       input: network,
     });
-    dispatch(
-      showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')
-    );
+    if (showConfirm) {
+      dispatch(
+        showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')
+      );
+    }
   } catch (e) {
     dispatch(
       showErrorNotification(

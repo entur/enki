@@ -83,8 +83,6 @@ const FlexibleLineEditor = (props: Props) => {
     }
   };
 
-  console.log({ flexibleLine: props.flexibleLine });
-
   return (
     <div className="line-editor">
       <OverlayLoader

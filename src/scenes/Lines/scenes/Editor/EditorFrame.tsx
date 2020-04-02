@@ -44,10 +44,13 @@ const createAndGetNetwork = (
   activeProvider: Provider
 ): Promise<string> =>
   dispatch(
-    saveNetwork({
-      name: activeProvider.codespace?.xmlns,
-      authorityRef: authorityRef,
-    })
+    saveNetwork(
+      {
+        name: activeProvider.codespace?.xmlns,
+        authorityRef: authorityRef,
+      },
+      false
+    )
   )
     .then(() => dispatch(loadNetworks()))
     .then((newNetworks: Network[]) =>
@@ -93,7 +96,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         setFlexibleLine(
           getFlexibleLineFromPath(flexibleLines ?? [], props.match)
         );
-      } else if (authorities.length > 1) {
+      } else if (authorities.length > 0) {
         const networkId = findNetworkIdByProvider(providers.active, networks);
         if (networkId) {
           setFlexibleLine(initFlexibleLine(networkId));
