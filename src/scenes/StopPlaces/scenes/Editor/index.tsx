@@ -140,7 +140,6 @@ const FlexibleStopPlaceEditor = ({
   }, [dispatch, history, flexibleStopPlace]);
 
   const handleMapOnClick = (e: LeafletMouseEvent) => {
-    console.log(e);
     const newCoordinates = addCoordinate(polygonCoordinates, [
       e.latlng.lat,
       e.latlng.lng,
