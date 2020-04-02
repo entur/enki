@@ -9,7 +9,10 @@ import { selectIntl } from 'i18n';
 import FlexibleLineEditor from './index';
 import { GlobalState } from 'reducers';
 import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
-import { filterNetexOperators } from 'reducers/organisations';
+import {
+  filterAuthorities,
+  filterNetexOperators,
+} from 'reducers/organisations';
 import { aboutLineStepIsValid } from './validateForm';
 import { isBlank } from 'helpers/forms';
 import { validJourneyPattern } from './JourneyPatterns/Editor/StopPoints/Editor/validateForm';
@@ -22,23 +25,27 @@ import Loading from 'components/Loading';
 import { setSavedChanges } from 'actions/editor';
 import { loadNetworks, saveNetwork } from 'actions/networks';
 import { Network } from 'model/Network';
+import Provider from 'model/Provider';
+import { PrimaryButton } from '@entur/button';
+import ConfirmDialog from 'components/ConfirmDialog';
 
 const findNetworkIdByProvider = (
-  provider: string,
+  provider: Provider,
   networks: Network[]
 ): string | undefined =>
   networks.find(
-    (network) => network.id?.split(':')?.[0]?.toLowerCase() === provider
+    (network) =>
+      network.id?.split(':')?.[0]?.toUpperCase() === provider.codespace?.xmlns
   )?.id;
 
 const createAndGetNetwork = (
   dispatch: any,
   authorityRef: string,
-  activeProvider: string
+  activeProvider: Provider
 ): Promise<string> =>
   dispatch(
     saveNetwork({
-      name: activeProvider!,
+      name: activeProvider.codespace?.xmlns,
       authorityRef: authorityRef,
     })
   )
@@ -81,26 +88,21 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
       organisations &&
       networks
     ) {
+      const authorities = filterAuthorities(organisations, providers.active);
       if (!isBlank(props.match.params.id)) {
         setFlexibleLine(
           getFlexibleLineFromPath(flexibleLines ?? [], props.match)
         );
-      } else if (filterNetexOperators(organisations).length === 0) {
-        console.log('NO AUTHORITIES');
-      } else {
+      } else if (authorities.length > 1) {
         const networkId = findNetworkIdByProvider(providers.active, networks);
         if (networkId) {
-          console.log({ networkId });
           setFlexibleLine(initFlexibleLine(networkId));
         } else {
           createAndGetNetwork(
             dispatch,
-            filterNetexOperators(organisations)[0].id,
+            authorities[0].id,
             providers.active
-          ).then((networkId) => {
-            console.log('createAndGetNetwork');
-            setFlexibleLine(initFlexibleLine(networkId));
-          });
+          ).then((networkId) => setFlexibleLine(initFlexibleLine(networkId)));
         }
       }
     }
@@ -133,6 +135,10 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     dispatch(setSavedChanges(false));
   };
 
+  const authoritiesMissing =
+    organisations &&
+    filterAuthorities(organisations, providers.active).length === 0;
+
   return (
     <>
       <PageHeader
@@ -158,7 +164,6 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
             activeStep={activeStepperIndex}
             setActiveStep={setActiveStepperIndex}
             flexibleLine={flexibleLine}
-            networks={networks ?? []}
             changeFlexibleLine={onFlexibleLineChange}
             operators={filterNetexOperators(organisations ?? [])}
           />
@@ -172,6 +177,20 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
           description={formatMessage('redirectMessage')}
           confirmText={formatMessage('redirectYes')}
           cancelText={formatMessage('redirectNo')}
+        />
+      )}
+      {authoritiesMissing && (
+        <ConfirmDialog
+          className="authority-missing-modal"
+          isOpen={true}
+          title={formatMessage('networkAuthorityMissing')}
+          message={formatMessage('networkAuthorityMissingDetails')}
+          onDismiss={() => props.history.push('/')}
+          buttons={[
+            <PrimaryButton key="0" onClick={() => props.history.push('/')}>
+              {formatMessage('homePage')}
+            </PrimaryButton>,
+          ]}
         />
       )}
     </>

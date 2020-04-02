@@ -332,6 +332,10 @@ export const messages = {
   networkRefEmpty: 'Du må velge et nettverk.',
   operatorRefEmpty: 'Du må velge en operatør.',
   flexibleLineTypeEmpty: 'Du må velge en type.',
+  homePage: 'Startsiden',
+  networkAuthorityMissing: 'Nettverk mangler',
+  networkAuthorityMissingDetails:
+    'Det finnes ingen autoriteter for denne dataleverandøren. Vennligst ta kontakt med administratorene for å opprette dette.',
   networksAuthorityTableHeaderLabel: 'Autoritet',
   networksCreateNetworkIconButtonLabel: 'Opprett nettverk',
   editorAuthorityLabelText: 'Autoritet *',

@@ -334,6 +334,10 @@ export const messages: MessagesKey = {
   networkRefEmpty: 'You must select a network.',
   operatorRefEmpty: 'You must select an operator.',
   flexibleLineTypeEmpty: 'You must select a type.',
+  homePage: 'Home page',
+  networkAuthorityMissing: 'Network is missing',
+  networkAuthorityMissingDetails:
+    'There are no authorities created for this data provider. Please contact the administrators for help.',
   networksAuthorityTableHeaderLabel: 'Authority',
   networksCreateNetworkIconButtonLabel: 'Create network',
   editorAuthorityLabelText: 'Authority *',

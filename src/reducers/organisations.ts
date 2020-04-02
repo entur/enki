@@ -3,6 +3,7 @@ import {
   ReceiveOrganisations,
 } from 'actions/organisations';
 import { ORGANISATION_TYPE } from 'model/enums';
+import Provider from 'model/Provider';
 
 type ContactInfo = {
   url: string;
@@ -36,6 +37,17 @@ const organisationsReducer = (
       return state;
   }
 };
+
+export const filterAuthorities = (
+  organisations: Organisation[],
+  activeProvider: Provider | null
+) =>
+  organisations.filter(
+    (org) =>
+      org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
+      org.references.netexAuthorityId &&
+      org.references.codeSpace === activeProvider?.codespace?.xmlns
+  );
 
 export const filterNetexOperators = (
   organisations: Organisation[]

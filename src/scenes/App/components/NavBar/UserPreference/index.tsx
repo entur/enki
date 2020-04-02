@@ -9,7 +9,6 @@ import { setActiveProvider } from 'actions/providers';
 import { GlobalState } from 'reducers';
 import { ProvidersState } from 'reducers/providers';
 import { RouteComponentProps } from 'react-router';
-import Provider from 'model/Provider';
 import './styles.scss';
 
 const UserPreference = ({ history }: RouteComponentProps) => {
@@ -19,9 +18,12 @@ const UserPreference = ({ history }: RouteComponentProps) => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const dispatch = useDispatch();
 
-  const handleActiveProviderChange = (provider: Provider) => {
-    dispatch(setActiveProvider(provider));
-    history.replace('/');
+  const handleActiveProviderChange = (providerCode: string | undefined) => {
+    const provider = providers?.find((p) => p.code === providerCode);
+    if (provider) {
+      dispatch(setActiveProvider(provider));
+      history.replace('/');
+    }
   };
 
   const items = providers
@@ -40,8 +42,8 @@ const UserPreference = ({ history }: RouteComponentProps) => {
             className="provider-wrapper"
             items={items}
             label={formatMessage('navBarDataProvider')}
-            value={active ?? ''}
-            onChange={(e) => handleActiveProviderChange(e?.value as Provider)}
+            value={active?.code ?? ''}
+            onChange={(e) => handleActiveProviderChange(e?.value)}
           />
         </Contrast>
       )}

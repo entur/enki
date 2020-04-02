@@ -38,7 +38,7 @@ export const loadNetworks = () => async (
 ) => {
   try {
     const data = await UttuQuery(
-      getState().providers.active,
+      getState().providers.active?.code,
       getNetworksQuery,
       {}
     );
@@ -65,7 +65,7 @@ export const loadNetworkById = (id: string) => async (
 ) => {
   try {
     const data = await UttuQuery(
-      getState().providers.active,
+      getState().providers.active?.code,
       getNetworkByIdQuery,
       { id }
     );
@@ -90,7 +90,7 @@ export const saveNetwork = (network: Network) => async (
   getState: () => GlobalState
 ) => {
   try {
-    await UttuQuery(getState().providers.active, networkMutation, {
+    await UttuQuery(getState().providers.active?.code, networkMutation, {
       input: network,
     });
     dispatch(
@@ -118,7 +118,7 @@ export const deleteNetworkById = (id: string | undefined) => async (
   if (!id) return;
 
   try {
-    await UttuQuery(getState().providers.active, deleteNetwork, { id });
+    await UttuQuery(getState().providers.active?.code, deleteNetwork, { id });
     dispatch(
       showSuccessNotification('Slette nettverk', 'Nettverket ble slettet.')
     );

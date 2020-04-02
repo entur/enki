@@ -19,7 +19,6 @@ import ServiceJourneysEditor from './ServiceJourneys';
 import { changeElementAtIndex } from 'helpers/arrays';
 import NavigationButtons from './NavigationButtons';
 import FlexibleLine from 'model/FlexibleLine';
-import { Network } from 'model/Network';
 import { validJourneyPattern } from './JourneyPatterns/Editor/StopPoints/Editor/validateForm';
 import { validServiceJourneys } from './ServiceJourneys/Editor/validate';
 import { aboutLineStepIsValid } from 'scenes/Lines/scenes/Editor/validateForm';
@@ -30,7 +29,6 @@ type Props = RouteComponentProps<MatchParams> & {
   flexibleLine: FlexibleLine;
   changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
   operators: Organisation[];
-  networks: Network[];
   lastStep: boolean;
   isEdit: boolean;
 };
@@ -104,7 +102,6 @@ const FlexibleLineEditor = (props: Props) => {
               <section className="general-line-info">
                 <General
                   flexibleLine={props.flexibleLine}
-                  networks={props.networks}
                   operators={props.operators}
                   flexibleLineChange={props.changeFlexibleLine}
                   spoilPristine={nextClicked}
