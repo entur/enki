@@ -28,7 +28,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getProviders());
-    dispatch(getOrganisations(undefined));
+    dispatch(getOrganisations());
   }, [dispatch]);
 
   const { providers, organisations } = useSelector<GlobalState, GlobalState>(

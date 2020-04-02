@@ -6,7 +6,7 @@ import './styles.scss';
 type Props = {
   flexibleStopPlaces: FlexibleStopPlace[];
   stopPoints: StopPoint[];
-  children: any;
+  children: React.ReactNode;
 };
 
 const FlexibleAreasPassingTime = (props: Props) => {

@@ -72,7 +72,10 @@ const ServiceJourneyEditor = (props: Props) => {
 
   const operators = filterNetexOperators(organisations ?? []);
 
-  const onFieldChange = (field: keyof ServiceJourney, value: any) => {
+  const onFieldChange = (
+    field: keyof ServiceJourney,
+    value: ServiceJourney[keyof ServiceJourney]
+  ) => {
     onChange({ ...serviceJourney, [field]: value });
   };
 

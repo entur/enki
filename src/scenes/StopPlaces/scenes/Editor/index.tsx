@@ -43,6 +43,7 @@ import { equals } from 'ramda';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
+import { LeafletMouseEvent } from 'leaflet';
 
 // Show coordinates in GeoJson order [Long, Lat]
 const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
@@ -138,7 +139,8 @@ const FlexibleStopPlaceEditor = ({
     }
   }, [dispatch, history, flexibleStopPlace]);
 
-  const handleMapOnClick = (e: any) => {
+  const handleMapOnClick = (e: LeafletMouseEvent) => {
+    console.log(e);
     const newCoordinates = addCoordinate(polygonCoordinates, [
       e.latlng.lat,
       e.latlng.lng,
