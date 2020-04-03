@@ -5,7 +5,9 @@ import {
   saveFlexibleLine,
 } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
-import BookingArrangementEditor from './BookingArrangementEditor';
+import BookingArrangementEditor, {
+  bookingArrangementIsValid,
+} from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
 import './styles.scss';
 import General from './General';
@@ -29,7 +31,7 @@ type Props = RouteComponentProps<MatchParams> & {
   flexibleLine: FlexibleLine;
   changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
   operators: Organisation[];
-  lastStep: boolean;
+  numSteps: number;
   isEdit: boolean;
 };
 
@@ -43,14 +45,18 @@ const FlexibleLineEditor = (props: Props) => {
   const goToLines = () => props.history.push('/lines');
 
   const handleOnSaveClick = () => {
-    const valid = aboutLineStepIsValid(props.flexibleLine);
+    const valid = [...Array(props.numSteps)]
+      .map((_, i: number) => currentStepIsValid(i, props.flexibleLine))
+      .every((step) => step);
 
+    setNextClicked(true);
     if (valid) {
       setSaving(true);
       dispatch(saveFlexibleLine(props.flexibleLine))
         .then(() => goToLines())
         .finally(() => setSaving(false));
       dispatch(setSavedChanges(true));
+      setNextClicked(false);
     }
   };
 
@@ -63,19 +69,24 @@ const FlexibleLineEditor = (props: Props) => {
     }
   };
 
-  const currentStepIsValid = (currentStep: number) => {
-    if (currentStep === 0) return aboutLineStepIsValid(props.flexibleLine);
+  const currentStepIsValid = (
+    currentStep: number,
+    flexibleLine: FlexibleLine
+  ) => {
+    if (currentStep === 0) return aboutLineStepIsValid(flexibleLine);
     else if (currentStep === 1)
-      return validJourneyPattern(props.flexibleLine.journeyPatterns);
+      return validJourneyPattern(flexibleLine.journeyPatterns);
     else if (currentStep === 2)
       return validServiceJourneys(
-        props.flexibleLine.journeyPatterns?.[0].serviceJourneys
+        flexibleLine.journeyPatterns?.[0].serviceJourneys
       );
-    else return currentStep === 3;
+    else if (currentStep === 3)
+      return bookingArrangementIsValid(flexibleLine.bookingArrangement ?? {});
+    else return false;
   };
 
   const onNextClicked = () => {
-    if (currentStepIsValid(props.activeStep)) {
+    if (currentStepIsValid(props.activeStep, props.flexibleLine)) {
       props.setActiveStep(props.activeStep + 1);
       setNextClicked(false);
     } else {
@@ -162,13 +173,14 @@ const FlexibleLineEditor = (props: Props) => {
                     bookingArrangement: b,
                   })
                 }
+                spoilPristine={nextClicked}
               />
             </section>
           )}
 
           <NavigationButtons
             editMode={props.isEdit}
-            lastStep={props.lastStep}
+            lastStep={props.activeStep === props.numSteps - 1}
             onDelete={handleDelete}
             onSave={handleOnSaveClick}
             onNext={onNextClicked}
