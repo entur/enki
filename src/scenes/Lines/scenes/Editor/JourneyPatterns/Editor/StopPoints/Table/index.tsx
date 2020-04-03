@@ -27,9 +27,10 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
   const [removeDialogOpenFor, setRemoveDialogOpenFor] = useState<number | null>(
     null
   );
-  const flexibleStopPlaces = useSelector(
-    (state: GlobalState) => state.flexibleStopPlaces
-  );
+  const flexibleStopPlaces = useSelector<
+    GlobalState,
+    FlexibleStopPlace[] | null
+  >((state) => state.flexibleStopPlaces);
   const { formatMessage } = useSelector(selectIntl);
 
   const doDelete = () => {
