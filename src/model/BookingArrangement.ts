@@ -1,5 +1,10 @@
 import Contact from './Contact';
-import { BOOKING_METHOD, PURCHASE_MOMENT } from 'model/enums';
+import {
+  BOOKING_METHOD,
+  PURCHASE_MOMENT,
+  BOOKING_ACCESS,
+  PURCHASE_WHEN,
+} from 'model/enums';
 
 type BookingArrangement = {
   name?: string;
@@ -8,11 +13,11 @@ type BookingArrangement = {
   bookingContact?: Contact;
   bookingNote?: string;
   bookingMethods?: BOOKING_METHOD[];
-  bookingAccess?: any;
-  bookWhen?: any;
+  bookingAccess?: BOOKING_ACCESS;
+  bookWhen?: PURCHASE_WHEN;
   buyWhen?: PURCHASE_MOMENT[];
-  latestBookingTime?: any;
-  minimumBookingPeriod?: any;
+  latestBookingTime?: string;
+  minimumBookingPeriod?: string; // ISO8601 format e.g PT10M for 10 minutes
 };
 
 export const bookingArrangementIsEmpty = (

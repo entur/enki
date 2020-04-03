@@ -17,13 +17,14 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { AppIntlState, selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
+import { MessagesKey } from 'i18n/translations/translationKeys';
 
 type StopPlaceMode = 'nsr' | 'custom';
 
 export type StopPointsFormError = {
-  flexibleStopPlaceRefAndQuayRef: any;
-  frontText: any;
-  boarding: any;
+  flexibleStopPlaceRefAndQuayRef: keyof MessagesKey | undefined;
+  frontText: keyof MessagesKey | undefined;
+  boarding: keyof MessagesKey | undefined;
 };
 
 type Props = {

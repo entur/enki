@@ -14,7 +14,12 @@ import BookingArrangement, {
   bookingArrangementIsEmpty,
 } from 'model/BookingArrangement';
 import { addOrRemove } from 'helpers/arrays';
-import { BOOKING_METHOD, PURCHASE_MOMENT } from 'model/enums';
+import {
+  BOOKING_METHOD,
+  PURCHASE_MOMENT,
+  PURCHASE_WHEN,
+  BOOKING_ACCESS,
+} from 'model/enums';
 import { Heading2, LeadParagraph } from '@entur/typography';
 
 type Props = {
@@ -74,7 +79,7 @@ const BookingArrangementEditor = (props: Props) => {
 
         <BookingTimeSelection
           bookWhen={bookWhen}
-          onChange={(bookWhen: any) =>
+          onChange={(bookWhen: PURCHASE_WHEN) =>
             onFieldChange({ ...bookingArrangement, bookWhen })
           }
         />
@@ -82,10 +87,10 @@ const BookingArrangementEditor = (props: Props) => {
         <BookingLimitFields
           latestBookingTime={latestBookingTime}
           minimumBookingPeriod={minimumBookingPeriod}
-          onLatestBookingTimeChange={(latestBookingTime: any) =>
+          onLatestBookingTimeChange={(latestBookingTime: string) =>
             onFieldChange({ ...bookingArrangement, latestBookingTime })
           }
-          onMinimumBookingPeriodChange={(minimumBookingPeriod: any) =>
+          onMinimumBookingPeriodChange={(minimumBookingPeriod: string) =>
             onFieldChange({ ...bookingArrangement, minimumBookingPeriod })
           }
           resetBookingLimit={() => ({
@@ -107,14 +112,14 @@ const BookingArrangementEditor = (props: Props) => {
 
         <BookingAccessSelection
           bookingAccess={bookingAccess}
-          onChange={(bookingAccess: any) =>
+          onChange={(bookingAccess: BOOKING_ACCESS) =>
             onFieldChange({ ...bookingArrangement, bookingAccess })
           }
         />
 
         <BookingNoteField
           bookingNote={bookingNote}
-          onChange={(bookingNote: any) =>
+          onChange={(bookingNote: string) =>
             onFieldChange({ ...bookingArrangement, bookingNote })
           }
         />

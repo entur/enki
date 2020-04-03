@@ -1,5 +1,6 @@
 import http from 'http/http';
 import { OrganisationState } from 'reducers/organisations';
+import { ORGANISATION_TYPE } from 'model/enums';
 
 export const RECEIVE_ORGANISATIONS = 'RECEIVE_ORGANISATIONS';
 
@@ -15,12 +16,10 @@ export const receiveOrganisations = (
   organisations,
 });
 
-export const getOrganisations = (types: any) => (
+export const getOrganisations = (types?: ORGANISATION_TYPE[]) => (
   dispatch: (receiveOrganisations: ReceiveOrganisations) => void
 ) => {
-  let typesQuery = types
-    ? '?types' + (Array.isArray(types) ? types.join(',') : types)
-    : '';
+  const typesQuery = types?.length ? '?types' + types.join(',') : '';
   return http.get(`/organisations${typesQuery}`).then((response) => {
     dispatch(receiveOrganisations(response.data));
     return Promise.resolve(response.data);

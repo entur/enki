@@ -14,7 +14,6 @@ export type StopPlace = {
 
 export type SearchForQuayResponse = {
   stopPlace: null | StopPlace[];
-  errors?: any[];
 };
 
 export type QuaySearch = { stopPlace?: StopPlace; quay?: Quay };

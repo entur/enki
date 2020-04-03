@@ -57,18 +57,18 @@ export enum BOOKING_METHOD {
   TEXT = 'text',
 }
 
-export const BOOKING_ACCESS = Object.freeze({
-  PUBLIC: 'public',
-  AUTHORISED_PUBLIC: 'authorisedPublic',
-  STAFF: 'staff',
-});
+export enum BOOKING_ACCESS {
+  PUBLIC = 'public',
+  AUTHORISED_PUBLIC = 'authorisedPublic',
+  STAFF = 'staff',
+}
 
-export const PURCHASE_WHEN = Object.freeze({
-  TIME_OF_TRAVEL_ONLY: 'timeOfTravelOnly',
-  DAY_OF_TRAVEL_ONLY: 'dayOfTravelOnly',
-  UNTIL_PREVIOUS_DAY: 'untilPreviousDay',
-  ADVANCE_AND_DAY_OF_TRAVEL: 'advanceAndDayOfTravel',
-});
+export enum PURCHASE_WHEN {
+  TIME_OF_TRAVEL_ONLY = 'timeOfTravelOnly',
+  DAY_OF_TRAVEL_ONLY = 'dayOfTravelOnly',
+  UNTIL_PREVIOUS_DAY = 'untilPreviousDay',
+  ADVANCE_AND_DAY_OF_TRAVEL = 'advanceAndDayOfTravel',
+}
 
 export enum PURCHASE_MOMENT {
   ON_RESERVATION = 'onReservation',

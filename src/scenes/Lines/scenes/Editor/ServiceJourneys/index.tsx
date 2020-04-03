@@ -34,7 +34,10 @@ const ServiceJourneysEditor = ({
   const { formatMessage } = useSelector(selectIntl);
   const textFieldRef = useRef<HTMLInputElement>(null);
 
-  const updateServiceJourney = (index: number, serviceJourney: any) => {
+  const updateServiceJourney = (
+    index: number,
+    serviceJourney: ServiceJourney
+  ) => {
     onChange(replaceElement(serviceJourneys, index, serviceJourney));
   };
   const deleteServiceJourney = (index: number) => {

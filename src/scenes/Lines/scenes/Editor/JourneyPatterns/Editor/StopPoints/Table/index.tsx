@@ -14,20 +14,23 @@ import {
 } from '@entur/table';
 import ConfirmDialog from 'components/ConfirmDialog';
 import './styles.scss';
+import { GlobalState } from 'reducers';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
 
 type Props = {
   stopPoints: StopPoint[];
   onRowClick: (i: number) => void;
-  onDeleteClick: (sp: any) => void;
+  onDeleteClick: (sp: number | null) => void;
 };
 
 const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
   const [removeDialogOpenFor, setRemoveDialogOpenFor] = useState<number | null>(
     null
   );
-  const flexibleStopPlaces = useSelector(
-    (state: any) => state.flexibleStopPlaces
-  );
+  const flexibleStopPlaces = useSelector<
+    GlobalState,
+    FlexibleStopPlace[] | null
+  >((state) => state.flexibleStopPlaces);
   const { formatMessage } = useSelector(selectIntl);
 
   const doDelete = () => {
@@ -42,9 +45,9 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
           <DataCell>{i + 1}</DataCell>
           <DataCell>
             {sp.flexibleStopPlaceRef
-              ? flexibleStopPlaces.find(
-                  (fsp: any) => fsp.id === sp.flexibleStopPlaceRef
-                ).name
+              ? flexibleStopPlaces?.find(
+                  (fsp: FlexibleStopPlace) => fsp.id === sp.flexibleStopPlaceRef
+                )?.name
               : // prettier-ignore
               //@ts-ignore: 27.02.2020 - Checka vad sp.Ref skal vara
               sp.Ref
