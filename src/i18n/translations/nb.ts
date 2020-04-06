@@ -164,7 +164,7 @@ export const messages = {
   contactFieldsFurtherDetailsTitle: 'Detaljer',
   contactFieldsPhoneTitle: 'Telefon',
   contactFieldsUrlTitle: 'URL',
-  urlOrPhoneMustBeFilled: 'Både telefon og URL kan ikke være tomme',
+  urlOrPhoneMustBeFilled: 'URL eller telefonnummer må utfylles',
   purchaseMomentAfterBoarding: 'Etter ombordstigning',
   purchaseMomentBeforeBoarding: 'Før ombordstigning',
   purchaseMomentOnCheckOut: 'Ved avstigning',
