@@ -125,7 +125,7 @@ export const messages: MessagesKey = {
   inProgress: 'In progress',
   success: 'Success',
   viewerFromDateLabel: 'From date',
-  viewerHeader: 'Show export',
+  viewerHeader: 'Export',
   viewerLoadingText: 'Loading export...',
   viewerMessagesLabel: 'Messages',
   viewerNameLabel: 'Name',

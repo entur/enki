@@ -122,7 +122,7 @@ export const messages = {
   inProgress: 'Pågår',
   success: 'Ferdig',
   viewerFromDateLabel: 'Fra dato',
-  viewerHeader: 'Vis eksport',
+  viewerHeader: 'Eksport',
   viewerLoadingText: 'Laster inn eksport...',
   viewerMessagesLabel: 'Meldinger',
   viewerNameLabel: 'Navn',

@@ -10,7 +10,7 @@ type Props = {
   isFullScreen?: boolean;
   text: string;
   className?: string;
-  children: ReactElement | null;
+  children: ReactElement | null | (() => ReactElement);
 };
 
 const Loading = ({
@@ -21,7 +21,7 @@ const Loading = ({
   children,
 }: Props) => {
   if (!isLoading) {
-    return children;
+    return typeof children === 'function' ? children() : children;
   }
 
   const classNames = cx(
