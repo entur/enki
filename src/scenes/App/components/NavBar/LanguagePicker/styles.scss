@@ -1,0 +1,103 @@
+@import '~@entur/tokens/dist/styles.scss';
+
+.language-picker-wrapper {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+
+  .language-picker {
+    // align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    // z-index: 9;
+
+    // &__floating {
+    //   left: 5.5rem;
+    //   position: absolute;
+    //   top: 1rem;
+
+    //   & + & {
+    //     margin-left: 0.25rem;
+    //   }
+    // }
+
+    // &__header {
+    //   font-weight: 600;
+    // }
+
+    &__icon-container {
+      &__flag {
+        svg {
+          margin-bottom: 0.125rem;
+        }
+      }
+
+      &__check {
+        svg {
+          height: 0.75rem;
+          margin-top: 0.125rem;
+          width: 0.75rem;
+        }
+      }
+
+      &__arrow {
+        margin-top: 2px;
+        svg {
+          height: 0.75rem;
+          margin: 0.125rem 0.125rem 0 0;
+          width: 0.75rem;
+        }
+      }
+    }
+
+    &__dropdown {
+      background-color: transparent;
+      border: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      // left: 5.5rem;
+      // position: absolute;
+      // top: 4.375rem;
+    }
+
+    &__item {
+      background: $colors-greys-grey40;
+      border-bottom: 1px solid $colors-greys-grey20;
+      border-radius: 0;
+      justify-content: flex-start;
+      // color: $colors-brand-blue;
+      min-height: 2.25rem;
+      // position: relative;
+      width: 8.25rem;
+
+      // &__highlight {
+      //   background: $colors-brand-white;
+      // }
+
+      // &:hover {
+      //   background: $colors-brand-white;
+      // }
+
+      &:first-child {
+        border-bottom: 1px solid $colors-greys-grey20;
+        border-radius: 0;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+      }
+
+      &:last-child {
+        border-radius: 0;
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+      }
+    }
+
+    span {
+      margin: 0 0 -0.0625rem;
+      min-width: 3.5rem;
+    }
+  }
+}
