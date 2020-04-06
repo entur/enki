@@ -66,4 +66,10 @@
     column-gap: 1.5rem;
     grid-template-columns: 1fr 1fr;
   }
+
+  .bus-icon {
+    g {
+      fill: $colors-brand-blue;
+    }
+  }
 }

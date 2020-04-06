@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Heading1, LeadParagraph, Heading2 } from '@entur/typography';
 import { NavigationCard } from '@entur/layout';
-import { DesktopIcon } from '@entur/icons';
+import { ChannelsIcon, RulesIcon, MapIcon, BusIcon } from '@entur/icons';
 import './styles.scss';
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
         <section className="cards">
           <NavigationCard
             title={formatMessage('homeCardsGetStarted')}
-            titleIcon={<DesktopIcon />}
+            titleIcon={<RulesIcon />}
             href="/get-started"
           >
             {formatMessage('homeCardsGetStartedDescription')}
@@ -28,21 +28,21 @@ const Home = () => {
 
           <NavigationCard
             title={formatMessage('navBarLinesMenuItemLabel')}
-            titleIcon={<DesktopIcon />}
+            titleIcon={<BusIcon className="bus-icon" />}
             href="/lines"
           >
             {formatMessage('homeCardsLinesDescription')}
           </NavigationCard>
           <NavigationCard
             title={formatMessage('navBarNetworksMenuItemLabel')}
-            titleIcon={<DesktopIcon />}
+            titleIcon={<ChannelsIcon />}
             href="/networks"
           >
             {formatMessage('homeCardsNetworkDescription')}
           </NavigationCard>
           <NavigationCard
             title={formatMessage('navBarStopPlacesMenuItemLabel')}
-            titleIcon={<DesktopIcon />}
+            titleIcon={<MapIcon />}
             href="/stop-places"
           >
             {formatMessage('homeCardsStopPlacesDescription')}
