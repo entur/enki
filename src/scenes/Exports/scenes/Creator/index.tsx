@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { PrimaryButton, SuccessButton } from '@entur/button';
+import { PrimaryButton } from '@entur/button';
 import { Checkbox, InputGroup, TextField } from '@entur/form';
 import { DatePicker } from '@entur/datepicker';
 import { dateToString } from 'helpers/dates';
