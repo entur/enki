@@ -7,7 +7,6 @@ import { FLEXIBLE_LINE_TYPE } from 'model/enums';
 import { selectIntl } from 'i18n';
 import './styles.scss';
 import FlexibleLine from 'model/FlexibleLine';
-import { Network } from 'model/Network';
 import { Organisation } from 'reducers/organisations';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
@@ -19,7 +18,6 @@ import RequiredInputMarker from 'components/RequiredInputMarker';
 
 type Props = {
   flexibleLine: FlexibleLine;
-  networks: Network[];
   operators: Organisation[];
   flexibleLineChange: (flexibleLine: FlexibleLine) => void;
   spoilPristine: boolean;
@@ -27,7 +25,6 @@ type Props = {
 
 export default ({
   flexibleLine,
-  networks,
   operators,
   flexibleLineChange,
   spoilPristine,
@@ -38,7 +35,6 @@ export default ({
 
   const namePristine = usePristine(flexibleLine.name, spoilPristine);
   const publicCodePristine = usePristine(publicCode, spoilPristine);
-  const networkPristine = usePristine(flexibleLine.networkRef, spoilPristine);
   const operatorPristine = usePristine(flexibleLine.operatorRef, spoilPristine);
   const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
 
@@ -160,27 +156,6 @@ export default ({
             formatMessage('operatorRefEmpty'),
             !isBlank(flexibleLine.operatorRef),
             operatorPristine
-          )}
-        />
-
-        <Dropdown
-          className="form-section"
-          value={flexibleLine.networkRef ?? flexibleLine.network?.id}
-          items={networks.map((n) => ({
-            value: n.id ?? '',
-            label: n.name ?? '',
-          }))}
-          label={formatMessage('generalNetworkFormGroupTitle')}
-          onChange={(element) =>
-            flexibleLineChange({
-              ...flexibleLine,
-              networkRef: element?.value,
-            })
-          }
-          {...getErrorFeedback(
-            formatMessage('networkRefEmpty'),
-            !isBlank(flexibleLine.networkRef ?? flexibleLine.network?.id),
-            networkPristine
           )}
         />
 

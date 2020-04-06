@@ -80,11 +80,6 @@ const NavBar = () => {
           setRedirect={setRedirect}
         />
         <NavBarItem
-          text={formatMessage('navBarNetworksMenuItemLabel')}
-          path="/networks"
-          setRedirect={setRedirect}
-        />
-        <NavBarItem
           text={formatMessage('navBarStopPlacesMenuItemLabel')}
           path="/stop-places"
           setRedirect={setRedirect}
@@ -98,6 +93,11 @@ const NavBar = () => {
           text={formatMessage('navBarExportsMenuItemLabel')}
           path="/exports"
           className="exports"
+          setRedirect={setRedirect}
+        />
+        <NavBarItem
+          text={formatMessage('navBarNetworksMenuItemLabel')}
+          path="/networks"
           setRedirect={setRedirect}
         />
       </SideNavigation>

@@ -1,8 +1,12 @@
 import BookingArrangement from './BookingArrangement';
-import JourneyPattern, { journeyPatternToPayload } from './JourneyPattern';
+import JourneyPattern, {
+  initJourneyPatterns,
+  journeyPatternToPayload,
+} from './JourneyPattern';
 import Notice from './Notice';
 import { Network } from './Network';
 import VersionedType from 'model/VersionedType';
+import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 
 type FlexibleLine = VersionedType & {
   name?: string;
@@ -19,6 +23,13 @@ type FlexibleLine = VersionedType & {
   journeyPatterns?: JourneyPattern[];
   notices?: Notice[];
 };
+
+export const initFlexibleLine = (networkRef: string) => ({
+  transportMode: VEHICLE_MODE.BUS,
+  transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
+  journeyPatterns: initJourneyPatterns(),
+  networkRef: networkRef,
+});
 
 export const flexibleLineToPayload = (flexibleLine: FlexibleLine) => {
   const { network, ...rest } = flexibleLine;

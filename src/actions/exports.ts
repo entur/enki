@@ -40,7 +40,7 @@ export const loadExports = () => async (
 ) => {
   dispatch(requestExportsActionCreator());
 
-  const activeProvider = getState().providers.active;
+  const activeProvider = getState().providers.active?.code;
   const intl = getIntl(getState());
 
   try {
@@ -66,7 +66,7 @@ export const loadExportById = (id: string) => async (
   dispatch: Dispatch<GlobalState>,
   getState: () => GlobalState
 ) => {
-  const activeProvider = getState().providers.active;
+  const activeProvider = getState().providers.active?.code;
   const intl = getIntl(getState());
 
   try {
@@ -90,7 +90,7 @@ export const saveExport = (theExport: Export) => async (
   dispatch: Dispatch<GlobalState>,
   getState: () => GlobalState
 ) => {
-  const activeProvider = getState().providers.active;
+  const activeProvider = getState().providers.active?.code;
   const intl = getIntl(getState());
 
   try {

@@ -8,8 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import FlexibleLineEditor from './index';
 import { GlobalState } from 'reducers';
-import FlexibleLine from 'model/FlexibleLine';
-import { filterNetexOperators } from 'reducers/organisations';
+import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
+import {
+  filterAuthorities,
+  filterNetexOperators,
+} from 'reducers/organisations';
 import { aboutLineStepIsValid } from './validateForm';
 import { isBlank } from 'helpers/forms';
 import { validJourneyPattern } from './JourneyPatterns/Editor/StopPoints/Editor/validateForm';
@@ -20,17 +23,53 @@ import PageHeader from 'components/PageHeader';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 import Loading from 'components/Loading';
 import { setSavedChanges } from 'actions/editor';
+import { loadNetworks, saveNetwork } from 'actions/networks';
+import { Network } from 'model/Network';
+import Provider from 'model/Provider';
+import { PrimaryButton } from '@entur/button';
+import ConfirmDialog from 'components/ConfirmDialog';
+
+const findNetworkIdByProvider = (
+  provider: Provider,
+  networks: Network[]
+): string | undefined =>
+  networks.find(
+    (network) =>
+      network.id?.split(':')?.[0]?.toUpperCase() === provider.codespace?.xmlns
+  )?.id;
+
+const createAndGetNetwork = (
+  dispatch: any,
+  authorityRef: string,
+  activeProvider: Provider
+): Promise<string> =>
+  dispatch(
+    saveNetwork(
+      {
+        name: activeProvider.codespace?.xmlns,
+        authorityRef: authorityRef,
+      },
+      false
+    )
+  )
+    .then(() => dispatch(loadNetworks()))
+    .then((newNetworks: Network[]) =>
+      findNetworkIdByProvider(activeProvider, newNetworks)
+    );
 
 const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const [flexibleLine, setFlexibleLine] = useState<FlexibleLine>({});
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   const { formatMessage } = useSelector(selectIntl);
-  const dispatch = useDispatch();
-  const { flexibleLines, organisations, networks, editor } = useSelector<
-    GlobalState,
-    GlobalState
-  >((s) => s);
+  const dispatch = useDispatch<any>();
+  const {
+    flexibleLines,
+    organisations,
+    networks,
+    editor,
+    providers,
+  } = useSelector<GlobalState, GlobalState>((s) => s);
 
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
   const FLEXIBLE_LINE_STEPS = [
@@ -46,8 +85,29 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   } as RouteComponentProps<MatchParams>);
 
   useEffect(() => {
-    if (!isLoadingDependencies) {
-      setFlexibleLine(getFlexibleLineFromPath(flexibleLines, props.match));
+    if (
+      !isLoadingDependencies &&
+      providers.active &&
+      organisations &&
+      networks
+    ) {
+      const authorities = filterAuthorities(organisations, providers.active);
+      if (!isBlank(props.match.params.id)) {
+        setFlexibleLine(
+          getFlexibleLineFromPath(flexibleLines ?? [], props.match)
+        );
+      } else if (authorities.length > 0) {
+        const networkId = findNetworkIdByProvider(providers.active, networks);
+        if (networkId) {
+          setFlexibleLine(initFlexibleLine(networkId));
+        } else {
+          createAndGetNetwork(
+            dispatch,
+            authorities[0].id,
+            providers.active
+          ).then((networkId) => setFlexibleLine(initFlexibleLine(networkId)));
+        }
+      }
     }
     // eslint-disable-next-line
   }, [flexibleLines, isLoadingDependencies]);
@@ -78,6 +138,10 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     dispatch(setSavedChanges(false));
   };
 
+  const authoritiesMissing =
+    organisations &&
+    filterAuthorities(organisations, providers.active).length === 0;
+
   return (
     <>
       <PageHeader
@@ -85,27 +149,28 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         onBackButtonClick={onBackButtonClicked}
         backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
       />
-      <Stepper
-        className="editor-frame"
-        steps={FLEXIBLE_LINE_STEPS}
-        activeIndex={activeStepperIndex}
-        onStepClick={(index) => onStepClicked(index)}
-      />
       <Loading
         className=""
         isLoading={isLoadingDependencies || isEmpty(flexibleLine)}
         text={formatMessage('editorLoadingLineText')}
       >
-        <FlexibleLineEditor
-          isEdit={!isBlank(props.match.params.id)}
-          lastStep={FLEXIBLE_LINE_STEPS.length - 1 === activeStepperIndex}
-          activeStep={activeStepperIndex}
-          setActiveStep={setActiveStepperIndex}
-          flexibleLine={flexibleLine}
-          networks={networks ?? []}
-          changeFlexibleLine={onFlexibleLineChange}
-          operators={filterNetexOperators(organisations ?? [])}
-        />
+        <>
+          <Stepper
+            className="editor-frame"
+            steps={FLEXIBLE_LINE_STEPS}
+            activeIndex={activeStepperIndex}
+            onStepClick={(index) => onStepClicked(index)}
+          />
+          <FlexibleLineEditor
+            isEdit={!isBlank(props.match.params.id)}
+            lastStep={FLEXIBLE_LINE_STEPS.length - 1 === activeStepperIndex}
+            activeStep={activeStepperIndex}
+            setActiveStep={setActiveStepperIndex}
+            flexibleLine={flexibleLine}
+            changeFlexibleLine={onFlexibleLineChange}
+            operators={filterNetexOperators(organisations ?? [])}
+          />
+        </>
       </Loading>
       {showConfirm && (
         <NavigateConfirmBox
@@ -115,6 +180,20 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
           description={formatMessage('redirectMessage')}
           confirmText={formatMessage('redirectYes')}
           cancelText={formatMessage('redirectNo')}
+        />
+      )}
+      {authoritiesMissing && (
+        <ConfirmDialog
+          className="authority-missing-modal"
+          isOpen={true}
+          title={formatMessage('networkAuthorityMissing')}
+          message={formatMessage('networkAuthorityMissingDetails')}
+          onDismiss={() => props.history.push('/')}
+          buttons={[
+            <PrimaryButton key="0" onClick={() => props.history.push('/')}>
+              {formatMessage('homePage')}
+            </PrimaryButton>,
+          ]}
         />
       )}
     </>

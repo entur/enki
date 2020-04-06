@@ -9,7 +9,7 @@ import Provider from 'model/Provider';
 export type ProvidersState = {
   providers: Provider[] | null;
   failure: boolean;
-  active: string | null;
+  active: Provider | null;
   exports: null;
 };
 
@@ -28,21 +28,23 @@ const providersReducer = (
     case RECEIVE_PROVIDERS: {
       const active =
         !state.active && action.providers.length > 0
-          ? action.providers[0].code
+          ? action.providers[0]
           : state.active;
-      return Object.assign({}, state, {
+      return {
+        ...state,
         providers: action.providers,
         active,
-      });
+      };
     }
 
     case FAILED_RECEIVING_PROVIDERS:
-      return Object.assign({}, state, { failure: true });
+      return {
+        ...state,
+        failure: true,
+      };
 
     case SET_ACTIVE_PROVIDER:
-      return Object.assign({}, state, {
-        active: action.provider,
-      });
+      return { ...state, active: action.provider };
 
     default:
       return state;

@@ -38,11 +38,12 @@ export const loadNetworks = () => async (
 ) => {
   try {
     const data = await UttuQuery(
-      getState().providers.active,
+      getState().providers.active?.code,
       getNetworksQuery,
       {}
     );
     dispatch(receiveNetworksActionCreator(data.networks));
+    return data.networks;
   } catch (e) {
     dispatch(
       showErrorNotification(
@@ -64,7 +65,7 @@ export const loadNetworkById = (id: string) => async (
 ) => {
   try {
     const data = await UttuQuery(
-      getState().providers.active,
+      getState().providers.active?.code,
       getNetworkByIdQuery,
       { id }
     );
@@ -84,17 +85,19 @@ export const loadNetworkById = (id: string) => async (
   }
 };
 
-export const saveNetwork = (network: Network) => async (
+export const saveNetwork = (network: Network, showConfirm = true) => async (
   dispatch: Dispatch<GlobalState>,
   getState: () => GlobalState
 ) => {
   try {
-    await UttuQuery(getState().providers.active, networkMutation, {
+    await UttuQuery(getState().providers.active?.code, networkMutation, {
       input: network,
     });
-    dispatch(
-      showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')
-    );
+    if (showConfirm) {
+      dispatch(
+        showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')
+      );
+    }
   } catch (e) {
     dispatch(
       showErrorNotification(
@@ -117,7 +120,7 @@ export const deleteNetworkById = (id: string | undefined) => async (
   if (!id) return;
 
   try {
-    await UttuQuery(getState().providers.active, deleteNetwork, { id });
+    await UttuQuery(getState().providers.active?.code, deleteNetwork, { id });
     dispatch(
       showSuccessNotification('Slette nettverk', 'Nettverket ble slettet.')
     );

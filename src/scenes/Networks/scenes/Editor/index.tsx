@@ -7,7 +7,6 @@ import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { Paragraph } from '@entur/typography';
 import { RouteComponentProps } from 'react-router';
 import { isBlank } from 'helpers/forms';
-import { ORGANISATION_TYPE } from 'model/enums';
 import {
   deleteNetworkById,
   loadNetworkById,
@@ -18,18 +17,17 @@ import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';
 import PageHeader from 'components/PageHeader';
-
-import './styles.scss';
-import selectActiveProvider from 'selectors/selectActiveProvider';
 import { AppIntlState, selectIntl } from 'i18n';
 import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
-import { OrganisationState } from 'reducers/organisations';
+import { filterAuthorities, OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
+import Provider from 'model/Provider';
+import './styles.scss';
 
 const getCurrentNetwork = (
   state: GlobalState,
@@ -42,7 +40,9 @@ const NetworkEditor = ({
   history,
 }: RouteComponentProps<MatchParams>) => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
-  const activeProvider = useSelector(selectActiveProvider());
+  const activeProvider = useSelector<GlobalState, Provider | null>(
+    (state) => state.providers.active
+  );
   const organisations = useSelector<GlobalState, OrganisationState>(
     ({ organisations }) => organisations
   );
@@ -113,12 +113,7 @@ const NetworkEditor = ({
     );
   };
 
-  const authorities = (organisations ?? []).filter(
-    (org) =>
-      org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
-      org.references.netexAuthorityId &&
-      org.references.codeSpace === activeProvider.codespace.xmlns
-  );
+  const authorities = filterAuthorities(organisations ?? [], activeProvider);
 
   const isDeleteDisabled =
     !network ||
