@@ -38,43 +38,6 @@ const UserMenu = () => {
         <UserIcon color="#ffffff" />
       </div>
       <div className="name">{givenName + ' ' + familyName}</div>
-      <RightArrowIcon className="arrow-icon" />
-
-      <Popover open={open} onRequestClose={() => setOpen(false)}>
-        <Menu className="popover">
-          <MenuItem
-            menuItems={[
-              <MenuItem
-                key={0}
-                onClick={() => {
-                  handleChangeLocale('nb');
-                }}
-              >
-                <div className="locale">
-                  <Checkbox checked={locale === 'nb'} readOnly />
-                  <span>{formatMessage('userMenuMenuItemTextNorwegian')}</span>
-                </div>
-              </MenuItem>,
-              <MenuItem
-                key={1}
-                onClick={() => {
-                  handleChangeLocale('en');
-                }}
-              >
-                <div className="locale">
-                  <Checkbox checked={locale === 'en'} readOnly />
-                  <span>{formatMessage('userMenuMenuItemTextEnglish')}</span>
-                </div>
-              </MenuItem>,
-            ]}
-          >
-            {formatMessage('userMenuMenuItemTextLanguage')}
-          </MenuItem>
-          <a href={logoutUrl} className="log-out-link">
-            <MenuItem>{formatMessage('userMenuLogoutLinkText')}</MenuItem>
-          </a>
-        </Menu>
-      </Popover>
     </div>
   );
 };
