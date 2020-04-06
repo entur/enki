@@ -1,30 +1,11 @@
 @import '~@entur/tokens/dist/styles.scss';
 
 .language-picker-wrapper {
-  position: absolute;
-  left: 1rem;
-  bottom: 1rem;
-
   .language-picker {
-    // align-items: center;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    // z-index: 9;
-
-    // &__floating {
-    //   left: 5.5rem;
-    //   position: absolute;
-    //   top: 1rem;
-
-    //   & + & {
-    //     margin-left: 0.25rem;
-    //   }
-    // }
-
-    // &__header {
-    //   font-weight: 600;
-    // }
+    width: 8.25rem;
 
     &__icon-container {
       &__flag {
@@ -58,9 +39,6 @@
       flex-direction: column;
       justify-content: space-between;
       margin-bottom: 0.5rem;
-      // left: 5.5rem;
-      // position: absolute;
-      // top: 4.375rem;
     }
 
     &__item {
@@ -68,18 +46,8 @@
       border-bottom: 1px solid $colors-greys-grey20;
       border-radius: 0;
       justify-content: flex-start;
-      // color: $colors-brand-blue;
       min-height: 2.25rem;
-      // position: relative;
       width: 8.25rem;
-
-      // &__highlight {
-      //   background: $colors-brand-white;
-      // }
-
-      // &:hover {
-      //   background: $colors-brand-white;
-      // }
 
       &:first-child {
         border-bottom: 1px solid $colors-greys-grey20;

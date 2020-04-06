@@ -75,12 +75,14 @@ const LanguagePicker = () => {
       </div>
     );
   }, []);
+
   return (
     <div className="language-picker-wrapper">
       {toggled && (
         <div className="language-picker__dropdown">
           {SUPPORTED_LOCALES.map((locale: string) => (
             <FloatingButton
+              key={locale}
               className="language-picker__item"
               onClick={() => handleChangeLocale(locale)}
               aria-label="pick locale"

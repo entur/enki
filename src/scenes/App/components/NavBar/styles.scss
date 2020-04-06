@@ -6,6 +6,17 @@
   background-color: $colors-brand-blue;
   min-height: 100vh;
   position: relative;
+
+  .bottom-chips {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 1rem;
+    width: 100%;
+  }
 }
 
 .side-navigation {
