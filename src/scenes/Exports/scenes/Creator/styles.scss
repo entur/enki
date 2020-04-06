@@ -1,3 +1,5 @@
+@import '~@entur/tokens/dist/styles.scss';
+
 .export-editor {
   flex: 1;
   display: flex;
@@ -23,5 +25,38 @@
   .required-marker {
     display: block;
     margin-bottom: 20px;
+  }
+
+  .export-name {
+    margin: $space-extra-large3 0 $space-extra-large6;
+    max-width: 30rem;
+  }
+
+  .export-dates {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: $space-extra-large6;
+    margin-top: $space-large;
+
+    > :first-child {
+      margin-right: $space-large;
+    }
+  }
+
+  .export-dry-run {
+    display: flex;
+    align-items: flex-end;
+    .question-icon {
+      margin-left: 1rem;
+      cursor: help;
+
+      svg {
+        color: $colors-validation-sky;
+      }
+    }
+  }
+
+  .export-save {
+    margin-top: $space-extra-large9;
   }
 }

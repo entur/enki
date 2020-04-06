@@ -86,12 +86,19 @@ export const messages: MessagesKey = {
   item3: "Create a new line in 'Flexible lines', in the menu to the left",
   exportsCreateExportButtonLabel: 'Create export',
   creatorDryRunFormLabel: 'Dry run',
+  creatorDryRunFormLabelTooltip:
+    'Will not export the offer to travel search, but creates a NeTEx-file to watch',
   creatorFromDateFormLabel: 'From date *',
   creatorHeader: 'Create export',
+  creatorDescription:
+    'Export the offer to make it available in the travel search',
   creatorNameFormLabel: 'Name *',
-  creatorSaveButtonLabelText: 'Save',
+  creatorSaveButtonLabelText: 'Create export',
   creatorSavingOverlayLoaderText: 'Saving export...',
   creatorToDateFormLabel: 'To date *',
+  creatorDateForExport: 'Date for export',
+  creatorDateForExportDesc:
+    'Export offer which is available in the selected time span',
   validateFormErrorExportFromDateIsAfterToDate:
     'To-date must be after from-date',
   validateFormErrorExportNameIsEmpty: 'Name must be provided.',
