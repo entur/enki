@@ -15,10 +15,12 @@ import { isBlank } from 'helpers/forms';
 import ServiceJourney from 'model/ServiceJourney';
 import JourneyPattern from 'model/JourneyPattern';
 import RequiredInputMarker from 'components/RequiredInputMarker';
+import { Network } from 'model/Network';
 
 type Props = {
   flexibleLine: FlexibleLine;
   operators: Organisation[];
+  networks: Network[];
   flexibleLineChange: (flexibleLine: FlexibleLine) => void;
   spoilPristine: boolean;
 };
@@ -26,6 +28,7 @@ type Props = {
 export default ({
   flexibleLine,
   operators,
+  networks,
   flexibleLineChange,
   spoilPristine,
 }: Props) => {
@@ -36,6 +39,7 @@ export default ({
   const namePristine = usePristine(flexibleLine.name, spoilPristine);
   const publicCodePristine = usePristine(publicCode, spoilPristine);
   const operatorPristine = usePristine(flexibleLine.operatorRef, spoilPristine);
+  const networkPristine = usePristine(flexibleLine.networkRef, spoilPristine);
   const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
 
   const onFlexibleLineTypeChange = (flexibleLineType: string | undefined) => {
@@ -156,6 +160,23 @@ export default ({
             formatMessage('operatorRefEmpty'),
             !isBlank(flexibleLine.operatorRef),
             operatorPristine
+          )}
+        />
+
+        <Dropdown
+          className="form-section"
+          value={flexibleLine.networkRef}
+          items={[
+            ...networks.map(({ id, name }) => ({ value: id, label: name })),
+          ]}
+          label={formatMessage('generalNetworkFormGroupTitle')}
+          onChange={(element) =>
+            flexibleLineChange({ ...flexibleLine, networkRef: element?.value })
+          }
+          {...getErrorFeedback(
+            formatMessage('networkRefEmpty'),
+            !isBlank(flexibleLine.networkRef),
+            networkPristine
           )}
         />
 

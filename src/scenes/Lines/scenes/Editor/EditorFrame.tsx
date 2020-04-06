@@ -46,7 +46,7 @@ const createAndGetNetwork = (
   dispatch(
     saveNetwork(
       {
-        name: activeProvider.codespace?.xmlns,
+        name: activeProvider.codespace?.xmlns ?? 'New network',
         authorityRef: authorityRef,
       },
       false
@@ -96,7 +96,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         setFlexibleLine(
           getFlexibleLineFromPath(flexibleLines ?? [], props.match)
         );
-      } else if (authorities.length > 0) {
+      } else if (networks.length < 2 && authorities.length > 0) {
         const networkId = findNetworkIdByProvider(providers.active, networks);
         if (networkId) {
           setFlexibleLine(initFlexibleLine(networkId));
@@ -107,6 +107,8 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
             providers.active
           ).then((networkId) => setFlexibleLine(initFlexibleLine(networkId)));
         }
+      } else {
+        setFlexibleLine(initFlexibleLine());
       }
     }
     // eslint-disable-next-line
@@ -169,6 +171,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
             flexibleLine={flexibleLine}
             changeFlexibleLine={onFlexibleLineChange}
             operators={filterNetexOperators(organisations ?? [])}
+            networks={networks ?? []}
           />
         </>
       </Loading>

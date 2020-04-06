@@ -33,7 +33,10 @@ const getCurrentNetwork = (
   state: GlobalState,
   match: { params: MatchParams }
 ): Network =>
-  state.networks?.find((network) => network.id === match.params.id) ?? {};
+  state.networks?.find((network) => network.id === match.params.id) ?? {
+    name: '',
+    authorityRef: '',
+  };
 
 const NetworkEditor = ({
   match,
@@ -96,9 +99,7 @@ const NetworkEditor = ({
     setSaveClicked(true);
   };
 
-  const handleAuthoritySelectionChange = (
-    authoritySelection: string | undefined
-  ) => {
+  const handleAuthoritySelectionChange = (authoritySelection: string) => {
     setNetwork({
       ...network,
       authorityRef: authoritySelection,
@@ -197,7 +198,7 @@ const NetworkEditor = ({
                 })),
               ]}
               onChange={(organisation) =>
-                handleAuthoritySelectionChange(organisation?.value)
+                handleAuthoritySelectionChange(organisation?.value ?? '')
               }
               {...getErrorFeedback(
                 formatMessage('editorValidationAuthority'),

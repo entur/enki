@@ -24,12 +24,14 @@ import FlexibleLine from 'model/FlexibleLine';
 import { validJourneyPattern } from './JourneyPatterns/Editor/StopPoints/Editor/validateForm';
 import { validServiceJourneys } from './ServiceJourneys/Editor/validate';
 import { aboutLineStepIsValid } from 'scenes/Lines/scenes/Editor/validateForm';
+import { Network } from 'model/Network';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
   setActiveStep: (index: number) => void;
   flexibleLine: FlexibleLine;
   changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
+  networks: Network[];
   operators: Organisation[];
   numSteps: number;
   isEdit: boolean;
@@ -112,6 +114,7 @@ const FlexibleLineEditor = (props: Props) => {
                 <General
                   flexibleLine={props.flexibleLine}
                   operators={props.operators}
+                  networks={props.networks}
                   flexibleLineChange={props.changeFlexibleLine}
                   spoilPristine={nextClicked}
                 />
