@@ -1,18 +1,38 @@
+@import '~@entur/tokens/dist/styles.scss';
+
 .booking-editor {
-  .booking-limit-radio {
-    margin-bottom: 5px;
-  }
+  .booking-contact-info {
+    margin-top: $space-extra-large5 - $space-large;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-  .latest-time-picker {
-    margin-left: 25px;
-    margin-bottom: 10px;
-
-    input {
-      margin-bottom: 0;
+    > div {
+      width: 48%;
+      min-width: 20rem;
+      margin-top: $space-large;
     }
   }
+  .booking-time-info {
+    .filter-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      .eds-chip {
+        margin-left: 0.5rem;
+      }
+      :first-child {
+        margin-left: 0;
+      }
+    }
 
-  .mimimum-booking-period-picker {
-    margin-left: 25px;
+    > div {
+      margin-top: $space-large;
+    }
+
+    > :first-child {
+      width: 48%;
+      min-width: 20rem;
+      margin-bottom: $space-extra-large;
+    }
   }
 }

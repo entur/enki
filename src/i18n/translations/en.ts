@@ -167,6 +167,7 @@ export const messages: MessagesKey = {
   contactFieldsFurtherDetailsTitle: 'Further details',
   contactFieldsPhoneTitle: 'Phone',
   contactFieldsUrlTitle: 'URL',
+  urlOrPhoneMustBeFilled: 'At least URL or Phone must be filled',
   purchaseMomentAfterBoarding: 'After boarding',
   purchaseMomentBeforeBoarding: 'Before boarding',
   purchaseMomentOnCheckOut: 'On checkout',
