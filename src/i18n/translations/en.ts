@@ -91,7 +91,7 @@ export const messages: MessagesKey = {
   creatorFromDateFormLabel: 'From date *',
   creatorHeader: 'Create export',
   creatorDescription:
-    'Export the offer to make it available in the travel search',
+    'Export services so that they are available in travel search',
   creatorNameFormLabel: 'Name *',
   creatorSaveButtonLabelText: 'Create export',
   creatorSavingOverlayLoaderText: 'Saving export...',
