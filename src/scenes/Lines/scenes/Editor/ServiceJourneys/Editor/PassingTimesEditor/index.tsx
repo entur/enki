@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
+import { TimePicker } from '@entur/datepicker';
 import { InputGroup, TextField } from '@entur/form';
 import { ClockIcon } from '@entur/icons';
 import StopPoint from 'model/StopPoint';
@@ -67,40 +68,39 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     />
   );
 
-  const padTimePickerInput = (time: string): string | undefined => {
-    if (time.length === 0) return undefined;
-    return time + ':00';
-  };
-
   const getTimePicker = (
     passingTime: PassingTime,
     index: number,
     label: string
   ) => {
-    const shownValue = passingTime.departureTime
-      ?.split(':')
-      .slice(0, 2)
-      .join(':');
+    const departureTime = passingTime?.departureTime ?? '00:00:00';
+    const [hours, minutes, seconds] = departureTime.split(':');
+    const now = new Date();
+    now.setHours(parseInt(hours));
+    now.setMinutes(parseInt(minutes));
+    now.setSeconds(parseInt(seconds));
 
     return (
       <InputGroup label={label} className="timepicker">
-        <TextField
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        <TimePicker
+          onChange={(e: Date | null) => {
+            if (!e) return;
+            const date = e.toTimeString().split(' ')[0];
+
             onChange(
               changeElementAtIndex(
                 passingTimes,
                 {
                   ...passingTimes[index],
-                  departureTime: padTimePickerInput(e.target.value),
-                  arrivalTime: padTimePickerInput(e.target.value),
+                  departureTime: date,
+                  arrivalTime: date,
                 },
                 index
               )
-            )
-          }
+            );
+          }}
           prepend={<ClockIcon inline />}
-          type="time"
-          defaultValue={shownValue}
+          selectedTime={now}
         />
       </InputGroup>
     );
