@@ -5,7 +5,6 @@
   color: $colors-brand-white;
   display: flex;
   align-items: center;
-  cursor: pointer;
 
   .user-icon {
     background-color: $colors-blues-blue20;
@@ -16,7 +15,6 @@
     svg {
       display: block;
       margin: 0 auto;
-      transform: translateX(2px);
     }
   }
 
@@ -26,79 +24,12 @@
     font-weight: 600;
   }
 
-  .arrow-icon {
-    margin-right: 22px;
-  }
-
-  .locale {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    span {
-      margin-left: 10px;
-    }
-  }
-
-  .arrow-icon {
-    cursor: pointer;
-    height: 20px;
-    margin-left: 3px;
-  }
-
   .menu-item {
     border-bottom: 2px solid $colors-greys-grey10;
     border-right: 2px solid $colors-greys-grey10;
 
     .eds-checkbox-icon {
       margin-right: 0;
-    }
-  }
-
-  .popover {
-    position: absolute;
-    width: 100px;
-    color: $colors-misc-black;
-    cursor: pointer;
-    box-sizing: content-box;
-
-    .menu-item-nested {
-      border-left: 2px solid $colors-greys-grey10;
-      transform: translateY(155px);
-      background-color: $colors-greys-grey10;
-      border-top: 2px solid $colors-greys-grey10;
-
-      &:before {
-        content: '';
-        width: 10px;
-        height: 10px;
-        position: absolute;
-        left: -5px;
-        top: 12px;
-        -webkit-transform: rotate(45deg) translateY(2px);
-        border: 2px solid $colors-greys-grey10;
-        -ms-transform: rotate(45deg) translateY(2px);
-        transform: rotate(45deg) translateY(2px);
-        background: $colors-greys-grey30;
-        z-index: -1;
-      }
-    }
-
-    .log-out-link {
-      text-decoration: none;
-      font-size: 12px;
-      width: 100%;
-      appearance: none;
-    }
-  }
-
-  &:hover {
-    .name {
-      text-decoration: underline;
-    }
-
-    .user-icon {
-      background-color: $colors-blues-blue30;
     }
   }
 }

@@ -10,6 +10,8 @@ import { GlobalState } from 'reducers';
 import logo from 'static/img/logo.png';
 import './styles.scss';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
+import LanguagePicker from './LanguagePicker';
+import LogoutChip from './LogoutChip';
 
 const isActive = (pathname: string, path: string) =>
   pathname.split('/')[1] === path.split('/')[1];
@@ -101,6 +103,12 @@ const NavBar = () => {
           setRedirect={setRedirect}
         />
       </SideNavigation>
+
+      <div className="bottom-chips">
+        <LanguagePicker />
+        <LogoutChip />
+      </div>
+
       {redirect.showConfirm && (
         <NavigateConfirmBox
           hideDialog={() => setRedirect({ ...redirect, showConfirm: false })}

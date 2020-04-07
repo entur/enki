@@ -57,6 +57,7 @@ export const messages = {
   userMenuMenuItemTextEnglish: 'English',
   userMenuMenuItemTextLanguage: 'Språk',
   userMenuMenuItemTextNorwegian: 'Norsk',
+  languagePickerAriaLabel: 'Velg språk',
   navBarDataProvider: 'Velg dataleverandør',
   redirectTitle: 'Endringer er ikke lagret!',
   redirectMessage:
