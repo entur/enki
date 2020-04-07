@@ -65,6 +65,11 @@
     grid-gap: 1.5rem;
     column-gap: 1.5rem;
     grid-template-columns: 1fr 1fr;
+
+    .card-link {
+      text-decoration: inherit;
+      color: inherit;
+    }
   }
 
   .bus-icon {
