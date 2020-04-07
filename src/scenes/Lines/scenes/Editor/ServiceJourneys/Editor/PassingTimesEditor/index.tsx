@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TimePicker } from '@entur/datepicker';
-import { InputGroup, TextField } from '@entur/form';
+import { InputGroup } from '@entur/form';
 import { ClockIcon } from '@entur/icons';
 import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
