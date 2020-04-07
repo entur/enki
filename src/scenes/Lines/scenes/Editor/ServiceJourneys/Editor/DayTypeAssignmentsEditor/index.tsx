@@ -47,7 +47,9 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
   if (dayTypeAssignments.length === 0) addNewDayTypeAssignment();
 
   const uniqueKeys = useUniqueKeys(dayTypeAssignments);
-  const operatingPeriods = dayTypeAssignments.map((dta) => dta.operatingPeriod);
+  const operatingPeriods = dayTypeAssignments
+    .map((dta) => dta.operatingPeriod)
+    .filter(Boolean);
 
   const dateJsToIso = (date: Date | null): string => {
     const dateOrNow = date ?? new Date();
