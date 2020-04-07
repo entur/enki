@@ -30,7 +30,7 @@ export const messages: MessagesKey = {
   flexibleLinesSaveLineSuccessMessage: 'The line was successfully saved!',
   modalSaveLineSuccessHeader: 'The line was created!',
   modalSaveLineSuccessMessage:
-    'was successfully created and saved. You can view or make changes to it in the overview for flexible lines.',
+    'was successfully created and saved. You can view or make changes to it in the overview for flexible lines. Remember to do an export including the line to make it visible in travel searches.',
   flexibleLinesSaveLineSuccessButton: 'Ok',
   flexibleStopPlacesDeleteStopPlaceErrorHeader: 'Delete stop place',
   flexibleStopPlacesDeleteStopPlaceErrorMessage:

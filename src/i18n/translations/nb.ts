@@ -28,7 +28,7 @@ export const messages = {
   flexibleLinesSaveLineSuccessMessage: 'Linjen ble lagret!',
   modalSaveLineSuccessHeader: 'Linjen ble opprettet!',
   modalSaveLineSuccessMessage:
-    'ble suksessfullt opprettet og lagret. For å se eller gjøre endringer finner du den i oversikten over Linjer.',
+    'ble opprettet og lagret. Se eller gjør endringer i oversikten over Linjer. Husk at du må eksportere for at tilbudet skal bli tilgjengelig i reisesøk.',
   flexibleLinesSaveLineSuccessButton: 'Den er grei',
   flexibleStopPlacesDeleteStopPlaceErrorHeader: 'Slette stoppested',
   flexibleStopPlacesDeleteStopPlaceErrorMessage:
