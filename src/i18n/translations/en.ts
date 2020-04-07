@@ -86,12 +86,19 @@ export const messages: MessagesKey = {
   item3: "Create a new line in 'Flexible lines', in the menu to the left",
   exportsCreateExportButtonLabel: 'Create export',
   creatorDryRunFormLabel: 'Dry run',
+  creatorDryRunFormLabelTooltip:
+    'Will not export the service to travel search, but creates a NeTEx-file to look at',
   creatorFromDateFormLabel: 'From date *',
   creatorHeader: 'Create export',
+  creatorDescription:
+    'Export services so that they are available in travel search',
   creatorNameFormLabel: 'Name *',
-  creatorSaveButtonLabelText: 'Save',
+  creatorSaveButtonLabelText: 'Create export',
   creatorSavingOverlayLoaderText: 'Saving export...',
   creatorToDateFormLabel: 'To date *',
+  creatorDateForExport: 'Date for export',
+  creatorDateForExportDesc:
+    'Export services with availability within the selected time span',
   validateFormErrorExportFromDateIsAfterToDate:
     'To-date must be after from-date',
   validateFormErrorExportNameIsEmpty: 'Name must be provided.',
@@ -118,7 +125,7 @@ export const messages: MessagesKey = {
   inProgress: 'In progress',
   success: 'Success',
   viewerFromDateLabel: 'From date',
-  viewerHeader: 'Show export',
+  viewerHeader: 'Export',
   viewerLoadingText: 'Loading export...',
   viewerMessagesLabel: 'Messages',
   viewerNameLabel: 'Name',

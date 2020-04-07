@@ -2,12 +2,11 @@ import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { SuccessButton } from '@entur/button';
+import { PrimaryButton } from '@entur/button';
 import { Checkbox, InputGroup, TextField } from '@entur/form';
 import { DatePicker } from '@entur/datepicker';
 import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
-import PageHeader from 'components/PageHeader';
 import OverlayLoader from 'components/OverlayLoader';
 import { AppIntlState, selectIntl } from 'i18n';
 import { RouteComponentProps } from 'react-router';
@@ -17,8 +16,12 @@ import { GlobalState } from 'reducers';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
-import './styles.scss';
 import RequiredInputMarker from 'components/RequiredInputMarker';
+import Page from 'components/Page';
+import { Heading4, LeadParagraph, SubParagraph } from '@entur/typography';
+import { Tooltip } from '@entur/tooltip';
+import { QuestionIcon } from '@entur/icons';
+import './styles.scss';
 
 const newExport = (): Export => {
   const today = moment().format('YYYY-MM-DD');
@@ -51,39 +54,38 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
   };
 
   return (
-    <div className="export-editor">
-      <div className="header">
-        <PageHeader withBackButton title={formatMessage('creatorHeader')} />
-
-        <div className="buttons">
-          <SuccessButton onClick={handleOnSaveClick}>
-            {formatMessage('creatorSaveButtonLabelText')}
-          </SuccessButton>
-        </div>
-      </div>
-
+    <Page
+      className="export-editor"
+      backButtonTitle={formatMessage('navBarExportsMenuItemLabel')}
+      title={formatMessage('creatorHeader')}
+    >
       <OverlayLoader
         className=""
         isLoading={isSaving}
         text={formatMessage('creatorSavingOverlayLoaderText')}
       >
-        <div className="export-form">
-          <RequiredInputMarker />
-          <InputGroup
-            label={formatMessage('creatorNameFormLabel')}
-            {...getErrorFeedback(
-              formatMessage('validateFormErrorExportNameIsEmpty'),
-              !isBlank(theExport.name),
-              namePristine
-            )}
-          >
-            <TextField
-              defaultValue={theExport.name}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onFieldChange('name', e.target.value)
-              }
-            />
-          </InputGroup>
+        <LeadParagraph>{formatMessage('creatorDescription')}</LeadParagraph>
+        <RequiredInputMarker />
+        <InputGroup
+          className="export-name"
+          label={formatMessage('creatorNameFormLabel')}
+          {...getErrorFeedback(
+            formatMessage('validateFormErrorExportNameIsEmpty'),
+            !isBlank(theExport.name),
+            namePristine
+          )}
+        >
+          <TextField
+            defaultValue={theExport.name}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onFieldChange('name', e.target.value)
+            }
+          />
+        </InputGroup>
+
+        <Heading4>{formatMessage('creatorDateForExport')}</Heading4>
+        <SubParagraph>{formatMessage('creatorDateForExportDesc')}</SubParagraph>
+        <div className="export-dates">
           <InputGroup label={formatMessage('creatorFromDateFormLabel')}>
             <DatePicker
               selectedDate={moment(theExport.fromDate).toDate()}
@@ -107,18 +109,31 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               }
             />
           </InputGroup>
-          <InputGroup label={formatMessage('creatorDryRunFormLabel')}>
-            <Checkbox
-              value="1"
-              checked={theExport.dryRun}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onFieldChange('dryRun', e.target.checked)
-              }
-            />
-          </InputGroup>
         </div>
+        <div className="export-dry-run">
+          <Checkbox
+            value="1"
+            checked={theExport.dryRun}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onFieldChange('dryRun', e.target.checked)
+            }
+          >
+            {formatMessage('creatorDryRunFormLabel')}
+          </Checkbox>
+          <Tooltip
+            placement="right"
+            content={formatMessage('creatorDryRunFormLabelTooltip')}
+          >
+            <span className="question-icon">
+              <QuestionIcon />
+            </span>
+          </Tooltip>
+        </div>
+        <PrimaryButton className="export-save" onClick={handleOnSaveClick}>
+          {formatMessage('creatorSaveButtonLabelText')}
+        </PrimaryButton>
       </OverlayLoader>
-    </div>
+    </Page>
   );
 };
 

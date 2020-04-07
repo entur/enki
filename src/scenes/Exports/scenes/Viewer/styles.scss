@@ -1,3 +1,5 @@
+@import '~@entur/tokens/dist/styles.scss';
+
 .export-viewer {
   flex: 1;
   display: flex;
@@ -10,12 +12,32 @@
   }
 
   .export-view {
-    .value {
-      margin-bottom: 20px;
+    .export-items {
+      margin: $space-extra-large 0;
+
+      .export-item {
+        min-width: 10rem;
+        margin-right: $space-large;
+        margin-bottom: $space-large;
+
+        .export-status {
+          display: flex;
+          align-items: center;
+          :first-child {
+            margin-right: 0.5rem;
+          }
+        }
+      }
     }
 
-    .download {
-      cursor: pointer;
+    .export-download {
+      display: flex;
+      flex-direction: column;
+      margin-top: $space-extra-large;
+      button {
+        max-width: fit-content;
+        cursor: pointer;
+      }
     }
 
     .status,

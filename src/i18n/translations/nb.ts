@@ -84,12 +84,19 @@ export const messages = {
   item3: 'Opprett en ny linje under ‘Linjer’ i menyen til venstre',
   exportsCreateExportButtonLabel: 'Opprett eksport',
   creatorDryRunFormLabel: 'Tørrkjøring',
+  creatorDryRunFormLabelTooltip:
+    'Eksporterer ikke tilbudet til reisesøk, men genererer en NeTEx-fil man kan se på',
   creatorFromDateFormLabel: 'Fra dato *',
   creatorHeader: 'Opprett eksport',
+  creatorDescription:
+    'Eksportér tilbud, slik at de blir tilgjengelige i reisesøk',
   creatorNameFormLabel: 'Navn *',
-  creatorSaveButtonLabelText: 'Lagre',
+  creatorSaveButtonLabelText: 'Opprett eksport',
   creatorSavingOverlayLoaderText: 'Lagrer eksporten...',
   creatorToDateFormLabel: 'Til dato *',
+  creatorDateForExport: 'Dato for eksport',
+  creatorDateForExportDesc:
+    'Eksportér tilbud som har tilgjengelighet innenfor dette datospennet',
   validateFormErrorExportFromDateIsAfterToDate:
     'Til-dato må være etter fra-dato',
   validateFormErrorExportNameIsEmpty: 'Navn må fylles ut.',
@@ -115,7 +122,7 @@ export const messages = {
   inProgress: 'Pågår',
   success: 'Ferdig',
   viewerFromDateLabel: 'Fra dato',
-  viewerHeader: 'Vis eksport',
+  viewerHeader: 'Eksport',
   viewerLoadingText: 'Laster inn eksport...',
   viewerMessagesLabel: 'Meldinger',
   viewerNameLabel: 'Navn',
