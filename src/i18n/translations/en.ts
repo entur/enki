@@ -87,7 +87,7 @@ export const messages: MessagesKey = {
   exportsCreateExportButtonLabel: 'Create export',
   creatorDryRunFormLabel: 'Dry run',
   creatorDryRunFormLabelTooltip:
-    'Will not export the offer to travel search, but creates a NeTEx-file to watch',
+    'Will not export the service to travel search, but creates a NeTEx-file to look at',
   creatorFromDateFormLabel: 'From date *',
   creatorHeader: 'Create export',
   creatorDescription:
