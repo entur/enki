@@ -59,6 +59,7 @@ export const messages: MessagesKey = {
   userMenuMenuItemTextEnglish: 'English',
   userMenuMenuItemTextLanguage: 'Language',
   userMenuMenuItemTextNorwegian: 'Norsk',
+  languagePickerAriaLabel: 'Choose language',
   navBarDataProvider: 'Choose data provider',
   redirectTitle: 'Unsaved changes!',
   redirectMessage:

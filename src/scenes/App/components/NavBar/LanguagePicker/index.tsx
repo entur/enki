@@ -4,7 +4,7 @@ import { updateIntl } from 'react-intl-redux';
 import { FloatingButton } from '@entur/button';
 import { DownArrowIcon, CheckIcon, UpArrowIcon } from '@entur/icons';
 import { NorwayIcon, UKIcon } from '@entur/icons';
-import { getMessages, SUPPORTED_LOCALES, LOCALE_KEY } from 'i18n';
+import { getMessages, SUPPORTED_LOCALES, LOCALE_KEY, selectIntl } from 'i18n';
 import './styles.scss';
 import { GlobalState } from 'reducers';
 
@@ -37,6 +37,7 @@ const LanguagePicker = () => {
     (state) => state.intl.locale
   );
   const dispatch = useDispatch();
+  const { formatMessage } = useSelector(selectIntl);
 
   const handleChangeLocale = useCallback(
     (locale) => {
@@ -85,7 +86,7 @@ const LanguagePicker = () => {
               key={locale}
               className="language-picker__item"
               onClick={() => handleChangeLocale(locale)}
-              aria-label="pick locale"
+              aria-label={locale}
               size="medium"
             >
               {flagIcon(locale)}
@@ -97,7 +98,7 @@ const LanguagePicker = () => {
       )}
       <FloatingButton
         onClick={() => setToggle(!toggled)}
-        aria-label="velg språk"
+        aria-label={formatMessage('languagePickerAriaLabel')}
         className="language-picker"
       >
         {flagIcon(selectedLocale)}
