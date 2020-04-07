@@ -11,13 +11,13 @@ import { Paragraph } from '@entur/typography';
 import { SecondaryButton, SuccessButton, TertiaryButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import ConfirmDialog from 'components/ConfirmDialog';
-import './styles.scss';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { AppIntlState, selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
 import { MessagesKey } from 'i18n/translations/translationKeys';
+import './styles.scss';
 
 type StopPlaceMode = 'nsr' | 'custom';
 

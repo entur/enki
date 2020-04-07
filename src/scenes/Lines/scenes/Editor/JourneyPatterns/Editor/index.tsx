@@ -4,9 +4,9 @@ import { selectIntl } from 'i18n';
 import General from './General';
 import {
   Paragraph,
-  Heading2,
   LeadParagraph,
   Heading3,
+  Heading1,
 } from '@entur/typography';
 import { validateStopPoint } from './StopPoints/Editor/validateForm';
 import {
@@ -19,7 +19,6 @@ import StopPoint from 'model/StopPoint';
 import AddButton from 'components/AddButton/AddButton';
 import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
-import './styles.scss';
 import JourneyPattern from 'model/JourneyPattern';
 import FlexibleAreasOnlyEditor from './StopPoints/Editor/FlexibleAreasOnlyEditor';
 import RequiredInputMarker from 'components/RequiredInputMarker';
@@ -108,7 +107,7 @@ const JourneyPatternEditor = ({
   return (
     <div className="journey-pattern-editor">
       <section>
-        <Heading2>{formatMessage('editorJourneyPatternsTabLabel')}</Heading2>
+        <Heading1>{formatMessage('editorJourneyPatternsTabLabel')}</Heading1>
         <LeadParagraph>{formatMessage('editorFillInformation')}</LeadParagraph>
         <RequiredInputMarker />
         <General

@@ -211,7 +211,7 @@ const ServiceJourneyEditor = (props: Props) => {
             />
           </section>
           <section className="passing-times-section">
-            <h4>{formatMessage('serviceJourneyPassingTimes')}</h4>
+            <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
             <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
             <PassingTimesEditor
               passingTimes={passingTimes ?? []}

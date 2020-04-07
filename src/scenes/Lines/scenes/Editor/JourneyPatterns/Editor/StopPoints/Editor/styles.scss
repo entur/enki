@@ -57,9 +57,13 @@
 }
 
 .flexible-areas-stop-points {
-  max-width: 40%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   > div {
-    margin-bottom: 16px;
+    width: 48%;
+    min-width: 20rem;
+    margin-top: $space-large;
   }
 }

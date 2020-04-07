@@ -15,7 +15,7 @@ import {
   PURCHASE_MOMENT,
   PURCHASE_WHEN,
 } from 'model/enums';
-import { Heading2, LeadParagraph } from '@entur/typography';
+import { Heading1, LeadParagraph } from '@entur/typography';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 import Contact from 'model/Contact';
 import { Dropdown } from '@entur/dropdown';
@@ -73,7 +73,7 @@ const BookingArrangementEditor = (props: Props) => {
   return (
     <ScrollToTop>
       <div className="booking-editor">
-        <Heading2>{formatMessage('bookingInfoHeader')}</Heading2>
+        <Heading1>{formatMessage('bookingInfoHeader')}</Heading1>
         <LeadParagraph>{formatMessage('bookingInfoText')}</LeadParagraph>
 
         <section className="booking-contact-info">
@@ -159,10 +159,7 @@ const BookingArrangementEditor = (props: Props) => {
             />
           </InputGroup>
 
-          <InputGroup
-            className="form-section"
-            label={formatMessage('bookingNoteFieldTitle')}
-          >
+          <InputGroup label={formatMessage('bookingNoteFieldTitle')}>
             <TextArea
               value={bookingNote ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
