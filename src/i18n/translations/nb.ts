@@ -96,7 +96,7 @@ export const messages = {
   creatorToDateFormLabel: 'Til dato *',
   creatorDateForExport: 'Dato for eksport',
   creatorDateForExportDesc:
-    ' Eksportér tilbud som har tilgjengelighet innenfor dette datospennet',
+    'Eksportér tilbud som har tilgjengelighet innenfor dette datospennet',
   validateFormErrorExportFromDateIsAfterToDate:
     'Til-dato må være etter fra-dato',
   validateFormErrorExportNameIsEmpty: 'Navn må fylles ut.',
