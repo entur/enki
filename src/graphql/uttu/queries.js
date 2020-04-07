@@ -148,6 +148,7 @@ export const getFlexibleLineByIdQuery = `
     bookingMethods,
     bookingAccess,
     bookWhen,
+    buyWhen,
     latestBookingTime,
     minimumBookingPeriod
   }
