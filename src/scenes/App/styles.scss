@@ -64,7 +64,12 @@
     display: grid;
     grid-gap: 1.5rem;
     column-gap: 1.5rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .eds-navigation-card {
+      height: 100%;
+      width: 100%;
+    }
 
     .card-link {
       text-decoration: inherit;

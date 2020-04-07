@@ -4,7 +4,7 @@ import { selectIntl } from 'i18n';
 import { Link } from 'react-router-dom';
 import { Heading1, LeadParagraph, Heading2 } from '@entur/typography';
 import { NavigationCard } from '@entur/layout';
-import { ChannelsIcon, RulesIcon, MapIcon, BusIcon } from '@entur/icons';
+import { RulesIcon, MapIcon, BusIcon } from '@entur/icons';
 import './styles.scss';
 
 const Home = () => {
@@ -23,6 +23,7 @@ const Home = () => {
             <NavigationCard
               title={formatMessage('homeCardsGetStarted')}
               titleIcon={<RulesIcon />}
+              as={'object'}
             >
               {formatMessage('homeCardsGetStartedDescription')}
             </NavigationCard>
@@ -32,17 +33,9 @@ const Home = () => {
             <NavigationCard
               title={formatMessage('navBarLinesMenuItemLabel')}
               titleIcon={<BusIcon className="bus-icon" />}
+              as={'object'}
             >
               {formatMessage('homeCardsLinesDescription')}
-            </NavigationCard>
-          </Link>
-
-          <Link to="/networks" className="card-link">
-            <NavigationCard
-              title={formatMessage('navBarNetworksMenuItemLabel')}
-              titleIcon={<ChannelsIcon />}
-            >
-              {formatMessage('homeCardsNetworkDescription')}
             </NavigationCard>
           </Link>
 
@@ -50,6 +43,7 @@ const Home = () => {
             <NavigationCard
               title={formatMessage('navBarStopPlacesMenuItemLabel')}
               titleIcon={<MapIcon />}
+              as={'object'}
             >
               {formatMessage('homeCardsStopPlacesDescription')}
             </NavigationCard>
