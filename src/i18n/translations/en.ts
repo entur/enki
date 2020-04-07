@@ -77,13 +77,18 @@ export const messages: MessagesKey = {
     'See the overview of your networks add new ones.',
   homeCardsStopPlacesDescription:
     'See the overview of stop places and areas, or create new ones.',
+  getStartedRedirectButton: 'Go to Stop places and Areas',
+  getStartedPlatformIDText:
+    "You can go directly to 'Flexible lines' if you wish to use a Platform-ID from NSR.",
   headerParagraph:
     'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',
   intropageTitle: 'Get started!',
   item1:
-    "Create a stop place or a zone in 'Stop places and Areas', in the menu to the left",
-  item2: "Create a new line in 'Flexible lines', in the menu to the left",
-  item3: 'Export the line to make it visible in our travel searches.',
+    "Start by creating a stop place or area under 'Stop places and Areas', in the menu to the left.",
+  item2:
+    "Afterwards move on to 'Flexible lines' in the menu to the left, to create a new line.",
+  item3:
+    'For the line to be visible in our travel searches, one must export it in the "Eksport" section which can be found in the menu.',
   exportsCreateExportButtonLabel: 'Create export',
   creatorDryRunFormLabel: 'Dry run',
   creatorFromDateFormLabel: 'From date *',

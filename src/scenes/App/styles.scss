@@ -51,10 +51,18 @@
   }
 
   section:not(:last-child) {
-    margin-bottom: $space-extra-large6;
+    margin-bottom: $space-extra-large4;
   }
   .point {
     margin: 0 0 $space-extra-large 0;
+  }
+
+  .stop-place-button {
+    margin-left: $space-medium;
+  }
+
+  .platform-id-text {
+    margin-top: $space-extra-large8;
   }
 }
 

@@ -19,35 +19,35 @@ const Home = () => {
       <main>
         <Heading2>{formatMessage('homeShortcut')}</Heading2>
         <section className="cards">
-          <Link to="get-started" className="card-link">
-            <NavigationCard
-              title={formatMessage('homeCardsGetStarted')}
-              titleIcon={<RulesIcon />}
-              as={'object'}
-            >
-              {formatMessage('homeCardsGetStartedDescription')}
-            </NavigationCard>
-          </Link>
+          <NavigationCard
+            title={formatMessage('homeCardsGetStarted')}
+            titleIcon={<RulesIcon />}
+            as={Link}
+            to={'get-started'}
+            className="card-link"
+          >
+            {formatMessage('homeCardsGetStartedDescription')}
+          </NavigationCard>
 
-          <Link to="/lines" className="card-link">
-            <NavigationCard
-              title={formatMessage('navBarLinesMenuItemLabel')}
-              titleIcon={<BusIcon className="bus-icon" />}
-              as={'object'}
-            >
-              {formatMessage('homeCardsLinesDescription')}
-            </NavigationCard>
-          </Link>
+          <NavigationCard
+            title={formatMessage('navBarLinesMenuItemLabel')}
+            titleIcon={<BusIcon className="bus-icon" />}
+            as={Link}
+            to="/lines"
+            className="card-link"
+          >
+            {formatMessage('homeCardsLinesDescription')}
+          </NavigationCard>
 
-          <Link to="/stop-places" className="card-link">
-            <NavigationCard
-              title={formatMessage('navBarStopPlacesMenuItemLabel')}
-              titleIcon={<MapIcon />}
-              as={'object'}
-            >
-              {formatMessage('homeCardsStopPlacesDescription')}
-            </NavigationCard>
-          </Link>
+          <NavigationCard
+            title={formatMessage('navBarStopPlacesMenuItemLabel')}
+            titleIcon={<MapIcon />}
+            as={Link}
+            to="/stop-places"
+            className="card-link"
+          >
+            {formatMessage('homeCardsStopPlacesDescription')}
+          </NavigationCard>
         </section>
       </main>
     </div>
