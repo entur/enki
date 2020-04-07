@@ -98,7 +98,7 @@ export const messages: MessagesKey = {
   creatorToDateFormLabel: 'To date *',
   creatorDateForExport: 'Date for export',
   creatorDateForExportDesc:
-    'Export offer which is available in the selected time span',
+    'Export services with availability within the selected time span',
   validateFormErrorExportFromDateIsAfterToDate:
     'To-date must be after from-date',
   validateFormErrorExportNameIsEmpty: 'Name must be provided.',
