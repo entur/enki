@@ -41,16 +41,16 @@ const BookingArrangementEditor = (props: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const { bookingArrangement, onChange, spoilPristine } = props;
   const {
-    bookingContact = {},
-    bookingMethods = [],
+    bookingContact,
+    bookingMethods,
     bookWhen,
-    buyWhen = [],
+    buyWhen,
     bookingAccess,
     bookingNote,
   } = bookingArrangement;
 
-  const phonePristine = usePristine(bookingContact.phone, spoilPristine);
-  const urlPristine = usePristine(bookingContact.url, spoilPristine);
+  const phonePristine = usePristine(bookingContact?.phone, spoilPristine);
+  const urlPristine = usePristine(bookingContact?.url, spoilPristine);
 
   const onContactChange = (contact: Contact) =>
     onChange({
@@ -61,13 +61,13 @@ const BookingArrangementEditor = (props: Props) => {
   const onPurchaseMomentChange = (moment: PURCHASE_MOMENT) =>
     onChange({
       ...bookingArrangement,
-      buyWhen: addOrRemove(moment, buyWhen),
+      buyWhen: addOrRemove(moment, buyWhen ?? []),
     });
 
   const onBookingMethodChange = (method: BOOKING_METHOD) =>
     onChange({
       ...bookingArrangement,
-      bookingMethods: addOrRemove(method, bookingMethods),
+      bookingMethods: addOrRemove(method, bookingMethods ?? []),
     });
 
   return (
@@ -79,7 +79,7 @@ const BookingArrangementEditor = (props: Props) => {
         <section className="booking-contact-info">
           <InputGroup label={formatMessage('contactFieldsContactPersonTitle')}>
             <TextField
-              defaultValue={bookingContact.contactPerson ?? ''}
+              defaultValue={bookingContact?.contactPerson ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onContactChange({
                   ...bookingContact,
@@ -91,7 +91,7 @@ const BookingArrangementEditor = (props: Props) => {
 
           <InputGroup label={formatMessage('contactFieldsEmailTitle')}>
             <TextField
-              defaultValue={bookingContact.email ?? ''}
+              defaultValue={bookingContact?.email ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onContactChange({ ...bookingContact, email: e.target.value })
               }
@@ -107,7 +107,7 @@ const BookingArrangementEditor = (props: Props) => {
             )}
           >
             <TextField
-              defaultValue={bookingContact.phone ?? ''}
+              defaultValue={bookingContact?.phone ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onContactChange({ ...bookingContact, phone: e.target.value })
               }
@@ -123,7 +123,7 @@ const BookingArrangementEditor = (props: Props) => {
             )}
           >
             <TextField
-              defaultValue={bookingContact.url ?? ''}
+              defaultValue={bookingContact?.url ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onContactChange({ ...bookingContact, url: e.target.value })
               }
@@ -149,7 +149,7 @@ const BookingArrangementEditor = (props: Props) => {
 
           <InputGroup label={formatMessage('contactFieldsFurtherDetailsTitle')}>
             <TextField
-              defaultValue={bookingContact.furtherDetails ?? ''}
+              defaultValue={bookingContact?.furtherDetails ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onContactChange({
                   ...bookingContact,
@@ -184,7 +184,10 @@ const BookingArrangementEditor = (props: Props) => {
                 })),
               ]}
               onChange={(e) =>
-                onChange({ ...bookingArrangement, bookWhen: e?.value as PURCHASE_WHEN})
+                onChange({
+                  ...bookingArrangement,
+                  bookWhen: e?.value as PURCHASE_WHEN,
+                })
               }
             />
           </InputGroup>
@@ -195,7 +198,7 @@ const BookingArrangementEditor = (props: Props) => {
                 <FilterChip
                   value={v}
                   key={v}
-                  checked={bookingMethods.includes(v)}
+                  checked={bookingMethods?.includes(v)}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     onBookingMethodChange(e.target.value as BOOKING_METHOD)
                   }
@@ -212,7 +215,7 @@ const BookingArrangementEditor = (props: Props) => {
                 <FilterChip
                   value={v}
                   key={v}
-                  checked={buyWhen.includes(v)}
+                  checked={buyWhen?.includes(v)}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     onPurchaseMomentChange(e.target.value as PURCHASE_MOMENT)
                   }

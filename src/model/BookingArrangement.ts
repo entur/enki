@@ -20,19 +20,4 @@ type BookingArrangement = {
   minimumBookingPeriod?: string; // ISO8601 format e.g PT10M for 10 minutes
 };
 
-export const bookingArrangementIsEmpty = (
-  bookingArrangement: BookingArrangement
-): boolean =>
-  !bookingArrangement.name &&
-  !bookingArrangement.description &&
-  !bookingArrangement.privateCode &&
-  !bookingArrangement.bookingContact &&
-  !bookingArrangement.bookingNote &&
-  (bookingArrangement.bookingMethods ?? []).length === 0 &&
-  !bookingArrangement.bookingAccess &&
-  !bookingArrangement.bookWhen &&
-  bookingArrangement.buyWhen?.length === 0 &&
-  !bookingArrangement.latestBookingTime &&
-  !bookingArrangement.minimumBookingPeriod;
-
 export default BookingArrangement;
