@@ -1,17 +1,17 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import {
+  DataCell,
+  HeaderCell,
   Table,
   TableBody,
   TableHead,
   TableRow,
-  HeaderCell,
-  DataCell,
 } from '@entur/table';
 import Loading from 'components/Loading';
-import PageHeader from 'components/PageHeader';
+import { Heading1 } from '@entur/typography';
 import { loadNetworks } from 'actions/networks';
 import { selectIntl } from 'i18n';
 import './styles.scss';
@@ -73,10 +73,7 @@ const Networks = ({ history }: RouteComponentProps) => {
 
   return (
     <div className="networks">
-      <PageHeader
-        title={formatMessage('networksHeaderText')}
-        withBackButton={false}
-      />
+      <Heading1>{formatMessage('networksHeaderText')}</Heading1>
 
       <SecondaryButton className="create" as={Link} to="/networks/create">
         <AddIcon />

@@ -1,17 +1,16 @@
 import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { AddIcon } from '@entur/icons';
-
 import {
+  DataCell,
+  HeaderCell,
   Table,
   TableBody,
   TableHead,
   TableRow,
-  HeaderCell,
-  DataCell,
 } from '@entur/table';
-import PageHeader from 'components/PageHeader';
+import { Heading1 } from '@entur/typography';
 import Loading from 'components/Loading';
 import { SecondaryButton } from '@entur/button';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
@@ -72,7 +71,7 @@ const StopPlaces = ({ history }) => {
 
   return (
     <div className="stop-places">
-      <PageHeader title={formatMessage('stopPlacesHeader')} />
+      <Heading1>{formatMessage('stopPlacesHeader')}</Heading1>
 
       <SecondaryButton
         as={Link}

@@ -14,7 +14,7 @@ import {
   TableRow,
 } from '@entur/table';
 import Loading from 'components/Loading';
-import PageHeader from 'components/PageHeader';
+import { Heading1 } from '@entur/typography';
 import { SecondaryButton, SecondarySquareButton } from '@entur/button';
 import { loadExports } from 'actions/exports';
 import { EXPORT_STATUS } from 'model/enums';
@@ -97,10 +97,7 @@ const Exports = ({ history }: RouteComponentProps) => {
 
   return (
     <div className="exports">
-      <PageHeader
-        title={formatMessage('exportsHeader')}
-        withBackButton={false}
-      />
+      <Heading1>{formatMessage('exportsHeader')}</Heading1>
 
       <SecondaryButton
         as={Link}
