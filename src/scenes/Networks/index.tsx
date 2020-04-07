@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import {
   Table,
@@ -18,6 +18,8 @@ import './styles.scss';
 import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
 import { Organisation } from 'reducers/organisations';
+import { AddIcon } from '@entur/icons';
+import { SecondaryButton } from '@entur/button';
 
 const Networks = ({ history }: RouteComponentProps) => {
   const { formatMessage } = useSelector(selectIntl);
@@ -75,6 +77,12 @@ const Networks = ({ history }: RouteComponentProps) => {
         title={formatMessage('networksHeaderText')}
         withBackButton={false}
       />
+
+      <SecondaryButton className="create" as={Link} to="/networks/create">
+        <AddIcon />
+        {formatMessage('editorCreateNetworkHeaderText')}
+      </SecondaryButton>
+
       <Loading
         text={formatMessage('networksLoadingNetworksText')}
         isLoading={!networks || !organisations}

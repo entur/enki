@@ -24,7 +24,7 @@ type FlexibleLine = VersionedType & {
   notices?: Notice[];
 };
 
-export const initFlexibleLine = (networkRef: string) => ({
+export const initFlexibleLine = (networkRef?: string) => ({
   transportMode: VEHICLE_MODE.BUS,
   transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
   journeyPatterns: initJourneyPatterns(),
