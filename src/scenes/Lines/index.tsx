@@ -12,7 +12,7 @@ import {
   TableRow,
 } from '@entur/table';
 import Loading from 'components/Loading';
-import PageHeader from 'components/PageHeader';
+import { Heading1 } from '@entur/typography';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import { RouteComponentProps } from 'react-router';
 import './styles.scss';
@@ -76,7 +76,7 @@ const Lines = ({ history }: RouteComponentProps) => {
 
   return (
     <div className="lines">
-      <PageHeader title={formatMessage('linesHeader')} withBackButton={false} />
+      <Heading1>{formatMessage('linesHeader')}</Heading1>
 
       <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
         <AddIcon />

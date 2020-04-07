@@ -1,10 +1,12 @@
 import React, { ReactElement } from 'react';
-import { Heading1 as H1 } from '@entur/typography';
-import BackButton from 'components/BackButton';
+import { Heading1 } from '@entur/typography';
 import './styles.scss';
+import { useHistory } from 'react-router-dom';
+import { TertiaryButton } from '@entur/button';
+import { BackArrowIcon } from '@entur/icons';
 
 type Props = {
-  title: string;
+  title?: string;
   children: ReactElement;
   backButtonTitle: string;
   onBackButtonClick?: () => void;
@@ -17,17 +19,24 @@ const Page = ({
   onBackButtonClick,
   children,
   className = '',
-}: Props) => (
-  <div className={`page ${className}`}>
-    <BackButton
-      onBackButtonClick={onBackButtonClick}
-      backButtonTitle={backButtonTitle}
-    />
-    <div className="page-content">
-      <H1>{title}</H1>
-      {children}
+}: Props) => {
+  const history = useHistory();
+  return (
+    <div className={`page ${className}`}>
+      <div className="back-button">
+        <TertiaryButton onClick={onBackButtonClick ?? history.goBack}>
+          <>
+            <BackArrowIcon />
+            {backButtonTitle && <div>{backButtonTitle}</div>}
+          </>
+        </TertiaryButton>
+      </div>
+      <div className="page-content">
+        {title && <Heading1>{title}</Heading1>}
+        {children}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Page;

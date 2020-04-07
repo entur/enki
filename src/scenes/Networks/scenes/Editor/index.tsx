@@ -16,7 +16,7 @@ import { loadFlexibleLines } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';
-import PageHeader from 'components/PageHeader';
+import Page from 'components/Page';
 import { AppIntlState, selectIntl } from 'i18n';
 import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
@@ -123,134 +123,132 @@ const NetworkEditor = ({
     isDeleting;
 
   return (
-    <div className="network-editor">
-      <div className="header">
-        <PageHeader
-          withBackButton
-          title={
-            match.params.id
-              ? formatMessage('editorEditNetworkHeaderText')
-              : formatMessage('editorCreateNetworkHeaderText')
-          }
+    <Page
+      backButtonTitle={formatMessage('navBarNetworksMenuItemLabel')}
+      title={
+        match.params.id
+          ? formatMessage('editorEditNetworkHeaderText')
+          : formatMessage('editorCreateNetworkHeaderText')
+      }
+    >
+      <div className="network-editor">
+        <Paragraph>{formatMessage('editorNetworkDescription')}</Paragraph>
+
+        {network && lines ? (
+          <OverlayLoader
+            className=""
+            isLoading={isSaving || isDeleting}
+            text={
+              isSaving
+                ? formatMessage('editorSavingNetworkLoadingText')
+                : formatMessage('editorDeletingNetworkLoadingText')
+            }
+          >
+            <div className="network-form">
+              <RequiredInputMarker />
+              <InputGroup
+                className="form-section"
+                label={formatMessage('editorNameLabelText')}
+                {...getErrorFeedback(
+                  formatMessage('editorValidationName'),
+                  !isBlank(network.name),
+                  namePristine
+                )}
+              >
+                <TextField
+                  defaultValue={network.name ?? ''}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange('name', e.target.value)
+                  }
+                />
+              </InputGroup>
+              <InputGroup
+                className="form-section"
+                label={formatMessage('editorDescriptionLabelText')}
+              >
+                <TextArea
+                  value={network.description ?? ''}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange('description', e.target.value)
+                  }
+                />
+              </InputGroup>
+              <InputGroup
+                className="form-section"
+                label={formatMessage('editorPrivateCodeLabelText')}
+              >
+                <TextField
+                  value={network.privateCode ?? ''}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange('privateCode', e.target.value)
+                  }
+                />
+              </InputGroup>
+              <Dropdown
+                className="form-section"
+                value={network.authorityRef}
+                label={formatMessage('editorAuthorityLabelText')}
+                items={[
+                  ...authorities.map((org) => ({
+                    label: org.name,
+                    value: org.id,
+                  })),
+                ]}
+                onChange={(organisation) =>
+                  handleAuthoritySelectionChange(organisation?.value ?? '')
+                }
+                {...getErrorFeedback(
+                  formatMessage('editorValidationAuthority'),
+                  !isBlank(network.authorityRef),
+                  authorityPristine
+                )}
+              />
+              <div className="buttons">
+                {match.params.id && (
+                  <NegativeButton
+                    onClick={() => setDeleteDialogOpen(true)}
+                    disabled={isDeleteDisabled}
+                  >
+                    {formatMessage('editorDeleteButtonText')}
+                  </NegativeButton>
+                )}
+
+                <SuccessButton onClick={handleOnSaveClick}>
+                  {formatMessage('editorSaveButtonText')}
+                </SuccessButton>
+              </div>
+            </div>
+          </OverlayLoader>
+        ) : (
+          <Loading
+            className=""
+            isLoading={!network}
+            isFullScreen
+            children={null}
+            text={
+              !network
+                ? formatMessage('editorLoadingNetworkText')
+                : formatMessage('editorLoadingDependenciesText')
+            }
+          />
+        )}
+
+        <ConfirmDialog
+          isOpen={isDeleteDialogOpen}
+          title={formatMessage('editorDeleteNetworkConfirmDialogTitle')}
+          message={formatMessage('editorDeleteNetworkConfirmDialogMessage')}
+          buttons={[
+            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+              {formatMessage('editorDeleteNetworkConfirmDialogCancelText')}
+            </SecondaryButton>,
+            <SuccessButton key={1} onClick={handleDelete}>
+              {formatMessage('editorDeleteNetworkConfirmDialogConfirmText')}
+            </SuccessButton>,
+          ]}
+          onDismiss={() => setDeleteDialogOpen(false)}
         />
       </div>
-
-      <Paragraph>{formatMessage('editorNetworkDescription')}</Paragraph>
-
-      {network && lines ? (
-        <OverlayLoader
-          className=""
-          isLoading={isSaving || isDeleting}
-          text={
-            isSaving
-              ? formatMessage('editorSavingNetworkLoadingText')
-              : formatMessage('editorDeletingNetworkLoadingText')
-          }
-        >
-          <div className="network-form">
-            <RequiredInputMarker />
-            <InputGroup
-              className="form-section"
-              label={formatMessage('editorNameLabelText')}
-              {...getErrorFeedback(
-                formatMessage('editorValidationName'),
-                !isBlank(network.name),
-                namePristine
-              )}
-            >
-              <TextField
-                defaultValue={network.name ?? ''}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('name', e.target.value)
-                }
-              />
-            </InputGroup>
-            <InputGroup
-              className="form-section"
-              label={formatMessage('editorDescriptionLabelText')}
-            >
-              <TextArea
-                value={network.description ?? ''}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('description', e.target.value)
-                }
-              />
-            </InputGroup>
-            <InputGroup
-              className="form-section"
-              label={formatMessage('editorPrivateCodeLabelText')}
-            >
-              <TextField
-                value={network.privateCode ?? ''}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('privateCode', e.target.value)
-                }
-              />
-            </InputGroup>
-            <Dropdown
-              className="form-section"
-              value={network.authorityRef}
-              label={formatMessage('editorAuthorityLabelText')}
-              items={[
-                ...authorities.map((org) => ({
-                  label: org.name,
-                  value: org.id,
-                })),
-              ]}
-              onChange={(organisation) =>
-                handleAuthoritySelectionChange(organisation?.value ?? '')
-              }
-              {...getErrorFeedback(
-                formatMessage('editorValidationAuthority'),
-                !isBlank(network.authorityRef),
-                authorityPristine
-              )}
-            />
-            <div className="buttons">
-              {match.params.id && (
-                <NegativeButton
-                  onClick={() => setDeleteDialogOpen(true)}
-                  disabled={isDeleteDisabled}
-                >
-                  {formatMessage('editorDeleteButtonText')}
-                </NegativeButton>
-              )}
-
-              <SuccessButton onClick={handleOnSaveClick}>
-                {formatMessage('editorSaveButtonText')}
-              </SuccessButton>
-            </div>
-          </div>
-        </OverlayLoader>
-      ) : (
-        <Loading
-          className=""
-          isLoading={!network}
-          isFullScreen
-          children={null}
-          text={
-            !network
-              ? formatMessage('editorLoadingNetworkText')
-              : formatMessage('editorLoadingDependenciesText')
-          }
-        />
-      )}
-
-      <ConfirmDialog
-        isOpen={isDeleteDialogOpen}
-        title={formatMessage('editorDeleteNetworkConfirmDialogTitle')}
-        message={formatMessage('editorDeleteNetworkConfirmDialogMessage')}
-        buttons={[
-          <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-            {formatMessage('editorDeleteNetworkConfirmDialogCancelText')}
-          </SecondaryButton>,
-          <SuccessButton key={1} onClick={handleDelete}>
-            {formatMessage('editorDeleteNetworkConfirmDialogConfirmText')}
-          </SuccessButton>,
-        ]}
-        onDismiss={() => setDeleteDialogOpen(false)}
-      />
-    </div>
+    </Page>
   );
 };
 

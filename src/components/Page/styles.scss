@@ -1,5 +1,24 @@
 @import '~@entur/tokens/dist/styles.scss';
 
-.page .page-content {
-  margin: $space-extra-large4 $space-extra-large9;
+.page {
+  .back-button {
+    button {
+      border: none;
+      display: flex;
+      align-items: baseline;
+      min-width: fit-content;
+
+      svg {
+        margin-right: 1rem;
+      }
+    }
+
+    button:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .page-content {
+    margin: $space-extra-large4 $space-extra-large9;
+  }
 }

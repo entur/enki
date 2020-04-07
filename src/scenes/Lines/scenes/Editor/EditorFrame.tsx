@@ -19,7 +19,6 @@ import { validJourneyPattern } from './JourneyPatterns/Editor/StopPoints/Editor/
 import { validServiceJourneys } from './ServiceJourneys/Editor/validate';
 import { isEmpty } from 'ramda';
 import { getFlexibleLineFromPath } from 'helpers/url';
-import PageHeader from 'components/PageHeader';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 import Loading from 'components/Loading';
 import { setSavedChanges } from 'actions/editor';
@@ -28,6 +27,7 @@ import { Network } from 'model/Network';
 import Provider from 'model/Provider';
 import { PrimaryButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
+import Page from 'components/Page';
 
 const findNetworkIdByProvider = (
   provider: Provider,
@@ -145,61 +145,61 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     filterAuthorities(organisations, providers.active).length === 0;
 
   return (
-    <>
-      <PageHeader
-        withBackButton
-        onBackButtonClick={onBackButtonClicked}
-        backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
-      />
-      <Loading
-        className=""
-        isLoading={isLoadingDependencies || isEmpty(flexibleLine)}
-        text={formatMessage('editorLoadingLineText')}
-      >
-        <>
-          <Stepper
-            className="editor-frame"
-            steps={FLEXIBLE_LINE_STEPS}
-            activeIndex={activeStepperIndex}
-            onStepClick={(index) => onStepClicked(index)}
+    <Page
+      backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
+      onBackButtonClick={onBackButtonClicked}
+    >
+      <>
+        <Loading
+          className=""
+          isLoading={isLoadingDependencies || isEmpty(flexibleLine)}
+          text={formatMessage('editorLoadingLineText')}
+        >
+          <>
+            <Stepper
+              className="editor-frame"
+              steps={FLEXIBLE_LINE_STEPS}
+              activeIndex={activeStepperIndex}
+              onStepClick={(index) => onStepClicked(index)}
+            />
+            <FlexibleLineEditor
+              isEdit={!isBlank(props.match.params.id)}
+              numSteps={FLEXIBLE_LINE_STEPS.length}
+              activeStep={activeStepperIndex}
+              setActiveStep={setActiveStepperIndex}
+              flexibleLine={flexibleLine}
+              changeFlexibleLine={onFlexibleLineChange}
+              operators={filterNetexOperators(organisations ?? [])}
+              networks={networks ?? []}
+            />
+          </>
+        </Loading>
+        {showConfirm && (
+          <NavigateConfirmBox
+            hideDialog={() => setShowConfirm(false)}
+            redirectTo="/lines"
+            title={formatMessage('redirectTitle')}
+            description={formatMessage('redirectMessage')}
+            confirmText={formatMessage('redirectYes')}
+            cancelText={formatMessage('redirectNo')}
           />
-          <FlexibleLineEditor
-            isEdit={!isBlank(props.match.params.id)}
-            numSteps={FLEXIBLE_LINE_STEPS.length}
-            activeStep={activeStepperIndex}
-            setActiveStep={setActiveStepperIndex}
-            flexibleLine={flexibleLine}
-            changeFlexibleLine={onFlexibleLineChange}
-            operators={filterNetexOperators(organisations ?? [])}
-            networks={networks ?? []}
+        )}
+        {authoritiesMissing && (
+          <ConfirmDialog
+            className="authority-missing-modal"
+            isOpen={true}
+            title={formatMessage('networkAuthorityMissing')}
+            message={formatMessage('networkAuthorityMissingDetails')}
+            onDismiss={() => props.history.push('/')}
+            buttons={[
+              <PrimaryButton key="0" onClick={() => props.history.push('/')}>
+                {formatMessage('homePage')}
+              </PrimaryButton>,
+            ]}
           />
-        </>
-      </Loading>
-      {showConfirm && (
-        <NavigateConfirmBox
-          hideDialog={() => setShowConfirm(false)}
-          redirectTo="/lines"
-          title={formatMessage('redirectTitle')}
-          description={formatMessage('redirectMessage')}
-          confirmText={formatMessage('redirectYes')}
-          cancelText={formatMessage('redirectNo')}
-        />
-      )}
-      {authoritiesMissing && (
-        <ConfirmDialog
-          className="authority-missing-modal"
-          isOpen={true}
-          title={formatMessage('networkAuthorityMissing')}
-          message={formatMessage('networkAuthorityMissingDetails')}
-          onDismiss={() => props.history.push('/')}
-          buttons={[
-            <PrimaryButton key="0" onClick={() => props.history.push('/')}>
-              {formatMessage('homePage')}
-            </PrimaryButton>,
-          ]}
-        />
-      )}
-    </>
+        )}
+      </>
+    </Page>
   );
 };
 
