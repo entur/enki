@@ -6,6 +6,7 @@ import {
 } from 'actions/flexibleStopPlaces';
 import FlexibleStopPlace from '../model/FlexibleStopPlace';
 import { AnyAction } from 'redux';
+import { SET_ACTIVE_PROVIDER } from 'actions/providers';
 
 export type FlexibleStopPlacesState = FlexibleStopPlace[] | null;
 
@@ -29,6 +30,9 @@ const flexibleStopPlaces = (
             sp.id === action.stopPlace.id ? action.stopPlace : sp
           )
         : [action.stopPlace];
+
+    case SET_ACTIVE_PROVIDER:
+      return null;
 
     default:
       return stopPlaces;

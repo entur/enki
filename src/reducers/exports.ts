@@ -5,6 +5,7 @@ import {
 } from 'actions/exports';
 import { AnyAction } from 'redux';
 import { Export } from 'model/Export';
+import { SET_ACTIVE_PROVIDER } from 'actions/providers';
 
 export type ExportsState = Export[] | null;
 
@@ -20,6 +21,9 @@ const exportsReducer = (exports: ExportsState = null, action: AnyAction) => {
       return exports
         ? exports.map((e) => (e.id === action.export.id ? action.export : e))
         : [action.export];
+
+    case SET_ACTIVE_PROVIDER:
+      return null;
 
     default:
       return exports;
