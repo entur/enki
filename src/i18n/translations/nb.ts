@@ -46,7 +46,7 @@ export const messages = {
     'En feil oppstod under lagringen av stoppested: {details}',
   flexibleStopPlacesSaveStopPlaceSuccessHeader: 'Lagre stoppested',
   flexibleStopPlacesSaveStopPlaceSuccessMessage: 'Stoppestedet ble lagret.',
-  navBarIntroduction: 'Introduksjon',
+  navBarIntroduction: 'Slik kommer du i gang',
   navBarExportsMenuItemLabel: 'Eksporter',
   navBarLinesMenuItemLabel: 'Linjer',
   navBarNetworksMenuItemLabel: 'Nettverk',
@@ -76,13 +76,18 @@ export const messages = {
     'Se oversikt over dine nettverk eller legg till nytt.',
   homeCardsStopPlacesDescription:
     'Se oversikt over stoppesteder og områder eller opprett nye.',
+  getStartedRedirectButton: 'Gå til Stoppesteder og områder',
+  getStartedPlatformIDText:
+    "Ønsker du å benytte Plattform-ID fra NSR kan du gå direkte til 'Linjer'.",
   headerParagraph:
     'Velkommen til Entur fleksibel transport. Dette er et verktøy for at aktører selv skal kunne legge inn fleksible linjetilbud som synliggjøres i våre kanaler.',
   intropageTitle: 'Kom i gang!',
-  item1: 'Lag et nytt nettverk under ‘Nettverk’ i menyen til venstre ',
+  item1:
+    'Start med å opprette stoppested eller område under ’Stoppesteder og områder’ i menyen til venstre.',
   item2:
-    'Lag stoppested eller sone under ’Stoppesteder og områder’ i menyen til venstre ',
-  item3: 'Opprett en ny linje under ‘Linjer’ i menyen til venstre',
+    'Klikk deretter på ‘Linjer’ i menyen til venstre for å opprette en ny linje.',
+  item3:
+    'For at linjen skal bli tilgjengelig i reisesøk må det opprettes en eksport under ‘Eksporter’ i venstremenyen.',
   exportsCreateExportButtonLabel: 'Opprett eksport',
   creatorDryRunFormLabel: 'Tørrkjøring',
   creatorDryRunFormLabelTooltip:
