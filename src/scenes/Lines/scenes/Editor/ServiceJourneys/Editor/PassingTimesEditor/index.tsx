@@ -17,6 +17,17 @@ import './styles.scss';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import FlexibleAreasPassingTime from './FlexibleAreasPassingTime';
 
+const toDate = (date: string | undefined): Date | undefined => {
+  if (!date) return;
+  const [hours, minutes, seconds] = date.split(':');
+  const dateObj = new Date();
+  dateObj.setHours(parseInt(hours));
+  dateObj.setMinutes(parseInt(minutes));
+  dateObj.setSeconds(parseInt(seconds));
+
+  return dateObj;
+};
+
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
   intl: IntlState;
@@ -73,19 +84,11 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     index: number,
     label: string
   ) => {
-    const departureTime = passingTime?.departureTime ?? '00:00:00';
-    const [hours, minutes, seconds] = departureTime.split(':');
-    const now = new Date();
-    now.setHours(parseInt(hours));
-    now.setMinutes(parseInt(minutes));
-    now.setSeconds(parseInt(seconds));
-
     return (
       <InputGroup label={label} className="timepicker">
         <TimePicker
           onChange={(e: Date | null) => {
-            if (!e) return;
-            const date = e.toTimeString().split(' ')[0];
+            const date = e?.toTimeString().split(' ')[0];
 
             onChange(
               changeElementAtIndex(
@@ -100,7 +103,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
             );
           }}
           prepend={<ClockIcon inline />}
-          selectedTime={now}
+          selectedTime={toDate(passingTime.departureTime)}
         />
       </InputGroup>
     );
