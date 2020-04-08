@@ -172,7 +172,10 @@ export const messages: MessagesKey = {
   bookingMethodPhoneAtStop: 'Phone at stop',
   bookingMethodText: 'Text',
   bookingMethodSelectionTitle: 'Booking method',
-  bookingNoteFieldTitle: 'Booking note',
+  bookingNoteFieldTitle: 'Booking note *',
+  bookingNoteRequiredFeedback: 'Booking note is required.',
+  bookingNoteTooltip:
+    'Information that can be presented along with the travel detail.',
   purchaseWhenAdvanceAndDayOfTravel: 'Advance and day of travel',
   purchaseWhenDayOfTravelOnly: 'Day of travel only',
   purchaseWhenTimeOfTravelOnly: 'Time of travel only',

@@ -34,8 +34,9 @@ type Props = {
 export const bookingArrangementIsValid = (
   bookingArrangement: BookingArrangement
 ) =>
-  !isBlank(bookingArrangement?.bookingContact?.url) ||
-  !isBlank(bookingArrangement?.bookingContact?.phone);
+  (!isBlank(bookingArrangement?.bookingContact?.url) ||
+    !isBlank(bookingArrangement?.bookingContact?.phone)) &&
+  !isBlank(bookingArrangement?.bookingNote);
 
 const BookingArrangementEditor = (props: Props) => {
   const { formatMessage } = useSelector(selectIntl);
@@ -51,6 +52,10 @@ const BookingArrangementEditor = (props: Props) => {
 
   const phonePristine = usePristine(bookingContact?.phone, spoilPristine);
   const urlPristine = usePristine(bookingContact?.url, spoilPristine);
+  const notePristine = usePristine(bookingNote, spoilPristine);
+  const hasContactInformation =
+    !isBlank(bookingArrangement?.bookingContact?.url) ||
+    !isBlank(bookingArrangement?.bookingContact?.phone);
 
   const onContactChange = (contact: Contact) =>
     onChange({
@@ -102,7 +107,7 @@ const BookingArrangementEditor = (props: Props) => {
             label={formatMessage('contactFieldsPhoneTitle')}
             {...getErrorFeedback(
               formatMessage('urlOrPhoneMustBeFilled'),
-              bookingArrangementIsValid(bookingArrangement),
+              hasContactInformation,
               phonePristine && urlPristine
             )}
           >
@@ -118,7 +123,7 @@ const BookingArrangementEditor = (props: Props) => {
             label={formatMessage('contactFieldsUrlTitle')}
             {...getErrorFeedback(
               formatMessage('urlOrPhoneMustBeFilled'),
-              bookingArrangementIsValid(bookingArrangement),
+              hasContactInformation,
               phonePristine && urlPristine
             )}
           >
@@ -159,7 +164,15 @@ const BookingArrangementEditor = (props: Props) => {
             />
           </InputGroup>
 
-          <InputGroup label={formatMessage('bookingNoteFieldTitle')}>
+          <InputGroup
+            label={formatMessage('bookingNoteFieldTitle')}
+            {...getErrorFeedback(
+              formatMessage('bookingNoteRequiredFeedback'),
+              !isBlank(bookingNote),
+              notePristine
+            )}
+            labelTooltip={formatMessage('bookingNoteTooltip')}
+          >
             <TextArea
               value={bookingNote ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
