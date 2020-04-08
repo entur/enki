@@ -229,6 +229,8 @@ export const messages: MessagesKey = {
   stepperServiceJourney: 'Service Journey',
   stepperBooking: 'Booking info',
   editorStopPoints: 'Add stop places or areas for the service',
+  editorStopPointFlexibleAreaOnly:
+    'Add stop place or area defining the service',
   stopPointsInfo:
     'You have to create at least two stop points; one for start and one for stop. If you are creating an area based service, and you only have one area, you have to add the same area twice.',
   deleteTitle: 'Delete stop point',
@@ -256,7 +258,7 @@ export const messages: MessagesKey = {
   dayTypeEditorToDate: 'To *',
   dayTypeEditorToDateValidation: 'Not before from-date',
   passingTimesEditorError: 'You need valid passing times.',
-  editorAddStopPoint: 'Create new stop point',
+  editorAddStopPoint: 'Add stop place or area',
   editorAddServiceJourneys: 'Create more Service Journeys',
   editorEdit: 'Edit',
   editorCreate: 'Create new ',
@@ -292,7 +294,8 @@ export const messages: MessagesKey = {
   labelForAlighting: 'For alighting',
   labelForBoarding: 'For boarding',
   labelForBoardingAndAlighting: 'Boarding and alighting',
-  labelFrontText: 'Front Text',
+  labelFrontText: 'Front text',
+  labelFrontTextRequired: 'Front text *',
   labelBoarding: 'On/off-boarding',
   labelQuayRef: 'Platform ID (from NSR) *',
   flexibleStopPlaceRefAndQuayRefBothValues:
@@ -316,8 +319,11 @@ export const messages: MessagesKey = {
   tableDeleteMessage: 'Are you sure you want to delete this stop point?',
   serviceJourneyAvailability: 'Availability',
   serviceJourneyPassingTimes: 'Passing times',
+  serviceJourneyBusinessHours: 'Business hours',
   passingTimesInfo:
     'Enter the passing times for the different stops. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
+  businessHoursInfo:
+    'Enter the business hour for the area or stop. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
   serviceJourneyBooking: 'Booking',
   generalName: 'Name *',
   nameIsRequired: 'Name is required.',

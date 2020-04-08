@@ -51,7 +51,10 @@
     margin-bottom: $space-large;
   }
 
-  .eds-drawer__close-button:hover {
-    cursor: pointer;
+  .eds-drawer {
+    overflow-y: scroll;
+    &__close-button:hover {
+      cursor: pointer;
+    }
   }
 }

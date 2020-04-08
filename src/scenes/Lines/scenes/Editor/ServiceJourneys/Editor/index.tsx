@@ -211,8 +211,20 @@ const ServiceJourneyEditor = (props: Props) => {
             />
           </section>
           <section className="passing-times-section">
-            <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
-            <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
+            <Heading4>
+              {formatMessage(
+                flexibleLineType === 'flexibleAreasOnly'
+                  ? 'serviceJourneyBusinessHours'
+                  : 'serviceJourneyPassingTimes'
+              )}
+            </Heading4>
+            <Paragraph>
+              {formatMessage(
+                flexibleLineType === 'flexibleAreasOnly'
+                  ? 'businessHoursInfo'
+                  : 'passingTimesInfo'
+              )}
+            </Paragraph>
             <PassingTimesEditor
               passingTimes={passingTimes ?? []}
               stopPoints={stopPoints}

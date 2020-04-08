@@ -74,7 +74,7 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
       }
 
       <InputGroup
-        label={formatMessage('labelFrontText')}
+        label={formatMessage('labelFrontTextRequired')}
         {...getErrorFeedback(
           formatMessage('frontTextNoValue'),
           !isBlank(frontText),

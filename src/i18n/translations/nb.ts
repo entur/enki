@@ -226,6 +226,8 @@ export const messages = {
   stepperServiceJourney: 'Service Journey',
   stepperBooking: 'Bestillingsinfo',
   editorStopPoints: 'Legg til stoppesteder eller områder for tilbudet',
+  editorStopPointFlexibleAreaOnly:
+    'Legg til stoppested eller område som definerer tilbudet',
   stopPointsInfo:
     'Du må opprette minst to stoppesteder; ett for start og ett for slutt. Hvis du lager et områdebasert tilbud, og du kun har ett område, må du legge til samme område to ganger.',
   deleteTitle: 'Slette stoppepunkt',
@@ -253,7 +255,7 @@ export const messages = {
   dayTypeEditorToDate: 'Til *',
   dayTypeEditorToDateValidation: 'Ikke før fra-dato',
   passingTimesEditorError: 'Du må ha gyldige passeringstider.',
-  editorAddStopPoint: 'Legg til stoppepunkt',
+  editorAddStopPoint: 'Legg til stoppested eller område',
   editorAddServiceJourneys: 'Legg til flere Service Journeys',
   editorEdit: 'Rediger',
   editorCreate: 'Opprett',
@@ -290,6 +292,7 @@ export const messages = {
   labelForBoarding: 'For påstigning',
   labelForBoardingAndAlighting: 'På- og avstigning',
   labelFrontText: 'Fronttekst',
+  labelFrontTextRequired: 'Fronttekst *',
   labelBoarding: 'På-/avstigning',
   labelQuayRef: 'Plattform-ID (fra NSR) *',
   tableYes: 'Ja',
@@ -314,8 +317,11 @@ export const messages = {
   quayRefInvalid: 'Ugyldig plattform-ID',
   serviceJourneyAvailability: 'Tilgjengelighet',
   serviceJourneyPassingTimes: 'Passeringstider',
+  serviceJourneyBusinessHours: 'Åpningstid',
   passingTimesInfo:
     'Fyll inn passeringstider for de ulike stoppene. Hvis du lager et områdebasert tilbud fyller du inn åpningstidene, med starttidspunkt på første stopp og sluttidspunkt på det siste.',
+  businessHoursInfo:
+    'Fyll inn åpningstid for stoppet eller området. Hvis du lager et områdebasert tilbud fyller du inn åpningstidene, med starttidspunkt på første stopp og sluttidspunkt på det siste.',
   serviceJourneyBooking: 'Bestilling',
   generalName: 'Navn *',
   nameIsRequired: 'Navn må fylles inn.',

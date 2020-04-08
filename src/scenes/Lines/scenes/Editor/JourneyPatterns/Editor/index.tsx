@@ -118,41 +118,49 @@ const JourneyPatternEditor = ({
       </section>
 
       <section style={{ marginTop: '5rem' }}>
-        <Heading3>{formatMessage('editorStopPoints')}</Heading3>
+        <Heading3>
+          {formatMessage(
+            flexibleLineType === 'flexibleAreasOnly'
+              ? 'editorStopPointFlexibleAreaOnly'
+              : 'editorStopPoints'
+          )}
+        </Heading3>
         <Paragraph>{formatMessage('stopPointsInfo')}</Paragraph>
-        {flexibleLineType === 'flexibleAreasOnly' ? (
-          <FlexibleAreasOnlyEditor
-            stopPoints={pointsInSequence}
-            updateStopPoints={updateStopPoints}
-            flexibleStopPlaces={flexibleStopPlaces}
-            spoilPristine={spoilPristine}
-          />
-        ) : (
-          pointsInSequence.map((stopPoint, index) => (
-            <StopPointEditor
-              key={keys[index]}
-              index={index}
-              isFirstStop={index === 0}
-              stopPoint={stopPoint}
-              errors={validateStopPoint(
-                stopPoint,
-                index === 0,
-                index === pointsInSequence.length - 1
-              )}
-              deleteStopPoint={
-                pointsInSequence.length > 2
-                  ? () => deleteStopPoint(index)
-                  : undefined
-              }
-              stopPointChange={(stopPoint: StopPoint) =>
-                updateStopPoint(index, stopPoint)
-              }
+        <div className="stop-point-editor">
+          {flexibleLineType === 'flexibleAreasOnly' ? (
+            <FlexibleAreasOnlyEditor
+              stopPoints={pointsInSequence}
+              updateStopPoints={updateStopPoints}
               flexibleStopPlaces={flexibleStopPlaces}
               spoilPristine={spoilPristine}
-              flexibleLineType={flexibleLineType}
             />
-          ))
-        )}
+          ) : (
+            pointsInSequence.map((stopPoint, index) => (
+              <StopPointEditor
+                key={keys[index]}
+                index={index}
+                isFirstStop={index === 0}
+                stopPoint={stopPoint}
+                errors={validateStopPoint(
+                  stopPoint,
+                  index === 0,
+                  index === pointsInSequence.length - 1
+                )}
+                deleteStopPoint={
+                  pointsInSequence.length > 2
+                    ? () => deleteStopPoint(index)
+                    : undefined
+                }
+                stopPointChange={(stopPoint: StopPoint) =>
+                  updateStopPoint(index, stopPoint)
+                }
+                flexibleStopPlaces={flexibleStopPlaces}
+                spoilPristine={spoilPristine}
+                flexibleLineType={flexibleLineType}
+              />
+            ))
+          )}
+        </div>
         {flexibleLineType !== 'flexibleAreasOnly' && (
           <AddButton
             onClick={addStopPoint}
