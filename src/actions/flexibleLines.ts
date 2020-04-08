@@ -16,6 +16,7 @@ import { getIntl } from 'i18n';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
 import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
+import { SetActiveProviderAction } from 'actions/providers';
 
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINE = 'RECEIVE_FLEXIBLE_LINE';
@@ -31,6 +32,7 @@ type ReceiveFlexibleLineAction = {
 };
 
 export type FlexibleLinesAction =
+  | SetActiveProviderAction
   | ReceiveFlexibleLineAction
   | ReceiveFlexibleLinesAction;
 

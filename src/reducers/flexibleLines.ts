@@ -6,6 +6,7 @@ import {
 import FlexibleLine from '../model/FlexibleLine';
 import PassingTime from 'model/PassingTime';
 import JourneyPattern from 'model/JourneyPattern';
+import { SET_ACTIVE_PROVIDER } from 'actions/providers';
 
 export type FlexibleLinesState = FlexibleLine[] | null;
 
@@ -70,6 +71,9 @@ const flexibleLines = (
           newFlexibleLine,
         ]
       );
+
+    case SET_ACTIVE_PROVIDER:
+      return null;
 
     default:
       return lines;

@@ -13,9 +13,17 @@ const receiveProviders = (providers: Provider[]) => ({
   type: RECEIVE_PROVIDERS,
   providers,
 });
+
 const failedReceivingProviders = { type: FAILED_RECEIVING_PROVIDERS };
 
-export const setActiveProvider = (provider: Provider) => ({
+export type SetActiveProviderAction = {
+  type: typeof SET_ACTIVE_PROVIDER;
+  provider: Provider;
+};
+
+export const setActiveProvider = (
+  provider: Provider
+): SetActiveProviderAction => ({
   type: SET_ACTIVE_PROVIDER,
   provider,
 });
