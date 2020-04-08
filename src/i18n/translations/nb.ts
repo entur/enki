@@ -82,7 +82,7 @@ export const messages = {
   getStartedLeadParagraph:
     'Før du oppretter en ny linje må du legge till stoppesteder eller område for tilbudet. Følj stegene beskrevet under.',
   headerParagraph:
-    'Velkommen til Entur fleksibel transport. Dette er et verktøy for at aktører selv skal kunne legge inn fleksible linjetilbud som synliggjøres i våre kanaler.',
+    'Velkommen til Entur fleksibel transport, et verktøy som lar aktører legge inn fleksible linjetilbud.',
   intropageTitle: 'Kom i gang!',
   item1:
     'Start med å opprette stoppested eller område under ’Stoppesteder og områder’ i menyen til venstre.',
