@@ -266,6 +266,7 @@ export const messages = {
   editorAddServiceJourneys: 'Legg til flere Service Journeys',
   editorEdit: 'Rediger',
   editorCreate: 'Opprett',
+  editorDetailedCreate: 'Opprett {details}',
   stopPointsAtleastTwoPoints: 'Minst to stoppepunkter',
   stopPointsAtleastTwoPointsDetailed:
     'Et journey pattern krever minst to stoppepunkter.',
@@ -379,6 +380,7 @@ export const messages = {
   editorPrivateCodeLabelText: 'Privat kode',
   save: 'Lagre',
   editorSavingNetworkLoadingText: 'Lagrer nettverket...',
+  network: 'nettverk',
   networksHeaderText: 'Nettverk',
   networksLoadingNetworksText: 'Laster inn nettverk...',
   networksNameTableHeaderLabel: 'Navn',
@@ -408,6 +410,7 @@ export const messages = {
   validateFormErrorFlexibleAreaNotEnoughPolygons:
     'Du må legge til flere punkter i kartet',
   validateFormErrorNameEmpty: 'Du må gi stoppestedet et navn',
+  stopPlaceText: 'stoppested',
   stopPlace: 'Stoppested/område *',
   stopPlacesHeader: 'Stoppesteder og områder',
   stopPlacesLoadingStopPlacesText: 'Laster inn stoppesteder...',

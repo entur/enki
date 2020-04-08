@@ -269,6 +269,7 @@ export const messages: MessagesKey = {
   editorAddServiceJourneys: 'Create more Service Journeys',
   editorEdit: 'Edit',
   editorCreate: 'Create new ',
+  editorDetailedCreate: 'Create new {details}',
   stopPointsAtleastTwoPoints: 'At least two stop points',
   stopPointsAtleastTwoPointsDetailed:
     'A journey pattern requires at least two stop points.',
@@ -379,12 +380,14 @@ export const messages: MessagesKey = {
   editorNameLabelText: 'Name *',
   editorPrivateCodeLabelText: 'Private code',
   editorSavingNetworkLoadingText: 'Saving network...',
+  network: 'network',
   networksHeaderText: 'Networks',
   networksLoadingNetworksText: 'Loading networks...',
   networksNameTableHeaderLabel: 'Name',
   networksNoNetworksFoundText: 'No networks found',
   networksPrivateCodeTableHeaderLabel: 'Private code',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Create stop place or area',
+  stopPlaceText: 'stop place',
   stopPlace: 'Stop place/area *',
   editorDescription:
     'Create a stop place or area, either by entering a list of coordinates in GeoJSON format, or by clicking on the map.',

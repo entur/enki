@@ -334,7 +334,12 @@ const FlexibleStopPlaceEditor = ({
                   )}
 
                   <SuccessButton onClick={handleOnSaveClick}>
-                    {formatMessage('editorSaveButtonText')}
+                    {match.params.id
+                      ? formatMessage('editorSaveButtonText')
+                      : formatMessage(
+                          'editorDetailedCreate',
+                          formatMessage('stopPlaceText')
+                        )}
                   </SuccessButton>
                 </div>
               </div>
