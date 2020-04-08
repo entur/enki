@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
-import { InputGroup, TextField } from '@entur/form';
+import { TimePicker } from '@entur/datepicker';
+import { InputGroup } from '@entur/form';
 import { ClockIcon } from '@entur/icons';
 import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
@@ -15,6 +16,17 @@ import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import FlexibleAreasPassingTime from './FlexibleAreasPassingTime';
+
+const toDate = (date: string | undefined): Date | undefined => {
+  if (!date) return;
+  const [hours, minutes, seconds] = date.split(':');
+  const dateObj = new Date();
+  dateObj.setHours(parseInt(hours));
+  dateObj.setMinutes(parseInt(minutes));
+  dateObj.setSeconds(parseInt(seconds));
+
+  return dateObj;
+};
 
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
@@ -67,40 +79,31 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     />
   );
 
-  const padTimePickerInput = (time: string): string | undefined => {
-    if (time.length === 0) return undefined;
-    return time + ':00';
-  };
-
   const getTimePicker = (
     passingTime: PassingTime,
     index: number,
     label: string
   ) => {
-    const shownValue = passingTime.departureTime
-      ?.split(':')
-      .slice(0, 2)
-      .join(':');
-
     return (
       <InputGroup label={label} className="timepicker">
-        <TextField
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        <TimePicker
+          onChange={(e: Date | null) => {
+            const date = e?.toTimeString().split(' ')[0];
+
             onChange(
               changeElementAtIndex(
                 passingTimes,
                 {
                   ...passingTimes[index],
-                  departureTime: padTimePickerInput(e.target.value),
-                  arrivalTime: padTimePickerInput(e.target.value),
+                  departureTime: date,
+                  arrivalTime: date,
                 },
                 index
               )
-            )
-          }
+            );
+          }}
           prepend={<ClockIcon inline />}
-          type="time"
-          defaultValue={shownValue}
+          selectedTime={toDate(passingTime.departureTime)}
         />
       </InputGroup>
     );
