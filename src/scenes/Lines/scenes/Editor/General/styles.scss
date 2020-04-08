@@ -7,20 +7,13 @@
   }
   .inputs {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
 
-    .eds-input-group + .eds-input-group {
-      margin-top: 0;
-    }
-
-    .eds-input-group {
-      margin: 0 $space-large $space-large 0;
-      flex: 1 45%;
-    }
-
-    .eds-input-group:nth-child(even) {
-      margin-right: $space-large;
+    > div {
+      width: 48%;
+      min-width: 20rem;
+      margin-top: $space-large;
     }
   }
 
@@ -37,10 +30,6 @@
 
       text-decoration: underline;
     }
-  }
-
-  .flexible-line-type {
-    min-width: 19rem;
   }
 
   header.flexible-line-type-drawer {
