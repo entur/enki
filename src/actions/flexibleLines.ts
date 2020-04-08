@@ -56,7 +56,7 @@ export const loadFlexibleLines = () => async (
 ) => {
   try {
     const data = await UttuQuery(
-      getState().providers.active?.code,
+      getState().providers.active?.code ?? '',
       getFlexibleLinesQuery,
       {}
     );
@@ -83,7 +83,7 @@ export const loadFlexibleLineById = (id: string) => async (
 ) => {
   try {
     const data = await UttuQuery(
-      getState().providers.active?.code,
+      getState().providers.active?.code ?? '',
       getFlexibleLineByIdQuery,
       { id }
     );
@@ -108,7 +108,7 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
   dispatch: Dispatch<any>,
   getState: () => GlobalState
 ) => {
-  const activeProvider = getState().providers.active?.code;
+  const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
   const isNewLine = flexibleLine.id === undefined;
 
@@ -147,7 +147,7 @@ export const deleteFlexibleLineById = (id: string) => async (
   dispatch: Dispatch<any>,
   getState: () => GlobalState
 ) => {
-  const activeProvider = getState().providers.active?.code;
+  const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
 
   try {

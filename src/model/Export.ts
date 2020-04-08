@@ -3,12 +3,11 @@ import http from 'http/http';
 import { saveAs } from 'file-saver';
 import token from 'http/token';
 import { VersionedType } from 'model/VersionedType';
-
-type exportStatus = 'inProgress' | 'failed' | 'success';
+import { EXPORT_STATUS } from 'model/enums';
 
 export type Export = VersionedType & {
   name: string;
-  exportStatus?: exportStatus;
+  exportStatus?: EXPORT_STATUS;
   fromDate: string;
   toDate: string;
   dryRun: boolean;

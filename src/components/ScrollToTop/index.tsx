@@ -1,8 +1,13 @@
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
+import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { usePrevious } from 'helpers/hooks';
 
-const ScrollToTop = ({ children, location }) => {
+type Props = RouteComponentProps & {
+  children: ReactElement;
+};
+
+const ScrollToTop = ({ children, location }: Props) => {
   const prevLocation = usePrevious(location);
 
   useEffect(() => {

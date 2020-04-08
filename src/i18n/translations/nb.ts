@@ -125,7 +125,7 @@ export const messages = {
   viewerDryRunYes: 'Ja',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE: 'Ingen gyldig linjer i datagrunnlaget',
   failed: 'Feilet',
-  inProgress: 'Pågår',
+  in_progress: 'Pågår',
   success: 'Ferdig',
   viewerFromDateLabel: 'Fra dato',
   viewerHeader: 'Eksport',

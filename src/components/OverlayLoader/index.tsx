@@ -1,18 +1,23 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment, ReactElement } from 'react';
 import cx from 'classnames';
-
 import LoadingIcon from '../icons/Loading';
-
 import './styles.scss';
+
+type Props = {
+  isLoading: boolean;
+  seeThrough?: boolean;
+  text?: string;
+  className?: string;
+  children: ReactElement | ReactElement[];
+};
 
 const OverlayLoader = ({
   className,
   isLoading,
   text,
-  seeThrough,
   children,
-}) => {
+  seeThrough = true,
+}: Props) => {
   const classNames = cx('overlay-loader', className);
   const overlayClassNames = cx('overlay', { seeThrough });
   return (
@@ -32,16 +37,6 @@ const OverlayLoader = ({
       {children}
     </div>
   );
-};
-
-OverlayLoader.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  seeThrough: PropTypes.bool,
-  text: PropTypes.string,
-};
-OverlayLoader.defaultProps = {
-  isLoading: true,
-  seeThrough: true,
 };
 
 export default OverlayLoader;
