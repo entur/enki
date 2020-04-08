@@ -1,11 +1,16 @@
 @import '~@entur/tokens/dist/styles.scss';
 
 .language-picker-wrapper {
+  margin-bottom: $space-small;
   .language-picker {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     width: 8.25rem;
+
+    > :first-child {
+      margin-left: 0.5em;
+    }
 
     &__icon-container {
       &__flag {

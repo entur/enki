@@ -4,6 +4,7 @@ import { ActionChip } from '@entur/chip';
 import { User } from 'reducers/user';
 import { GlobalState } from 'reducers';
 import { AppIntlState, selectIntl } from 'i18n';
+import { BackArrowIcon } from '@entur/icons';
 import './styles.scss';
 
 const LogoutChip = () => {
@@ -16,7 +17,10 @@ const LogoutChip = () => {
   }));
   return (
     <a className="logout" href={logoutUrl}>
-      <ActionChip> {formatMessage('userMenuLogoutLinkText')} </ActionChip>
+      <ActionChip>
+        <BackArrowIcon />
+        {formatMessage('userMenuLogoutLinkText')}
+      </ActionChip>
     </a>
   );
 };
