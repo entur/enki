@@ -1,65 +1,75 @@
 @import '~@entur/tokens/dist/styles.scss';
 
-.stop-point-element {
-  display: flex;
-  margin-top: 1rem;
-  padding-bottom: 0.7rem;
-  border-bottom: 2px solid $colors-greys-grey20;
-
-  .stop-point-key-info {
+.stop-point-editor {
+  .stop-point-element {
     display: flex;
-    min-width: fit-content;
+    margin-top: 1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 2px solid $colors-greys-grey20;
 
-    > :first-child {
-      margin: auto 2rem auto 0;
-    }
-
-    > fieldset {
-      margin: auto 0;
-      min-width: fit-content;
-    }
-
-    .radio-buttons {
+    .stop-point-key-info {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      min-width: fit-content;
+
+      > :first-child {
+        margin: auto 2rem auto 0;
+      }
+
+      > fieldset {
+        margin: auto 0;
+        min-width: fit-content;
+      }
+
+      .radio-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+
+    .stop-point-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 700px;
+      flex-basis: 100%;
+      margin: 0 1rem;
+
+      .eds-input-group + .eds-input-group {
+        margin-top: 0;
+      }
+
+      > div {
+        width: 200px;
+
+        margin-bottom: 1rem;
+      }
+    }
+
+    .delete-button {
+      margin: auto 0 auto auto;
+      padding: 0 0.5rem;
+      min-width: fit-content;
+
+      svg {
+        margin-right: 0;
+      }
     }
   }
 
-  .stop-point-info {
+  .flexible-areas-stop-points {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    max-width: 700px;
-    flex-basis: 100%;
-    margin: 0 1rem;
-
-    .eds-input-group + .eds-input-group {
-      margin-top: 0;
-    }
 
     > div {
-      width: 200px;
-
-      margin-bottom: 1rem;
+      width: 48%;
+      min-width: 20rem;
+      margin-top: $space-large;
     }
   }
 
-  .delete-button {
-    margin: auto 0 auto auto;
-    padding: 0 0.5rem;
-    min-width: fit-content;
-
-    svg {
-      margin-right: 0;
-    }
-  }
-}
-
-.flexible-areas-stop-points {
-  max-width: 40%;
-
-  > div {
-    margin-bottom: 16px;
+  > :last-child {
+    border-bottom: none;
   }
 }

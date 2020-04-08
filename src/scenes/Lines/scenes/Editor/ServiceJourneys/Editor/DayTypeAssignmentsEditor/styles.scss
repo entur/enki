@@ -32,4 +32,8 @@
       }
     }
   }
+
+  > :last-child {
+    border-bottom: none;
+  }
 }

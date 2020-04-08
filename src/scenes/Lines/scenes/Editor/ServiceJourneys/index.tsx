@@ -6,7 +6,7 @@ import { selectIntl } from 'i18n';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import AddButton from 'components/AddButton/AddButton';
 import ServiceJourney from 'model/ServiceJourney';
-import { Heading2, LeadParagraph } from '@entur/typography';
+import { Heading1, LeadParagraph } from '@entur/typography';
 import { ExpandablePanel } from '@entur/expand';
 import ScrollToTop from 'components/ScrollToTop';
 import { Modal } from '@entur/modal';
@@ -120,7 +120,7 @@ const ServiceJourneysEditor = ({
 
       <ScrollToTop>
         <div className="service-journeys-editor">
-          <Heading2>{formatMessage('editorServiceJourneys')}</Heading2>
+          <Heading1>{formatMessage('editorServiceJourneys')}</Heading1>
           <LeadParagraph>{formatMessage('serviceJourneysInfo')}</LeadParagraph>
           {serviceJourneys.length === 1
             ? renderServiceJourneyEditor(serviceJourneys[0], 0)

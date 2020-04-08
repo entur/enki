@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
-import { Heading2 } from '@entur/typography';
+import { Heading1 } from '@entur/typography';
 import { FLEXIBLE_LINE_TYPE } from 'model/enums';
 import { selectIntl } from 'i18n';
 import './styles.scss';
@@ -72,7 +72,7 @@ export default ({
 
   return (
     <div className="lines-editor-general">
-      <Heading2> {formatMessage('editorAbout')}</Heading2>
+      <Heading1> {formatMessage('editorAbout')}</Heading1>
       <RequiredInputMarker />
       <section className="inputs">
         <InputGroup

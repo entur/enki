@@ -1,4 +1,5 @@
 @import '~@entur/tokens/dist/styles.scss';
+@import '~@entur/modal/dist/styles.css';
 
 .lines-editor-general {
   .header {
@@ -48,5 +49,12 @@
 
   section.flexible-line-type-drawer {
     margin-bottom: $space-large;
+  }
+
+  .eds-drawer {
+    overflow-y: scroll;
+    &__close-button:hover {
+      cursor: pointer;
+    }
   }
 }
