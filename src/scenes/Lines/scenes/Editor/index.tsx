@@ -9,7 +9,6 @@ import BookingArrangementEditor, {
   bookingArrangementIsValid,
 } from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
-import './styles.scss';
 import General from './General';
 import { setSavedChanges } from 'actions/editor';
 import { withRouter } from 'react-router-dom';
@@ -25,6 +24,8 @@ import { validJourneyPattern } from './JourneyPatterns/Editor/StopPoints/Editor/
 import { validServiceJourneys } from './ServiceJourneys/Editor/validate';
 import { aboutLineStepIsValid } from 'scenes/Lines/scenes/Editor/validateForm';
 import { Network } from 'model/Network';
+import { SmallAlertBox } from '@entur/alert';
+import './styles.scss';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
@@ -33,7 +34,7 @@ type Props = RouteComponentProps<MatchParams> & {
   changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
   networks: Network[];
   operators: Organisation[];
-  numSteps: number;
+  steps: string[];
   isEdit: boolean;
 };
 
@@ -46,10 +47,32 @@ const FlexibleLineEditor = (props: Props) => {
 
   const goToLines = () => props.history.push('/lines');
 
+  const currentStepIsValid = (
+    currentStep: number,
+    flexibleLine: FlexibleLine
+  ) => {
+    if (currentStep === 0) return aboutLineStepIsValid(flexibleLine);
+    else if (currentStep === 1)
+      return validJourneyPattern(flexibleLine.journeyPatterns);
+    else if (currentStep === 2)
+      return validServiceJourneys(
+        flexibleLine.journeyPatterns?.[0].serviceJourneys
+      );
+    else if (currentStep === 3)
+      return bookingArrangementIsValid(flexibleLine.bookingArrangement ?? {});
+    else return false;
+  };
+
+  const invalidSteps = props.steps.filter(
+    (step, i) => !currentStepIsValid(i, props.flexibleLine)
+  );
+
+  const otherStepsHasError =
+    invalidSteps.length > 0 &&
+    !invalidSteps.includes(props.steps[props.activeStep]);
+
   const handleOnSaveClick = () => {
-    const valid = [...Array(props.numSteps)]
-      .map((_, i: number) => currentStepIsValid(i, props.flexibleLine))
-      .every((step) => step);
+    const valid = invalidSteps.length === 0;
 
     setNextClicked(true);
     if (valid) {
@@ -69,22 +92,6 @@ const FlexibleLineEditor = (props: Props) => {
         goToLines()
       );
     }
-  };
-
-  const currentStepIsValid = (
-    currentStep: number,
-    flexibleLine: FlexibleLine
-  ) => {
-    if (currentStep === 0) return aboutLineStepIsValid(flexibleLine);
-    else if (currentStep === 1)
-      return validJourneyPattern(flexibleLine.journeyPatterns);
-    else if (currentStep === 2)
-      return validServiceJourneys(
-        flexibleLine.journeyPatterns?.[0].serviceJourneys
-      );
-    else if (currentStep === 3)
-      return bookingArrangementIsValid(flexibleLine.bookingArrangement ?? {});
-    else return false;
   };
 
   const onNextClicked = () => {
@@ -181,9 +188,20 @@ const FlexibleLineEditor = (props: Props) => {
             </section>
           )}
 
+          {otherStepsHasError && nextClicked && props.isEdit && (
+            <SmallAlertBox
+              className="step-errors"
+              variant="error"
+              width="fit-content"
+            >
+              {formatMessage('fixErrorsInTheFollowingSteps')}
+              {invalidSteps.join(', ')}
+            </SmallAlertBox>
+          )}
+
           <NavigationButtons
             editMode={props.isEdit}
-            lastStep={props.activeStep === props.numSteps - 1}
+            lastStep={props.activeStep === props.steps.length - 1}
             onDelete={handleDelete}
             onSave={handleOnSaveClick}
             onNext={onNextClicked}

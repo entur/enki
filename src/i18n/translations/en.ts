@@ -294,6 +294,8 @@ export const messages: MessagesKey = {
   editorSaveButtonText: 'Save',
   editorSaveAndCreateLine: 'Save and create the line',
   editorSaveLineLoadingText: 'Saving line...',
+  fixErrorsInTheFollowingSteps:
+    'You must fix the errors in the following steps: ',
   navigationNext: 'Next',
   linesHeader: 'Lines',
   labelForAlighting: 'For alighting',
