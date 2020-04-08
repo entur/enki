@@ -50,7 +50,7 @@ export const loadFlexibleStopPlaces = () => async (
 ) => {
   dispatch(requestFlexibleStopPlacesActionCreator());
 
-  const activeProvider = getState().providers.active?.code;
+  const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
 
   try {
@@ -81,7 +81,7 @@ export const loadFlexibleStopPlaceById = (id: string) => async (
 ) => {
   dispatch(requestFlexibleStopPlaceActionCreator());
 
-  const activeProvider = getState().providers.active?.code;
+  const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
 
   try {
@@ -108,7 +108,7 @@ export const loadFlexibleStopPlaceById = (id: string) => async (
 export const saveFlexibleStopPlace = (
   flexibleStopPlace: FlexibleStopPlace
 ) => async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
-  const activeProvider = getState().providers.active?.code;
+  const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
 
   try {
@@ -139,7 +139,7 @@ export const deleteFlexibleStopPlaceById = (id: string) => async (
   dispatch: Dispatch<any>,
   getState: () => GlobalState
 ) => {
-  const activeProvider = getState().providers.active?.code;
+  const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
   try {
     await UttuQuery(activeProvider, deleteFlexibleStopPlace, { id });

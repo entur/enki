@@ -96,17 +96,17 @@ export enum DIRECTION_TYPE {
   ANTICLOCKWISE = 'anticlockwise',
 }
 
-export const EXPORT_STATUS = Object.freeze({
-  IN_PROGRESS: 'in_progress',
-  FAILED: 'failed',
-  SUCCESS: 'success',
-});
+export enum EXPORT_STATUS {
+  IN_PROGRESS = 'in_progress',
+  FAILED = 'failed',
+  SUCCESS = 'success',
+}
 
-export const SEVERITY = Object.freeze({
-  INFO: 'info',
-  WARN: 'warn',
-  ERROR: 'error',
-});
+export enum SEVERITY {
+  INFO = 'info',
+  WARN = 'warn',
+  ERROR = 'error',
+}
 
 export const bookingAccessMessages: Record<
   BOOKING_ACCESS,

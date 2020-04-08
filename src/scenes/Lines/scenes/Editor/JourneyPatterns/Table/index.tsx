@@ -1,37 +1,41 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import {
+  DataCell,
+  HeaderCell,
   Table,
   TableBody,
   TableHead,
   TableRow,
-  HeaderCell,
-  DataCell,
 } from '@entur/table';
-import { JourneyPattern } from 'model';
 import ConfirmDialog from 'components/ConfirmDialog';
-
-import './styles.scss';
 import { selectIntl } from 'i18n';
+import JourneyPattern from 'model/JourneyPattern';
+import './styles.scss';
+
+type Props = {
+  journeyPatterns: JourneyPattern[];
+  onRowClick: (index: number) => void;
+  onDeleteClick: (index: number) => void;
+};
 
 const JourneyPatternsTable = ({
   journeyPatterns,
   onRowClick,
   onDeleteClick,
-}) => {
+}: Props) => {
   const { formatMessage } = useSelector(selectIntl);
-  const [removeDialogOpenFor, setRemoveDialogOpenFor] = useState(null);
-
-  const showDeleteDialogFor = (journeyPattern) => {
-    setRemoveDialogOpenFor(journeyPattern);
-  };
+  const [removeDialogOpenFor, setRemoveDialogOpenFor] = useState<
+    number | undefined
+  >(undefined);
 
   const doDelete = () => {
-    onDeleteClick(removeDialogOpenFor);
-    showDeleteDialogFor(null);
+    if (removeDialogOpenFor !== undefined) {
+      onDeleteClick(removeDialogOpenFor);
+      setRemoveDialogOpenFor(undefined);
+    }
   };
 
   const tableRows =
@@ -49,7 +53,7 @@ const JourneyPatternsTable = ({
           <DataCell>
             <div
               onClick={(e) => {
-                showDeleteDialogFor(i);
+                setRemoveDialogOpenFor(i);
                 e.stopPropagation();
               }}
             >
@@ -89,28 +93,24 @@ const JourneyPatternsTable = ({
       </Table>
 
       <ConfirmDialog
-        isOpen={removeDialogOpenFor !== null}
+        isOpen={removeDialogOpenFor !== undefined}
         title={formatMessage('tableDeleteConfirmDialogTitle')}
         message={formatMessage('tableDeleteConfirmDialogMessage')}
         buttons={[
-          <SecondaryButton key={2} onClick={() => showDeleteDialogFor(null)}>
+          <SecondaryButton
+            key={2}
+            onClick={() => setRemoveDialogOpenFor(undefined)}
+          >
             {formatMessage('tableDeleteConfirmDialogCancelButtonText')}
           </SecondaryButton>,
           <SuccessButton key={1} onClick={doDelete}>
             {formatMessage('tableDeleteConfirmDialogConfirmButtonText')}
           </SuccessButton>,
         ]}
-        onDismiss={() => showDeleteDialogFor(null)}
+        onDismiss={() => setRemoveDialogOpenFor(undefined)}
       />
     </div>
   );
-};
-
-JourneyPatternsTable.propTypes = {
-  journeyPatterns: PropTypes.arrayOf(PropTypes.instanceOf(JourneyPattern))
-    .isRequired,
-  onRowClick: PropTypes.func.isRequired,
-  onDeleteClick: PropTypes.func.isRequired,
 };
 
 export default JourneyPatternsTable;

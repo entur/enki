@@ -8,7 +8,7 @@ import {
 import './styles.scss';
 import { EXPORT_STATUS, SEVERITY } from 'model/enums';
 
-export const getIconForStatus = (status) => {
+export const getIconForStatus = (status?: EXPORT_STATUS) => {
   switch (status) {
     case EXPORT_STATUS.SUCCESS:
       return <ValidationCheckIcon className="success-icon" />;
@@ -21,7 +21,7 @@ export const getIconForStatus = (status) => {
   }
 };
 
-export const getIconForSeverity = (severity) => {
+export const getIconForSeverity = (severity?: SEVERITY) => {
   switch (severity) {
     case SEVERITY.INFO:
       return <ValidationExclamationIcon className="exlamation-icon" />;
