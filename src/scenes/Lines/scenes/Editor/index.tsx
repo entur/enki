@@ -55,7 +55,7 @@ const FlexibleLineEditor = (props: Props) => {
     if (valid) {
       setSaving(true);
       dispatch(saveFlexibleLine(props.flexibleLine))
-        .then(() => goToLines())
+        .then(() => !props.isEdit && goToLines())
         .finally(() => setSaving(false));
       dispatch(setSavedChanges(true));
       setNextClicked(false);
