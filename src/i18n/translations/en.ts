@@ -81,6 +81,8 @@ export const messages: MessagesKey = {
   getStartedRedirectButton: 'Go to Stop places and Areas',
   getStartedPlatformIDText:
     "You can go directly to 'Flexible lines' if you wish to use a Platform-ID from NSR.",
+  getStartedLeadParagraph:
+    'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
   headerParagraph:
     'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',
   intropageTitle: 'Get started!',

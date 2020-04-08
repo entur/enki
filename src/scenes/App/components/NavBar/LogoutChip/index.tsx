@@ -3,15 +3,20 @@ import { useSelector } from 'react-redux';
 import { ActionChip } from '@entur/chip';
 import { User } from 'reducers/user';
 import { GlobalState } from 'reducers';
+import { AppIntlState, selectIntl } from 'i18n';
 import './styles.scss';
 
 const LogoutChip = () => {
-  const { logoutUrl } = useSelector<GlobalState, User>(
-    (state) => state.user as User
-  );
+  const {
+    user: { logoutUrl },
+    intl: { formatMessage },
+  } = useSelector<GlobalState, { user: User; intl: AppIntlState }>((state) => ({
+    user: state.user as User,
+    intl: selectIntl(state),
+  }));
   return (
     <a className="logout" href={logoutUrl}>
-      <ActionChip>Logout</ActionChip>
+      <ActionChip> {formatMessage('userMenuLogoutLinkText')} </ActionChip>
     </a>
   );
 };
