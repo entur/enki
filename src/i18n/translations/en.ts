@@ -156,7 +156,9 @@ export const messages: MessagesKey = {
   uttuErrorUNKNOWN: 'Unknown error',
   linesCreateLineIconButtonLabel: 'Create line',
   bookingInfoHeader: 'Booking info',
-  bookingInfoText: 'Information about how the service can be booked',
+  bookingInfoText: 'Information about how the service can be booked.',
+  bookingLabel:
+    'To make the booking process easier, we recommend filling out Phone, URL and Booking note.',
   bookingAccessAuthorisedPublic: 'Authorised public',
   bookingAccessPublic: 'Public',
   bookingAccessStaff: 'Staff',
@@ -172,7 +174,7 @@ export const messages: MessagesKey = {
   bookingMethodPhoneAtStop: 'Phone at stop',
   bookingMethodText: 'Text',
   bookingMethodSelectionTitle: 'Booking method',
-  bookingNoteFieldTitle: 'Booking note *',
+  bookingNoteFieldTitle: 'Booking note',
   bookingNoteRequiredFeedback: 'Booking note is required.',
   bookingNoteTooltip:
     'Information that can be presented along with the travel detail.',

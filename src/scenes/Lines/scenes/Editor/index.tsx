@@ -5,9 +5,7 @@ import {
   saveFlexibleLine,
 } from 'actions/flexibleLines';
 import OverlayLoader from 'components/OverlayLoader';
-import BookingArrangementEditor, {
-  bookingArrangementIsValid,
-} from './BookingArrangementEditor';
+import BookingArrangementEditor from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
 import './styles.scss';
 import General from './General';
@@ -82,8 +80,7 @@ const FlexibleLineEditor = (props: Props) => {
       return validServiceJourneys(
         flexibleLine.journeyPatterns?.[0].serviceJourneys
       );
-    else if (currentStep === 3)
-      return bookingArrangementIsValid(flexibleLine.bookingArrangement ?? {});
+    else if (currentStep === 3) return true;
     else return false;
   };
 
