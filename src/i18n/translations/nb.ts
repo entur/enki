@@ -80,7 +80,7 @@ export const messages = {
   getStartedPlatformIDText:
     "Ønsker du å benytte Plattform-ID fra NSR kan du gå direkte til 'Linjer'.",
   getStartedLeadParagraph:
-    'Før du oppretter en ny linje må du legge till stoppesteder eller område for tilbudet. Følj stegene beskrevet under.',
+    'Før du oppretter en ny linje må du legge til stoppesteder eller område for tilbudet. Følg stegene beskrevet under.',
   headerParagraph:
     'Velkommen til Entur fleksibel transport, et verktøy som lar aktører legge inn fleksible linjetilbud.',
   intropageTitle: 'Kom i gang!',
