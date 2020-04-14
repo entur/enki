@@ -81,6 +81,8 @@ export const messages: MessagesKey = {
   getStartedRedirectButton: 'Go to Stop places and Areas',
   getStartedPlatformIDText:
     "You can go directly to 'Flexible lines' if you wish to use a Platform-ID from NSR.",
+  getStartedLeadParagraph:
+    'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
   headerParagraph:
     'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',
   intropageTitle: 'Get started!',
@@ -154,7 +156,9 @@ export const messages: MessagesKey = {
   uttuErrorUNKNOWN: 'Unknown error',
   linesCreateLineIconButtonLabel: 'Create line',
   bookingInfoHeader: 'Booking info',
-  bookingInfoText: 'Information about how the service can be booked',
+  bookingInfoText: 'Information about how the service can be booked.',
+  bookingLabel:
+    'To make the booking process easier, we recommend filling out Phone, URL and Booking note.',
   bookingAccessAuthorisedPublic: 'Authorised public',
   bookingAccessPublic: 'Public',
   bookingAccessStaff: 'Staff',
@@ -171,6 +175,9 @@ export const messages: MessagesKey = {
   bookingMethodText: 'Text',
   bookingMethodSelectionTitle: 'Booking method',
   bookingNoteFieldTitle: 'Booking note',
+  bookingNoteRequiredFeedback: 'Booking note is required.',
+  bookingNoteTooltip:
+    'Information that can be presented along with the travel detail.',
   purchaseWhenAdvanceAndDayOfTravel: 'Advance and day of travel',
   purchaseWhenDayOfTravelOnly: 'Day of travel only',
   purchaseWhenTimeOfTravelOnly: 'Time of travel only',
@@ -267,6 +274,7 @@ export const messages: MessagesKey = {
   editorAddServiceJourneys: 'Create more Service Journeys',
   editorEdit: 'Edit',
   editorCreate: 'Create new ',
+  editorDetailedCreate: 'Create new {details}',
   stopPointsAtleastTwoPoints: 'At least two stop points',
   stopPointsAtleastTwoPointsDetailed:
     'A journey pattern requires at least two stop points.',
@@ -379,12 +387,14 @@ export const messages: MessagesKey = {
   editorNameLabelText: 'Name *',
   editorPrivateCodeLabelText: 'Private code',
   editorSavingNetworkLoadingText: 'Saving network...',
+  network: 'network',
   networksHeaderText: 'Networks',
   networksLoadingNetworksText: 'Loading networks...',
   networksNameTableHeaderLabel: 'Name',
   networksNoNetworksFoundText: 'No networks found',
   networksPrivateCodeTableHeaderLabel: 'Private code',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Create stop place or area',
+  stopPlaceText: 'stop place',
   stopPlace: 'Stop place/area *',
   editorDescription:
     'Create a stop place or area, either by entering a list of coordinates in GeoJSON format, or by clicking on the map.',

@@ -40,7 +40,7 @@ export const showSuccessNotification = (
     title,
     message,
     NotificationTypes.SUCCESS,
-    NotificationDuration.SHORT,
+    NotificationDuration.LONG,
     showModal
   );
 

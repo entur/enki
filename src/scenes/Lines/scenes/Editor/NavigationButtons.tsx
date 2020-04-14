@@ -36,14 +36,15 @@ const NavigationButtons = (props: Props) => {
             {formatMessage('navigationNext')}
           </PrimaryButton>
         )}
-        {(props.editMode || props.lastStep) && (
+        {props.editMode && props.lastStep && (
           <PrimaryButton onClick={props.onSave}>
-            {formatMessage(
-              props.editMode
-                ? 'editorSaveButtonText'
-                : 'editorSaveAndCreateLine'
-            )}
+            {formatMessage('editorSaveButtonText')}
           </PrimaryButton>
+        )}
+        {!props.editMode && props.lastStep && (
+          <SuccessButton onClick={props.onSave}>
+            {formatMessage('editorSaveAndCreateLine')}
+          </SuccessButton>
         )}
         {props.editMode && (
           <NegativeButton

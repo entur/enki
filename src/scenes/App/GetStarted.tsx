@@ -21,8 +21,10 @@ const GetStarted = () => {
         <h4 className="tagline color-blue">
           {formatMessage('navBarIntroduction')}
         </h4>
-        <Heading1>{formatMessage('homeHeader')}</Heading1>
-        <LeadParagraph>{formatMessage('headerParagraph')}</LeadParagraph>
+        <Heading1>{formatMessage('navBarIntroduction')}</Heading1>
+        <LeadParagraph>
+          {formatMessage('getStartedLeadParagraph')}
+        </LeadParagraph>
       </header>
       <main>
         <section>

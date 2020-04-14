@@ -79,8 +79,10 @@ export const messages = {
   getStartedRedirectButton: 'Gå til Stoppesteder og områder',
   getStartedPlatformIDText:
     "Ønsker du å benytte Plattform-ID fra NSR kan du gå direkte til 'Linjer'.",
+  getStartedLeadParagraph:
+    'Før du oppretter en ny linje må du legge til stoppesteder eller område for tilbudet. Følg stegene beskrevet under.',
   headerParagraph:
-    'Velkommen til Entur fleksibel transport. Dette er et verktøy for at aktører selv skal kunne legge inn fleksible linjetilbud som synliggjøres i våre kanaler.',
+    'Velkommen til Entur fleksibel transport, et verktøy som lar aktører legge inn fleksible linjetilbud.',
   intropageTitle: 'Kom i gang!',
   item1:
     'Start med å opprette stoppested eller område under ’Stoppesteder og områder’ i menyen til venstre.',
@@ -151,7 +153,9 @@ export const messages = {
   uttuErrorUNKNOWN: 'Ukjent feil',
   linesCreateLineIconButtonLabel: 'Opprett linje',
   bookingInfoHeader: 'Bestillingsinfo',
-  bookingInfoText: 'Informasjon om hvordan tilbudet kan bestilles',
+  bookingInfoText: 'Informasjon om hvordan tilbudet kan bestilles.',
+  bookingLabel:
+    'For enklere bestilling av tilbudet anbefales det å fylle ut Telefon, URL og Merknad.',
   bookingAccessAuthorisedPublic: 'Forhåndsgodkjent',
   bookingAccessPublic: 'Åpen',
   bookingAccessStaff: 'Ansatte',
@@ -168,6 +172,8 @@ export const messages = {
   bookingMethodText: 'SMS',
   bookingMethodSelectionTitle: 'Hvordan bestille',
   bookingNoteFieldTitle: 'Merknad',
+  bookingNoteRequiredFeedback: 'Merknad må fylles inn.',
+  bookingNoteTooltip: 'Informasjon som kan vises sammen med reiseforslaget.',
   purchaseWhenAdvanceAndDayOfTravel: 'Frem til og med samme dag',
   purchaseWhenDayOfTravelOnly: 'Samme dag',
   purchaseWhenTimeOfTravelOnly: 'Ved reisetidspunkt',
@@ -264,6 +270,7 @@ export const messages = {
   editorAddServiceJourneys: 'Legg til flere Service Journeys',
   editorEdit: 'Rediger',
   editorCreate: 'Opprett',
+  editorDetailedCreate: 'Opprett {details}',
   stopPointsAtleastTwoPoints: 'Minst to stoppepunkter',
   stopPointsAtleastTwoPointsDetailed:
     'Et journey pattern krever minst to stoppepunkter.',
@@ -378,6 +385,7 @@ export const messages = {
   editorPrivateCodeLabelText: 'Privat kode',
   save: 'Lagre',
   editorSavingNetworkLoadingText: 'Lagrer nettverket...',
+  network: 'nettverk',
   networksHeaderText: 'Nettverk',
   networksLoadingNetworksText: 'Laster inn nettverk...',
   networksNameTableHeaderLabel: 'Navn',
@@ -407,6 +415,7 @@ export const messages = {
   validateFormErrorFlexibleAreaNotEnoughPolygons:
     'Du må legge til flere punkter i kartet',
   validateFormErrorNameEmpty: 'Du må gi stoppestedet et navn',
+  stopPlaceText: 'stoppested',
   stopPlace: 'Stoppested/område *',
   stopPlacesHeader: 'Stoppesteder og områder',
   stopPlacesLoadingStopPlacesText: 'Laster inn stoppesteder...',

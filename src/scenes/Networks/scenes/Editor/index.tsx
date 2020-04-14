@@ -214,7 +214,12 @@ const NetworkEditor = ({
                 )}
 
                 <SuccessButton onClick={handleOnSaveClick}>
-                  {formatMessage('editorSaveButtonText')}
+                  {match.params.id
+                    ? formatMessage('editorSaveButtonText')
+                    : formatMessage(
+                        'editorDetailedCreate',
+                        formatMessage('network')
+                      )}
                 </SuccessButton>
               </div>
             </div>

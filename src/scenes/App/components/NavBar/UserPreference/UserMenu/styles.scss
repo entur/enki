@@ -7,7 +7,6 @@
   align-items: center;
 
   .user-icon {
-    background-color: $colors-blues-blue20;
     border-radius: 20px;
     padding: 10px;
     margin-right: 15px;
@@ -20,8 +19,9 @@
 
   .name {
     flex: 1;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
+    margin-top: 0.1875rem;
   }
 
   .menu-item {

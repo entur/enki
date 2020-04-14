@@ -9,7 +9,7 @@
 
   .bottom-chips {
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
     justify-content: space-between;
     position: absolute;
     left: 0;
@@ -45,8 +45,4 @@
     font-size: 1.3em;
     font-weight: 500;
   }
-}
-
-.exports {
-  margin-top: 20px;
 }
