@@ -14,7 +14,7 @@
 
   .buttons {
     display: flex;
-    margin-top: 3rem;
+    margin-top: $space-extra-large4;
 
     :first-child {
       margin-right: 2rem;
@@ -38,6 +38,10 @@
 
   .no-error {
     opacity: 0;
+  }
+
+  .step-errors {
+    margin-top: $space-extra-large4;
   }
 }
 

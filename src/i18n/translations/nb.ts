@@ -298,6 +298,7 @@ export const messages = {
   editorSaveButtonText: 'Lagre',
   editorSaveAndCreateLine: 'Lagre og opprett linjen',
   editorSaveLineLoadingText: 'Lagrer linjen...',
+  fixErrorsInTheFollowingSteps: 'Du må rette feil på følgende steg: ',
   navigationNext: 'Neste',
   linesHeader: 'Linjer',
   labelForAlighting: 'For avstigning',

@@ -164,7 +164,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
             />
             <FlexibleLineEditor
               isEdit={!isBlank(props.match.params.id)}
-              numSteps={FLEXIBLE_LINE_STEPS.length}
+              steps={FLEXIBLE_LINE_STEPS}
               activeStep={activeStepperIndex}
               setActiveStep={setActiveStepperIndex}
               flexibleLine={flexibleLine}

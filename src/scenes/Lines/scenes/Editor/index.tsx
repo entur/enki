@@ -7,7 +7,6 @@ import {
 import OverlayLoader from 'components/OverlayLoader';
 import BookingArrangementEditor from './BookingArrangementEditor';
 import JourneyPatternsEditor from './JourneyPatterns';
-import './styles.scss';
 import General from './General';
 import { setSavedChanges } from 'actions/editor';
 import { withRouter } from 'react-router-dom';
@@ -23,6 +22,8 @@ import { validJourneyPattern } from './JourneyPatterns/Editor/StopPoints/Editor/
 import { validServiceJourneys } from './ServiceJourneys/Editor/validate';
 import { aboutLineStepIsValid } from 'scenes/Lines/scenes/Editor/validateForm';
 import { Network } from 'model/Network';
+import { SmallAlertBox } from '@entur/alert';
+import './styles.scss';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
@@ -31,7 +32,7 @@ type Props = RouteComponentProps<MatchParams> & {
   changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
   networks: Network[];
   operators: Organisation[];
-  numSteps: number;
+  steps: string[];
   isEdit: boolean;
 };
 
@@ -43,31 +44,6 @@ const FlexibleLineEditor = (props: Props) => {
   const dispatch = useDispatch<any>();
 
   const goToLines = () => props.history.push('/lines');
-
-  const handleOnSaveClick = () => {
-    const valid = [...Array(props.numSteps)]
-      .map((_, i: number) => currentStepIsValid(i, props.flexibleLine))
-      .every((step) => step);
-
-    setNextClicked(true);
-    if (valid) {
-      setSaving(true);
-      dispatch(saveFlexibleLine(props.flexibleLine))
-        .then(() => goToLines())
-        .finally(() => setSaving(false));
-      dispatch(setSavedChanges(true));
-      setNextClicked(false);
-    }
-  };
-
-  const handleDelete = () => {
-    if (props.flexibleLine.id) {
-      setDeleting(true);
-      dispatch(deleteFlexibleLineById(props.flexibleLine.id)).then(() =>
-        goToLines()
-      );
-    }
-  };
 
   const currentStepIsValid = (
     currentStep: number,
@@ -82,6 +58,37 @@ const FlexibleLineEditor = (props: Props) => {
       );
     else if (currentStep === 3) return true;
     else return false;
+  };
+
+  const invalidSteps = props.steps.filter(
+    (step, i) => !currentStepIsValid(i, props.flexibleLine)
+  );
+
+  const otherStepsHasError =
+    invalidSteps.length > 0 &&
+    !invalidSteps.includes(props.steps[props.activeStep]);
+
+  const handleOnSaveClick = () => {
+    const valid = invalidSteps.length === 0;
+
+    setNextClicked(true);
+    if (valid) {
+      setSaving(true);
+      dispatch(saveFlexibleLine(props.flexibleLine))
+        .then(() => !props.isEdit && goToLines())
+        .finally(() => setSaving(false));
+      dispatch(setSavedChanges(true));
+      setNextClicked(false);
+    }
+  };
+
+  const handleDelete = () => {
+    if (props.flexibleLine.id) {
+      setDeleting(true);
+      dispatch(deleteFlexibleLineById(props.flexibleLine.id)).then(() =>
+        goToLines()
+      );
+    }
   };
 
   const onNextClicked = () => {
@@ -178,9 +185,20 @@ const FlexibleLineEditor = (props: Props) => {
             </section>
           )}
 
+          {otherStepsHasError && nextClicked && props.isEdit && (
+            <SmallAlertBox
+              className="step-errors"
+              variant="error"
+              width="fit-content"
+            >
+              {formatMessage('fixErrorsInTheFollowingSteps')}
+              {invalidSteps.join(', ')}
+            </SmallAlertBox>
+          )}
+
           <NavigationButtons
             editMode={props.isEdit}
-            lastStep={props.activeStep === props.numSteps - 1}
+            lastStep={props.activeStep === props.steps.length - 1}
             onDelete={handleDelete}
             onSave={handleOnSaveClick}
             onNext={onNextClicked}

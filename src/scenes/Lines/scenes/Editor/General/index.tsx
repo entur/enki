@@ -76,7 +76,6 @@ export default ({
       <RequiredInputMarker />
       <section className="inputs">
         <InputGroup
-          className="form-section"
           label={formatMessage('generalNameFormGroupTitle')}
           {...getErrorFeedback(
             formatMessage('nameEmpty'),
@@ -92,10 +91,7 @@ export default ({
           />
         </InputGroup>
 
-        <InputGroup
-          className="form-section"
-          label={formatMessage('generalDescriptionFormGroupTitle')}
-        >
+        <InputGroup label={formatMessage('generalDescriptionFormGroupTitle')}>
           <TextField
             value={flexibleLine.description ?? ''}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -108,7 +104,6 @@ export default ({
         </InputGroup>
 
         <InputGroup
-          className="form-section"
           label={formatMessage('generalPrivateCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPrivateCodeInputLabelTooltip')}
         >
@@ -125,7 +120,6 @@ export default ({
         </InputGroup>
 
         <InputGroup
-          className="form-section"
           label={formatMessage('generalPublicCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPublicCodeInputLabelTooltip')}
           {...getErrorFeedback(
@@ -147,7 +141,6 @@ export default ({
         </InputGroup>
 
         <Dropdown
-          className="form-section"
           value={flexibleLine.operatorRef}
           items={[
             ...operators.map(({ id, name }) => ({ value: id, label: name })),
@@ -164,7 +157,6 @@ export default ({
         />
 
         <Dropdown
-          className="form-section"
           value={flexibleLine.networkRef}
           items={[
             ...networks.map(({ id, name }) => ({ value: id, label: name })),
@@ -189,7 +181,7 @@ export default ({
             {formatMessage('typeFormGroupTitleTooltip')}
           </div>
           <Dropdown
-            className="form-section flexible-line-type"
+            className="flexible-line-type"
             value={flexibleLine.flexibleLineType}
             items={[
               ...Object.values(FLEXIBLE_LINE_TYPE).map((type) => ({
