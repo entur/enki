@@ -16,6 +16,12 @@ import ServiceJourney from 'model/ServiceJourney';
 import JourneyPattern from 'model/JourneyPattern';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { Network } from 'model/Network';
+import {
+  getEnumInit,
+  getInit,
+  mapEnumToItems,
+  mapToItems,
+} from 'helpers/dropdown';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -52,20 +58,18 @@ export default ({
 
     flexibleLineChange({
       ...flexibleLine,
-      journeyPatterns: journeyPatterns.map((journeyPattern: JourneyPattern) => {
-        return {
+      journeyPatterns: journeyPatterns.map(
+        (journeyPattern: JourneyPattern) => ({
           ...journeyPattern,
           serviceJourneys: serviceJourneys.map(
-            (serviceJourney: ServiceJourney) => {
-              return {
-                ...serviceJourney,
-                passingTimes: [{}, {}],
-              };
-            }
+            (serviceJourney: ServiceJourney) => ({
+              ...serviceJourney,
+              passingTimes: [{}, {}],
+            })
           ),
           pointsInSequence: [{}, {}],
-        };
-      }),
+        })
+      ),
       flexibleLineType,
     });
   };
@@ -141,10 +145,10 @@ export default ({
         </InputGroup>
 
         <Dropdown
-          value={flexibleLine.operatorRef}
-          items={[
-            ...operators.map(({ id, name }) => ({ value: id, label: name })),
-          ]}
+          initialSelectedItem={getInit(operators, flexibleLine.operatorRef)}
+          placeholder={formatMessage('defaultOption')}
+          items={mapToItems(operators)}
+          clearable
           label={formatMessage('generalOperatorFormGroupTitle')}
           onChange={(element) =>
             flexibleLineChange({ ...flexibleLine, operatorRef: element?.value })
@@ -157,10 +161,10 @@ export default ({
         />
 
         <Dropdown
-          value={flexibleLine.networkRef}
-          items={[
-            ...networks.map(({ id, name }) => ({ value: id, label: name })),
-          ]}
+          initialSelectedItem={getInit(networks, flexibleLine.networkRef)}
+          placeholder={formatMessage('defaultOption')}
+          items={mapToItems(networks)}
+          clearable
           label={formatMessage('generalNetworkFormGroupTitle')}
           onChange={(element) =>
             flexibleLineChange({ ...flexibleLine, networkRef: element?.value })
@@ -182,13 +186,10 @@ export default ({
           </div>
           <Dropdown
             className="flexible-line-type"
-            value={flexibleLine.flexibleLineType}
-            items={[
-              ...Object.values(FLEXIBLE_LINE_TYPE).map((type) => ({
-                value: type,
-                label: type,
-              })),
-            ]}
+            initialSelectedItem={getEnumInit(flexibleLineType)}
+            placeholder={formatMessage('defaultOption')}
+            items={mapEnumToItems(FLEXIBLE_LINE_TYPE)}
+            clearable
             label={formatMessage('generalTypeFormGroupTitle')}
             onChange={(element) => onFlexibleLineTypeChange(element?.value)}
             {...getErrorFeedback(

@@ -107,6 +107,7 @@ export const messages: MessagesKey = {
   creatorDateForExport: 'Date for export',
   creatorDateForExportDesc:
     'Export services with availability within the selected time span',
+  defaultOption: 'Select an option',
   validateFormErrorExportFromDateIsAfterToDate:
     'To-date must be after from-date',
   validateFormErrorExportNameIsEmpty: 'Name must be provided.',
@@ -315,7 +316,7 @@ export const messages: MessagesKey = {
   labelQuayRef: 'Platform ID (from NSR) *',
   flexibleStopPlaceRefAndQuayRefBothValues:
     'Choose either stop place or platform, not both.',
-  flexibleStopPlaceRefAndQuayRefNoValues: 'You must a place',
+  flexibleStopPlaceRefAndQuayRefNoValues: 'You must select a place',
   flexibleStopPlaceNoValue: 'You must select a stop place',
   frontTextNoValue: 'You must enter a front text',
   frontTextAlighting: 'First stop can only be for boarding',

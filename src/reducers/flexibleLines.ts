@@ -54,6 +54,10 @@ const flexibleLines = (
       const newJourneyPatterns: JourneyPattern[] =
         action.line?.journeyPatterns?.map((jp) => ({
           ...jp,
+          pointsInSequence: jp.pointsInSequence.map((pis) => ({
+            ...pis,
+            flexibleStopPlaceRef: pis.flexibleStopPlace?.id,
+          })),
           serviceJourneys: jp.serviceJourneys.map((sj) => ({
             ...sj,
             passingTimes: sj.passingTimes.map((pt) => cleanUpPassingTimes(pt)),

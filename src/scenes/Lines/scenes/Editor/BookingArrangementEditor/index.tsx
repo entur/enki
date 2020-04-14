@@ -8,9 +8,7 @@ import { addOrRemove } from 'helpers/arrays';
 import {
   BOOKING_ACCESS,
   BOOKING_METHOD,
-  bookingAccessMessages,
   bookingMethodMessages,
-  bookingTimeMessages,
   paymentTimeMessages,
   PURCHASE_MOMENT,
   PURCHASE_WHEN,
@@ -21,6 +19,7 @@ import Contact from 'model/Contact';
 import { Dropdown } from '@entur/dropdown';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { FilterChip } from '@entur/chip';
+import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -122,13 +121,10 @@ const BookingArrangementEditor = (props: Props) => {
 
           <Dropdown
             label={formatMessage('bookingAccessSelectionTitle')}
-            value={bookingAccess}
-            items={[
-              ...Object.values(BOOKING_ACCESS).map((v) => ({
-                value: v,
-                label: formatMessage(bookingAccessMessages[v]),
-              })),
-            ]}
+            initialSelectedItem={getEnumInit(bookingAccess)}
+            placeholder={formatMessage('defaultOption')}
+            items={mapEnumToItems(BOOKING_ACCESS)}
+            clearable
             onChange={(e) =>
               onChange({
                 ...bookingArrangement,
@@ -151,24 +147,19 @@ const BookingArrangementEditor = (props: Props) => {
         </section>
 
         <section className="booking-time-info">
-          <InputGroup>
-            <Dropdown
-              label={formatMessage('bookingTimeSelectionTitle')}
-              value={bookWhen}
-              items={[
-                ...Object.values(PURCHASE_WHEN).map((v) => ({
-                  value: v,
-                  label: formatMessage(bookingTimeMessages[v]),
-                })),
-              ]}
-              onChange={(e) =>
-                onChange({
-                  ...bookingArrangement,
-                  bookWhen: e?.value as PURCHASE_WHEN,
-                })
-              }
-            />
-          </InputGroup>
+          <Dropdown
+            label={formatMessage('bookingTimeSelectionTitle')}
+            initialSelectedItem={getEnumInit(bookWhen)}
+            placeholder={formatMessage('defaultOption')}
+            items={mapEnumToItems(PURCHASE_WHEN)}
+            clearable
+            onChange={(e) =>
+              onChange({
+                ...bookingArrangement,
+                bookWhen: e?.value as PURCHASE_WHEN,
+              })
+            }
+          />
 
           <InputGroup label={formatMessage('bookingMethodSelectionTitle')}>
             <div className="filter-chip-list">

@@ -28,7 +28,6 @@ export const validateStopPoint = (
 ): StopPointsFormError => {
   const {
     quayRef,
-    flexibleStopPlace,
     flexibleStopPlaceRef,
     destinationDisplay,
     forAlighting,
@@ -38,9 +37,9 @@ export const validateStopPoint = (
   const getFlexibleStopPlaceRefAndQuayRefError = ():
     | keyof MessagesKey
     | undefined => {
-    if (isBlank(quayRef) && !(flexibleStopPlaceRef ?? flexibleStopPlace?.id))
+    if (isBlank(quayRef) && !flexibleStopPlaceRef)
       return 'flexibleStopPlaceRefAndQuayRefNoValues';
-    if (!isBlank(quayRef) && (flexibleStopPlaceRef ?? flexibleStopPlace?.id))
+    if (!isBlank(quayRef) && flexibleStopPlaceRef)
       return 'flexibleStopPlaceRefAndQuayRefBothValues';
     return undefined;
   };

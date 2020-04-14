@@ -91,6 +91,7 @@ export const messages = {
   item3:
     'For at linjen skal bli tilgjengelig i reisesøk må det opprettes en eksport under ‘Eksporter’ i venstremenyen.',
   exportsCreateExportButtonLabel: 'Opprett eksport',
+  defaultOption: 'Vennligst velg',
   creatorDryRunFormLabel: 'Tørrkjøring',
   creatorDryRunFormLabelTooltip:
     'Eksporterer ikke tilbudet til reisesøk, men genererer en NeTEx-fil man kan se på',

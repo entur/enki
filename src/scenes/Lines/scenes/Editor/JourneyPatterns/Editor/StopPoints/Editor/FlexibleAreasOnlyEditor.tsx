@@ -10,6 +10,7 @@ import { AppIntlState, selectIntl } from 'i18n';
 import { isBlank } from 'helpers/forms';
 import { GlobalState } from 'reducers';
 import './styles.scss';
+import { getInit, mapToItems } from 'helpers/dropdown';
 
 type Props = {
   flexibleStopPlaces: FlexibleStopPlace[];
@@ -26,8 +27,7 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
   } = props;
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const [stopPoint, alightingStopPoint] = stopPoints;
-  const stopPointValue =
-    stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id;
+  const stopPointValue = stopPoint.flexibleStopPlaceRef;
 
   const frontText = stopPoints[0].destinationDisplay?.frontText;
   const stopPlacePristine = usePristine(stopPointValue, spoilPristine);
@@ -54,11 +54,10 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
       {
         <Dropdown
           label={formatMessage('stopPlace')}
-          value={stopPointValue}
-          items={flexibleStopPlaces.map((fsp) => ({
-            value: fsp.id,
-            label: fsp.name ?? '',
-          }))}
+          initialSelectedItem={getInit(flexibleStopPlaces, stopPointValue)}
+          placeholder={formatMessage('defaultOption')}
+          items={mapToItems(flexibleStopPlaces)}
+          clearable
           onChange={(e) =>
             stopPointChange({
               ...stopPoint,
