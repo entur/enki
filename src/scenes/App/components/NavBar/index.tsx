@@ -94,7 +94,6 @@ const NavBar = () => {
         <NavBarItem
           text={formatMessage('navBarExportsMenuItemLabel')}
           path="/exports"
-          className="exports"
           setRedirect={setRedirect}
         />
         <NavBarItem
