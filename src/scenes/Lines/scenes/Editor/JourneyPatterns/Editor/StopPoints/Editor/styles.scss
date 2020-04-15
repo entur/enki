@@ -40,9 +40,13 @@
       }
 
       > div {
-        width: 200px;
+        min-width: 200px;
 
         margin-bottom: 1rem;
+      }
+
+      .stop-point-dropdown {
+        width: 260px;
       }
     }
 

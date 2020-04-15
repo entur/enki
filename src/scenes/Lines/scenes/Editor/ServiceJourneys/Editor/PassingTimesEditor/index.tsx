@@ -16,6 +16,7 @@ import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import FlexibleAreasPassingTime from './FlexibleAreasPassingTime';
+import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
 
 const toDate = (date: string | undefined): Date | undefined => {
   if (!date) return;
@@ -56,13 +57,12 @@ const PassingTimesEditor = (props: Props & StateProps) => {
 
   const getDayOffsetDropdown = (passingTime: PassingTime, index: number) => (
     <Dropdown
+      initialSelectedItem={getEnumInit(
+        passingTime.departureDayOffset?.toString() ?? '0'
+      )}
       label={formatMessage('passingTimesDayTimeOffset')}
       labelTooltip={formatMessage('passingTimesDayTimeOffsetTooltip')}
-      value={passingTime.departureDayOffset?.toString() ?? '0'}
-      items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map((i) => ({
-        value: i,
-        label: i,
-      }))}
+      items={mapEnumToItems(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])}
       onChange={(e) =>
         onChange(
           changeElementAtIndex(
