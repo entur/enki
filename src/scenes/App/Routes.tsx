@@ -6,7 +6,7 @@ import GetStarted from './GetStarted';
 import NetworksOverview from '../Networks';
 import NetworkEditor from '../Networks/scenes/Editor';
 import LinesOverview from '../Lines';
-import EditorFrame from '../Lines/scenes/Editor/EditorFrame';
+import EditorFrame from '../Lines/scenes/Editor';
 import StopPlacesOverview from '../StopPlaces';
 import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import ExportsOverview from '../Exports';
