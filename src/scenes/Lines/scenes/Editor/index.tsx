@@ -35,6 +35,7 @@ import {
   deleteFlexibleLineById,
   saveFlexibleLine,
 } from 'actions/flexibleLines';
+import { FLEXIBLE_LINE_STEPS } from './steps';
 import './styles.scss';
 
 const findNetworkIdByProvider = (
@@ -83,12 +84,6 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   } = useSelector<GlobalState, GlobalState>((s) => s);
 
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
-  const FLEXIBLE_LINE_STEPS = [
-    formatMessage('stepperAbout'),
-    formatMessage('stepperJourneyPattern'),
-    formatMessage('stepperServiceJourney'),
-    formatMessage('stepperBooking'),
-  ];
 
   const isLoadingDependencies = useLoadDependencies({
     match: props.match,
@@ -191,13 +186,12 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
           <>
             <Stepper
               className="editor-frame"
-              steps={FLEXIBLE_LINE_STEPS}
+              steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
               activeIndex={activeStepperIndex}
               onStepClick={(index) => onStepClicked(index)}
             />
             <FlexibleLineEditor
               isEdit={isEdit}
-              steps={FLEXIBLE_LINE_STEPS}
               activeStep={activeStepperIndex}
               setActiveStep={setActiveStepperIndex}
               flexibleLine={flexibleLine}
