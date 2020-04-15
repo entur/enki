@@ -4,8 +4,10 @@ import StopPoint from 'model/StopPoint';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import JourneyPattern from 'model/JourneyPattern';
 
-export const validJourneyPattern = (journeyPatterns?: JourneyPattern[]) =>
-  journeyPatterns &&
+export const validJourneyPattern = (
+  journeyPatterns?: JourneyPattern[]
+): boolean =>
+  !!journeyPatterns &&
   !isBlank(journeyPatterns[0].name) &&
   validateStopPoints(journeyPatterns[0].pointsInSequence ?? []);
 

@@ -1,15 +1,37 @@
 @import '~@entur/tokens/dist/styles.scss';
 
-.line-editor {
-  margin-top: $space-large;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-
-  .header {
+.page-content {
+  .line-editor {
+    margin-top: $space-large;
+    flex: 1;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .error-icon {
+      color: $colors-validation-lava;
+      vertical-align: middle;
+      margin-left: 0.5rem;
+    }
+
+    .no-error {
+      opacity: 0;
+    }
+
+    .step-errors {
+      margin-top: $space-extra-large4;
+    }
+  }
+
+  .authority-missing-modal {
+    .confirm-dialog-buttons {
+      justify-content: center;
+    }
   }
 
   .buttons {
@@ -28,25 +50,5 @@
   .save-button-container {
     margin-top: 20px;
     text-align: right;
-  }
-
-  .error-icon {
-    color: $colors-validation-lava;
-    vertical-align: middle;
-    margin-left: 0.5rem;
-  }
-
-  .no-error {
-    opacity: 0;
-  }
-
-  .step-errors {
-    margin-top: $space-extra-large4;
-  }
-}
-
-.authority-missing-modal {
-  .confirm-dialog-buttons {
-    justify-content: center;
   }
 }

@@ -36,7 +36,7 @@ const NavigationButtons = (props: Props) => {
             {formatMessage('navigationNext')}
           </PrimaryButton>
         )}
-        {props.editMode && props.lastStep && (
+        {props.editMode && (
           <PrimaryButton onClick={props.onSave}>
             {formatMessage('editorSaveButtonText')}
           </PrimaryButton>

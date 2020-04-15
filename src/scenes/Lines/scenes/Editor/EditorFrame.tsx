@@ -13,10 +13,12 @@ import {
   filterAuthorities,
   filterNetexOperators,
 } from 'reducers/organisations';
-import { aboutLineStepIsValid } from './validateForm';
+import {
+  currentStepIsValid,
+  getMaxAllowedStepIndex,
+  validFlexibleLine,
+} from './validateForm';
 import { isBlank } from 'helpers/forms';
-import { validJourneyPattern } from './JourneyPatterns/Editor/StopPoints/Editor/validateForm';
-import { validServiceJourneys } from './ServiceJourneys/Editor/validate';
 import { isEmpty } from 'ramda';
 import { getFlexibleLineFromPath } from 'helpers/url';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
@@ -28,6 +30,12 @@ import Provider from 'model/Provider';
 import { PrimaryButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Page from 'components/Page';
+import NavigationButtons from './NavigationButtons';
+import {
+  deleteFlexibleLineById,
+  saveFlexibleLine,
+} from 'actions/flexibleLines';
+import './styles.scss';
 
 const findNetworkIdByProvider = (
   provider: Provider,
@@ -60,6 +68,9 @@ const createAndGetNetwork = (
 const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const [flexibleLine, setFlexibleLine] = useState<FlexibleLine>({});
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
+  const [nextClicked, setNextClicked] = useState<boolean>(false);
+  const [isSaving, setSaving] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
 
   const { formatMessage } = useSelector(selectIntl);
   const dispatch = useDispatch<any>();
@@ -116,19 +127,41 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
 
   const goToLines = () => props.history.push('/lines');
 
-  const getMaxAllowedStepIndex = () => {
-    if (!aboutLineStepIsValid(flexibleLine)) return 0;
-    else if (!validJourneyPattern(flexibleLine.journeyPatterns)) return 1;
-    else if (
-      !validServiceJourneys(flexibleLine.journeyPatterns?.[0]?.serviceJourneys)
-    )
-      return 2;
-    else return 3;
+  const onStepClicked = (stepIndexClicked: number) => {
+    if (getMaxAllowedStepIndex(flexibleLine) >= stepIndexClicked) {
+      setActiveStepperIndex(stepIndexClicked);
+    }
   };
 
-  const onStepClicked = (stepIndexClicked: number) => {
-    if (getMaxAllowedStepIndex() >= stepIndexClicked) {
-      setActiveStepperIndex(stepIndexClicked);
+  const isEdit = !isBlank(props.match.params.id);
+
+  const handleOnSaveClick = () => {
+    const valid = validFlexibleLine(flexibleLine);
+
+    setNextClicked(true);
+    if (valid) {
+      setSaving(true);
+      dispatch(saveFlexibleLine(flexibleLine))
+        .then(() => !isEdit && goToLines())
+        .finally(() => setSaving(false));
+      dispatch(setSavedChanges(true));
+      setNextClicked(false);
+    }
+  };
+
+  const handleDelete = () => {
+    if (flexibleLine.id) {
+      setDeleting(true);
+      dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() => goToLines());
+    }
+  };
+
+  const onNextClicked = () => {
+    if (currentStepIsValid(activeStepperIndex, flexibleLine)) {
+      setActiveStepperIndex(activeStepperIndex + 1);
+      setNextClicked(false);
+    } else {
+      setNextClicked(true);
     }
   };
 
@@ -163,7 +196,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
               onStepClick={(index) => onStepClicked(index)}
             />
             <FlexibleLineEditor
-              isEdit={!isBlank(props.match.params.id)}
+              isEdit={isEdit}
               steps={FLEXIBLE_LINE_STEPS}
               activeStep={activeStepperIndex}
               setActiveStep={setActiveStepperIndex}
@@ -171,6 +204,16 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
               changeFlexibleLine={onFlexibleLineChange}
               operators={filterNetexOperators(organisations ?? [])}
               networks={networks ?? []}
+              spoilPristine={nextClicked}
+              isSaving={isSaving}
+              isDeleting={isDeleting}
+            />
+            <NavigationButtons
+              editMode={isEdit}
+              lastStep={activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1}
+              onDelete={handleDelete}
+              onSave={handleOnSaveClick}
+              onNext={onNextClicked}
             />
           </>
         </Loading>
