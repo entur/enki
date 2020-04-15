@@ -140,8 +140,7 @@ export const messages = {
   uttuErrorCONSTRAINT_VIOLATION: 'Not a unique name',
   uttuErrorCONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME:
     'Service journeyen må ha et unikt navn',
-  uttuErrorCONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME:
-    'Linjen må ha et unikt navn',
+  uttuErrorCONSTRAINT_VIOLATION_LINE_UNIQUE_NAME: 'Linjen må ha et unikt navn',
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'Journey patternet må ha et unikt navn',
   uttuErrorENTITY_IS_REFERENCED:
@@ -151,6 +150,8 @@ export const messages = {
     'Reisemønster må ha minimum 2 sekvensielle stoppepunkter.',
   uttuErrorMISSING_OPERATOR: 'Tur eller linje må ha operatør',
   uttuErrorORGANISATION_NOT_VALID_OPERATOR: 'Ugyldig operatør',
+  uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
+    'Fant ingen gyldige linjer i eksporten',
   uttuErrorUNKNOWN: 'Ukjent feil',
   linesCreateLineIconButtonLabel: 'Opprett linje',
   bookingInfoHeader: 'Bestillingsinfo',

@@ -16,6 +16,7 @@ import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { getInternationalizedUttuError } from 'helpers/uttu';
+import { sentryCaptureException } from 'store';
 
 export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
 export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
@@ -71,7 +72,7 @@ export const loadFlexibleStopPlaces = () => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -101,7 +102,7 @@ export const loadFlexibleStopPlaceById = (id: string) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -131,7 +132,7 @@ export const saveFlexibleStopPlace = (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -159,6 +160,6 @@ export const deleteFlexibleStopPlaceById = (id: string) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };

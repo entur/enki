@@ -8,13 +8,15 @@ import createSentryMiddleware from 'redux-sentry-middleware';
 import reducers from 'reducers';
 import { geti18n, getIntl } from 'i18n';
 import { normalizeAllUrls } from 'helpers/url';
+import { captureException } from '@sentry/browser';
 
 const SENTRY_DSN = 'https://cc3cacbc67234cc7bfe1cf391010414b@sentry.io/1769954';
+
+const useSentry = process.env.NODE_ENV === 'production';
 
 const getMiddlewares = () => {
   const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
 
-  const useSentry = process.env.NODE_ENV === 'production';
   if (useSentry) {
     Sentry.init({
       dsn: SENTRY_DSN,
@@ -29,6 +31,9 @@ const getMiddlewares = () => {
   }
   return middlewares;
 };
+
+export const sentryCaptureException = (e) =>
+  useSentry ? captureException(e) : console.error({ e });
 
 export const configureStore = (user) => {
   const combinedReducers = combineReducers({

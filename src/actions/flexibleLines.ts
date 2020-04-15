@@ -17,6 +17,7 @@ import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
 import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
 import { SetActiveProviderAction } from 'actions/providers';
+import { sentryCaptureException } from 'store';
 
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINE = 'RECEIVE_FLEXIBLE_LINE';
@@ -73,7 +74,7 @@ export const loadFlexibleLines = () => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -100,7 +101,7 @@ export const loadFlexibleLineById = (id: string) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -139,7 +140,7 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -168,6 +169,6 @@ export const deleteFlexibleLineById = (id: string) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };

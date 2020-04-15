@@ -42,7 +42,7 @@ export const getInternationalizedUttuError = (
       | UttuCode
       | CombinedUttuCode;
 
-    const errorMessage = messages[messageCode] ?? 'UNKNOWN';
+    const errorMessage = messages[messageCode] ?? messages[UttuCode.UNKNOWN];
 
     return intl.formatMessage(errorMessage);
   }
