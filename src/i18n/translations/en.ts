@@ -143,7 +143,7 @@ export const messages: MessagesKey = {
   uttuErrorCONSTRAINT_VIOLATION: 'Ikke unikt navn',
   uttuErrorCONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME:
     'Service journey must have a unique name',
-  uttuErrorCONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME:
+  uttuErrorCONSTRAINT_VIOLATION_LINE_UNIQUE_NAME:
     'Flexible line must have a unique name',
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'The journey pattern must have a unique name',
@@ -154,6 +154,8 @@ export const messages: MessagesKey = {
     'Journey pattern must have minimum 2 sequential stop points.',
   uttuErrorMISSING_OPERATOR: 'Service journey or line must have an operator',
   uttuErrorORGANISATION_NOT_VALID_OPERATOR: 'Invalid operator',
+  uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
+    'Found no valid lines in data space, while exporting',
   uttuErrorUNKNOWN: 'Unknown error',
   linesCreateLineIconButtonLabel: 'Create line',
   bookingInfoHeader: 'Booking info',
