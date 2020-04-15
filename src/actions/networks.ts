@@ -9,6 +9,7 @@ import { getStyledUttuError } from 'helpers/uttu';
 import { Network } from 'model/Network';
 import { Dispatch } from 'redux';
 import { GlobalState } from 'reducers';
+import { sentryCaptureException } from 'store';
 
 export const REQUEST_NETWORKS = 'REQUEST_NETWORKS';
 export const RECEIVE_NETWORKS = 'RECEIVE_NETWORKS';
@@ -55,7 +56,7 @@ export const loadNetworks = () => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -81,7 +82,7 @@ export const loadNetworkById = (id: string) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -109,7 +110,7 @@ export const saveNetwork = (network: Network, showConfirm = true) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -133,6 +134,6 @@ export const deleteNetworkById = (id: string | undefined) => async (
         getStyledUttuError(e, 'En feil oppstod under slettingen av nettverket')
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };

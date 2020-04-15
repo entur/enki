@@ -10,6 +10,7 @@ import { Export, toPayload } from 'model/Export';
 import { Dispatch } from 'redux';
 import { GlobalState } from 'reducers';
 import { getInternationalizedUttuError } from 'helpers/uttu';
+import { sentryCaptureException } from 'store';
 
 export const REQUEST_EXPORTS = 'REQUEST_EXPORTS';
 export const RECEIVE_EXPORTS = 'RECEIVE_EXPORTS';
@@ -58,7 +59,7 @@ export const loadExports = () => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -82,7 +83,7 @@ export const loadExportById = (id: string) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -113,6 +114,6 @@ export const saveExport = (theExport: Export) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
