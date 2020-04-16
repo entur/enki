@@ -89,10 +89,7 @@ const Lines = ({ history }: RouteComponentProps) => {
         </SecondaryButton>
         <SecondaryButton
           as={Link}
-          to={{
-            pathname: '/lines/create/fixed',
-            state: { isFixedLine: true },
-          }}
+          to="/lines/create/fixed"
           className="new-line-button"
         >
           <AddIcon />

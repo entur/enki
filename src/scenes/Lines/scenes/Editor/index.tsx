@@ -31,10 +31,7 @@ import { PrimaryButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Page from 'components/Page';
 import NavigationButtons from './NavigationButtons';
-import {
-  deleteFlexibleLineById,
-  saveFlexibleLine,
-} from 'actions/flexibleLines';
+import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
 import { FLEXIBLE_LINE_STEPS, FIXED_LINE_STEPS } from './steps';
 import './styles.scss';
 
@@ -73,7 +70,9 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const [isSaving, setSaving] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
   const [lastPath] = useLocation().pathname.split('/').slice(-1);
-  const isFlexibleLine = lastPath === 'flexible';
+  const isFlexibleLine = Boolean(
+    flexibleLine.flexibleLineType || lastPath === 'flexible'
+  );
 
   const { formatMessage } = useSelector(selectIntl);
   const dispatch = useDispatch<any>();
@@ -154,7 +153,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const handleDelete = () => {
     if (flexibleLine.id) {
       setDeleting(true);
-      dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() => goToLines());
+      dispatch(deleteLine(flexibleLine)).then(() => goToLines());
     }
   };
 

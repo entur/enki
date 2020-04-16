@@ -44,6 +44,29 @@ export const getFlexibleLinesQuery = `
     flexibleLines {
       id,
       name,
+      flexibleLineType,
+      description,
+      privateCode,
+      operatorRef,
+      network {
+        id
+      },
+      journeyPatterns {
+        pointsInSequence {
+          flexibleStopPlace {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const getFixedLinesQuery = `
+  query GetFixedLines {
+    fixedLines {
+      id,
+      name,
       description,
       privateCode,
       operatorRef,
@@ -76,9 +99,8 @@ export const getFlexibleLineByIdQuery = `
       publicCode,
       transportMode,
       transportSubmode,
-      flexibleLineType,
       operatorRef,
-      bookingArrangement { ...bookingArrangementFields },
+      flexibleLineType,
       network {
         id
       },
@@ -151,6 +173,78 @@ export const getFlexibleLineByIdQuery = `
     buyWhen,
     latestBookingTime,
     minimumBookingPeriod
+  }
+`;
+
+export const getFixedLineByIdQuery = `
+  query GetFixedLineById($id:ID!) {
+    fixedLine(id: $id) {
+      id,
+      version,
+      created,
+      createdBy,
+      changed,
+      changedBy,
+      name,
+      description,
+      privateCode,
+      publicCode,
+      transportMode,
+      transportSubmode,
+      operatorRef,
+      network {
+        id
+      },
+      journeyPatterns {
+        id,
+        name,
+        description,
+        privateCode,
+        pointsInSequence {
+          id,
+          flexibleStopPlace {
+            id
+          },
+          quayRef,
+          destinationDisplay {
+            frontText
+          },
+          forBoarding,
+          forAlighting
+        },
+        serviceJourneys {
+          id,
+          name,
+          description,
+          privateCode,
+          publicCode,
+          operatorRef,
+          passingTimes {
+            id,
+            arrivalTime,
+            arrivalDayOffset,
+            departureTime,
+            departureDayOffset,
+            latestArrivalTime,
+            latestArrivalDayOffset,
+            earliestDepartureTime,
+            earliestDepartureDayOffset
+          },
+          dayTypes {
+            id,
+            daysOfWeek,
+            dayTypeAssignments {
+              isAvailable,
+              date,
+              operatingPeriod {
+                fromDate,
+                toDate
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;
 
