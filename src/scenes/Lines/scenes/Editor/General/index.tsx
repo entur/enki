@@ -176,29 +176,33 @@ export default ({
           )}
         />
 
-        <div className="line-type-dropdown">
-          <div
-            className="line-type-dropdown-tooltip"
-            aria-label={formatMessage('drawerAria')}
-            onClick={() => setDrawer(true)}
-          >
-            {formatMessage('typeFormGroupTitleTooltip')}
+        {flexibleLineType && (
+          <div className="line-type-dropdown">
+            <div
+              className="line-type-dropdown-tooltip"
+              aria-label={formatMessage('drawerAria')}
+              onClick={() => setDrawer(true)}
+            >
+              {formatMessage('typeFormGroupTitleTooltip')}
+            </div>
+            {
+              <Dropdown
+                className="flexible-line-type"
+                initialSelectedItem={getEnumInit(flexibleLineType)}
+                placeholder={formatMessage('defaultOption')}
+                items={mapEnumToItems(FLEXIBLE_LINE_TYPE)}
+                clearable
+                label={formatMessage('generalTypeFormGroupTitle')}
+                onChange={(element) => onFlexibleLineTypeChange(element?.value)}
+                {...getErrorFeedback(
+                  formatMessage('flexibleLineTypeEmpty'),
+                  !isBlank(flexibleLine.flexibleLineType),
+                  lineTypePristine
+                )}
+              />
+            }
           </div>
-          <Dropdown
-            className="flexible-line-type"
-            initialSelectedItem={getEnumInit(flexibleLineType)}
-            placeholder={formatMessage('defaultOption')}
-            items={mapEnumToItems(FLEXIBLE_LINE_TYPE)}
-            clearable
-            label={formatMessage('generalTypeFormGroupTitle')}
-            onChange={(element) => onFlexibleLineTypeChange(element?.value)}
-            {...getErrorFeedback(
-              formatMessage('flexibleLineTypeEmpty'),
-              !isBlank(flexibleLine.flexibleLineType),
-              lineTypePristine
-            )}
-          />
-        </div>
+        )}
       </section>
 
       <FlexibleLineTypeDrawer

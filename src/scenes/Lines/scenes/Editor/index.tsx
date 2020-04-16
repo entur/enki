@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLoadDependencies } from './hooks';
 import { RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import FlexibleLineEditor from 'scenes/Lines/scenes/Editor/FlexibleLineEditor';
@@ -72,6 +72,8 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
+  const [lastPath] = useLocation().pathname.split('/').slice(-1);
+  const isFlexibleLine = lastPath === 'flexible';
 
   const { formatMessage } = useSelector(selectIntl);
   const dispatch = useDispatch<any>();
@@ -90,32 +92,40 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     history: props.history,
   } as RouteComponentProps<MatchParams>);
 
+  console.log(flexibleLine);
   useEffect(() => {
     if (
-      !isLoadingDependencies &&
-      providers.active &&
-      organisations &&
-      networks
-    ) {
-      const authorities = filterAuthorities(organisations, providers.active);
-      if (!isBlank(props.match.params.id)) {
-        setFlexibleLine(
-          getFlexibleLineFromPath(flexibleLines ?? [], props.match)
-        );
-      } else if (networks.length < 2 && authorities.length > 0) {
-        const networkId = findNetworkIdByProvider(providers.active, networks);
-        if (networkId) {
-          setFlexibleLine(initFlexibleLine(networkId));
-        } else {
-          createAndGetNetwork(
-            dispatch,
-            authorities[0].id,
-            providers.active
-          ).then((networkId) => setFlexibleLine(initFlexibleLine(networkId)));
-        }
-      } else {
-        setFlexibleLine(initFlexibleLine());
-      }
+      isLoadingDependencies ||
+      !providers.active ||
+      !organisations ||
+      !networks
+    )
+      return;
+
+    const authorities = filterAuthorities(organisations, providers.active);
+    if (!isBlank(props.match.params.id))
+      return setFlexibleLine(
+        getFlexibleLineFromPath(flexibleLines ?? [], props.match)
+      );
+
+    const newFlexibleLine: FlexibleLine = isFlexibleLine
+      ? { ...initFlexibleLine(), flexibleLineType: 'flexibleAreasOnly' }
+      : initFlexibleLine();
+
+    if (networks.length > 1 || authorities.length === 0)
+      return setFlexibleLine(newFlexibleLine);
+
+    const networkRef = findNetworkIdByProvider(providers.active, networks);
+    if (networkRef) {
+      setFlexibleLine({ ...newFlexibleLine, networkRef });
+    } else {
+      createAndGetNetwork(
+        dispatch,
+        authorities[0].id,
+        providers.active
+      ).then((networkRef) =>
+        setFlexibleLine({ ...newFlexibleLine, networkRef })
+      );
     }
     // eslint-disable-next-line
   }, [flexibleLines, isLoadingDependencies]);
