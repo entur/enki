@@ -39,31 +39,8 @@ export const getNetworkByIdQuery = `
   }
 `;
 
-export const getFlexibleLinesQuery = `
-  query GetFlexibleLines {
-    flexibleLines {
-      id,
-      name,
-      flexibleLineType,
-      description,
-      privateCode,
-      operatorRef,
-      network {
-        id
-      },
-      journeyPatterns {
-        pointsInSequence {
-          flexibleStopPlace {
-            id
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const getFixedLinesQuery = `
-  query GetFixedLines {
+export const getLinesQuery = `
+  query getLines {
     fixedLines {
       id,
       name,
@@ -81,7 +58,26 @@ export const getFixedLinesQuery = `
         }
       }
     }
+    flexibleLines {
+      id,
+      name,
+      description,
+      privateCode,
+      flexibleLineType,
+      operatorRef,
+      network {
+        id
+      },
+      journeyPatterns {
+        pointsInSequence {
+          flexibleStopPlace {
+            id
+          }
+        }
+      }
+    }
   }
+
 `;
 
 export const getFlexibleLineByIdQuery = `

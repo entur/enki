@@ -71,7 +71,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const [isDeleting, setDeleting] = useState(false);
   const [lastPath] = useLocation().pathname.split('/').slice(-1);
   const isFlexibleLine = Boolean(
-    flexibleLine.flexibleLineType || lastPath === 'flexible'
+    flexibleLine?.flexibleLineType || lastPath === 'flexible'
   );
 
   const { formatMessage } = useSelector(selectIntl);
@@ -106,6 +106,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         getFlexibleLineFromPath(flexibleLines ?? [], props.match)
       );
 
+    console.log('AKSODKAOSKDKADKASDK');
     const newFlexibleLine: FlexibleLine = initFlexibleLine();
 
     if (networks.length > 1 || authorities.length === 0)
@@ -210,6 +211,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
               isSaving={isSaving}
               isDeleting={isDeleting}
               isFlexibleLine={isFlexibleLine}
+              steps={STEPS}
             />
             <NavigationButtons
               editMode={isEdit}

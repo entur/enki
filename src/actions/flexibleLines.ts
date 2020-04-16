@@ -1,9 +1,8 @@
 import { UttuQuery } from 'graphql';
 import {
   getFlexibleLineByIdQuery,
-  getFlexibleLinesQuery,
   getFixedLineByIdQuery,
-  getFixedLinesQuery,
+  getLinesQuery,
 } from 'graphql/uttu/queries';
 import {
   showErrorNotification,
@@ -61,16 +60,13 @@ export const loadFlexibleLines = () => async (
 ) => {
   try {
     const activeProvider = getState().providers.active?.code ?? '';
-    const [flexibleResponse, fixedResponse] = await Promise.all(
-      [getFlexibleLinesQuery, getFixedLinesQuery].map((query) => {
-        return UttuQuery(activeProvider, query);
-      })
+    const { flexibleLines, fixedLines } = await UttuQuery(
+      activeProvider,
+      getLinesQuery
     );
-    const lines = [
-      ...flexibleResponse.flexibleLines,
-      ...fixedResponse.fixedLines,
-    ];
-    dispatch(receiveFlexibleLinesActionCreator(lines));
+    dispatch(
+      receiveFlexibleLinesActionCreator([...flexibleLines, ...fixedLines])
+    );
   } catch (e) {
     const intl = getIntl(getState());
     dispatch(
@@ -86,20 +82,17 @@ export const loadFlexibleLines = () => async (
   }
 };
 
-export const loadFlexibleLineById = (id: string) => async (
-  dispatch: Dispatch<any>,
-  getState: () => GlobalState
-) => {
+export const loadFlexibleLineById = (
+  id: string,
+  isFlexibleLine: boolean
+) => async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
   try {
-    const { flexibleLines, providers } = getState();
-    const line = flexibleLines?.find((line) => line.id === id);
-    console.log(line);
-    if (!line) return;
-    const queryById = line.flexibleLineType
+    const queryById = isFlexibleLine
       ? getFlexibleLineByIdQuery
       : getFixedLineByIdQuery;
+
     const { fixedLine, flexibleLine } = await UttuQuery(
-      providers.active?.code ?? '',
+      getState().providers.active?.code ?? '',
       queryById,
       {
         id,

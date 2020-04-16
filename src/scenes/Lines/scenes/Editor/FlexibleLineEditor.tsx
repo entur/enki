@@ -16,7 +16,7 @@ import { currentStepIsValid } from 'scenes/Lines/scenes/Editor/validateForm';
 import { Network } from 'model/Network';
 import { SmallAlertBox } from '@entur/alert';
 import './styles.scss';
-import { FLEXIBLE_LINE_STEPS } from 'scenes/Lines/scenes/Editor/steps';
+import { LINE_STEP } from './steps';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
@@ -30,18 +30,19 @@ type Props = RouteComponentProps<MatchParams> & {
   isSaving: boolean;
   isDeleting: boolean;
   isFlexibleLine: boolean;
+  steps: LINE_STEP[];
 };
 
 const FlexibleLineEditor = (props: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
-  const invalidSteps = FLEXIBLE_LINE_STEPS.filter(
+  const invalidSteps = props.steps.filter(
     (step, i) => !currentStepIsValid(i, props.flexibleLine)
   );
 
   const otherStepsHasError =
     invalidSteps.length > 0 &&
-    !invalidSteps.includes(FLEXIBLE_LINE_STEPS[props.activeStep]);
+    !invalidSteps.includes(props.steps[props.activeStep]);
 
   return (
     <div className="line-editor">
