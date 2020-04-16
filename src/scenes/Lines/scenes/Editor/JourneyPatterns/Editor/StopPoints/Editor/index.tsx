@@ -17,9 +17,9 @@ import { AppIntlState, selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
 import { MessagesKey } from 'i18n/translations/translationKeys';
-import './styles.scss';
 import { getInit, mapToItems } from 'helpers/dropdown';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import './styles.scss';
 
 type StopPlaceMode = 'nsr' | 'custom';
 
@@ -157,6 +157,7 @@ const StopPointEditor = ({
 
         {selectMode === 'nsr' && (
           <InputGroup
+            className="nsr-input-group"
             label={formatMessage('labelQuayRef')}
             {...getErrorFeedback(
               stopPlaceError ? formatMessage(stopPlaceError) : '',

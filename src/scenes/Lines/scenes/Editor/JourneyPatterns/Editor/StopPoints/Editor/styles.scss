@@ -3,6 +3,7 @@
 .stop-point-editor {
   .stop-point-element {
     display: flex;
+    justify-content: space-between;
     margin-top: 1rem;
     padding-bottom: 0.7rem;
     border-bottom: 2px solid $colors-greys-grey20;
@@ -31,9 +32,9 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      max-width: 700px;
+      max-width: 50rem;
       flex-basis: 100%;
-      margin: 0 1rem;
+      margin-left: 1rem;
 
       .eds-input-group + .eds-input-group {
         margin-top: 0;
@@ -41,12 +42,20 @@
 
       > div {
         min-width: 200px;
-
+        margin-right: 3px;
         margin-bottom: 1rem;
+      }
+
+      .nsr-input-group {
+        width: 260px;
       }
 
       .stop-point-dropdown {
         width: 260px;
+      }
+
+      > :last-child {
+        margin-right: 0;
       }
     }
 
