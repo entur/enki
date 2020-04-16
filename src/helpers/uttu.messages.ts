@@ -49,4 +49,9 @@ const uttuMessages: {
     'uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME',
 };
 
+export const isOfUttuMessage = (
+  key: string
+): key is UttuCode | CombinedUttuCode =>
+  key in UttuCode || key in CombinedUttuCode;
+
 export default defineMessages(uttuMessages);
