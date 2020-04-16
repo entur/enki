@@ -106,7 +106,6 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         getFlexibleLineFromPath(flexibleLines ?? [], props.match)
       );
 
-    console.log('AKSODKAOSKDKADKASDK');
     const newFlexibleLine: FlexibleLine = initFlexibleLine();
 
     if (networks.length > 1 || authorities.length === 0)
