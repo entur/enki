@@ -11,8 +11,8 @@ import token from 'http/token';
 import { isAdmin } from 'helpers/tokenParser';
 import { API_BASE } from 'http/http';
 
-import './styles/index.scss';
 import { User } from './reducers/user';
+import './styles/index.scss';
 
 const renderIndex = (userInfo: User) => {
   const root = document.getElementById('root');
