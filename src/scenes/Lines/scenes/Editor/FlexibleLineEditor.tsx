@@ -29,6 +29,7 @@ type Props = RouteComponentProps<MatchParams> & {
   spoilPristine: boolean;
   isSaving: boolean;
   isDeleting: boolean;
+  isFlexibleLine: boolean;
 };
 
 const FlexibleLineEditor = (props: Props) => {
@@ -63,6 +64,7 @@ const FlexibleLineEditor = (props: Props) => {
                   networks={props.networks}
                   flexibleLineChange={props.changeFlexibleLine}
                   spoilPristine={props.spoilPristine}
+                  isFlexibleLine={props.isFlexibleLine}
                 />
               </section>
             </>

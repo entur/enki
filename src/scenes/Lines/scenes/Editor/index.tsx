@@ -35,7 +35,7 @@ import {
   deleteFlexibleLineById,
   saveFlexibleLine,
 } from 'actions/flexibleLines';
-import { FLEXIBLE_LINE_STEPS } from './steps';
+import { FLEXIBLE_LINE_STEPS, FIXED_LINE_STEPS } from './steps';
 import './styles.scss';
 
 const findNetworkIdByProvider = (
@@ -92,7 +92,6 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     history: props.history,
   } as RouteComponentProps<MatchParams>);
 
-  console.log(flexibleLine);
   useEffect(() => {
     if (
       isLoadingDependencies ||
@@ -108,9 +107,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         getFlexibleLineFromPath(flexibleLines ?? [], props.match)
       );
 
-    const newFlexibleLine: FlexibleLine = isFlexibleLine
-      ? { ...initFlexibleLine(), flexibleLineType: 'flexibleAreasOnly' }
-      : initFlexibleLine();
+    const newFlexibleLine: FlexibleLine = initFlexibleLine();
 
     if (networks.length > 1 || authorities.length === 0)
       return setFlexibleLine(newFlexibleLine);
@@ -182,6 +179,8 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     organisations &&
     filterAuthorities(organisations, providers.active).length === 0;
 
+  const STEPS = isFlexibleLine ? FLEXIBLE_LINE_STEPS : FIXED_LINE_STEPS;
+
   return (
     <Page
       backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
@@ -196,7 +195,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
           <>
             <Stepper
               className="editor-frame"
-              steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
+              steps={STEPS.map((step) => formatMessage(step))}
               activeIndex={activeStepperIndex}
               onStepClick={(index) => onStepClicked(index)}
             />
@@ -211,10 +210,11 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
               spoilPristine={nextClicked}
               isSaving={isSaving}
               isDeleting={isDeleting}
+              isFlexibleLine={isFlexibleLine}
             />
             <NavigationButtons
               editMode={isEdit}
-              lastStep={activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1}
+              lastStep={activeStepperIndex === STEPS.length - 1}
               onDelete={handleDelete}
               onSave={handleOnSaveClick}
               onNext={onNextClicked}

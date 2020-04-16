@@ -78,22 +78,27 @@ const Lines = ({ history }: RouteComponentProps) => {
     <div className="lines">
       <Heading1>{formatMessage('linesHeader')}</Heading1>
 
-      <SecondaryButton
-        as={Link}
-        to="/lines/create/flexible"
-        className="new-line-button"
-      >
-        <AddIcon />
-        {formatMessage('linesCreateLineIconButtonLabel')}
-      </SecondaryButton>
-      <SecondaryButton
-        as={Link}
-        to="/lines/create/fixed"
-        className="new-line-button"
-      >
-        <AddIcon />
-        {'Create fixed line'}
-      </SecondaryButton>
+      <section className="buttons">
+        <SecondaryButton
+          as={Link}
+          to="/lines/create/flexible"
+          className="new-line-button"
+        >
+          <AddIcon />
+          {formatMessage('linesCreateLineIconButtonLabel')}
+        </SecondaryButton>
+        <SecondaryButton
+          as={Link}
+          to={{
+            pathname: '/lines/create/fixed',
+            state: { isFixedLine: true },
+          }}
+          className="new-line-button"
+        >
+          <AddIcon />
+          {'Create fixed line'}
+        </SecondaryButton>
+      </section>
 
       <Table>
         <TableHead>
