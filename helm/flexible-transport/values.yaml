@@ -1,0 +1,31 @@
+env: dev
+
+replicas: 1
+
+rollingUpdate:
+  maxSurge: 1
+  maxUnavailable: 1
+
+resources:
+  cpuLimit: 550m
+  memLimit: 550Mi
+  cpuRequest: 100m
+  memRequest: 500Mi
+
+configMapMount:
+   name: flexible-transport-config
+
+image:
+  identifier: ${artifact.metadata.image}
+  imagePullPolicy: Always
+
+service:
+  http:
+    externalPort: 80
+    internalPort: 3001
+
+ingress:
+    enabled: true
+    devIp: 35.189.192.172
+    stagingIp: 35.240.29.194
+    productionIp: 192.158.29.145

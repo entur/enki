@@ -1,0 +1,10 @@
+env: production
+
+replicas: 2
+
+configMap:
+  authServerUrl: https://auth.entur.org/auth
+  logForwardPaths: "true"
+  organisationsApiUrl: https://api.entur.io/organisations/v1/register
+  publicUrl: /
+  uttuApiUrl: https://api.entur.io/timetable-admin/v1/flexible-lines

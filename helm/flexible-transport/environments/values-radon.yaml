@@ -1,0 +1,8 @@
+env: staging
+
+configMap:
+  authServerUrl: https://kc-stage.devstage.entur.io/auth
+  logForwardPaths: "true"
+  organisationsApiUrl: https://api.staging.entur.io/organisations/v1/register
+  publicUrl: /
+  uttuApiUrl: https://api.staging.entur.io/timetable-admin/v1/flexible-lines
