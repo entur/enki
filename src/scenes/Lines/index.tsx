@@ -85,7 +85,7 @@ const Lines = ({ history }: RouteComponentProps) => {
           className="new-line-button"
         >
           <AddIcon />
-          {formatMessage('linesCreateLineIconButtonLabel')}
+          {formatMessage('linesCreateFlexibleLineIconButtonLabel')}
         </SecondaryButton>
         <SecondaryButton
           as={Link}
@@ -93,7 +93,7 @@ const Lines = ({ history }: RouteComponentProps) => {
           className="new-line-button"
         >
           <AddIcon />
-          {'Create fixed line'}
+          {formatMessage('linesCreateLineIconButtonLabel')}
         </SecondaryButton>
       </section>
 

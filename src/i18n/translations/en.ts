@@ -157,6 +157,7 @@ export const messages: MessagesKey = {
   uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
     'Found no valid lines in data space, while exporting',
   uttuErrorUNKNOWN: 'Unknown error',
+  linesCreateFlexibleLineIconButtonLabel: 'Create flexible line',
   linesCreateLineIconButtonLabel: 'Create line',
   bookingInfoHeader: 'Booking info',
   bookingInfoText: 'Information about how the service can be booked.',
