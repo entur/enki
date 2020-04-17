@@ -24,11 +24,10 @@ type FlexibleLine = VersionedType & {
   notices?: Notice[];
 };
 
-export const initFlexibleLine = (networkRef?: string) => ({
+export const initFlexibleLine = () => ({
   transportMode: VEHICLE_MODE.BUS,
   transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
   journeyPatterns: initJourneyPatterns(),
-  networkRef: networkRef,
 });
 
 export const flexibleLineToPayload = (flexibleLine: FlexibleLine) => {

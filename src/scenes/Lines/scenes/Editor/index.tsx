@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLoadDependencies } from './hooks';
 import { RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import FlexibleLineEditor from 'scenes/Lines/scenes/Editor/FlexibleLineEditor';
@@ -31,11 +31,8 @@ import { PrimaryButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Page from 'components/Page';
 import NavigationButtons from './NavigationButtons';
-import {
-  deleteFlexibleLineById,
-  saveFlexibleLine,
-} from 'actions/flexibleLines';
-import { FLEXIBLE_LINE_STEPS } from './steps';
+import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
+import { FLEXIBLE_LINE_STEPS, FIXED_LINE_STEPS } from './steps';
 import './styles.scss';
 
 const findNetworkIdByProvider = (
@@ -72,6 +69,10 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
+  const [lastPath] = useLocation().pathname.split('/').slice(-1);
+  const isFlexibleLine = Boolean(
+    flexibleLine?.flexibleLineType || lastPath === 'flexible'
+  );
 
   const { formatMessage } = useSelector(selectIntl);
   const dispatch = useDispatch<any>();
@@ -92,30 +93,35 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
 
   useEffect(() => {
     if (
-      !isLoadingDependencies &&
-      providers.active &&
-      organisations &&
-      networks
-    ) {
-      const authorities = filterAuthorities(organisations, providers.active);
-      if (!isBlank(props.match.params.id)) {
-        setFlexibleLine(
-          getFlexibleLineFromPath(flexibleLines ?? [], props.match)
-        );
-      } else if (networks.length < 2 && authorities.length > 0) {
-        const networkId = findNetworkIdByProvider(providers.active, networks);
-        if (networkId) {
-          setFlexibleLine(initFlexibleLine(networkId));
-        } else {
-          createAndGetNetwork(
-            dispatch,
-            authorities[0].id,
-            providers.active
-          ).then((networkId) => setFlexibleLine(initFlexibleLine(networkId)));
-        }
-      } else {
-        setFlexibleLine(initFlexibleLine());
-      }
+      isLoadingDependencies ||
+      !providers.active ||
+      !organisations ||
+      !networks
+    )
+      return;
+
+    const authorities = filterAuthorities(organisations, providers.active);
+    if (!isBlank(props.match.params.id))
+      return setFlexibleLine(
+        getFlexibleLineFromPath(flexibleLines ?? [], props.match)
+      );
+
+    const newFlexibleLine: FlexibleLine = initFlexibleLine();
+
+    if (networks.length > 1 || authorities.length === 0)
+      return setFlexibleLine(newFlexibleLine);
+
+    const networkRef = findNetworkIdByProvider(providers.active, networks);
+    if (networkRef) {
+      setFlexibleLine({ ...newFlexibleLine, networkRef });
+    } else {
+      createAndGetNetwork(
+        dispatch,
+        authorities[0].id,
+        providers.active
+      ).then((networkRef) =>
+        setFlexibleLine({ ...newFlexibleLine, networkRef })
+      );
     }
     // eslint-disable-next-line
   }, [flexibleLines, isLoadingDependencies]);
@@ -147,7 +153,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const handleDelete = () => {
     if (flexibleLine.id) {
       setDeleting(true);
-      dispatch(deleteFlexibleLineById(flexibleLine.id)).then(() => goToLines());
+      dispatch(deleteLine(flexibleLine)).then(() => goToLines());
     }
   };
 
@@ -172,6 +178,8 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     organisations &&
     filterAuthorities(organisations, providers.active).length === 0;
 
+  const STEPS = isFlexibleLine ? FLEXIBLE_LINE_STEPS : FIXED_LINE_STEPS;
+
   return (
     <Page
       backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
@@ -186,7 +194,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
           <>
             <Stepper
               className="editor-frame"
-              steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
+              steps={STEPS.map((step) => formatMessage(step))}
               activeIndex={activeStepperIndex}
               onStepClick={(index) => onStepClicked(index)}
             />
@@ -201,10 +209,12 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
               spoilPristine={nextClicked}
               isSaving={isSaving}
               isDeleting={isDeleting}
+              isFlexibleLine={isFlexibleLine}
+              steps={STEPS}
             />
             <NavigationButtons
               editMode={isEdit}
-              lastStep={activeStepperIndex === FLEXIBLE_LINE_STEPS.length - 1}
+              lastStep={activeStepperIndex === STEPS.length - 1}
               onDelete={handleDelete}
               onSave={handleOnSaveClick}
               onNext={onNextClicked}

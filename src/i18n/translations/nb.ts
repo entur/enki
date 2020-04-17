@@ -153,7 +153,8 @@ export const messages = {
   uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
     'Fant ingen gyldige linjer i eksporten',
   uttuErrorUNKNOWN: 'Ukjent feil',
-  linesCreateLineIconButtonLabel: 'Opprett linje',
+  linesCreateFlexibleLineIconButtonLabel: 'Opprett fleksibel linje',
+  linesCreateLineIconButtonLabel: 'Opprett rutegående linje',
   bookingInfoHeader: 'Bestillingsinfo',
   bookingInfoText: 'Informasjon om hvordan tilbudet kan bestilles.',
   bookingLabel:

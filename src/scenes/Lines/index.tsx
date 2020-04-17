@@ -78,10 +78,24 @@ const Lines = ({ history }: RouteComponentProps) => {
     <div className="lines">
       <Heading1>{formatMessage('linesHeader')}</Heading1>
 
-      <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
-        <AddIcon />
-        {formatMessage('linesCreateLineIconButtonLabel')}
-      </SecondaryButton>
+      <section className="buttons">
+        <SecondaryButton
+          as={Link}
+          to="/lines/create/flexible"
+          className="new-line-button"
+        >
+          <AddIcon />
+          {formatMessage('linesCreateFlexibleLineIconButtonLabel')}
+        </SecondaryButton>
+        <SecondaryButton
+          as={Link}
+          to="/lines/create/fixed"
+          className="new-line-button"
+        >
+          <AddIcon />
+          {formatMessage('linesCreateLineIconButtonLabel')}
+        </SecondaryButton>
+      </section>
 
       <Table>
         <TableHead>

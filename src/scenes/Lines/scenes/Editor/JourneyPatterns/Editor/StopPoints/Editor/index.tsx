@@ -50,10 +50,11 @@ const StopPointEditor = ({
   isFirstStop,
   deleteStopPoint,
   spoilPristine,
+  flexibleLineType,
 }: Props) => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectMode, setSelectMode] = useState<StopPlaceMode>(
-    stopPoint.quayRef ? 'nsr' : 'custom'
+    stopPoint.quayRef || !flexibleLineType ? 'nsr' : 'custom'
   );
   const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
     undefined

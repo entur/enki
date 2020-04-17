@@ -39,3 +39,15 @@ export const exportMutation = `
     export(input: $input) { id }
   }
 `;
+
+export const fixedLineMutation = `
+  mutation MutateFixedLine($input: FixedLineInput!) {
+    mutateFixedLine(input: $input) { id }
+  }
+`;
+
+export const deleteFixedLine = `
+  mutation DeleteFixedLine($id: ID!) {
+    deleteFixedLine(id: $id) { id }
+  }
+`;
