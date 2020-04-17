@@ -6,6 +6,7 @@ import { selectIntl } from 'i18n';
 import JourneyPattern from 'model/JourneyPattern';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import './styles.scss';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -21,7 +22,6 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
   return (
     <div className="journey-pattern-inputs">
       <InputGroup
-        className="form-section"
         label={formatMessage('generalNameLabel')}
         {...getErrorFeedback(
           formatMessage('generalValidationName'),
@@ -37,10 +37,7 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
         />
       </InputGroup>
 
-      <InputGroup
-        label={formatMessage('generalDescriptionLabel')}
-        className="form-section"
-      >
+      <InputGroup label={formatMessage('generalDescriptionLabel')}>
         <TextField
           value={journeyPattern.description || ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -50,7 +47,6 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
       </InputGroup>
 
       <InputGroup
-        className="form-section"
         label={formatMessage('generalPrivateCodeLabel')}
         labelTooltip={formatMessage('generalPrivateCodeLabelTooltip')}
       >

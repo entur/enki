@@ -14,7 +14,7 @@ const UserMenu = () => {
   return (
     <div className="user-menu">
       <div className="user-icon">
-        <UserIcon color="#ffffff" />
+        <UserIcon />
       </div>
       <div className="name">{`${givenName} ${familyName}`}</div>
     </div>

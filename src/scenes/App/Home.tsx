@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
+import { Link } from 'react-router-dom';
 import { Heading1, LeadParagraph, Heading2 } from '@entur/typography';
 import { NavigationCard } from '@entur/layout';
-import { DesktopIcon } from '@entur/icons';
+import { RulesIcon, MapIcon, BusIcon } from '@entur/icons';
 import './styles.scss';
 
 const Home = () => {
@@ -20,30 +21,30 @@ const Home = () => {
         <section className="cards">
           <NavigationCard
             title={formatMessage('homeCardsGetStarted')}
-            titleIcon={<DesktopIcon />}
-            href="/get-started"
+            titleIcon={<RulesIcon />}
+            as={Link}
+            to={'get-started'}
+            className="card-link"
           >
             {formatMessage('homeCardsGetStartedDescription')}
           </NavigationCard>
 
           <NavigationCard
             title={formatMessage('navBarLinesMenuItemLabel')}
-            titleIcon={<DesktopIcon />}
-            href="/lines"
+            titleIcon={<BusIcon className="bus-icon" />}
+            as={Link}
+            to="/lines"
+            className="card-link"
           >
             {formatMessage('homeCardsLinesDescription')}
           </NavigationCard>
-          <NavigationCard
-            title={formatMessage('navBarNetworksMenuItemLabel')}
-            titleIcon={<DesktopIcon />}
-            href="/networks"
-          >
-            {formatMessage('homeCardsNetworkDescription')}
-          </NavigationCard>
+
           <NavigationCard
             title={formatMessage('navBarStopPlacesMenuItemLabel')}
-            titleIcon={<DesktopIcon />}
-            href="/stop-places"
+            titleIcon={<MapIcon />}
+            as={Link}
+            to="/stop-places"
+            className="card-link"
           >
             {formatMessage('homeCardsStopPlacesDescription')}
           </NavigationCard>

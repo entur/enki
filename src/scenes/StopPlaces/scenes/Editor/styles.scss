@@ -1,17 +1,7 @@
-@import '~@entur/modal/dist/styles.css';
+@import '~@entur/tokens/dist/styles.scss';
+
 .stop-place-editor {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   .stop-place-form-container {
-    flex: 1;
     display: flex;
 
     .stop-place-form {
@@ -22,16 +12,18 @@
       margin-right: 30px;
       justify-content: space-between;
 
-      .save-button-container {
-        margin-top: 20px;
-        text-align: right;
+      > div,
+      > button {
+        margin-top: $space-large;
       }
 
       .buttons {
+        margin-top: $space-extra-large4;
         display: flex;
-        justify-content: flex-end;
-        button:last-of-type {
-          margin-left: 30px;
+        justify-content: space-between;
+
+        > :first-child {
+          margin-right: $space-large;
         }
       }
     }
@@ -44,21 +36,8 @@
     }
   }
 
-  .loader,
-  .overlay-loader {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
   textarea::placeholder {
     color: #bbb;
     font-size: 12px;
-  }
-
-  .draw-polygon-button {
-    margin-top: 1.5rem;
-    float: right;
   }
 }

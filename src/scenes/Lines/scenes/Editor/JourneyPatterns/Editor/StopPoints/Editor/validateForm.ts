@@ -4,8 +4,10 @@ import StopPoint from 'model/StopPoint';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import JourneyPattern from 'model/JourneyPattern';
 
-export const validJourneyPattern = (journeyPatterns?: JourneyPattern[]) =>
-  journeyPatterns &&
+export const validJourneyPattern = (
+  journeyPatterns?: JourneyPattern[]
+): boolean =>
+  !!journeyPatterns &&
   !isBlank(journeyPatterns[0].name) &&
   validateStopPoints(journeyPatterns[0].pointsInSequence ?? []);
 
@@ -28,7 +30,6 @@ export const validateStopPoint = (
 ): StopPointsFormError => {
   const {
     quayRef,
-    flexibleStopPlace,
     flexibleStopPlaceRef,
     destinationDisplay,
     forAlighting,
@@ -38,9 +39,9 @@ export const validateStopPoint = (
   const getFlexibleStopPlaceRefAndQuayRefError = ():
     | keyof MessagesKey
     | undefined => {
-    if (isBlank(quayRef) && !(flexibleStopPlaceRef ?? flexibleStopPlace?.id))
+    if (isBlank(quayRef) && !flexibleStopPlaceRef)
       return 'flexibleStopPlaceRefAndQuayRefNoValues';
-    if (!isBlank(quayRef) && (flexibleStopPlaceRef ?? flexibleStopPlace?.id))
+    if (!isBlank(quayRef) && flexibleStopPlaceRef)
       return 'flexibleStopPlaceRefAndQuayRefBothValues';
     return undefined;
   };

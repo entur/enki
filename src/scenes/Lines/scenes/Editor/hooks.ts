@@ -46,7 +46,9 @@ export const useLoadDependencies = ({
 
   const dispatchLoadFlexibleLineById = useCallback(() => {
     if (match.params.id) {
-      dispatch(loadFlexibleLineById(match.params.id))
+      const lineType = match.params.id.split(':')[1];
+      const isFlexibleLine = lineType === 'FlexibleLine';
+      dispatch(loadFlexibleLineById(match.params.id, isFlexibleLine))
         .catch(() => history.push('/lines'))
         .then(() => setFlexibleLineIsLoading(false));
     } else {

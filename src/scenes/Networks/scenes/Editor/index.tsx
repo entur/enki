@@ -27,6 +27,7 @@ import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import Provider from 'model/Provider';
+import { getInit, mapToItems } from 'helpers/dropdown';
 import './styles.scss';
 
 const getCurrentNetwork = (
@@ -186,14 +187,11 @@ const NetworkEditor = ({
               </InputGroup>
               <Dropdown
                 className="form-section"
-                value={network.authorityRef}
+                initialSelectedItem={getInit(authorities, network.authorityRef)}
+                items={mapToItems(authorities)}
+                placeholder={formatMessage('defaultOption')}
+                clearable
                 label={formatMessage('editorAuthorityLabelText')}
-                items={[
-                  ...authorities.map((org) => ({
-                    label: org.name,
-                    value: org.id,
-                  })),
-                ]}
                 onChange={(organisation) =>
                   handleAuthoritySelectionChange(organisation?.value ?? '')
                 }
@@ -214,7 +212,12 @@ const NetworkEditor = ({
                 )}
 
                 <SuccessButton onClick={handleOnSaveClick}>
-                  {formatMessage('editorSaveButtonText')}
+                  {match.params.id
+                    ? formatMessage('editorSaveButtonText')
+                    : formatMessage(
+                        'editorDetailedCreate',
+                        formatMessage('network')
+                      )}
                 </SuccessButton>
               </div>
             </div>

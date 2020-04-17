@@ -10,6 +10,7 @@ import { Export, toPayload } from 'model/Export';
 import { Dispatch } from 'redux';
 import { GlobalState } from 'reducers';
 import { getInternationalizedUttuError } from 'helpers/uttu';
+import { sentryCaptureException } from 'store';
 
 export const REQUEST_EXPORTS = 'REQUEST_EXPORTS';
 export const RECEIVE_EXPORTS = 'RECEIVE_EXPORTS';
@@ -40,7 +41,7 @@ export const loadExports = () => async (
 ) => {
   dispatch(requestExportsActionCreator());
 
-  const activeProvider = getState().providers.active?.code;
+  const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
 
   try {
@@ -58,7 +59,7 @@ export const loadExports = () => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -66,7 +67,7 @@ export const loadExportById = (id: string) => async (
   dispatch: Dispatch<GlobalState>,
   getState: () => GlobalState
 ) => {
-  const activeProvider = getState().providers.active?.code;
+  const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
 
   try {
@@ -82,7 +83,7 @@ export const loadExportById = (id: string) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };
 
@@ -90,7 +91,7 @@ export const saveExport = (theExport: Export) => async (
   dispatch: Dispatch<GlobalState>,
   getState: () => GlobalState
 ) => {
-  const activeProvider = getState().providers.active?.code;
+  const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
 
   try {
@@ -113,6 +114,6 @@ export const saveExport = (theExport: Export) => async (
         )
       )
     );
-    throw e;
+    sentryCaptureException(e);
   }
 };

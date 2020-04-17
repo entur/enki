@@ -26,6 +26,7 @@ import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
 import { newDayTypeAssignment } from 'model/DayTypeAssignment';
 import { Tooltip } from '@entur/tooltip';
 import RequiredInputMarker from 'components/RequiredInputMarker';
+import { getInit, mapToItems } from 'helpers/dropdown';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -147,13 +148,10 @@ const ServiceJourneyEditor = (props: Props) => {
             <Dropdown
               className="form-section operator-selector"
               label={formatMessage('generalOperator')}
-              items={[
-                ...operators.map(({ name, id }) => ({
-                  label: name,
-                  value: id,
-                })),
-              ]}
-              value={operatorSelection}
+              initialSelectedItem={getInit(operators, operatorSelection)}
+              placeholder={formatMessage('defaultOption')}
+              items={mapToItems(operators)}
+              clearable
               onChange={(e: NormalizedDropdownItemType | null) =>
                 handleOperatorSelectionChange(e?.value)
               }
@@ -211,8 +209,20 @@ const ServiceJourneyEditor = (props: Props) => {
             />
           </section>
           <section className="passing-times-section">
-            <h4>{formatMessage('serviceJourneyPassingTimes')}</h4>
-            <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
+            <Heading4>
+              {formatMessage(
+                flexibleLineType === 'flexibleAreasOnly'
+                  ? 'serviceJourneyBusinessHours'
+                  : 'serviceJourneyPassingTimes'
+              )}
+            </Heading4>
+            <Paragraph>
+              {formatMessage(
+                flexibleLineType === 'flexibleAreasOnly'
+                  ? 'businessHoursInfo'
+                  : 'passingTimesInfo'
+              )}
+            </Paragraph>
             <PassingTimesEditor
               passingTimes={passingTimes ?? []}
               stopPoints={stopPoints}

@@ -11,13 +11,15 @@ import { Paragraph } from '@entur/typography';
 import { SecondaryButton, SuccessButton, TertiaryButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import ConfirmDialog from 'components/ConfirmDialog';
-import './styles.scss';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { AppIntlState, selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
 import { MessagesKey } from 'i18n/translations/translationKeys';
+import { getInit, mapToItems } from 'helpers/dropdown';
+import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import './styles.scss';
 
 type StopPlaceMode = 'nsr' | 'custom';
 
@@ -48,10 +50,11 @@ const StopPointEditor = ({
   isFirstStop,
   deleteStopPoint,
   spoilPristine,
+  flexibleLineType,
 }: Props) => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectMode, setSelectMode] = useState<StopPlaceMode>(
-    stopPoint.quayRef ? 'nsr' : 'custom'
+    stopPoint.quayRef || !flexibleLineType ? 'nsr' : 'custom'
   );
   const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
     undefined
@@ -59,8 +62,7 @@ const StopPointEditor = ({
 
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
-  const stopPointValue =
-    stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id;
+  const stopPointValue = stopPoint.flexibleStopPlaceRef;
   const frontTextValue = stopPoint.destinationDisplay?.frontText;
 
   const stopPlacePristine = usePristine(stopPointValue, spoilPristine);
@@ -92,12 +94,21 @@ const StopPointEditor = ({
   const stopPlaceError = errors.flexibleStopPlaceRefAndQuayRef;
   const frontTextError = errors.frontText;
 
+  const boardingItems = [
+    { value: '0', label: formatMessage('labelForBoarding') },
+    { value: '1', label: formatMessage('labelForAlighting') },
+    {
+      value: '2',
+      label: formatMessage('labelForBoardingAndAlighting'),
+    },
+  ];
+
   const convertBoardingToDropdown = (
     sp: StopPoint
-  ): '0' | '1' | '2' | undefined => {
-    if (sp.forBoarding && sp.forAlighting) return '2';
-    else if (sp.forBoarding) return '0';
-    else if (sp.forAlighting) return '1';
+  ): NormalizedDropdownItemType | undefined => {
+    if (sp.forBoarding && sp.forAlighting) return boardingItems[2];
+    else if (sp.forBoarding) return boardingItems[0];
+    else if (sp.forAlighting) return boardingItems[1];
     else return undefined;
   };
 
@@ -128,12 +139,12 @@ const StopPointEditor = ({
       <div className="stop-point-info">
         {selectMode === 'custom' && (
           <Dropdown
+            className="stop-point-dropdown"
+            initialSelectedItem={getInit(flexibleStopPlaces, stopPointValue)}
+            placeholder={formatMessage('defaultOption')}
+            items={mapToItems(flexibleStopPlaces)}
+            clearable
             label={formatMessage('stopPlace')}
-            value={stopPointValue}
-            items={flexibleStopPlaces.map((fsp) => ({
-              value: fsp.id,
-              label: fsp.name ?? '',
-            }))}
             onChange={(e) =>
               stopPointChange({ ...stopPoint, flexibleStopPlaceRef: e?.value })
             }
@@ -147,6 +158,7 @@ const StopPointEditor = ({
 
         {selectMode === 'nsr' && (
           <InputGroup
+            className="nsr-input-group"
             label={formatMessage('labelQuayRef')}
             {...getErrorFeedback(
               stopPlaceError ? formatMessage(stopPlaceError) : '',
@@ -168,7 +180,9 @@ const StopPointEditor = ({
         )}
 
         <InputGroup
-          label={`${formatMessage('labelFrontText')}${isFirstStop ? ' *' : ''}`}
+          label={formatMessage(
+            isFirstStop ? 'labelFrontTextRequired' : 'labelFrontText'
+          )}
           {...getErrorFeedback(
             frontTextError ? formatMessage(frontTextError) : '',
             !frontTextError,
@@ -187,8 +201,11 @@ const StopPointEditor = ({
           />
         </InputGroup>
         <Dropdown
+          className="stop-point-dropdown"
           label={formatMessage('labelBoarding')}
-          value={convertBoardingToDropdown(stopPoint)}
+          initialSelectedItem={convertBoardingToDropdown(stopPoint)}
+          placeholder={formatMessage('defaultOption')}
+          clearable
           onChange={(element) =>
             stopPointChange({
               ...stopPoint,
@@ -196,14 +213,7 @@ const StopPointEditor = ({
               forAlighting: element?.value === '1' || element?.value === '2',
             })
           }
-          items={[
-            { value: '0', label: formatMessage('labelForBoarding') },
-            { value: '1', label: formatMessage('labelForAlighting') },
-            {
-              value: '2',
-              label: formatMessage('labelForBoardingAndAlighting'),
-            },
-          ]}
+          items={boardingItems}
           feedback={errors.boarding && formatMessage(errors.boarding)}
           variant={errors.boarding ? 'error' : undefined}
         />

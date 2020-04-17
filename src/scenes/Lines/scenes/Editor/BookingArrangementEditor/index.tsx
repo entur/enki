@@ -8,22 +8,18 @@ import { addOrRemove } from 'helpers/arrays';
 import {
   BOOKING_ACCESS,
   BOOKING_METHOD,
-  bookingAccessMessages,
   bookingMethodMessages,
-  bookingTimeMessages,
   paymentTimeMessages,
   PURCHASE_MOMENT,
   PURCHASE_WHEN,
 } from 'model/enums';
-import { Heading2, LeadParagraph } from '@entur/typography';
+import { Heading1, LeadParagraph, Label } from '@entur/typography';
 import { InputGroup, TextArea, TextField } from '@entur/form';
 import Contact from 'model/Contact';
 import { Dropdown } from '@entur/dropdown';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { FilterChip } from '@entur/chip';
-import { isBlank } from 'helpers/forms';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -31,15 +27,9 @@ type Props = {
   spoilPristine: boolean;
 };
 
-export const bookingArrangementIsValid = (
-  bookingArrangement: BookingArrangement
-) =>
-  !isBlank(bookingArrangement?.bookingContact?.url) ||
-  !isBlank(bookingArrangement?.bookingContact?.phone);
-
 const BookingArrangementEditor = (props: Props) => {
   const { formatMessage } = useSelector(selectIntl);
-  const { bookingArrangement, onChange, spoilPristine } = props;
+  const { bookingArrangement, onChange } = props;
   const {
     bookingContact,
     bookingMethods,
@@ -48,9 +38,6 @@ const BookingArrangementEditor = (props: Props) => {
     bookingAccess,
     bookingNote,
   } = bookingArrangement;
-
-  const phonePristine = usePristine(bookingContact?.phone, spoilPristine);
-  const urlPristine = usePristine(bookingContact?.url, spoilPristine);
 
   const onContactChange = (contact: Contact) =>
     onChange({
@@ -73,8 +60,11 @@ const BookingArrangementEditor = (props: Props) => {
   return (
     <ScrollToTop>
       <div className="booking-editor">
-        <Heading2>{formatMessage('bookingInfoHeader')}</Heading2>
+        <Heading1>{formatMessage('bookingInfoHeader')}</Heading1>
         <LeadParagraph>{formatMessage('bookingInfoText')}</LeadParagraph>
+        <Label>
+          <i>{formatMessage('bookingLabel')} </i>
+        </Label>
 
         <section className="booking-contact-info">
           <InputGroup label={formatMessage('contactFieldsContactPersonTitle')}>
@@ -98,14 +88,7 @@ const BookingArrangementEditor = (props: Props) => {
             />
           </InputGroup>
 
-          <InputGroup
-            label={formatMessage('contactFieldsPhoneTitle')}
-            {...getErrorFeedback(
-              formatMessage('urlOrPhoneMustBeFilled'),
-              bookingArrangementIsValid(bookingArrangement),
-              phonePristine && urlPristine
-            )}
-          >
+          <InputGroup label={formatMessage('contactFieldsPhoneTitle')}>
             <TextField
               defaultValue={bookingContact?.phone ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -114,14 +97,7 @@ const BookingArrangementEditor = (props: Props) => {
             />
           </InputGroup>
 
-          <InputGroup
-            label={formatMessage('contactFieldsUrlTitle')}
-            {...getErrorFeedback(
-              formatMessage('urlOrPhoneMustBeFilled'),
-              bookingArrangementIsValid(bookingArrangement),
-              phonePristine && urlPristine
-            )}
-          >
+          <InputGroup label={formatMessage('contactFieldsUrlTitle')}>
             <TextField
               defaultValue={bookingContact?.url ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -130,15 +106,25 @@ const BookingArrangementEditor = (props: Props) => {
             />
           </InputGroup>
 
+          <InputGroup
+            label={formatMessage('bookingNoteFieldTitle')}
+            labelTooltip={formatMessage('bookingNoteTooltip')}
+            style={{ width: '100%' }}
+          >
+            <TextArea
+              value={bookingNote ?? ''}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onChange({ ...bookingArrangement, bookingNote: e.target.value })
+              }
+            />
+          </InputGroup>
+
           <Dropdown
             label={formatMessage('bookingAccessSelectionTitle')}
-            value={bookingAccess}
-            items={[
-              ...Object.values(BOOKING_ACCESS).map((v) => ({
-                value: v,
-                label: formatMessage(bookingAccessMessages[v]),
-              })),
-            ]}
+            initialSelectedItem={getEnumInit(bookingAccess)}
+            placeholder={formatMessage('defaultOption')}
+            items={mapEnumToItems(BOOKING_ACCESS)}
+            clearable
             onChange={(e) =>
               onChange({
                 ...bookingArrangement,
@@ -158,39 +144,22 @@ const BookingArrangementEditor = (props: Props) => {
               }
             />
           </InputGroup>
-
-          <InputGroup
-            className="form-section"
-            label={formatMessage('bookingNoteFieldTitle')}
-          >
-            <TextArea
-              value={bookingNote ?? ''}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onChange({ ...bookingArrangement, bookingNote: e.target.value })
-              }
-            />
-          </InputGroup>
         </section>
 
         <section className="booking-time-info">
-          <InputGroup>
-            <Dropdown
-              label={formatMessage('bookingTimeSelectionTitle')}
-              value={bookWhen}
-              items={[
-                ...Object.values(PURCHASE_WHEN).map((v) => ({
-                  value: v,
-                  label: formatMessage(bookingTimeMessages[v]),
-                })),
-              ]}
-              onChange={(e) =>
-                onChange({
-                  ...bookingArrangement,
-                  bookWhen: e?.value as PURCHASE_WHEN,
-                })
-              }
-            />
-          </InputGroup>
+          <Dropdown
+            label={formatMessage('bookingTimeSelectionTitle')}
+            initialSelectedItem={getEnumInit(bookWhen)}
+            placeholder={formatMessage('defaultOption')}
+            items={mapEnumToItems(PURCHASE_WHEN)}
+            clearable
+            onChange={(e) =>
+              onChange({
+                ...bookingArrangement,
+                bookWhen: e?.value as PURCHASE_WHEN,
+              })
+            }
+          />
 
           <InputGroup label={formatMessage('bookingMethodSelectionTitle')}>
             <div className="filter-chip-list">

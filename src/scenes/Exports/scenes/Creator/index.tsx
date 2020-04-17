@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { PrimaryButton } from '@entur/button';
+import { SuccessButton } from '@entur/button';
 import { Checkbox, InputGroup, TextField } from '@entur/form';
 import { DatePicker } from '@entur/datepicker';
 import { dateToString } from 'helpers/dates';
@@ -129,9 +129,9 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
             </span>
           </Tooltip>
         </div>
-        <PrimaryButton className="export-save" onClick={handleOnSaveClick}>
+        <SuccessButton className="export-save" onClick={handleOnSaveClick}>
           {formatMessage('creatorSaveButtonLabelText')}
-        </PrimaryButton>
+        </SuccessButton>
       </OverlayLoader>
     </Page>
   );

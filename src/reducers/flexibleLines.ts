@@ -6,6 +6,7 @@ import {
 import FlexibleLine from '../model/FlexibleLine';
 import PassingTime from 'model/PassingTime';
 import JourneyPattern from 'model/JourneyPattern';
+import { SET_ACTIVE_PROVIDER } from 'actions/providers';
 
 export type FlexibleLinesState = FlexibleLine[] | null;
 
@@ -53,6 +54,10 @@ const flexibleLines = (
       const newJourneyPatterns: JourneyPattern[] =
         action.line?.journeyPatterns?.map((jp) => ({
           ...jp,
+          pointsInSequence: jp.pointsInSequence.map((pis) => ({
+            ...pis,
+            flexibleStopPlaceRef: pis.flexibleStopPlace?.id,
+          })),
           serviceJourneys: jp.serviceJourneys.map((sj) => ({
             ...sj,
             passingTimes: sj.passingTimes.map((pt) => cleanUpPassingTimes(pt)),
@@ -70,6 +75,9 @@ const flexibleLines = (
           newFlexibleLine,
         ]
       );
+
+    case SET_ACTIVE_PROVIDER:
+      return null;
 
     default:
       return lines;

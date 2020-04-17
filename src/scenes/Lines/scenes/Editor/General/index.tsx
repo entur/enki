@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
-import { Heading2 } from '@entur/typography';
+import { Heading1 } from '@entur/typography';
 import { FLEXIBLE_LINE_TYPE } from 'model/enums';
 import { selectIntl } from 'i18n';
 import './styles.scss';
@@ -16,6 +16,12 @@ import ServiceJourney from 'model/ServiceJourney';
 import JourneyPattern from 'model/JourneyPattern';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { Network } from 'model/Network';
+import {
+  getEnumInit,
+  getInit,
+  mapEnumToItems,
+  mapToItems,
+} from 'helpers/dropdown';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -23,6 +29,7 @@ type Props = {
   networks: Network[];
   flexibleLineChange: (flexibleLine: FlexibleLine) => void;
   spoilPristine: boolean;
+  isFlexibleLine?: boolean;
 };
 
 export default ({
@@ -31,6 +38,7 @@ export default ({
   networks,
   flexibleLineChange,
   spoilPristine,
+  isFlexibleLine,
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const { publicCode, flexibleLineType } = flexibleLine;
@@ -52,31 +60,28 @@ export default ({
 
     flexibleLineChange({
       ...flexibleLine,
-      journeyPatterns: journeyPatterns.map((journeyPattern: JourneyPattern) => {
-        return {
+      journeyPatterns: journeyPatterns.map(
+        (journeyPattern: JourneyPattern) => ({
           ...journeyPattern,
           serviceJourneys: serviceJourneys.map(
-            (serviceJourney: ServiceJourney) => {
-              return {
-                ...serviceJourney,
-                passingTimes: [{}, {}],
-              };
-            }
+            (serviceJourney: ServiceJourney) => ({
+              ...serviceJourney,
+              passingTimes: [{}, {}],
+            })
           ),
           pointsInSequence: [{}, {}],
-        };
-      }),
+        })
+      ),
       flexibleLineType,
     });
   };
 
   return (
     <div className="lines-editor-general">
-      <Heading2> {formatMessage('editorAbout')}</Heading2>
+      <Heading1> {formatMessage('editorAbout')}</Heading1>
       <RequiredInputMarker />
       <section className="inputs">
         <InputGroup
-          className="form-section"
           label={formatMessage('generalNameFormGroupTitle')}
           {...getErrorFeedback(
             formatMessage('nameEmpty'),
@@ -92,10 +97,7 @@ export default ({
           />
         </InputGroup>
 
-        <InputGroup
-          className="form-section"
-          label={formatMessage('generalDescriptionFormGroupTitle')}
-        >
+        <InputGroup label={formatMessage('generalDescriptionFormGroupTitle')}>
           <TextField
             value={flexibleLine.description ?? ''}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -108,7 +110,6 @@ export default ({
         </InputGroup>
 
         <InputGroup
-          className="form-section"
           label={formatMessage('generalPrivateCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPrivateCodeInputLabelTooltip')}
         >
@@ -125,7 +126,6 @@ export default ({
         </InputGroup>
 
         <InputGroup
-          className="form-section"
           label={formatMessage('generalPublicCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPublicCodeInputLabelTooltip')}
           {...getErrorFeedback(
@@ -147,11 +147,10 @@ export default ({
         </InputGroup>
 
         <Dropdown
-          className="form-section"
-          value={flexibleLine.operatorRef}
-          items={[
-            ...operators.map(({ id, name }) => ({ value: id, label: name })),
-          ]}
+          initialSelectedItem={getInit(operators, flexibleLine.operatorRef)}
+          placeholder={formatMessage('defaultOption')}
+          items={mapToItems(operators)}
+          clearable
           label={formatMessage('generalOperatorFormGroupTitle')}
           onChange={(element) =>
             flexibleLineChange({ ...flexibleLine, operatorRef: element?.value })
@@ -164,11 +163,10 @@ export default ({
         />
 
         <Dropdown
-          className="form-section"
-          value={flexibleLine.networkRef}
-          items={[
-            ...networks.map(({ id, name }) => ({ value: id, label: name })),
-          ]}
+          initialSelectedItem={getInit(networks, flexibleLine.networkRef)}
+          placeholder={formatMessage('defaultOption')}
+          items={mapToItems(networks)}
+          clearable
           label={formatMessage('generalNetworkFormGroupTitle')}
           onChange={(element) =>
             flexibleLineChange({ ...flexibleLine, networkRef: element?.value })
@@ -180,32 +178,33 @@ export default ({
           )}
         />
 
-        <div className="line-type-dropdown">
-          <div
-            className="line-type-dropdown-tooltip"
-            aria-label={formatMessage('drawerAria')}
-            onClick={() => setDrawer(true)}
-          >
-            {formatMessage('typeFormGroupTitleTooltip')}
+        {isFlexibleLine && (
+          <div className="line-type-dropdown">
+            <div
+              className="line-type-dropdown-tooltip"
+              aria-label={formatMessage('drawerAria')}
+              onClick={() => setDrawer(true)}
+            >
+              {formatMessage('typeFormGroupTitleTooltip')}
+            </div>
+            {
+              <Dropdown
+                className="flexible-line-type"
+                initialSelectedItem={getEnumInit(flexibleLineType)}
+                placeholder={formatMessage('defaultOption')}
+                items={mapEnumToItems(FLEXIBLE_LINE_TYPE)}
+                clearable
+                label={formatMessage('generalTypeFormGroupTitle')}
+                onChange={(element) => onFlexibleLineTypeChange(element?.value)}
+                {...getErrorFeedback(
+                  formatMessage('flexibleLineTypeEmpty'),
+                  !isBlank(flexibleLine.flexibleLineType),
+                  lineTypePristine
+                )}
+              />
+            }
           </div>
-          <Dropdown
-            className="form-section flexible-line-type"
-            value={flexibleLine.flexibleLineType}
-            items={[
-              ...Object.values(FLEXIBLE_LINE_TYPE).map((type) => ({
-                value: type,
-                label: type,
-              })),
-            ]}
-            label={formatMessage('generalTypeFormGroupTitle')}
-            onChange={(element) => onFlexibleLineTypeChange(element?.value)}
-            {...getErrorFeedback(
-              formatMessage('flexibleLineTypeEmpty'),
-              !isBlank(flexibleLine.flexibleLineType),
-              lineTypePristine
-            )}
-          />
-        </div>
+        )}
       </section>
 
       <FlexibleLineTypeDrawer

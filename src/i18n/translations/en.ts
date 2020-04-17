@@ -30,7 +30,7 @@ export const messages: MessagesKey = {
   flexibleLinesSaveLineSuccessMessage: 'The line was successfully saved!',
   modalSaveLineSuccessHeader: 'The line was created!',
   modalSaveLineSuccessMessage:
-    'was successfully created and saved. You can view or make changes to it in the overview for flexible lines.',
+    'was successfully created and saved. You can view or make changes to it in the overview for flexible lines. Remember to do an export including the line to make it visible in travel searches.',
   flexibleLinesSaveLineSuccessButton: 'Ok',
   flexibleStopPlacesDeleteStopPlaceErrorHeader: 'Delete stop place',
   flexibleStopPlacesDeleteStopPlaceErrorMessage:
@@ -77,14 +77,21 @@ export const messages: MessagesKey = {
   homeCardsNetworkDescription:
     'See the overview of your networks add new ones.',
   homeCardsStopPlacesDescription:
-    'See the over of stop places and areas, or create new ones.',
+    'See the overview of stop places and areas, or create new ones.',
+  getStartedRedirectButton: 'Go to Stop places and Areas',
+  getStartedPlatformIDText:
+    "You can go directly to 'Flexible lines' if you wish to use a Platform-ID from NSR.",
+  getStartedLeadParagraph:
+    'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
   headerParagraph:
     'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',
   intropageTitle: 'Get started!',
-  item1: "Create a network in 'Networks', in the menu to the left",
+  item1:
+    "Start by creating a stop place or area under 'Stop places and Areas', in the menu to the left.",
   item2:
-    "Create a stop place or a zone in 'Stop places and Areas', in the menu to the left",
-  item3: "Create a new line in 'Flexible lines', in the menu to the left",
+    "Afterwards move on to 'Flexible lines' in the menu to the left, to create a new line.",
+  item3:
+    'For the line to be visible in our travel searches, one must export it in the "Eksport" section which can be found in the menu.',
   exportsCreateExportButtonLabel: 'Create export',
   creatorDryRunFormLabel: 'Dry run',
   creatorDryRunFormLabelTooltip:
@@ -100,6 +107,7 @@ export const messages: MessagesKey = {
   creatorDateForExport: 'Date for export',
   creatorDateForExportDesc:
     'Export services with availability within the selected time span',
+  defaultOption: 'Select an option',
   validateFormErrorExportFromDateIsAfterToDate:
     'To-date must be after from-date',
   validateFormErrorExportNameIsEmpty: 'Name must be provided.',
@@ -123,7 +131,7 @@ export const messages: MessagesKey = {
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE:
     'No valid flexible lines in data space',
   failed: 'Failed',
-  inProgress: 'In progress',
+  in_progress: 'In progress',
   success: 'Success',
   viewerFromDateLabel: 'From date',
   viewerHeader: 'Export',
@@ -135,7 +143,7 @@ export const messages: MessagesKey = {
   uttuErrorCONSTRAINT_VIOLATION: 'Ikke unikt navn',
   uttuErrorCONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME:
     'Service journey must have a unique name',
-  uttuErrorCONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME:
+  uttuErrorCONSTRAINT_VIOLATION_LINE_UNIQUE_NAME:
     'Flexible line must have a unique name',
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'The journey pattern must have a unique name',
@@ -146,10 +154,15 @@ export const messages: MessagesKey = {
     'Journey pattern must have minimum 2 sequential stop points.',
   uttuErrorMISSING_OPERATOR: 'Service journey or line must have an operator',
   uttuErrorORGANISATION_NOT_VALID_OPERATOR: 'Invalid operator',
+  uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
+    'Found no valid lines in data space, while exporting',
   uttuErrorUNKNOWN: 'Unknown error',
+  linesCreateFlexibleLineIconButtonLabel: 'Create flexible line',
   linesCreateLineIconButtonLabel: 'Create line',
   bookingInfoHeader: 'Booking info',
-  bookingInfoText: 'Information about how the service can be booked',
+  bookingInfoText: 'Information about how the service can be booked.',
+  bookingLabel:
+    'To make the booking process easier, we recommend filling out Phone, URL and Booking note.',
   bookingAccessAuthorisedPublic: 'Authorised public',
   bookingAccessPublic: 'Public',
   bookingAccessStaff: 'Staff',
@@ -166,6 +179,9 @@ export const messages: MessagesKey = {
   bookingMethodText: 'Text',
   bookingMethodSelectionTitle: 'Booking method',
   bookingNoteFieldTitle: 'Booking note',
+  bookingNoteRequiredFeedback: 'Booking note is required.',
+  bookingNoteTooltip:
+    'Information that can be presented along with the travel detail.',
   purchaseWhenAdvanceAndDayOfTravel: 'Advance and day of travel',
   purchaseWhenDayOfTravelOnly: 'Day of travel only',
   purchaseWhenTimeOfTravelOnly: 'Time of travel only',
@@ -229,6 +245,8 @@ export const messages: MessagesKey = {
   stepperServiceJourney: 'Service Journey',
   stepperBooking: 'Booking info',
   editorStopPoints: 'Add stop places or areas for the service',
+  editorStopPointFlexibleAreaOnly:
+    'Add stop place or area defining the service',
   stopPointsInfo:
     'You have to create at least two stop points; one for start and one for stop. If you are creating an area based service, and you only have one area, you have to add the same area twice.',
   deleteTitle: 'Delete stop point',
@@ -256,10 +274,11 @@ export const messages: MessagesKey = {
   dayTypeEditorToDate: 'To *',
   dayTypeEditorToDateValidation: 'Not before from-date',
   passingTimesEditorError: 'You need valid passing times.',
-  editorAddStopPoint: 'Create new stop point',
+  editorAddStopPoint: 'Add stop place or area',
   editorAddServiceJourneys: 'Create more Service Journeys',
   editorEdit: 'Edit',
   editorCreate: 'Create new ',
+  editorDetailedCreate: 'Create new {details}',
   stopPointsAtleastTwoPoints: 'At least two stop points',
   stopPointsAtleastTwoPointsDetailed:
     'A journey pattern requires at least two stop points.',
@@ -287,17 +306,20 @@ export const messages: MessagesKey = {
   editorSaveButtonText: 'Save',
   editorSaveAndCreateLine: 'Save and create the line',
   editorSaveLineLoadingText: 'Saving line...',
+  fixErrorsInTheFollowingSteps:
+    'You must fix the errors in the following steps: ',
   navigationNext: 'Next',
   linesHeader: 'Lines',
   labelForAlighting: 'For alighting',
   labelForBoarding: 'For boarding',
   labelForBoardingAndAlighting: 'Boarding and alighting',
-  labelFrontText: 'Front Text',
+  labelFrontText: 'Front text',
+  labelFrontTextRequired: 'Front text *',
   labelBoarding: 'On/off-boarding',
   labelQuayRef: 'Platform ID (from NSR) *',
   flexibleStopPlaceRefAndQuayRefBothValues:
     'Choose either stop place or platform, not both.',
-  flexibleStopPlaceRefAndQuayRefNoValues: 'You must a place',
+  flexibleStopPlaceRefAndQuayRefNoValues: 'You must select a place',
   flexibleStopPlaceNoValue: 'You must select a stop place',
   frontTextNoValue: 'You must enter a front text',
   frontTextAlighting: 'First stop can only be for boarding',
@@ -316,8 +338,11 @@ export const messages: MessagesKey = {
   tableDeleteMessage: 'Are you sure you want to delete this stop point?',
   serviceJourneyAvailability: 'Availability',
   serviceJourneyPassingTimes: 'Passing times',
+  serviceJourneyBusinessHours: 'Business hours',
   passingTimesInfo:
     'Enter the passing times for the different stops. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
+  businessHoursInfo:
+    'Enter the business hour for the area or stop. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
   serviceJourneyBooking: 'Booking',
   generalName: 'Name *',
   nameIsRequired: 'Name is required.',
@@ -366,12 +391,14 @@ export const messages: MessagesKey = {
   editorNameLabelText: 'Name *',
   editorPrivateCodeLabelText: 'Private code',
   editorSavingNetworkLoadingText: 'Saving network...',
+  network: 'network',
   networksHeaderText: 'Networks',
   networksLoadingNetworksText: 'Loading networks...',
   networksNameTableHeaderLabel: 'Name',
   networksNoNetworksFoundText: 'No networks found',
   networksPrivateCodeTableHeaderLabel: 'Private code',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Create stop place or area',
+  stopPlaceText: 'stop place',
   stopPlace: 'Stop place/area *',
   editorDescription:
     'Create a stop place or area, either by entering a list of coordinates in GeoJSON format, or by clicking on the map.',

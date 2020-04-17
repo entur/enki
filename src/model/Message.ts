@@ -1,6 +1,8 @@
+import { SEVERITY } from 'model/enums';
+
 type Message = {
-  severity?: string;
-  message?: 'NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE';
+  severity?: SEVERITY;
+  message?: string;
 };
 
 export default Message;

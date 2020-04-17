@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
-import { InputGroup, TextField } from '@entur/form';
+import { TimePicker } from '@entur/datepicker';
+import { InputGroup } from '@entur/form';
 import { ClockIcon } from '@entur/icons';
 import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
@@ -15,6 +16,18 @@ import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import FlexibleAreasPassingTime from './FlexibleAreasPassingTime';
+import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
+
+const toDate = (date: string | undefined): Date | undefined => {
+  if (!date) return;
+  const [hours, minutes, seconds] = date.split(':');
+  const dateObj = new Date();
+  dateObj.setHours(parseInt(hours));
+  dateObj.setMinutes(parseInt(minutes));
+  dateObj.setSeconds(parseInt(seconds));
+
+  return dateObj;
+};
 
 type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
@@ -44,13 +57,12 @@ const PassingTimesEditor = (props: Props & StateProps) => {
 
   const getDayOffsetDropdown = (passingTime: PassingTime, index: number) => (
     <Dropdown
+      initialSelectedItem={getEnumInit(
+        passingTime.departureDayOffset?.toString() ?? '0'
+      )}
       label={formatMessage('passingTimesDayTimeOffset')}
       labelTooltip={formatMessage('passingTimesDayTimeOffsetTooltip')}
-      value={passingTime.departureDayOffset?.toString() ?? '0'}
-      items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map((i) => ({
-        value: i,
-        label: i,
-      }))}
+      items={mapEnumToItems(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])}
       onChange={(e) =>
         onChange(
           changeElementAtIndex(
@@ -67,40 +79,31 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     />
   );
 
-  const padTimePickerInput = (time: string): string | undefined => {
-    if (time.length === 0) return undefined;
-    return time + ':00';
-  };
-
   const getTimePicker = (
     passingTime: PassingTime,
     index: number,
     label: string
   ) => {
-    const shownValue = passingTime.departureTime
-      ?.split(':')
-      .slice(0, 2)
-      .join(':');
-
     return (
       <InputGroup label={label} className="timepicker">
-        <TextField
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        <TimePicker
+          onChange={(e: Date | null) => {
+            const date = e?.toTimeString().split(' ')[0];
+
             onChange(
               changeElementAtIndex(
                 passingTimes,
                 {
                   ...passingTimes[index],
-                  departureTime: padTimePickerInput(e.target.value),
-                  arrivalTime: padTimePickerInput(e.target.value),
+                  departureTime: date,
+                  arrivalTime: date,
                 },
                 index
               )
-            )
-          }
+            );
+          }}
           prepend={<ClockIcon inline />}
-          type="time"
-          defaultValue={shownValue}
+          selectedTime={toDate(passingTime.departureTime)}
         />
       </InputGroup>
     );

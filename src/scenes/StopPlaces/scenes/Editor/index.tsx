@@ -241,104 +241,106 @@ const FlexibleStopPlaceEditor = ({
             <div className="stop-place-form-container">
               <div className="stop-place-form">
                 <RequiredInputMarker />
-                <div>
-                  <InputGroup
-                    label={formatMessage('editorNameFormLabelText')}
-                    {...getErrorFeedback(
-                      errors.name ? formatMessage(errors.name) : '',
-                      !errors.name,
-                      namePristine
-                    )}
-                  >
-                    <TextField
-                      defaultValue={name}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setFlexibleStopPlace({
-                          ...flexibleStopPlace,
-                          name: e.target.value,
-                        })
-                      }
-                    />
-                  </InputGroup>
-                  <InputGroup
-                    label={formatMessage('editorDescriptionFormLabelText')}
-                  >
-                    <TextArea
-                      type="text"
-                      value={flexibleStopPlace.description ?? ''}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setFlexibleStopPlace({
-                          ...flexibleStopPlace,
-                          description: e.target.value,
-                        })
-                      }
-                    />
-                  </InputGroup>
-
-                  <InputGroup
-                    label={formatMessage('editorPrivateCodeFormLabelText')}
-                  >
-                    <TextField
-                      value={flexibleStopPlace.privateCode ?? ''}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setFlexibleStopPlace({
-                          ...flexibleStopPlace,
-                          privateCode: e.target.value,
-                        })
-                      }
-                    />
-                  </InputGroup>
-
-                  <InputGroup
-                    label={formatMessage('editorCoordinatesFormLabelText')}
-                    variant={
-                      coordinateHolder === '' ||
-                      stringIsValidCoordinates(coordinateHolder)
-                        ? undefined
-                        : 'error'
+                <InputGroup
+                  label={formatMessage('editorNameFormLabelText')}
+                  {...getErrorFeedback(
+                    errors.name ? formatMessage(errors.name) : '',
+                    !errors.name,
+                    namePristine
+                  )}
+                >
+                  <TextField
+                    defaultValue={name}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setFlexibleStopPlace({
+                        ...flexibleStopPlace,
+                        name: e.target.value,
+                      })
                     }
-                    feedback={formatMessage('errorCoordinates')}
-                  >
-                    <TextArea
-                      rows="12"
-                      value={coordinateHolder}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setCoordinateHolder(e.target.value)
-                      }
-                      onBlur={(e: ChangeEvent<HTMLInputElement>) =>
-                        stringIsValidCoordinates(coordinateHolder)
-                          ? changeCoordinates(
-                              transformTextToCoordinates(e.target.value)
-                            )
-                          : undefined
-                      }
-                      placeholder={coordinatesPlaceholder}
-                    />
-                  </InputGroup>
-                  <PrimaryButton
-                    className="draw-polygon-button"
-                    onClick={handleDrawPolygonClick}
-                    disabled={!stringIsValidCoordinates(coordinateHolder)}
-                  >
-                    {formatMessage('editorDrawPolygonButtonText')}
-                    <MapIcon />
-                  </PrimaryButton>
-                </div>
-                <div>
-                  <div className="buttons">
-                    {match.params.id && (
-                      <NegativeButton
-                        onClick={() => setDeleteDialogOpen(true)}
-                        disabled={isDeleteDisabled}
-                      >
-                        {formatMessage('editorDeleteButtonText')}
-                      </NegativeButton>
-                    )}
+                  />
+                </InputGroup>
+                <InputGroup
+                  label={formatMessage('editorDescriptionFormLabelText')}
+                >
+                  <TextArea
+                    type="text"
+                    value={flexibleStopPlace.description ?? ''}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setFlexibleStopPlace({
+                        ...flexibleStopPlace,
+                        description: e.target.value,
+                      })
+                    }
+                  />
+                </InputGroup>
 
-                    <SuccessButton onClick={handleOnSaveClick}>
-                      {formatMessage('editorSaveButtonText')}
-                    </SuccessButton>
-                  </div>
+                <InputGroup
+                  label={formatMessage('editorPrivateCodeFormLabelText')}
+                >
+                  <TextField
+                    value={flexibleStopPlace.privateCode ?? ''}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setFlexibleStopPlace({
+                        ...flexibleStopPlace,
+                        privateCode: e.target.value,
+                      })
+                    }
+                  />
+                </InputGroup>
+
+                <InputGroup
+                  label={formatMessage('editorCoordinatesFormLabelText')}
+                  variant={
+                    coordinateHolder === '' ||
+                    stringIsValidCoordinates(coordinateHolder)
+                      ? undefined
+                      : 'error'
+                  }
+                  feedback={formatMessage('errorCoordinates')}
+                >
+                  <TextArea
+                    rows="12"
+                    value={coordinateHolder}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setCoordinateHolder(e.target.value)
+                    }
+                    onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+                      stringIsValidCoordinates(coordinateHolder)
+                        ? changeCoordinates(
+                            transformTextToCoordinates(e.target.value)
+                          )
+                        : undefined
+                    }
+                    placeholder={coordinatesPlaceholder}
+                  />
+                </InputGroup>
+                <PrimaryButton
+                  className="draw-polygon-button"
+                  onClick={handleDrawPolygonClick}
+                  disabled={!stringIsValidCoordinates(coordinateHolder)}
+                >
+                  {formatMessage('editorDrawPolygonButtonText')}
+                  <MapIcon />
+                </PrimaryButton>
+
+                <div className="buttons">
+                  {match.params.id && (
+                    <NegativeButton
+                      onClick={() => setDeleteDialogOpen(true)}
+                      disabled={isDeleteDisabled}
+                    >
+                      {formatMessage('editorDeleteButtonText')}
+                    </NegativeButton>
+                  )}
+
+                  <SuccessButton onClick={handleOnSaveClick}>
+                    {match.params.id
+                      ? formatMessage('editorSaveButtonText')
+                      : formatMessage(
+                          'editorDetailedCreate',
+                          formatMessage('stopPlaceText')
+                        )}
+                  </SuccessButton>
                 </div>
               </div>
 

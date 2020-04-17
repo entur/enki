@@ -87,7 +87,7 @@ const LanguagePicker = () => {
               className="language-picker__item"
               onClick={() => handleChangeLocale(locale)}
               aria-label={locale}
-              size="medium"
+              size="small"
             >
               {flagIcon(locale)}
               <span>{getLocaleString(locale)}</span>
@@ -100,6 +100,7 @@ const LanguagePicker = () => {
         onClick={() => setToggle(!toggled)}
         aria-label={formatMessage('languagePickerAriaLabel')}
         className="language-picker"
+        size="small"
       >
         {flagIcon(selectedLocale)}
         {getLocaleString(selectedLocale)}

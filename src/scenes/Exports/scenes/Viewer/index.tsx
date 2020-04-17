@@ -20,8 +20,9 @@ import { AppIntlState, selectIntl } from 'i18n';
 import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import { download, Export } from 'model/Export';
-import './styles.scss';
 import Page from 'components/Page';
+import uttuMessages, { isOfUttuMessage, UttuCode } from 'helpers/uttu.messages';
+import './styles.scss';
 
 const ExportItem = ({
   label,
@@ -35,8 +36,6 @@ const ExportItem = ({
     <div className="value">{value}</div>
   </div>
 );
-
-const exportMessages = ['NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE'];
 
 const getCurrentExport = (
   state: GlobalState,
@@ -142,9 +141,9 @@ const ExportsViewer = ({
                         {getIconForSeverity(m.severity)}
                       </div>
                       <div>
-                        {m?.message && exportMessages.includes(m.message)
-                          ? formatMessage(m.message)
-                          : m.message}
+                        {m?.message && isOfUttuMessage(m.message)
+                          ? formatMessage(uttuMessages[m.message])
+                          : formatMessage(uttuMessages[UttuCode.UNKNOWN])}
                       </div>
                     </div>
                   ))}

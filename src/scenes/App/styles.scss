@@ -51,10 +51,18 @@
   }
 
   section:not(:last-child) {
-    margin-bottom: $space-extra-large6;
+    margin-bottom: $space-extra-large4;
   }
   .point {
     margin: 0 0 $space-extra-large 0;
+  }
+
+  .stop-place-button {
+    margin-left: $space-medium;
+  }
+
+  .platform-id-text {
+    margin-top: $space-extra-large8;
   }
 }
 
@@ -64,6 +72,22 @@
     display: grid;
     grid-gap: 1.5rem;
     column-gap: 1.5rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .eds-navigation-card {
+      height: 100%;
+      width: 100%;
+    }
+
+    .card-link {
+      text-decoration: inherit;
+      color: inherit;
+    }
+  }
+
+  .bus-icon {
+    g {
+      fill: $colors-brand-blue;
+    }
   }
 }

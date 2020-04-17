@@ -28,7 +28,7 @@ export const messages = {
   flexibleLinesSaveLineSuccessMessage: 'Linjen ble lagret!',
   modalSaveLineSuccessHeader: 'Linjen ble opprettet!',
   modalSaveLineSuccessMessage:
-    'ble suksessfullt opprettet og lagret. For å se eller gjøre endringer finner du den i oversikten over Linjer.',
+    'ble opprettet og lagret. Se eller gjør endringer i oversikten over Linjer. Husk at du må eksportere for at tilbudet skal bli tilgjengelig i reisesøk.',
   flexibleLinesSaveLineSuccessButton: 'Den er grei',
   flexibleStopPlacesDeleteStopPlaceErrorHeader: 'Slette stoppested',
   flexibleStopPlacesDeleteStopPlaceErrorMessage:
@@ -46,7 +46,7 @@ export const messages = {
     'En feil oppstod under lagringen av stoppested: {details}',
   flexibleStopPlacesSaveStopPlaceSuccessHeader: 'Lagre stoppested',
   flexibleStopPlacesSaveStopPlaceSuccessMessage: 'Stoppestedet ble lagret.',
-  navBarIntroduction: 'Introduksjon',
+  navBarIntroduction: 'Slik kommer du i gang',
   navBarExportsMenuItemLabel: 'Eksporter',
   navBarLinesMenuItemLabel: 'Linjer',
   navBarNetworksMenuItemLabel: 'Nettverk',
@@ -76,14 +76,22 @@ export const messages = {
     'Se oversikt over dine nettverk eller legg till nytt.',
   homeCardsStopPlacesDescription:
     'Se oversikt over stoppesteder og områder eller opprett nye.',
+  getStartedRedirectButton: 'Gå til Stoppesteder og områder',
+  getStartedPlatformIDText:
+    "Ønsker du å benytte Plattform-ID fra NSR kan du gå direkte til 'Linjer'.",
+  getStartedLeadParagraph:
+    'Før du oppretter en ny linje må du legge til stoppesteder eller område for tilbudet. Følg stegene beskrevet under.',
   headerParagraph:
-    'Velkommen til Entur fleksibel transport. Dette er et verktøy for at aktører selv skal kunne legge inn fleksible linjetilbud som synliggjøres i våre kanaler.',
+    'Velkommen til Entur fleksibel transport, et verktøy som lar aktører legge inn fleksible linjetilbud.',
   intropageTitle: 'Kom i gang!',
-  item1: 'Lag et nytt nettverk under ‘Nettverk’ i menyen til venstre ',
+  item1:
+    'Start med å opprette stoppested eller område under ’Stoppesteder og områder’ i menyen til venstre.',
   item2:
-    'Lag stoppested eller sone under ’Stoppesteder og områder’ i menyen til venstre ',
-  item3: 'Opprett en ny linje under ‘Linjer’ i menyen til venstre',
+    'Klikk deretter på ‘Linjer’ i menyen til venstre for å opprette en ny linje.',
+  item3:
+    'For at linjen skal bli tilgjengelig i reisesøk må det opprettes en eksport under ‘Eksporter’ i venstremenyen.',
   exportsCreateExportButtonLabel: 'Opprett eksport',
+  defaultOption: 'Vennligst velg',
   creatorDryRunFormLabel: 'Tørrkjøring',
   creatorDryRunFormLabelTooltip:
     'Eksporterer ikke tilbudet til reisesøk, men genererer en NeTEx-fil man kan se på',
@@ -120,7 +128,7 @@ export const messages = {
   viewerDryRunYes: 'Ja',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE: 'Ingen gyldig linjer i datagrunnlaget',
   failed: 'Feilet',
-  inProgress: 'Pågår',
+  in_progress: 'Pågår',
   success: 'Ferdig',
   viewerFromDateLabel: 'Fra dato',
   viewerHeader: 'Eksport',
@@ -132,8 +140,7 @@ export const messages = {
   uttuErrorCONSTRAINT_VIOLATION: 'Not a unique name',
   uttuErrorCONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME:
     'Service journeyen må ha et unikt navn',
-  uttuErrorCONSTRAINT_VIOLATION_FLEXIBLE_LINE_UNIQUE_NAME:
-    'Linjen må ha et unikt navn',
+  uttuErrorCONSTRAINT_VIOLATION_LINE_UNIQUE_NAME: 'Linjen må ha et unikt navn',
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'Journey patternet må ha et unikt navn',
   uttuErrorENTITY_IS_REFERENCED:
@@ -143,10 +150,15 @@ export const messages = {
     'Reisemønster må ha minimum 2 sekvensielle stoppepunkter.',
   uttuErrorMISSING_OPERATOR: 'Tur eller linje må ha operatør',
   uttuErrorORGANISATION_NOT_VALID_OPERATOR: 'Ugyldig operatør',
+  uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
+    'Fant ingen gyldige linjer i eksporten',
   uttuErrorUNKNOWN: 'Ukjent feil',
-  linesCreateLineIconButtonLabel: 'Opprett linje',
+  linesCreateFlexibleLineIconButtonLabel: 'Opprett fleksibel linje',
+  linesCreateLineIconButtonLabel: 'Opprett rutegående linje',
   bookingInfoHeader: 'Bestillingsinfo',
-  bookingInfoText: 'Informasjon om hvordan tilbudet kan bestilles',
+  bookingInfoText: 'Informasjon om hvordan tilbudet kan bestilles.',
+  bookingLabel:
+    'For enklere bestilling av tilbudet anbefales det å fylle ut Telefon, URL og Merknad.',
   bookingAccessAuthorisedPublic: 'Forhåndsgodkjent',
   bookingAccessPublic: 'Åpen',
   bookingAccessStaff: 'Ansatte',
@@ -163,6 +175,8 @@ export const messages = {
   bookingMethodText: 'SMS',
   bookingMethodSelectionTitle: 'Hvordan bestille',
   bookingNoteFieldTitle: 'Merknad',
+  bookingNoteRequiredFeedback: 'Merknad må fylles inn.',
+  bookingNoteTooltip: 'Informasjon som kan vises sammen med reiseforslaget.',
   purchaseWhenAdvanceAndDayOfTravel: 'Frem til og med samme dag',
   purchaseWhenDayOfTravelOnly: 'Samme dag',
   purchaseWhenTimeOfTravelOnly: 'Ved reisetidspunkt',
@@ -226,6 +240,8 @@ export const messages = {
   stepperServiceJourney: 'Service Journey',
   stepperBooking: 'Bestillingsinfo',
   editorStopPoints: 'Legg til stoppesteder eller områder for tilbudet',
+  editorStopPointFlexibleAreaOnly:
+    'Legg til stoppested eller område som definerer tilbudet',
   stopPointsInfo:
     'Du må opprette minst to stoppesteder; ett for start og ett for slutt. Hvis du lager et områdebasert tilbud, og du kun har ett område, må du legge til samme område to ganger.',
   deleteTitle: 'Slette stoppepunkt',
@@ -253,10 +269,11 @@ export const messages = {
   dayTypeEditorToDate: 'Til *',
   dayTypeEditorToDateValidation: 'Ikke før fra-dato',
   passingTimesEditorError: 'Du må ha gyldige passeringstider.',
-  editorAddStopPoint: 'Legg til stoppepunkt',
+  editorAddStopPoint: 'Legg til stoppested eller område',
   editorAddServiceJourneys: 'Legg til flere Service Journeys',
   editorEdit: 'Rediger',
   editorCreate: 'Opprett',
+  editorDetailedCreate: 'Opprett {details}',
   stopPointsAtleastTwoPoints: 'Minst to stoppepunkter',
   stopPointsAtleastTwoPointsDetailed:
     'Et journey pattern krever minst to stoppepunkter.',
@@ -284,12 +301,14 @@ export const messages = {
   editorSaveButtonText: 'Lagre',
   editorSaveAndCreateLine: 'Lagre og opprett linjen',
   editorSaveLineLoadingText: 'Lagrer linjen...',
+  fixErrorsInTheFollowingSteps: 'Du må rette feil på følgende steg: ',
   navigationNext: 'Neste',
   linesHeader: 'Linjer',
   labelForAlighting: 'For avstigning',
   labelForBoarding: 'For påstigning',
   labelForBoardingAndAlighting: 'På- og avstigning',
   labelFrontText: 'Fronttekst',
+  labelFrontTextRequired: 'Fronttekst *',
   labelBoarding: 'På-/avstigning',
   labelQuayRef: 'Plattform-ID (fra NSR) *',
   tableYes: 'Ja',
@@ -314,8 +333,11 @@ export const messages = {
   quayRefInvalid: 'Ugyldig plattform-ID',
   serviceJourneyAvailability: 'Tilgjengelighet',
   serviceJourneyPassingTimes: 'Passeringstider',
+  serviceJourneyBusinessHours: 'Åpningstid',
   passingTimesInfo:
     'Fyll inn passeringstider for de ulike stoppene. Hvis du lager et områdebasert tilbud fyller du inn åpningstidene, med starttidspunkt på første stopp og sluttidspunkt på det siste.',
+  businessHoursInfo:
+    'Fyll inn åpningstid for stoppet eller området. Hvis du lager et områdebasert tilbud fyller du inn åpningstidene, med starttidspunkt på første stopp og sluttidspunkt på det siste.',
   serviceJourneyBooking: 'Bestilling',
   generalName: 'Navn *',
   nameIsRequired: 'Navn må fylles inn.',
@@ -366,6 +388,7 @@ export const messages = {
   editorPrivateCodeLabelText: 'Privat kode',
   save: 'Lagre',
   editorSavingNetworkLoadingText: 'Lagrer nettverket...',
+  network: 'nettverk',
   networksHeaderText: 'Nettverk',
   networksLoadingNetworksText: 'Laster inn nettverk...',
   networksNameTableHeaderLabel: 'Navn',
@@ -395,6 +418,7 @@ export const messages = {
   validateFormErrorFlexibleAreaNotEnoughPolygons:
     'Du må legge til flere punkter i kartet',
   validateFormErrorNameEmpty: 'Du må gi stoppestedet et navn',
+  stopPlaceText: 'stoppested',
   stopPlace: 'Stoppested/område *',
   stopPlacesHeader: 'Stoppesteder og områder',
   stopPlacesLoadingStopPlacesText: 'Laster inn stoppesteder...',
