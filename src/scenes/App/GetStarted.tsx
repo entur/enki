@@ -27,9 +27,33 @@ const GetStarted = () => {
         <section>
           <Heading2>{formatMessage('intropageTitle')}</Heading2>
           <NumberedList>
-            <ListItem>{formatMessage('item1')}</ListItem>
-            <ListItem>{formatMessage('item2')}</ListItem>
-            <ListItem>{formatMessage('item3')}</ListItem>
+            <ListItem>
+              <>
+                {formatMessage('item1pre')}
+                <Link to="/stop-places">
+                  {formatMessage('navBarStopPlacesMenuItemLabel')}
+                </Link>
+                {formatMessage('item1post')}
+              </>
+            </ListItem>
+            <ListItem>
+              <>
+                {formatMessage('item2pre')}
+                <Link to="/lines">
+                  {formatMessage('navBarLinesMenuItemLabel')}
+                </Link>
+                {formatMessage('item2post')}
+              </>
+            </ListItem>
+            <ListItem>
+              <>
+                {formatMessage('item3pre')}
+                <Link to="/exports">
+                  {formatMessage('navBarExportsMenuItemLabel')}
+                </Link>
+                {formatMessage('item3post')}
+              </>
+            </ListItem>
           </NumberedList>
         </section>
         <Link to="/stop-places">

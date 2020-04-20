@@ -84,12 +84,13 @@ export const messages = {
   headerParagraph:
     'Velkommen til Entur flex editor, et verktøy som lar aktører legge inn fleksible linjetilbud.',
   intropageTitle: 'Kom i gang!',
-  item1:
-    'Start med å opprette stoppested eller område under ’Stoppesteder og områder’ i menyen til venstre.',
-  item2:
-    'Klikk deretter på ‘Linjer’ i menyen til venstre for å opprette en ny linje.',
-  item3:
-    'For at linjen skal bli tilgjengelig i reisesøk må det opprettes en eksport under ‘Eksporter’ i venstremenyen.',
+  item1pre: 'Start med å opprette stoppested eller område under ',
+  item1post: ' i menyen til venstre.',
+  item2pre: 'Klikk deretter på ',
+  item2post: ' i menyen til venstre for å opprette en ny linje.',
+  item3pre:
+    'For at linjen skal bli tilgjengelig i reisesøk må det opprettes en eksport under ',
+  item3post: ' i venstremenyen.',
   exportsCreateExportButtonLabel: 'Opprett eksport',
   defaultOption: 'Vennligst velg',
   creatorDryRunFormLabel: 'Tørrkjøring',
