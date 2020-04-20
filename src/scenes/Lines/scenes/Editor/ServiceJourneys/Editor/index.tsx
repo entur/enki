@@ -27,6 +27,7 @@ import { newDayTypeAssignment } from 'model/DayTypeAssignment';
 import { Tooltip } from '@entur/tooltip';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getInit, mapToItems } from 'helpers/dropdown';
+import { MessagesKey } from 'i18n/translations/translationKeys';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -78,6 +79,19 @@ const ServiceJourneyEditor = (props: Props) => {
     value: ServiceJourney[keyof ServiceJourney]
   ) => {
     onChange({ ...serviceJourney, [field]: value });
+  };
+
+  const getParagraphMessageKey = (
+    flexibleLineType: string | undefined
+  ): keyof MessagesKey => {
+    switch (flexibleLineType) {
+      case undefined:
+        return 'passingTimesInfoFixed';
+      case 'flexibleAreasOnly':
+        return 'businessHoursInfo';
+      default:
+        return 'passingTimesInfo';
+    }
   };
 
   const namePristine = usePristine(name, spoilPristine);
@@ -217,11 +231,7 @@ const ServiceJourneyEditor = (props: Props) => {
               )}
             </Heading4>
             <Paragraph>
-              {formatMessage(
-                flexibleLineType === 'flexibleAreasOnly'
-                  ? 'businessHoursInfo'
-                  : 'passingTimesInfo'
-              )}
+              {formatMessage(getParagraphMessageKey(flexibleLineType))}
             </Paragraph>
             <PassingTimesEditor
               passingTimes={passingTimes ?? []}
