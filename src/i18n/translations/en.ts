@@ -52,7 +52,7 @@ export const messages: MessagesKey = {
   navBarExportsMenuItemLabel: 'Exports',
   navBarLinesMenuItemLabel: 'Flexible lines',
   navBarNetworksMenuItemLabel: 'Networks',
-  navBarRootLinkLogoAltText: 'Logo for Entur Flexible Transport',
+  navBarRootLinkLogoAltText: 'Logo',
   navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Stop places and Areas',
   userMenuLogoutLinkText: 'Log out',
@@ -67,7 +67,7 @@ export const messages: MessagesKey = {
   redirectYes: 'Yes, leave this page',
   redirectNo: 'No, stay on this page',
   appTitle: 'Flex editor',
-  homeHeader: 'Entur Flexible transport',
+  homeHeader: 'Entur Flex editor',
   homeShortcut: 'Shortcuts',
   homeCardsGetStarted: 'Get started',
   homeCardsGetStartedDescription:
@@ -84,7 +84,7 @@ export const messages: MessagesKey = {
   getStartedLeadParagraph:
     'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
   headerParagraph:
-    'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',
+    'Welcome to Entur flex editor. This application is a tool to help organisations make their services visible through our channels.',
   intropageTitle: 'Get started!',
   item1:
     "Start by creating a stop place or area under 'Stop places and Areas', in the menu to the left.",

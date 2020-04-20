@@ -50,7 +50,7 @@ export const messages = {
   navBarExportsMenuItemLabel: 'Eksporter',
   navBarLinesMenuItemLabel: 'Linjer',
   navBarNetworksMenuItemLabel: 'Nettverk',
-  navBarRootLinkLogoAltText: 'Logo for Entur Bestillingstransport',
+  navBarRootLinkLogoAltText: 'Logo',
   navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Stoppesteder og områder',
   userMenuLogoutLinkText: 'Logg ut',
@@ -65,7 +65,7 @@ export const messages = {
   redirectYes: 'Ja, forlat siden',
   redirectNo: 'Nei, bli på siden',
   appTitle: 'Flex editor',
-  homeHeader: 'Entur Fleksibel transport',
+  homeHeader: 'Entur Flex editor',
   homeShortcut: 'Snarveier',
   homeCardsGetStarted: 'Kom i gang',
   homeCardsGetStartedDescription:
@@ -82,7 +82,7 @@ export const messages = {
   getStartedLeadParagraph:
     'Før du oppretter en ny linje må du legge til stoppesteder eller område for tilbudet. Følg stegene beskrevet under.',
   headerParagraph:
-    'Velkommen til Entur fleksibel transport, et verktøy som lar aktører legge inn fleksible linjetilbud.',
+    'Velkommen til Entur flex editor, et verktøy som lar aktører legge inn fleksible linjetilbud.',
   intropageTitle: 'Kom i gang!',
   item1:
     'Start med å opprette stoppested eller område under ’Stoppesteder og områder’ i menyen til venstre.',
