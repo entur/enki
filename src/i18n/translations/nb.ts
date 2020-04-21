@@ -245,6 +245,8 @@ export const messages = {
     'Legg til stoppested eller område som definerer tilbudet',
   stopPointsInfo:
     'Du må opprette minst to stoppesteder; ett for start og ett for slutt. Hvis du lager et områdebasert tilbud, og du kun har ett område, må du legge til samme område to ganger.',
+  stopPointsInfoFixed:
+    'Du må opprette minst to stoppesteder; ett for start og ett for slutt. Skriv inn platform-ID fra NSR.',
   deleteTitle: 'Slette stoppepunkt',
   deleteMessage: 'Er du sikker på at du ønsker å slette dette stoppepunktet?',
   selectCustom: 'Stoppested',
@@ -339,6 +341,7 @@ export const messages = {
     'Fyll inn passeringstider for de ulike stoppene. Hvis du lager et områdebasert tilbud fyller du inn åpningstidene, med starttidspunkt på første stopp og sluttidspunkt på det siste.',
   businessHoursInfo:
     'Fyll inn åpningstid for stoppet eller området. Hvis du lager et områdebasert tilbud fyller du inn åpningstidene, med starttidspunkt på første stopp og sluttidspunkt på det siste.',
+  passingTimesInfoFixed: 'Fyll inn passeringstider for de ulike stoppene.',
   serviceJourneyBooking: 'Bestilling',
   generalName: 'Navn *',
   nameIsRequired: 'Navn må fylles inn.',

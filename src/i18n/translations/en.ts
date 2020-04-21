@@ -250,6 +250,8 @@ export const messages: MessagesKey = {
     'Add stop place or area defining the service',
   stopPointsInfo:
     'You have to create at least two stop points; one for start and one for stop. If you are creating an area based service, and you only have one area, you have to add the same area twice.',
+  stopPointsInfoFixed:
+    'You have to create at least two stop points; one for start and one for stop. Enter platform-ID from NSR.',
   deleteTitle: 'Delete stop point',
   deleteMessage: 'Are you sure you want to delete this stop point?',
   selectCustom: 'Stop point',
@@ -344,6 +346,7 @@ export const messages: MessagesKey = {
     'Enter the passing times for the different stops. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
   businessHoursInfo:
     'Enter the business hour for the area or stop. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
+  passingTimesInfoFixed: 'Enter the passing times for the different stops.',
   serviceJourneyBooking: 'Booking',
   generalName: 'Name *',
   nameIsRequired: 'Name is required.',
