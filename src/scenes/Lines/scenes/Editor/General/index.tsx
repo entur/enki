@@ -29,7 +29,7 @@ type Props = {
   networks: Network[];
   flexibleLineChange: (flexibleLine: FlexibleLine) => void;
   spoilPristine: boolean;
-  isFlexibleLine?: boolean;
+  isFlexibleLine: boolean;
 };
 
 export default ({

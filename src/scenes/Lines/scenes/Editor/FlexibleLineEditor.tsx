@@ -37,7 +37,8 @@ const FlexibleLineEditor = (props: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
   const invalidSteps = props.steps.filter(
-    (step, i) => !currentStepIsValid(i, props.flexibleLine)
+    (step, i) =>
+      !currentStepIsValid(i, props.flexibleLine, props.isFlexibleLine)
   );
 
   const otherStepsHasError =
