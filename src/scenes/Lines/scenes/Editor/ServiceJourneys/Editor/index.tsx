@@ -243,8 +243,8 @@ const ServiceJourneyEditor = (props: Props) => {
         {showDeleteDialog && deleteServiceJourney && (
           <ConfirmDialog
             isOpen={showDeleteDialog}
-            title={formatMessage('deleteTitle')}
-            message={formatMessage('deleteMessage')}
+            title={formatMessage('serviceJourneydeleteTitle')}
+            message={formatMessage('serviceJourneydeleteMessage')}
             buttons={[
               <SecondaryButton
                 key={2}
