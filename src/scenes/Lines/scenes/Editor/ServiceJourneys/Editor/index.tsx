@@ -18,7 +18,6 @@ import { GlobalState } from 'reducers';
 import ServiceJourney from 'model/ServiceJourney';
 import { Heading4, Paragraph } from '@entur/typography';
 import ScrollToTop from 'components/ScrollToTop';
-import './styles.scss';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import WeekdayPicker from 'components/WeekdayPicker';
@@ -28,6 +27,7 @@ import { Tooltip } from '@entur/tooltip';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getInit, mapToItems } from 'helpers/dropdown';
 import { MessagesKey } from 'i18n/translations/translationKeys';
+import './styles.scss';
 
 type Props = {
   serviceJourney: ServiceJourney;
