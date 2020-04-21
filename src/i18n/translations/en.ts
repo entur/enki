@@ -52,7 +52,7 @@ export const messages: MessagesKey = {
   navBarExportsMenuItemLabel: 'Exports',
   navBarLinesMenuItemLabel: 'Flexible lines',
   navBarNetworksMenuItemLabel: 'Networks',
-  navBarRootLinkLogoAltText: 'Logo for Entur Flexible Transport',
+  navBarRootLinkLogoAltText: 'Logo',
   navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Stop places and Areas',
   userMenuLogoutLinkText: 'Log out',
@@ -67,7 +67,7 @@ export const messages: MessagesKey = {
   redirectYes: 'Yes, leave this page',
   redirectNo: 'No, stay on this page',
   appTitle: 'Flex editor',
-  homeHeader: 'Entur Flexible transport',
+  homeHeader: 'Entur Flex editor',
   homeShortcut: 'Shortcuts',
   homeCardsGetStarted: 'Get started',
   homeCardsGetStartedDescription:
@@ -84,14 +84,15 @@ export const messages: MessagesKey = {
   getStartedLeadParagraph:
     'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
   headerParagraph:
-    'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',
+    'Welcome to Entur flex editor. This application is a tool to help organisations make their services visible through our channels.',
   intropageTitle: 'Get started!',
-  item1:
-    "Start by creating a stop place or area under 'Stop places and Areas', in the menu to the left.",
-  item2:
-    "Afterwards move on to 'Flexible lines' in the menu to the left, to create a new line.",
-  item3:
-    'For the line to be visible in our travel searches, one must export it in the "Eksport" section which can be found in the menu.',
+  item1pre: 'Start by creating a stop place or area under ',
+  item1post: ', in the menu to the left.',
+  item2pre: 'Afterwards move on to ',
+  item2post: ' in the menu to the left, to create a new line.',
+  item3pre:
+    'For the line to be visible in our travel searches, one must export it in the ',
+  item3post: ' section which can be found in the menu.',
   exportsCreateExportButtonLabel: 'Create export',
   creatorDryRunFormLabel: 'Dry run',
   creatorDryRunFormLabelTooltip:
