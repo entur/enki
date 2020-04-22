@@ -6,7 +6,6 @@ import { PrimaryButton } from '@entur/button';
 import {
   Heading1,
   LeadParagraph,
-  Heading2,
   NumberedList,
   ListItem,
   Paragraph,
@@ -25,7 +24,6 @@ const GetStarted = () => {
       </header>
       <main>
         <section>
-          <Heading2>{formatMessage('intropageTitle')}</Heading2>
           <NumberedList>
             <ListItem>
               <>

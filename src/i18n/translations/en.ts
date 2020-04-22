@@ -78,14 +78,13 @@ export const messages: MessagesKey = {
     'See the overview of your networks add new ones.',
   homeCardsStopPlacesDescription:
     'See the overview of stop places and areas, or create new ones.',
-  getStartedRedirectButton: 'Go to Stop places and Areas',
+  getStartedRedirectButton: 'Get started',
   getStartedPlatformIDText:
     "You can go directly to 'Flexible lines' if you wish to use a Platform-ID from NSR.",
   getStartedLeadParagraph:
     'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
   headerParagraph:
     'Welcome to Entur flex editor. This application is a tool to help organisations make their services visible through our channels.',
-  intropageTitle: 'Get started!',
   item1pre: 'Start by creating a stop place or area under ',
   item1post: ', in the menu to the left.',
   item2pre: 'Afterwards move on to ',
