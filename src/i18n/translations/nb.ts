@@ -76,14 +76,13 @@ export const messages = {
     'Se oversikt over dine nettverk eller legg till nytt.',
   homeCardsStopPlacesDescription:
     'Se oversikt over stoppesteder og områder eller opprett nye.',
-  getStartedRedirectButton: 'Gå til Stoppesteder og områder',
+  getStartedRedirectButton: 'Kom i gang',
   getStartedPlatformIDText:
     "Ønsker du å benytte Plattform-ID fra NSR kan du gå direkte til 'Linjer'.",
   getStartedLeadParagraph:
     'Før du oppretter en ny linje må du legge til stoppesteder eller område for tilbudet. Følg stegene beskrevet under.',
   headerParagraph:
     'Velkommen til Entur flex editor, et verktøy som lar aktører legge inn fleksible linjetilbud.',
-  intropageTitle: 'Kom i gang!',
   item1pre: 'Start med å opprette stoppested eller område under ',
   item1post: ' i menyen til venstre.',
   item2pre: 'Klikk deretter på ',
