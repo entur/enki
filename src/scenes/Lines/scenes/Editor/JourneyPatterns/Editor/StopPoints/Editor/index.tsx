@@ -169,6 +169,7 @@ const StopPointEditor = ({
           >
             <TextField
               defaultValue={stopPoint.quayRef}
+              placeholder="NSR:Quay:69"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 debouncedSearchForQuay(e.target.value)
               }

@@ -64,14 +64,14 @@ const createAndGetNetwork = (
     );
 
 const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
-  const [flexibleLine, setFlexibleLine] = useState<FlexibleLine>({});
+  const [line, setLine] = useState<FlexibleLine>({});
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
   const [lastPath] = useLocation().pathname.split('/').slice(-1);
   const isFlexibleLine = Boolean(
-    flexibleLine?.flexibleLineType || lastPath === 'flexible'
+    line?.flexibleLineType || lastPath === 'flexible'
   );
 
   const { formatMessage } = useSelector(selectIntl);
@@ -102,26 +102,22 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
 
     const authorities = filterAuthorities(organisations, providers.active);
     if (!isBlank(props.match.params.id))
-      return setFlexibleLine(
-        getFlexibleLineFromPath(flexibleLines ?? [], props.match)
-      );
+      return setLine(getFlexibleLineFromPath(flexibleLines ?? [], props.match));
 
     const newFlexibleLine: FlexibleLine = initFlexibleLine();
 
     if (networks.length > 1 || authorities.length === 0)
-      return setFlexibleLine(newFlexibleLine);
+      return setLine(newFlexibleLine);
 
     const networkRef = findNetworkIdByProvider(providers.active, networks);
     if (networkRef) {
-      setFlexibleLine({ ...newFlexibleLine, networkRef });
+      setLine({ ...newFlexibleLine, networkRef });
     } else {
       createAndGetNetwork(
         dispatch,
         authorities[0].id,
         providers.active
-      ).then((networkRef) =>
-        setFlexibleLine({ ...newFlexibleLine, networkRef })
-      );
+      ).then((networkRef) => setLine({ ...newFlexibleLine, networkRef }));
     }
     // eslint-disable-next-line
   }, [flexibleLines, isLoadingDependencies]);
@@ -129,7 +125,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const goToLines = () => props.history.push('/lines');
 
   const onStepClicked = (stepIndexClicked: number) => {
-    if (getMaxAllowedStepIndex(flexibleLine) >= stepIndexClicked) {
+    if (getMaxAllowedStepIndex(line, isFlexibleLine) >= stepIndexClicked) {
       setActiveStepperIndex(stepIndexClicked);
     }
   };
@@ -137,12 +133,12 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const isEdit = !isBlank(props.match.params.id);
 
   const handleOnSaveClick = () => {
-    const valid = validFlexibleLine(flexibleLine);
+    const valid = validFlexibleLine(line, isFlexibleLine);
 
     setNextClicked(true);
     if (valid) {
       setSaving(true);
-      dispatch(saveFlexibleLine(flexibleLine))
+      dispatch(saveFlexibleLine(line))
         .then(() => !isEdit && goToLines())
         .finally(() => setSaving(false));
       dispatch(setSavedChanges(true));
@@ -151,14 +147,14 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   };
 
   const handleDelete = () => {
-    if (flexibleLine.id) {
+    if (line.id) {
       setDeleting(true);
-      dispatch(deleteLine(flexibleLine)).then(() => goToLines());
+      dispatch(deleteLine(line)).then(() => goToLines());
     }
   };
 
   const onNextClicked = () => {
-    if (currentStepIsValid(activeStepperIndex, flexibleLine)) {
+    if (currentStepIsValid(activeStepperIndex, line, isFlexibleLine)) {
       setActiveStepperIndex(activeStepperIndex + 1);
       setNextClicked(false);
     } else {
@@ -170,7 +166,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     editor.isSaved ? goToLines() : setShowConfirm(true);
 
   const onFlexibleLineChange = (flexibleLine: FlexibleLine) => {
-    setFlexibleLine(flexibleLine);
+    setLine(flexibleLine);
     dispatch(setSavedChanges(false));
   };
 
@@ -188,7 +184,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
       <>
         <Loading
           className=""
-          isLoading={isLoadingDependencies || isEmpty(flexibleLine)}
+          isLoading={isLoadingDependencies || isEmpty(line)}
           text={formatMessage('editorLoadingLineText')}
         >
           <>
@@ -202,7 +198,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
               isEdit={isEdit}
               activeStep={activeStepperIndex}
               setActiveStep={setActiveStepperIndex}
-              flexibleLine={flexibleLine}
+              flexibleLine={line}
               changeFlexibleLine={onFlexibleLineChange}
               operators={filterNetexOperators(organisations ?? [])}
               networks={networks ?? []}

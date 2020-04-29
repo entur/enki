@@ -18,7 +18,6 @@ import { GlobalState } from 'reducers';
 import ServiceJourney from 'model/ServiceJourney';
 import { Heading4, Paragraph } from '@entur/typography';
 import ScrollToTop from 'components/ScrollToTop';
-import './styles.scss';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import WeekdayPicker from 'components/WeekdayPicker';
@@ -27,6 +26,8 @@ import { newDayTypeAssignment } from 'model/DayTypeAssignment';
 import { Tooltip } from '@entur/tooltip';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getInit, mapToItems } from 'helpers/dropdown';
+import { MessagesKey } from 'i18n/translations/translationKeys';
+import './styles.scss';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -78,6 +79,19 @@ const ServiceJourneyEditor = (props: Props) => {
     value: ServiceJourney[keyof ServiceJourney]
   ) => {
     onChange({ ...serviceJourney, [field]: value });
+  };
+
+  const getParagraphMessageKey = (
+    flexibleLineType: string | undefined
+  ): keyof MessagesKey => {
+    switch (flexibleLineType) {
+      case undefined:
+        return 'passingTimesInfoFixed';
+      case 'flexibleAreasOnly':
+        return 'businessHoursInfo';
+      default:
+        return 'passingTimesInfo';
+    }
   };
 
   const namePristine = usePristine(name, spoilPristine);
@@ -217,11 +231,7 @@ const ServiceJourneyEditor = (props: Props) => {
               )}
             </Heading4>
             <Paragraph>
-              {formatMessage(
-                flexibleLineType === 'flexibleAreasOnly'
-                  ? 'businessHoursInfo'
-                  : 'passingTimesInfo'
-              )}
+              {formatMessage(getParagraphMessageKey(flexibleLineType))}
             </Paragraph>
             <PassingTimesEditor
               passingTimes={passingTimes ?? []}
@@ -243,8 +253,8 @@ const ServiceJourneyEditor = (props: Props) => {
         {showDeleteDialog && deleteServiceJourney && (
           <ConfirmDialog
             isOpen={showDeleteDialog}
-            title={formatMessage('deleteTitle')}
-            message={formatMessage('deleteMessage')}
+            title={formatMessage('serviceJourneydeleteTitle')}
+            message={formatMessage('serviceJourneydeleteMessage')}
             buttons={[
               <SecondaryButton
                 key={2}

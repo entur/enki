@@ -3,38 +3,44 @@ import { isBlank } from 'helpers/forms';
 import { validJourneyPattern } from './JourneyPatterns/Editor/StopPoints/Editor/validateForm';
 import { validServiceJourneys } from './ServiceJourneys/Editor/validate';
 
-export const validFlexibleLine = (flexibleLine: FlexibleLine): boolean =>
-  aboutLineStepIsValid(flexibleLine) &&
-  validJourneyPattern(flexibleLine.journeyPatterns) &&
-  validServiceJourneys(flexibleLine.journeyPatterns?.[0].serviceJourneys);
+export const validFlexibleLine = (
+  line: FlexibleLine,
+  isFlexibleLine: boolean
+): boolean =>
+  aboutLineStepIsValid(line, isFlexibleLine) &&
+  validJourneyPattern(line.journeyPatterns) &&
+  validServiceJourneys(line.journeyPatterns?.[0].serviceJourneys);
 
-export const getMaxAllowedStepIndex = (flexibleLine: FlexibleLine) => {
-  if (!aboutLineStepIsValid(flexibleLine)) return 0;
-  else if (!validJourneyPattern(flexibleLine.journeyPatterns)) return 1;
-  else if (
-    !validServiceJourneys(flexibleLine.journeyPatterns?.[0]?.serviceJourneys)
-  )
+export const getMaxAllowedStepIndex = (
+  line: FlexibleLine,
+  isFlexibleLine: boolean
+) => {
+  if (!aboutLineStepIsValid(line, isFlexibleLine)) return 0;
+  else if (!validJourneyPattern(line.journeyPatterns)) return 1;
+  else if (!validServiceJourneys(line.journeyPatterns?.[0]?.serviceJourneys))
     return 2;
   else return 3;
 };
 
 export const currentStepIsValid = (
   currentStep: number,
-  flexibleLine: FlexibleLine
+  line: FlexibleLine,
+  isFlexibleLine: boolean
 ) => {
-  if (currentStep === 0) return aboutLineStepIsValid(flexibleLine);
-  else if (currentStep === 1)
-    return validJourneyPattern(flexibleLine.journeyPatterns);
+  if (currentStep === 0) return aboutLineStepIsValid(line, isFlexibleLine);
+  else if (currentStep === 1) return validJourneyPattern(line.journeyPatterns);
   else if (currentStep === 2)
-    return validServiceJourneys(
-      flexibleLine.journeyPatterns?.[0].serviceJourneys
-    );
+    return validServiceJourneys(line.journeyPatterns?.[0].serviceJourneys);
   else if (currentStep === 3) return true;
   else return false;
 };
 
-export const aboutLineStepIsValid = (flexibleLine: FlexibleLine): boolean =>
-  !isBlank(flexibleLine.name) &&
-  !isBlank(flexibleLine.publicCode) &&
-  !isBlank(flexibleLine.operatorRef) &&
-  !isBlank(flexibleLine.networkRef);
+const aboutLineStepIsValid = (
+  line: FlexibleLine,
+  isFlexibleLine: boolean
+): boolean =>
+  !isBlank(line.name) &&
+  !isBlank(line.publicCode) &&
+  !isBlank(line.operatorRef) &&
+  !isBlank(line.networkRef) &&
+  (!isBlank(line.flexibleLineType) || !isFlexibleLine);

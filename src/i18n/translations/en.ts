@@ -52,7 +52,7 @@ export const messages: MessagesKey = {
   navBarExportsMenuItemLabel: 'Exports',
   navBarLinesMenuItemLabel: 'Flexible lines',
   navBarNetworksMenuItemLabel: 'Networks',
-  navBarRootLinkLogoAltText: 'Logo for Entur Flexible Transport',
+  navBarRootLinkLogoAltText: 'Logo',
   navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Stop places and Areas',
   userMenuLogoutLinkText: 'Log out',
@@ -67,7 +67,7 @@ export const messages: MessagesKey = {
   redirectYes: 'Yes, leave this page',
   redirectNo: 'No, stay on this page',
   appTitle: 'Flex editor',
-  homeHeader: 'Entur Flexible transport',
+  homeHeader: 'Entur Flex editor',
   homeShortcut: 'Shortcuts',
   homeCardsGetStarted: 'Get started',
   homeCardsGetStartedDescription:
@@ -78,20 +78,20 @@ export const messages: MessagesKey = {
     'See the overview of your networks add new ones.',
   homeCardsStopPlacesDescription:
     'See the overview of stop places and areas, or create new ones.',
-  getStartedRedirectButton: 'Go to Stop places and Areas',
+  getStartedRedirectButton: 'Get started',
   getStartedPlatformIDText:
     "You can go directly to 'Flexible lines' if you wish to use a Platform-ID from NSR.",
   getStartedLeadParagraph:
     'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
   headerParagraph:
-    'Welcome to Entur flexible transport. This application is a tool to help organisations make their services visible through our channels.',
-  intropageTitle: 'Get started!',
-  item1:
-    "Start by creating a stop place or area under 'Stop places and Areas', in the menu to the left.",
-  item2:
-    "Afterwards move on to 'Flexible lines' in the menu to the left, to create a new line.",
-  item3:
-    'For the line to be visible in our travel searches, one must export it in the "Eksport" section which can be found in the menu.',
+    'Welcome to Entur flex editor. This application is a tool to help organisations make their services visible through our channels.',
+  item1pre: 'Start by creating a stop place or area under ',
+  item1post: ', in the menu to the left.',
+  item2pre: 'Afterwards move on to ',
+  item2post: ' in the menu to the left, to create a new line.',
+  item3pre:
+    'For the line to be visible in our travel searches, one must export it in the ',
+  item3post: ' section which can be found in the menu.',
   exportsCreateExportButtonLabel: 'Create export',
   creatorDryRunFormLabel: 'Dry run',
   creatorDryRunFormLabelTooltip:
@@ -249,6 +249,8 @@ export const messages: MessagesKey = {
     'Add stop place or area defining the service',
   stopPointsInfo:
     'You have to create at least two stop points; one for start and one for stop. If you are creating an area based service, and you only have one area, you have to add the same area twice.',
+  stopPointsInfoFixed:
+    'You have to create at least two stop points; one for start and one for stop. Enter platform-ID from NSR.',
   deleteTitle: 'Delete stop point',
   deleteMessage: 'Are you sure you want to delete this stop point?',
   selectCustom: 'Stop point',
@@ -343,6 +345,7 @@ export const messages: MessagesKey = {
     'Enter the passing times for the different stops. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
   businessHoursInfo:
     'Enter the business hour for the area or stop. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
+  passingTimesInfoFixed: 'Enter the passing times for the different stops.',
   serviceJourneyBooking: 'Booking',
   generalName: 'Name *',
   nameIsRequired: 'Name is required.',
