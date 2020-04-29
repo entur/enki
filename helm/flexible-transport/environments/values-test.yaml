@@ -9,4 +9,4 @@ configMap:
 
 ingress:
     enabled: true
-    stagingIp: 35.240.29.194
+    stagingIp: 35.233.47.68

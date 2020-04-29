@@ -11,4 +11,4 @@ configMap:
 
 ingress:
     enabled: true
-    productionIp: 192.158.29.145
+    productionIp: 104.199.93.228
