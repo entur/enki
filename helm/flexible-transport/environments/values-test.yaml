@@ -1,7 +1,5 @@
 env: staging
 
-replicas: 0
-
 configMap:
   authServerUrl: https://kc-stage.devstage.entur.io/auth
   logForwardPaths: "true"
@@ -10,4 +8,5 @@ configMap:
   uttuApiUrl: https://api.staging.entur.io/timetable-admin/v1/flexible-lines
 
 ingress:
-  enabled: false
+    enabled: true
+    stagingIp: 35.240.29.194

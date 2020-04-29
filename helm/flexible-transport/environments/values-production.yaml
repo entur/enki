@@ -1,6 +1,6 @@
 env: production
 
-replicas: 0
+replicas: 2
 
 configMap:
   authServerUrl: https://auth.entur.org/auth
@@ -10,4 +10,5 @@ configMap:
   uttuApiUrl: https://api.entur.io/timetable-admin/v1/flexible-lines
 
 ingress:
-  enabled: false
+    enabled: true
+    productionIp: 192.158.29.145
