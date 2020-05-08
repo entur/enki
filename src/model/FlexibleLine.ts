@@ -13,8 +13,8 @@ type FlexibleLine = VersionedType & {
   description?: string;
   privateCode?: string;
   publicCode?: string;
-  transportMode?: string;
-  transportSubmode?: string;
+  transportMode?: VEHICLE_MODE;
+  transportSubmode?: VEHICLE_SUBMODE;
   flexibleLineType?: string;
   network?: Network;
   networkRef?: string; // Either of network or networkRef seems useless / duplicated
@@ -25,8 +25,6 @@ type FlexibleLine = VersionedType & {
 };
 
 export const initFlexibleLine = () => ({
-  transportMode: VEHICLE_MODE.BUS,
-  transportSubmode: VEHICLE_SUBMODE.LOCAL_BUS,
   journeyPatterns: initJourneyPatterns(),
 });
 
