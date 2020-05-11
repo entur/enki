@@ -45,8 +45,13 @@ export const geti18n = () => {
   };
 };
 
+export type FormatMessage = (
+  messageId: keyof MessagesKey,
+  details?: string
+) => string;
+
 export type AppIntlState = IntlState & {
-  formatMessage: (messageId: keyof MessagesKey, details?: string) => string;
+  formatMessage: FormatMessage;
 };
 
 let cachedIntl: any = null;

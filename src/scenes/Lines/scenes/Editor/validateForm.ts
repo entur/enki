@@ -43,4 +43,6 @@ const aboutLineStepIsValid = (
   !isBlank(line.publicCode) &&
   !isBlank(line.operatorRef) &&
   !isBlank(line.networkRef) &&
+  !isBlank(line.transportMode) &&
+  !isBlank(line.transportSubmode) &&
   (!isBlank(line.flexibleLineType) || !isFlexibleLine);

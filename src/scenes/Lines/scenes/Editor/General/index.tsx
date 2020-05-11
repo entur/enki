@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
 import { Heading1 } from '@entur/typography';
-import { FLEXIBLE_LINE_TYPE } from 'model/enums';
+import {
+  FLEXIBLE_LINE_TYPE,
+  VEHICLE_MODE,
+  vehicleModeMessages,
+} from 'model/enums';
 import { selectIntl } from 'i18n';
 import './styles.scss';
 import FlexibleLine from 'model/FlexibleLine';
@@ -21,7 +25,10 @@ import {
   getInit,
   mapEnumToItems,
   mapToItems,
+  mapVehicleModeAndLabelToItems,
+  vehicleModeInit,
 } from 'helpers/dropdown';
+import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -49,6 +56,7 @@ export default ({
   const operatorPristine = usePristine(flexibleLine.operatorRef, spoilPristine);
   const networkPristine = usePristine(flexibleLine.networkRef, spoilPristine);
   const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
+  const modePristine = usePristine(flexibleLine.transportMode, spoilPristine);
 
   const onFlexibleLineTypeChange = (flexibleLineType: string | undefined) => {
     if (flexibleLineType !== 'flexibleAreasOnly') {
@@ -179,7 +187,7 @@ export default ({
         />
 
         {isFlexibleLine && (
-          <div className="line-type-dropdown">
+          <section className="line-type-dropdown">
             <div
               className="line-type-dropdown-tooltip"
               aria-label={formatMessage('drawerAria')}
@@ -203,8 +211,50 @@ export default ({
                 )}
               />
             }
-          </div>
+          </section>
         )}
+        <section className="transport-mode-dropdowns">
+          <Dropdown
+            initialSelectedItem={vehicleModeInit(
+              vehicleModeMessages,
+              formatMessage,
+              flexibleLine.transportMode
+            )}
+            placeholder={formatMessage('defaultOption')}
+            items={mapVehicleModeAndLabelToItems(
+              vehicleModeMessages,
+              formatMessage
+            )}
+            clearable
+            label={formatMessage('transportModeTitle')}
+            onChange={(element) =>
+              flexibleLineChange({
+                ...flexibleLine,
+                transportMode: element?.value as VEHICLE_MODE,
+                transportSubmode: undefined,
+              })
+            }
+            {...getErrorFeedback(
+              formatMessage('transportModeEmpty'),
+              !isBlank(flexibleLine.transportMode),
+              modePristine
+            )}
+          />
+
+          {flexibleLine.transportMode && (
+            <VehicleSubModeDropdown
+              transportMode={flexibleLine.transportMode}
+              transportSubmode={flexibleLine.transportSubmode}
+              submodeChange={(submode) =>
+                flexibleLineChange({
+                  ...flexibleLine,
+                  transportSubmode: submode,
+                })
+              }
+              spoilPristine={spoilPristine}
+            />
+          )}
+        </section>
       </section>
 
       <FlexibleLineTypeDrawer

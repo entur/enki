@@ -12,16 +12,18 @@
 
     > div {
       width: 48%;
+      margin-right: 2px;
       min-width: 20rem;
       margin-top: $space-large;
     }
   }
 
   .line-type-dropdown {
+    width: 100%;
     position: relative;
     font-size: 14px;
-    flex: 1;
     cursor: pointer;
+    margin-top: $space-large;
 
     &-tooltip {
       position: absolute;
@@ -29,6 +31,19 @@
       top: -1px;
 
       text-decoration: underline;
+    }
+  }
+  .transport-mode-dropdowns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+
+    > div {
+      width: 48%;
+      margin-right: 2px;
+      min-width: 20rem;
+      margin-top: $space-large;
     }
   }
 

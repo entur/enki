@@ -13,24 +13,159 @@ export enum ORGANISATION_TYPE {
   OTHER = 'other',
 }
 
-export const VEHICLE_MODE = Object.freeze({
-  BUS: 'bus',
-  WATER: 'water',
-});
+export enum VEHICLE_MODE {
+  AIR = 'air',
+  BUS = 'bus',
+  CABLEWAY = 'cableway',
+  COACH = 'coach',
+  FUNICULAR = 'funicular',
+  METRO = 'metro',
+  RAIL = 'rail',
+  TRAM = 'tram',
+  WATER = 'water',
+}
 
-export const VEHICLE_SUBMODE = Object.freeze({
-  AIRPORT_LINK_BUS: 'airportLinkBus',
-  EXPRESS_BUS: 'expressBus',
-  LOCAL_BUS: 'localBus',
-  NIGHT_BUS: 'nightBus',
-  RAIL_REPLACEMENT_BUS: 'railReplacementBus',
-  REGIONAL_BUS: 'regionalBus',
-  SCHOOL_BUS: 'schoolBus',
-  SHUTTLE_BUS: 'shuttleBus',
-  SIGHTSEEING_BUS: 'sightseeingBus',
-  LOCAL_PASSENGER_FERRY: 'localPassengerFerry',
-  SIGHTSEEING_SERVICE: 'sightseeingService',
-});
+enum AIR_SUBMODE {
+  DOMESTIC_FLIGHT = 'domesticFlight',
+  HELICOPTER_SERVICE = 'helicopterService',
+  INTERNATIONAL_FLIGHT = 'internationalFlight',
+}
+
+enum BUS_SUBMODE {
+  AIRPORT_LINK_BUS = 'airportLinkBus',
+  EXPRESS_BUS = 'expressBus',
+  LOCAL_BUS = 'localBus',
+  NIGHT_BUS = 'nightBus',
+  RAIL_REPLACEMENT_BUS = 'railReplacementBus',
+  REGIONAL_BUS = 'regionalBus',
+  SCHOOL_BUS = 'schoolBus',
+  SHUTTLE_BUS = 'shuttleBus',
+  SIGHTSEEING_BUS = 'sightseeingBus',
+  SIGHTSEEING_SERVICE = 'sightseeingService',
+}
+
+enum TELECABIN_SUBMODE {
+  TELECABIN = 'telecabin',
+}
+
+enum COACH_SUBMODE {
+  INTERNATIONAL_COACH = 'internationalCoach',
+  NATIONAL_COACH = 'nationalCoach',
+  TOURIST_COACH = 'touristCoach',
+}
+
+enum FUNICULAR_SUBMODE {
+  FUNICULAR = 'funicular',
+}
+
+enum METRO_SUBMODE {
+  METRO = 'metro',
+}
+
+enum RAIL_SUBMODE {
+  AIRPORT_LINK_RAIL = 'airportLinkRail',
+  INTERNATIONAL = 'international',
+  INTERREGIONAL_RAIL = 'interregionalRail',
+  LOCAL = 'local',
+  LONG_DISTANCE = 'longDistance',
+  NIGHT_RAIL = 'nightRail',
+  REGIONAL_RAIL = 'regionalRail',
+  TOURIST_RAILWAY = 'touristRailway',
+}
+
+enum TRAM_SUBMODE {
+  CITY_TRAM = 'cityTram',
+  LOCAL_TRAM = 'localTram',
+}
+
+enum WATER_SUBMODE {
+  HIGH_SPEED_PASSENGER_SERVICE = 'highSpeedPassengerService',
+  HIGH_SPEED_VEHICLE_SERVICE = 'highSpeedVehicleService',
+  INTERNATIONAL_CAR_FERRY = 'internationalCarFerry',
+  INTERNATIONAL_PASSENGER_FERRY = 'internationalPassengerFerry',
+  LOCAL_CAR_FERRY = 'localCarFerry',
+  LOCAL_PASSENGER_FERRY = 'localPassengerFerry',
+  NATIONAL_CAR_FERRY = 'nationalCarFerry',
+  SIGHTSEEING_SERVICE = 'sightseeingService',
+}
+
+export type VEHICLE_SUBMODE =
+  | AIR_SUBMODE
+  | BUS_SUBMODE
+  | TELECABIN_SUBMODE
+  | COACH_SUBMODE
+  | FUNICULAR_SUBMODE
+  | METRO_SUBMODE
+  | RAIL_SUBMODE
+  | TRAM_SUBMODE
+  | WATER_SUBMODE;
+
+export const VEHICLE_SUBMODE_LINK: Record<VEHICLE_MODE, VEHICLE_SUBMODE[]> = {
+  [VEHICLE_MODE.AIR]: Object.values(AIR_SUBMODE),
+  [VEHICLE_MODE.BUS]: Object.values(BUS_SUBMODE),
+  [VEHICLE_MODE.CABLEWAY]: Object.values(TELECABIN_SUBMODE),
+  [VEHICLE_MODE.COACH]: Object.values(COACH_SUBMODE),
+  [VEHICLE_MODE.FUNICULAR]: Object.values(FUNICULAR_SUBMODE),
+  [VEHICLE_MODE.METRO]: Object.values(METRO_SUBMODE),
+  [VEHICLE_MODE.RAIL]: Object.values(RAIL_SUBMODE),
+  [VEHICLE_MODE.TRAM]: Object.values(TRAM_SUBMODE),
+  [VEHICLE_MODE.WATER]: Object.values(WATER_SUBMODE),
+};
+
+export const vehicleModeMessages: Record<VEHICLE_MODE, keyof MessagesKey> = {
+  [VEHICLE_MODE.AIR]: 'air',
+  [VEHICLE_MODE.BUS]: 'bus',
+  [VEHICLE_MODE.CABLEWAY]: 'cableway',
+  [VEHICLE_MODE.COACH]: 'coach',
+  [VEHICLE_MODE.FUNICULAR]: 'funicular',
+  [VEHICLE_MODE.METRO]: 'metro',
+  [VEHICLE_MODE.RAIL]: 'rail',
+  [VEHICLE_MODE.TRAM]: 'tram',
+  [VEHICLE_MODE.WATER]: 'water',
+};
+
+export const vehicleSubmodeMessages: Record<
+  VEHICLE_SUBMODE,
+  keyof MessagesKey
+> = {
+  [AIR_SUBMODE.DOMESTIC_FLIGHT]: 'domesticFlight',
+  [AIR_SUBMODE.HELICOPTER_SERVICE]: 'helicopterService',
+  [AIR_SUBMODE.INTERNATIONAL_FLIGHT]: 'internationalFlight',
+  [BUS_SUBMODE.AIRPORT_LINK_BUS]: 'airportLinkBus',
+  [BUS_SUBMODE.EXPRESS_BUS]: 'expressBus',
+  [BUS_SUBMODE.LOCAL_BUS]: 'localBus',
+  [BUS_SUBMODE.NIGHT_BUS]: 'nightBus',
+  [BUS_SUBMODE.RAIL_REPLACEMENT_BUS]: 'railReplacementBus',
+  [BUS_SUBMODE.REGIONAL_BUS]: 'regionalBus',
+  [BUS_SUBMODE.SCHOOL_BUS]: 'schoolBus',
+  [BUS_SUBMODE.SHUTTLE_BUS]: 'shuttleBus',
+  [BUS_SUBMODE.SIGHTSEEING_BUS]: 'sightseeingBus',
+  [BUS_SUBMODE.SIGHTSEEING_SERVICE]: 'sightseeingService',
+  [TELECABIN_SUBMODE.TELECABIN]: 'telecabin',
+  [COACH_SUBMODE.INTERNATIONAL_COACH]: 'internationalCoach',
+  [COACH_SUBMODE.NATIONAL_COACH]: 'nationalCoach',
+  [COACH_SUBMODE.TOURIST_COACH]: 'touristCoach',
+  [FUNICULAR_SUBMODE.FUNICULAR]: 'funicular',
+  [METRO_SUBMODE.METRO]: 'metro',
+  [RAIL_SUBMODE.AIRPORT_LINK_RAIL]: 'airportLinkRail',
+  [RAIL_SUBMODE.INTERNATIONAL]: 'international',
+  [RAIL_SUBMODE.INTERREGIONAL_RAIL]: 'interregionalRail',
+  [RAIL_SUBMODE.LOCAL]: 'local',
+  [RAIL_SUBMODE.LONG_DISTANCE]: 'longDistance',
+  [RAIL_SUBMODE.NIGHT_RAIL]: 'nightRail',
+  [RAIL_SUBMODE.REGIONAL_RAIL]: 'regionalRail',
+  [RAIL_SUBMODE.TOURIST_RAILWAY]: 'touristRailway',
+  [TRAM_SUBMODE.CITY_TRAM]: 'cityTram',
+  [TRAM_SUBMODE.LOCAL_TRAM]: 'localTram',
+  [WATER_SUBMODE.HIGH_SPEED_PASSENGER_SERVICE]: 'highSpeedPassengerService',
+  [WATER_SUBMODE.HIGH_SPEED_VEHICLE_SERVICE]: 'highSpeedVehicleService',
+  [WATER_SUBMODE.INTERNATIONAL_CAR_FERRY]: 'internationalCarFerry',
+  [WATER_SUBMODE.INTERNATIONAL_PASSENGER_FERRY]: 'internationalPassengerFerry',
+  [WATER_SUBMODE.LOCAL_CAR_FERRY]: 'localCarFerry',
+  [WATER_SUBMODE.LOCAL_PASSENGER_FERRY]: 'localPassengerFerry',
+  [WATER_SUBMODE.NATIONAL_CAR_FERRY]: 'nationalCarFerry',
+  [WATER_SUBMODE.SIGHTSEEING_SERVICE]: 'sightseeingService',
+};
 
 export const FLEXIBLE_LINE_TYPE = Object.freeze({
   FIXED: 'fixed',
