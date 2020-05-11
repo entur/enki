@@ -155,44 +155,6 @@ export default ({
         </InputGroup>
 
         <Dropdown
-          initialSelectedItem={vehicleModeInit(
-            vehicleModeMessages,
-            formatMessage,
-            flexibleLine.transportMode
-          )}
-          placeholder={formatMessage('defaultOption')}
-          items={mapVehicleModeAndLabelToItems(
-            vehicleModeMessages,
-            formatMessage
-          )}
-          clearable
-          label={formatMessage('transportModeTitle')}
-          onChange={(element) =>
-            flexibleLineChange({
-              ...flexibleLine,
-              transportMode: element?.value as VEHICLE_MODE,
-              transportSubmode: undefined,
-            })
-          }
-          {...getErrorFeedback(
-            formatMessage('transportModeEmpty'),
-            !isBlank(flexibleLine.transportMode),
-            modePristine
-          )}
-        />
-
-        {flexibleLine.transportMode && (
-          <VehicleSubModeDropdown
-            transportMode={flexibleLine.transportMode}
-            transportSubmode={flexibleLine.transportSubmode}
-            submodeChange={(submode) =>
-              flexibleLineChange({ ...flexibleLine, transportSubmode: submode })
-            }
-            spoilPristine={spoilPristine}
-          />
-        )}
-
-        <Dropdown
           initialSelectedItem={getInit(operators, flexibleLine.operatorRef)}
           placeholder={formatMessage('defaultOption')}
           items={mapToItems(operators)}
@@ -225,7 +187,7 @@ export default ({
         />
 
         {isFlexibleLine && (
-          <div className="line-type-dropdown">
+          <section className="line-type-dropdown">
             <div
               className="line-type-dropdown-tooltip"
               aria-label={formatMessage('drawerAria')}
@@ -249,8 +211,50 @@ export default ({
                 )}
               />
             }
-          </div>
+          </section>
         )}
+        <section className="transport-mode-dropdowns">
+          <Dropdown
+            initialSelectedItem={vehicleModeInit(
+              vehicleModeMessages,
+              formatMessage,
+              flexibleLine.transportMode
+            )}
+            placeholder={formatMessage('defaultOption')}
+            items={mapVehicleModeAndLabelToItems(
+              vehicleModeMessages,
+              formatMessage
+            )}
+            clearable
+            label={formatMessage('transportModeTitle')}
+            onChange={(element) =>
+              flexibleLineChange({
+                ...flexibleLine,
+                transportMode: element?.value as VEHICLE_MODE,
+                transportSubmode: undefined,
+              })
+            }
+            {...getErrorFeedback(
+              formatMessage('transportModeEmpty'),
+              !isBlank(flexibleLine.transportMode),
+              modePristine
+            )}
+          />
+
+          {flexibleLine.transportMode && (
+            <VehicleSubModeDropdown
+              transportMode={flexibleLine.transportMode}
+              transportSubmode={flexibleLine.transportSubmode}
+              submodeChange={(submode) =>
+                flexibleLineChange({
+                  ...flexibleLine,
+                  transportSubmode: submode,
+                })
+              }
+              spoilPristine={spoilPristine}
+            />
+          )}
+        </section>
       </section>
 
       <FlexibleLineTypeDrawer
