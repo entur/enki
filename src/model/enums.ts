@@ -41,7 +41,6 @@ enum BUS_SUBMODE {
   SCHOOL_BUS = 'schoolBus',
   SHUTTLE_BUS = 'shuttleBus',
   SIGHTSEEING_BUS = 'sightseeingBus',
-  SIGHTSEEING_SERVICE = 'sightseeingService',
 }
 
 enum TELECABIN_SUBMODE {
@@ -140,7 +139,6 @@ export const vehicleSubmodeMessages: Record<
   [BUS_SUBMODE.SCHOOL_BUS]: 'schoolBus',
   [BUS_SUBMODE.SHUTTLE_BUS]: 'shuttleBus',
   [BUS_SUBMODE.SIGHTSEEING_BUS]: 'sightseeingBus',
-  [BUS_SUBMODE.SIGHTSEEING_SERVICE]: 'sightseeingService',
   [TELECABIN_SUBMODE.TELECABIN]: 'telecabin',
   [COACH_SUBMODE.INTERNATIONAL_COACH]: 'internationalCoach',
   [COACH_SUBMODE.NATIONAL_COACH]: 'nationalCoach',
