@@ -97,6 +97,7 @@ export const getFlexibleLineByIdQuery = `
       transportSubmode,
       operatorRef,
       flexibleLineType,
+      bookingArrangement { ...bookingArrangementFields },
       network {
         id
       },
@@ -153,7 +154,7 @@ export const getFlexibleLineByIdQuery = `
       }
     }
   }
-  
+
   fragment bookingArrangementFields on BookingArrangement {
     bookingContact {
       contactPerson,
