@@ -215,7 +215,7 @@ export const messages = {
   generalPublicCodeFormGroupTitle: 'Offentlig kode *',
   generalPublicCodeInputLabelTooltip:
     'Offentlig kode er det som kjennetegner linjen ut mot publikum',
-  generalTypeFormGroupTitle: 'Flexible line type *',
+  generalTypeFormGroupTitle: 'Fleksibel linje-type *',
   typeFormGroupTitleTooltip: 'Les mer om linjetypene',
   editorGeneralTabLabel: 'Generelt',
   generalDrawer: 'Her er en kort beskrivelse av de ulike linjetypene.',
@@ -364,7 +364,7 @@ export const messages = {
   linesOperatorTableHeader: 'Operatør',
   linesPrivateCodeTableHeaderLabel: 'Privat kode',
   nameEmpty: 'Navn må fylles inn.',
-  publicCodeEmpty: 'Public code må fylles inn.',
+  publicCodeEmpty: 'Offentlig kode må fylles inn.',
   networkRefEmpty: 'Du må velge et nettverk.',
   operatorRefEmpty: 'Du må velge en operatør.',
   transportModeEmpty: 'Du må velge en transportgruppe.',
