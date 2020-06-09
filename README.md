@@ -10,6 +10,7 @@ To run FT for development, simply do:
 npm install
 npm run start-devenv
 ```
+Note: The app use Node v8. `nvm use v8.17.0`
 
 To run together with a local instance of [Uttu](https://github.com/entur/uttu) on port 11701, add the following to your env:
 

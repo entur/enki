@@ -13,9 +13,12 @@ import ConfirmDialog from 'components/ConfirmDialog';
 type Props = {
   editMode: boolean;
   lastStep: boolean;
+  firstStep: boolean;
   onDelete: () => void;
   onSave: () => void;
   onNext: () => void;
+  onPrevious: () => void;
+  onCancel: () => void;
 };
 
 const NavigationButtons = (props: Props) => {
@@ -26,6 +29,16 @@ const NavigationButtons = (props: Props) => {
   return (
     <>
       <div className="buttons">
+        {!props.editMode && props.firstStep && (
+          <SecondaryButton onClick={props.onCancel}>
+            {formatMessage('navigationCancel')}
+          </SecondaryButton>
+        )}
+        {!props.editMode && !props.firstStep && (
+          <SecondaryButton onClick={props.onPrevious}>
+            {formatMessage('navigationPrevious')}
+          </SecondaryButton>
+        )}
         {props.editMode && !props.lastStep && (
           <SecondaryButton onClick={props.onNext}>
             {formatMessage('navigationNext')}

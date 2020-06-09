@@ -307,6 +307,8 @@ export const messages = {
   editorSaveLineLoadingText: 'Lagrer linjen...',
   fixErrorsInTheFollowingSteps: 'Du må rette feil på følgende steg: ',
   navigationNext: 'Neste',
+  navigationCancel: 'Avbryt',
+  navigationPrevious: 'Forrige',
   linesHeader: 'Linjer',
   labelForAlighting: 'For avstigning',
   labelForBoarding: 'For påstigning',
