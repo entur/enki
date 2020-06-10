@@ -313,6 +313,8 @@ export const messages: MessagesKey = {
   fixErrorsInTheFollowingSteps:
     'You must fix the errors in the following steps: ',
   navigationNext: 'Next',
+  navigationCancel: 'Cancel',
+  navigationPrevious: 'Previous',
   linesHeader: 'Lines',
   labelForAlighting: 'For alighting',
   labelForBoarding: 'For boarding',

@@ -210,10 +210,15 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
             />
             <NavigationButtons
               editMode={isEdit}
+              firstStep={activeStepperIndex === 0}
               lastStep={activeStepperIndex === STEPS.length - 1}
               onDelete={handleDelete}
               onSave={handleOnSaveClick}
               onNext={onNextClicked}
+              onCancel={onBackButtonClicked}
+              onPrevious={() =>
+                setActiveStepperIndex(Math.max(activeStepperIndex - 1, 0))
+              }
             />
           </>
         </Loading>
