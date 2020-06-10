@@ -1,7 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
-import { Link, withRouter } from 'react-router-dom';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
 import {
   DataCell,
@@ -12,21 +9,33 @@ import {
   TableRow,
 } from '@entur/table';
 import { Heading1 } from '@entur/typography';
+import {
+  deleteFlexibleStopPlaceById,
+  loadFlexibleStopPlaces,
+} from 'actions/flexibleStopPlaces';
 import Loading from 'components/Loading';
-import { SecondaryButton } from '@entur/button';
-import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import { selectIntl } from 'i18n';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { Link, withRouter } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { FlexibleStopPlacesState } from 'reducers/flexibleStopPlaces';
-import FlexibleStopPlace from 'model/FlexibleStopPlace';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import DeleteButton from '../../components/DeleteButton/DeleteButton';
 import './styles.scss';
 
 const StopPlaces = ({ history }: RouteComponentProps) => {
+  const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
+  const [selectedStopPlace, setSelectedStopPlace] = useState<
+    FlexibleStopPlace | undefined
+  >(undefined);
   const stopPlaces = useSelector<GlobalState, FlexibleStopPlacesState>(
     (state) => state.flexibleStopPlaces
   );
   const { formatMessage } = useSelector(selectIntl);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(loadFlexibleStopPlaces());
@@ -51,6 +60,16 @@ const StopPlaces = ({ history }: RouteComponentProps) => {
           <DataCell>{sp.privateCode}</DataCell>
           <DataCell>
             {(sp.flexibleArea?.polygon?.coordinates?.length ?? 1) - 1}
+          </DataCell>
+          <DataCell className="delete-row-cell">
+            <DeleteButton
+              onClick={() => {
+                setSelectedStopPlace(sp);
+                setShowDeleteDialogue(true);
+              }}
+              title=""
+              thin
+            />
           </DataCell>
         </TableRow>
       ))}
@@ -81,24 +100,64 @@ const StopPlaces = ({ history }: RouteComponentProps) => {
         isLoading={!stopPlaces}
       >
         {() => (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <HeaderCell>
-                  {formatMessage('stopPlacesNameTableHeaderLabelText')}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage('stopPlacesPrivateCodeTableHeaderLabelText')}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage(
-                    'stopPlacesNumberOfPointsTableHeaderLabelText'
-                  )}
-                </HeaderCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{renderTableRows(stopPlaces!)}</TableBody>
-          </Table>
+          <>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <HeaderCell>
+                    {formatMessage('stopPlacesNameTableHeaderLabelText')}
+                  </HeaderCell>
+                  <HeaderCell>
+                    {formatMessage('stopPlacesPrivateCodeTableHeaderLabelText')}
+                  </HeaderCell>
+                  <HeaderCell>
+                    {formatMessage(
+                      'stopPlacesNumberOfPointsTableHeaderLabelText'
+                    )}
+                  </HeaderCell>
+                  <HeaderCell>{''}</HeaderCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{renderTableRows(stopPlaces!)}</TableBody>
+            </Table>
+            {showDeleteDialogue && selectedStopPlace && (
+              <ConfirmDialog
+                isOpen
+                onDismiss={() => {
+                  setSelectedStopPlace(undefined);
+                  setShowDeleteDialogue(false);
+                }}
+                title={formatMessage('editorDeleteConfirmationDialogTitle')}
+                message={formatMessage('editorDeleteConfirmationDialogMessage')}
+                buttons={[
+                  <SecondaryButton
+                    key="no"
+                    onClick={() => {
+                      setSelectedStopPlace(undefined);
+                      setShowDeleteDialogue(false);
+                    }}
+                  >
+                    {formatMessage('tableNo')}
+                  </SecondaryButton>,
+                  <SuccessButton
+                    key="yes"
+                    onClick={() => {
+                      dispatch(
+                        deleteFlexibleStopPlaceById(selectedStopPlace.id ?? '')
+                      )
+                        .then(() => {
+                          setSelectedStopPlace(undefined);
+                          setShowDeleteDialogue(false);
+                        })
+                        .then(() => dispatch(loadFlexibleStopPlaces()));
+                    }}
+                  >
+                    {formatMessage('tableYes')}
+                  </SuccessButton>,
+                ]}
+              />
+            )}
+          </>
         )}
       </Loading>
     </div>
