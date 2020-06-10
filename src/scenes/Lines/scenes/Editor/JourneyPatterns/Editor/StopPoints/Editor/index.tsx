@@ -8,9 +8,9 @@ import debounce from './debounce';
 import { isBlank } from 'helpers/forms';
 import { Dropdown } from '@entur/dropdown';
 import { Paragraph } from '@entur/typography';
-import { SecondaryButton, SuccessButton, TertiaryButton } from '@entur/button';
-import { DeleteIcon } from '@entur/icons';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
+import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { AppIntlState, selectIntl } from 'i18n';
@@ -220,12 +220,10 @@ const StopPointEditor = ({
         />
       </div>
       {deleteStopPoint && (
-        <TertiaryButton
-          className="delete-button"
+        <DeleteButton
           onClick={() => setDeleteDialogOpen(true)}
-        >
-          <DeleteIcon inline /> {formatMessage('editorDeleteButtonText')}
-        </TertiaryButton>
+          title={formatMessage('editorDeleteButtonText')}
+        />
       )}
 
       <ConfirmDialog
