@@ -1,15 +1,18 @@
 import { TertiaryButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import React from 'react';
+import './DeleteButton.scss';
 
 type Props = {
   onClick: () => void;
   title: string;
+  thin?: boolean;
 };
 
 const DeleteButton = (props: Props) => (
   <TertiaryButton
-    className="delete-button"
+    id="delete-button"
+    className={props.thin ? 'thin' : ''}
     onClick={(event: Event) => {
       props.onClick();
       event.stopPropagation();

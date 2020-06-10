@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
@@ -12,22 +12,28 @@ import {
 } from '@entur/table';
 import Loading from 'components/Loading';
 import { Heading1 } from '@entur/typography';
-import { loadNetworks } from 'actions/networks';
+import { deleteNetworkById, loadNetworks } from 'actions/networks';
 import { selectIntl } from 'i18n';
 import './styles.scss';
 import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
 import { Organisation } from 'reducers/organisations';
 import { AddIcon } from '@entur/icons';
-import { SecondaryButton } from '@entur/button';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import DeleteButton from '../../components/DeleteButton/DeleteButton';
 
 const Networks = ({ history }: RouteComponentProps) => {
+  const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
+  const [selectedNetwork, setSelectedNetwork] = useState<Network | undefined>(
+    undefined
+  );
   const { formatMessage } = useSelector(selectIntl);
   const { providers, organisations, networks } = useSelector<
     GlobalState,
     GlobalState
   >((s) => s);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(loadNetworks());
@@ -59,6 +65,16 @@ const Networks = ({ history }: RouteComponentProps) => {
           <DataCell>
             {organisationList.find((o) => o.id === n.authorityRef)?.name ?? '-'}
           </DataCell>
+          <DataCell className="delete-row-cell">
+            <DeleteButton
+              onClick={() => {
+                setSelectedNetwork(n);
+                setShowDeleteDialogue(true);
+              }}
+              title=""
+              thin
+            />
+          </DataCell>
         </TableRow>
       ))}
       {networkList.length === 0 && (
@@ -84,27 +100,65 @@ const Networks = ({ history }: RouteComponentProps) => {
         text={formatMessage('networksLoadingNetworksText')}
         isLoading={!networks || !organisations}
       >
-        <Table>
-          <TableHead>
-            <TableRow>
-              <HeaderCell>
-                {formatMessage('networksNameTableHeaderLabel')}
-              </HeaderCell>
-              <HeaderCell>
-                {formatMessage('networksPrivateCodeTableHeaderLabel')}
-              </HeaderCell>
-              <HeaderCell>
-                {formatMessage('networksAuthorityTableHeaderLabel')}
-              </HeaderCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <RenderTableRows
-              networkList={networks!}
-              organisationList={organisations!}
+        <>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <HeaderCell>
+                  {formatMessage('networksNameTableHeaderLabel')}
+                </HeaderCell>
+                <HeaderCell>
+                  {formatMessage('networksPrivateCodeTableHeaderLabel')}
+                </HeaderCell>
+                <HeaderCell>
+                  {formatMessage('networksAuthorityTableHeaderLabel')}
+                </HeaderCell>
+                <HeaderCell>{''}</HeaderCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <RenderTableRows
+                networkList={networks!}
+                organisationList={organisations!}
+              />
+            </TableBody>
+          </Table>
+          {showDeleteDialogue && selectedNetwork && (
+            <ConfirmDialog
+              isOpen
+              onDismiss={() => {
+                setSelectedNetwork(undefined);
+                setShowDeleteDialogue(false);
+              }}
+              title={formatMessage('editorDeleteConfirmationDialogTitle')}
+              message={formatMessage('editorDeleteConfirmationDialogMessage')}
+              buttons={[
+                <SecondaryButton
+                  key="no"
+                  onClick={() => {
+                    setSelectedNetwork(undefined);
+                    setShowDeleteDialogue(false);
+                  }}
+                >
+                  {formatMessage('tableNo')}
+                </SecondaryButton>,
+                <SuccessButton
+                  key="yes"
+                  onClick={() => {
+                    dispatch(deleteNetworkById(selectedNetwork?.id))
+                      .then(() => {
+                        setSelectedNetwork(undefined);
+                        setShowDeleteDialogue(false);
+                      })
+                      .then(() => dispatch(loadNetworks()));
+                  }}
+                >
+                  {formatMessage('tableYes')}
+                </SuccessButton>,
+              ]}
             />
-          </TableBody>
-        </Table>
+          )}
+        </>
       </Loading>
     </div>
   );

@@ -63,7 +63,8 @@ const Lines = ({ history }: RouteComponentProps) => {
                   setSelectedLine(line);
                   setShowDeleteDialogue(true);
                 }}
-                title={formatMessage('delete')}
+                title=""
+                thin
               />
             </DataCell>
           </TableRow>
