@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import moment from 'moment/moment';
-import { AddIcon, DeleteIcon } from '@entur/icons';
+import { AddIcon } from '@entur/icons';
 import { TertiaryButton } from '@entur/button';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import {
