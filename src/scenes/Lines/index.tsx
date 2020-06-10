@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { AddIcon } from '@entur/icons';
-import { SecondaryButton } from '@entur/button';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import {
   DataCell,
   HeaderCell,
@@ -13,15 +13,22 @@ import {
 } from '@entur/table';
 import Loading from 'components/Loading';
 import { Heading1 } from '@entur/typography';
-import { loadFlexibleLines } from 'actions/flexibleLines';
+import { deleteLine, loadFlexibleLines } from 'actions/flexibleLines';
 import { RouteComponentProps } from 'react-router';
 import './styles.scss';
 import { selectIntl } from 'i18n';
 import { GlobalState } from 'reducers';
 import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
+import ConfirmDialog from 'components/ConfirmDialog';
+import DeleteButton from 'components/DeleteButton/DeleteButton';
+import FlexibleLine from 'model/FlexibleLine';
 
 const Lines = ({ history }: RouteComponentProps) => {
+  const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
+  const [selectedLine, setSelectedLine] = useState<FlexibleLine | undefined>(
+    undefined
+  );
   const { formatMessage } = useSelector(selectIntl);
   const lines = useSelector<GlobalState, FlexibleLinesState>(
     (state) => state.flexibleLines
@@ -29,7 +36,7 @@ const Lines = ({ history }: RouteComponentProps) => {
   const operator = useSelector<GlobalState, OrganisationState>(
     (state) => state.organisations
   );
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(loadFlexibleLines());
@@ -49,6 +56,15 @@ const Lines = ({ history }: RouteComponentProps) => {
             <DataCell>{line.privateCode}</DataCell>
             <DataCell>
               {operator?.find((op) => op.id === line.operatorRef)?.name ?? '-'}
+            </DataCell>
+            <DataCell className="delete-row-cell">
+              <DeleteButton
+                onClick={() => {
+                  setSelectedLine(line);
+                  setShowDeleteDialogue(true);
+                }}
+                title={formatMessage('delete')}
+              />
             </DataCell>
           </TableRow>
         ))
@@ -107,10 +123,47 @@ const Lines = ({ history }: RouteComponentProps) => {
               {formatMessage('linesPrivateCodeTableHeaderLabel')}
             </HeaderCell>
             <HeaderCell>{formatMessage('linesOperatorTableHeader')}</HeaderCell>
+            <HeaderCell>{''}</HeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>{renderTableRows()}</TableBody>
       </Table>
+
+      {showDeleteDialogue && selectedLine && (
+        <ConfirmDialog
+          isOpen
+          onDismiss={() => {
+            setSelectedLine(undefined);
+            setShowDeleteDialogue(false);
+          }}
+          title={formatMessage('editorDeleteConfirmationDialogTitle')}
+          message={formatMessage('editorDeleteConfirmationDialogMessage')}
+          buttons={[
+            <SecondaryButton
+              key="no"
+              onClick={() => {
+                setSelectedLine(undefined);
+                setShowDeleteDialogue(false);
+              }}
+            >
+              {formatMessage('tableNo')}
+            </SecondaryButton>,
+            <SuccessButton
+              key="yes"
+              onClick={() => {
+                dispatch(deleteLine(selectedLine))
+                  .then(() => {
+                    setSelectedLine(undefined);
+                    setShowDeleteDialogue(false);
+                  })
+                  .then(() => dispatch(loadFlexibleLines()));
+              }}
+            >
+              {formatMessage('tableYes')}
+            </SuccessButton>,
+          ]}
+        />
+      )}
     </div>
   );
 };

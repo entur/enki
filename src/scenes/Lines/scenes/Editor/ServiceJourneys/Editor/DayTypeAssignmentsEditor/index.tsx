@@ -14,6 +14,7 @@ import { DatePicker } from '@entur/datepicker';
 import { InputGroup } from '@entur/form';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import DeleteButton from 'components/DeleteButton/DeleteButton';
 import './styles.scss';
 
 type Props = {
@@ -88,14 +89,12 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
               />
             </InputGroup>
             {dayTypeAssignments.length > 1 && (
-              <TertiaryButton
-                className="delete-button"
+              <DeleteButton
                 onClick={() =>
                   onChange(removeElementByIndex(dayTypeAssignments, index))
                 }
-              >
-                <DeleteIcon inline /> {formatMessage('delete')}
-              </TertiaryButton>
+                title={formatMessage('delete')}
+              />
             )}
           </div>
         ))}

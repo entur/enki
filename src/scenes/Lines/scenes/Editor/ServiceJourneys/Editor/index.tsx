@@ -9,6 +9,7 @@ import PassingTimesEditor from './PassingTimesEditor';
 import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
+import DeleteButton from 'components/DeleteButton/DeleteButton';
 import {
   filterNetexOperators,
   OrganisationState,
@@ -243,12 +244,10 @@ const ServiceJourneyEditor = (props: Props) => {
           </section>
         </div>
         {deleteServiceJourney && (
-          <TertiaryButton
-            className="delete-button"
+          <DeleteButton
             onClick={() => setShowDeleteDialog(true)}
-          >
-            <DeleteIcon inline /> {formatMessage('editorDeleteButtonText')}
-          </TertiaryButton>
+            title={formatMessage('editorDeleteButtonText')}
+          />
         )}
         {showDeleteDialog && deleteServiceJourney && (
           <ConfirmDialog
