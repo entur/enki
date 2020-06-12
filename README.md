@@ -76,11 +76,4 @@ kubectl create secret generic ot-credentials --from-literal=internal_client_id=7
 ```
 
 ### Deployment
-Use **deploy.sh** {env} {version} {mode} to upgrade a deployment. Eg:
-```
-./deploy.sh dev master-v27
-```
-Parameters:
-* env: dev/staging/prod
-* version: docker image tag
-* mode: value **reinstall** may be used to remove-reinstall the app (involves downtime), otherwise leave this parameter blank.
+Use [Harness](https://app.harness.io/#/account/8VwWgE0WRK67_PWDpkooNA/app/Nz86fSIWS3q_kRyGmsvCaw/pipelines/iro-a9KpS6iI292u61Z7Sg/edit) for deployment
