@@ -76,4 +76,4 @@ kubectl create secret generic ot-credentials --from-literal=internal_client_id=7
 ```
 
 ### Deployment
-Use [Harness](https://app.harness.io/#/account/8VwWgE0WRK67_PWDpkooNA/app/Nz86fSIWS3q_kRyGmsvCaw/pipelines/iro-a9KpS6iI292u61Z7Sg/edit) for deployment
+Use [Harness](https://app.harness.io/#/account/8VwWgE0WRK67_PWDpkooNA/deployments) for deployment
