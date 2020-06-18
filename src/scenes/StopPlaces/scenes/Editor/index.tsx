@@ -152,14 +152,9 @@ const FlexibleStopPlaceEditor = ({
   };
 
   const handleDrawPolygonClick = () => {
-    // Transform input coordinates from GeoJson order [Long, Lat] to [Lat, Long]
-    const coords = JSON.parse(
-      coordinatesToText(polygonCoordinates)
-    ).map(([x, y]: Coordinate) => [y, x]);
-
     changePolygon({
       type: GEOMETRY_TYPE.POLYGON,
-      coordinates: coords,
+      coordinates: polygonCoordinates,
     });
   };
 
@@ -175,6 +170,7 @@ const FlexibleStopPlaceEditor = ({
   const changeCoordinates = (coordinates: Coordinate[]) =>
     changePolygon({
       ...flexibleStopPlace?.flexibleArea?.polygon,
+      type: GEOMETRY_TYPE.POLYGON,
       coordinates,
     });
 
