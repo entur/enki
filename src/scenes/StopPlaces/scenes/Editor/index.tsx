@@ -152,10 +152,7 @@ const FlexibleStopPlaceEditor = ({
   };
 
   const handleDrawPolygonClick = () => {
-    // Transform input coordinates from GeoJson order [Long, Lat] to [Lat, Long]
-    const coords = JSON.parse(
-      coordinatesToText(polygonCoordinates)
-    ).map(([x, y]: Coordinate) => [y, x]);
+    const coords = JSON.parse(coordinatesToText(polygonCoordinates));
 
     changePolygon({
       type: GEOMETRY_TYPE.POLYGON,
