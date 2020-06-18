@@ -172,6 +172,7 @@ const FlexibleStopPlaceEditor = ({
   const changeCoordinates = (coordinates: Coordinate[]) =>
     changePolygon({
       ...flexibleStopPlace?.flexibleArea?.polygon,
+      type: GEOMETRY_TYPE.POLYGON,
       coordinates,
     });
 
