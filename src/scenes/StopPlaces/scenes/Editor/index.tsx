@@ -152,11 +152,9 @@ const FlexibleStopPlaceEditor = ({
   };
 
   const handleDrawPolygonClick = () => {
-    const coords = JSON.parse(coordinatesToText(polygonCoordinates));
-
     changePolygon({
       type: GEOMETRY_TYPE.POLYGON,
-      coordinates: coords,
+      coordinates: polygonCoordinates,
     });
   };
 
