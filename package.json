@@ -20,7 +20,7 @@
     "@entur/chip": "^0.3.9",
     "@entur/datepicker": "^0.3.14",
     "@entur/dropdown": "^0.9.0",
-    "@entur/form": "^2.5.2",
+    "@entur/form": "^3.2.1",
     "@entur/icons": "^1.0.0",
     "@entur/layout": "^1.3.4",
     "@entur/menu": "^1.3.5",
