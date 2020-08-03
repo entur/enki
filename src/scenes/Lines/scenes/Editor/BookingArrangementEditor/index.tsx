@@ -12,16 +12,22 @@ import {
   paymentTimeMessages,
   PURCHASE_MOMENT,
   PURCHASE_WHEN,
-  BOOKING_TIME_RESTRICTION_TYPE,
+  BOOKING_LIMIT_TYPE,
 } from 'model/enums';
 import { Heading1, LeadParagraph, Label } from '@entur/typography';
-import { InputGroup, TextArea, TextField } from '@entur/form';
+import {
+  RadioGroup,
+  Radio,
+  InputGroup,
+  TextArea,
+  TextField,
+} from '@entur/form';
 import Contact from 'model/Contact';
 import { Dropdown } from '@entur/dropdown';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { FilterChip } from '@entur/chip';
 import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
-import { RadioGroup, Radio } from '@entur/form';
+import DurationPicker from 'components/DurationPicker';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -59,8 +65,8 @@ const BookingArrangementEditor = (props: Props) => {
       bookingMethods: addOrRemove(method, bookingMethods ?? []),
     });
 
-  const [bookingTimeRestrictionType, setBookingTimeRestrictionType] = useState(
-    BOOKING_TIME_RESTRICTION_TYPE.TIME
+  const [bookingLimitType, setBookingLimitType] = useState(
+    BOOKING_LIMIT_TYPE.TIME
   );
 
   return (
@@ -169,16 +175,27 @@ const BookingArrangementEditor = (props: Props) => {
 
           <RadioGroup
             name="booking-time-restrictions"
-            label="Booking time restrictions"
+            label="Booking limit"
             onChange={(e) =>
-              setBookingTimeRestrictionType(
-                e?.target?.value as BOOKING_TIME_RESTRICTION_TYPE
-              )
+              setBookingLimitType(e?.target?.value as BOOKING_LIMIT_TYPE)
             }
-            value={bookingTimeRestrictionType}
+            value={bookingLimitType}
           >
-            <Radio value={BOOKING_TIME_RESTRICTION_TYPE.TIME}>Time</Radio>
-            <Radio value={BOOKING_TIME_RESTRICTION_TYPE.PERIOD}>Period</Radio>
+            <Radio value={BOOKING_LIMIT_TYPE.TIME}>Time</Radio>
+            <TextField
+              type="time"
+              disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
+              onChange={console.log}
+            />
+            <Radio value={BOOKING_LIMIT_TYPE.PERIOD}>Period</Radio>
+            <DurationPicker
+              resetOnZero
+              disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
+              position="above"
+              showYears={false}
+              showMonths={false}
+              onChange={console.log}
+            />
           </RadioGroup>
 
           <InputGroup label={formatMessage('bookingMethodSelectionTitle')}>
