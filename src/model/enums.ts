@@ -184,6 +184,11 @@ export enum DAY_OF_WEEK {
   SUNDAY = 'sunday',
 }
 
+export enum BOOKING_TIME_RESTRICTION_TYPE {
+  TIME = 'time',
+  PERIOD = 'period',
+}
+
 export enum BOOKING_METHOD {
   CALL_DRIVER = 'callDriver',
   CALL_OFFICE = 'callOffice',

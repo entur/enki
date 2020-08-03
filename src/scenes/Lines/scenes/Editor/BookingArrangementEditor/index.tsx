@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import ScrollToTop from 'components/ScrollToTop';
@@ -12,6 +12,7 @@ import {
   paymentTimeMessages,
   PURCHASE_MOMENT,
   PURCHASE_WHEN,
+  BOOKING_TIME_RESTRICTION_TYPE,
 } from 'model/enums';
 import { Heading1, LeadParagraph, Label } from '@entur/typography';
 import { InputGroup, TextArea, TextField } from '@entur/form';
@@ -20,6 +21,7 @@ import { Dropdown } from '@entur/dropdown';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { FilterChip } from '@entur/chip';
 import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
+import { RadioGroup, Radio } from '@entur/form';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -56,6 +58,10 @@ const BookingArrangementEditor = (props: Props) => {
       ...bookingArrangement,
       bookingMethods: addOrRemove(method, bookingMethods ?? []),
     });
+
+  const [bookingTimeRestrictionType, setBookingTimeRestrictionType] = useState(
+    BOOKING_TIME_RESTRICTION_TYPE.TIME
+  );
 
   return (
     <ScrollToTop>
@@ -160,6 +166,20 @@ const BookingArrangementEditor = (props: Props) => {
               })
             }
           />
+
+          <RadioGroup
+            name="booking-time-restrictions"
+            label="Booking time restrictions"
+            onChange={(e) =>
+              setBookingTimeRestrictionType(
+                e?.target?.value as BOOKING_TIME_RESTRICTION_TYPE
+              )
+            }
+            value={bookingTimeRestrictionType}
+          >
+            <Radio value={BOOKING_TIME_RESTRICTION_TYPE.TIME}>Time</Radio>
+            <Radio value={BOOKING_TIME_RESTRICTION_TYPE.PERIOD}>Period</Radio>
+          </RadioGroup>
 
           <InputGroup label={formatMessage('bookingMethodSelectionTitle')}>
             <div className="filter-chip-list">
