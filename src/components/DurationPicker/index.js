@@ -62,7 +62,7 @@ class DurationPicker extends React.Component {
         values.push(days + ' dag' + (days > 1 ? 'er' : ''));
       }
       if (hours !== 0) {
-        values.push(hours + ' time' + (hours > 1 ? 'er' : ''));
+        values.push(hours + ' time' + (hours > 1 ? 'r' : ''));
       }
       if (minutes !== 0) {
         values.push(minutes + ' minutt' + (minutes > 1 ? 'er' : ''));

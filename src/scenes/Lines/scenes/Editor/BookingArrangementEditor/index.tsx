@@ -45,6 +45,8 @@ const BookingArrangementEditor = (props: Props) => {
     buyWhen,
     bookingAccess,
     bookingNote,
+    latestBookingTime,
+    minimumBookingPeriod,
   } = bookingArrangement;
 
   const onContactChange = (contact: Contact) =>
@@ -68,6 +70,20 @@ const BookingArrangementEditor = (props: Props) => {
   const [bookingLimitType, setBookingLimitType] = useState(
     BOOKING_LIMIT_TYPE.TIME
   );
+
+  const onLatestBookingTimeChange = (time: string) =>
+    onChange({
+      ...bookingArrangement,
+      minimumBookingPeriod: undefined,
+      latestBookingTime: time,
+    });
+
+  const onMinimumBookingPeriodChange = (period: string) =>
+    onChange({
+      ...bookingArrangement,
+      latestBookingTime: undefined,
+      minimumBookingPeriod: period,
+    });
 
   return (
     <ScrollToTop>
@@ -181,20 +197,31 @@ const BookingArrangementEditor = (props: Props) => {
             }
             value={bookingLimitType}
           >
-            <Radio value={BOOKING_LIMIT_TYPE.TIME}>Time</Radio>
+            <Radio value={BOOKING_LIMIT_TYPE.TIME}>Latest booking time</Radio>
+
             <TextField
               type="time"
               disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-              onChange={console.log}
+              value={latestBookingTime}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onLatestBookingTimeChange(e?.target?.value)
+              }
             />
-            <Radio value={BOOKING_LIMIT_TYPE.PERIOD}>Period</Radio>
+
+            <Radio value={BOOKING_LIMIT_TYPE.PERIOD}>
+              Minimum booking period
+            </Radio>
+
             <DurationPicker
+              duration={minimumBookingPeriod}
               resetOnZero
               disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
               position="above"
               showYears={false}
               showMonths={false}
-              onChange={console.log}
+              onChange={(period: string) =>
+                onMinimumBookingPeriodChange(period)
+              }
             />
           </RadioGroup>
 
