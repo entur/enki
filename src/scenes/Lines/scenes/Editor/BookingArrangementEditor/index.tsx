@@ -28,6 +28,8 @@ import { MessagesKey } from 'i18n/translations/translationKeys';
 import { FilterChip } from '@entur/chip';
 import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
 import DurationPicker from 'components/DurationPicker';
+import { GlobalState } from 'reducers';
+import { AppIntlState } from 'i18n';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -36,7 +38,9 @@ type Props = {
 };
 
 const BookingArrangementEditor = (props: Props) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage, locale } = useSelector<GlobalState, AppIntlState>(
+    selectIntl
+  );
   const { bookingArrangement, onChange } = props;
   const {
     bookingContact,
@@ -225,6 +229,7 @@ const BookingArrangementEditor = (props: Props) => {
               position="above"
               showYears={false}
               showMonths={false}
+              locale={locale}
               onChange={(period: string) =>
                 onMinimumBookingPeriodChange(period)
               }

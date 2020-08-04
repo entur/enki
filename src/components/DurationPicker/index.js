@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import formatDuration from 'date-fns/formatDuration';
+import { nb } from 'date-fns/locale';
+import * as durationLib from 'duration-fns';
 import cx from 'classnames';
 
 import TimeUnitPicker from '../TimeUnitPicker';
@@ -40,71 +43,41 @@ class DurationPicker extends React.Component {
       position,
       className,
       disabled,
+      locale,
     } = this.props;
 
-    const d = moment.duration(duration);
-    const seconds = d.seconds();
-    const minutes = d.minutes();
-    const hours = d.hours();
-    const days = d.days();
-    const months = d.months();
-    const years = d.years();
-
-    const textValue = () => {
-      const values = [];
-      if (years !== 0) {
-        values.push(years + ' år');
+    const parsedDuration = (() => {
+      if (duration !== '') {
+        const durationObj = durationLib.parse(duration);
+        return {
+          ...durationObj,
+          textValue: formatDuration(durationObj, {
+            locale: locale === 'nb' && nb,
+            delimiter: ', ',
+          }),
+        };
+      } else {
+        return undefined;
       }
-      if (months !== 0) {
-        values.push(months + ' måned' + (months > 1 ? 'er' : ''));
-      }
-      if (days !== 0) {
-        values.push(days + ' dag' + (days > 1 ? 'er' : ''));
-      }
-      if (hours !== 0) {
-        values.push(hours + ' time' + (hours > 1 ? 'r' : ''));
-      }
-      if (minutes !== 0) {
-        values.push(minutes + ' minutt' + (minutes > 1 ? 'er' : ''));
-      }
-      if (seconds !== 0) {
-        values.push(seconds + ' sekund' + (seconds > 1 ? 'er' : ''));
-      }
-      if (values.length === 0) {
-        return '';
-      }
-      if (values.length === 1) {
-        return values[0];
-      }
-      return values
-        .map((value, i) => {
-          if (i < values.length - 2) {
-            return value + ', ';
-          } else if (i === values.length - 2) {
-            return value + ' og ';
-          }
-          return value;
-        })
-        .join('');
-    };
+    })();
 
     return (
       <TimeUnitPicker
         onUnitChange={this.handleOnUnitChange.bind(this)}
         onReset={!resetOnZero ? this.handleReset.bind(this) : () => undefined}
-        years={years}
-        months={months}
-        days={days}
-        hours={hours}
-        minutes={minutes}
-        seconds={seconds}
+        years={parsedDuration?.years}
+        months={parsedDuration?.months}
+        days={parsedDuration?.days}
+        hours={parsedDuration?.hours}
+        minutes={parsedDuration?.minutes}
+        seconds={parsedDuration?.seconds}
         showYears={showYears}
         showMonths={showMonths}
         showDays={showDays}
         showHours={showHours}
         showMinutes={showMinutes}
         showSeconds={showSeconds}
-        textValue={textValue()}
+        textValue={parsedDuration?.textValue}
         className={cx('duration-picker', className)}
         position={position}
         disabled={disabled}
