@@ -191,13 +191,17 @@ const BookingArrangementEditor = (props: Props) => {
 
           <RadioGroup
             name="booking-time-restrictions"
-            label="Booking limit"
+            label={formatMessage('bookingLimitFieldsHeaderLabel')}
             onChange={(e) =>
               setBookingLimitType(e?.target?.value as BOOKING_LIMIT_TYPE)
             }
             value={bookingLimitType}
           >
-            <Radio value={BOOKING_LIMIT_TYPE.TIME}>Latest booking time</Radio>
+            <Radio value={BOOKING_LIMIT_TYPE.TIME}>
+              {formatMessage(
+                'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'
+              )}
+            </Radio>
 
             <TextField
               type="time"
@@ -209,7 +213,9 @@ const BookingArrangementEditor = (props: Props) => {
             />
 
             <Radio value={BOOKING_LIMIT_TYPE.PERIOD}>
-              Minimum booking period
+              {formatMessage(
+                'bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel'
+              )}
             </Radio>
 
             <DurationPicker
