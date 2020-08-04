@@ -43,7 +43,7 @@ class DurationPicker extends React.Component {
       position,
       className,
       disabled,
-      locale,
+      intl,
     } = this.props;
 
     const parsedDuration = (() => {
@@ -52,7 +52,7 @@ class DurationPicker extends React.Component {
         return {
           ...durationObj,
           textValue: formatDuration(durationObj, {
-            locale: locale === 'nb' && nb,
+            locale: intl.locale === 'nb' && nb,
             delimiter: ', ',
           }),
         };
@@ -81,6 +81,7 @@ class DurationPicker extends React.Component {
         className={cx('duration-picker', className)}
         position={position}
         disabled={disabled}
+        intl={intl}
       />
     );
   }

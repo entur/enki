@@ -506,4 +506,12 @@ export const messages: MessagesKey = {
   localCarFerry: 'Local car ferry',
   localPassengerFerry: 'Local passenger ferry',
   nationalCarFerry: 'National car ferry',
+  timeUnitPickerYearsLabel: 'Years',
+  timeUnitPickerMonthsLabel: 'Months',
+  timeUnitPickerDaysLabel: 'Days',
+  timeUnitPickerHoursLabel: 'Hours',
+  timeUnitPickerMinutesLabel: 'Minutes',
+  timeUnitPickerSecondsLabel: 'Seconds',
+  timeUnitPickerResetLabel: 'Reset',
+  timeUnitPickerDoneLabel: 'Done',
 };

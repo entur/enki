@@ -38,9 +38,8 @@ type Props = {
 };
 
 const BookingArrangementEditor = (props: Props) => {
-  const { formatMessage, locale } = useSelector<GlobalState, AppIntlState>(
-    selectIntl
-  );
+  const intl = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = intl;
   const { bookingArrangement, onChange } = props;
   const {
     bookingContact,
@@ -229,7 +228,7 @@ const BookingArrangementEditor = (props: Props) => {
               position="above"
               showYears={false}
               showMonths={false}
-              locale={locale}
+              intl={intl}
               onChange={(period: string) =>
                 onMinimumBookingPeriodChange(period)
               }

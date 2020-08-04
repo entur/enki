@@ -61,6 +61,7 @@ class TimeUnitPicker extends React.Component {
       textValue,
       position,
       className,
+      intl: { formatMessage },
     } = this.props;
     const { open } = this.state;
 
@@ -81,7 +82,7 @@ class TimeUnitPicker extends React.Component {
             <div className="pickers">
               {showYears && (
                 <Picker
-                  label="År"
+                  label={formatMessage('timeUnitPickerYearsLabel')}
                   value={years}
                   onChange={(value) => onUnitChange('years', value)}
                   nrOfOptions={10}
@@ -90,7 +91,7 @@ class TimeUnitPicker extends React.Component {
 
               {showMonths && (
                 <Picker
-                  label="Måneder"
+                  label={formatMessage('timeUnitPickerMonthsLabel')}
                   value={months}
                   onChange={(value) => onUnitChange('months', value)}
                   nrOfOptions={12}
@@ -99,7 +100,7 @@ class TimeUnitPicker extends React.Component {
 
               {showDays && (
                 <Picker
-                  label="Dager"
+                  label={formatMessage('timeUnitPickerDaysLabel')}
                   value={days}
                   onChange={(value) => onUnitChange('days', value)}
                   nrOfOptions={31}
@@ -108,7 +109,7 @@ class TimeUnitPicker extends React.Component {
 
               {showHours && (
                 <Picker
-                  label="Timer"
+                  label={formatMessage('timeUnitPickerHoursLabel')}
                   value={hours}
                   onChange={(value) => onUnitChange('hours', value)}
                   nrOfOptions={24}
@@ -117,7 +118,7 @@ class TimeUnitPicker extends React.Component {
 
               {showMinutes && (
                 <Picker
-                  label="Minutter"
+                  label={formatMessage('timeUnitPickerMinutesLabel')}
                   value={minutes}
                   onChange={(value) => onUnitChange('minutes', value)}
                   nrOfOptions={60}
@@ -126,7 +127,7 @@ class TimeUnitPicker extends React.Component {
 
               {showSeconds && (
                 <Picker
-                  label="Sekunder"
+                  label={formatMessage('timeUnitPickerSecondsLabel')}
                   value={seconds}
                   onChange={(value) => onUnitChange('seconds', value)}
                   nrOfOptions={60}
@@ -142,12 +143,12 @@ class TimeUnitPicker extends React.Component {
                     this.showPickers(false);
                   }}
                 >
-                  Nullstill
+                  {formatMessage('timeUnitPickerResetLabel')}
                 </NegativeButton>
               )}
 
               <SuccessButton onClick={() => this.showPickers(false)}>
-                Ferdig
+                {formatMessage('timeUnitPickerDoneLabel')}
               </SuccessButton>
             </div>
           </div>

@@ -502,4 +502,12 @@ export const messages = {
   localCarFerry: 'Innenriks bilferje',
   localPassengerFerry: 'Innenriks passasjerbåt',
   nationalCarFerry: 'Hurtigruten',
+  timeUnitPickerYearsLabel: 'År',
+  timeUnitPickerMonthsLabel: 'Måneder',
+  timeUnitPickerDaysLabel: 'Dager',
+  timeUnitPickerHoursLabel: 'Timer',
+  timeUnitPickerMinutesLabel: 'Minutter',
+  timeUnitPickerSecondsLabel: 'Sekunder',
+  timeUnitPickerResetLabel: 'Nullstill',
+  timeUnitPickerDoneLabel: 'Ferdig',
 };
