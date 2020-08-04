@@ -71,7 +71,7 @@ const BookingArrangementEditor = (props: Props) => {
     });
 
   const [bookingLimitType, setBookingLimitType] = useState(
-    BOOKING_LIMIT_TYPE.TIME
+    minimumBookingPeriod ? BOOKING_LIMIT_TYPE.PERIOD : BOOKING_LIMIT_TYPE.TIME
   );
 
   const onLatestBookingTimeChange = (time: string) =>
@@ -209,7 +209,7 @@ const BookingArrangementEditor = (props: Props) => {
             <TextField
               type="time"
               disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-              value={latestBookingTime}
+              value={latestBookingTime || ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onLatestBookingTimeChange(e?.target?.value)
               }
