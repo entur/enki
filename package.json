@@ -17,7 +17,7 @@
   "dependencies": {
     "@entur/alert": "^0.5.18",
     "@entur/button": "^2.2.4",
-    "@entur/chip": "^0.3.9",
+    "@entur/chip": "^0.3.22",
     "@entur/datepicker": "^0.3.14",
     "@entur/dropdown": "^0.9.0",
     "@entur/form": "^3.2.1",

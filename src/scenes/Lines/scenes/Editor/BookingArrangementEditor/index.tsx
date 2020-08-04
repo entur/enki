@@ -193,7 +193,7 @@ const BookingArrangementEditor = (props: Props) => {
           />
 
           <RadioGroup
-            name="booking-time-restrictions"
+            name="booking-limit-type"
             label={formatMessage('bookingLimitFieldsHeaderLabel')}
             onChange={(e) =>
               setBookingLimitType(e?.target?.value as BOOKING_LIMIT_TYPE)
@@ -241,10 +241,7 @@ const BookingArrangementEditor = (props: Props) => {
                 <FilterChip
                   value={v}
                   key={v}
-                  checked={bookingMethods?.includes(v)}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onBookingMethodChange(e.target.value as BOOKING_METHOD)
-                  }
+                  onClick={() => onBookingMethodChange(v)}
                 >
                   {formatMessage(bookingMethodMessages[v] as keyof MessagesKey)}
                 </FilterChip>
@@ -258,10 +255,7 @@ const BookingArrangementEditor = (props: Props) => {
                 <FilterChip
                   value={v}
                   key={v}
-                  checked={buyWhen?.includes(v)}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onPurchaseMomentChange(e.target.value as PURCHASE_MOMENT)
-                  }
+                  onClick={() => onPurchaseMomentChange(v)}
                 >
                   {formatMessage(paymentTimeMessages[v] as keyof MessagesKey)}
                 </FilterChip>
