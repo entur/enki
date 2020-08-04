@@ -167,6 +167,7 @@ export const messages: MessagesKey = {
   bookingAccessPublic: 'Public',
   bookingAccessStaff: 'Staff',
   bookingAccessSelectionTitle: 'Booking access',
+  bookingLimitTypeNoneRadioButtonLabel: 'None',
   bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel:
     'The minimum period prior to the departure the booking has to be placed',
   bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel:

@@ -71,20 +71,31 @@ const BookingArrangementEditor = (props: Props) => {
     });
 
   const [bookingLimitType, setBookingLimitType] = useState(
-    minimumBookingPeriod ? BOOKING_LIMIT_TYPE.PERIOD : BOOKING_LIMIT_TYPE.TIME
+    minimumBookingPeriod
+      ? BOOKING_LIMIT_TYPE.PERIOD
+      : latestBookingTime
+      ? BOOKING_LIMIT_TYPE.TIME
+      : BOOKING_LIMIT_TYPE.NONE
   );
+
+  const onBookingLimitTypeChange = (type: BOOKING_LIMIT_TYPE) => {
+    onChange({
+      ...bookingArrangement,
+      latestBookingTime: undefined,
+      minimumBookingPeriod: undefined,
+    });
+    setBookingLimitType(type);
+  };
 
   const onLatestBookingTimeChange = (time: string) =>
     onChange({
       ...bookingArrangement,
-      minimumBookingPeriod: undefined,
       latestBookingTime: time,
     });
 
   const onMinimumBookingPeriodChange = (period: string) =>
     onChange({
       ...bookingArrangement,
-      latestBookingTime: undefined,
       minimumBookingPeriod: period,
     });
 
@@ -196,10 +207,14 @@ const BookingArrangementEditor = (props: Props) => {
             name="booking-limit-type"
             label={formatMessage('bookingLimitFieldsHeaderLabel')}
             onChange={(e) =>
-              setBookingLimitType(e?.target?.value as BOOKING_LIMIT_TYPE)
+              onBookingLimitTypeChange(e?.target?.value as BOOKING_LIMIT_TYPE)
             }
             value={bookingLimitType}
           >
+            <Radio value={BOOKING_LIMIT_TYPE.NONE}>
+              {formatMessage('bookingLimitTypeNoneRadioButtonLabel')}
+            </Radio>
+
             <Radio value={BOOKING_LIMIT_TYPE.TIME}>
               {formatMessage(
                 'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'

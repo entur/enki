@@ -185,6 +185,7 @@ export enum DAY_OF_WEEK {
 }
 
 export enum BOOKING_LIMIT_TYPE {
+  NONE = 'none',
   TIME = 'time',
   PERIOD = 'period',
 }

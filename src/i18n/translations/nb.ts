@@ -163,6 +163,7 @@ export const messages = {
   bookingAccessPublic: 'Åpen',
   bookingAccessStaff: 'Ansatte',
   bookingAccessSelectionTitle: 'Tilgang',
+  bookingLimitTypeNoneRadioButtonLabel: 'Ingen',
   bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel:
     'Seneste tidspunkt før avreise reisen kan bestilles',
   bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel:
