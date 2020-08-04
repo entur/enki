@@ -48,7 +48,7 @@ const BookingArrangementEditor = (props: Props) => {
     buyWhen,
     bookingAccess,
     bookingNote,
-    latestBookingTime,
+    latestBookingTime = '',
     minimumBookingPeriod,
   } = bookingArrangement;
 
