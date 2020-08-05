@@ -27,7 +27,9 @@ import { Dropdown } from '@entur/dropdown';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { FilterChip } from '@entur/chip';
 import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
-import DurationPicker from 'components/DurationPicker';
+import DurationPicker, {
+  DurationPickerPosition,
+} from 'components/DurationPicker';
 import { GlobalState } from 'reducers';
 import { AppIntlState } from 'i18n';
 
@@ -93,7 +95,7 @@ const BookingArrangementEditor = (props: Props) => {
       latestBookingTime: time,
     });
 
-  const onMinimumBookingPeriodChange = (period: string) =>
+  const onMinimumBookingPeriodChange = (period?: string) =>
     onChange({
       ...bookingArrangement,
       minimumBookingPeriod: period,
@@ -240,11 +242,10 @@ const BookingArrangementEditor = (props: Props) => {
               duration={minimumBookingPeriod}
               resetOnZero
               disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
-              position="above"
+              position={DurationPickerPosition.ABOVE}
               showYears={false}
               showMonths={false}
-              intl={intl}
-              onChange={(period: string) =>
+              onChange={(period?: string) =>
                 onMinimumBookingPeriodChange(period)
               }
             />
