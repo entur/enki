@@ -6,13 +6,8 @@ import * as durationLib from 'duration-fns';
 import cx from 'classnames';
 import { useSelector } from 'react-redux';
 import { selectIntl, AppIntlState } from 'i18n';
-import TimeUnitPicker from '../TimeUnitPicker';
+import TimeUnitPicker, { TimeUnitPickerPosition } from '../TimeUnitPicker';
 import { GlobalState } from 'reducers';
-
-export enum DurationPickerPosition {
-  ABOVE = 'above',
-  BELOW = 'below',
-}
 
 type Props = {
   onChange: (duration?: string) => void;
@@ -24,7 +19,7 @@ type Props = {
   showHours?: boolean;
   showMinutes?: boolean;
   showSeconds?: boolean;
-  position?: DurationPickerPosition;
+  position?: TimeUnitPickerPosition;
   className?: string;
   disabled?: boolean;
 };
@@ -40,7 +35,7 @@ export default (props: Props) => {
     showMonths = true,
     showYears = true,
     showDays = true,
-    position = DurationPickerPosition.ABOVE,
+    position = TimeUnitPickerPosition.ABOVE,
     className,
     disabled = false,
   } = props;
@@ -103,7 +98,6 @@ export default (props: Props) => {
       className={cx('duration-picker', className)}
       position={position}
       disabled={disabled}
-      intl={intl}
     />
   );
 };
