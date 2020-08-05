@@ -163,6 +163,7 @@ export const messages = {
   bookingAccessPublic: 'Åpen',
   bookingAccessStaff: 'Ansatte',
   bookingAccessSelectionTitle: 'Tilgang',
+  bookingLimitTypeNoneRadioButtonLabel: 'Ingen',
   bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel:
     'Seneste tidspunkt før avreise reisen kan bestilles',
   bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel:
@@ -502,4 +503,12 @@ export const messages = {
   localCarFerry: 'Innenriks bilferje',
   localPassengerFerry: 'Innenriks passasjerbåt',
   nationalCarFerry: 'Hurtigruten',
+  timeUnitPickerYearsLabel: 'År',
+  timeUnitPickerMonthsLabel: 'Måneder',
+  timeUnitPickerDaysLabel: 'Dager',
+  timeUnitPickerHoursLabel: 'Timer',
+  timeUnitPickerMinutesLabel: 'Minutter',
+  timeUnitPickerSecondsLabel: 'Sekunder',
+  timeUnitPickerResetLabel: 'Nullstill',
+  timeUnitPickerDoneLabel: 'Ferdig',
 };

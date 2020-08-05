@@ -1,0 +1,94 @@
+@import '~@entur/tokens/dist/styles.scss';
+
+.time-unit-picker {
+  position: relative;
+
+  input {
+    width: 100%;
+    background: $colors-greys-grey30 url('../../static/icons/Arrowdown.svg')
+      no-repeat right 16px center;
+    padding-right: 30px;
+    cursor: default;
+    user-select: none;
+  }
+
+  .pickers-container {
+    position: absolute;
+    z-index: 100;
+    width: 400px;
+    padding: 25px;
+    background-color: $colors-blues-blue80;
+    text-align: center;
+
+    .picker {
+      margin-bottom: 20px;
+      font-weight: 500;
+
+      > div {
+        text-transform: capitalize;
+      }
+
+      .entur-form-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: auto;
+        min-width: auto;
+        margin-bottom: 0;
+
+        select {
+          width: 75px !important;
+          min-width: 75px;
+          padding-left: 16px;
+          background-position: right 16px center;
+          color: $colors-brand-blue;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 35px;
+
+      button {
+        height: 45px;
+        max-height: 45px;
+        min-height: 45px;
+
+        &:nth-of-type(2) {
+          margin-left: 12px;
+        }
+      }
+    }
+
+    &.above {
+      bottom: 45px + 15px;
+
+      &:after {
+        content: '';
+        border-style: solid;
+        border-width: 6px 6px 0 6px;
+        border-color: $colors-blues-blue80 transparent transparent transparent;
+        position: absolute;
+        left: 15px;
+        bottom: -6px;
+      }
+    }
+
+    &.below {
+      margin-top: 15px;
+
+      &:before {
+        content: '';
+        border-style: solid;
+        border-width: 0 6px 6px 6px;
+        border-color: transparent transparent $colors-blues-blue60 transparent;
+        position: absolute;
+        left: 15px;
+        top: -6px;
+      }
+    }
+  }
+}

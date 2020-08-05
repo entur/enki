@@ -167,6 +167,7 @@ export const messages: MessagesKey = {
   bookingAccessPublic: 'Public',
   bookingAccessStaff: 'Staff',
   bookingAccessSelectionTitle: 'Booking access',
+  bookingLimitTypeNoneRadioButtonLabel: 'None',
   bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel:
     'The minimum period prior to the departure the booking has to be placed',
   bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel:
@@ -506,4 +507,12 @@ export const messages: MessagesKey = {
   localCarFerry: 'Local car ferry',
   localPassengerFerry: 'Local passenger ferry',
   nationalCarFerry: 'National car ferry',
+  timeUnitPickerYearsLabel: 'Years',
+  timeUnitPickerMonthsLabel: 'Months',
+  timeUnitPickerDaysLabel: 'Days',
+  timeUnitPickerHoursLabel: 'Hours',
+  timeUnitPickerMinutesLabel: 'Minutes',
+  timeUnitPickerSecondsLabel: 'Seconds',
+  timeUnitPickerResetLabel: 'Reset',
+  timeUnitPickerDoneLabel: 'Done',
 };
