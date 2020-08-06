@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import ScrollToTop from 'components/ScrollToTop';
@@ -12,14 +12,25 @@ import {
   paymentTimeMessages,
   PURCHASE_MOMENT,
   PURCHASE_WHEN,
+  BOOKING_LIMIT_TYPE,
 } from 'model/enums';
 import { Heading1, LeadParagraph, Label } from '@entur/typography';
-import { InputGroup, TextArea, TextField } from '@entur/form';
+import {
+  RadioGroup,
+  Radio,
+  InputGroup,
+  TextArea,
+  TextField,
+} from '@entur/form';
 import Contact from 'model/Contact';
 import { Dropdown } from '@entur/dropdown';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { FilterChip } from '@entur/chip';
 import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
+import DurationPicker from 'components/DurationPicker';
+import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
+import { GlobalState } from 'reducers';
+import { AppIntlState } from 'i18n';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -28,7 +39,8 @@ type Props = {
 };
 
 const BookingArrangementEditor = (props: Props) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const intl = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = intl;
   const { bookingArrangement, onChange } = props;
   const {
     bookingContact,
@@ -37,6 +49,8 @@ const BookingArrangementEditor = (props: Props) => {
     buyWhen,
     bookingAccess,
     bookingNote,
+    latestBookingTime = '',
+    minimumBookingPeriod,
   } = bookingArrangement;
 
   const onContactChange = (contact: Contact) =>
@@ -55,6 +69,35 @@ const BookingArrangementEditor = (props: Props) => {
     onChange({
       ...bookingArrangement,
       bookingMethods: addOrRemove(method, bookingMethods ?? []),
+    });
+
+  const [bookingLimitType, setBookingLimitType] = useState(
+    minimumBookingPeriod
+      ? BOOKING_LIMIT_TYPE.PERIOD
+      : latestBookingTime
+      ? BOOKING_LIMIT_TYPE.TIME
+      : BOOKING_LIMIT_TYPE.NONE
+  );
+
+  const onBookingLimitTypeChange = (type: BOOKING_LIMIT_TYPE) => {
+    onChange({
+      ...bookingArrangement,
+      latestBookingTime: undefined,
+      minimumBookingPeriod: undefined,
+    });
+    setBookingLimitType(type);
+  };
+
+  const onLatestBookingTimeChange = (time: string) =>
+    onChange({
+      ...bookingArrangement,
+      latestBookingTime: time,
+    });
+
+  const onMinimumBookingPeriodChange = (period?: string) =>
+    onChange({
+      ...bookingArrangement,
+      minimumBookingPeriod: period,
     });
 
   return (
@@ -161,16 +204,59 @@ const BookingArrangementEditor = (props: Props) => {
             }
           />
 
+          <RadioGroup
+            name="booking-limit-type"
+            label={formatMessage('bookingLimitFieldsHeaderLabel')}
+            onChange={(e) =>
+              onBookingLimitTypeChange(e?.target?.value as BOOKING_LIMIT_TYPE)
+            }
+            value={bookingLimitType}
+          >
+            <Radio value={BOOKING_LIMIT_TYPE.NONE}>
+              {formatMessage('bookingLimitTypeNoneRadioButtonLabel')}
+            </Radio>
+
+            <Radio value={BOOKING_LIMIT_TYPE.TIME}>
+              {formatMessage(
+                'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'
+              )}
+            </Radio>
+
+            <TextField
+              type="time"
+              disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
+              value={latestBookingTime || ''}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onLatestBookingTimeChange(e?.target?.value)
+              }
+            />
+
+            <Radio value={BOOKING_LIMIT_TYPE.PERIOD}>
+              {formatMessage(
+                'bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel'
+              )}
+            </Radio>
+
+            <DurationPicker
+              duration={minimumBookingPeriod}
+              resetOnZero
+              disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
+              position={TimeUnitPickerPosition.ABOVE}
+              showYears={false}
+              showMonths={false}
+              onChange={(period?: string) =>
+                onMinimumBookingPeriodChange(period)
+              }
+            />
+          </RadioGroup>
+
           <InputGroup label={formatMessage('bookingMethodSelectionTitle')}>
             <div className="filter-chip-list">
               {Object.values(BOOKING_METHOD).map((v) => (
                 <FilterChip
                   value={v}
                   key={v}
-                  checked={bookingMethods?.includes(v)}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onBookingMethodChange(e.target.value as BOOKING_METHOD)
-                  }
+                  onClick={() => onBookingMethodChange(v)}
                 >
                   {formatMessage(bookingMethodMessages[v] as keyof MessagesKey)}
                 </FilterChip>
@@ -184,10 +270,7 @@ const BookingArrangementEditor = (props: Props) => {
                 <FilterChip
                   value={v}
                   key={v}
-                  checked={buyWhen?.includes(v)}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onPurchaseMomentChange(e.target.value as PURCHASE_MOMENT)
-                  }
+                  onClick={() => onPurchaseMomentChange(v)}
                 >
                   {formatMessage(paymentTimeMessages[v] as keyof MessagesKey)}
                 </FilterChip>
