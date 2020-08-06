@@ -35,9 +35,9 @@ npm test
 brew cask install graphiql
 ```
 
-POST https://api.dev.entur.io/timetable-admin/v1/flexible-lines/<provider>/graphql
+    POST https://api.dev.entur.io/timetable-admin/v1/flexible-lines/<provider>/graphql
 
-Replace <provider> with the provider codespace of your choice.
+Replace `<provider>` with the provider codespace of your choice.
 
 HTTP-header:
 ```json
