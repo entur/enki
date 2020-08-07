@@ -1,12 +1,12 @@
 apiVersion: v1
 appVersion: "0.1.0"
-description: Flexible Transport (FT)
-name: flexible-transport
+description: Enki (Simple timetable editor)
+name: enki
 version: 0.1.0
 keywords:
-- flexible-transport
+- enki
 sources:
-- https://github.com/entur/flexible-transport
+- https://github.com/entur/enki
 maintainers:
 - name: 'team-ror'
   email: team.rutedata@entur.org

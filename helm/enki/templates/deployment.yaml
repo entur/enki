@@ -30,27 +30,27 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: UTTU_API_URL
-              name: flexible-transport-config
+              name: enki-config
         - name: ORGANISATIONS_API_URL
           valueFrom:
             configMapKeyRef:
               key: ORGANISATIONS_API_URL
-              name: flexible-transport-config
+              name: enki-config
         - name: AUTH_SERVER_URL
           valueFrom:
             configMapKeyRef:
               key: AUTH_SERVER_URL
-              name: flexible-transport-config
+              name: enki-config
         - name: LOG_FORWARD_PATHS
           valueFrom:
             configMapKeyRef:
               key: LOG_FORWARD_PATHS
-              name: flexible-transport-config
+              name: enki-config
         - name: PUBLIC_URL
           valueFrom:
             configMapKeyRef:
               key: PUBLIC_URL
-              name: flexible-transport-config
+              name: enki-config
         - name: TZ
           value: Europe/Oslo
         - name: ENVIRONMENT

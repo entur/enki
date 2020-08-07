@@ -13,7 +13,7 @@ metadata:
     {{ else if eq .Values.env "dev"}}
     external-dns.alpha.kubernetes.io/target: {{ .Values.ingress.devIp }}
     {{- end}}
-  name: flexible-transport
+  name: enki
   namespace: {{ .Release.Namespace }}
 spec:
   rules:
