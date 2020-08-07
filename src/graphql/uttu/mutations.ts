@@ -40,14 +40,14 @@ export const exportMutation = `
   }
 `;
 
-export const fixedLineMutation = `
-  mutation MutateFixedLine($input: FixedLineInput!) {
-    mutateFixedLine(input: $input) { id }
+export const lineMutation = `
+  mutation Mutateline($input: LineInput!) {
+    mutateLine(input: $input) { id }
   }
 `;
 
-export const deleteFixedLine = `
-  mutation DeleteFixedLine($id: ID!) {
-    deleteFixedLine(id: $id) { id }
+export const deleteline = `
+  mutation Deleteline($id: ID!) {
+    deleteLine(id: $id) { id }
   }
 `;
