@@ -127,7 +127,9 @@ const JourneyPatternEditor = ({
         </Heading3>
         <Paragraph>
           {flexibleLineType
-            ? formatMessage('stopPointsInfo')
+            ? flexibleLineType !== 'flexibleAreasOnly'
+              ? formatMessage('stopPointsInfo')
+              : ''
             : formatMessage('stopPointsInfoFixed')}
         </Paragraph>
         <div className="stop-point-editor">
