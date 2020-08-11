@@ -262,7 +262,7 @@ export const messages: MessagesKey = {
   deleteTitle: 'Delete stop point',
   deleteMessage: 'Are you sure you want to delete this stop point?',
   selectCustom: 'Flexible stop place',
-  selectNsr: 'Quay id',
+  selectNsr: 'Stop place',
   editorServiceJourneys: 'Service Journeys',
   modalTitle: 'New service journey',
   modalSubTitle: 'Enter a name and press Create',

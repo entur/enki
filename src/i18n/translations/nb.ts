@@ -256,7 +256,7 @@ export const messages = {
   deleteTitle: 'Slette stoppepunkt',
   deleteMessage: 'Er du sikker på at du ønsker å slette dette stoppepunktet?',
   selectCustom: 'Fleksibelt stoppested',
-  selectNsr: 'Plattform-ID',
+  selectNsr: 'Stoppested',
   editorServiceJourneys: 'Service Journeys',
   modalTitle: 'Ny service journey',
   modalSubTitle: 'Fyll in navn og trykk deretter Opprett',
