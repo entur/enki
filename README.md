@@ -1,6 +1,6 @@
 # Enki [![CircleCI](https://circleci.com/gh/entur/enki.svg?style=svg)](https://circleci.com/gh/entur/enki)
 
-Simple timetable editor frontend for [Uttu](https://github.com/entur/uttu).
+Frontend app for Nplan - a simple timetable editor. Backend is [Uttu](https://github.com/entur/uttu).
 
 ## Development
 
