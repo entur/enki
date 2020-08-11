@@ -154,6 +154,7 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
       )
     );
     sentryCaptureException(e);
+    throw e;
   }
 };
 

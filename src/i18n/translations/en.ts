@@ -143,7 +143,7 @@ export const messages: MessagesKey = {
   uttuErrorCONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME:
     'Service journey must have a unique name',
   uttuErrorCONSTRAINT_VIOLATION_LINE_UNIQUE_NAME:
-    'Flexible line must have a unique name',
+    'Line must have a unique name',
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'The journey pattern must have a unique name',
   uttuErrorENTITY_IS_REFERENCED:
