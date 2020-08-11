@@ -50,7 +50,7 @@ export const messages: MessagesKey = {
   flexibleStopPlacesSaveStopPlaceSuccessMessage: 'Stop place was saved.',
   navBarIntroduction: 'Introduction',
   navBarExportsMenuItemLabel: 'Exports',
-  navBarLinesMenuItemLabel: 'Flexible lines',
+  navBarLinesMenuItemLabel: 'Lines',
   navBarNetworksMenuItemLabel: 'Networks',
   navBarRootLinkLogoAltText: 'Logo',
   navBarRootLinkText: '',
@@ -158,6 +158,7 @@ export const messages: MessagesKey = {
   uttuErrorUNKNOWN: 'Unknown error',
   linesCreateFlexibleLineIconButtonLabel: 'Create flexible line',
   linesCreateLineIconButtonLabel: 'Create line',
+  linesFlexibleDataCell: 'Flexible',
   bookingInfoHeader: 'Booking info',
   bookingInfoText: 'Information about how the service can be booked.',
   bookingLabel:
