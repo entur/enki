@@ -116,25 +116,27 @@ const StopPointEditor = ({
     <div className="stop-point-element">
       <div className="stop-point-key-info">
         <Paragraph>{index + 1}</Paragraph>
-        <RadioGroup
-          name={`stopPointMode-${index}`}
-          value={selectMode}
-          onChange={(e) => {
-            setSelectMode(e.target.value as StopPlaceMode);
-            setQuaySearch(undefined);
-            stopPointChange({
-              ...stopPoint,
-              quayRef: undefined,
-              flexibleStopPlaceRef: undefined,
-              flexibleStopPlace: undefined,
-            });
-          }}
-        >
-          <div className="radio-buttons">
-            <Radio value="custom">{formatMessage('selectCustom')}</Radio>
-            <Radio value="nsr">{formatMessage('selectNsr')}</Radio>
-          </div>
-        </RadioGroup>
+        {flexibleLineType && (
+          <RadioGroup
+            name={`stopPointMode-${index}`}
+            value={selectMode}
+            onChange={(e) => {
+              setSelectMode(e.target.value as StopPlaceMode);
+              setQuaySearch(undefined);
+              stopPointChange({
+                ...stopPoint,
+                quayRef: undefined,
+                flexibleStopPlaceRef: undefined,
+                flexibleStopPlace: undefined,
+              });
+            }}
+          >
+            <div className="radio-buttons">
+              <Radio value="custom">{formatMessage('selectCustom')}</Radio>
+              <Radio value="nsr">{formatMessage('selectNsr')}</Radio>
+            </div>
+          </RadioGroup>
+        )}
       </div>
       <div className="stop-point-info">
         {selectMode === 'custom' && (

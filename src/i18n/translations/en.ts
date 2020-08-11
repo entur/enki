@@ -50,11 +50,11 @@ export const messages: MessagesKey = {
   flexibleStopPlacesSaveStopPlaceSuccessMessage: 'Stop place was saved.',
   navBarIntroduction: 'Introduction',
   navBarExportsMenuItemLabel: 'Exports',
-  navBarLinesMenuItemLabel: 'Flexible lines',
+  navBarLinesMenuItemLabel: 'Lines',
   navBarNetworksMenuItemLabel: 'Networks',
   navBarRootLinkLogoAltText: 'Logo',
   navBarRootLinkText: '',
-  navBarStopPlacesMenuItemLabel: 'Stop places and Areas',
+  navBarStopPlacesMenuItemLabel: 'Flexible stop places',
   userMenuLogoutLinkText: 'Log out',
   userMenuMenuItemTextEnglish: 'English',
   userMenuMenuItemTextLanguage: 'Language',
@@ -72,15 +72,14 @@ export const messages: MessagesKey = {
   homeCardsGetStarted: 'Get started',
   homeCardsGetStartedDescription:
     'Click here if you are creating a line for the first time.',
-  homeCardsLinesDescription:
-    'See the overview of lines. This is where you can view and edit existing lines, or create new ones.',
+  homeCardsLinesDescription: 'See the overview of lines, or create new ones.',
   homeCardsNetworkDescription:
-    'See the overview of your networks add new ones.',
+    'See the overview of networks, or create new ones.',
   homeCardsStopPlacesDescription:
-    'See the overview of stop places and areas, or create new ones.',
+    'See the overview of flexible stop places, or create new ones.',
   getStartedRedirectButton: 'Get started',
   getStartedPlatformIDText:
-    "You can go directly to 'Flexible lines' if you wish to use a Platform-ID from NSR.",
+    "You can go directly to 'Flexible lines' if you wish to use a quay id from the National stop place registry.",
   getStartedLeadParagraph:
     'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
   headerParagraph:
@@ -159,6 +158,7 @@ export const messages: MessagesKey = {
   uttuErrorUNKNOWN: 'Unknown error',
   linesCreateFlexibleLineIconButtonLabel: 'Create flexible line',
   linesCreateLineIconButtonLabel: 'Create line',
+  linesFlexibleDataCell: 'Flexible',
   bookingInfoHeader: 'Booking info',
   bookingInfoText: 'Information about how the service can be booked.',
   bookingLabel:
@@ -204,10 +204,16 @@ export const messages: MessagesKey = {
   editorDeleteButtonText: 'Delete',
   editorDeleteConfirmationDialogCancelButtonText: 'No',
   editorDeleteConfirmationDialogConfirmButtonText: 'Yes',
-  editorDeleteConfirmationDialogMessage:
+  editorDeleteLineConfirmationDialogMessage:
     'Are you sure you want to delete this line?',
-  editorDeleteConfirmationDialogTitle: 'Delete line',
+  editorDeleteLineConfirmationDialogTitle: 'Delete line',
   editorDeleteLineLoadingText: 'Deleting line...',
+  editorDeleteStopPlaceConfirmationDialogMessage:
+    'Are you sure you want to delete this flexible stop place?',
+  editorDeleteStopPlaceConfirmationDialogTitle: 'Delete flexible stop place',
+  editorDeleteNetworkConfirmationDialogMessage:
+    'Are you sure you want to delete this network?',
+  editorDeleteNetworkConfirmationDialogTitle: 'Delete network',
   editorEditLineHeader: 'Edit line',
   generalDescriptionFormGroupTitle: 'Description',
   generalNameFormGroupTitle: 'Name *',
@@ -247,17 +253,17 @@ export const messages: MessagesKey = {
   stepperJourneyPattern: 'Journey Pattern',
   stepperServiceJourney: 'Service Journey',
   stepperBooking: 'Booking info',
-  editorStopPoints: 'Add stop places or areas for the service',
+  editorStopPoints: 'Add stop points defining the service',
   editorStopPointFlexibleAreaOnly:
-    'Add stop place or area defining the service',
+    'Add flexible stop place defining the service',
   stopPointsInfo:
-    'You have to create at least two stop points; one for start and one for stop. If you are creating an area based service, and you only have one area, you have to add the same area twice.',
+    'You have to add at least two stop points; one for start and one for stop. Choose between flexible stop places and quay IDs from the National stop place registry.',
   stopPointsInfoFixed:
-    'You have to create at least two stop points; one for start and one for stop. Enter platform-ID from NSR.',
+    'You have to add at least two stop points; one for start and one for stop. Enter quay id from the National stop place registry.',
   deleteTitle: 'Delete stop point',
   deleteMessage: 'Are you sure you want to delete this stop point?',
-  selectCustom: 'Stop point',
-  selectNsr: 'Platform-ID NSR',
+  selectCustom: 'Flexible stop place',
+  selectNsr: 'Stop place',
   editorServiceJourneys: 'Service Journeys',
   modalTitle: 'New service journey',
   modalSubTitle: 'Enter a name and press Create',
@@ -279,7 +285,7 @@ export const messages: MessagesKey = {
   dayTypeEditorToDate: 'To *',
   dayTypeEditorToDateValidation: 'Not before from-date',
   passingTimesEditorError: 'You need valid passing times.',
-  editorAddStopPoint: 'Add stop place or area',
+  editorAddStopPoint: 'Add stop point',
   editorAddServiceJourneys: 'Create more Service Journeys',
   editorEdit: 'Edit',
   editorCreate: 'Create new ',
@@ -323,7 +329,7 @@ export const messages: MessagesKey = {
   labelFrontText: 'Front text',
   labelFrontTextRequired: 'Front text *',
   labelBoarding: 'On/off-boarding',
-  labelQuayRef: 'Platform ID (from NSR) *',
+  labelQuayRef: 'Quay id *',
   flexibleStopPlaceRefAndQuayRefBothValues:
     'Choose either stop place or platform, not both.',
   flexibleStopPlaceRefAndQuayRefNoValues: 'You must select a place',
@@ -407,12 +413,12 @@ export const messages: MessagesKey = {
   networksNameTableHeaderLabel: 'Name',
   networksNoNetworksFoundText: 'No networks found',
   networksPrivateCodeTableHeaderLabel: 'Private code',
-  stopPlacesCreateStopPlaceLinkIconLabelText: 'Create stop place or area',
-  stopPlaceText: 'stop place',
-  stopPlace: 'Stop place/area *',
+  stopPlacesCreateStopPlaceLinkIconLabelText: 'Create flexible stop place',
+  stopPlaceText: 'flexible stop place',
+  stopPlace: 'Flexible stop place *',
   editorDescription:
-    'Create a stop place or area, either by entering a list of coordinates in GeoJSON format, or by clicking on the map.',
-  editorCreateHeader: 'Create stop place or area',
+    'Enter a list of coordinates in GeoJSON format, or click on the map to create a polygon.',
+  editorCreateHeader: 'Create flexible stop place',
   delete: 'Delete',
   editorDeleteStopPlaceDialogCancelButtonText: 'No',
   editorDeleteStopPlaceDialogConfirmButtonText: 'Yes',
@@ -421,7 +427,7 @@ export const messages: MessagesKey = {
   editorDeleteStopPlaceDialogTitle: 'Delete stop place',
   editorDeletingOverlayLoaderText: 'Deleting stop place...',
   editorDescriptionFormLabelText: 'Description',
-  editorEditHeader: 'Edit stop place',
+  editorEditHeader: 'Edit flexible stop place',
   errorCoordinates: 'The coordinates are in an invalid format',
   editorLoadingDependenciesText: 'Loading dependencies',
   editorLoadingStopPlaceText: 'Loading stop place',
@@ -434,7 +440,7 @@ export const messages: MessagesKey = {
   validateFormErrorFlexibleAreaNotEnoughPolygons:
     'You must add more map points',
   validateFormErrorNameEmpty: 'You must enter a name',
-  stopPlacesHeader: 'Stop places and Areas',
+  stopPlacesHeader: 'Flexible stop places',
   stopPlacesLoadingStopPlacesText: 'Loading stop places...',
   stopPlacesNameTableHeaderLabelText: 'Name',
   stopPlacesNoStopPlacesFoundText: 'No stop places found.',

@@ -52,7 +52,7 @@ export const messages = {
   navBarNetworksMenuItemLabel: 'Nettverk',
   navBarRootLinkLogoAltText: 'Logo',
   navBarRootLinkText: '',
-  navBarStopPlacesMenuItemLabel: 'Stoppesteder og områder',
+  navBarStopPlacesMenuItemLabel: 'Fleksible stoppesteder',
   userMenuLogoutLinkText: 'Logg ut',
   userMenuMenuItemTextEnglish: 'English',
   userMenuMenuItemTextLanguage: 'Språk',
@@ -70,15 +70,13 @@ export const messages = {
   homeCardsGetStarted: 'Kom i gang',
   homeCardsGetStartedDescription:
     'Klikk her hvis du oppretter en linje for første gang.',
-  homeCardsLinesDescription:
-    'Se oversikt over linjer. Her kan du se og redigere linjer eller opprette ny.',
-  homeCardsNetworkDescription:
-    'Se oversikt over dine nettverk eller legg till nytt.',
+  homeCardsLinesDescription: 'Se oversikt over linjer eller legg til nye.',
+  homeCardsNetworkDescription: 'Se oversikt over nettverk eller legg til nye.',
   homeCardsStopPlacesDescription:
-    'Se oversikt over stoppesteder og områder eller opprett nye.',
+    'Se oversikt over fleksible stoppesteder eller legg til nye.',
   getStartedRedirectButton: 'Kom i gang',
   getStartedPlatformIDText:
-    "Ønsker du å benytte Plattform-ID fra NSR kan du gå direkte til 'Linjer'.",
+    "Ønsker du å benytte Plattform-ID fra nasjonalt stoppestedsregister kan du gå direkte til 'Linjer'.",
   getStartedLeadParagraph:
     'Før du oppretter en ny linje må du legge til stoppesteder eller område for tilbudet. Følg stegene beskrevet under.',
   headerParagraph:
@@ -155,6 +153,7 @@ export const messages = {
   uttuErrorUNKNOWN: 'Ukjent feil',
   linesCreateFlexibleLineIconButtonLabel: 'Opprett fleksibel linje',
   linesCreateLineIconButtonLabel: 'Opprett rutegående linje',
+  linesFlexibleDataCell: 'Flexible',
   bookingInfoHeader: 'Bestillingsinfo',
   bookingInfoText: 'Informasjon om hvordan tilbudet kan bestilles.',
   bookingLabel:
@@ -199,10 +198,16 @@ export const messages = {
   editorDeleteButtonText: 'Slett',
   editorDeleteConfirmationDialogCancelButtonText: 'Nei',
   editorDeleteConfirmationDialogConfirmButtonText: 'Ja',
-  editorDeleteConfirmationDialogMessage:
+  editorDeleteLineConfirmationDialogMessage:
     'Er du sikker på at du ønsker å slette denne linjen?',
-  editorDeleteConfirmationDialogTitle: 'Slette linje',
+  editorDeleteLineConfirmationDialogTitle: 'Slette linje',
   editorDeleteLineLoadingText: 'Sletter linjen...',
+  editorDeleteStopPlaceConfirmationDialogMessage:
+    'Er du sikker på at du ønsker å slette dette fleksible stoppestedet?',
+  editorDeleteStopPlaceConfirmationDialogTitle: 'Slette fleksibelt stoppested',
+  editorDeleteNetworkConfirmationDialogMessage:
+    'Er du sikker på at du ønsker å slette dette nettverket?',
+  editorDeleteNetworkConfirmationDialogTitle: 'Slette nettverk',
   editorEditLineHeader: 'Rediger linje',
   generalDescriptionFormGroupTitle: 'Beskrivelse',
   generalNameFormGroupTitle: 'Navn *',
@@ -242,17 +247,17 @@ export const messages = {
   stepperJourneyPattern: 'Journey Patterns',
   stepperServiceJourney: 'Service Journey',
   stepperBooking: 'Bestillingsinfo',
-  editorStopPoints: 'Legg til stoppesteder eller områder for tilbudet',
+  editorStopPoints: 'Legg til stopp for tilbudet',
   editorStopPointFlexibleAreaOnly:
-    'Legg til stoppested eller område som definerer tilbudet',
+    'Legg til fleksibelt stoppested som definerer tilbudet',
   stopPointsInfo:
-    'Du må opprette minst to stoppesteder; ett for start og ett for slutt. Hvis du lager et områdebasert tilbud, og du kun har ett område, må du legge til samme område to ganger.',
+    'Du må legge til minst to stopp; ett for start og ett for slutt. Velg mellom fleksible stoppesteder eller platform-IDer fra Nasjonalt stoppestedsregister.',
   stopPointsInfoFixed:
-    'Du må opprette minst to stoppesteder; ett for start og ett for slutt. Skriv inn platform-ID fra NSR.',
+    'Du må legge til minst to stopp; ett for start og ett for slutt. Skriv inn platform-ID fra stoppestedsregisteret.',
   deleteTitle: 'Slette stoppepunkt',
   deleteMessage: 'Er du sikker på at du ønsker å slette dette stoppepunktet?',
-  selectCustom: 'Stoppested',
-  selectNsr: 'Plattform-ID NSR',
+  selectCustom: 'Fleksibelt stoppested',
+  selectNsr: 'Stoppested',
   editorServiceJourneys: 'Service Journeys',
   modalTitle: 'Ny service journey',
   modalSubTitle: 'Fyll in navn og trykk deretter Opprett',
@@ -274,7 +279,7 @@ export const messages = {
   dayTypeEditorToDate: 'Til *',
   dayTypeEditorToDateValidation: 'Ikke før fra-dato',
   passingTimesEditorError: 'Du må ha gyldige passeringstider.',
-  editorAddStopPoint: 'Legg til stoppested eller område',
+  editorAddStopPoint: 'Legg til stopp',
   editorAddServiceJourneys: 'Legg til flere Service Journeys',
   editorEdit: 'Rediger',
   editorCreate: 'Opprett',
@@ -317,7 +322,7 @@ export const messages = {
   labelFrontText: 'Fronttekst',
   labelFrontTextRequired: 'Fronttekst *',
   labelBoarding: 'På-/avstigning',
-  labelQuayRef: 'Plattform-ID (fra NSR) *',
+  labelQuayRef: 'Plattform-ID *',
   tableYes: 'Ja',
   tableNo: 'Nei',
   tableName: 'Navn',
@@ -404,10 +409,10 @@ export const messages = {
   networksNameTableHeaderLabel: 'Navn',
   networksNoNetworksFoundText: 'Ingen nettverk ble funnet',
   networksPrivateCodeTableHeaderLabel: 'Privat kode',
-  stopPlacesCreateStopPlaceLinkIconLabelText: 'Opprett stoppested eller område',
+  stopPlacesCreateStopPlaceLinkIconLabelText: 'Opprett fleksibelt stoppested',
   editorDescription:
-    'Opprett et stoppested eller område, enten ved å fylle inn en liste med koordinater på GeoJSON-format, eller ved å klikke i kartet.',
-  editorCreateHeader: 'Opprett stoppested eller område',
+    'Fyll inn liste med koordinater på GeoJSON-format, eller klikk i kartet for å opprette polygon.',
+  editorCreateHeader: 'Opprett fleksibelt stoppested',
   editorDeleteStopPlaceDialogCancelButtonText: 'Nei',
   editorDeleteStopPlaceDialogConfirmButtonText: 'Ja',
   editorDeleteStopPlaceDialogMessage:
@@ -415,7 +420,7 @@ export const messages = {
   editorDeleteStopPlaceDialogTitle: 'Slette stoppested',
   editorDeletingOverlayLoaderText: 'Sletter stoppestedet...',
   editorDescriptionFormLabelText: 'Beskrivelse',
-  editorEditHeader: 'Rediger stoppested',
+  editorEditHeader: 'Rediger fleksibelt stoppested',
   errorCoordinates: 'Koordinatene er ikke på rett format',
   editorLoadingDependenciesText: 'Laster inn avhengigheter',
   editorLoadingStopPlaceText: 'Laster inn stoppestedet',
@@ -428,9 +433,9 @@ export const messages = {
   validateFormErrorFlexibleAreaNotEnoughPolygons:
     'Du må legge til flere punkter i kartet',
   validateFormErrorNameEmpty: 'Du må gi stoppestedet et navn',
-  stopPlaceText: 'stoppested',
-  stopPlace: 'Stoppested/område *',
-  stopPlacesHeader: 'Stoppesteder og områder',
+  stopPlaceText: 'fleksibelt stoppested',
+  stopPlace: 'Fleksibelt stoppested *',
+  stopPlacesHeader: 'Fleksible stoppesteder',
   stopPlacesLoadingStopPlacesText: 'Laster inn stoppesteder...',
   stopPlacesNameTableHeaderLabelText: 'Navn',
   stopPlacesNoStopPlacesFoundText: 'Ingen stoppesteder ble funnet.',

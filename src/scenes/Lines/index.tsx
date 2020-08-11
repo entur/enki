@@ -57,6 +57,9 @@ const Lines = ({ history }: RouteComponentProps) => {
             <DataCell>
               {operator?.find((op) => op.id === line.operatorRef)?.name ?? '-'}
             </DataCell>
+            <DataCell>
+              {line.flexibleLineType && formatMessage('linesFlexibleDataCell')}
+            </DataCell>
             <DataCell className="delete-row-cell">
               <DeleteButton
                 onClick={() => {
@@ -125,6 +128,7 @@ const Lines = ({ history }: RouteComponentProps) => {
             </HeaderCell>
             <HeaderCell>{formatMessage('linesOperatorTableHeader')}</HeaderCell>
             <HeaderCell>{''}</HeaderCell>
+            <HeaderCell>{''}</HeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>{renderTableRows()}</TableBody>
@@ -137,8 +141,8 @@ const Lines = ({ history }: RouteComponentProps) => {
             setSelectedLine(undefined);
             setShowDeleteDialogue(false);
           }}
-          title={formatMessage('editorDeleteConfirmationDialogTitle')}
-          message={formatMessage('editorDeleteConfirmationDialogMessage')}
+          title={formatMessage('editorDeleteLineConfirmationDialogTitle')}
+          message={formatMessage('editorDeleteLineConfirmationDialogMessage')}
           buttons={[
             <SecondaryButton
               key="no"
