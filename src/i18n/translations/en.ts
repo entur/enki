@@ -203,10 +203,16 @@ export const messages: MessagesKey = {
   editorDeleteButtonText: 'Delete',
   editorDeleteConfirmationDialogCancelButtonText: 'No',
   editorDeleteConfirmationDialogConfirmButtonText: 'Yes',
-  editorDeleteConfirmationDialogMessage:
+  editorDeleteLineConfirmationDialogMessage:
     'Are you sure you want to delete this line?',
-  editorDeleteConfirmationDialogTitle: 'Delete line',
+  editorDeleteLineConfirmationDialogTitle: 'Delete line',
   editorDeleteLineLoadingText: 'Deleting line...',
+  editorDeleteStopPlaceConfirmationDialogMessage:
+    'Are you sure you want to delete this flexible stop place?',
+  editorDeleteStopPlaceConfirmationDialogTitle: 'Delete flexible stop place',
+  editorDeleteNetworkConfirmationDialogMessage:
+    'Are you sure you want to delete this network?',
+  editorDeleteNetworkConfirmationDialogTitle: 'Delete network',
   editorEditLineHeader: 'Edit line',
   generalDescriptionFormGroupTitle: 'Description',
   generalNameFormGroupTitle: 'Name *',

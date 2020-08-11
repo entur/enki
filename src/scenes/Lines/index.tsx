@@ -137,8 +137,8 @@ const Lines = ({ history }: RouteComponentProps) => {
             setSelectedLine(undefined);
             setShowDeleteDialogue(false);
           }}
-          title={formatMessage('editorDeleteConfirmationDialogTitle')}
-          message={formatMessage('editorDeleteConfirmationDialogMessage')}
+          title={formatMessage('editorDeleteLineConfirmationDialogTitle')}
+          message={formatMessage('editorDeleteLineConfirmationDialogMessage')}
           buttons={[
             <SecondaryButton
               key="no"

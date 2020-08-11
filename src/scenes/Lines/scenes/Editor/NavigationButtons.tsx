@@ -70,8 +70,8 @@ const NavigationButtons = (props: Props) => {
       </div>
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title={formatMessage('editorDeleteConfirmationDialogTitle')}
-        message={formatMessage('editorDeleteConfirmationDialogMessage')}
+        title={formatMessage('editorDeleteLineConfirmationDialogTitle')}
+        message={formatMessage('editorDeleteLineConfirmationDialogMessage')}
         buttons={[
           <SecondaryButton key={0} onClick={() => setDeleteDialogOpen(false)}>
             {formatMessage('editorDeleteConfirmationDialogCancelButtonText')}
