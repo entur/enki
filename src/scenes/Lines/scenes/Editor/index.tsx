@@ -139,16 +139,11 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     if (valid) {
       setSaving(true);
       dispatch(saveFlexibleLine(line))
-        .then(() => {
-          dispatch(setSavedChanges(true));
-          if (!isEdit) {
-            goToLines();
-          }
-        })
-        .catch(() => {
-          // noop just catching to avoid unhandled rejection
-          // error message is handled upstream
-        })
+        .then(() => dispatch(setSavedChanges(true)))
+        .then(() => !isEdit && goToLines())
+        // noop just catching to avoid unhandled rejection
+        // error message is handled upstream
+        .catch(() => {})
         .finally(() => setSaving(false));
       setNextClicked(false);
     }
