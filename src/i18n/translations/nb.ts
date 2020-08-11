@@ -153,6 +153,7 @@ export const messages = {
   uttuErrorUNKNOWN: 'Ukjent feil',
   linesCreateFlexibleLineIconButtonLabel: 'Opprett fleksibel linje',
   linesCreateLineIconButtonLabel: 'Opprett rutegående linje',
+  linesFlexibleDataCell: 'Flexible',
   bookingInfoHeader: 'Bestillingsinfo',
   bookingInfoText: 'Informasjon om hvordan tilbudet kan bestilles.',
   bookingLabel:
