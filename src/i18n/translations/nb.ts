@@ -197,10 +197,16 @@ export const messages = {
   editorDeleteButtonText: 'Slett',
   editorDeleteConfirmationDialogCancelButtonText: 'Nei',
   editorDeleteConfirmationDialogConfirmButtonText: 'Ja',
-  editorDeleteConfirmationDialogMessage:
+  editorDeleteLineConfirmationDialogMessage:
     'Er du sikker på at du ønsker å slette denne linjen?',
-  editorDeleteConfirmationDialogTitle: 'Slette linje',
+  editorDeleteLineConfirmationDialogTitle: 'Slette linje',
   editorDeleteLineLoadingText: 'Sletter linjen...',
+  editorDeleteStopPlaceConfirmationDialogMessage:
+    'Er du sikker på at du ønsker å slette dette fleksible stoppestedet?',
+  editorDeleteStopPlaceConfirmationDialogTitle: 'Slette fleksibelt stoppested',
+  editorDeleteNetworkConfirmationDialogMessage:
+    'Er du sikker på at du ønsker å slette dette nettverket?',
+  editorDeleteNetworkConfirmationDialogTitle: 'Slette nettverk',
   editorEditLineHeader: 'Rediger linje',
   generalDescriptionFormGroupTitle: 'Beskrivelse',
   generalNameFormGroupTitle: 'Navn *',

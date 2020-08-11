@@ -127,8 +127,12 @@ const StopPlaces = ({ history }: RouteComponentProps) => {
                   setSelectedStopPlace(undefined);
                   setShowDeleteDialogue(false);
                 }}
-                title={formatMessage('editorDeleteConfirmationDialogTitle')}
-                message={formatMessage('editorDeleteConfirmationDialogMessage')}
+                title={formatMessage(
+                  'editorDeleteStopPlaceConfirmationDialogTitle'
+                )}
+                message={formatMessage(
+                  'editorDeleteStopPlaceConfirmationDialogMessage'
+                )}
                 buttons={[
                   <SecondaryButton
                     key="no"

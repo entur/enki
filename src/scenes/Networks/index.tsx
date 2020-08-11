@@ -130,8 +130,12 @@ const Networks = ({ history }: RouteComponentProps) => {
                 setSelectedNetwork(undefined);
                 setShowDeleteDialogue(false);
               }}
-              title={formatMessage('editorDeleteConfirmationDialogTitle')}
-              message={formatMessage('editorDeleteConfirmationDialogMessage')}
+              title={formatMessage(
+                'editorDeleteNetworkConfirmationDialogTitle'
+              )}
+              message={formatMessage(
+                'editorDeleteNetworkConfirmationDialogMessage'
+              )}
               buttons={[
                 <SecondaryButton
                   key="no"
