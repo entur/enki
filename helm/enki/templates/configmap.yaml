@@ -7,6 +7,7 @@ metadata:
   {{- include "common.labels" . | indent 4 }}
 data:
   AUTH_SERVER_URL: {{ .Values.configMap.authServerUrl }}
+  AUTH_CLIENT_ID: {{ .Values.configMap.authClientId }}
   LOG_FORWARD_PATHS: {{ .Values.configMap.logForwardPaths }}
   ORGANISATIONS_API_URL: {{ .Values.configMap.organisationsApiUrl }}
   PUBLIC_URL: {{ .Values.configMap.publicUrl }}

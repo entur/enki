@@ -30,27 +30,32 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: UTTU_API_URL
-              name: enki-config
+              name: {{ .Values.configMapMount.name }}
         - name: ORGANISATIONS_API_URL
           valueFrom:
             configMapKeyRef:
               key: ORGANISATIONS_API_URL
-              name: enki-config
+              name: {{ .Values.configMapMount.name }}
         - name: AUTH_SERVER_URL
           valueFrom:
             configMapKeyRef:
               key: AUTH_SERVER_URL
-              name: enki-config
+              name: {{ .Values.configMapMount.name }}
+        - name: AUTH_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: AUTH_CLIENT_ID
+              name: {{ .Values.configMapMount.name }}
         - name: LOG_FORWARD_PATHS
           valueFrom:
             configMapKeyRef:
               key: LOG_FORWARD_PATHS
-              name: enki-config
+              name: {{ .Values.configMapMount.name }}
         - name: PUBLIC_URL
           valueFrom:
             configMapKeyRef:
               key: PUBLIC_URL
-              name: enki-config
+              name: {{ .Values.configMapMount.name }}
         - name: TZ
           value: Europe/Oslo
         - name: ENVIRONMENT

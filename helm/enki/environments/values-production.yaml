@@ -4,6 +4,7 @@ replicas: 2
 
 configMap:
   authServerUrl: https://auth.entur.org/auth
+  authClientId: enki
   logForwardPaths: "true"
   organisationsApiUrl: https://api.entur.io/organisations/v1/register
   publicUrl: /

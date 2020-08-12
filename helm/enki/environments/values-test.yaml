@@ -2,6 +2,7 @@ env: staging
 
 configMap:
   authServerUrl: https://kc-stage.devstage.entur.io/auth
+  authClientId: enki
   logForwardPaths: "true"
   organisationsApiUrl: https://api.staging.entur.io/organisations/v1/register
   publicUrl: /
