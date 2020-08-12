@@ -66,8 +66,8 @@ export const messages: MessagesKey = {
     'You have unsaved changes which will be lost if you navigate away. Do you want to proceed?',
   redirectYes: 'Yes, leave this page',
   redirectNo: 'No, stay on this page',
-  appTitle: 'Flex editor',
-  homeHeader: 'Entur Flex editor',
+  appTitle: 'Nplan',
+  homeHeader: 'Entur Nplan',
   homeShortcut: 'Shortcuts',
   homeCardsGetStarted: 'Get started',
   homeCardsGetStartedDescription:
@@ -83,7 +83,7 @@ export const messages: MessagesKey = {
   getStartedLeadParagraph:
     'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
   headerParagraph:
-    'Welcome to Entur flex editor. This application is a tool to help organisations make their services visible through our channels.',
+    'Welcome to Entur Nplan. This application is a tool to help organisations make their services visible through our channels.',
   item1pre: 'Start by creating a stop place or area under ',
   item1post: ', in the menu to the left.',
   item2pre: 'Afterwards move on to ',

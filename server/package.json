@@ -1,7 +1,6 @@
 {
-  "name": "order-transport-server",
+  "name": "enki-server",
   "version": "0.0.1",
-  "author": "Zsolt Herpai",
   "private": true,
   "dependencies": {
     "body-parser": "^1.18.2",

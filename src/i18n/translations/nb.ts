@@ -64,8 +64,8 @@ export const messages = {
     'Du har gjort endringer som vil gå tapt hvis du forlater siden. Ønsker du å forlate siden?  ',
   redirectYes: 'Ja, forlat siden',
   redirectNo: 'Nei, bli på siden',
-  appTitle: 'Flex editor',
-  homeHeader: 'Entur Flex editor',
+  appTitle: 'Nplan',
+  homeHeader: 'Entur Nplan',
   homeShortcut: 'Snarveier',
   homeCardsGetStarted: 'Kom i gang',
   homeCardsGetStartedDescription:
@@ -80,7 +80,7 @@ export const messages = {
   getStartedLeadParagraph:
     'Før du oppretter en ny linje må du legge til stoppesteder eller område for tilbudet. Følg stegene beskrevet under.',
   headerParagraph:
-    'Velkommen til Entur flex editor, et verktøy som lar aktører legge inn fleksible linjetilbud.',
+    'Velkommen til Entur Nplan, et verktøy som lar aktører opprette linjetilbud.',
   item1pre: 'Start med å opprette stoppested eller område under ',
   item1post: ' i menyen til venstre.',
   item2pre: 'Klikk deretter på ',
