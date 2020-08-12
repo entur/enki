@@ -13,7 +13,7 @@ const app = configureApp(express(), mountPath);
 const server = app.listen(port, () => {
   appLog(
     infoLevel,
-    `OrderTransport UI server running on port: ${server.address().port}`
+    `Enki running on port: ${server.address().port}`
   );
   if (mountPath) {
     appLog(infoLevel, `Mount path: ${mountPath}`);

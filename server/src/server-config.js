@@ -17,7 +17,7 @@ const configureApp = (app, mountpath = '') =>
       .get('/health', (req, res) => res.json({ status: 'UP' }))
       .get('/info', (req, res) =>
         res.json({
-          name: 'order-transport',
+          name: 'enki',
           environment: process.env.ENVIRONMENT,
           version: process.env.IMAGE_TAG || 'N/A',
           buildDate: process.env.BUILD_DATE

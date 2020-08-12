@@ -13,7 +13,7 @@ metadata:
     {{ else if eq .Values.env "dev"}}
     external-dns.alpha.kubernetes.io/target: {{ .Values.ingress.devIp }}
     {{- end}}
-  name: flexible-transport
+  name: enki
   namespace: {{ .Release.Namespace }}
 spec:
   rules:
@@ -21,6 +21,16 @@ spec:
   - host: flexible-transport.entur.org
   {{ else }}
   - host: flexible-transport.{{ .Release.Namespace }}.entur.org
+  {{- end}}
+    http:
+      paths:
+        - backend:
+            serviceName: {{ template "app.name" . }}
+            servicePort: {{ .Values.service.http.externalPort }}
+  {{- if eq .Values.env "production"}}
+  - host: nplan.entur.org
+  {{ else }}
+  - host: nplan.{{ .Release.Namespace }}.entur.org
   {{- end}}
     http:
       paths:

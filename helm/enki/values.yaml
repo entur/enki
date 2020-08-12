@@ -13,7 +13,7 @@ resources:
   memRequest: 500Mi
 
 configMapMount:
-   name: flexible-transport-config
+   name: enki-config
 
 image:
   identifier: ${artifact.metadata.image}
