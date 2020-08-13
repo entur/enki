@@ -1,7 +1,7 @@
 import { UttuQuery } from 'graphql';
 import {
   getFlexibleLineByIdQuery,
-  getFixedLineByIdQuery,
+  getlineByIdQuery,
   getLinesQuery,
 } from 'graphql/uttu/queries';
 import {
@@ -10,9 +10,9 @@ import {
 } from 'actions/notification';
 import {
   deleteFlexibleLine,
-  deleteFixedLine,
+  deleteline,
   flexibleLineMutation,
-  fixedLineMutation,
+  lineMutation,
 } from 'graphql/uttu/mutations';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
@@ -60,13 +60,11 @@ export const loadFlexibleLines = () => async (
 ) => {
   try {
     const activeProvider = getState().providers.active?.code ?? '';
-    const { flexibleLines, fixedLines } = await UttuQuery(
+    const { flexibleLines, lines } = await UttuQuery(
       activeProvider,
       getLinesQuery
     );
-    dispatch(
-      receiveFlexibleLinesActionCreator([...flexibleLines, ...fixedLines])
-    );
+    dispatch(receiveFlexibleLinesActionCreator([...flexibleLines, ...lines]));
   } catch (e) {
     const intl = getIntl(getState());
     dispatch(
@@ -89,9 +87,9 @@ export const loadFlexibleLineById = (
   try {
     const queryById = isFlexibleLine
       ? getFlexibleLineByIdQuery
-      : getFixedLineByIdQuery;
+      : getlineByIdQuery;
 
-    const { fixedLine, flexibleLine } = await UttuQuery(
+    const { line, flexibleLine } = await UttuQuery(
       getState().providers.active?.code ?? '',
       queryById,
       {
@@ -99,7 +97,7 @@ export const loadFlexibleLineById = (
       }
     );
 
-    dispatch(receiveFlexibleLineActionCreator(flexibleLine ?? fixedLine ?? {}));
+    dispatch(receiveFlexibleLineActionCreator(flexibleLine ?? line ?? {}));
   } catch (e) {
     const intl = getIntl(getState());
     dispatch(
@@ -124,7 +122,7 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
   const isNewLine = flexibleLine.id === undefined;
   const mutation = flexibleLine.flexibleLineType
     ? flexibleLineMutation
-    : fixedLineMutation;
+    : lineMutation;
 
   const { header, message } = isNewLine
     ? {
@@ -165,7 +163,7 @@ export const deleteLine = (flexibleLine: FlexibleLine) => async (
   const { id, flexibleLineType } = flexibleLine;
   const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
-  const deleteQuery = flexibleLineType ? deleteFlexibleLine : deleteFixedLine;
+  const deleteQuery = flexibleLineType ? deleteFlexibleLine : deleteline;
 
   try {
     await UttuQuery(activeProvider, deleteQuery, { id });

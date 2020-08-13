@@ -41,7 +41,7 @@ export const getNetworkByIdQuery = `
 
 export const getLinesQuery = `
   query getLines {
-    fixedLines {
+    lines {
       id,
       name,
       description,
@@ -173,9 +173,9 @@ export const getFlexibleLineByIdQuery = `
   }
 `;
 
-export const getFixedLineByIdQuery = `
-  query GetFixedLineById($id:ID!) {
-    fixedLine(id: $id) {
+export const getlineByIdQuery = `
+  query GetlineById($id:ID!) {
+    line(id: $id) {
       id,
       version,
       created,
