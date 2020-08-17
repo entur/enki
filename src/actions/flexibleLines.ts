@@ -8,12 +8,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
-import {
-  deleteFlexibleLine,
-  deleteline,
-  flexibleLineMutation,
-  lineMutation,
-} from 'graphql/uttu/mutations';
+import { flexibleLineMutation, lineMutation } from 'graphql/uttu/mutations';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';

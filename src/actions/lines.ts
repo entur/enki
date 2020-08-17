@@ -1,22 +1,13 @@
 import { UttuQuery } from 'graphql';
-import {
-  getFlexibleLineByIdQuery,
-  getlineByIdQuery,
-  getLinesQuery,
-} from 'graphql/uttu/queries';
+import { getLinesQuery } from 'graphql/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
-import {
-  deleteFlexibleLine,
-  deleteline,
-  flexibleLineMutation,
-  lineMutation,
-} from 'graphql/uttu/mutations';
+import { deleteFlexibleLine, deleteline } from 'graphql/uttu/mutations';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
-import Line, { lineToPayload } from 'model/Line';
+import Line from 'model/Line';
 import FlexibleLine from 'model/FlexibleLine';
 import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
@@ -44,11 +35,6 @@ export type LinesAction =
 const receiveLinesActionCreator = (lines: Line[]): ReceiveLinesAction => ({
   type: RECEIVE_LINES,
   lines,
-});
-
-const receiveLineActionCreator = (line: Line): ReceiveLineAction => ({
-  type: RECEIVE_LINE,
-  line,
 });
 
 export const loadLines = () => async (
