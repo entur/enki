@@ -22,6 +22,8 @@ import { GlobalState } from 'reducers';
 import { SetActiveProviderAction } from 'actions/providers';
 import { sentryCaptureException } from 'store';
 
+export { deleteLine } from 'actions/lines';
+
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINE = 'RECEIVE_FLEXIBLE_LINE';
 
@@ -153,36 +155,5 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
     );
     sentryCaptureException(e);
     throw e;
-  }
-};
-
-export const deleteLine = (flexibleLine: FlexibleLine) => async (
-  dispatch: Dispatch<any>,
-  getState: () => GlobalState
-) => {
-  const { id, flexibleLineType } = flexibleLine;
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
-  const deleteQuery = flexibleLineType ? deleteFlexibleLine : deleteline;
-
-  try {
-    await UttuQuery(activeProvider, deleteQuery, { id });
-    dispatch(
-      showSuccessNotification(
-        intl.formatMessage('flexibleLinesDeleteLineSuccessHeader'),
-        intl.formatMessage('flexibleLinesDeleteLineSuccessMessage')
-      )
-    );
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('flexibleLinesDeleteLineErrorHeader'),
-        intl.formatMessage(
-          'flexibleLinesDeleteLineErrorMessage',
-          getInternationalizedUttuError(intl, e)
-        )
-      )
-    );
-    sentryCaptureException(e);
   }
 };

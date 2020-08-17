@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { Heading1 } from '@entur/typography';
 import { deleteLine, loadFlexibleLines } from 'actions/flexibleLines';
-import { RouteComponentProps } from 'react-router';
 import './styles.scss';
 import { selectIntl } from 'i18n';
 import { GlobalState } from 'reducers';
@@ -15,7 +14,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import FlexibleLine from 'model/FlexibleLine';
 import LinesTable from 'components/LinesTable';
 
-const Lines = ({ history }: RouteComponentProps) => {
+export default () => {
   const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
   const [selectedLine, setSelectedLine] = useState<FlexibleLine | undefined>(
     undefined
@@ -32,6 +31,8 @@ const Lines = ({ history }: RouteComponentProps) => {
   useEffect(() => {
     dispatch(loadFlexibleLines());
   }, [dispatch]);
+
+  const history = useHistory();
 
   const handleOnRowClick = (line: FlexibleLine) =>
     history.push(`/lines/edit/${line.id}`);
@@ -56,13 +57,6 @@ const Lines = ({ history }: RouteComponentProps) => {
       </section>
 
       <LinesTable
-        nameTableHeader={formatMessage('linesNameTableHeaderLabel')}
-        privateCodeTableHeader={formatMessage(
-          'linesPrivateCodeTableHeaderLabel'
-        )}
-        operatorTableHeader={formatMessage('linesOperatorTableHeader')}
-        noLinesFoundText={formatMessage('linesNoLinesFoundText')}
-        loadingText={formatMessage('linesLoadingText')}
         lines={lines!}
         organisations={operator!}
         onRowClick={handleOnRowClick}
@@ -107,5 +101,3 @@ const Lines = ({ history }: RouteComponentProps) => {
     </div>
   );
 };
-
-export default withRouter(Lines);

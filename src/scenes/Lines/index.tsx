@@ -1,21 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { Heading1 } from '@entur/typography';
-import { SecondaryButton } from '@entur/button';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
 
 import { GlobalState } from 'reducers';
+import { LinesState } from 'reducers/lines';
+import { loadLines, deleteLine } from 'actions/lines';
+import { OrganisationState } from 'reducers/organisations';
+import Line from 'model/Line';
 
 import LinesTable from 'components/LinesTable';
-import { LinesState } from 'reducers/lines';
-import { loadLines } from 'actions/lines';
-import { OrganisationState } from 'reducers/organisations';
+import ConfirmDialog from 'components/ConfirmDialog';
 
 export default () => {
   const { formatMessage } = useSelector(selectIntl);
+
+  const [lineSelectedForDeletion, setLineSelectedForDeletion] = useState<
+    Line | undefined
+  >();
 
   const lines = useSelector<GlobalState, LinesState>((state) => state.lines);
 
@@ -28,6 +34,11 @@ export default () => {
   useEffect(() => {
     dispatch(loadLines());
   }, [dispatch]);
+
+  const history = useHistory();
+
+  const handleOnRowClick = (line: Line) =>
+    history.push(`/lines/edit/${line.id}`);
 
   return (
     <div className="lines">
@@ -45,18 +56,44 @@ export default () => {
       </section>
 
       <LinesTable
-        nameTableHeader={formatMessage('linesNameTableHeaderLabel')}
-        privateCodeTableHeader={formatMessage(
-          'linesPrivateCodeTableHeaderLabel'
-        )}
-        operatorTableHeader={formatMessage('linesOperatorTableHeader')}
-        noLinesFoundText={formatMessage('linesNoLinesFoundText')}
-        loadingText={formatMessage('linesLoadingText')}
         lines={lines!}
         organisations={organisations!}
-        onRowClick={() => {}}
-        onDeleteRowClick={() => {}}
+        onRowClick={handleOnRowClick}
+        onDeleteRowClick={setLineSelectedForDeletion}
       />
+
+      {lineSelectedForDeletion && (
+        <ConfirmDialog
+          isOpen
+          onDismiss={() => {
+            setLineSelectedForDeletion(undefined);
+          }}
+          title={formatMessage('editorDeleteLineConfirmationDialogTitle')}
+          message={formatMessage('editorDeleteLineConfirmationDialogMessage')}
+          buttons={[
+            <SecondaryButton
+              key="no"
+              onClick={() => {
+                setLineSelectedForDeletion(undefined);
+              }}
+            >
+              {formatMessage('tableNo')}
+            </SecondaryButton>,
+            <SuccessButton
+              key="yes"
+              onClick={() => {
+                dispatch(deleteLine(lineSelectedForDeletion))
+                  .then(() => {
+                    setLineSelectedForDeletion(undefined);
+                  })
+                  .then(() => dispatch(loadLines()));
+              }}
+            >
+              {formatMessage('tableYes')}
+            </SuccessButton>,
+          ]}
+        />
+      )}
     </div>
   );
 };

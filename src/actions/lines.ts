@@ -17,6 +17,7 @@ import {
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import Line, { lineToPayload } from 'model/Line';
+import FlexibleLine from 'model/FlexibleLine';
 import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
 import { SetActiveProviderAction } from 'actions/providers';
@@ -57,4 +58,35 @@ export const loadLines = () => async (
   const activeProvider = getState().providers.active?.code ?? '';
   const { lines } = await UttuQuery(activeProvider, getLinesQuery);
   dispatch(receiveLinesActionCreator(lines));
+};
+
+export const deleteLine = (line: Line & FlexibleLine) => async (
+  dispatch: Dispatch<any>,
+  getState: () => GlobalState
+) => {
+  const { id, flexibleLineType } = line;
+  const activeProvider = getState().providers.active?.code ?? '';
+  const intl = getIntl(getState());
+  const deleteQuery = flexibleLineType ? deleteFlexibleLine : deleteline;
+
+  try {
+    await UttuQuery(activeProvider, deleteQuery, { id });
+    dispatch(
+      showSuccessNotification(
+        intl.formatMessage('flexibleLinesDeleteLineSuccessHeader'),
+        intl.formatMessage('flexibleLinesDeleteLineSuccessMessage')
+      )
+    );
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        intl.formatMessage('flexibleLinesDeleteLineErrorHeader'),
+        intl.formatMessage(
+          'flexibleLinesDeleteLineErrorMessage',
+          getInternationalizedUttuError(intl, e)
+        )
+      )
+    );
+    sentryCaptureException(e);
+  }
 };
