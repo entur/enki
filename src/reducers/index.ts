@@ -10,6 +10,7 @@ import flexibleStopPlaces, {
 } from './flexibleStopPlaces';
 import editor, { EditorState } from './editor';
 import { AppIntlState } from 'i18n';
+import lines, { LinesState } from './lines';
 
 export type GlobalState = {
   notification: NotificationState;
@@ -18,6 +19,7 @@ export type GlobalState = {
   providers: ProvidersState;
   exports: ExportsState;
   networks: NetworksState;
+  lines: LinesState;
   flexibleLines: FlexibleLinesState;
   flexibleStopPlaces: FlexibleStopPlacesState;
   editor: EditorState;
@@ -31,6 +33,7 @@ const reducers = {
   providers,
   exports,
   networks,
+  lines,
   flexibleLines,
   flexibleStopPlaces,
   editor,

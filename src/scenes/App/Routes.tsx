@@ -5,6 +5,7 @@ import Home from './Home';
 import GetStarted from './GetStarted';
 import NetworksOverview from '../Networks';
 import NetworkEditor from '../Networks/scenes/Editor';
+import LinesOverview from 'scenes/Lines';
 import FlexibleLinesOverview from '../FlexibleLines';
 import FlexibleLinesEditor from '../FlexibleLines/scenes/Editor';
 import StopPlacesOverview from '../StopPlaces';
@@ -21,6 +22,7 @@ const Routes = () => (
       <Route exact path="/networks" component={NetworksOverview} />
       <Route exact path="/networks/create" component={NetworkEditor} />
       <Route exact path="/networks/edit/:id" component={NetworkEditor} />
+      <Route exact path="/lines" component={LinesOverview} />
       <Route exact path="/flexible-lines" component={FlexibleLinesOverview} />
       <Route
         exact

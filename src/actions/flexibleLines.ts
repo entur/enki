@@ -2,7 +2,7 @@ import { UttuQuery } from 'graphql';
 import {
   getFlexibleLineByIdQuery,
   getlineByIdQuery,
-  getLinesQuery,
+  getFlexibleLinesQuery,
 } from 'graphql/uttu/queries';
 import {
   showErrorNotification,
@@ -60,11 +60,11 @@ export const loadFlexibleLines = () => async (
 ) => {
   try {
     const activeProvider = getState().providers.active?.code ?? '';
-    const { flexibleLines, lines } = await UttuQuery(
+    const { flexibleLines } = await UttuQuery(
       activeProvider,
-      getLinesQuery
+      getFlexibleLinesQuery
     );
-    dispatch(receiveFlexibleLinesActionCreator([...flexibleLines, ...lines]));
+    dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
   } catch (e) {
     const intl = getIntl(getState());
     dispatch(

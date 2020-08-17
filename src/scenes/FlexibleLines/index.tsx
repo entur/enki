@@ -3,15 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import {
-  DataCell,
-  HeaderCell,
-  Table,
-  TableBody,
-  TableHead,
-  TableRow,
-} from '@entur/table';
-import Loading from 'components/Loading';
 import { Heading1 } from '@entur/typography';
 import { deleteLine, loadFlexibleLines } from 'actions/flexibleLines';
 import { RouteComponentProps } from 'react-router';
@@ -21,8 +12,8 @@ import { GlobalState } from 'reducers';
 import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
 import ConfirmDialog from 'components/ConfirmDialog';
-import DeleteButton from 'components/DeleteButton/DeleteButton';
 import FlexibleLine from 'model/FlexibleLine';
+import LinesTable from 'components/LinesTable';
 
 const Lines = ({ history }: RouteComponentProps) => {
   const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
@@ -42,56 +33,11 @@ const Lines = ({ history }: RouteComponentProps) => {
     dispatch(loadFlexibleLines());
   }, [dispatch]);
 
-  const handleOnRowClick = (id: string) => history.push(`/lines/edit/${id}`);
-
-  const renderTableRows = () => {
-    if (lines) {
-      return lines.length > 0 ? (
-        lines.map((line) => (
-          <TableRow
-            key={line.id}
-            onClick={() => handleOnRowClick(line.id ?? '')}
-          >
-            <DataCell title={line.description}>{line.name}</DataCell>
-            <DataCell>{line.privateCode}</DataCell>
-            <DataCell>
-              {operator?.find((op) => op.id === line.operatorRef)?.name ?? '-'}
-            </DataCell>
-            <DataCell>
-              {line.flexibleLineType && formatMessage('linesFlexibleDataCell')}
-            </DataCell>
-            <DataCell className="delete-row-cell">
-              <DeleteButton
-                onClick={() => {
-                  setSelectedLine(line);
-                  setShowDeleteDialogue(true);
-                }}
-                title=""
-                thin
-              />
-            </DataCell>
-          </TableRow>
-        ))
-      ) : (
-        <TableRow className="row-no-lines disabled">
-          <DataCell colSpan={3}>
-            {formatMessage('linesNoLinesFoundText')}
-          </DataCell>
-        </TableRow>
-      );
-    } else {
-      return (
-        <TableRow className="disabled">
-          <DataCell colSpan={3}>
-            <Loading
-              className=""
-              text={formatMessage('linesLoadingText')}
-              children={null}
-            />
-          </DataCell>
-        </TableRow>
-      );
-    }
+  const handleOnRowClick = (line: FlexibleLine) =>
+    history.push(`/lines/edit/${line.id}`);
+  const handleOnRowDeleteClick = (line: FlexibleLine) => {
+    setSelectedLine(line);
+    setShowDeleteDialogue(true);
   };
 
   return (
@@ -107,32 +53,21 @@ const Lines = ({ history }: RouteComponentProps) => {
           <AddIcon />
           {formatMessage('linesCreateFlexibleLineIconButtonLabel')}
         </SecondaryButton>
-        <SecondaryButton
-          as={Link}
-          to="/lines/create"
-          className="new-line-button"
-        >
-          <AddIcon />
-          {formatMessage('linesCreateLineIconButtonLabel')}
-        </SecondaryButton>
       </section>
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            <HeaderCell>
-              {formatMessage('linesNameTableHeaderLabel')}
-            </HeaderCell>
-            <HeaderCell>
-              {formatMessage('linesPrivateCodeTableHeaderLabel')}
-            </HeaderCell>
-            <HeaderCell>{formatMessage('linesOperatorTableHeader')}</HeaderCell>
-            <HeaderCell>{''}</HeaderCell>
-            <HeaderCell>{''}</HeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>{renderTableRows()}</TableBody>
-      </Table>
+      <LinesTable
+        nameTableHeader={formatMessage('linesNameTableHeaderLabel')}
+        privateCodeTableHeader={formatMessage(
+          'linesPrivateCodeTableHeaderLabel'
+        )}
+        operatorTableHeader={formatMessage('linesOperatorTableHeader')}
+        noLinesFoundText={formatMessage('linesNoLinesFoundText')}
+        loadingText={formatMessage('linesLoadingText')}
+        lines={lines!}
+        organisations={operator!}
+        onRowClick={handleOnRowClick}
+        onDeleteRowClick={handleOnRowDeleteClick}
+      />
 
       {showDeleteDialogue && selectedLine && (
         <ConfirmDialog
