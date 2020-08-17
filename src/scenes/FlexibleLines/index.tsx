@@ -41,14 +41,14 @@ const Lines = ({ history }: RouteComponentProps) => {
   };
 
   return (
-    <div className="lines">
+    <div className="flexible-lines">
       <Heading1>{formatMessage('linesHeader')}</Heading1>
 
       <section className="buttons">
         <SecondaryButton
           as={Link}
           to="/flexible-lines/create"
-          className="new-line-button"
+          className="new-flexible-line-button"
         >
           <AddIcon />
           {formatMessage('linesCreateFlexibleLineIconButtonLabel')}

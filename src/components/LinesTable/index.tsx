@@ -37,7 +37,7 @@ export default (props: Props) => {
   } = props;
 
   return (
-    <Table>
+    <Table className="lines-table">
       <TableHead>
         <TableRow>
           <HeaderCell>{nameTableHeader}</HeaderCell>
