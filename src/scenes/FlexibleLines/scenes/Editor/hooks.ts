@@ -5,18 +5,6 @@ import { useDispatch } from 'react-redux';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import { loadNetworks } from 'actions/networks';
 import { loadFlexibleLineById } from 'actions/flexibleLines';
-import { equals } from 'ramda';
-
-export const usePristine = (value: any, spoil: boolean): boolean => {
-  const [isPristine, setIsPristine] = useState<boolean>(true);
-  const [initValue] = useState<any>(value);
-
-  useEffect(() => {
-    if (!equals(initValue, value)) setIsPristine(false);
-  }, [value, initValue]);
-
-  return isPristine && !spoil;
-};
 
 export const useLoadDependencies = ({
   match,

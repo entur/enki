@@ -23,7 +23,7 @@ import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
 import { filterAuthorities, OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import Provider from 'model/Provider';

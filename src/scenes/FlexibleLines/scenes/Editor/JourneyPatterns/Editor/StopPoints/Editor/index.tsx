@@ -11,7 +11,7 @@ import { Paragraph } from '@entur/typography';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { AppIntlState, selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';

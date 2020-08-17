@@ -4,7 +4,7 @@ import { InputGroup, TextField } from '@entur/form';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import StopPoint from 'model/StopPoint';
 import { Dropdown } from '@entur/dropdown';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { AppIntlState, selectIntl } from 'i18n';
 import { isBlank } from 'helpers/forms';

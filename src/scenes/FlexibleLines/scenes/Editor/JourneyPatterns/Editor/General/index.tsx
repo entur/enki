@@ -4,7 +4,7 @@ import { InputGroup, TextField } from '@entur/form';
 import { isBlank } from 'helpers/forms';
 import { selectIntl } from 'i18n';
 import JourneyPattern from 'model/JourneyPattern';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import './styles.scss';
 

@@ -6,7 +6,7 @@ import { MatchParams } from 'http/http';
 import { withRouter, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import FlexibleLineEditor from 'scenes/Lines/scenes/Editor/FlexibleLineEditor';
+import FlexibleLineEditor from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditor';
 import { GlobalState } from 'reducers';
 import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
 import {
@@ -181,7 +181,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
 
   return (
     <Page
-      backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
+      backButtonTitle={formatMessage('navBarFlexibleLinesMenuItemLabel')}
       onBackButtonClick={onBackButtonClicked}
     >
       <>

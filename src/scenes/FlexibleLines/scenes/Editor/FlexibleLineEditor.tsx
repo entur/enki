@@ -12,7 +12,7 @@ import { MatchParams } from 'http/http';
 import ServiceJourneysEditor from './ServiceJourneys';
 import { changeElementAtIndex } from 'helpers/arrays';
 import FlexibleLine from 'model/FlexibleLine';
-import { currentStepIsValid } from 'scenes/Lines/scenes/Editor/validateForm';
+import { currentStepIsValid } from 'scenes/FlexibleLines/scenes/Editor/validateForm';
 import { Network } from 'model/Network';
 import { SmallAlertBox } from '@entur/alert';
 import './styles.scss';

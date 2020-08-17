@@ -13,7 +13,7 @@ import {
   VEHICLE_SUBMODE,
   VEHICLE_SUBMODE_LINK,
 } from 'model/enums';
-import { usePristine } from '../hooks';
+import usePristine from 'hooks/usePristine';
 
 type Props = {
   transportMode: VEHICLE_MODE;

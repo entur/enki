@@ -13,7 +13,7 @@ import './styles.scss';
 import FlexibleLine from 'model/FlexibleLine';
 import { Organisation } from 'reducers/organisations';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import ServiceJourney from 'model/ServiceJourney';

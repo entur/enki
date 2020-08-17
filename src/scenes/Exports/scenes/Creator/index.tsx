@@ -13,7 +13,7 @@ import { RouteComponentProps } from 'react-router';
 import { exportIsValid, toDateIsAfterFromDate } from './validateForm';
 import { Export } from 'model/Export';
 import { GlobalState } from 'reducers';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import RequiredInputMarker from 'components/RequiredInputMarker';

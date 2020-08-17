@@ -5,8 +5,8 @@ import Home from './Home';
 import GetStarted from './GetStarted';
 import NetworksOverview from '../Networks';
 import NetworkEditor from '../Networks/scenes/Editor';
-import LinesOverview from '../Lines';
-import EditorFrame from '../Lines/scenes/Editor';
+import FlexibleLinesOverview from '../FlexibleLines';
+import FlexibleLinesEditor from '../FlexibleLines/scenes/Editor';
 import StopPlacesOverview from '../StopPlaces';
 import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import ExportsOverview from '../Exports';
@@ -21,10 +21,17 @@ const Routes = () => (
       <Route exact path="/networks" component={NetworksOverview} />
       <Route exact path="/networks/create" component={NetworkEditor} />
       <Route exact path="/networks/edit/:id" component={NetworkEditor} />
-      <Route exact path="/lines" component={LinesOverview} />
-      <Route exact path="/lines/create/flexible" component={EditorFrame} />
-      <Route exact path="/lines/create/fixed" component={EditorFrame} />
-      <Route exact path="/lines/edit/:id" component={EditorFrame} />
+      <Route exact path="/flexible-lines" component={FlexibleLinesOverview} />
+      <Route
+        exact
+        path="/flexible-lines/create"
+        component={FlexibleLinesEditor}
+      />
+      <Route
+        exact
+        path="/flexible-lines/edit/:id"
+        component={FlexibleLinesEditor}
+      />
       <Route exact path="/stop-places" component={StopPlacesOverview} />
       <Route exact path="/stop-places/create" component={StopPlacesEditor} />
       <Route exact path="/stop-places/edit/:id" component={StopPlacesEditor} />

@@ -51,6 +51,7 @@ export const messages: MessagesKey = {
   navBarIntroduction: 'Introduction',
   navBarExportsMenuItemLabel: 'Exports',
   navBarLinesMenuItemLabel: 'Lines',
+  navBarFlexibleLinesMenuItemLabel: 'Flexible lines',
   navBarNetworksMenuItemLabel: 'Networks',
   navBarRootLinkLogoAltText: 'Logo',
   navBarRootLinkText: '',

@@ -101,7 +101,7 @@ const Lines = ({ history }: RouteComponentProps) => {
       <section className="buttons">
         <SecondaryButton
           as={Link}
-          to="/lines/create/flexible"
+          to="/flexible-lines/create"
           className="new-line-button"
         >
           <AddIcon />
@@ -109,7 +109,7 @@ const Lines = ({ history }: RouteComponentProps) => {
         </SecondaryButton>
         <SecondaryButton
           as={Link}
-          to="/lines/create/fixed"
+          to="/lines/create"
           className="new-line-button"
         >
           <AddIcon />
