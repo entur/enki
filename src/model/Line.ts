@@ -7,7 +7,7 @@ import { Network } from './Network';
 import VersionedType from 'model/VersionedType';
 import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 
-type Line = VersionedType & {
+interface Line extends VersionedType {
   name?: string;
   description?: string;
   privateCode?: string;
@@ -19,7 +19,7 @@ type Line = VersionedType & {
   operatorRef?: string;
   journeyPatterns?: JourneyPattern[];
   notices?: Notice[];
-};
+}
 
 export const initLine = () => ({
   journeyPatterns: initJourneyPatterns(),

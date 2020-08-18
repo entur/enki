@@ -8,13 +8,37 @@ import { SecondaryButton, SuccessButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
 
 import { GlobalState } from 'reducers';
-import { LinesState } from 'reducers/lines';
 import { loadLines, deleteLine } from 'actions/lines';
 import { OrganisationState } from 'reducers/organisations';
 import Line from 'model/Line';
 
 import LinesTable from 'components/LinesTable';
 import ConfirmDialog from 'components/ConfirmDialog';
+
+import { useQuery, useMutation, gql } from '@apollo/client';
+
+const GET_LINES = gql`
+  query GetLines {
+    lines {
+      id
+      name
+      privateCode
+      operatorRef
+    }
+  }
+`;
+
+const DELETE_LINE = gql`
+  mutation Deleteline($id: ID!) {
+    deleteLine(id: $id) {
+      id
+    }
+  }
+`;
+
+interface LinesData {
+  lines: Line[];
+}
 
 export default () => {
   const { formatMessage } = useSelector(selectIntl);
@@ -23,17 +47,14 @@ export default () => {
     Line | undefined
   >();
 
-  const lines = useSelector<GlobalState, LinesState>((state) => state.lines);
+  const { loading, error, data, refetch } = useQuery<LinesData>(GET_LINES);
+  const [deleteLine] = useMutation(DELETE_LINE);
 
   const organisations = useSelector<GlobalState, OrganisationState>(
     (state) => state.organisations
   );
 
   const dispatch = useDispatch<any>();
-
-  useEffect(() => {
-    dispatch(loadLines());
-  }, [dispatch]);
 
   const history = useHistory();
 
@@ -56,7 +77,7 @@ export default () => {
       </section>
 
       <LinesTable
-        lines={lines!}
+        lines={data && data.lines}
         organisations={organisations!}
         onRowClick={handleOnRowClick}
         onDeleteRowClick={setLineSelectedForDeletion}
@@ -81,12 +102,14 @@ export default () => {
             </SecondaryButton>,
             <SuccessButton
               key="yes"
-              onClick={() => {
-                dispatch(deleteLine(lineSelectedForDeletion))
-                  .then(() => {
-                    setLineSelectedForDeletion(undefined);
-                  })
-                  .then(() => dispatch(loadLines()));
+              onClick={async () => {
+                await deleteLine({
+                  variables: {
+                    id: lineSelectedForDeletion.id,
+                  },
+                });
+                setLineSelectedForDeletion(undefined);
+                refetch();
               }}
             >
               {formatMessage('tableYes')}

@@ -1,8 +1,8 @@
 import {
   getFlexibleStopPlaceByIdQuery,
   getFlexibleStopPlacesQuery,
-} from 'graphql/uttu/queries';
-import { UttuQuery } from 'graphql';
+} from 'api/uttu/queries';
+import { UttuQuery } from 'api';
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -10,7 +10,7 @@ import {
 import {
   deleteFlexibleStopPlace,
   flexibleStopPlaceMutation,
-} from 'graphql/uttu/mutations';
+} from 'api/uttu/mutations';
 import { getIntl } from 'i18n';
 import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';

@@ -20,7 +20,7 @@ import Loading from 'components/Loading';
 import './styles.scss';
 
 export type Props = {
-  lines: Line[];
+  lines?: Line[];
   organisations: Organisation[];
   onRowClick: (line: Line) => void;
   onDeleteRowClick: (line: Line) => void;

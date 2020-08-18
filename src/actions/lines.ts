@@ -1,10 +1,10 @@
-import { UttuQuery } from 'graphql';
-import { getLinesQuery } from 'graphql/uttu/queries';
+import { UttuQuery } from 'api';
+import { getLinesQuery } from 'api/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
-import { deleteFlexibleLine, deleteline } from 'graphql/uttu/mutations';
+import { deleteFlexibleLine, deleteline } from 'api/uttu/mutations';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import Line from 'model/Line';

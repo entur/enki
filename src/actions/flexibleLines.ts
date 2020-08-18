@@ -1,14 +1,14 @@
-import { UttuQuery } from 'graphql';
+import { UttuQuery } from 'api';
 import {
   getFlexibleLineByIdQuery,
   getlineByIdQuery,
   getFlexibleLinesQuery,
-} from 'graphql/uttu/queries';
+} from 'api/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
-import { flexibleLineMutation, lineMutation } from 'graphql/uttu/mutations';
+import { flexibleLineMutation, lineMutation } from 'api/uttu/mutations';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';

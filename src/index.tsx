@@ -13,6 +13,7 @@ import { API_BASE } from 'http/http';
 
 import { User } from './reducers/user';
 import './styles/index.scss';
+import { Apollo } from 'api';
 
 const renderIndex = (userInfo: User) => {
   const root = document.getElementById('root');
@@ -22,8 +23,11 @@ const renderIndex = (userInfo: User) => {
     <ErrorBoundary sentry={sentry}>
       {/* Store is not typed yet
           // @ts-ignore */}
+
       <Provider store={store}>
-        <App />
+        <Apollo>
+          <App />
+        </Apollo>
       </Provider>
     </ErrorBoundary>,
     root
