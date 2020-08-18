@@ -122,7 +122,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     // eslint-disable-next-line
   }, [flexibleLines, isLoadingDependencies]);
 
-  const goToLines = () => props.history.push('/lines');
+  const goToLines = () => props.history.push('/flexible-lines');
 
   const onStepClicked = (stepIndexClicked: number) => {
     if (getMaxAllowedStepIndex(line, isFlexibleLine) >= stepIndexClicked) {

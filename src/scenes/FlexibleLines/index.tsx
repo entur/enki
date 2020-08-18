@@ -35,7 +35,7 @@ export default () => {
   const history = useHistory();
 
   const handleOnRowClick = (line: FlexibleLine) =>
-    history.push(`/lines/edit/${line.id}`);
+    history.push(`/flexible-lines/edit/${line.id}`);
   const handleOnRowDeleteClick = (line: FlexibleLine) => {
     setSelectedLine(line);
     setShowDeleteDialogue(true);
