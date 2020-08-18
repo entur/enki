@@ -3,7 +3,7 @@ import { LinesAction, RECEIVE_LINES } from 'actions/lines';
 
 export type LinesState = Line[] | null;
 
-const lines = (lines: LinesState = null, action: LinesAction): LinesState => {
+export default (lines: LinesState = null, action: LinesAction): LinesState => {
   switch (action.type) {
     case RECEIVE_LINES:
       return action.lines;
@@ -12,5 +12,3 @@ const lines = (lines: LinesState = null, action: LinesAction): LinesState => {
       return lines;
   }
 };
-
-export default lines;
