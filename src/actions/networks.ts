@@ -1,6 +1,6 @@
-import { UttuQuery } from 'graphql';
-import { deleteNetwork, networkMutation } from 'graphql/uttu/mutations';
-import { getNetworkByIdQuery, getNetworksQuery } from 'graphql/uttu/queries';
+import { UttuQuery } from 'api';
+import { deleteNetwork, networkMutation } from 'api/uttu/mutations';
+import { getNetworkByIdQuery, getNetworksQuery } from 'api/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,

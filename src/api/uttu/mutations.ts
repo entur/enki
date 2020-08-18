@@ -1,3 +1,5 @@
+import { gql } from '@apollo/client';
+
 export const networkMutation = `
   mutation MutateNetwork($input: NetworkInput!) {
     mutateNetwork(input: $input) { id }
@@ -49,5 +51,13 @@ export const lineMutation = `
 export const deleteline = `
   mutation Deleteline($id: ID!) {
     deleteLine(id: $id) { id }
+  }
+`;
+
+export const DELETE_LINE = gql`
+  mutation Deleteline($id: ID!) {
+    deleteLine(id: $id) {
+      id
+    }
   }
 `;

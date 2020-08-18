@@ -1,3 +1,5 @@
+import { gql } from '@apollo/client';
+
 export const getProvidersQuery = `
   query GetProviders {
     providers {
@@ -326,6 +328,28 @@ export const getExportByIdQuery = `
         severity,
         message
       }
+    }
+  }
+`;
+
+export const GET_LINES = gql`
+  query GetLines {
+    lines {
+      id
+      name
+      privateCode
+      operatorRef
+    }
+  }
+`;
+
+export const GET_LINE_BY_ID = gql`
+  query GetlineById($id: ID!) {
+    line(id: $id) {
+      id
+      name
+      privateCode
+      operatorRef
     }
   }
 `;

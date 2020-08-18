@@ -1,4 +1,4 @@
-import { StopPlacesQuery } from 'graphql';
+import { StopPlacesQuery } from 'api';
 
 export type Quay = {
   id: string;

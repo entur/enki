@@ -234,10 +234,10 @@ const StopPointEditor = ({
         message={formatMessage('deleteMessage')}
         buttons={[
           <SecondaryButton key="no" onClick={() => setDeleteDialogOpen(false)}>
-            {formatMessage('tableNo')}
+            {formatMessage('no')}
           </SecondaryButton>,
           <SuccessButton key="yes" onClick={deleteStopPoint}>
-            {formatMessage('tableYes')}
+            {formatMessage('yes')}
           </SuccessButton>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}

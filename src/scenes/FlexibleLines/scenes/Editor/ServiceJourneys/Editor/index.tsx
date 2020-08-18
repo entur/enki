@@ -259,10 +259,10 @@ const ServiceJourneyEditor = (props: Props) => {
                 key={2}
                 onClick={() => setShowDeleteDialog(false)}
               >
-                {formatMessage('tableNo')}
+                {formatMessage('no')}
               </SecondaryButton>,
               <SuccessButton key={1} onClick={deleteServiceJourney}>
-                {formatMessage('tableYes')}
+                {formatMessage('yes')}
               </SuccessButton>,
             ]}
             onDismiss={() => setShowDeleteDialog(false)}

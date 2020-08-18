@@ -1,5 +1,5 @@
-import { UttuQuery } from 'graphql';
-import { getProvidersQuery } from 'graphql/uttu/queries';
+import { UttuQuery } from 'api';
+import { getProvidersQuery } from 'api/uttu/queries';
 import Provider from 'model/Provider';
 import { Dispatch } from 'redux';
 import { GlobalState } from 'reducers';

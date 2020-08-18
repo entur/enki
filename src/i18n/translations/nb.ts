@@ -18,8 +18,8 @@ export const messages = {
   flexibleLinesLoadLineByIdErrorHeader: 'Laste linje',
   flexibleLinesLoadLineByIdErrorMessage:
     'En feil oppstod under lastingen av linjen: {details}',
-  flexibleLinesLoadLinesErrorHeader: 'Laste linjer',
-  flexibleLinesLoadLinesErrorMessage:
+  loadLinesErrorHeader: 'Laste linjer',
+  loadLinesErrorMessage:
     'En feil oppstod under lastingen av linjene: {details}',
   flexibleLinesSaveLineErrorHeader: 'Lagre linje',
   flexibleLinesSaveLineErrorMessage:
@@ -324,8 +324,8 @@ export const messages = {
   labelFrontTextRequired: 'Fronttekst *',
   labelBoarding: 'På-/avstigning',
   labelQuayRef: 'Plattform-ID *',
-  tableYes: 'Ja',
-  tableNo: 'Nei',
+  yes: 'Ja',
+  no: 'Nei',
   tableName: 'Navn',
   tableFrontText: 'Fronttekst',
   frontTextTooltip: 'Teksten som skal vises foran på kjøretøyet',

@@ -80,7 +80,7 @@ export default () => {
                 setShowDeleteDialogue(false);
               }}
             >
-              {formatMessage('tableNo')}
+              {formatMessage('no')}
             </SecondaryButton>,
             <SuccessButton
               key="yes"
@@ -93,7 +93,7 @@ export default () => {
                   .then(() => dispatch(loadFlexibleLines()));
               }}
             >
-              {formatMessage('tableYes')}
+              {formatMessage('yes')}
             </SuccessButton>,
           ]}
         />

@@ -58,14 +58,10 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
             {sp.destinationDisplay ? sp.destinationDisplay.frontText : ''}
           </DataCell>
           <DataCell>
-            {sp.forBoarding
-              ? formatMessage('tableYes')
-              : formatMessage('tableNo')}
+            {sp.forBoarding ? formatMessage('yes') : formatMessage('no')}
           </DataCell>
           <DataCell>
-            {sp.forAlighting
-              ? formatMessage('tableYes')
-              : formatMessage('tableNo')}
+            {sp.forAlighting ? formatMessage('yes') : formatMessage('no')}
           </DataCell>
           <DataCell>
             <div
@@ -106,10 +102,10 @@ const StopPointsTable = ({ stopPoints, onRowClick, onDeleteClick }: Props) => {
         message={formatMessage('tableDeleteMessage')}
         buttons={[
           <SecondaryButton key={2} onClick={() => setRemoveDialogOpenFor(null)}>
-            {formatMessage('tableNo')}
+            {formatMessage('no')}
           </SecondaryButton>,
           <SuccessButton key={1} onClick={() => doDelete()}>
-            {formatMessage('tableYes')}
+            {formatMessage('yes')}
           </SuccessButton>,
         ]}
         onDismiss={() => setRemoveDialogOpenFor(null)}

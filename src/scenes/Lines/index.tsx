@@ -1,20 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Link, useHistory } from 'react-router-dom';
+import { useQuery, useMutation, NetworkStatus } from '@apollo/client';
 
 import { Heading1 } from '@entur/typography';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
 
 import { GlobalState } from 'reducers';
-import { LinesState } from 'reducers/lines';
-import { loadLines, deleteLine } from 'actions/lines';
 import { OrganisationState } from 'reducers/organisations';
 import Line from 'model/Line';
+import { GET_LINES } from 'api/uttu/queries';
+import { DELETE_LINE } from 'api/uttu/mutations';
+import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 
 import LinesTable from 'components/LinesTable';
 import ConfirmDialog from 'components/ConfirmDialog';
+import useUttuError from 'hooks/useUttuError';
+
+interface LinesData {
+  lines: Line[];
+}
 
 export default () => {
   const { formatMessage } = useSelector(selectIntl);
@@ -23,40 +30,38 @@ export default () => {
     Line | undefined
   >();
 
-  const lines = useSelector<GlobalState, LinesState>((state) => state.lines);
+  const { loading, data, error, refetch, networkStatus } = useQuery<LinesData>(
+    GET_LINES,
+    {
+      notifyOnNetworkStatusChange: true,
+    }
+  );
+  const [deleteLine] = useMutation(DELETE_LINE);
+
+  useRefetchOnLocationChange(refetch);
+  useUttuError('loadLinesErrorHeader', 'loadLinesErrorMessage', error);
 
   const organisations = useSelector<GlobalState, OrganisationState>(
     (state) => state.organisations
   );
 
-  const dispatch = useDispatch<any>();
-
-  useEffect(() => {
-    dispatch(loadLines());
-  }, [dispatch]);
-
   const history = useHistory();
-
   const handleOnRowClick = (line: Line) =>
     history.push(`/lines/edit/${line.id}`);
+
+  const done = !loading && networkStatus !== NetworkStatus.refetch;
 
   return (
     <div className="lines">
       <Heading1>{formatMessage('linesHeader')}</Heading1>
 
-      <section className="buttons">
-        <SecondaryButton
-          as={Link}
-          to="/lines/create"
-          className="new-line-button"
-        >
-          <AddIcon />
-          {formatMessage('linesCreateLineIconButtonLabel')}
-        </SecondaryButton>
-      </section>
+      <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
+        <AddIcon />
+        {formatMessage('linesCreateLineIconButtonLabel')}
+      </SecondaryButton>
 
       <LinesTable
-        lines={lines!}
+        lines={done ? data && data.lines : undefined}
         organisations={organisations!}
         onRowClick={handleOnRowClick}
         onDeleteRowClick={setLineSelectedForDeletion}
@@ -77,19 +82,21 @@ export default () => {
                 setLineSelectedForDeletion(undefined);
               }}
             >
-              {formatMessage('tableNo')}
+              {formatMessage('no')}
             </SecondaryButton>,
             <SuccessButton
               key="yes"
-              onClick={() => {
-                dispatch(deleteLine(lineSelectedForDeletion))
-                  .then(() => {
-                    setLineSelectedForDeletion(undefined);
-                  })
-                  .then(() => dispatch(loadLines()));
+              onClick={async () => {
+                await deleteLine({
+                  variables: {
+                    id: lineSelectedForDeletion.id,
+                  },
+                });
+                setLineSelectedForDeletion(undefined);
+                refetch();
               }}
             >
-              {formatMessage('tableYes')}
+              {formatMessage('yes')}
             </SuccessButton>,
           ]}
         />
