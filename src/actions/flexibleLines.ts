@@ -1,9 +1,9 @@
-import { UttuQuery } from 'graphql';
+import { UttuQuery } from 'api';
 import {
   getFlexibleLineByIdQuery,
   getlineByIdQuery,
   getLinesQuery,
-} from 'graphql/uttu/queries';
+} from 'api/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -13,7 +13,7 @@ import {
   deleteline,
   flexibleLineMutation,
   lineMutation,
-} from 'graphql/uttu/mutations';
+} from 'api/uttu/mutations';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { getIntl } from 'i18n';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
@@ -69,9 +69,9 @@ export const loadFlexibleLines = () => async (
     const intl = getIntl(getState());
     dispatch(
       showErrorNotification(
-        intl.formatMessage('flexibleLinesLoadLinesErrorHeader'),
+        intl.formatMessage('loadLinesErrorHeader'),
         intl.formatMessage(
-          'flexibleLinesLoadLinesErrorMessage',
+          'loadLinesErrorMessage',
           getInternationalizedUttuError(intl, e)
         )
       )

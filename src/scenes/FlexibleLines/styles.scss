@@ -1,4 +1,4 @@
-.lines {
+.flexible-lines {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -10,6 +10,6 @@
   }
 }
 
-.new-line-button {
+.new-flexible-line-button {
   width: 17rem;
 }

@@ -20,9 +20,8 @@ export const messages: MessagesKey = {
   flexibleLinesLoadLineByIdErrorHeader: 'Load line',
   flexibleLinesLoadLineByIdErrorMessage:
     'An error occurred while loading the line: {details}',
-  flexibleLinesLoadLinesErrorHeader: 'Load lines',
-  flexibleLinesLoadLinesErrorMessage:
-    'An error occurred while loading lines: {details}',
+  loadLinesErrorHeader: 'Load lines',
+  loadLinesErrorMessage: 'An error occurred while loading lines: {details}',
   flexibleLinesSaveLineErrorHeader: 'Save line',
   flexibleLinesSaveLineErrorMessage:
     'An error occurred while saving the line: {details}',
@@ -51,6 +50,7 @@ export const messages: MessagesKey = {
   navBarIntroduction: 'Introduction',
   navBarExportsMenuItemLabel: 'Exports',
   navBarLinesMenuItemLabel: 'Lines',
+  navBarFlexibleLinesMenuItemLabel: 'Flexible lines',
   navBarNetworksMenuItemLabel: 'Networks',
   navBarRootLinkLogoAltText: 'Logo',
   navBarRootLinkText: '',
@@ -338,8 +338,8 @@ export const messages: MessagesKey = {
   frontTextAlighting: 'First stop can only be for boarding',
   frontTextBoarding: 'Last stop can only be for alighting',
   quayRefInvalid: 'Invalid platform ID',
-  tableYes: 'Yes',
-  tableNo: 'No',
+  yes: 'Yes',
+  no: 'No',
   tableName: 'Name',
   tableFrontText: 'Front text',
   frontTextTooltip: 'The text that is shown at the front of the vehicle',

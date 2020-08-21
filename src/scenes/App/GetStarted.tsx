@@ -37,8 +37,8 @@ const GetStarted = () => {
             <ListItem>
               <>
                 {formatMessage('item2pre')}
-                <Link to="/lines">
-                  {formatMessage('navBarLinesMenuItemLabel')}
+                <Link to="/flexible-lines">
+                  {formatMessage('navBarFlexibleLinesMenuItemLabel')}
                 </Link>
                 {formatMessage('item2post')}
               </>

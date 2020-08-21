@@ -1,176 +1,96 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { AddIcon } from '@entur/icons';
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import {
-  DataCell,
-  HeaderCell,
-  Table,
-  TableBody,
-  TableHead,
-  TableRow,
-} from '@entur/table';
-import Loading from 'components/Loading';
-import { Heading1 } from '@entur/typography';
-import { deleteLine, loadFlexibleLines } from 'actions/flexibleLines';
-import { RouteComponentProps } from 'react-router';
-import './styles.scss';
+import React, { useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
+import { Link, useHistory } from 'react-router-dom';
+import { useQuery, useMutation, NetworkStatus } from '@apollo/client';
+
+import { Heading1 } from '@entur/typography';
+import { SecondaryButton } from '@entur/button';
+import { AddIcon } from '@entur/icons';
+
 import { GlobalState } from 'reducers';
 import { OrganisationState } from 'reducers/organisations';
-import { FlexibleLinesState } from 'reducers/flexibleLines';
-import ConfirmDialog from 'components/ConfirmDialog';
-import DeleteButton from 'components/DeleteButton/DeleteButton';
-import FlexibleLine from 'model/FlexibleLine';
+import Line from 'model/Line';
+import { GET_LINES } from 'api/uttu/queries';
+import { DELETE_LINE } from 'api/uttu/mutations';
+import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 
-const Lines = ({ history }: RouteComponentProps) => {
-  const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
-  const [selectedLine, setSelectedLine] = useState<FlexibleLine | undefined>(
-    undefined
-  );
+import LinesTable from 'components/LinesTable';
+import useUttuError from 'hooks/useUttuError';
+import DeleteConfirmationDialog from './DeleteConfirmationDialog';
+
+interface LinesData {
+  lines: Line[];
+}
+
+export default () => {
   const { formatMessage } = useSelector(selectIntl);
-  const lines = useSelector<GlobalState, FlexibleLinesState>(
-    (state) => state.flexibleLines
+
+  const [lineSelectedForDeletion, setLineSelectedForDeletion] = useState<
+    Line | undefined
+  >();
+
+  const { loading, data, error, refetch, networkStatus } = useQuery<LinesData>(
+    GET_LINES,
+    {
+      notifyOnNetworkStatusChange: true,
+    }
   );
-  const operator = useSelector<GlobalState, OrganisationState>(
+  const [deleteLine] = useMutation(DELETE_LINE);
+
+  const confirmDelete = useCallback(async () => {
+    await deleteLine({
+      variables: {
+        id: lineSelectedForDeletion?.id,
+      },
+    });
+    setLineSelectedForDeletion(undefined);
+    refetch();
+  }, [
+    deleteLine,
+    lineSelectedForDeletion,
+    setLineSelectedForDeletion,
+    refetch,
+  ]);
+
+  const dismissDelete = useCallback(() => {
+    setLineSelectedForDeletion(undefined);
+  }, [setLineSelectedForDeletion]);
+
+  useRefetchOnLocationChange(refetch);
+  useUttuError('loadLinesErrorHeader', 'loadLinesErrorMessage', error);
+
+  const organisations = useSelector<GlobalState, OrganisationState>(
     (state) => state.organisations
   );
-  const dispatch = useDispatch<any>();
 
-  useEffect(() => {
-    dispatch(loadFlexibleLines());
-  }, [dispatch]);
+  const history = useHistory();
+  const handleOnRowClick = (line: Line) =>
+    history.push(`/lines/edit/${line.id}`);
 
-  const handleOnRowClick = (id: string) => history.push(`/lines/edit/${id}`);
-
-  const renderTableRows = () => {
-    if (lines) {
-      return lines.length > 0 ? (
-        lines.map((line) => (
-          <TableRow
-            key={line.id}
-            onClick={() => handleOnRowClick(line.id ?? '')}
-          >
-            <DataCell title={line.description}>{line.name}</DataCell>
-            <DataCell>{line.privateCode}</DataCell>
-            <DataCell>
-              {operator?.find((op) => op.id === line.operatorRef)?.name ?? '-'}
-            </DataCell>
-            <DataCell>
-              {line.flexibleLineType && formatMessage('linesFlexibleDataCell')}
-            </DataCell>
-            <DataCell className="delete-row-cell">
-              <DeleteButton
-                onClick={() => {
-                  setSelectedLine(line);
-                  setShowDeleteDialogue(true);
-                }}
-                title=""
-                thin
-              />
-            </DataCell>
-          </TableRow>
-        ))
-      ) : (
-        <TableRow className="row-no-lines disabled">
-          <DataCell colSpan={3}>
-            {formatMessage('linesNoLinesFoundText')}
-          </DataCell>
-        </TableRow>
-      );
-    } else {
-      return (
-        <TableRow className="disabled">
-          <DataCell colSpan={3}>
-            <Loading
-              className=""
-              text={formatMessage('linesLoadingText')}
-              children={null}
-            />
-          </DataCell>
-        </TableRow>
-      );
-    }
-  };
+  const done = !loading && networkStatus !== NetworkStatus.refetch;
 
   return (
     <div className="lines">
       <Heading1>{formatMessage('linesHeader')}</Heading1>
 
-      <section className="buttons">
-        <SecondaryButton
-          as={Link}
-          to="/lines/create/flexible"
-          className="new-line-button"
-        >
-          <AddIcon />
-          {formatMessage('linesCreateFlexibleLineIconButtonLabel')}
-        </SecondaryButton>
-        <SecondaryButton
-          as={Link}
-          to="/lines/create/fixed"
-          className="new-line-button"
-        >
-          <AddIcon />
-          {formatMessage('linesCreateLineIconButtonLabel')}
-        </SecondaryButton>
-      </section>
+      <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
+        <AddIcon />
+        {formatMessage('linesCreateLineIconButtonLabel')}
+      </SecondaryButton>
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            <HeaderCell>
-              {formatMessage('linesNameTableHeaderLabel')}
-            </HeaderCell>
-            <HeaderCell>
-              {formatMessage('linesPrivateCodeTableHeaderLabel')}
-            </HeaderCell>
-            <HeaderCell>{formatMessage('linesOperatorTableHeader')}</HeaderCell>
-            <HeaderCell>{''}</HeaderCell>
-            <HeaderCell>{''}</HeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>{renderTableRows()}</TableBody>
-      </Table>
+      <LinesTable
+        lines={done ? data && data.lines : undefined}
+        organisations={organisations!}
+        onRowClick={handleOnRowClick}
+        onDeleteRowClick={setLineSelectedForDeletion}
+      />
 
-      {showDeleteDialogue && selectedLine && (
-        <ConfirmDialog
-          isOpen
-          onDismiss={() => {
-            setSelectedLine(undefined);
-            setShowDeleteDialogue(false);
-          }}
-          title={formatMessage('editorDeleteLineConfirmationDialogTitle')}
-          message={formatMessage('editorDeleteLineConfirmationDialogMessage')}
-          buttons={[
-            <SecondaryButton
-              key="no"
-              onClick={() => {
-                setSelectedLine(undefined);
-                setShowDeleteDialogue(false);
-              }}
-            >
-              {formatMessage('tableNo')}
-            </SecondaryButton>,
-            <SuccessButton
-              key="yes"
-              onClick={() => {
-                dispatch(deleteLine(selectedLine))
-                  .then(() => {
-                    setSelectedLine(undefined);
-                    setShowDeleteDialogue(false);
-                  })
-                  .then(() => dispatch(loadFlexibleLines()));
-              }}
-            >
-              {formatMessage('tableYes')}
-            </SuccessButton>,
-          ]}
-        />
-      )}
+      <DeleteConfirmationDialog
+        visible={!!lineSelectedForDeletion}
+        onDismiss={dismissDelete}
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 };
-
-export default withRouter(Lines);

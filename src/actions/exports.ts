@@ -1,6 +1,6 @@
-import { UttuQuery } from 'graphql';
-import { exportMutation } from 'graphql/uttu/mutations';
-import { getExportByIdQuery, getExportsQuery } from 'graphql/uttu/queries';
+import { UttuQuery } from 'api';
+import { exportMutation } from 'api/uttu/mutations';
+import { getExportByIdQuery, getExportsQuery } from 'api/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,

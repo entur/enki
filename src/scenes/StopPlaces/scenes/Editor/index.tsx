@@ -40,7 +40,7 @@ import GeoJSON, {
   stringIsValidCoordinates,
 } from 'model/GeoJSON';
 import { equals } from 'ramda';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { LeafletMouseEvent } from 'leaflet';

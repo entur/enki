@@ -33,7 +33,7 @@ const Home = () => {
             title={formatMessage('navBarLinesMenuItemLabel')}
             titleIcon={<BusIcon className="bus-icon" />}
             as={Link}
-            to="/lines"
+            to="/flexible-lines"
             className="card-link"
           >
             {formatMessage('homeCardsLinesDescription')}

@@ -144,7 +144,7 @@ const Networks = ({ history }: RouteComponentProps) => {
                     setShowDeleteDialogue(false);
                   }}
                 >
-                  {formatMessage('tableNo')}
+                  {formatMessage('no')}
                 </SecondaryButton>,
                 <SuccessButton
                   key="yes"
@@ -157,7 +157,7 @@ const Networks = ({ history }: RouteComponentProps) => {
                       .then(() => dispatch(loadNetworks()));
                   }}
                 >
-                  {formatMessage('tableYes')}
+                  {formatMessage('yes')}
                 </SuccessButton>,
               ]}
             />

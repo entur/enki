@@ -3,7 +3,7 @@ import React from 'react';
 import { InputGroup } from '@entur/form';
 import { FilterChip } from '@entur/chip';
 import { DAY_OF_WEEK } from 'model/enums';
-import { usePristine } from 'scenes/Lines/scenes/Editor/hooks';
+import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
