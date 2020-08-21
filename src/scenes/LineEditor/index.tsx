@@ -72,8 +72,8 @@ export default () => {
     () => history.push('/lines')
   );
 
-  const onChange = (line: Line) => {
-    setLine(line);
+  const onChange = (changeLine: Line) => {
+    setLine(changeLine);
     dispatch(setSavedChanges(false));
   };
 
