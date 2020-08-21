@@ -15,8 +15,8 @@ export const messages = {
     'En feil oppstod under slettingen av linjen: {details}',
   flexibleLinesDeleteLineSuccessHeader: 'Slette linje',
   flexibleLinesDeleteLineSuccessMessage: 'Linjen ble slettet',
-  flexibleLinesLoadLineByIdErrorHeader: 'Laste linje',
-  flexibleLinesLoadLineByIdErrorMessage:
+  loadLineByIdErrorHeader: 'Laste linje',
+  loadLineByIdErrorMessage:
     'En feil oppstod under lastingen av linjen: {details}',
   loadLinesErrorHeader: 'Laste linjer',
   loadLinesErrorMessage:

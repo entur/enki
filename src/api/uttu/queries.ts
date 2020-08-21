@@ -343,13 +343,50 @@ export const GET_LINES = gql`
   }
 `;
 
-export const GET_LINE_BY_ID = gql`
-  query GetlineById($id: ID!) {
+const LineEditorPage = {
+  fragments: {
+    line: gql`
+      fragment LineEditorPageLine on Line {
+        id
+        version
+        created
+        createdBy
+        changed
+        changedBy
+        name
+        description
+        privateCode
+        publicCode
+        transportMode
+        transportSubmode
+        operatorRef
+        network {
+          id
+          authorityRef
+        }
+      }
+    `,
+    networks: gql`
+      fragment LineEditorPageNetworks on Network {
+        id
+        name
+        description
+        privateCode
+        authorityRef
+      }
+    `,
+  },
+};
+
+export const LINE_EDITOR_QUERY = gql`
+  query LineEditorQuery($id: ID!) {
     line(id: $id) {
-      id
-      name
-      privateCode
-      operatorRef
+      ...LineEditorPageLine
+    }
+    networks {
+      ...LineEditorPageNetworks
     }
   }
+  ${LineEditorPage.fragments.line}
+  ${LineEditorPage.fragments.networks}
 `;

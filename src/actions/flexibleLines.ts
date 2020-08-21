@@ -102,9 +102,9 @@ export const loadFlexibleLineById = (
     const intl = getIntl(getState());
     dispatch(
       showErrorNotification(
-        intl.formatMessage('flexibleLinesLoadLineByIdErrorHeader'),
+        intl.formatMessage('loadLineByIdErrorHeader'),
         intl.formatMessage(
-          'flexibleLinesLoadLineByIdErrorMessage',
+          'loadLineByIdErrorMessage',
           getInternationalizedUttuError(intl, e)
         )
       )

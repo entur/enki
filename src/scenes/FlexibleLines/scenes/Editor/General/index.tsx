@@ -171,7 +171,10 @@ export default ({
         />
 
         <Dropdown
-          initialSelectedItem={getInit(networks, flexibleLine.networkRef)}
+          initialSelectedItem={getInit(
+            networks,
+            flexibleLine.networkRef || flexibleLine.network?.id
+          )}
           placeholder={formatMessage('defaultOption')}
           items={mapToItems(networks)}
           clearable

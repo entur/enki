@@ -17,8 +17,8 @@ export const messages: MessagesKey = {
     'An error occured while deleting the line: {details}',
   flexibleLinesDeleteLineSuccessHeader: 'Delete line',
   flexibleLinesDeleteLineSuccessMessage: 'The line was deleted',
-  flexibleLinesLoadLineByIdErrorHeader: 'Load line',
-  flexibleLinesLoadLineByIdErrorMessage:
+  loadLineByIdErrorHeader: 'Load line',
+  loadLineByIdErrorMessage:
     'An error occurred while loading the line: {details}',
   loadLinesErrorHeader: 'Load lines',
   loadLinesErrorMessage: 'An error occurred while loading lines: {details}',
