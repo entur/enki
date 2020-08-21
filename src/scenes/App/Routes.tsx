@@ -23,6 +23,8 @@ const Routes = () => (
       <Route exact path="/networks/create" component={NetworkEditor} />
       <Route exact path="/networks/edit/:id" component={NetworkEditor} />
       <Route exact path="/lines" component={LinesOverview} />
+      <Route exact path="/lines/edit/:id" component={FlexibleLinesEditor} />
+      <Route exact path="/lines/create" component={FlexibleLinesEditor} />
       <Route exact path="/flexible-lines" component={FlexibleLinesOverview} />
       <Route
         exact

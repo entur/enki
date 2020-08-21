@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Link, useHistory } from 'react-router-dom';
@@ -18,6 +18,7 @@ import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import LinesTable from 'components/LinesTable';
 import ConfirmDialog from 'components/ConfirmDialog';
 import useUttuError from 'hooks/useUttuError';
+import DeleteConfirmationDialog from './DeleteConfirmationDialog';
 
 interface LinesData {
   lines: Line[];
@@ -37,6 +38,25 @@ export default () => {
     }
   );
   const [deleteLine] = useMutation(DELETE_LINE);
+
+  const confirmDelete = useCallback(async () => {
+    await deleteLine({
+      variables: {
+        id: lineSelectedForDeletion?.id,
+      },
+    });
+    setLineSelectedForDeletion(undefined);
+    refetch();
+  }, [
+    deleteLine,
+    lineSelectedForDeletion,
+    setLineSelectedForDeletion,
+    refetch,
+  ]);
+
+  const dismissDelete = useCallback(() => {
+    setLineSelectedForDeletion(undefined);
+  }, [setLineSelectedForDeletion]);
 
   useRefetchOnLocationChange(refetch);
   useUttuError('loadLinesErrorHeader', 'loadLinesErrorMessage', error);
@@ -67,40 +87,11 @@ export default () => {
         onDeleteRowClick={setLineSelectedForDeletion}
       />
 
-      {lineSelectedForDeletion && (
-        <ConfirmDialog
-          isOpen
-          onDismiss={() => {
-            setLineSelectedForDeletion(undefined);
-          }}
-          title={formatMessage('editorDeleteLineConfirmationDialogTitle')}
-          message={formatMessage('editorDeleteLineConfirmationDialogMessage')}
-          buttons={[
-            <SecondaryButton
-              key="no"
-              onClick={() => {
-                setLineSelectedForDeletion(undefined);
-              }}
-            >
-              {formatMessage('no')}
-            </SecondaryButton>,
-            <SuccessButton
-              key="yes"
-              onClick={async () => {
-                await deleteLine({
-                  variables: {
-                    id: lineSelectedForDeletion.id,
-                  },
-                });
-                setLineSelectedForDeletion(undefined);
-                refetch();
-              }}
-            >
-              {formatMessage('yes')}
-            </SuccessButton>,
-          ]}
-        />
-      )}
+      <DeleteConfirmationDialog
+        visible={!!lineSelectedForDeletion}
+        onDismiss={dismissDelete}
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 };

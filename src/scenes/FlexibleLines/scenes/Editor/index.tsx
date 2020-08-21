@@ -69,9 +69,9 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
-  const [lastPath] = useLocation().pathname.split('/').slice(-1);
+  const [firstPath] = useLocation().pathname.split('/').slice(1);
   const isFlexibleLine = Boolean(
-    line?.flexibleLineType || lastPath === 'flexible'
+    line?.flexibleLineType || firstPath === 'flexible-lines'
   );
 
   const { formatMessage } = useSelector(selectIntl);
@@ -122,7 +122,8 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     // eslint-disable-next-line
   }, [flexibleLines, isLoadingDependencies]);
 
-  const goToLines = () => props.history.push('/flexible-lines');
+  const goToLines = () =>
+    props.history.push(isFlexibleLine ? '/flexible-lines' : '/lines');
 
   const onStepClicked = (stepIndexClicked: number) => {
     if (getMaxAllowedStepIndex(line, isFlexibleLine) >= stepIndexClicked) {
@@ -181,7 +182,11 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
 
   return (
     <Page
-      backButtonTitle={formatMessage('navBarFlexibleLinesMenuItemLabel')}
+      backButtonTitle={
+        isFlexibleLine
+          ? formatMessage('navBarFlexibleLinesMenuItemLabel')
+          : formatMessage('navBarLinesMenuItemLabel')
+      }
       onBackButtonClick={onBackButtonClicked}
     >
       <>
@@ -228,7 +233,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         {showConfirm && (
           <NavigateConfirmBox
             hideDialog={() => setShowConfirm(false)}
-            redirectTo="/lines"
+            redirectTo={isFlexibleLine ? '/flexible-lines' : '/lines'}
             title={formatMessage('redirectTitle')}
             description={formatMessage('redirectMessage')}
             confirmText={formatMessage('redirectYes')}
