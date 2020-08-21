@@ -21,7 +21,6 @@ import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
 import { SetActiveProviderAction } from 'actions/providers';
 import { sentryCaptureException } from 'store';
-import flexibleLines from 'reducers/flexibleLines';
 
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINE = 'RECEIVE_FLEXIBLE_LINE';
