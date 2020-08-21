@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
@@ -12,12 +12,12 @@ import EditorNavigationButtons from 'components/EditorNavigationButtons';
 import { isBlank } from 'helpers/forms';
 import { LINE_EDITOR_QUERY } from 'api/uttu/queries';
 import { DELETE_LINE } from 'api/uttu/mutations';
-import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import useUttuError from 'hooks/useUttuError';
 import FlexibleLineEditor from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditor';
 import { Network } from 'model/Network';
 import { GlobalState } from 'reducers';
 import { filterNetexOperators } from 'reducers/organisations';
+import { setSavedChanges } from 'actions/editor';
 
 enum LINE_STEP {
   ABOUT = 'stepperAbout',
@@ -45,6 +45,9 @@ export default () => {
   const history = useHistory();
   const match = useRouteMatch<MatchParams>('/lines/edit/:id');
 
+  const [line, setLine] = useState<Line>();
+
+  const dispatch = useDispatch<any>();
   const { organisations, editor, providers } = useSelector<
     GlobalState,
     GlobalState
@@ -57,6 +60,15 @@ export default () => {
     }
   );
 
+  useEffect(() => {
+    if (data?.line) {
+      setLine({
+        ...data.line,
+        networkRef: data.line.network?.id,
+      });
+    }
+  }, [data]);
+
   const [deleteLine] = useMutation(DELETE_LINE);
 
   useUttuError(
@@ -66,14 +78,17 @@ export default () => {
     () => history.push('/lines')
   );
 
-  useRefetchOnLocationChange(refetch);
+  const onChange = (line: Line) => {
+    setLine(line);
+    dispatch(setSavedChanges(false));
+  };
 
   const onDelete = useCallback(() => {
     deleteLine({
       variables: { id: match?.params?.id },
     });
     history.push('/lines');
-  }, [match?.params?.id]);
+  }, [match, deleteLine, history]);
 
   return (
     <Page
@@ -81,7 +96,7 @@ export default () => {
       onBackButtonClick={() => history.push('/lines')}
     >
       <Loading
-        isLoading={loading}
+        isLoading={loading || !line}
         text={formatMessage('editorLoadingLineText')}
       >
         <>
@@ -91,11 +106,11 @@ export default () => {
             onStepClick={() => {}}
           />
           <FlexibleLineEditor
-            isEdit={true}
+            isEdit={!isBlank(match?.params.id)}
             activeStep={0}
             setActiveStep={() => {}}
-            flexibleLine={data?.line!}
-            changeFlexibleLine={() => {}}
+            flexibleLine={line!}
+            changeFlexibleLine={onChange}
             operators={filterNetexOperators(organisations ?? [])}
             networks={data?.networks || []}
             spoilPristine={false}
