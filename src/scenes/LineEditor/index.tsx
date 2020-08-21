@@ -48,17 +48,11 @@ export default () => {
   const [line, setLine] = useState<Line>();
 
   const dispatch = useDispatch<any>();
-  const { organisations, editor, providers } = useSelector<
-    GlobalState,
-    GlobalState
-  >((s) => s);
+  const { organisations } = useSelector<GlobalState, GlobalState>((s) => s);
 
-  const { loading, error, data, refetch } = useQuery<LineData>(
-    LINE_EDITOR_QUERY,
-    {
-      variables: { id: match?.params.id },
-    }
-  );
+  const { loading, error, data } = useQuery<LineData>(LINE_EDITOR_QUERY, {
+    variables: { id: match?.params.id },
+  });
 
   useEffect(() => {
     if (data?.line) {
