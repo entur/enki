@@ -364,6 +364,55 @@ const LineEditorPage = {
           id
           authorityRef
         }
+        journeyPatterns {
+          id
+          name
+          description
+          privateCode
+          pointsInSequence {
+            id
+            flexibleStopPlace {
+              id
+            }
+            quayRef
+            destinationDisplay {
+              frontText
+            }
+            forBoarding
+            forAlighting
+          }
+          serviceJourneys {
+            id
+            name
+            description
+            privateCode
+            publicCode
+            operatorRef
+            passingTimes {
+              id
+              arrivalTime
+              arrivalDayOffset
+              departureTime
+              departureDayOffset
+              latestArrivalTime
+              latestArrivalDayOffset
+              earliestDepartureTime
+              earliestDepartureDayOffset
+            }
+            dayTypes {
+              id
+              daysOfWeek
+              dayTypeAssignments {
+                isAvailable
+                date
+                operatingPeriod {
+                  fromDate
+                  toDate
+                }
+              }
+            }
+          }
+        }
       }
     `,
     networks: gql`

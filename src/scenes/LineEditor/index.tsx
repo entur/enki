@@ -11,13 +11,16 @@ import { Stepper } from '@entur/menu';
 import EditorNavigationButtons from 'components/EditorNavigationButtons';
 import { isBlank } from 'helpers/forms';
 import { LINE_EDITOR_QUERY } from 'api/uttu/queries';
-import { DELETE_LINE } from 'api/uttu/mutations';
+import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
 import useUttuError from 'hooks/useUttuError';
 import FlexibleLineEditor from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditor';
 import { Network } from 'model/Network';
 import { GlobalState } from 'reducers';
 import { filterNetexOperators } from 'reducers/organisations';
 import { setSavedChanges } from 'actions/editor';
+import { validLine } from './validateForm';
+import { lineToPayload } from 'model/Line';
+import { showSuccessNotification } from 'actions/notification';
 
 enum LINE_STEP {
   ABOUT = 'stepperAbout',
@@ -46,6 +49,13 @@ export default () => {
   const match = useRouteMatch<MatchParams>('/lines/edit/:id');
 
   const [line, setLine] = useState<Line>();
+  //const [showConfirm, setShowConfirm] = useState<boolean>(false);
+  const [nextClicked, setNextClicked] = useState<boolean>(false);
+  const [isSaving, setSaving] = useState(false);
+  const [
+    isDeleting,
+    //setDeleting
+  ] = useState(false);
 
   const dispatch = useDispatch<any>();
   const { organisations } = useSelector<GlobalState, GlobalState>((s) => s);
@@ -63,7 +73,8 @@ export default () => {
     }
   }, [data]);
 
-  const [deleteLine] = useMutation(DELETE_LINE);
+  const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
+  const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
 
   useUttuError(
     'loadLineByIdErrorHeader',
@@ -72,17 +83,68 @@ export default () => {
     () => history.push('/lines')
   );
 
+  useUttuError(
+    'flexibleLinesDeleteLineErrorHeader',
+    'flexibleLinesDeleteLineErrorMessage',
+    deleteError
+  );
+
+  useUttuError(
+    'flexibleLinesSaveLineErrorHeader',
+    'flexibleLinesSaveLineErrorMessage',
+    mutationError
+  );
+
   const onChange = (changeLine: Line) => {
     setLine(changeLine);
     dispatch(setSavedChanges(false));
   };
 
-  const onDelete = useCallback(() => {
-    deleteLine({
+  const onSave = useCallback(async () => {
+    if (validLine(line!)) {
+      setNextClicked(true);
+      setSaving(true);
+
+      try {
+        await mutateLine({
+          variables: { input: lineToPayload(line!) },
+        });
+        dispatch(setSavedChanges(true));
+
+        dispatch(
+          showSuccessNotification(
+            formatMessage('flexibleLinesSaveLineSuccessHeader'),
+            formatMessage('flexibleLinesSaveLineSuccessMessage'),
+            false
+          )
+        );
+        //!isEdit && goToLines()
+      } catch (_) {
+        // noop just catching to avoid unhandled rejection
+        // error message is handled upstream
+      } finally {
+        setSaving(false);
+      }
+      setNextClicked(false);
+    }
+
+    // eslint-disable-next-line
+  }, [line]);
+
+  const onDelete = useCallback(async () => {
+    await deleteLine({
       variables: { id: match?.params?.id },
     });
+    dispatch(
+      showSuccessNotification(
+        formatMessage('flexibleLinesDeleteLineSuccessHeader'),
+        formatMessage('flexibleLinesDeleteLineSuccessMessage')
+      )
+    );
     history.push('/lines');
-  }, [match, deleteLine, history]);
+
+    // eslint-disable-next-line
+  }, [match]);
 
   return (
     <Page
@@ -107,9 +169,9 @@ export default () => {
             changeFlexibleLine={onChange}
             operators={filterNetexOperators(organisations ?? [])}
             networks={data?.networks || []}
-            spoilPristine={false}
-            isSaving={false}
-            isDeleting={false}
+            spoilPristine={nextClicked}
+            isSaving={isSaving}
+            isDeleting={isDeleting}
             isFlexibleLine={false}
             steps={FIXED_LINE_STEPS}
           />
@@ -118,7 +180,7 @@ export default () => {
             firstStep={true}
             lastStep={false}
             onDelete={onDelete}
-            onSave={() => {}}
+            onSave={onSave}
             onNext={() => {}}
             onCancel={() => {}}
             onPrevious={
