@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useQuery, useMutation, NetworkStatus } from '@apollo/client';
 
 import { Heading1 } from '@entur/typography';
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { SecondaryButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
 
 import { GlobalState } from 'reducers';
@@ -16,7 +16,6 @@ import { DELETE_LINE } from 'api/uttu/mutations';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 
 import LinesTable from 'components/LinesTable';
-import ConfirmDialog from 'components/ConfirmDialog';
 import useUttuError from 'hooks/useUttuError';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
 
