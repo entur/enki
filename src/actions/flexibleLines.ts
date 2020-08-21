@@ -2,7 +2,7 @@ import { UttuQuery } from 'api';
 import {
   getFlexibleLineByIdQuery,
   getlineByIdQuery,
-  getLinesQuery,
+  getFlexibleLinesQuery,
 } from 'api/uttu/queries';
 import {
   showErrorNotification,
@@ -21,6 +21,7 @@ import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
 import { SetActiveProviderAction } from 'actions/providers';
 import { sentryCaptureException } from 'store';
+import flexibleLines from 'reducers/flexibleLines';
 
 export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
 export const RECEIVE_FLEXIBLE_LINE = 'RECEIVE_FLEXIBLE_LINE';
@@ -60,11 +61,11 @@ export const loadFlexibleLines = () => async (
 ) => {
   try {
     const activeProvider = getState().providers.active?.code ?? '';
-    const { flexibleLines, lines } = await UttuQuery(
+    const { flexibleLines } = await UttuQuery(
       activeProvider,
-      getLinesQuery
+      getFlexibleLinesQuery
     );
-    dispatch(receiveFlexibleLinesActionCreator([...flexibleLines, ...lines]));
+    dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
   } catch (e) {
     const intl = getIntl(getState());
     dispatch(
