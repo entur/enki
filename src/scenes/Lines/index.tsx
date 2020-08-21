@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Link, useHistory } from 'react-router-dom';
-import { useQuery, useMutation, NetworkStatus } from '@apollo/client';
+import { useQuery, NetworkStatus } from '@apollo/client';
 
 import { Heading1 } from '@entur/typography';
 import { SecondaryButton } from '@entur/button';
@@ -12,12 +12,12 @@ import { GlobalState } from 'reducers';
 import { OrganisationState } from 'reducers/organisations';
 import Line from 'model/Line';
 import { GET_LINES } from 'api/uttu/queries';
-import { DELETE_LINE } from 'api/uttu/mutations';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 
 import LinesTable from 'components/LinesTable';
 import useUttuError from 'hooks/useUttuError';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
+import { useConfirmDeleteLine } from './hooks';
 
 interface LinesData {
   lines: Line[];
@@ -36,24 +36,16 @@ export default () => {
       notifyOnNetworkStatusChange: true,
     }
   );
-  const [deleteLine] = useMutation(DELETE_LINE);
 
-  const confirmDelete = useCallback(async () => {
-    await deleteLine({
-      variables: {
-        id: lineSelectedForDeletion?.id,
-      },
-    });
-    setLineSelectedForDeletion(undefined);
-    refetch();
-  }, [
-    deleteLine,
-    lineSelectedForDeletion,
-    setLineSelectedForDeletion,
-    refetch,
-  ]);
+  const [confirmDeleteLine] = useConfirmDeleteLine(
+    lineSelectedForDeletion?.id!,
+    () => {
+      setLineSelectedForDeletion(undefined);
+      refetch();
+    }
+  );
 
-  const dismissDelete = useCallback(() => {
+  const dismissDeleteLine = useCallback(() => {
     setLineSelectedForDeletion(undefined);
   }, [setLineSelectedForDeletion]);
 
@@ -88,8 +80,8 @@ export default () => {
 
       <DeleteConfirmationDialog
         visible={!!lineSelectedForDeletion}
-        onDismiss={dismissDelete}
-        onConfirm={confirmDelete}
+        onDismiss={dismissDeleteLine}
+        onConfirm={confirmDeleteLine}
       />
     </div>
   );
