@@ -1,18 +1,14 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-
 import Page from 'components/Page';
-import Line, { initLine } from 'model/Line';
+import Line from 'model/Line';
 import Loading from 'components/Loading';
-import { Stepper } from '@entur/menu';
-import EditorNavigationButtons from 'components/EditorNavigationButtons';
 import { isBlank } from 'helpers/forms';
 import { LINE_EDITOR_QUERY } from 'api/uttu/queries';
 import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
-import useUttuError from 'hooks/useUttuError';
 import FlexibleLineEditor from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditor';
 import { Network } from 'model/Network';
 import { GlobalState } from 'reducers';
@@ -22,18 +18,9 @@ import { validLine, currentStepIsValid } from './validateForm';
 import { lineToPayload } from 'model/Line';
 import { showSuccessNotification } from 'actions/notification';
 import { getMaxAllowedStepIndex } from 'scenes/FlexibleLines/scenes/Editor/validateForm';
-
-enum LINE_STEP {
-  ABOUT = 'stepperAbout',
-  JOURNEYPATTERN = 'stepperJourneyPattern',
-  SERVICEJOURNEY = 'stepperServiceJourney',
-}
-
-const FIXED_LINE_STEPS: LINE_STEP[] = [
-  LINE_STEP.ABOUT,
-  LINE_STEP.JOURNEYPATTERN,
-  LINE_STEP.SERVICEJOURNEY,
-];
+import { useUttuErrors, useLine } from './hooks';
+import Stepper from './Stepper';
+import { FIXED_LINE_STEPS } from './constants';
 
 interface LineData {
   line: Line;
@@ -49,7 +36,6 @@ export default () => {
   const history = useHistory();
   const match = useRouteMatch<MatchParams>('/lines/edit/:id');
 
-  const [line, setLine] = useState<Line>();
   //const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
@@ -57,8 +43,6 @@ export default () => {
     isDeleting,
     //setDeleting
   ] = useState(false);
-
-  const [activeStepperIndex, setActiveStepperIndex] = useState(0);
 
   const dispatch = useDispatch<any>();
   const { organisations } = useSelector<GlobalState, GlobalState>((s) => s);
@@ -70,42 +54,12 @@ export default () => {
     },
   });
 
-  useEffect(() => {
-    if (data?.line) {
-      setLine({
-        ...data.line,
-        networkRef: data.line.network?.id,
-      });
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (isBlank(match?.params.id)) {
-      setLine(initLine());
-    }
-  }, [match]);
+  const [line, setLine] = useLine(data?.line);
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
 
-  useUttuError(
-    'loadLineByIdErrorHeader',
-    'loadLineByIdErrorMessage',
-    error,
-    () => history.push('/lines')
-  );
-
-  useUttuError(
-    'flexibleLinesDeleteLineErrorHeader',
-    'flexibleLinesDeleteLineErrorMessage',
-    deleteError
-  );
-
-  useUttuError(
-    'flexibleLinesSaveLineErrorHeader',
-    'flexibleLinesSaveLineErrorMessage',
-    mutationError
-  );
+  useUttuErrors(error, deleteError, mutationError);
 
   const onChange = (changeLine: Line) => {
     setLine(changeLine);
@@ -121,6 +75,8 @@ export default () => {
         await mutateLine({
           variables: { input: lineToPayload(line!) },
         });
+
+        // TODO: can this be handled by local state?
         dispatch(setSavedChanges(true));
 
         dispatch(
@@ -158,23 +114,8 @@ export default () => {
     // eslint-disable-next-line
   }, [match]);
 
-  const onNextClicked = () => {
-    if (currentStepIsValid(activeStepperIndex, line!)) {
-      setActiveStepperIndex(activeStepperIndex + 1);
-      setNextClicked(false);
-    } else {
-      setNextClicked(true);
-    }
-  };
-
   const onBackButtonClicked = () => {};
   //editor.isSaved ? goToLines() : setShowConfirm(true);
-
-  const onStepClicked = (stepIndexClicked: number) => {
-    if (getMaxAllowedStepIndex(line!, false) >= stepIndexClicked) {
-      setActiveStepperIndex(stepIndexClicked);
-    }
-  };
 
   return (
     <Page
@@ -185,39 +126,35 @@ export default () => {
         isLoading={loading || !line}
         text={formatMessage('editorLoadingLineText')}
       >
-        <>
-          <Stepper
-            steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
-            activeIndex={activeStepperIndex}
-            onStepClick={(index) => onStepClicked(index)}
-          />
-          <FlexibleLineEditor
-            isEdit={!isBlank(match?.params.id)}
-            activeStep={activeStepperIndex}
-            setActiveStep={setActiveStepperIndex}
-            flexibleLine={line!}
-            changeFlexibleLine={onChange}
-            operators={filterNetexOperators(organisations ?? [])}
-            networks={data?.networks || []}
-            spoilPristine={nextClicked}
-            isSaving={isSaving}
-            isDeleting={isDeleting}
-            isFlexibleLine={false}
-            steps={FIXED_LINE_STEPS}
-          />
-          <EditorNavigationButtons
-            editMode={!isBlank(match?.params.id)}
-            firstStep={activeStepperIndex === 0}
-            lastStep={activeStepperIndex === FIXED_LINE_STEPS.length - 1}
-            onDelete={onDelete}
-            onSave={onSave}
-            onNext={onNextClicked}
-            onCancel={onBackButtonClicked}
-            onPrevious={() => {
-              setActiveStepperIndex(Math.max(activeStepperIndex - 1, 0));
-            }}
-          />
-        </>
+        <Stepper
+          steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
+          isValidStepIndex={(i: number) =>
+            getMaxAllowedStepIndex(line!, false) >= i
+          }
+          currentStepIsValid={(i) => currentStepIsValid(i, line!)}
+          setNextClicked={setNextClicked}
+          isEdit={!isBlank(match?.params.id)}
+          onDelete={onDelete}
+          onSave={onSave}
+          onCancel={onBackButtonClicked}
+        >
+          {([activeStepperIndex, setActiveStepperIndex]) => (
+            <FlexibleLineEditor
+              isEdit={!isBlank(match?.params.id)}
+              activeStep={activeStepperIndex}
+              setActiveStep={setActiveStepperIndex}
+              flexibleLine={line!}
+              changeFlexibleLine={onChange}
+              operators={filterNetexOperators(organisations ?? [])}
+              networks={data?.networks || []}
+              spoilPristine={nextClicked}
+              isSaving={isSaving}
+              isDeleting={isDeleting}
+              isFlexibleLine={false}
+              steps={FIXED_LINE_STEPS}
+            />
+          )}
+        </Stepper>
       </Loading>
     </Page>
   );

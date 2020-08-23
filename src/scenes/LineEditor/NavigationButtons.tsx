@@ -21,7 +21,7 @@ type Props = {
   onCancel: () => void;
 };
 
-const EditorNavigationButtons = (props: Props) => {
+const NavigationButtons = (props: Props) => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -92,4 +92,4 @@ const EditorNavigationButtons = (props: Props) => {
   );
 };
 
-export default EditorNavigationButtons;
+export default NavigationButtons;

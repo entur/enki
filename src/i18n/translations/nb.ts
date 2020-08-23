@@ -10,8 +10,8 @@ export const messages = {
     'En feil oppstod under lagringen av eksporten: {details}',
   exportsSaveExportSuccessHeader: 'Lagre eksport',
   exportsSaveExportSuccessMessage: 'Eksporten ble lagret.',
-  flexibleLinesDeleteLineErrorHeader: 'Slette linje',
-  flexibleLinesDeleteLineErrorMessage:
+  deleteLineErrorHeader: 'Slette linje',
+  deleteLineErrorMessage:
     'En feil oppstod under slettingen av linjen: {details}',
   flexibleLinesDeleteLineSuccessHeader: 'Slette linje',
   flexibleLinesDeleteLineSuccessMessage: 'Linjen ble slettet',
@@ -21,9 +21,8 @@ export const messages = {
   loadLinesErrorHeader: 'Laste linjer',
   loadLinesErrorMessage:
     'En feil oppstod under lastingen av linjene: {details}',
-  flexibleLinesSaveLineErrorHeader: 'Lagre linje',
-  flexibleLinesSaveLineErrorMessage:
-    'En feil oppstod under lagringen av linjen: {details}',
+  saveLineErrorHeader: 'Lagre linje',
+  saveLineErrorMessage: 'En feil oppstod under lagringen av linjen: {details}',
   flexibleLinesSaveLineSuccessHeader: 'Lagre linje',
   flexibleLinesSaveLineSuccessMessage: 'Linjen ble lagret!',
   modalSaveLineSuccessHeader: 'Linjen ble opprettet!',

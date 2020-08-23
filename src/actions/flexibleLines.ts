@@ -144,9 +144,9 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage('flexibleLinesSaveLineErrorHeader'),
+        intl.formatMessage('saveLineErrorHeader'),
         intl.formatMessage(
-          'flexibleLinesSaveLineErrorMessage',
+          'saveLineErrorMessage',
           getInternationalizedUttuError(intl, e)
         )
       )
@@ -176,9 +176,9 @@ export const deleteLine = (flexibleLine: FlexibleLine) => async (
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage('flexibleLinesDeleteLineErrorHeader'),
+        intl.formatMessage('deleteLineErrorHeader'),
         intl.formatMessage(
-          'flexibleLinesDeleteLineErrorMessage',
+          'deleteLineErrorMessage',
           getInternationalizedUttuError(intl, e)
         )
       )

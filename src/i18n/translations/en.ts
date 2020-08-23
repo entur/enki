@@ -12,9 +12,8 @@ export const messages: MessagesKey = {
     'An error occurred while saving export: {details}',
   exportsSaveExportSuccessHeader: 'Saving export',
   exportsSaveExportSuccessMessage: 'Export was saved.',
-  flexibleLinesDeleteLineErrorHeader: 'Delete line',
-  flexibleLinesDeleteLineErrorMessage:
-    'An error occured while deleting the line: {details}',
+  deleteLineErrorHeader: 'Delete line',
+  deleteLineErrorMessage: 'An error occured while deleting the line: {details}',
   flexibleLinesDeleteLineSuccessHeader: 'Delete line',
   flexibleLinesDeleteLineSuccessMessage: 'The line was deleted',
   loadLineByIdErrorHeader: 'Load line',
@@ -22,9 +21,8 @@ export const messages: MessagesKey = {
     'An error occurred while loading the line: {details}',
   loadLinesErrorHeader: 'Load lines',
   loadLinesErrorMessage: 'An error occurred while loading lines: {details}',
-  flexibleLinesSaveLineErrorHeader: 'Save line',
-  flexibleLinesSaveLineErrorMessage:
-    'An error occurred while saving the line: {details}',
+  saveLineErrorHeader: 'Save line',
+  saveLineErrorMessage: 'An error occurred while saving the line: {details}',
   flexibleLinesSaveLineSuccessHeader: 'Save line',
   flexibleLinesSaveLineSuccessMessage: 'The line was successfully saved!',
   modalSaveLineSuccessHeader: 'The line was created!',
