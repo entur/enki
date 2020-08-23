@@ -5,7 +5,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
 import Page from 'components/Page';
-import Line from 'model/Line';
+import Line, { initLine } from 'model/Line';
 import Loading from 'components/Loading';
 import { Stepper } from '@entur/menu';
 import EditorNavigationButtons from 'components/EditorNavigationButtons';
@@ -61,7 +61,10 @@ export default () => {
   const { organisations } = useSelector<GlobalState, GlobalState>((s) => s);
 
   const { loading, error, data } = useQuery<LineData>(LINE_EDITOR_QUERY, {
-    variables: { id: match?.params.id },
+    variables: {
+      id: match?.params.id || '',
+      includeLine: !isBlank(match?.params.id),
+    },
   });
 
   useEffect(() => {
@@ -72,6 +75,12 @@ export default () => {
       });
     }
   }, [data]);
+
+  useEffect(() => {
+    if (isBlank(match?.params.id)) {
+      setLine(initLine());
+    }
+  }, []);
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);

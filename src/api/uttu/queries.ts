@@ -428,8 +428,8 @@ const LineEditorPage = {
 };
 
 export const LINE_EDITOR_QUERY = gql`
-  query LineEditorQuery($id: ID!) {
-    line(id: $id) {
+  query LineEditorQuery($id: ID!, $includeLine: Boolean!) {
+    line(id: $id) @include(if: $includeLine) {
       ...LineEditorPageLine
     }
     networks {
