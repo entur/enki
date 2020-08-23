@@ -18,9 +18,10 @@ import { Network } from 'model/Network';
 import { GlobalState } from 'reducers';
 import { filterNetexOperators } from 'reducers/organisations';
 import { setSavedChanges } from 'actions/editor';
-import { validLine } from './validateForm';
+import { validLine, currentStepIsValid } from './validateForm';
 import { lineToPayload } from 'model/Line';
 import { showSuccessNotification } from 'actions/notification';
+import { getMaxAllowedStepIndex } from 'scenes/FlexibleLines/scenes/Editor/validateForm';
 
 enum LINE_STEP {
   ABOUT = 'stepperAbout',
@@ -57,6 +58,8 @@ export default () => {
     //setDeleting
   ] = useState(false);
 
+  const [activeStepperIndex, setActiveStepperIndex] = useState(0);
+
   const dispatch = useDispatch<any>();
   const { organisations } = useSelector<GlobalState, GlobalState>((s) => s);
 
@@ -80,7 +83,7 @@ export default () => {
     if (isBlank(match?.params.id)) {
       setLine(initLine());
     }
-  }, []);
+  }, [match]);
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
@@ -155,6 +158,24 @@ export default () => {
     // eslint-disable-next-line
   }, [match]);
 
+  const onNextClicked = () => {
+    if (currentStepIsValid(activeStepperIndex, line!)) {
+      setActiveStepperIndex(activeStepperIndex + 1);
+      setNextClicked(false);
+    } else {
+      setNextClicked(true);
+    }
+  };
+
+  const onBackButtonClicked = () => {};
+  //editor.isSaved ? goToLines() : setShowConfirm(true);
+
+  const onStepClicked = (stepIndexClicked: number) => {
+    if (getMaxAllowedStepIndex(line!, false) >= stepIndexClicked) {
+      setActiveStepperIndex(stepIndexClicked);
+    }
+  };
+
   return (
     <Page
       backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
@@ -167,13 +188,13 @@ export default () => {
         <>
           <Stepper
             steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
-            activeIndex={0}
-            onStepClick={() => {}}
+            activeIndex={activeStepperIndex}
+            onStepClick={(index) => onStepClicked(index)}
           />
           <FlexibleLineEditor
             isEdit={!isBlank(match?.params.id)}
-            activeStep={0}
-            setActiveStep={() => {}}
+            activeStep={activeStepperIndex}
+            setActiveStep={setActiveStepperIndex}
             flexibleLine={line!}
             changeFlexibleLine={onChange}
             operators={filterNetexOperators(organisations ?? [])}
@@ -186,16 +207,15 @@ export default () => {
           />
           <EditorNavigationButtons
             editMode={!isBlank(match?.params.id)}
-            firstStep={true}
-            lastStep={false}
+            firstStep={activeStepperIndex === 0}
+            lastStep={activeStepperIndex === FIXED_LINE_STEPS.length - 1}
             onDelete={onDelete}
             onSave={onSave}
-            onNext={() => {}}
-            onCancel={() => {}}
-            onPrevious={
-              () => {}
-              //setActiveStepperIndex(Math.max(activeStepperIndex - 1, 0))
-            }
+            onNext={onNextClicked}
+            onCancel={onBackButtonClicked}
+            onPrevious={() => {
+              setActiveStepperIndex(Math.max(activeStepperIndex - 1, 0));
+            }}
           />
         </>
       </Loading>
