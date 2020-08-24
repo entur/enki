@@ -2,15 +2,13 @@ import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Page from 'components/Page';
 import Line from 'model/Line';
 import Loading from 'components/Loading';
 import { isBlank } from 'helpers/forms';
-import { LINE_EDITOR_QUERY } from 'api/uttu/queries';
 import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
 import FlexibleLineEditor from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditor';
-import { Network } from 'model/Network';
 import { GlobalState } from 'reducers';
 import { filterNetexOperators } from 'reducers/organisations';
 import { setSavedChanges } from 'actions/editor';
@@ -21,11 +19,6 @@ import { getMaxAllowedStepIndex } from 'scenes/FlexibleLines/scenes/Editor/valid
 import { useUttuErrors, useLine } from './hooks';
 import Stepper from './Stepper';
 import { FIXED_LINE_STEPS } from './constants';
-
-interface LineData {
-  line: Line;
-  networks: Network[];
-}
 
 interface MatchParams {
   id: string;
@@ -44,14 +37,7 @@ export default () => {
     (s) => s
   );
 
-  const { loading, error, data } = useQuery<LineData>(LINE_EDITOR_QUERY, {
-    variables: {
-      id: match?.params.id || '',
-      includeLine: !isBlank(match?.params.id),
-    },
-  });
-
-  const [line, setLine] = useLine(data?.line);
+  const { line, setLine, loading, error, networks } = useLine();
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
@@ -83,7 +69,7 @@ export default () => {
             false
           )
         );
-        if (!isBlank(match?.params.id)) {
+        if (isBlank(match?.params.id)) {
           history.push('/lines');
         }
       } catch (_) {
@@ -147,7 +133,7 @@ export default () => {
               flexibleLine={line!}
               changeFlexibleLine={onChange}
               operators={filterNetexOperators(organisations ?? [])}
-              networks={data?.networks || []}
+              networks={networks || []}
               spoilPristine={nextClicked}
               isSaving={isSaving}
               isDeleting={isDeleting}
