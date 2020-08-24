@@ -114,12 +114,12 @@ export const useLine: UseLineType = () => {
     if (isBlank(match?.params.id)) {
       const newLine = initLine();
       const authorities = filterAuthorities(organisations!, activeProvider);
-      if (data?.networks?.length! > 1 || authorities.length === 0) {
+      if (data?.networks?.length > 1 || authorities.length === 0) {
         setLine(newLine);
       } else {
         const networkRef = findNetworkIdByProvider(
           activeProvider!,
-          data?.networks!
+          data?.networks
         );
         if (networkRef) {
           setLine({ ...newLine, networkRef });
@@ -129,7 +129,7 @@ export const useLine: UseLineType = () => {
             authorities[0].id,
             activeProvider!,
             refetch
-          ).then((networkRef) => setLine({ ...newLine, networkRef }));
+          ).then((ref) => setLine({ ...newLine, networkRef: ref }));
         }
       }
     }
