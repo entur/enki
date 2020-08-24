@@ -132,8 +132,8 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
         )}`,
       }
     : {
-        header: intl.formatMessage('flexibleLinesSaveLineSuccessHeader'),
-        message: intl.formatMessage('flexibleLinesSaveLineSuccessMessage'),
+        header: intl.formatMessage('saveLineSuccessHeader'),
+        message: intl.formatMessage('saveLineSuccessMessage'),
       };
 
   try {
@@ -169,8 +169,8 @@ export const deleteLine = (flexibleLine: FlexibleLine) => async (
     await UttuQuery(activeProvider, deleteQuery, { id });
     dispatch(
       showSuccessNotification(
-        intl.formatMessage('flexibleLinesDeleteLineSuccessHeader'),
-        intl.formatMessage('flexibleLinesDeleteLineSuccessMessage')
+        intl.formatMessage('deleteLineSuccessHeader'),
+        intl.formatMessage('deleteLineSuccessMessage')
       )
     );
   } catch (e) {

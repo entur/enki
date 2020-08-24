@@ -14,8 +14,8 @@ export const messages: MessagesKey = {
   exportsSaveExportSuccessMessage: 'Export was saved.',
   deleteLineErrorHeader: 'Delete line',
   deleteLineErrorMessage: 'An error occured while deleting the line: {details}',
-  flexibleLinesDeleteLineSuccessHeader: 'Delete line',
-  flexibleLinesDeleteLineSuccessMessage: 'The line was deleted',
+  deleteLineSuccessHeader: 'Delete line',
+  deleteLineSuccessMessage: 'The line was deleted',
   loadLineByIdErrorHeader: 'Load line',
   loadLineByIdErrorMessage:
     'An error occurred while loading the line: {details}',
@@ -23,8 +23,8 @@ export const messages: MessagesKey = {
   loadLinesErrorMessage: 'An error occurred while loading lines: {details}',
   saveLineErrorHeader: 'Save line',
   saveLineErrorMessage: 'An error occurred while saving the line: {details}',
-  flexibleLinesSaveLineSuccessHeader: 'Save line',
-  flexibleLinesSaveLineSuccessMessage: 'The line was successfully saved!',
+  saveLineSuccessHeader: 'Save line',
+  saveLineSuccessMessage: 'The line was successfully saved!',
   modalSaveLineSuccessHeader: 'The line was created!',
   modalSaveLineSuccessMessage:
     'was successfully created and saved. You can view or make changes to it in the overview for flexible lines. Remember to do an export including the line to make it visible in travel searches.',

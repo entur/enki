@@ -13,8 +13,8 @@ export const messages = {
   deleteLineErrorHeader: 'Slette linje',
   deleteLineErrorMessage:
     'En feil oppstod under slettingen av linjen: {details}',
-  flexibleLinesDeleteLineSuccessHeader: 'Slette linje',
-  flexibleLinesDeleteLineSuccessMessage: 'Linjen ble slettet',
+  deleteLineSuccessHeader: 'Slette linje',
+  deleteLineSuccessMessage: 'Linjen ble slettet',
   loadLineByIdErrorHeader: 'Laste linje',
   loadLineByIdErrorMessage:
     'En feil oppstod under lastingen av linjen: {details}',
@@ -23,8 +23,8 @@ export const messages = {
     'En feil oppstod under lastingen av linjene: {details}',
   saveLineErrorHeader: 'Lagre linje',
   saveLineErrorMessage: 'En feil oppstod under lagringen av linjen: {details}',
-  flexibleLinesSaveLineSuccessHeader: 'Lagre linje',
-  flexibleLinesSaveLineSuccessMessage: 'Linjen ble lagret!',
+  saveLineSuccessHeader: 'Lagre linje',
+  saveLineSuccessMessage: 'Linjen ble lagret!',
   modalSaveLineSuccessHeader: 'Linjen ble opprettet!',
   modalSaveLineSuccessMessage:
     'ble opprettet og lagret. Se eller gjør endringer i oversikten over Linjer. Husk at du må eksportere for at tilbudet skal bli tilgjengelig i reisesøk.',

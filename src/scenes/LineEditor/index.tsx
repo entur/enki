@@ -64,8 +64,8 @@ export default () => {
 
         dispatch(
           showSuccessNotification(
-            formatMessage('flexibleLinesSaveLineSuccessHeader'),
-            formatMessage('flexibleLinesSaveLineSuccessMessage'),
+            formatMessage('saveLineSuccessHeader'),
+            formatMessage('saveLineSuccessMessage'),
             false
           )
         );
@@ -91,8 +91,8 @@ export default () => {
     });
     dispatch(
       showSuccessNotification(
-        formatMessage('flexibleLinesDeleteLineSuccessHeader'),
-        formatMessage('flexibleLinesDeleteLineSuccessMessage')
+        formatMessage('deleteLineSuccessHeader'),
+        formatMessage('deleteLineSuccessMessage')
       )
     );
     history.push('/lines');
