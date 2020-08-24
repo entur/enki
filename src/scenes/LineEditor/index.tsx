@@ -35,17 +35,14 @@ export default () => {
   const { formatMessage } = useSelector(selectIntl);
   const history = useHistory();
   const match = useRouteMatch<MatchParams>('/lines/edit/:id');
-
-  //const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
-  const [
-    isDeleting,
-    //setDeleting
-  ] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
 
   const dispatch = useDispatch<any>();
-  const { organisations } = useSelector<GlobalState, GlobalState>((s) => s);
+  const { organisations, editor } = useSelector<GlobalState, GlobalState>(
+    (s) => s
+  );
 
   const { loading, error, data } = useQuery<LineData>(LINE_EDITOR_QUERY, {
     variables: {
@@ -86,7 +83,9 @@ export default () => {
             false
           )
         );
-        //!isEdit && goToLines()
+        if (!isBlank(match?.params.id)) {
+          history.push('/lines');
+        }
       } catch (_) {
         // noop just catching to avoid unhandled rejection
         // error message is handled upstream
@@ -100,6 +99,7 @@ export default () => {
   }, [line]);
 
   const onDelete = useCallback(async () => {
+    setDeleting(true);
     await deleteLine({
       variables: { id: match?.params?.id },
     });
@@ -113,9 +113,6 @@ export default () => {
 
     // eslint-disable-next-line
   }, [match]);
-
-  const onBackButtonClicked = () => {};
-  //editor.isSaved ? goToLines() : setShowConfirm(true);
 
   return (
     <Page
@@ -136,7 +133,11 @@ export default () => {
           isEdit={!isBlank(match?.params.id)}
           onDelete={onDelete}
           onSave={onSave}
-          onCancel={onBackButtonClicked}
+          isSaved={editor.isSaved}
+          redirect={() => {
+            history.push('/lines');
+          }}
+          redirectTo="/lines"
         >
           {([activeStepperIndex, setActiveStepperIndex]) => (
             <FlexibleLineEditor

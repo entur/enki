@@ -1,6 +1,9 @@
 import React, { useState, ReactElement } from 'react';
 import { Stepper } from '@entur/menu';
 import NavigationButtons from './NavigationButtons';
+import ConfirmNavigationDialog from 'components/ConfirmNavigationDialog';
+import { useSelector } from 'react-redux';
+import { selectIntl } from 'i18n';
 
 type Props = {
   steps: string[];
@@ -10,7 +13,9 @@ type Props = {
   setNextClicked: (b: boolean) => void;
   onDelete: () => void;
   onSave: () => void;
-  onCancel: () => void;
+  isSaved: boolean;
+  redirect: () => void;
+  redirectTo: string;
   children: (
     arg: [number, React.Dispatch<React.SetStateAction<number>>]
   ) => ReactElement;
@@ -24,10 +29,14 @@ export default ({
   setNextClicked,
   onDelete,
   onSave,
-  onCancel,
+  isSaved,
+  redirect,
+  redirectTo,
   children,
 }: Props) => {
+  const { formatMessage } = useSelector(selectIntl);
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
+  const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   const onStepClicked = (stepIndexClicked: number) => {
     if (isValidStepIndex(stepIndexClicked)) {
@@ -43,6 +52,8 @@ export default ({
       setNextClicked(true);
     }
   };
+
+  const onCancel = () => (isSaved ? redirect() : setShowConfirm(true));
 
   return (
     <>
@@ -64,6 +75,16 @@ export default ({
           setActiveStepperIndex(Math.max(activeStepperIndex - 1, 0));
         }}
       />
+      {showConfirm && (
+        <ConfirmNavigationDialog
+          hideDialog={() => setShowConfirm(false)}
+          redirectTo={redirectTo}
+          title={formatMessage('redirectTitle')}
+          description={formatMessage('redirectMessage')}
+          confirmText={formatMessage('redirectYes')}
+          cancelText={formatMessage('redirectNo')}
+        />
+      )}
     </>
   );
 };
