@@ -343,13 +343,99 @@ export const GET_LINES = gql`
   }
 `;
 
-export const GET_LINE_BY_ID = gql`
-  query GetlineById($id: ID!) {
-    line(id: $id) {
-      id
-      name
-      privateCode
-      operatorRef
+const LineEditorPage = {
+  fragments: {
+    line: gql`
+      fragment LineEditorPageLine on Line {
+        id
+        version
+        created
+        createdBy
+        changed
+        changedBy
+        name
+        description
+        privateCode
+        publicCode
+        transportMode
+        transportSubmode
+        operatorRef
+        network {
+          id
+          authorityRef
+        }
+        journeyPatterns {
+          id
+          name
+          description
+          privateCode
+          pointsInSequence {
+            id
+            flexibleStopPlace {
+              id
+            }
+            quayRef
+            destinationDisplay {
+              frontText
+            }
+            forBoarding
+            forAlighting
+          }
+          serviceJourneys {
+            id
+            name
+            description
+            privateCode
+            publicCode
+            operatorRef
+            passingTimes {
+              id
+              arrivalTime
+              arrivalDayOffset
+              departureTime
+              departureDayOffset
+              latestArrivalTime
+              latestArrivalDayOffset
+              earliestDepartureTime
+              earliestDepartureDayOffset
+            }
+            dayTypes {
+              id
+              daysOfWeek
+              dayTypeAssignments {
+                isAvailable
+                date
+                operatingPeriod {
+                  fromDate
+                  toDate
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+    networks: gql`
+      fragment LineEditorPageNetworks on Network {
+        id
+        name
+        description
+        privateCode
+        authorityRef
+      }
+    `,
+  },
+};
+
+export const LINE_EDITOR_QUERY = gql`
+  query LineEditorQuery($id: ID!, $includeLine: Boolean!) {
+    line(id: $id) @include(if: $includeLine) {
+      ...LineEditorPageLine
+    }
+    networks {
+      ...LineEditorPageNetworks
     }
   }
+  ${LineEditorPage.fragments.line}
+  ${LineEditorPage.fragments.networks}
 `;

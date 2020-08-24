@@ -6,6 +6,7 @@ import {
   ApolloClient,
   createHttpLink,
   InMemoryCache,
+  ApolloLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
@@ -41,6 +42,20 @@ export const StopPlacesQuery = (
   return client.request(query, variables);
 };
 
+const cleanTypeName = new ApolloLink((operation, forward) => {
+  if (operation.variables) {
+    const omitTypename = (key: string, value: any) =>
+      key === '__typename' ? undefined : value;
+    operation.variables = JSON.parse(
+      JSON.stringify(operation.variables),
+      omitTypename
+    );
+  }
+  return forward(operation).map((data) => {
+    return data;
+  });
+});
+
 const apolloClient = (provider: string) => {
   const httpLink = createHttpLink({
     uri: API_BASE + '/uttu/' + provider,
@@ -57,7 +72,7 @@ const apolloClient = (provider: string) => {
   });
 
   return new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: ApolloLink.from([cleanTypeName, authLink, httpLink]),
     cache: new InMemoryCache(),
   });
 };

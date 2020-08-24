@@ -35,7 +35,7 @@ export const currentStepIsValid = (
   else return false;
 };
 
-const aboutLineStepIsValid = (
+export const aboutLineStepIsValid = (
   line: FlexibleLine,
   isFlexibleLine: boolean
 ): boolean =>

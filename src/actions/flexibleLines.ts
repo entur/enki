@@ -102,9 +102,9 @@ export const loadFlexibleLineById = (
     const intl = getIntl(getState());
     dispatch(
       showErrorNotification(
-        intl.formatMessage('flexibleLinesLoadLineByIdErrorHeader'),
+        intl.formatMessage('loadLineByIdErrorHeader'),
         intl.formatMessage(
-          'flexibleLinesLoadLineByIdErrorMessage',
+          'loadLineByIdErrorMessage',
           getInternationalizedUttuError(intl, e)
         )
       )
@@ -132,8 +132,8 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
         )}`,
       }
     : {
-        header: intl.formatMessage('flexibleLinesSaveLineSuccessHeader'),
-        message: intl.formatMessage('flexibleLinesSaveLineSuccessMessage'),
+        header: intl.formatMessage('saveLineSuccessHeader'),
+        message: intl.formatMessage('saveLineSuccessMessage'),
       };
 
   try {
@@ -144,9 +144,9 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage('flexibleLinesSaveLineErrorHeader'),
+        intl.formatMessage('saveLineErrorHeader'),
         intl.formatMessage(
-          'flexibleLinesSaveLineErrorMessage',
+          'saveLineErrorMessage',
           getInternationalizedUttuError(intl, e)
         )
       )
@@ -169,16 +169,16 @@ export const deleteLine = (flexibleLine: FlexibleLine) => async (
     await UttuQuery(activeProvider, deleteQuery, { id });
     dispatch(
       showSuccessNotification(
-        intl.formatMessage('flexibleLinesDeleteLineSuccessHeader'),
-        intl.formatMessage('flexibleLinesDeleteLineSuccessMessage')
+        intl.formatMessage('deleteLineSuccessHeader'),
+        intl.formatMessage('deleteLineSuccessMessage')
       )
     );
   } catch (e) {
     dispatch(
       showErrorNotification(
-        intl.formatMessage('flexibleLinesDeleteLineErrorHeader'),
+        intl.formatMessage('deleteLineErrorHeader'),
         intl.formatMessage(
-          'flexibleLinesDeleteLineErrorMessage',
+          'deleteLineErrorMessage',
           getInternationalizedUttuError(intl, e)
         )
       )

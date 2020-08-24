@@ -10,22 +10,21 @@ export const messages = {
     'En feil oppstod under lagringen av eksporten: {details}',
   exportsSaveExportSuccessHeader: 'Lagre eksport',
   exportsSaveExportSuccessMessage: 'Eksporten ble lagret.',
-  flexibleLinesDeleteLineErrorHeader: 'Slette linje',
-  flexibleLinesDeleteLineErrorMessage:
+  deleteLineErrorHeader: 'Slette linje',
+  deleteLineErrorMessage:
     'En feil oppstod under slettingen av linjen: {details}',
-  flexibleLinesDeleteLineSuccessHeader: 'Slette linje',
-  flexibleLinesDeleteLineSuccessMessage: 'Linjen ble slettet',
-  flexibleLinesLoadLineByIdErrorHeader: 'Laste linje',
-  flexibleLinesLoadLineByIdErrorMessage:
+  deleteLineSuccessHeader: 'Slette linje',
+  deleteLineSuccessMessage: 'Linjen ble slettet',
+  loadLineByIdErrorHeader: 'Laste linje',
+  loadLineByIdErrorMessage:
     'En feil oppstod under lastingen av linjen: {details}',
   loadLinesErrorHeader: 'Laste linjer',
   loadLinesErrorMessage:
     'En feil oppstod under lastingen av linjene: {details}',
-  flexibleLinesSaveLineErrorHeader: 'Lagre linje',
-  flexibleLinesSaveLineErrorMessage:
-    'En feil oppstod under lagringen av linjen: {details}',
-  flexibleLinesSaveLineSuccessHeader: 'Lagre linje',
-  flexibleLinesSaveLineSuccessMessage: 'Linjen ble lagret!',
+  saveLineErrorHeader: 'Lagre linje',
+  saveLineErrorMessage: 'En feil oppstod under lagringen av linjen: {details}',
+  saveLineSuccessHeader: 'Lagre linje',
+  saveLineSuccessMessage: 'Linjen ble lagret!',
   modalSaveLineSuccessHeader: 'Linjen ble opprettet!',
   modalSaveLineSuccessMessage:
     'ble opprettet og lagret. Se eller gjør endringer i oversikten over Linjer. Husk at du må eksportere for at tilbudet skal bli tilgjengelig i reisesøk.',

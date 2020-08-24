@@ -54,6 +54,14 @@ export const deleteline = `
   }
 `;
 
+export const MUTATE_LINE = gql`
+  mutation Mutateline($input: LineInput!) {
+    mutateLine(input: $input) {
+      id
+    }
+  }
+`;
+
 export const DELETE_LINE = gql`
   mutation Deleteline($id: ID!) {
     deleteLine(id: $id) {

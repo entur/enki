@@ -12,21 +12,19 @@ export const messages: MessagesKey = {
     'An error occurred while saving export: {details}',
   exportsSaveExportSuccessHeader: 'Saving export',
   exportsSaveExportSuccessMessage: 'Export was saved.',
-  flexibleLinesDeleteLineErrorHeader: 'Delete line',
-  flexibleLinesDeleteLineErrorMessage:
-    'An error occured while deleting the line: {details}',
-  flexibleLinesDeleteLineSuccessHeader: 'Delete line',
-  flexibleLinesDeleteLineSuccessMessage: 'The line was deleted',
-  flexibleLinesLoadLineByIdErrorHeader: 'Load line',
-  flexibleLinesLoadLineByIdErrorMessage:
+  deleteLineErrorHeader: 'Delete line',
+  deleteLineErrorMessage: 'An error occured while deleting the line: {details}',
+  deleteLineSuccessHeader: 'Delete line',
+  deleteLineSuccessMessage: 'The line was deleted',
+  loadLineByIdErrorHeader: 'Load line',
+  loadLineByIdErrorMessage:
     'An error occurred while loading the line: {details}',
   loadLinesErrorHeader: 'Load lines',
   loadLinesErrorMessage: 'An error occurred while loading lines: {details}',
-  flexibleLinesSaveLineErrorHeader: 'Save line',
-  flexibleLinesSaveLineErrorMessage:
-    'An error occurred while saving the line: {details}',
-  flexibleLinesSaveLineSuccessHeader: 'Save line',
-  flexibleLinesSaveLineSuccessMessage: 'The line was successfully saved!',
+  saveLineErrorHeader: 'Save line',
+  saveLineErrorMessage: 'An error occurred while saving the line: {details}',
+  saveLineSuccessHeader: 'Save line',
+  saveLineSuccessMessage: 'The line was successfully saved!',
   modalSaveLineSuccessHeader: 'The line was created!',
   modalSaveLineSuccessMessage:
     'was successfully created and saved. You can view or make changes to it in the overview for flexible lines. Remember to do an export including the line to make it visible in travel searches.',
