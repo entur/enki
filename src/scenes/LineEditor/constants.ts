@@ -1,4 +1,4 @@
-enum LINE_STEP {
+export enum LINE_STEP {
   ABOUT = 'stepperAbout',
   JOURNEYPATTERN = 'stepperJourneyPattern',
   SERVICEJOURNEY = 'stepperServiceJourney',

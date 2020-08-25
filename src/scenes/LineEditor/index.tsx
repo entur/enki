@@ -8,7 +8,6 @@ import Line from 'model/Line';
 import Loading from 'components/Loading';
 import { isBlank } from 'helpers/forms';
 import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
-import FlexibleLineEditor from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditor';
 import { GlobalState } from 'reducers';
 import { filterNetexOperators } from 'reducers/organisations';
 import { setSavedChanges } from 'actions/editor';
@@ -19,6 +18,7 @@ import { getMaxAllowedStepIndex } from 'scenes/FlexibleLines/scenes/Editor/valid
 import { useUttuErrors, useLine } from './hooks';
 import Stepper from './Stepper';
 import { FIXED_LINE_STEPS } from './constants';
+import LineEditorSteps from './LineEditorSteps';
 
 interface MatchParams {
   id: string;
@@ -126,17 +126,16 @@ export default () => {
           redirectTo="/lines"
         >
           {(activeStepperIndex) => (
-            <FlexibleLineEditor
+            <LineEditorSteps
               isEdit={!isBlank(match?.params.id)}
               activeStep={activeStepperIndex}
-              flexibleLine={line!}
-              changeFlexibleLine={onChange}
+              line={line!}
+              changeLine={onChange}
               operators={filterNetexOperators(organisations ?? [])}
               networks={networks || []}
               spoilPristine={nextClicked}
               isSaving={isSaving}
               isDeleting={isDeleting}
-              isFlexibleLine={false}
               steps={FIXED_LINE_STEPS}
             />
           )}
