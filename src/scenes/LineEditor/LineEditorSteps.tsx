@@ -1,5 +1,6 @@
 import React from 'react';
 import JourneyPatternsEditor from 'scenes/FlexibleLines/scenes/Editor/JourneyPatterns';
+import JourneyPatternEditor from 'scenes/FlexibleLines/scenes/Editor/JourneyPatterns/Editor';
 import General from 'scenes/FlexibleLines/scenes/Editor/General';
 import { Organisation } from 'reducers/organisations';
 import ServiceJourneysEditor from 'scenes/FlexibleLines/scenes/Editor/ServiceJourneys';
@@ -44,9 +45,17 @@ const LineEditorSteps = (props: Props) => {
                 journeyPatterns: jps,
               })
             }
-            flexibleLineType={undefined}
-            spoilPristine={props.spoilPristine}
-          />
+          >
+            {(journeyPattern, index, onSave) => (
+              <JourneyPatternEditor
+                journeyPattern={journeyPattern}
+                index={index}
+                onSave={onSave}
+                spoilPristine={props.spoilPristine}
+                flexibleLineType={undefined}
+              />
+            )}
+          </JourneyPatternsEditor>
         </section>
       )}
 

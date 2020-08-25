@@ -10,13 +10,15 @@ import { Organisation } from 'reducers/organisations';
 import { RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
 import ServiceJourneysEditor from './ServiceJourneys';
-import { changeElementAtIndex } from 'helpers/arrays';
+import { changeElementAtIndex, replaceElement } from 'helpers/arrays';
 import FlexibleLine from 'model/FlexibleLine';
 import { currentStepIsValid } from 'scenes/FlexibleLines/scenes/Editor/validateForm';
 import { Network } from 'model/Network';
 import { SmallAlertBox } from '@entur/alert';
 import './styles.scss';
 import { LINE_STEP } from './steps';
+import JourneyPatternEditor from './JourneyPatterns/Editor';
+import JourneyPattern from 'model/JourneyPattern';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
@@ -81,9 +83,17 @@ const FlexibleLineEditor = (props: Props) => {
                     journeyPatterns: jps,
                   })
                 }
-                flexibleLineType={props.flexibleLine.flexibleLineType}
-                spoilPristine={props.spoilPristine}
-              />
+              >
+                {(journeyPattern, index, onSave) => (
+                  <JourneyPatternEditor
+                    journeyPattern={journeyPattern}
+                    onSave={onSave}
+                    index={index}
+                    spoilPristine={props.spoilPristine}
+                    flexibleLineType={props.flexibleLine.flexibleLineType}
+                  />
+                )}
+              </JourneyPatternsEditor>
             </section>
           )}
 

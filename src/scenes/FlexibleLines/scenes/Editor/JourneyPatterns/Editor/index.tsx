@@ -107,8 +107,6 @@ const JourneyPatternEditor = ({
   return (
     <div className="journey-pattern-editor">
       <section>
-        <Heading1>{formatMessage('editorJourneyPatternsTabLabel')}</Heading1>
-        <LeadParagraph>{formatMessage('editorFillInformation')}</LeadParagraph>
         <RequiredInputMarker />
         <General
           journeyPattern={journeyPattern}
