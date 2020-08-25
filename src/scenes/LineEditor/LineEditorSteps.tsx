@@ -3,11 +3,8 @@ import { useSelector } from 'react-redux';
 import OverlayLoader from 'components/OverlayLoader';
 import JourneyPatternsEditor from 'scenes/FlexibleLines/scenes/Editor/JourneyPatterns';
 import General from 'scenes/FlexibleLines/scenes/Editor/General';
-import { withRouter } from 'react-router-dom';
 import { selectIntl } from 'i18n';
 import { Organisation } from 'reducers/organisations';
-import { RouteComponentProps } from 'react-router';
-import { MatchParams } from 'http/http';
 import ServiceJourneysEditor from 'scenes/FlexibleLines/scenes/Editor/ServiceJourneys';
 import { changeElementAtIndex } from 'helpers/arrays';
 import { currentStepIsValid } from './validateForm';
@@ -17,7 +14,7 @@ import './styles.scss';
 import { LINE_STEP } from './constants';
 import Line from 'model/Line';
 
-type Props = RouteComponentProps<MatchParams> & {
+type Props = {
   activeStep: number;
   line: Line;
   changeLine: (line: Line) => void;
@@ -124,4 +121,4 @@ const LineEditorSteps = (props: Props) => {
   );
 };
 
-export default withRouter(LineEditorSteps);
+export default LineEditorSteps;
