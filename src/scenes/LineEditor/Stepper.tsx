@@ -16,9 +16,7 @@ type Props = {
   isSaved: boolean;
   redirect: () => void;
   redirectTo: string;
-  children: (
-    arg: [number, React.Dispatch<React.SetStateAction<number>>]
-  ) => ReactElement;
+  children: (arg: number) => ReactElement;
 };
 
 export default ({
@@ -62,7 +60,7 @@ export default ({
         activeIndex={activeStepperIndex}
         onStepClick={(index) => onStepClicked(index)}
       />
-      {children([activeStepperIndex, setActiveStepperIndex])}
+      {children(activeStepperIndex)}
       <NavigationButtons
         editMode={isEdit}
         firstStep={activeStepperIndex === 0}

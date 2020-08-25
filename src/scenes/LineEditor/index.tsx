@@ -125,11 +125,10 @@ export default () => {
           }}
           redirectTo="/lines"
         >
-          {([activeStepperIndex, setActiveStepperIndex]) => (
+          {(activeStepperIndex) => (
             <FlexibleLineEditor
               isEdit={!isBlank(match?.params.id)}
               activeStep={activeStepperIndex}
-              setActiveStep={setActiveStepperIndex}
               flexibleLine={line!}
               changeFlexibleLine={onChange}
               operators={filterNetexOperators(organisations ?? [])}

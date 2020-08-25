@@ -205,7 +205,6 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
             <FlexibleLineEditor
               isEdit={isEdit}
               activeStep={activeStepperIndex}
-              setActiveStep={setActiveStepperIndex}
               flexibleLine={line}
               changeFlexibleLine={onFlexibleLineChange}
               operators={filterNetexOperators(organisations ?? [])}

@@ -20,7 +20,6 @@ import { LINE_STEP } from './steps';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
-  setActiveStep: (index: number) => void;
   flexibleLine: FlexibleLine;
   changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
   networks: Network[];
