@@ -19,6 +19,7 @@ import { useUttuErrors, useLine } from './hooks';
 import Stepper from './Stepper';
 import { FIXED_LINE_STEPS } from './constants';
 import LineEditorSteps from './LineEditorSteps';
+import './styles.scss';
 
 interface MatchParams {
   id: string;
@@ -117,26 +118,22 @@ export default () => {
           currentStepIsValid={(i) => currentStepIsValid(i, line!)}
           setNextClicked={setNextClicked}
           isEdit={!isBlank(match?.params.id)}
+          spoilPristine={nextClicked}
           onDelete={onDelete}
+          isDeleting={isDeleting}
           onSave={onSave}
+          isSaving={isSaving}
           isSaved={editor.isSaved}
-          redirect={() => {
-            history.push('/lines');
-          }}
           redirectTo="/lines"
         >
           {(activeStepperIndex) => (
             <LineEditorSteps
-              isEdit={!isBlank(match?.params.id)}
               activeStep={activeStepperIndex}
               line={line!}
               changeLine={onChange}
               operators={filterNetexOperators(organisations ?? [])}
               networks={networks || []}
               spoilPristine={nextClicked}
-              isSaving={isSaving}
-              isDeleting={isDeleting}
-              steps={FIXED_LINE_STEPS}
             />
           )}
         </Stepper>
