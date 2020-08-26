@@ -2,12 +2,7 @@ import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import General from './General';
-import {
-  Paragraph,
-  LeadParagraph,
-  Heading3,
-  Heading1,
-} from '@entur/typography';
+import { Paragraph, Heading3 } from '@entur/typography';
 import { validateStopPoint } from './StopPoints/Editor/validateForm';
 import {
   changeElementAtIndex,

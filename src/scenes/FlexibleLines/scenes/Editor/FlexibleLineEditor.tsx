@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import OverlayLoader from 'components/OverlayLoader';
 import BookingArrangementEditor from './BookingArrangementEditor';
-import JourneyPatternsEditor from './JourneyPatterns';
+import JourneyPatterns from 'components/JourneyPatterns';
 import General from './General';
 import { withRouter } from 'react-router-dom';
 import { selectIntl } from 'i18n';
@@ -10,7 +10,7 @@ import { Organisation } from 'reducers/organisations';
 import { RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
 import ServiceJourneysEditor from './ServiceJourneys';
-import { changeElementAtIndex, replaceElement } from 'helpers/arrays';
+import { changeElementAtIndex } from 'helpers/arrays';
 import FlexibleLine from 'model/FlexibleLine';
 import { currentStepIsValid } from 'scenes/FlexibleLines/scenes/Editor/validateForm';
 import { Network } from 'model/Network';
@@ -18,7 +18,6 @@ import { SmallAlertBox } from '@entur/alert';
 import './styles.scss';
 import { LINE_STEP } from './steps';
 import JourneyPatternEditor from './JourneyPatterns/Editor';
-import JourneyPattern from 'model/JourneyPattern';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
@@ -75,7 +74,7 @@ const FlexibleLineEditor = (props: Props) => {
 
           {props.activeStep === 1 && (
             <section>
-              <JourneyPatternsEditor
+              <JourneyPatterns
                 journeyPatterns={props.flexibleLine.journeyPatterns ?? []}
                 onChange={(jps) =>
                   props.changeFlexibleLine({
@@ -93,7 +92,7 @@ const FlexibleLineEditor = (props: Props) => {
                     flexibleLineType={props.flexibleLine.flexibleLineType}
                   />
                 )}
-              </JourneyPatternsEditor>
+              </JourneyPatterns>
             </section>
           )}
 

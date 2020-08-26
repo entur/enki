@@ -1,5 +1,5 @@
 import React from 'react';
-import JourneyPatternsEditor from 'scenes/FlexibleLines/scenes/Editor/JourneyPatterns';
+import JourneyPattern from 'components/JourneyPatterns';
 import JourneyPatternEditor from 'scenes/FlexibleLines/scenes/Editor/JourneyPatterns/Editor';
 import General from 'scenes/FlexibleLines/scenes/Editor/General';
 import { Organisation } from 'reducers/organisations';
@@ -37,7 +37,7 @@ const LineEditorSteps = (props: Props) => {
 
       {props.activeStep === 1 && (
         <section>
-          <JourneyPatternsEditor
+          <JourneyPattern
             journeyPatterns={props.line.journeyPatterns ?? []}
             onChange={(jps) =>
               props.changeLine({
@@ -55,7 +55,7 @@ const LineEditorSteps = (props: Props) => {
                 flexibleLineType={undefined}
               />
             )}
-          </JourneyPatternsEditor>
+          </JourneyPattern>
         </section>
       )}
 
