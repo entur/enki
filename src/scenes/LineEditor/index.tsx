@@ -9,7 +9,10 @@ import Loading from 'components/Loading';
 import { isBlank } from 'helpers/forms';
 import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
 import { GlobalState } from 'reducers';
-import { filterNetexOperators } from 'reducers/organisations';
+import {
+  filterNetexOperators,
+  filterAuthorities,
+} from 'reducers/organisations';
 import { setSavedChanges } from 'actions/editor';
 import { validLine, currentStepIsValid } from './validateForm';
 import { lineToPayload } from 'model/Line';
@@ -32,11 +35,13 @@ export default () => {
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
+  const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   const dispatch = useDispatch<any>();
-  const { organisations, editor } = useSelector<GlobalState, GlobalState>(
-    (s) => s
-  );
+  const { organisations, editor, providers } = useSelector<
+    GlobalState,
+    GlobalState
+  >((s) => s);
 
   const { line, setLine, loading, error, networks } = useLine();
 
@@ -101,10 +106,17 @@ export default () => {
     // eslint-disable-next-line
   }, [match]);
 
+  const onBackButtonClicked = () =>
+    editor.isSaved ? history.push('/lines') : setShowConfirm(true);
+
+  const authoritiesMissing =
+    organisations &&
+    filterAuthorities(organisations, providers.active).length === 0;
+
   return (
     <Page
       backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
-      onBackButtonClick={() => history.push('/lines')}
+      onBackButtonClick={onBackButtonClicked}
     >
       <Loading
         isLoading={loading || !line}
@@ -125,6 +137,9 @@ export default () => {
           isSaving={isSaving}
           isSaved={editor.isSaved}
           redirectTo="/lines"
+          showConfirm={showConfirm}
+          setShowConfirm={setShowConfirm}
+          authoritiesMissing={authoritiesMissing}
         >
           {(activeStep) => (
             <LineEditorSteps

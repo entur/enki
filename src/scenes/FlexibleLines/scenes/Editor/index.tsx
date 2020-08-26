@@ -1,4 +1,3 @@
-import { Stepper } from '@entur/menu';
 import React, { useEffect, useState } from 'react';
 import { useLoadDependencies } from './hooks';
 import { RouteComponentProps } from 'react-router';
@@ -6,7 +5,7 @@ import { MatchParams } from 'http/http';
 import { withRouter, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import FlexibleLineEditor from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditor';
+import FlexibleLineEditorSteps from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditorSteps';
 import { GlobalState } from 'reducers';
 import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
 import {
@@ -21,19 +20,16 @@ import {
 import { isBlank } from 'helpers/forms';
 import { isEmpty } from 'ramda';
 import { getFlexibleLineFromPath } from 'helpers/url';
-import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 import Loading from 'components/Loading';
 import { setSavedChanges } from 'actions/editor';
 import { loadNetworks, saveNetwork } from 'actions/networks';
 import { Network } from 'model/Network';
 import Provider from 'model/Provider';
-import { PrimaryButton } from '@entur/button';
-import ConfirmDialog from 'components/ConfirmDialog';
 import Page from 'components/Page';
-import NavigationButtons from './NavigationButtons';
 import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
-import { FLEXIBLE_LINE_STEPS, FIXED_LINE_STEPS } from './steps';
+import { FLEXIBLE_LINE_STEPS } from './steps';
 import './styles.scss';
+import LineEditorStepper from 'components/LineEditorStepper';
 
 const findNetworkIdByProvider = (
   provider: Provider,
@@ -84,8 +80,6 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     providers,
   } = useSelector<GlobalState, GlobalState>((s) => s);
 
-  const [activeStepperIndex, setActiveStepperIndex] = useState(0);
-
   const isLoadingDependencies = useLoadDependencies({
     match: props.match,
     history: props.history,
@@ -125,12 +119,6 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const goToLines = () =>
     props.history.push(isFlexibleLine ? '/flexible-lines' : '/lines');
 
-  const onStepClicked = (stepIndexClicked: number) => {
-    if (getMaxAllowedStepIndex(line, isFlexibleLine) >= stepIndexClicked) {
-      setActiveStepperIndex(stepIndexClicked);
-    }
-  };
-
   const isEdit = !isBlank(props.match.params.id);
 
   const handleOnSaveClick = () => {
@@ -157,15 +145,6 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     }
   };
 
-  const onNextClicked = () => {
-    if (currentStepIsValid(activeStepperIndex, line, isFlexibleLine)) {
-      setActiveStepperIndex(activeStepperIndex + 1);
-      setNextClicked(false);
-    } else {
-      setNextClicked(true);
-    }
-  };
-
   const onBackButtonClicked = () =>
     editor.isSaved ? goToLines() : setShowConfirm(true);
 
@@ -177,8 +156,6 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const authoritiesMissing =
     organisations &&
     filterAuthorities(organisations, providers.active).length === 0;
-
-  const STEPS = isFlexibleLine ? FLEXIBLE_LINE_STEPS : FIXED_LINE_STEPS;
 
   return (
     <Page
@@ -196,63 +173,38 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
           text={formatMessage('editorLoadingLineText')}
         >
           <>
-            <Stepper
-              className="editor-frame"
-              steps={STEPS.map((step) => formatMessage(step))}
-              activeIndex={activeStepperIndex}
-              onStepClick={(index) => onStepClicked(index)}
-            />
-            <FlexibleLineEditor
-              isEdit={isEdit}
-              activeStep={activeStepperIndex}
-              flexibleLine={line}
-              changeFlexibleLine={onFlexibleLineChange}
-              operators={filterNetexOperators(organisations ?? [])}
-              networks={networks ?? []}
-              spoilPristine={nextClicked}
-              isSaving={isSaving}
-              isDeleting={isDeleting}
-              isFlexibleLine={isFlexibleLine}
-              steps={STEPS}
-            />
-            <NavigationButtons
-              editMode={isEdit}
-              firstStep={activeStepperIndex === 0}
-              lastStep={activeStepperIndex === STEPS.length - 1}
-              onDelete={handleDelete}
-              onSave={handleOnSaveClick}
-              onNext={onNextClicked}
-              onCancel={onBackButtonClicked}
-              onPrevious={() =>
-                setActiveStepperIndex(Math.max(activeStepperIndex - 1, 0))
+            <LineEditorStepper
+              steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
+              isValidStepIndex={(i: number) =>
+                getMaxAllowedStepIndex(line!, true) >= i
               }
-            />
+              currentStepIsValid={(i) => currentStepIsValid(i, line!, true)}
+              setNextClicked={setNextClicked}
+              isEdit={isEdit}
+              spoilPristine={nextClicked}
+              onDelete={handleDelete}
+              isDeleting={isDeleting}
+              onSave={handleOnSaveClick}
+              isSaving={isSaving}
+              isSaved={editor.isSaved}
+              redirectTo="/flexible-lines"
+              showConfirm={showConfirm}
+              setShowConfirm={setShowConfirm}
+              authoritiesMissing={authoritiesMissing}
+            >
+              {(activeStep) => (
+                <FlexibleLineEditorSteps
+                  activeStep={activeStep}
+                  flexibleLine={line!}
+                  changeFlexibleLine={onFlexibleLineChange}
+                  operators={filterNetexOperators(organisations ?? [])}
+                  networks={networks || []}
+                  spoilPristine={nextClicked}
+                />
+              )}
+            </LineEditorStepper>
           </>
         </Loading>
-        {showConfirm && (
-          <NavigateConfirmBox
-            hideDialog={() => setShowConfirm(false)}
-            redirectTo={isFlexibleLine ? '/flexible-lines' : '/lines'}
-            title={formatMessage('redirectTitle')}
-            description={formatMessage('redirectMessage')}
-            confirmText={formatMessage('redirectYes')}
-            cancelText={formatMessage('redirectNo')}
-          />
-        )}
-        {authoritiesMissing && (
-          <ConfirmDialog
-            className="authority-missing-modal"
-            isOpen={true}
-            title={formatMessage('networkAuthorityMissing')}
-            message={formatMessage('networkAuthorityMissingDetails')}
-            onDismiss={() => props.history.push('/')}
-            buttons={[
-              <PrimaryButton key="0" onClick={() => props.history.push('/')}>
-                {formatMessage('homePage')}
-              </PrimaryButton>,
-            ]}
-          />
-        )}
       </>
     </Page>
   );
