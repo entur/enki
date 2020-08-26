@@ -16,7 +16,7 @@ import { lineToPayload } from 'model/Line';
 import { showSuccessNotification } from 'actions/notification';
 import { getMaxAllowedStepIndex } from 'scenes/FlexibleLines/scenes/Editor/validateForm';
 import { useUttuErrors, useLine } from './hooks';
-import Stepper from './Stepper';
+import LineEditorStepper from 'components/LineEditorStepper';
 import { FIXED_LINE_STEPS } from './constants';
 import LineEditorSteps from './LineEditorSteps';
 import './styles.scss';
@@ -110,7 +110,7 @@ export default () => {
         isLoading={loading || !line}
         text={formatMessage('editorLoadingLineText')}
       >
-        <Stepper
+        <LineEditorStepper
           steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
           isValidStepIndex={(i: number) =>
             getMaxAllowedStepIndex(line!, false) >= i
@@ -126,9 +126,9 @@ export default () => {
           isSaved={editor.isSaved}
           redirectTo="/lines"
         >
-          {(activeStepperIndex) => (
+          {(activeStep) => (
             <LineEditorSteps
-              activeStep={activeStepperIndex}
+              activeStep={activeStep}
               line={line!}
               changeLine={onChange}
               operators={filterNetexOperators(organisations ?? [])}
@@ -136,7 +136,7 @@ export default () => {
               spoilPristine={nextClicked}
             />
           )}
-        </Stepper>
+        </LineEditorStepper>
       </Loading>
     </Page>
   );
