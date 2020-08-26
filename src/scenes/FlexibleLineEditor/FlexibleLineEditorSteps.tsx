@@ -11,7 +11,7 @@ import { changeElementAtIndex } from 'helpers/arrays';
 import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import './styles.scss';
-import JourneyPatternEditor from './JourneyPatterns/Editor';
+import JourneyPatternEditor from './JourneyPatternEditor';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;

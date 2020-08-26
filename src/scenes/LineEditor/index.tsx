@@ -14,10 +14,13 @@ import {
   filterAuthorities,
 } from 'reducers/organisations';
 import { setSavedChanges } from 'actions/editor';
-import { validLine, currentStepIsValid } from './validateForm';
+import {
+  validLine,
+  currentStepIsValid,
+  getMaxAllowedStepIndex,
+} from './validateForm';
 import { lineToPayload } from 'model/Line';
 import { showSuccessNotification } from 'actions/notification';
-import { getMaxAllowedStepIndex } from 'scenes/FlexibleLines/scenes/Editor/validateForm';
 import { useUttuErrors, useLine } from './hooks';
 import LineEditorStepper from 'components/LineEditorStepper';
 import { FIXED_LINE_STEPS } from './constants';
@@ -124,9 +127,7 @@ export default () => {
       >
         <LineEditorStepper
           steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
-          isValidStepIndex={(i: number) =>
-            getMaxAllowedStepIndex(line!, false) >= i
-          }
+          isValidStepIndex={(i: number) => getMaxAllowedStepIndex(line!) >= i}
           currentStepIsValid={(i) => currentStepIsValid(i, line!)}
           setNextClicked={setNextClicked}
           isEdit={!isBlank(match?.params.id)}

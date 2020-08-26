@@ -5,7 +5,7 @@ import { MatchParams } from 'http/http';
 import { withRouter, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import FlexibleLineEditorSteps from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditorSteps';
+import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
 import { GlobalState } from 'reducers';
 import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
 import {

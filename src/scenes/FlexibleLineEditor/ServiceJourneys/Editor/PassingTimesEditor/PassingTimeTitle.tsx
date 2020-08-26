@@ -1,7 +1,7 @@
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import StopPoint from 'model/StopPoint';
 import React, { ReactElement, useEffect, useState } from 'react';
-import searchForQuay from 'scenes/FlexibleLines/scenes/Editor/JourneyPatterns/Editor/StopPoints/Editor/searchForQuay';
+import searchForQuay from 'scenes/FlexibleLineEditor/JourneyPatternEditor/StopPointEditor/searchForQuay';
 
 type Props = {
   flexibleStopPlaces: FlexibleStopPlace[];

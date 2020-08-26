@@ -1,9 +1,9 @@
 import React from 'react';
 import JourneyPattern from 'components/JourneyPatterns';
-import JourneyPatternEditor from 'scenes/FlexibleLines/scenes/Editor/JourneyPatterns/Editor';
-import General from 'scenes/FlexibleLines/scenes/Editor/General';
+import JourneyPatternEditor from 'scenes/FlexibleLineEditor/JourneyPatternEditor';
+import General from 'scenes/FlexibleLineEditor/General';
 import { Organisation } from 'reducers/organisations';
-import ServiceJourneysEditor from 'scenes/FlexibleLines/scenes/Editor/ServiceJourneys';
+import ServiceJourneysEditor from 'scenes/FlexibleLineEditor/ServiceJourneys';
 import { changeElementAtIndex } from 'helpers/arrays';
 import { Network } from 'model/Network';
 import Line from 'model/Line';

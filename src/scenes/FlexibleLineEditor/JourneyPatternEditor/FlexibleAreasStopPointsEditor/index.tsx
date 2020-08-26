@@ -9,8 +9,8 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { AppIntlState, selectIntl } from 'i18n';
 import { isBlank } from 'helpers/forms';
 import { GlobalState } from 'reducers';
-import './styles.scss';
 import { getInit, mapToItems } from 'helpers/dropdown';
+import './styles.scss';
 
 type Props = {
   flexibleStopPlaces: FlexibleStopPlace[];
