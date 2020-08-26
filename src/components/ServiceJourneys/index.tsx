@@ -1,48 +1,51 @@
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import StopPoint from 'model/StopPoint';
-import ServiceJourneyEditor from './Editor';
-import { selectIntl } from 'i18n';
-import { removeElementByIndex, replaceElement } from 'helpers/arrays';
-import AddButton from 'components/AddButton/AddButton';
+import React, { ReactElement, useState, useRef } from 'react';
 import ServiceJourney from 'model/ServiceJourney';
-import { Heading1, LeadParagraph } from '@entur/typography';
-import { ExpandablePanel } from '@entur/expand';
-import ScrollToTop from 'components/ScrollToTop';
 import { Modal } from '@entur/modal';
+import { selectIntl } from 'i18n';
+import { useSelector } from 'react-redux';
 import { InputGroup, TextField } from '@entur/form';
-import { PrimaryButton, SecondaryButton } from '@entur/button';
+import { SecondaryButton, PrimaryButton } from '@entur/button';
+import { replaceElement, removeElementByIndex } from 'helpers/arrays';
+import ScrollToTop from 'components/ScrollToTop';
+import { Heading1, LeadParagraph } from '@entur/typography';
+import StopPoint from 'model/StopPoint';
+import { ExpandablePanel } from '@entur/expand';
+import AddButton from 'components/AddButton/AddButton';
 import './styles.scss';
 
 type Props = {
   serviceJourneys: ServiceJourney[];
-  onChange: (sj: ServiceJourney[]) => void;
+  onChange: (serviceJourneys: ServiceJourney[]) => void;
   stopPoints: StopPoint[];
-  spoilPristine: boolean;
-  flexibleLineType: string | undefined;
+  children: (
+    serviceJourney: ServiceJourney,
+    key: number,
+    stopPoints: StopPoint[],
+    handleUpdate: (serviceJourney: ServiceJourney) => void,
+    handleDelete: () => void
+  ) => ReactElement;
 };
 
-const ServiceJourneysEditor = ({
-  serviceJourneys,
-  onChange,
-  stopPoints,
-  spoilPristine,
-  flexibleLineType,
-}: Props) => {
+export default ({ serviceJourneys, onChange, stopPoints, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [keys, setKeys] = useState<number[]>(serviceJourneys.map(Math.random));
   const { formatMessage } = useSelector(selectIntl);
   const textFieldRef = useRef<HTMLInputElement>(null);
 
-  const updateServiceJourney = (
-    index: number,
-    serviceJourney: ServiceJourney
-  ) => {
-    onChange(replaceElement(serviceJourneys, index, serviceJourney));
+  const updateServiceJourney = (index: number) => {
+    return (serviceJourney: ServiceJourney) => {
+      onChange(replaceElement(serviceJourneys, index, serviceJourney));
+    };
   };
+
   const deleteServiceJourney = (index: number) => {
-    onChange(removeElementByIndex(serviceJourneys, index));
+    return () => {
+      if (serviceJourneys.length > 1) {
+        onChange(removeElementByIndex(serviceJourneys, index));
+      }
+    };
   };
+
   const addNewServiceJourney = (name: string) => {
     const newServiceJourneys = [
       ...serviceJourneys,
@@ -57,26 +60,6 @@ const ServiceJourneysEditor = ({
     setTimeout(
       () => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }),
       100
-    );
-  };
-
-  const renderServiceJourneyEditor = (sj: ServiceJourney, index: number) => {
-    return (
-      <ServiceJourneyEditor
-        key={keys[index]}
-        serviceJourney={sj}
-        stopPoints={stopPoints}
-        onChange={(serviceJourney) =>
-          updateServiceJourney(index, serviceJourney)
-        }
-        spoilPristine={spoilPristine}
-        deleteServiceJourney={
-          serviceJourneys.length > 1
-            ? () => deleteServiceJourney(index)
-            : undefined
-        }
-        flexibleLineType={flexibleLineType}
-      />
     );
   };
 
@@ -123,14 +106,26 @@ const ServiceJourneysEditor = ({
           <Heading1>{formatMessage('editorServiceJourneys')}</Heading1>
           <LeadParagraph>{formatMessage('serviceJourneysInfo')}</LeadParagraph>
           {serviceJourneys.length === 1
-            ? renderServiceJourneyEditor(serviceJourneys[0], 0)
+            ? children(
+                serviceJourneys[0],
+                keys[0],
+                stopPoints,
+                updateServiceJourney(0),
+                deleteServiceJourney(0)
+              )
             : serviceJourneys.map((sj, index) => (
                 <ExpandablePanel
                   key={keys[index]}
                   title={sj.name}
                   defaultOpen={!sj.id && index === serviceJourneys.length - 1}
                 >
-                  {renderServiceJourneyEditor(sj, index)}
+                  {children(
+                    sj,
+                    keys[index],
+                    stopPoints,
+                    updateServiceJourney(index),
+                    deleteServiceJourney(index)
+                  )}
                 </ExpandablePanel>
               ))}
           <AddButton
@@ -142,5 +137,3 @@ const ServiceJourneysEditor = ({
     </>
   );
 };
-
-export default ServiceJourneysEditor;

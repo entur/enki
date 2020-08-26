@@ -1,7 +1,7 @@
 import FlexibleLine from 'model/FlexibleLine';
 import { isBlank } from 'helpers/forms';
 import { validJourneyPattern } from './JourneyPatternEditor/StopPointEditor/validateForm';
-import { validServiceJourneys } from './ServiceJourneys/Editor/validate';
+import { validServiceJourneys } from './ServiceJourneyEditor/validate';
 
 export const validFlexibleLine = (
   line: FlexibleLine,

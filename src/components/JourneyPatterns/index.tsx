@@ -36,7 +36,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
               key={jp.id ?? keys[index]}
               defaultOpen={journeyPatterns.length === 1}
             >
-              children(jp, index, handleSave)
+              {children(jp, index, handleSave)}
             </ExpandablePanel>
           ))}
     </div>

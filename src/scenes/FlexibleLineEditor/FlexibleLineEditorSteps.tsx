@@ -6,12 +6,13 @@ import { withRouter } from 'react-router-dom';
 import { Organisation } from 'reducers/organisations';
 import { RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
-import ServiceJourneysEditor from './ServiceJourneys';
 import { changeElementAtIndex } from 'helpers/arrays';
 import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import './styles.scss';
 import JourneyPatternEditor from './JourneyPatternEditor';
+import ServiceJourneys from 'components/ServiceJourneys';
+import ServiceJourneyEditor from './ServiceJourneyEditor';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
@@ -66,13 +67,11 @@ const FlexibleLineEditor = (props: Props) => {
 
       {props.activeStep === 2 && props.flexibleLine.journeyPatterns?.[0] && (
         <section>
-          <ServiceJourneysEditor
+          <ServiceJourneys
             serviceJourneys={
               props.flexibleLine.journeyPatterns[0].serviceJourneys
             }
             stopPoints={props.flexibleLine.journeyPatterns[0].pointsInSequence}
-            spoilPristine={props.spoilPristine}
-            flexibleLineType={props.flexibleLine.flexibleLineType}
             onChange={(sjs) =>
               props.changeFlexibleLine({
                 ...props.flexibleLine,
@@ -86,7 +85,19 @@ const FlexibleLineEditor = (props: Props) => {
                 ),
               })
             }
-          />
+          >
+            {(sj, key, stopPoints, handleUpdate, handleDelete) => (
+              <ServiceJourneyEditor
+                key={key}
+                serviceJourney={sj}
+                stopPoints={stopPoints}
+                onChange={handleUpdate}
+                spoilPristine={props.spoilPristine}
+                deleteServiceJourney={handleDelete}
+                flexibleLineType={props.flexibleLine.flexibleLineType}
+              />
+            )}
+          </ServiceJourneys>
         </section>
       )}
 

@@ -3,10 +3,11 @@ import JourneyPattern from 'components/JourneyPatterns';
 import JourneyPatternEditor from 'scenes/FlexibleLineEditor/JourneyPatternEditor';
 import General from 'scenes/FlexibleLineEditor/General';
 import { Organisation } from 'reducers/organisations';
-import ServiceJourneysEditor from 'scenes/FlexibleLineEditor/ServiceJourneys';
 import { changeElementAtIndex } from 'helpers/arrays';
 import { Network } from 'model/Network';
 import Line from 'model/Line';
+import ServiceJourneys from 'components/ServiceJourneys';
+import ServiceJourneyEditor from 'scenes/FlexibleLineEditor/ServiceJourneyEditor';
 
 type Props = {
   activeStep: number;
@@ -61,11 +62,9 @@ const LineEditorSteps = (props: Props) => {
 
       {props.activeStep === 2 && props.line.journeyPatterns?.[0] && (
         <section>
-          <ServiceJourneysEditor
+          <ServiceJourneys
             serviceJourneys={props.line.journeyPatterns[0].serviceJourneys}
             stopPoints={props.line.journeyPatterns[0].pointsInSequence}
-            spoilPristine={props.spoilPristine}
-            flexibleLineType={undefined}
             onChange={(sjs) =>
               props.changeLine({
                 ...props.line,
@@ -79,7 +78,19 @@ const LineEditorSteps = (props: Props) => {
                 ),
               })
             }
-          />
+          >
+            {(sj, key, stopPoints, handleUpdate, handleDelete) => (
+              <ServiceJourneyEditor
+                key={key}
+                serviceJourney={sj}
+                stopPoints={stopPoints}
+                onChange={handleUpdate}
+                spoilPristine={props.spoilPristine}
+                deleteServiceJourney={handleDelete}
+                flexibleLineType={undefined}
+              />
+            )}
+          </ServiceJourneys>
         </section>
       )}
     </>
