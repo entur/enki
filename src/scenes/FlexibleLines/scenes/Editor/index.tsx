@@ -176,9 +176,9 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
             <LineEditorStepper
               steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
               isValidStepIndex={(i: number) =>
-                getMaxAllowedStepIndex(line!, true) >= i
+                getMaxAllowedStepIndex(line, true) >= i
               }
-              currentStepIsValid={(i) => currentStepIsValid(i, line!, true)}
+              currentStepIsValid={(i) => currentStepIsValid(i, line, true)}
               setNextClicked={setNextClicked}
               isEdit={isEdit}
               spoilPristine={nextClicked}
@@ -195,7 +195,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
               {(activeStep) => (
                 <FlexibleLineEditorSteps
                   activeStep={activeStep}
-                  flexibleLine={line!}
+                  flexibleLine={line}
                   changeFlexibleLine={onFlexibleLineChange}
                   operators={filterNetexOperators(organisations ?? [])}
                   networks={networks || []}
