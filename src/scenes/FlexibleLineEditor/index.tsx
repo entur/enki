@@ -111,7 +111,9 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         dispatch,
         authorities[0].id,
         providers.active
-      ).then((networkRef) => setLine({ ...newFlexibleLine, networkRef }));
+      ).then((newNetworkRef) =>
+        setLine({ ...newFlexibleLine, networkRef: newNetworkRef })
+      );
     }
     // eslint-disable-next-line
   }, [flexibleLines, isLoadingDependencies]);

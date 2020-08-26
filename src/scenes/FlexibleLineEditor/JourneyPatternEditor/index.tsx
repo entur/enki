@@ -41,8 +41,8 @@ const JourneyPatternEditor = ({
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
 
-  const onJourneyPatternChange = (journeyPattern: JourneyPattern) => {
-    onSave(journeyPattern, index);
+  const onJourneyPatternChange = (newJourneyPattern: JourneyPattern) => {
+    onSave(newJourneyPattern, index);
   };
 
   const deleteStopPoint = (stopPointIndex: number) => {
@@ -76,13 +76,13 @@ const JourneyPatternEditor = ({
     });
   };
 
-  const updateStopPoint = (index: number, stopPlace: StopPoint) =>
+  const updateStopPoint = (pointIndex: number, stopPlace: StopPoint) =>
     onJourneyPatternChange({
       ...journeyPattern,
       pointsInSequence: changeElementAtIndex(
         journeyPattern.pointsInSequence,
         stopPlace,
-        index
+        pointIndex
       ),
     });
 
@@ -134,24 +134,24 @@ const JourneyPatternEditor = ({
               spoilPristine={spoilPristine}
             />
           ) : (
-            pointsInSequence.map((stopPoint, index) => (
+            pointsInSequence.map((stopPoint, pointIndex) => (
               <StopPointEditor
-                key={keys[index]}
-                index={index}
-                isFirstStop={index === 0}
+                key={keys[pointIndex]}
+                index={pointIndex}
+                isFirstStop={pointIndex === 0}
                 stopPoint={stopPoint}
                 errors={validateStopPoint(
                   stopPoint,
-                  index === 0,
-                  index === pointsInSequence.length - 1
+                  pointIndex === 0,
+                  pointIndex === pointsInSequence.length - 1
                 )}
                 deleteStopPoint={
                   pointsInSequence.length > 2
-                    ? () => deleteStopPoint(index)
+                    ? () => deleteStopPoint(pointIndex)
                     : undefined
                 }
-                stopPointChange={(stopPoint: StopPoint) =>
-                  updateStopPoint(index, stopPoint)
+                stopPointChange={(updatedStopPoint: StopPoint) =>
+                  updateStopPoint(pointIndex, updatedStopPoint)
                 }
                 flexibleStopPlaces={flexibleStopPlaces}
                 spoilPristine={spoilPristine}

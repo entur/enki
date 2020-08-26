@@ -58,9 +58,14 @@ export default ({
   const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
   const modePristine = usePristine(flexibleLine.transportMode, spoilPristine);
 
-  const onFlexibleLineTypeChange = (flexibleLineType: string | undefined) => {
-    if (flexibleLineType !== 'flexibleAreasOnly') {
-      return flexibleLineChange({ ...flexibleLine, flexibleLineType });
+  const onFlexibleLineTypeChange = (
+    newFlexibleLineType: string | undefined
+  ) => {
+    if (newFlexibleLineType !== 'flexibleAreasOnly') {
+      return flexibleLineChange({
+        ...flexibleLine,
+        flexibleLineType: newFlexibleLineType,
+      });
     }
 
     const journeyPatterns = flexibleLine.journeyPatterns ?? [];

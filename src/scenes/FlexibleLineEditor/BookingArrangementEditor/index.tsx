@@ -258,7 +258,7 @@ const BookingArrangementEditor = (props: Props) => {
                   key={v}
                   onClick={() => onBookingMethodChange(v)}
                 >
-                  {formatMessage(bookingMethodMessages[v] as keyof MessagesKey)}
+                  {formatMessage(bookingMethodMessages[v])}
                 </FilterChip>
               ))}
             </div>
@@ -272,7 +272,7 @@ const BookingArrangementEditor = (props: Props) => {
                   key={v}
                   onClick={() => onPurchaseMomentChange(v)}
                 >
-                  {formatMessage(paymentTimeMessages[v] as keyof MessagesKey)}
+                  {formatMessage(paymentTimeMessages[v])}
                 </FilterChip>
               ))}
             </div>

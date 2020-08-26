@@ -84,9 +84,7 @@ const StopPointEditor = ({
   const debouncedSearchForQuay = useCallback(
     debounce(async (quayRef: string) => {
       if (isBlank(quayRef)) return setQuaySearch({});
-
-      const quaySearch = await searchForQuay(quayRef);
-      setQuaySearch(quaySearch);
+      setQuaySearch(await searchForQuay(quayRef));
     }, 1000),
     []
   );

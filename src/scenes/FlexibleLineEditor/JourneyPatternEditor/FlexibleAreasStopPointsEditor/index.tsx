@@ -33,15 +33,15 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
   const stopPlacePristine = usePristine(stopPointValue, spoilPristine);
   const frontTextPristine = usePristine(frontText, spoilPristine);
 
-  const stopPointChange = (stopPoint: StopPoint) => {
+  const stopPointChange = (newStopPoint: StopPoint) => {
     updateStopPoints([
       {
-        ...stopPoint,
+        ...newStopPoint,
         forBoarding: true,
         forAlighting: false,
       },
       {
-        ...stopPoint,
+        ...newStopPoint,
         id: alightingStopPoint?.id,
         forBoarding: false,
         forAlighting: true,

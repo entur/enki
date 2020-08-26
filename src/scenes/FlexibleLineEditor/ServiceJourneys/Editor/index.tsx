@@ -67,10 +67,10 @@ const ServiceJourneyEditor = (props: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
   const handleOperatorSelectionChange = (
-    operatorSelection: string | undefined
+    newOperatorSelection: string | undefined
   ) => {
-    onFieldChange('operatorRef', operatorSelection);
-    setOperatorSelection(operatorSelection);
+    onFieldChange('operatorRef', newOperatorSelection);
+    setOperatorSelection(newOperatorSelection);
   };
 
   const operators = filterNetexOperators(organisations ?? []);
@@ -82,9 +82,7 @@ const ServiceJourneyEditor = (props: Props) => {
     onChange({ ...serviceJourney, [field]: value });
   };
 
-  const getParagraphMessageKey = (
-    flexibleLineType: string | undefined
-  ): keyof MessagesKey => {
+  const getParagraphMessageKey = (): keyof MessagesKey => {
     switch (flexibleLineType) {
       case undefined:
         return 'passingTimesInfoFixed';
@@ -231,9 +229,7 @@ const ServiceJourneyEditor = (props: Props) => {
                   : 'serviceJourneyPassingTimes'
               )}
             </Heading4>
-            <Paragraph>
-              {formatMessage(getParagraphMessageKey(flexibleLineType))}
-            </Paragraph>
+            <Paragraph>{formatMessage(getParagraphMessageKey())}</Paragraph>
             <PassingTimesEditor
               passingTimes={passingTimes ?? []}
               stopPoints={stopPoints}
