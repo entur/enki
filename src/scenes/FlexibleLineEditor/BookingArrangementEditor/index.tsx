@@ -24,7 +24,6 @@ import {
 } from '@entur/form';
 import Contact from 'model/Contact';
 import { Dropdown } from '@entur/dropdown';
-import { MessagesKey } from 'i18n/translations/translationKeys';
 import { FilterChip } from '@entur/chip';
 import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
 import DurationPicker from 'components/DurationPicker';
