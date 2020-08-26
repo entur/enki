@@ -57,7 +57,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
     const y = dateOrNow.getFullYear();
     const m = dateOrNow?.getMonth() + 1;
     const d = dateOrNow?.getDate();
-    return `${y}-${m! < 10 ? '0' + m : m}-${d! < 10 ? '0' + d : d}`;
+    return `${y}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
   };
 
   return (

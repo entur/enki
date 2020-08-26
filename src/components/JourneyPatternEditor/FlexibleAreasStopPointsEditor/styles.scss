@@ -1,0 +1,13 @@
+@import '~@entur/tokens/dist/styles.scss';
+
+.flexible-areas-stop-points {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  > div {
+    width: 48%;
+    min-width: 20rem;
+    margin-top: $space-large;
+  }
+}

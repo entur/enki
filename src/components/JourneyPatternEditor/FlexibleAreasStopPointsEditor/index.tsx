@@ -9,8 +9,8 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { AppIntlState, selectIntl } from 'i18n';
 import { isBlank } from 'helpers/forms';
 import { GlobalState } from 'reducers';
-import './styles.scss';
 import { getInit, mapToItems } from 'helpers/dropdown';
+import './styles.scss';
 
 type Props = {
   flexibleStopPlaces: FlexibleStopPlace[];
@@ -33,15 +33,15 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
   const stopPlacePristine = usePristine(stopPointValue, spoilPristine);
   const frontTextPristine = usePristine(frontText, spoilPristine);
 
-  const stopPointChange = (stopPoint: StopPoint) => {
+  const stopPointChange = (newStopPoint: StopPoint) => {
     updateStopPoints([
       {
-        ...stopPoint,
+        ...newStopPoint,
         forBoarding: true,
         forAlighting: false,
       },
       {
-        ...stopPoint,
+        ...newStopPoint,
         id: alightingStopPoint?.id,
         forBoarding: false,
         forAlighting: true,

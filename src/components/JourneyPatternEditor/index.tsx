@@ -2,25 +2,20 @@ import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import General from './General';
-import {
-  Paragraph,
-  LeadParagraph,
-  Heading3,
-  Heading1,
-} from '@entur/typography';
-import { validateStopPoint } from './StopPoints/Editor/validateForm';
+import { Paragraph, Heading3 } from '@entur/typography';
+import { validateStopPoint } from './StopPointEditor/validateForm';
 import {
   changeElementAtIndex,
   removeElementByIndex,
   useUniqueKeys,
 } from 'helpers/arrays';
-import StopPointEditor from './StopPoints/Editor';
+import StopPointEditor from './StopPointEditor';
 import StopPoint from 'model/StopPoint';
 import AddButton from 'components/AddButton/AddButton';
 import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import JourneyPattern from 'model/JourneyPattern';
-import FlexibleAreasOnlyEditor from './StopPoints/Editor/FlexibleAreasOnlyEditor';
+import FlexibleAreasOnlyEditor from './FlexibleAreasStopPointsEditor';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 
 type Props = {
@@ -46,8 +41,8 @@ const JourneyPatternEditor = ({
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const { formatMessage } = useSelector(selectIntl);
 
-  const onJourneyPatternChange = (journeyPattern: JourneyPattern) => {
-    onSave(journeyPattern, index);
+  const onJourneyPatternChange = (newJourneyPattern: JourneyPattern) => {
+    onSave(newJourneyPattern, index);
   };
 
   const deleteStopPoint = (stopPointIndex: number) => {
@@ -81,13 +76,13 @@ const JourneyPatternEditor = ({
     });
   };
 
-  const updateStopPoint = (index: number, stopPlace: StopPoint) =>
+  const updateStopPoint = (pointIndex: number, stopPlace: StopPoint) =>
     onJourneyPatternChange({
       ...journeyPattern,
       pointsInSequence: changeElementAtIndex(
         journeyPattern.pointsInSequence,
         stopPlace,
-        index
+        pointIndex
       ),
     });
 
@@ -107,8 +102,6 @@ const JourneyPatternEditor = ({
   return (
     <div className="journey-pattern-editor">
       <section>
-        <Heading1>{formatMessage('editorJourneyPatternsTabLabel')}</Heading1>
-        <LeadParagraph>{formatMessage('editorFillInformation')}</LeadParagraph>
         <RequiredInputMarker />
         <General
           journeyPattern={journeyPattern}
@@ -141,24 +134,24 @@ const JourneyPatternEditor = ({
               spoilPristine={spoilPristine}
             />
           ) : (
-            pointsInSequence.map((stopPoint, index) => (
+            pointsInSequence.map((stopPoint, pointIndex) => (
               <StopPointEditor
-                key={keys[index]}
-                index={index}
-                isFirstStop={index === 0}
+                key={keys[pointIndex]}
+                index={pointIndex}
+                isFirstStop={pointIndex === 0}
                 stopPoint={stopPoint}
                 errors={validateStopPoint(
                   stopPoint,
-                  index === 0,
-                  index === pointsInSequence.length - 1
+                  pointIndex === 0,
+                  pointIndex === pointsInSequence.length - 1
                 )}
                 deleteStopPoint={
                   pointsInSequence.length > 2
-                    ? () => deleteStopPoint(index)
+                    ? () => deleteStopPoint(pointIndex)
                     : undefined
                 }
-                stopPointChange={(stopPoint: StopPoint) =>
-                  updateStopPoint(index, stopPoint)
+                stopPointChange={(updatedStopPoint: StopPoint) =>
+                  updateStopPoint(pointIndex, updatedStopPoint)
                 }
                 flexibleStopPlaces={flexibleStopPlaces}
                 spoilPristine={spoilPristine}

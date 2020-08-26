@@ -8,17 +8,24 @@ import Line from 'model/Line';
 import Loading from 'components/Loading';
 import { isBlank } from 'helpers/forms';
 import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
-import FlexibleLineEditor from 'scenes/FlexibleLines/scenes/Editor/FlexibleLineEditor';
 import { GlobalState } from 'reducers';
-import { filterNetexOperators } from 'reducers/organisations';
+import {
+  filterNetexOperators,
+  filterAuthorities,
+} from 'reducers/organisations';
 import { setSavedChanges } from 'actions/editor';
-import { validLine, currentStepIsValid } from './validateForm';
+import {
+  validLine,
+  currentStepIsValid,
+  getMaxAllowedStepIndex,
+} from './validateForm';
 import { lineToPayload } from 'model/Line';
 import { showSuccessNotification } from 'actions/notification';
-import { getMaxAllowedStepIndex } from 'scenes/FlexibleLines/scenes/Editor/validateForm';
 import { useUttuErrors, useLine } from './hooks';
-import Stepper from './Stepper';
+import LineEditorStepper from 'components/LineEditorStepper';
 import { FIXED_LINE_STEPS } from './constants';
+import LineEditorSteps from './LineEditorSteps';
+import './styles.scss';
 
 interface MatchParams {
   id: string;
@@ -31,11 +38,13 @@ export default () => {
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
+  const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   const dispatch = useDispatch<any>();
-  const { organisations, editor } = useSelector<GlobalState, GlobalState>(
-    (s) => s
-  );
+  const { organisations, editor, providers } = useSelector<
+    GlobalState,
+    GlobalState
+  >((s) => s);
 
   const { line, setLine, loading, error, networks } = useLine();
 
@@ -100,48 +109,50 @@ export default () => {
     // eslint-disable-next-line
   }, [match]);
 
+  const onBackButtonClicked = () =>
+    editor.isSaved ? history.push('/lines') : setShowConfirm(true);
+
+  const authoritiesMissing =
+    organisations &&
+    filterAuthorities(organisations, providers.active).length === 0;
+
   return (
     <Page
       backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
-      onBackButtonClick={() => history.push('/lines')}
+      onBackButtonClick={onBackButtonClicked}
     >
       <Loading
         isLoading={loading || !line}
         text={formatMessage('editorLoadingLineText')}
       >
-        <Stepper
+        <LineEditorStepper
           steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
-          isValidStepIndex={(i: number) =>
-            getMaxAllowedStepIndex(line!, false) >= i
-          }
+          isValidStepIndex={(i: number) => getMaxAllowedStepIndex(line!) >= i}
           currentStepIsValid={(i) => currentStepIsValid(i, line!)}
           setNextClicked={setNextClicked}
           isEdit={!isBlank(match?.params.id)}
+          spoilPristine={nextClicked}
           onDelete={onDelete}
+          isDeleting={isDeleting}
           onSave={onSave}
+          isSaving={isSaving}
           isSaved={editor.isSaved}
-          redirect={() => {
-            history.push('/lines');
-          }}
           redirectTo="/lines"
+          showConfirm={showConfirm}
+          setShowConfirm={setShowConfirm}
+          authoritiesMissing={authoritiesMissing}
         >
-          {([activeStepperIndex, setActiveStepperIndex]) => (
-            <FlexibleLineEditor
-              isEdit={!isBlank(match?.params.id)}
-              activeStep={activeStepperIndex}
-              setActiveStep={setActiveStepperIndex}
-              flexibleLine={line!}
-              changeFlexibleLine={onChange}
+          {(activeStep) => (
+            <LineEditorSteps
+              activeStep={activeStep}
+              line={line!}
+              changeLine={onChange}
               operators={filterNetexOperators(organisations ?? [])}
               networks={networks || []}
               spoilPristine={nextClicked}
-              isSaving={isSaving}
-              isDeleting={isDeleting}
-              isFlexibleLine={false}
-              steps={FIXED_LINE_STEPS}
             />
           )}
-        </Stepper>
+        </LineEditorStepper>
       </Loading>
     </Page>
   );

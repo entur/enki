@@ -285,6 +285,7 @@ export const messages: MessagesKey = {
   passingTimesEditorError: 'You need valid passing times.',
   editorAddStopPoint: 'Add stop point',
   editorAddServiceJourneys: 'Create more Service Journeys',
+  editorAddJourneyPatterns: 'Create more Journey Patterns',
   editorEdit: 'Edit',
   editorCreate: 'Create new ',
   editorDetailedCreate: 'Create new {details}',

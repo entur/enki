@@ -24,7 +24,6 @@ import {
 } from '@entur/form';
 import Contact from 'model/Contact';
 import { Dropdown } from '@entur/dropdown';
-import { MessagesKey } from 'i18n/translations/translationKeys';
 import { FilterChip } from '@entur/chip';
 import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
 import DurationPicker from 'components/DurationPicker';
@@ -258,7 +257,7 @@ const BookingArrangementEditor = (props: Props) => {
                   key={v}
                   onClick={() => onBookingMethodChange(v)}
                 >
-                  {formatMessage(bookingMethodMessages[v] as keyof MessagesKey)}
+                  {formatMessage(bookingMethodMessages[v])}
                 </FilterChip>
               ))}
             </div>
@@ -272,7 +271,7 @@ const BookingArrangementEditor = (props: Props) => {
                   key={v}
                   onClick={() => onPurchaseMomentChange(v)}
                 >
-                  {formatMessage(paymentTimeMessages[v] as keyof MessagesKey)}
+                  {formatMessage(paymentTimeMessages[v])}
                 </FilterChip>
               ))}
             </div>

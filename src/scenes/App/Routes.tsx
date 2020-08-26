@@ -8,7 +8,7 @@ import NetworkEditor from '../Networks/scenes/Editor';
 import LinesOverview from 'scenes/Lines';
 import LineEditor from 'scenes/LineEditor';
 import FlexibleLinesOverview from '../FlexibleLines';
-import FlexibleLinesEditor from '../FlexibleLines/scenes/Editor';
+import FlexibleLineEditor from '../FlexibleLineEditor';
 import StopPlacesOverview from '../StopPlaces';
 import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import ExportsOverview from '../Exports';
@@ -30,12 +30,12 @@ const Routes = () => (
       <Route
         exact
         path="/flexible-lines/create"
-        component={FlexibleLinesEditor}
+        component={FlexibleLineEditor}
       />
       <Route
         exact
         path="/flexible-lines/edit/:id"
-        component={FlexibleLinesEditor}
+        component={FlexibleLineEditor}
       />
       <Route exact path="/stop-places" component={StopPlacesOverview} />
       <Route exact path="/stop-places/create" component={StopPlacesEditor} />

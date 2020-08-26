@@ -1,0 +1,50 @@
+@import '~@entur/tokens/dist/styles.scss';
+
+.page-content {
+  .line-editor {
+    margin-top: $space-large;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .error-icon {
+      color: $colors-validation-lava;
+      vertical-align: middle;
+      margin-left: 0.5rem;
+    }
+
+    .no-error {
+      opacity: 0;
+    }
+  }
+
+  .authority-missing-modal {
+    .confirm-dialog-buttons {
+      justify-content: center;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    margin-top: $space-extra-large4;
+
+    :first-child {
+      margin-right: 2rem;
+    }
+
+    .delete {
+      margin-left: auto;
+    }
+  }
+
+  .save-button-container {
+    margin-top: 20px;
+    text-align: right;
+  }
+}

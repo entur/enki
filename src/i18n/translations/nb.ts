@@ -281,6 +281,7 @@ export const messages = {
   passingTimesEditorError: 'Du må ha gyldige passeringstider.',
   editorAddStopPoint: 'Legg til stopp',
   editorAddServiceJourneys: 'Legg til flere Service Journeys',
+  editorAddJourneyPatterns: 'Legg til flere Journey Patterns',
   editorEdit: 'Rediger',
   editorCreate: 'Opprett',
   editorDetailedCreate: 'Opprett {details}',
