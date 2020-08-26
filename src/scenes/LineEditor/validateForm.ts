@@ -1,7 +1,7 @@
 import Line from 'model/Line';
 import { aboutLineStepIsValid } from 'scenes/FlexibleLineEditor/validateForm';
-import { validJourneyPattern } from 'scenes/FlexibleLineEditor/JourneyPatternEditor/StopPointEditor/validateForm';
-import { validServiceJourneys } from 'scenes/FlexibleLineEditor/ServiceJourneyEditor/validate';
+import { validJourneyPattern } from 'components/JourneyPatternEditor/StopPointEditor/validateForm';
+import { validServiceJourneys } from 'components/ServiceJourneyEditor/validate';
 
 export const validLine = (line: Line): boolean =>
   aboutLineStepIsValid(line, false) &&

@@ -1,13 +1,13 @@
 import React from 'react';
 import JourneyPattern from 'components/JourneyPatterns';
-import JourneyPatternEditor from 'scenes/FlexibleLineEditor/JourneyPatternEditor';
-import General from 'scenes/FlexibleLineEditor/General';
+import JourneyPatternEditor from 'components/JourneyPatternEditor';
+import General from 'components/GeneralLineEditor';
 import { Organisation } from 'reducers/organisations';
 import { changeElementAtIndex } from 'helpers/arrays';
 import { Network } from 'model/Network';
 import Line from 'model/Line';
 import ServiceJourneys from 'components/ServiceJourneys';
-import ServiceJourneyEditor from 'scenes/FlexibleLineEditor/ServiceJourneyEditor';
+import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
 
 type Props = {
   activeStep: number;

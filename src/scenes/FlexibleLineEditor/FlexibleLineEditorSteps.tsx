@@ -1,7 +1,7 @@
 import React from 'react';
-import BookingArrangementEditor from './BookingArrangementEditor';
+import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import JourneyPatterns from 'components/JourneyPatterns';
-import General from './General';
+import General from 'components/GeneralLineEditor';
 import { withRouter } from 'react-router-dom';
 import { Organisation } from 'reducers/organisations';
 import { RouteComponentProps } from 'react-router';
@@ -10,9 +10,9 @@ import { changeElementAtIndex } from 'helpers/arrays';
 import FlexibleLine from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import './styles.scss';
-import JourneyPatternEditor from './JourneyPatternEditor';
+import JourneyPatternEditor from 'components/JourneyPatternEditor';
 import ServiceJourneys from 'components/ServiceJourneys';
-import ServiceJourneyEditor from './ServiceJourneyEditor';
+import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
