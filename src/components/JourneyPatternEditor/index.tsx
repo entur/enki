@@ -183,8 +183,8 @@ const JourneyPatternEditor = ({
         {showDeleteDialog && onDelete && (
           <ConfirmDialog
             isOpen={showDeleteDialog}
-            title={formatMessage('serviceJourneydeleteTitle')}
-            message={formatMessage('serviceJourneydeleteMessage')}
+            title={formatMessage('journeyPatternDeleteDialogTitle')}
+            message={formatMessage('journeyPatternDeleteDialogMessage')}
             buttons={[
               <SecondaryButton
                 key={2}

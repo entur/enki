@@ -228,8 +228,8 @@ const StopPointEditor = ({
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title={formatMessage('deleteTitle')}
-        message={formatMessage('deleteMessage')}
+        title={formatMessage('deleteStopPointDialogTitle')}
+        message={formatMessage('deleteStopPointDialogMessage')}
         buttons={[
           <SecondaryButton key="no" onClick={() => setDeleteDialogOpen(false)}>
             {formatMessage('no')}

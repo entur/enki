@@ -65,18 +65,18 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
       <Modal
         size="small"
         open={showModal}
-        title={formatMessage('newServiceJourneyModalTitle')}
+        title={formatMessage('newJourneyPatternModalTitle')}
         onDismiss={() => setShowModal(false)}
         className="modal"
       >
-        {formatMessage('newServiceJourneyModalSubTitle')}
+        {formatMessage('newJourneyPatternModalSubTitle')}
         <div className="modal-content">
           <InputGroup
-            label={formatMessage('newServiceJourneyModalLabel')}
+            label={formatMessage('newJourneyPatternModalLabel')}
             className="modal-input"
           >
             <TextField
-              placeholder={formatMessage('newServiceJourneyModalPlaceholder')}
+              placeholder={formatMessage('newJourneyPatternModalPlaceholder')}
               ref={textFieldRef}
             />
           </InputGroup>
@@ -85,14 +85,14 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
               onClick={() => setShowModal(false)}
               className="margin-right"
             >
-              {formatMessage('newServiceJourneyModalCancel')}
+              {formatMessage('newJourneyPatternModalCancel')}
             </SecondaryButton>
             <PrimaryButton
               onClick={() =>
                 addNewJourneyPattern(textFieldRef?.current?.value ?? '')
               }
             >
-              {formatMessage('newServiceJourneyModalCreate')}
+              {formatMessage('newJourneyPatternModalCreate')}
             </PrimaryButton>
           </div>
         </div>
@@ -121,7 +121,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
               ))}
           <AddButton
             onClick={() => setShowModal(true)}
-            buttonTitle={formatMessage('editorAddServiceJourneys')}
+            buttonTitle={formatMessage('editorAddJourneyPatterns')}
           />
         </div>
       </ScrollToTop>
