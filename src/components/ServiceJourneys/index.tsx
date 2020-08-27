@@ -20,7 +20,6 @@ type Props = {
   stopPoints: StopPoint[];
   children: (
     serviceJourney: ServiceJourney,
-    key: string,
     stopPoints: StopPoint[],
     handleUpdate: (serviceJourney: ServiceJourney) => void,
     handleDelete: () => void
@@ -109,7 +108,6 @@ export default ({ serviceJourneys, onChange, stopPoints, children }: Props) => {
           {serviceJourneys.length === 1
             ? children(
                 serviceJourneys[0],
-                keys[0],
                 stopPoints,
                 updateServiceJourney(0),
                 deleteServiceJourney(0)
@@ -122,7 +120,6 @@ export default ({ serviceJourneys, onChange, stopPoints, children }: Props) => {
                 >
                   {children(
                     sj,
-                    keys[index],
                     stopPoints,
                     updateServiceJourney(index),
                     deleteServiceJourney(index)

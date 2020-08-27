@@ -47,10 +47,9 @@ const LineEditorSteps = (props: Props) => {
               })
             }
           >
-            {(journeyPattern, index, onSave) => (
+            {(journeyPattern, onSave) => (
               <JourneyPatternEditor
                 journeyPattern={journeyPattern}
-                index={index}
                 onSave={onSave}
                 spoilPristine={props.spoilPristine}
                 flexibleLineType={undefined}
@@ -79,9 +78,8 @@ const LineEditorSteps = (props: Props) => {
               })
             }
           >
-            {(sj, key, stopPoints, handleUpdate, handleDelete) => (
+            {(sj, stopPoints, handleUpdate, handleDelete) => (
               <ServiceJourneyEditor
-                key={key}
                 serviceJourney={sj}
                 stopPoints={stopPoints}
                 onChange={handleUpdate}

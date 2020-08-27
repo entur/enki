@@ -52,11 +52,10 @@ const FlexibleLineEditor = (props: Props) => {
               })
             }
           >
-            {(journeyPattern, index, onSave) => (
+            {(journeyPattern, onSave) => (
               <JourneyPatternEditor
                 journeyPattern={journeyPattern}
                 onSave={onSave}
-                index={index}
                 spoilPristine={props.spoilPristine}
                 flexibleLineType={props.flexibleLine.flexibleLineType}
               />
@@ -86,9 +85,8 @@ const FlexibleLineEditor = (props: Props) => {
               })
             }
           >
-            {(sj, key, stopPoints, handleUpdate, handleDelete) => (
+            {(sj, stopPoints, handleUpdate, handleDelete) => (
               <ServiceJourneyEditor
-                key={key}
                 serviceJourney={sj}
                 stopPoints={stopPoints}
                 onChange={handleUpdate}
