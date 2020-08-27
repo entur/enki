@@ -5,7 +5,11 @@ import { selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
 import { InputGroup, TextField } from '@entur/form';
 import { SecondaryButton, PrimaryButton } from '@entur/button';
-import { replaceElement, removeElementByIndex } from 'helpers/arrays';
+import {
+  replaceElement,
+  removeElementByIndex,
+  useUniqueKeys,
+} from 'helpers/arrays';
 import ScrollToTop from 'components/ScrollToTop';
 import { Heading1, LeadParagraph } from '@entur/typography';
 import StopPoint from 'model/StopPoint';
@@ -19,7 +23,7 @@ type Props = {
   stopPoints: StopPoint[];
   children: (
     serviceJourney: ServiceJourney,
-    key: number,
+    key: string,
     stopPoints: StopPoint[],
     handleUpdate: (serviceJourney: ServiceJourney) => void,
     handleDelete: () => void
@@ -28,9 +32,10 @@ type Props = {
 
 export default ({ serviceJourneys, onChange, stopPoints, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [keys, setKeys] = useState<number[]>(serviceJourneys.map(Math.random));
   const { formatMessage } = useSelector(selectIntl);
   const textFieldRef = useRef<HTMLInputElement>(null);
+
+  const keys = useUniqueKeys(serviceJourneys);
 
   const updateServiceJourney = (index: number) => {
     return (serviceJourney: ServiceJourney) => {
@@ -55,7 +60,6 @@ export default ({ serviceJourneys, onChange, stopPoints, children }: Props) => {
       },
     ];
     onChange(newServiceJourneys);
-    setKeys(newServiceJourneys.map(Math.random));
     setShowModal(false);
     setTimeout(
       () => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }),
