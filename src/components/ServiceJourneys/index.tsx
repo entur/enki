@@ -22,7 +22,7 @@ type Props = {
     serviceJourney: ServiceJourney,
     stopPoints: StopPoint[],
     handleUpdate: (serviceJourney: ServiceJourney) => void,
-    handleDelete: () => void
+    handleDelete?: () => void
   ) => ReactElement;
 };
 
@@ -106,12 +106,7 @@ export default ({ serviceJourneys, onChange, stopPoints, children }: Props) => {
           <Heading1>{formatMessage('editorServiceJourneys')}</Heading1>
           <LeadParagraph>{formatMessage('serviceJourneysInfo')}</LeadParagraph>
           {serviceJourneys.length === 1
-            ? children(
-                serviceJourneys[0],
-                stopPoints,
-                updateServiceJourney(0),
-                deleteServiceJourney(0)
-              )
+            ? children(serviceJourneys[0], stopPoints, updateServiceJourney(0))
             : serviceJourneys.map((sj, index) => (
                 <ExpandablePanel
                   key={keys[index]}
