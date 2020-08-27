@@ -1,7 +1,3 @@
-import { useEffect, useState } from 'react';
-import uuid from 'uuid';
-import { equals } from 'ramda';
-
 export const replaceElement = <E>(array: E[], index: number, value: E): E[] => [
   ...array.slice(0, index),
   value,
