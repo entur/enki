@@ -36,7 +36,7 @@ type Props = {
   spoilPristine: boolean;
   onChange: (serviceJourney: ServiceJourney) => void;
   deleteServiceJourney?: (index: number) => void;
-  flexibleLineType?: string | undefined;
+  flexibleLineType?: string;
 };
 
 const ServiceJourneyEditor = (props: Props) => {

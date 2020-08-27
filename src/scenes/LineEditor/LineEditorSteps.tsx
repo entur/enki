@@ -30,7 +30,6 @@ const LineEditorSteps = (props: Props) => {
               networks={props.networks}
               flexibleLineChange={props.changeLine}
               spoilPristine={props.spoilPristine}
-              isFlexibleLine={false}
             />
           </section>
         </>

@@ -36,7 +36,7 @@ type Props = {
   networks: Network[];
   flexibleLineChange: (flexibleLine: FlexibleLine) => void;
   spoilPristine: boolean;
-  isFlexibleLine: boolean;
+  isFlexibleLine?: boolean;
 };
 
 export default ({
@@ -45,7 +45,7 @@ export default ({
   networks,
   flexibleLineChange,
   spoilPristine,
-  isFlexibleLine,
+  isFlexibleLine = false,
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const { publicCode, flexibleLineType } = flexibleLine;

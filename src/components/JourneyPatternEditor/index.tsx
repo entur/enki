@@ -25,7 +25,7 @@ type Props = {
   onSave: (journeyPattern: JourneyPattern) => void;
   onDelete?: () => void;
   spoilPristine: boolean;
-  flexibleLineType?: string | undefined;
+  flexibleLineType?: string;
 };
 
 type StateProps = {

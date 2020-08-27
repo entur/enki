@@ -35,7 +35,7 @@ const FlexibleLineEditor = (props: Props) => {
               networks={props.networks}
               flexibleLineChange={props.changeFlexibleLine}
               spoilPristine={props.spoilPristine}
-              isFlexibleLine={true}
+              isFlexibleLine
             />
           </section>
         </>
