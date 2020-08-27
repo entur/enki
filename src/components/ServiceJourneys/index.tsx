@@ -68,18 +68,18 @@ export default ({ serviceJourneys, onChange, stopPoints, children }: Props) => {
       <Modal
         size="small"
         open={showModal}
-        title={formatMessage('modalTitle')}
+        title={formatMessage('newServiceJourneyModalTitle')}
         onDismiss={() => setShowModal(false)}
         className="modal"
       >
-        {formatMessage('modalSubTitle')}
+        {formatMessage('newServiceJourneyModalSubTitle')}
         <div className="modal-content">
           <InputGroup
-            label={formatMessage('modalLabel')}
+            label={formatMessage('newServiceJourneyModalLabel')}
             className="modal-input"
           >
             <TextField
-              placeholder={formatMessage('modalPlaceholder')}
+              placeholder={formatMessage('newServiceJourneyModalPlaceholder')}
               ref={textFieldRef}
             />
           </InputGroup>
@@ -88,14 +88,14 @@ export default ({ serviceJourneys, onChange, stopPoints, children }: Props) => {
               onClick={() => setShowModal(false)}
               className="margin-right"
             >
-              {formatMessage('modalCancel')}
+              {formatMessage('newServiceJourneyModalCancel')}
             </SecondaryButton>
             <PrimaryButton
               onClick={() =>
                 addNewServiceJourney(textFieldRef?.current?.value ?? '')
               }
             >
-              {formatMessage('modalCreate')}
+              {formatMessage('newServiceJourneyModalCreate')}
             </PrimaryButton>
           </div>
         </div>
