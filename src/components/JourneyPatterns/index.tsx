@@ -1,11 +1,12 @@
 import React, { ReactElement } from 'react';
 import { ExpandablePanel } from '@entur/expand';
-import { replaceElement, useUniqueKeys } from 'helpers/arrays';
+import { replaceElement } from 'helpers/arrays';
 import JourneyPattern from 'model/JourneyPattern';
 import './styles.scss';
 import { LeadParagraph, Heading1 } from '@entur/typography';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
+import useUniqueKeys from 'hooks/useUniqueKeys';
 
 type Props = {
   journeyPatterns: JourneyPattern[];

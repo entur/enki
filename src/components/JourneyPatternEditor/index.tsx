@@ -4,11 +4,7 @@ import { selectIntl } from 'i18n';
 import General from './General';
 import { Paragraph, Heading3 } from '@entur/typography';
 import { validateStopPoint } from './StopPointEditor/validateForm';
-import {
-  changeElementAtIndex,
-  removeElementByIndex,
-  useUniqueKeys,
-} from 'helpers/arrays';
+import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
 import StopPointEditor from './StopPointEditor';
 import StopPoint from 'model/StopPoint';
 import AddButton from 'components/AddButton/AddButton';
@@ -17,6 +13,7 @@ import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import JourneyPattern from 'model/JourneyPattern';
 import FlexibleAreasOnlyEditor from './FlexibleAreasStopPointsEditor';
 import RequiredInputMarker from 'components/RequiredInputMarker';
+import useUniqueKeys from 'hooks/useUniqueKeys';
 
 type Props = {
   journeyPattern: JourneyPattern;

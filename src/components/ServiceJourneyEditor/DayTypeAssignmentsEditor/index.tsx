@@ -5,17 +5,14 @@ import moment from 'moment/moment';
 import { AddIcon } from '@entur/icons';
 import { TertiaryButton } from '@entur/button';
 import DayTypeAssignment from 'model/DayTypeAssignment';
-import {
-  removeElementByIndex,
-  replaceElement,
-  useUniqueKeys,
-} from 'helpers/arrays';
+import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import { DatePicker } from '@entur/datepicker';
 import { InputGroup } from '@entur/form';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import './styles.scss';
+import useUniqueKeys from 'hooks/useUniqueKeys';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
