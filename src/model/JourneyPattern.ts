@@ -15,11 +15,13 @@ export type JourneyPattern = VersionedType & {
 };
 
 export const initJourneyPatterns = (): JourneyPattern[] => [
-  {
-    serviceJourneys: [{ passingTimes: [{}, {}] }],
-    pointsInSequence: [{}, {}],
-  },
+  initJourneyPattern(),
 ];
+
+export const initJourneyPattern = (): JourneyPattern => ({
+  serviceJourneys: [{ passingTimes: [{}, {}] }],
+  pointsInSequence: [{}, {}],
+});
 
 export const journeyPatternToPayload = (journeyPattern: JourneyPattern) => ({
   ...journeyPattern,

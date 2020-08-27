@@ -52,10 +52,11 @@ const FlexibleLineEditor = (props: Props) => {
               })
             }
           >
-            {(journeyPattern, onSave) => (
+            {(journeyPattern, onSave, onDelete) => (
               <JourneyPatternEditor
                 journeyPattern={journeyPattern}
                 onSave={onSave}
+                onDelete={onDelete}
                 spoilPristine={props.spoilPristine}
                 flexibleLineType={props.flexibleLine.flexibleLineType}
               />
