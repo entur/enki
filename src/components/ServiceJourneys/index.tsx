@@ -30,19 +30,6 @@ type Props = {
   ) => ReactElement;
 };
 
-/* Basic            onChange={(sjs, journeyPatternIndex) =>
-              props.changeLine({
-                ...props.line,
-                journeyPatterns: changeElementAtIndex(
-                  props.line.journeyPatterns!,
-                  {
-                    ...props.line.journeyPatterns![journeyPatternIndex],
-                    serviceJourneys: sjs,
-                  },
-                  journeyPatternIndex
-                ),
-              })*/
-
 export default ({ journeyPatterns, onChange, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { formatMessage } = useSelector(selectIntl);
