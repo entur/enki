@@ -96,176 +96,171 @@ const ServiceJourneyEditor = (props: Props) => {
   const namePristine = usePristine(name, spoilPristine);
 
   return (
-    <ScrollToTop>
-      <div className="service-journey-editor">
-        <div className="service-journey-editor-form">
-          <RequiredInputMarker />
-          <div className="input-group">
-            <div className="input-fields">
-              <InputGroup
-                className="form-section"
-                label={formatMessage('generalNameLabel')}
-                {...getErrorFeedback(
-                  formatMessage('nameIsRequired'),
-                  !isBlank(name),
-                  namePristine
-                )}
-              >
-                <TextField
-                  defaultValue={name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onFieldChange('name', e.target.value)
-                  }
-                />
-              </InputGroup>
-
-              <InputGroup
-                label={formatMessage('generalDescription')}
-                className="form-section"
-              >
-                <TextField
-                  defaultValue={description}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onFieldChange('description', e.target.value)
-                  }
-                />
-              </InputGroup>
-
-              <InputGroup
-                label={formatMessage('generalPrivateCode')}
-                labelTooltip={formatMessage('generalPrivateCodeTooltip')}
-                className="form-section"
-              >
-                <TextField
-                  defaultValue={privateCode}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onFieldChange('privateCode', e.target.value)
-                  }
-                />
-              </InputGroup>
-
-              <InputGroup
-                label={formatMessage('generalPublicCode')}
-                labelTooltip={formatMessage('generalPublicCodeTooltip')}
-                className="form-section"
-              >
-                <TextField
-                  defaultValue={publicCode}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onFieldChange('publicCode', e.target.value)
-                  }
-                />
-              </InputGroup>
-            </div>
-
-            <Dropdown
-              className="form-section operator-selector"
-              label={formatMessage('generalOperator')}
-              initialSelectedItem={getInit(operators, operatorSelection)}
-              placeholder={formatMessage('defaultOption')}
-              items={mapToItems(operators)}
-              clearable
-              onChange={(e: NormalizedDropdownItemType | null) =>
-                handleOperatorSelectionChange(e?.value)
-              }
-            />
-          </div>
-          <section className="weekday-section">
-            <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
-            <WeekdayPicker
-              days={dayTypes?.[0].daysOfWeek ?? []}
-              onChange={(dow) =>
-                onChange({
-                  ...serviceJourney,
-                  dayTypes: [
-                    {
-                      ...(serviceJourney.dayTypes?.[0] ?? {
-                        dayTypeAssignments: [newDayTypeAssignment()],
-                      }),
-                      daysOfWeek: dow,
-                    },
-                  ],
-                })
-              }
-              spoilPristine={spoilPristine}
-            />
-          </section>
-          <section className="day-type-section">
-            <Heading4>
-              {formatMessage('dayTypeEditorDateAvailability')}
-              <Tooltip
-                content={formatMessage('dayTypeEditorDateTooltip')}
-                placement="right"
-              >
-                <span className="question-icon">
-                  <QuestionIcon />
-                </span>
-              </Tooltip>
-            </Heading4>
-            <DayTypeAssignmentsEditor
-              dayTypeAssignments={
-                dayTypes?.[0].dayTypeAssignments?.length
-                  ? dayTypes[0].dayTypeAssignments
-                  : [newDayTypeAssignment()]
-              }
-              onChange={(dta) =>
-                onChange({
-                  ...serviceJourney,
-                  dayTypes: [
-                    {
-                      ...serviceJourney.dayTypes?.[0]!,
-                      dayTypeAssignments: dta,
-                    },
-                  ],
-                })
-              }
-            />
-          </section>
-          <section className="passing-times-section">
-            <Heading4>
-              {formatMessage(
-                flexibleLineType === 'flexibleAreasOnly'
-                  ? 'serviceJourneyBusinessHours'
-                  : 'serviceJourneyPassingTimes'
+    <div className="service-journey-editor">
+      <div className="service-journey-editor-form">
+        <RequiredInputMarker />
+        <div className="input-group">
+          <div className="input-fields">
+            <InputGroup
+              className="form-section"
+              label={formatMessage('generalNameLabel')}
+              {...getErrorFeedback(
+                formatMessage('nameIsRequired'),
+                !isBlank(name),
+                namePristine
               )}
-            </Heading4>
-            <Paragraph>{formatMessage(getParagraphMessageKey())}</Paragraph>
-            <PassingTimesEditor
-              passingTimes={passingTimes ?? []}
-              stopPoints={stopPoints}
-              onChange={(pts) => onFieldChange('passingTimes', pts)}
-              spoilPristine={spoilPristine}
-              flexibleLineType={flexibleLineType}
-            />
-          </section>
+            >
+              <TextField
+                defaultValue={name}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('name', e.target.value)
+                }
+              />
+            </InputGroup>
+
+            <InputGroup
+              label={formatMessage('generalDescription')}
+              className="form-section"
+            >
+              <TextField
+                defaultValue={description}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('description', e.target.value)
+                }
+              />
+            </InputGroup>
+
+            <InputGroup
+              label={formatMessage('generalPrivateCode')}
+              labelTooltip={formatMessage('generalPrivateCodeTooltip')}
+              className="form-section"
+            >
+              <TextField
+                defaultValue={privateCode}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('privateCode', e.target.value)
+                }
+              />
+            </InputGroup>
+
+            <InputGroup
+              label={formatMessage('generalPublicCode')}
+              labelTooltip={formatMessage('generalPublicCodeTooltip')}
+              className="form-section"
+            >
+              <TextField
+                defaultValue={publicCode}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('publicCode', e.target.value)
+                }
+              />
+            </InputGroup>
+          </div>
+
+          <Dropdown
+            className="form-section operator-selector"
+            label={formatMessage('generalOperator')}
+            initialSelectedItem={getInit(operators, operatorSelection)}
+            placeholder={formatMessage('defaultOption')}
+            items={mapToItems(operators)}
+            clearable
+            onChange={(e: NormalizedDropdownItemType | null) =>
+              handleOperatorSelectionChange(e?.value)
+            }
+          />
         </div>
-        {deleteServiceJourney && (
-          <DeleteButton
-            onClick={() => setShowDeleteDialog(true)}
-            title={formatMessage('editorDeleteButtonText')}
+        <section className="weekday-section">
+          <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
+          <WeekdayPicker
+            days={dayTypes?.[0].daysOfWeek ?? []}
+            onChange={(dow) =>
+              onChange({
+                ...serviceJourney,
+                dayTypes: [
+                  {
+                    ...(serviceJourney.dayTypes?.[0] ?? {
+                      dayTypeAssignments: [newDayTypeAssignment()],
+                    }),
+                    daysOfWeek: dow,
+                  },
+                ],
+              })
+            }
+            spoilPristine={spoilPristine}
           />
-        )}
-        {showDeleteDialog && deleteServiceJourney && (
-          <ConfirmDialog
-            isOpen={showDeleteDialog}
-            title={formatMessage('serviceJourneyDeleteTitle')}
-            message={formatMessage('serviceJourneydeleteMessage')}
-            buttons={[
-              <SecondaryButton
-                key={2}
-                onClick={() => setShowDeleteDialog(false)}
-              >
-                {formatMessage('no')}
-              </SecondaryButton>,
-              <SuccessButton key={1} onClick={deleteServiceJourney}>
-                {formatMessage('yes')}
-              </SuccessButton>,
-            ]}
-            onDismiss={() => setShowDeleteDialog(false)}
+        </section>
+        <section className="day-type-section">
+          <Heading4>
+            {formatMessage('dayTypeEditorDateAvailability')}
+            <Tooltip
+              content={formatMessage('dayTypeEditorDateTooltip')}
+              placement="right"
+            >
+              <span className="question-icon">
+                <QuestionIcon />
+              </span>
+            </Tooltip>
+          </Heading4>
+          <DayTypeAssignmentsEditor
+            dayTypeAssignments={
+              dayTypes?.[0].dayTypeAssignments?.length
+                ? dayTypes[0].dayTypeAssignments
+                : [newDayTypeAssignment()]
+            }
+            onChange={(dta) =>
+              onChange({
+                ...serviceJourney,
+                dayTypes: [
+                  {
+                    ...serviceJourney.dayTypes?.[0]!,
+                    dayTypeAssignments: dta,
+                  },
+                ],
+              })
+            }
           />
-        )}
+        </section>
+        <section className="passing-times-section">
+          <Heading4>
+            {formatMessage(
+              flexibleLineType === 'flexibleAreasOnly'
+                ? 'serviceJourneyBusinessHours'
+                : 'serviceJourneyPassingTimes'
+            )}
+          </Heading4>
+          <Paragraph>{formatMessage(getParagraphMessageKey())}</Paragraph>
+          <PassingTimesEditor
+            passingTimes={passingTimes ?? []}
+            stopPoints={stopPoints}
+            onChange={(pts) => onFieldChange('passingTimes', pts)}
+            spoilPristine={spoilPristine}
+            flexibleLineType={flexibleLineType}
+          />
+        </section>
       </div>
-    </ScrollToTop>
+      {deleteServiceJourney && (
+        <DeleteButton
+          onClick={() => setShowDeleteDialog(true)}
+          title={formatMessage('editorDeleteButtonText')}
+        />
+      )}
+      {showDeleteDialog && deleteServiceJourney && (
+        <ConfirmDialog
+          isOpen={showDeleteDialog}
+          title={formatMessage('serviceJourneyDeleteTitle')}
+          message={formatMessage('serviceJourneydeleteMessage')}
+          buttons={[
+            <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
+              {formatMessage('no')}
+            </SecondaryButton>,
+            <SuccessButton key={1} onClick={deleteServiceJourney}>
+              {formatMessage('yes')}
+            </SuccessButton>,
+          ]}
+          onDismiss={() => setShowDeleteDialog(false)}
+        />
+      )}
+    </div>
   );
 };
 

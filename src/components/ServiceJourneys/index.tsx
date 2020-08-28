@@ -18,6 +18,7 @@ import AddButton from 'components/AddButton/AddButton';
 import './styles.scss';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern from 'model/JourneyPattern';
+import { Dropdown } from '@entur/dropdown';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
@@ -34,6 +35,10 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { formatMessage } = useSelector(selectIntl);
   const textFieldRef = useRef<HTMLInputElement>(null);
+  const [
+    modalSelectedJourneyPatternIndex,
+    setModalSelectedJourneyPatternIndex,
+  ] = useState<number>(0);
 
   const keys = useUniqueKeys(journeyPatterns);
 
@@ -131,6 +136,20 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               ref={textFieldRef}
             />
           </InputGroup>
+          <Dropdown
+            label="Choose journey pattern"
+            className="modal-input"
+            items={journeyPatterns?.map((jp, i) => ({
+              value: keys[i],
+              label: jp.name || '',
+            }))}
+            value={keys[modalSelectedJourneyPatternIndex!]}
+            onChange={(selected) =>
+              setModalSelectedJourneyPatternIndex(
+                keys.indexOf(selected?.value!)
+              )
+            }
+          />
           <div>
             <SecondaryButton
               onClick={() => setShowModal(false)}
@@ -139,14 +158,15 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               {formatMessage('newServiceJourneyModalCancel')}
             </SecondaryButton>
             <PrimaryButton
-              onClick={() =>
+              onClick={() => {
+                const jp = journeyPatterns[modalSelectedJourneyPatternIndex];
                 addNewServiceJourney(
                   textFieldRef?.current?.value ?? '',
-                  journeyPatterns[0].serviceJourneys,
-                  journeyPatterns[0].pointsInSequence,
+                  jp.serviceJourneys,
+                  jp.pointsInSequence,
                   0
-                )
-              }
+                );
+              }}
             >
               {formatMessage('newServiceJourneyModalCreate')}
             </PrimaryButton>
@@ -154,50 +174,48 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
         </div>
       </Modal>
 
-      <ScrollToTop>
-        <div className="service-journeys-editor">
-          <Heading1>{formatMessage('editorServiceJourneys')}</Heading1>
-          <LeadParagraph>{formatMessage('serviceJourneysInfo')}</LeadParagraph>
-          {journeyPatterns.length === 1 &&
-          journeyPatterns.flatMap((jp) => jp.serviceJourneys).length === 1
-            ? children(
-                journeyPatterns[0].serviceJourneys[0],
-                journeyPatterns[0].pointsInSequence,
-                updateServiceJourney(0, journeyPatterns[0].serviceJourneys, 0)
-              )
-            : journeyPatterns.flatMap((jp, jpIndex) =>
-                jp.serviceJourneys.map((sj, sjIndex) => (
-                  <ExpandablePanel
-                    key={keys[jpIndex] + sjIndex}
-                    title={sj.name}
-                    defaultOpen={
-                      !sj.id &&
-                      sjIndex === journeyPatterns[0].serviceJourneys.length - 1
-                    }
-                  >
-                    {children(
-                      sj,
-                      journeyPatterns[jpIndex].pointsInSequence,
-                      updateServiceJourney(
-                        sjIndex,
-                        journeyPatterns[jpIndex].serviceJourneys,
-                        jpIndex
-                      ),
-                      deleteServiceJourney(
-                        sjIndex,
-                        journeyPatterns[jpIndex].serviceJourneys,
-                        jpIndex
-                      )
-                    )}
-                  </ExpandablePanel>
-                ))
-              )}
-          <AddButton
-            onClick={() => setShowModal(true)}
-            buttonTitle={formatMessage('editorAddServiceJourneys')}
-          />
-        </div>
-      </ScrollToTop>
+      <div className="service-journeys-editor">
+        <Heading1>{formatMessage('editorServiceJourneys')}</Heading1>
+        <LeadParagraph>{formatMessage('serviceJourneysInfo')}</LeadParagraph>
+        {journeyPatterns.length === 1 &&
+        journeyPatterns.flatMap((jp) => jp.serviceJourneys).length === 1
+          ? children(
+              journeyPatterns[0].serviceJourneys[0],
+              journeyPatterns[0].pointsInSequence,
+              updateServiceJourney(0, journeyPatterns[0].serviceJourneys, 0)
+            )
+          : journeyPatterns.flatMap((jp, jpIndex) =>
+              jp.serviceJourneys.map((sj, sjIndex) => (
+                <ExpandablePanel
+                  key={keys[jpIndex] + sjIndex}
+                  title={sj.name}
+                  defaultOpen={
+                    !sj.id &&
+                    sjIndex === journeyPatterns[0].serviceJourneys.length - 1
+                  }
+                >
+                  {children(
+                    sj,
+                    journeyPatterns[jpIndex].pointsInSequence,
+                    updateServiceJourney(
+                      sjIndex,
+                      journeyPatterns[jpIndex].serviceJourneys,
+                      jpIndex
+                    ),
+                    deleteServiceJourney(
+                      sjIndex,
+                      journeyPatterns[jpIndex].serviceJourneys,
+                      jpIndex
+                    )
+                  )}
+                </ExpandablePanel>
+              ))
+            )}
+        <AddButton
+          onClick={() => setShowModal(true)}
+          buttonTitle={formatMessage('editorAddServiceJourneys')}
+        />
+      </div>
     </>
   );
 };
