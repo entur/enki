@@ -10,7 +10,6 @@ import {
   removeElementByIndex,
   changeElementAtIndex,
 } from 'helpers/arrays';
-import ScrollToTop from 'components/ScrollToTop';
 import { Heading1, LeadParagraph } from '@entur/typography';
 import StopPoint from 'model/StopPoint';
 import { ExpandablePanel } from '@entur/expand';

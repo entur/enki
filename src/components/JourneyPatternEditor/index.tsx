@@ -14,7 +14,6 @@ import JourneyPattern from 'model/JourneyPattern';
 import FlexibleAreasOnlyEditor from './FlexibleAreasStopPointsEditor';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import useUniqueKeys from 'hooks/useUniqueKeys';
-import ScrollToTop from 'components/ScrollToTop';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { SecondaryButton, SuccessButton } from '@entur/button';
@@ -104,103 +103,98 @@ const JourneyPatternEditor = ({
   const keys = useUniqueKeys(pointsInSequence);
 
   return (
-    <ScrollToTop>
-      <div className="journey-pattern-editor">
-        <div>
-          <section>
-            <RequiredInputMarker />
-            <General
-              journeyPattern={journeyPattern}
-              onFieldChange={onJourneyPatternChange}
-              spoilPristine={spoilPristine}
-            />
-          </section>
+    <div className="journey-pattern-editor">
+      <div>
+        <section>
+          <RequiredInputMarker />
+          <General
+            journeyPattern={journeyPattern}
+            onFieldChange={onJourneyPatternChange}
+            spoilPristine={spoilPristine}
+          />
+        </section>
 
-          <section style={{ marginTop: '5rem' }}>
-            <Heading3>
-              {formatMessage(
-                flexibleLineType === 'flexibleAreasOnly'
-                  ? 'editorStopPointFlexibleAreaOnly'
-                  : 'editorStopPoints'
-              )}
-            </Heading3>
-            <Paragraph>
-              {flexibleLineType
-                ? flexibleLineType !== 'flexibleAreasOnly'
-                  ? formatMessage('stopPointsInfo')
-                  : ''
-                : formatMessage('stopPointsInfoFixed')}
-            </Paragraph>
-            <div className="stop-point-editor">
-              {flexibleLineType === 'flexibleAreasOnly' ? (
-                <FlexibleAreasOnlyEditor
-                  stopPoints={pointsInSequence}
-                  updateStopPoints={updateStopPoints}
+        <section style={{ marginTop: '5rem' }}>
+          <Heading3>
+            {formatMessage(
+              flexibleLineType === 'flexibleAreasOnly'
+                ? 'editorStopPointFlexibleAreaOnly'
+                : 'editorStopPoints'
+            )}
+          </Heading3>
+          <Paragraph>
+            {flexibleLineType
+              ? flexibleLineType !== 'flexibleAreasOnly'
+                ? formatMessage('stopPointsInfo')
+                : ''
+              : formatMessage('stopPointsInfoFixed')}
+          </Paragraph>
+          <div className="stop-point-editor">
+            {flexibleLineType === 'flexibleAreasOnly' ? (
+              <FlexibleAreasOnlyEditor
+                stopPoints={pointsInSequence}
+                updateStopPoints={updateStopPoints}
+                flexibleStopPlaces={flexibleStopPlaces}
+                spoilPristine={spoilPristine}
+              />
+            ) : (
+              pointsInSequence.map((stopPoint, pointIndex) => (
+                <StopPointEditor
+                  key={keys[pointIndex]}
+                  index={pointIndex}
+                  isFirstStop={pointIndex === 0}
+                  stopPoint={stopPoint}
+                  errors={validateStopPoint(
+                    stopPoint,
+                    pointIndex === 0,
+                    pointIndex === pointsInSequence.length - 1
+                  )}
+                  deleteStopPoint={
+                    pointsInSequence.length > 2
+                      ? () => deleteStopPoint(pointIndex)
+                      : undefined
+                  }
+                  stopPointChange={(updatedStopPoint: StopPoint) =>
+                    updateStopPoint(pointIndex, updatedStopPoint)
+                  }
                   flexibleStopPlaces={flexibleStopPlaces}
                   spoilPristine={spoilPristine}
+                  flexibleLineType={flexibleLineType}
                 />
-              ) : (
-                pointsInSequence.map((stopPoint, pointIndex) => (
-                  <StopPointEditor
-                    key={keys[pointIndex]}
-                    index={pointIndex}
-                    isFirstStop={pointIndex === 0}
-                    stopPoint={stopPoint}
-                    errors={validateStopPoint(
-                      stopPoint,
-                      pointIndex === 0,
-                      pointIndex === pointsInSequence.length - 1
-                    )}
-                    deleteStopPoint={
-                      pointsInSequence.length > 2
-                        ? () => deleteStopPoint(pointIndex)
-                        : undefined
-                    }
-                    stopPointChange={(updatedStopPoint: StopPoint) =>
-                      updateStopPoint(pointIndex, updatedStopPoint)
-                    }
-                    flexibleStopPlaces={flexibleStopPlaces}
-                    spoilPristine={spoilPristine}
-                    flexibleLineType={flexibleLineType}
-                  />
-                ))
-              )}
-            </div>
-            {flexibleLineType !== 'flexibleAreasOnly' && (
-              <AddButton
-                onClick={addStopPoint}
-                buttonTitle={formatMessage('editorAddStopPoint')}
-              />
+              ))
             )}
-          </section>
-        </div>
-        {onDelete && (
-          <DeleteButton
-            onClick={() => setShowDeleteDialog(true)}
-            title={formatMessage('editorDeleteButtonText')}
-          />
-        )}
-        {showDeleteDialog && onDelete && (
-          <ConfirmDialog
-            isOpen={showDeleteDialog}
-            title={formatMessage('journeyPatternDeleteDialogTitle')}
-            message={formatMessage('journeyPatternDeleteDialogMessage')}
-            buttons={[
-              <SecondaryButton
-                key={2}
-                onClick={() => setShowDeleteDialog(false)}
-              >
-                {formatMessage('no')}
-              </SecondaryButton>,
-              <SuccessButton key={1} onClick={onDelete}>
-                {formatMessage('yes')}
-              </SuccessButton>,
-            ]}
-            onDismiss={() => setShowDeleteDialog(false)}
-          />
-        )}
+          </div>
+          {flexibleLineType !== 'flexibleAreasOnly' && (
+            <AddButton
+              onClick={addStopPoint}
+              buttonTitle={formatMessage('editorAddStopPoint')}
+            />
+          )}
+        </section>
       </div>
-    </ScrollToTop>
+      {onDelete && (
+        <DeleteButton
+          onClick={() => setShowDeleteDialog(true)}
+          title={formatMessage('editorDeleteButtonText')}
+        />
+      )}
+      {showDeleteDialog && onDelete && (
+        <ConfirmDialog
+          isOpen={showDeleteDialog}
+          title={formatMessage('journeyPatternDeleteDialogTitle')}
+          message={formatMessage('journeyPatternDeleteDialogMessage')}
+          buttons={[
+            <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
+              {formatMessage('no')}
+            </SecondaryButton>,
+            <SuccessButton key={1} onClick={onDelete}>
+              {formatMessage('yes')}
+            </SuccessButton>,
+          ]}
+          onDismiss={() => setShowDeleteDialog(false)}
+        />
+      )}
+    </div>
   );
 };
 

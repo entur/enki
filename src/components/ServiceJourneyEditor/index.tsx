@@ -18,7 +18,6 @@ import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedIt
 import { GlobalState } from 'reducers';
 import ServiceJourney from 'model/ServiceJourney';
 import { Heading4, Paragraph } from '@entur/typography';
-import ScrollToTop from 'components/ScrollToTop';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import WeekdayPicker from 'components/WeekdayPicker';

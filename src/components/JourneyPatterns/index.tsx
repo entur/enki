@@ -9,7 +9,6 @@ import { selectIntl } from 'i18n';
 import { Modal } from '@entur/modal';
 import { InputGroup, TextField } from '@entur/form';
 import { SecondaryButton, PrimaryButton } from '@entur/button';
-import ScrollToTop from 'components/ScrollToTop';
 import AddButton from 'components/AddButton/AddButton';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 
@@ -98,33 +97,29 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
         </div>
       </Modal>
 
-      <ScrollToTop>
-        <div className="journey-patterns-editor">
-          <Heading1>{formatMessage('editorJourneyPatternsTabLabel')}</Heading1>
-          <LeadParagraph>
-            {formatMessage('editorFillInformation')}
-          </LeadParagraph>
-          {journeyPatterns.length === 1
-            ? children(journeyPatterns[0], updateJourneyPattern(0))
-            : journeyPatterns.map((jp: JourneyPattern, index: number) => (
-                <ExpandablePanel
-                  title={jp.name}
-                  key={jp.id ?? keys[index]}
-                  defaultOpen={journeyPatterns.length === 1}
-                >
-                  {children(
-                    jp,
-                    updateJourneyPattern(index),
-                    deleteJourneyPattern(index)
-                  )}
-                </ExpandablePanel>
-              ))}
-          <AddButton
-            onClick={() => setShowModal(true)}
-            buttonTitle={formatMessage('editorAddJourneyPatterns')}
-          />
-        </div>
-      </ScrollToTop>
+      <div className="journey-patterns-editor">
+        <Heading1>{formatMessage('editorJourneyPatternsTabLabel')}</Heading1>
+        <LeadParagraph>{formatMessage('editorFillInformation')}</LeadParagraph>
+        {journeyPatterns.length === 1
+          ? children(journeyPatterns[0], updateJourneyPattern(0))
+          : journeyPatterns.map((jp: JourneyPattern, index: number) => (
+              <ExpandablePanel
+                title={jp.name}
+                key={jp.id ?? keys[index]}
+                defaultOpen={journeyPatterns.length === 1}
+              >
+                {children(
+                  jp,
+                  updateJourneyPattern(index),
+                  deleteJourneyPattern(index)
+                )}
+              </ExpandablePanel>
+            ))}
+        <AddButton
+          onClick={() => setShowModal(true)}
+          buttonTitle={formatMessage('editorAddJourneyPatterns')}
+        />
+      </div>
     </>
   );
 };
