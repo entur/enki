@@ -187,7 +187,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               jp.serviceJourneys.map((sj, sjIndex) => (
                 <ExpandablePanel
                   key={keys[jpIndex] + sjIndex}
-                  title={sj.name}
+                  title={`${jp.name}: ${sj.name}`}
                   defaultOpen={
                     !sj.id &&
                     sjIndex === journeyPatterns[0].serviceJourneys.length - 1
