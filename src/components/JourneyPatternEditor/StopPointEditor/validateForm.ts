@@ -5,11 +5,11 @@ import { MessagesKey } from 'i18n/translations/translationKeys';
 import JourneyPattern from 'model/JourneyPattern';
 
 export const validJourneyPattern = (
-  journeyPatterns?: JourneyPattern[]
+  journeyPatterns?: JourneyPattern
 ): boolean =>
   !!journeyPatterns &&
-  !isBlank(journeyPatterns[0].name) &&
-  validateStopPoints(journeyPatterns[0].pointsInSequence ?? []);
+  !isBlank(journeyPatterns.name) &&
+  validateStopPoints(journeyPatterns.pointsInSequence ?? []);
 
 export const validateStopPoints = (stopPoints: StopPoint[]): boolean =>
   getStopPointsErrors(stopPoints).every((stopPointErrors) =>
