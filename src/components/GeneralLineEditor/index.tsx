@@ -69,14 +69,13 @@ export default ({
     }
 
     const journeyPatterns = flexibleLine.journeyPatterns ?? [];
-    const { serviceJourneys } = journeyPatterns[0];
 
     flexibleLineChange({
       ...flexibleLine,
       journeyPatterns: journeyPatterns.map(
         (journeyPattern: JourneyPattern) => ({
           ...journeyPattern,
-          serviceJourneys: serviceJourneys.map(
+          serviceJourneys: journeyPattern.serviceJourneys.map(
             (serviceJourney: ServiceJourney) => ({
               ...serviceJourney,
               passingTimes: [{}, {}],
