@@ -142,7 +142,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               value: keys[i],
               label: jp.name || '',
             }))}
-            value={keys[modalSelectedJourneyPatternIndex!]}
+            value={keys[modalSelectedJourneyPatternIndex]}
             onChange={(selected) =>
               setModalSelectedJourneyPatternIndex(
                 keys.indexOf(selected?.value!)
