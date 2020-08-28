@@ -127,7 +127,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
         {formatMessage('newServiceJourneyModalSubTitle')}
         <div className="modal-content">
           <InputGroup
-            label={formatMessage('newServiceJourneyModalLabel')}
+            label={formatMessage('newServiceJourneyModalNameLabel')}
             className="modal-input"
           >
             <TextField
@@ -136,7 +136,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
             />
           </InputGroup>
           <Dropdown
-            label="Choose journey pattern"
+            label={formatMessage('newServiceJourneyModalJourneyPatternLabel')}
             className="modal-input"
             items={journeyPatterns?.map((jp, i) => ({
               value: keys[i],

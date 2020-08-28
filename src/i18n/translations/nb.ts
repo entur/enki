@@ -261,11 +261,13 @@ export const messages = {
   selectNsr: 'Stoppested',
   editorServiceJourneys: 'Service Journeys',
   newServiceJourneyModalTitle: 'Ny service journey',
-  newServiceJourneyModalSubTitle: 'Fyll in navn og trykk deretter Opprett',
+  newServiceJourneyModalSubTitle:
+    'Fyll in navn, velg journey pattern og trykk deretter Opprett',
   newServiceJourneyModalCancel: 'Avbryt',
   newServiceJourneyModalCreate: 'Opprett',
-  newServiceJourneyModalLabel: 'Navn',
+  newServiceJourneyModalNameLabel: 'Navn',
   newServiceJourneyModalPlaceholder: 'Eks. "Melkeruta ettermiddag"',
+  newServiceJourneyModalJourneyPatternLabel: 'Velg journey pattern',
   serviceJourneysInfo:
     'Du kan opprette ulike Service Journeys for ulike åpningstider. For eksempel ett for hverdag og ett for helg.',
   dayTypeEditorWeekdays: 'Ukedager for tilgjengelighet',

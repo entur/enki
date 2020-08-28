@@ -265,11 +265,13 @@ export const messages: MessagesKey = {
   selectNsr: 'Stop place',
   editorServiceJourneys: 'Service Journeys',
   newServiceJourneyModalTitle: 'New service journey',
-  newServiceJourneyModalSubTitle: 'Enter a name and press Create',
+  newServiceJourneyModalSubTitle:
+    'Enter a name, choose a journey pattern and press Create',
   newServiceJourneyModalCancel: 'Cancel',
   newServiceJourneyModalCreate: 'Create',
-  newServiceJourneyModalLabel: 'Name',
+  newServiceJourneyModalNameLabel: 'Name',
   newServiceJourneyModalPlaceholder: 'E.g "Milk-route weekend"',
+  newServiceJourneyModalJourneyPatternLabel: 'Choose journey pattern',
   serviceJourneysInfo:
     'Create different Service Journeys for different opening hours. For instance one for weekdays and one for the weekend.',
   dayTypeEditorWeekdays: 'Weekdays for availability',
