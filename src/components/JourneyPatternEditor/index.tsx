@@ -1,14 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import General from './General';
 import { Paragraph, Heading3 } from '@entur/typography';
-import { validateStopPoint } from './StopPointEditor/validateForm';
-import {
-  changeElementAtIndex,
-  removeElementByIndex,
-  useUniqueKeys,
-} from 'helpers/arrays';
+import { validateStopPoint } from 'helpers/validation';
+import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
 import StopPointEditor from './StopPointEditor';
 import StopPoint from 'model/StopPoint';
 import AddButton from 'components/AddButton/AddButton';
@@ -17,13 +13,18 @@ import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import JourneyPattern from 'model/JourneyPattern';
 import FlexibleAreasOnlyEditor from './FlexibleAreasStopPointsEditor';
 import RequiredInputMarker from 'components/RequiredInputMarker';
+import useUniqueKeys from 'hooks/useUniqueKeys';
+import DeleteButton from 'components/DeleteButton/DeleteButton';
+import ConfirmDialog from 'components/ConfirmDialog';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import './styles.scss';
 
 type Props = {
   journeyPattern: JourneyPattern;
-  onSave: (journeyPattern: JourneyPattern, index: number) => void;
-  index: number;
+  onSave: (journeyPattern: JourneyPattern) => void;
+  onDelete?: () => void;
   spoilPristine: boolean;
-  flexibleLineType: string | undefined;
+  flexibleLineType?: string;
 };
 
 type StateProps = {
@@ -33,16 +34,18 @@ type StateProps = {
 const JourneyPatternEditor = ({
   journeyPattern,
   onSave,
-  index,
+  onDelete,
   flexibleStopPlaces,
   spoilPristine,
   flexibleLineType,
 }: Props & StateProps) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
+
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const { formatMessage } = useSelector(selectIntl);
 
   const onJourneyPatternChange = (newJourneyPattern: JourneyPattern) => {
-    onSave(newJourneyPattern, index);
+    onSave(newJourneyPattern);
   };
 
   const deleteStopPoint = (stopPointIndex: number) => {
@@ -101,72 +104,96 @@ const JourneyPatternEditor = ({
 
   return (
     <div className="journey-pattern-editor">
-      <section>
-        <RequiredInputMarker />
-        <General
-          journeyPattern={journeyPattern}
-          onFieldChange={onJourneyPatternChange}
-          spoilPristine={spoilPristine}
-        />
-      </section>
+      <div>
+        <section>
+          <RequiredInputMarker />
+          <General
+            journeyPattern={journeyPattern}
+            onFieldChange={onJourneyPatternChange}
+            spoilPristine={spoilPristine}
+          />
+        </section>
 
-      <section style={{ marginTop: '5rem' }}>
-        <Heading3>
-          {formatMessage(
-            flexibleLineType === 'flexibleAreasOnly'
-              ? 'editorStopPointFlexibleAreaOnly'
-              : 'editorStopPoints'
-          )}
-        </Heading3>
-        <Paragraph>
-          {flexibleLineType
-            ? flexibleLineType !== 'flexibleAreasOnly'
-              ? formatMessage('stopPointsInfo')
-              : ''
-            : formatMessage('stopPointsInfoFixed')}
-        </Paragraph>
-        <div className="stop-point-editor">
-          {flexibleLineType === 'flexibleAreasOnly' ? (
-            <FlexibleAreasOnlyEditor
-              stopPoints={pointsInSequence}
-              updateStopPoints={updateStopPoints}
-              flexibleStopPlaces={flexibleStopPlaces}
-              spoilPristine={spoilPristine}
-            />
-          ) : (
-            pointsInSequence.map((stopPoint, pointIndex) => (
-              <StopPointEditor
-                key={keys[pointIndex]}
-                index={pointIndex}
-                isFirstStop={pointIndex === 0}
-                stopPoint={stopPoint}
-                errors={validateStopPoint(
-                  stopPoint,
-                  pointIndex === 0,
-                  pointIndex === pointsInSequence.length - 1
-                )}
-                deleteStopPoint={
-                  pointsInSequence.length > 2
-                    ? () => deleteStopPoint(pointIndex)
-                    : undefined
-                }
-                stopPointChange={(updatedStopPoint: StopPoint) =>
-                  updateStopPoint(pointIndex, updatedStopPoint)
-                }
+        <section style={{ marginTop: '5rem' }}>
+          <Heading3>
+            {formatMessage(
+              flexibleLineType === 'flexibleAreasOnly'
+                ? 'editorStopPointFlexibleAreaOnly'
+                : 'editorStopPoints'
+            )}
+          </Heading3>
+          <Paragraph>
+            {flexibleLineType
+              ? flexibleLineType !== 'flexibleAreasOnly'
+                ? formatMessage('stopPointsInfo')
+                : ''
+              : formatMessage('stopPointsInfoFixed')}
+          </Paragraph>
+          <div className="stop-point-editor">
+            {flexibleLineType === 'flexibleAreasOnly' ? (
+              <FlexibleAreasOnlyEditor
+                stopPoints={pointsInSequence}
+                updateStopPoints={updateStopPoints}
                 flexibleStopPlaces={flexibleStopPlaces}
                 spoilPristine={spoilPristine}
-                flexibleLineType={flexibleLineType}
               />
-            ))
+            ) : (
+              pointsInSequence.map((stopPoint, pointIndex) => (
+                <StopPointEditor
+                  key={keys[pointIndex]}
+                  index={pointIndex}
+                  isFirstStop={pointIndex === 0}
+                  stopPoint={stopPoint}
+                  errors={validateStopPoint(
+                    stopPoint,
+                    pointIndex === 0,
+                    pointIndex === pointsInSequence.length - 1
+                  )}
+                  deleteStopPoint={
+                    pointsInSequence.length > 2
+                      ? () => deleteStopPoint(pointIndex)
+                      : undefined
+                  }
+                  stopPointChange={(updatedStopPoint: StopPoint) =>
+                    updateStopPoint(pointIndex, updatedStopPoint)
+                  }
+                  flexibleStopPlaces={flexibleStopPlaces}
+                  spoilPristine={spoilPristine}
+                  flexibleLineType={flexibleLineType}
+                />
+              ))
+            )}
+          </div>
+          {flexibleLineType !== 'flexibleAreasOnly' && (
+            <AddButton
+              onClick={addStopPoint}
+              buttonTitle={formatMessage('editorAddStopPoint')}
+            />
           )}
-        </div>
-        {flexibleLineType !== 'flexibleAreasOnly' && (
-          <AddButton
-            onClick={addStopPoint}
-            buttonTitle={formatMessage('editorAddStopPoint')}
-          />
-        )}
-      </section>
+        </section>
+      </div>
+      {onDelete && (
+        <DeleteButton
+          onClick={() => setShowDeleteDialog(true)}
+          title={formatMessage('editorDeleteButtonText')}
+        />
+      )}
+      {showDeleteDialog && onDelete && (
+        <ConfirmDialog
+          isOpen={showDeleteDialog}
+          title={formatMessage('journeyPatternDeleteDialogTitle')}
+          message={formatMessage('journeyPatternDeleteDialogMessage')}
+          buttons={[
+            <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
+              {formatMessage('no')}
+            </SecondaryButton>,
+            <SuccessButton key={1} onClick={onDelete}>
+              {formatMessage('yes')}
+            </SuccessButton>,
+          ]}
+          onDismiss={() => setShowDeleteDialog(false)}
+        />
+      )}
     </div>
   );
 };

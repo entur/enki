@@ -254,17 +254,20 @@ export const messages = {
     'Du må legge til minst to stopp; ett for start og ett for slutt. Velg mellom fleksible stoppesteder eller platform-IDer fra Nasjonalt stoppestedsregister.',
   stopPointsInfoFixed:
     'Du må legge til minst to stopp; ett for start og ett for slutt. Skriv inn platform-ID fra stoppestedsregisteret.',
-  deleteTitle: 'Slette stoppepunkt',
-  deleteMessage: 'Er du sikker på at du ønsker å slette dette stoppepunktet?',
+  deleteStopPointDialogTitle: 'Slette stoppepunkt',
+  deleteStopPointDialogMessage:
+    'Er du sikker på at du ønsker å slette dette stoppepunktet?',
   selectCustom: 'Fleksibelt stoppested',
   selectNsr: 'Stoppested',
   editorServiceJourneys: 'Service Journeys',
-  modalTitle: 'Ny service journey',
-  modalSubTitle: 'Fyll in navn og trykk deretter Opprett',
-  modalCancel: 'Avbryt',
-  modalCreate: 'Opprett',
-  modalLabel: 'Navn',
-  modalPlaceholder: 'Eks. "Melkeruta ettermiddag"',
+  newServiceJourneyModalTitle: 'Ny service journey',
+  newServiceJourneyModalSubTitle:
+    'Fyll in navn, velg journey pattern og trykk deretter Opprett',
+  newServiceJourneyModalCancel: 'Avbryt',
+  newServiceJourneyModalCreate: 'Opprett',
+  newServiceJourneyModalNameLabel: 'Navn',
+  newServiceJourneyModalPlaceholder: 'Eks. "Melkeruta ettermiddag"',
+  newServiceJourneyModalJourneyPatternLabel: 'Velg journey pattern',
   serviceJourneysInfo:
     'Du kan opprette ulike Service Journeys for ulike åpningstider. For eksempel ett for hverdag og ett for helg.',
   dayTypeEditorWeekdays: 'Ukedager for tilgjengelighet',
@@ -307,6 +310,12 @@ export const messages = {
   tableServiceJourneysTableHeaderCellLabel: 'Service journeys',
   tableStopPlacesTableHeaderCellLabel: 'Stoppesteder og områder',
   editorJourneyPatternsTabLabel: 'Journey patterns',
+  newJourneyPatternModalTitle: 'Nytt journey pattern',
+  newJourneyPatternModalSubTitle: 'Fyll inn navn og trykk deretter Opprett',
+  newJourneyPatternModalCancel: 'Avbryt',
+  newJourneyPatternModalCreate: 'Opprett',
+  newJourneyPatternModalLabel: 'Navn',
+  newJourneyPatternModalPlaceholder: 'Eks. "Lokal rute"',
   editorLoadingLineText: 'Laster inn linje',
   editorLoadingNetworkAndStopsText: 'Laster inn nettverk og stoppesteder',
   editorSaveButtonText: 'Lagre',
@@ -364,7 +373,10 @@ export const messages = {
   generalPublicCodeTooltip:
     'Offentlig kode er det som kjennetegner service journeyen ut mot publikum',
   generalOperator: 'Operatør',
-  serviceJourneydeleteTitle: 'Slette service journey',
+  journeyPatternDeleteDialogTitle: 'Slette journey pattern',
+  journeyPatternDeleteDialogMessage:
+    'Er du sikker på at du ønsker å slette dette journey patternet?',
+  serviceJourneyDeleteTitle: 'Slette service journey',
   serviceJourneydeleteMessage:
     'Er du sikker på at du ønsker å slette denne service journeyen?',
   linesLoadingText: 'Laster inn linjer...',

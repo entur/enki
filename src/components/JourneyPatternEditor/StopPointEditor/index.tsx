@@ -16,18 +16,12 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { AppIntlState, selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
-import { MessagesKey } from 'i18n/translations/translationKeys';
 import { getInit, mapToItems } from 'helpers/dropdown';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import './styles.scss';
+import { StopPointsFormError } from 'helpers/validation';
 
 type StopPlaceMode = 'nsr' | 'custom';
-
-export type StopPointsFormError = {
-  flexibleStopPlaceRefAndQuayRef: keyof MessagesKey | undefined;
-  frontText: keyof MessagesKey | undefined;
-  boarding: keyof MessagesKey | undefined;
-};
 
 type Props = {
   index: number;
@@ -228,8 +222,8 @@ const StopPointEditor = ({
 
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title={formatMessage('deleteTitle')}
-        message={formatMessage('deleteMessage')}
+        title={formatMessage('deleteStopPointDialogTitle')}
+        message={formatMessage('deleteStopPointDialogMessage')}
         buttons={[
           <SecondaryButton key="no" onClick={() => setDeleteDialogOpen(false)}>
             {formatMessage('no')}

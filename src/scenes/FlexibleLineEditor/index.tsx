@@ -16,7 +16,7 @@ import {
   currentStepIsValid,
   getMaxAllowedStepIndex,
   validFlexibleLine,
-} from './validateForm';
+} from 'helpers/validation';
 import { isBlank } from 'helpers/forms';
 import { isEmpty } from 'ramda';
 import { getFlexibleLineFromPath } from 'helpers/url';
@@ -124,7 +124,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const isEdit = !isBlank(props.match.params.id);
 
   const handleOnSaveClick = () => {
-    const valid = validFlexibleLine(line, isFlexibleLine);
+    const valid = validFlexibleLine(line);
 
     setNextClicked(true);
     if (valid) {
@@ -178,9 +178,9 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
             <LineEditorStepper
               steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
               isValidStepIndex={(i: number) =>
-                getMaxAllowedStepIndex(line, true) >= i
+                getMaxAllowedStepIndex(line) >= i
               }
-              currentStepIsValid={(i) => currentStepIsValid(i, line, true)}
+              currentStepIsValid={(i) => currentStepIsValid(i, line)}
               setNextClicked={setNextClicked}
               isEdit={isEdit}
               spoilPristine={nextClicked}

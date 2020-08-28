@@ -258,17 +258,20 @@ export const messages: MessagesKey = {
     'You have to add at least two stop points; one for start and one for stop. Choose between flexible stop places and quay IDs from the National stop place registry.',
   stopPointsInfoFixed:
     'You have to add at least two stop points; one for start and one for stop. Enter quay id from the National stop place registry.',
-  deleteTitle: 'Delete stop point',
-  deleteMessage: 'Are you sure you want to delete this stop point?',
+  deleteStopPointDialogTitle: 'Delete stop point',
+  deleteStopPointDialogMessage:
+    'Are you sure you want to delete this stop point?',
   selectCustom: 'Flexible stop place',
   selectNsr: 'Stop place',
   editorServiceJourneys: 'Service Journeys',
-  modalTitle: 'New service journey',
-  modalSubTitle: 'Enter a name and press Create',
-  modalCancel: 'Cancel',
-  modalCreate: 'Create',
-  modalLabel: 'Name',
-  modalPlaceholder: 'E.g "Milk-route weekend"',
+  newServiceJourneyModalTitle: 'New service journey',
+  newServiceJourneyModalSubTitle:
+    'Enter a name, choose a journey pattern and press Create',
+  newServiceJourneyModalCancel: 'Cancel',
+  newServiceJourneyModalCreate: 'Create',
+  newServiceJourneyModalNameLabel: 'Name',
+  newServiceJourneyModalPlaceholder: 'E.g "Milk-route weekend"',
+  newServiceJourneyModalJourneyPatternLabel: 'Choose journey pattern',
   serviceJourneysInfo:
     'Create different Service Journeys for different opening hours. For instance one for weekdays and one for the weekend.',
   dayTypeEditorWeekdays: 'Weekdays for availability',
@@ -311,6 +314,12 @@ export const messages: MessagesKey = {
   tableServiceJourneysTableHeaderCellLabel: 'Service journeys',
   tableStopPlacesTableHeaderCellLabel: 'Stop places and Areas',
   editorJourneyPatternsTabLabel: 'Journey Patterns',
+  newJourneyPatternModalTitle: 'New journey pattern',
+  newJourneyPatternModalSubTitle: 'Enter a name and press Create',
+  newJourneyPatternModalCancel: 'Cancel',
+  newJourneyPatternModalCreate: 'Create',
+  newJourneyPatternModalLabel: 'Name',
+  newJourneyPatternModalPlaceholder: 'E.g "Local route"',
   editorLoadingLineText: 'Loading line',
   editorLoadingNetworkAndStopsText: 'Loading network and stop places',
   editorSaveButtonText: 'Save',
@@ -368,7 +377,10 @@ export const messages: MessagesKey = {
   generalPublicCodeTooltip:
     'Public code is what identifies the service journey externally towards travellers',
   generalOperator: 'Operator',
-  serviceJourneydeleteTitle: 'Delete service journey',
+  journeyPatternDeleteDialogTitle: 'Delete journey pattern',
+  journeyPatternDeleteDialogMessage:
+    'Are you sure you want to delete this journey pattern?',
+  serviceJourneyDeleteTitle: 'Delete service journey',
   serviceJourneydeleteMessage:
     'Are you sure you want to delete this service journey?',
   linesLoadingText: 'Loading lines...',
