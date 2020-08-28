@@ -16,7 +16,7 @@ import {
   currentStepIsValid,
   getMaxAllowedStepIndex,
   validFlexibleLine,
-} from './validateForm';
+} from 'helpers/validation';
 import { isBlank } from 'helpers/forms';
 import { isEmpty } from 'ramda';
 import { getFlexibleLineFromPath } from 'helpers/url';

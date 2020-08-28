@@ -3,7 +3,7 @@ import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import General from './General';
 import { Paragraph, Heading3 } from '@entur/typography';
-import { validateStopPoint } from './StopPointEditor/validateForm';
+import { validateStopPoint } from 'helpers/validation';
 import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
 import StopPointEditor from './StopPointEditor';
 import StopPoint from 'model/StopPoint';

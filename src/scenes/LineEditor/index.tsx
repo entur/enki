@@ -18,7 +18,7 @@ import {
   validLine,
   currentStepIsValid,
   getMaxAllowedStepIndex,
-} from './validateForm';
+} from 'helpers/validation';
 import { lineToPayload } from 'model/Line';
 import { showSuccessNotification } from 'actions/notification';
 import { useUttuErrors, useLine } from './hooks';
