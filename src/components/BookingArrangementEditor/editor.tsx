@@ -38,7 +38,7 @@ type Props = {
   bookingInfoAttachment: BookingInfoAttachment;
 };
 
-const BookingArrangementEditor = (props: Props) => {
+export default (props: Props) => {
   const intl = useSelector<GlobalState, AppIntlState>(selectIntl);
   const { formatMessage } = intl;
   const {
@@ -294,5 +294,3 @@ const BookingArrangementEditor = (props: Props) => {
     </div>
   );
 };
-
-export default BookingArrangementEditor;
