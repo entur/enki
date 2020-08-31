@@ -266,7 +266,7 @@ export default ({
 
       {isFlexibleLine && (
         <BookingArrangementEditor
-          bookingArrangement={flexibleLine.bookingArrangement!}
+          bookingArrangement={flexibleLine.bookingArrangement}
           spoilPristine={spoilPristine}
           bookingInfoAttachment={{
             type: BookingInfoAttachmentType.LINE,
