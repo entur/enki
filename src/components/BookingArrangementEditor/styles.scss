@@ -1,5 +1,18 @@
 @import '~@entur/tokens/dist/styles.scss';
 
+.booking-info {
+  margin-top: 2rem;
+  padding: 1rem 2rem 2rem 2rem;
+
+  .booking-info-buttons {
+    margin-top: 1rem;
+  }
+}
+
+.booking-modal-buttons {
+  margin-top: 2rem;
+}
+
 .booking-editor {
   .booking-contact-info {
     margin-top: $space-extra-large5 - $space-large;
