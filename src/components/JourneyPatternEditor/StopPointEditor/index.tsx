@@ -245,7 +245,7 @@ const StopPointEditor = ({
           onDismiss={() => setDeleteDialogOpen(false)}
         />
       </div>
-      {flexibleLineType && (stopPoint.forBoarding || !stopPoint.forAlighting) && (
+      {flexibleLineType && (
         <div>
           <BookingArrangementEditor
             bookingArrangement={stopPoint.bookingArrangement}
