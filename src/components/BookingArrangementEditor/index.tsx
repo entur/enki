@@ -37,10 +37,11 @@ export default ({
     setShowBookingInfo(false);
   }, [onChange, bookingArrangementDraft, setShowBookingInfo]);
 
+  // switch to useReducer
   const cancel = useCallback(() => {
-    setBookingArrangementDraft({});
+    setBookingArrangementDraft(clone(bookingArrangement || {}));
     setShowBookingInfo(false);
-  }, [setBookingArrangementDraft, setShowBookingInfo]);
+  }, [setBookingArrangementDraft, setShowBookingInfo, bookingArrangement]);
 
   return (
     <div className="booking">
@@ -49,7 +50,8 @@ export default ({
           <Heading3>Booking information</Heading3>
           <Paragraph>
             Booking information can be added to the whole line, or to an
-            individual journey pattern or service journey (or all of the above).
+            individual stop point in journey pattern or service journey (or all
+            of the above).
           </Paragraph>
           {bookingArrangement ? (
             <>
@@ -92,10 +94,14 @@ export default ({
         title="Booking info"
         size="large"
         open={showBookingInfo}
-        onDismiss={() => setShowBookingInfo(false)}
+        onDismiss={cancel}
       >
         <BookingArrangementEditor
-          onChange={(ba) => setBookingArrangementDraft(ba!)}
+          onChange={(ba) =>
+            setBookingArrangementDraft({
+              ...ba,
+            })
+          }
           bookingArrangement={bookingArrangementDraft}
           spoilPristine={spoilPristine}
           bookingInfoAttachment={bookingInfoAttachment}

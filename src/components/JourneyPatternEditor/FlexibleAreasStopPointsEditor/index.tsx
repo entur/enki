@@ -11,6 +11,8 @@ import { isBlank } from 'helpers/forms';
 import { GlobalState } from 'reducers';
 import { getInit, mapToItems } from 'helpers/dropdown';
 import './styles.scss';
+import BookingArrangementEditor from 'components/BookingArrangementEditor';
+import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 
 type Props = {
   flexibleStopPlaces: FlexibleStopPlace[];
@@ -33,10 +35,14 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
   const stopPlacePristine = usePristine(stopPointValue, spoilPristine);
   const frontTextPristine = usePristine(frontText, spoilPristine);
 
-  const stopPointChange = (newStopPoint: StopPoint) => {
+  const stopPointChange = ({
+    bookingArrangement,
+    ...newStopPoint
+  }: StopPoint) => {
     updateStopPoints([
       {
         ...newStopPoint,
+        bookingArrangement,
         forBoarding: true,
         forAlighting: false,
       },
@@ -91,6 +97,26 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
           }
         />
       </InputGroup>
+      <BookingArrangementEditor
+        bookingArrangement={stopPoint.bookingArrangement}
+        spoilPristine={spoilPristine}
+        bookingInfoAttachment={{
+          type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
+          name: stopPoint.flexibleStopPlace?.name!,
+        }}
+        onChange={(bookingArrangement) => {
+          stopPointChange({
+            ...stopPoint,
+            bookingArrangement,
+          });
+        }}
+        onRemove={() => {
+          const { bookingArrangement, ...rest } = stopPoint;
+          stopPointChange({
+            ...rest,
+          });
+        }}
+      />
     </div>
   );
 };

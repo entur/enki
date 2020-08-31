@@ -3,7 +3,6 @@ import ServiceJourney from './ServiceJourney';
 import Notice from './Notice';
 import { DIRECTION_TYPE } from 'model/enums';
 import VersionedType from 'model/VersionedType';
-import BookingArrangement from './BookingArrangement';
 
 export type JourneyPattern = VersionedType & {
   name?: string;
@@ -13,7 +12,6 @@ export type JourneyPattern = VersionedType & {
   pointsInSequence: StopPoint[];
   serviceJourneys: ServiceJourney[];
   notices?: Notice[];
-  bookingArrangement?: BookingArrangement;
 };
 
 export const initJourneyPatterns = (): JourneyPattern[] => [

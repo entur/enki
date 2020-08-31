@@ -20,6 +20,8 @@ import { getInit, mapToItems } from 'helpers/dropdown';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import './styles.scss';
 import { StopPointsFormError } from 'helpers/validation';
+import BookingArrangementEditor from 'components/BookingArrangementEditor';
+import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 
 type StopPlaceMode = 'nsr' | 'custom';
 
@@ -105,135 +107,168 @@ const StopPointEditor = ({
   };
 
   return (
-    <div className="stop-point-element">
-      <div className="stop-point-key-info">
-        <Paragraph>{index + 1}</Paragraph>
-        {flexibleLineType && (
-          <RadioGroup
-            name={`stopPointMode-${index}`}
-            value={selectMode}
-            onChange={(e) => {
-              setSelectMode(e.target.value as StopPlaceMode);
-              setQuaySearch(undefined);
-              stopPointChange({
-                ...stopPoint,
-                quayRef: undefined,
-                flexibleStopPlaceRef: undefined,
-                flexibleStopPlace: undefined,
-              });
-            }}
-          >
-            <div className="radio-buttons">
-              <Radio value="custom">{formatMessage('selectCustom')}</Radio>
-              <Radio value="nsr">{formatMessage('selectNsr')}</Radio>
-            </div>
-          </RadioGroup>
-        )}
-      </div>
-      <div className="stop-point-info">
-        {selectMode === 'custom' && (
-          <Dropdown
-            className="stop-point-dropdown"
-            initialSelectedItem={getInit(flexibleStopPlaces, stopPointValue)}
-            placeholder={formatMessage('defaultOption')}
-            items={mapToItems(flexibleStopPlaces)}
-            clearable
-            label={formatMessage('stopPlace')}
-            onChange={(e) =>
-              stopPointChange({ ...stopPoint, flexibleStopPlaceRef: e?.value })
-            }
-            {...getErrorFeedback(
-              stopPlaceError ? formatMessage(stopPlaceError) : '',
-              !stopPlaceError,
-              stopPlacePristine
-            )}
-          />
-        )}
+    <div className="stop-point">
+      <div className="stop-point-element">
+        <div className="stop-point-key-info">
+          <Paragraph>{index + 1}</Paragraph>
+          {flexibleLineType && (
+            <RadioGroup
+              name={`stopPointMode-${index}`}
+              value={selectMode}
+              onChange={(e) => {
+                setSelectMode(e.target.value as StopPlaceMode);
+                setQuaySearch(undefined);
+                stopPointChange({
+                  ...stopPoint,
+                  quayRef: undefined,
+                  flexibleStopPlaceRef: undefined,
+                  flexibleStopPlace: undefined,
+                });
+              }}
+            >
+              <div className="radio-buttons">
+                <Radio value="custom">{formatMessage('selectCustom')}</Radio>
+                <Radio value="nsr">{formatMessage('selectNsr')}</Radio>
+              </div>
+            </RadioGroup>
+          )}
+        </div>
+        <div className="stop-point-info">
+          {selectMode === 'custom' && (
+            <Dropdown
+              className="stop-point-dropdown"
+              initialSelectedItem={getInit(flexibleStopPlaces, stopPointValue)}
+              placeholder={formatMessage('defaultOption')}
+              items={mapToItems(flexibleStopPlaces)}
+              clearable
+              label={formatMessage('stopPlace')}
+              onChange={(e) =>
+                stopPointChange({
+                  ...stopPoint,
+                  flexibleStopPlaceRef: e?.value,
+                })
+              }
+              {...getErrorFeedback(
+                stopPlaceError ? formatMessage(stopPlaceError) : '',
+                !stopPlaceError,
+                stopPlacePristine
+              )}
+            />
+          )}
 
-        {selectMode === 'nsr' && (
+          {selectMode === 'nsr' && (
+            <InputGroup
+              className="nsr-input-group"
+              label={formatMessage('labelQuayRef')}
+              {...getErrorFeedback(
+                stopPlaceError ? formatMessage(stopPlaceError) : '',
+                !stopPlaceError,
+                quayRefPristine
+              )}
+              {...quaySearchResults(quaySearch)}
+            >
+              <TextField
+                defaultValue={stopPoint.quayRef}
+                placeholder="NSR:Quay:69"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  debouncedSearchForQuay(e.target.value)
+                }
+                onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+                  stopPointChange({ ...stopPoint, quayRef: e.target.value })
+                }
+              />
+            </InputGroup>
+          )}
+
           <InputGroup
-            className="nsr-input-group"
-            label={formatMessage('labelQuayRef')}
-            {...getErrorFeedback(
-              stopPlaceError ? formatMessage(stopPlaceError) : '',
-              !stopPlaceError,
-              quayRefPristine
+            label={formatMessage(
+              isFirstStop ? 'labelFrontTextRequired' : 'labelFrontText'
             )}
-            {...quaySearchResults(quaySearch)}
+            {...getErrorFeedback(
+              frontTextError ? formatMessage(frontTextError) : '',
+              !frontTextError,
+              frontTextPristine
+            )}
+            labelTooltip={formatMessage('frontTextTooltip')}
           >
             <TextField
-              defaultValue={stopPoint.quayRef}
-              placeholder="NSR:Quay:69"
+              defaultValue={frontTextValue}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                debouncedSearchForQuay(e.target.value)
-              }
-              onBlur={(e: ChangeEvent<HTMLInputElement>) =>
-                stopPointChange({ ...stopPoint, quayRef: e.target.value })
+                stopPointChange({
+                  ...stopPoint,
+                  destinationDisplay: { frontText: e.target.value },
+                })
               }
             />
           </InputGroup>
-        )}
-
-        <InputGroup
-          label={formatMessage(
-            isFirstStop ? 'labelFrontTextRequired' : 'labelFrontText'
-          )}
-          {...getErrorFeedback(
-            frontTextError ? formatMessage(frontTextError) : '',
-            !frontTextError,
-            frontTextPristine
-          )}
-          labelTooltip={formatMessage('frontTextTooltip')}
-        >
-          <TextField
-            defaultValue={frontTextValue}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          <Dropdown
+            className="stop-point-dropdown"
+            label={formatMessage('labelBoarding')}
+            initialSelectedItem={convertBoardingToDropdown(stopPoint)}
+            placeholder={formatMessage('defaultOption')}
+            clearable
+            onChange={(element) =>
               stopPointChange({
                 ...stopPoint,
-                destinationDisplay: { frontText: e.target.value },
+                forBoarding: element?.value === '0' || element?.value === '2',
+                forAlighting: element?.value === '1' || element?.value === '2',
               })
             }
+            items={boardingItems}
+            feedback={errors.boarding && formatMessage(errors.boarding)}
+            variant={errors.boarding ? 'error' : undefined}
           />
-        </InputGroup>
-        <Dropdown
-          className="stop-point-dropdown"
-          label={formatMessage('labelBoarding')}
-          initialSelectedItem={convertBoardingToDropdown(stopPoint)}
-          placeholder={formatMessage('defaultOption')}
-          clearable
-          onChange={(element) =>
-            stopPointChange({
-              ...stopPoint,
-              forBoarding: element?.value === '0' || element?.value === '2',
-              forAlighting: element?.value === '1' || element?.value === '2',
-            })
-          }
-          items={boardingItems}
-          feedback={errors.boarding && formatMessage(errors.boarding)}
-          variant={errors.boarding ? 'error' : undefined}
+        </div>
+
+        {deleteStopPoint && (
+          <DeleteButton
+            onClick={() => setDeleteDialogOpen(true)}
+            title={formatMessage('editorDeleteButtonText')}
+          />
+        )}
+
+        <ConfirmDialog
+          isOpen={isDeleteDialogOpen}
+          title={formatMessage('deleteStopPointDialogTitle')}
+          message={formatMessage('deleteStopPointDialogMessage')}
+          buttons={[
+            <SecondaryButton
+              key="no"
+              onClick={() => setDeleteDialogOpen(false)}
+            >
+              {formatMessage('no')}
+            </SecondaryButton>,
+            <SuccessButton key="yes" onClick={deleteStopPoint}>
+              {formatMessage('yes')}
+            </SuccessButton>,
+          ]}
+          onDismiss={() => setDeleteDialogOpen(false)}
         />
       </div>
-      {deleteStopPoint && (
-        <DeleteButton
-          onClick={() => setDeleteDialogOpen(true)}
-          title={formatMessage('editorDeleteButtonText')}
-        />
+      {flexibleLineType && (stopPoint.forBoarding || !stopPoint.forAlighting) && (
+        <div>
+          <BookingArrangementEditor
+            bookingArrangement={stopPoint.bookingArrangement}
+            spoilPristine={spoilPristine}
+            bookingInfoAttachment={{
+              type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
+              name: stopPoint.flexibleStopPlace?.name! || stopPoint.quayRef!,
+            }}
+            onChange={(bookingArrangement) => {
+              stopPointChange({
+                ...stopPoint,
+                bookingArrangement,
+              });
+            }}
+            onRemove={() => {
+              const { bookingArrangement, ...rest } = stopPoint;
+              stopPointChange({
+                ...rest,
+              });
+            }}
+          />
+        </div>
       )}
-
-      <ConfirmDialog
-        isOpen={isDeleteDialogOpen}
-        title={formatMessage('deleteStopPointDialogTitle')}
-        message={formatMessage('deleteStopPointDialogMessage')}
-        buttons={[
-          <SecondaryButton key="no" onClick={() => setDeleteDialogOpen(false)}>
-            {formatMessage('no')}
-          </SecondaryButton>,
-          <SuccessButton key="yes" onClick={deleteStopPoint}>
-            {formatMessage('yes')}
-          </SuccessButton>,
-        ]}
-        onDismiss={() => setDeleteDialogOpen(false)}
-      />
     </div>
   );
 };

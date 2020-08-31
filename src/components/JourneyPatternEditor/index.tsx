@@ -17,9 +17,7 @@ import useUniqueKeys from 'hooks/useUniqueKeys';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import './styles.scss';
-import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -115,19 +113,6 @@ const JourneyPatternEditor = ({
             spoilPristine={spoilPristine}
           />
         </section>
-
-        {flexibleLineType && (
-          <BookingArrangementEditor
-            bookingArrangement={journeyPattern.bookingArrangement}
-            spoilPristine={spoilPristine}
-            bookingInfoAttachment={{
-              type: BookingInfoAttachmentType.JOURNEYPATTERN,
-              name: journeyPattern.name!,
-            }}
-            onChange={() => {}}
-            onRemove={() => {}}
-          />
-        )}
 
         <section style={{ marginTop: '2em' }}>
           <Heading3>

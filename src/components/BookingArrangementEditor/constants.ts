@@ -1,7 +1,7 @@
 export enum BookingInfoAttachmentType {
   LINE = 'LINE',
-  JOURNEYPATTERN = 'JOURNEYPATTERN',
-  SERVICEJOURNEY = 'SERVICEJOURNEY',
+  STOP_POINT_IN_JOURNEYPATTERN = 'STOP_POINT_IN_JOURNEYPATTERN',
+  SERVICE_JOURNEY = 'SERVICE_JOURNEY',
 }
 
 export type BookingInfoAttachment = {
@@ -15,9 +15,9 @@ export const bookingInfoAttachmentLabel = (
   switch (bookingInfoAttachmentType) {
     case BookingInfoAttachmentType.LINE:
       return 'Line';
-    case BookingInfoAttachmentType.JOURNEYPATTERN:
-      return 'Journey Pattern';
-    case BookingInfoAttachmentType.SERVICEJOURNEY:
+    case BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN:
+      return 'Stop Point in Journey Pattern';
+    case BookingInfoAttachmentType.SERVICE_JOURNEY:
       return 'Service Journey';
     default:
       return '';

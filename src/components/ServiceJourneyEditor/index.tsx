@@ -175,7 +175,7 @@ const ServiceJourneyEditor = (props: Props) => {
           <BookingArrangementEditor
             bookingArrangement={serviceJourney.bookingArrangement}
             bookingInfoAttachment={{
-              type: BookingInfoAttachmentType.SERVICEJOURNEY,
+              type: BookingInfoAttachmentType.SERVICE_JOURNEY,
               name: serviceJourney.name!,
             }}
             spoilPristine={spoilPristine}

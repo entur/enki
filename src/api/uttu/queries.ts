@@ -116,6 +116,7 @@ export const getFlexibleLineByIdQuery = `
           id,
           flexibleStopPlace {
             id
+            name
           },
           quayRef,
           bookingArrangement { ...bookingArrangementFields },
