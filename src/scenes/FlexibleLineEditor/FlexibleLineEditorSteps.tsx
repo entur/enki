@@ -1,5 +1,4 @@
 import React from 'react';
-import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import JourneyPatterns from 'components/JourneyPatterns';
 import General from 'components/GeneralLineEditor';
 import { withRouter } from 'react-router-dom';
@@ -86,21 +85,6 @@ const FlexibleLineEditor = (props: Props) => {
               />
             )}
           </ServiceJourneys>
-        </section>
-      )}
-
-      {props.activeStep === 3 && (
-        <section>
-          <BookingArrangementEditor
-            bookingArrangement={props.flexibleLine.bookingArrangement ?? {}}
-            onChange={(b) =>
-              props.changeFlexibleLine({
-                ...props.flexibleLine,
-                bookingArrangement: b,
-              })
-            }
-            spoilPristine={props.spoilPristine}
-          />
         </section>
       )}
     </>
