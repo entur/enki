@@ -173,6 +173,7 @@ const ServiceJourneyEditor = (props: Props) => {
 
         {flexibleLineType && (
           <BookingArrangementEditor
+            trim
             bookingArrangement={serviceJourney.bookingArrangement}
             bookingInfoAttachment={{
               type: BookingInfoAttachmentType.SERVICE_JOURNEY,

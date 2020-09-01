@@ -98,6 +98,7 @@ const FlexibleAreasOnlyEditor = (props: Props) => {
         />
       </InputGroup>
       <BookingArrangementEditor
+        trim
         bookingArrangement={stopPoint.bookingArrangement}
         spoilPristine={spoilPristine}
         bookingInfoAttachment={{

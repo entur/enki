@@ -248,6 +248,7 @@ const StopPointEditor = ({
       {flexibleLineType && (
         <div>
           <BookingArrangementEditor
+            trim
             bookingArrangement={stopPoint.bookingArrangement}
             spoilPristine={spoilPristine}
             bookingInfoAttachment={{
