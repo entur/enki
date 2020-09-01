@@ -1,4 +1,4 @@
-import React, { useState, ReactElement } from 'react';
+import React, { useState, ReactElement, useEffect } from 'react';
 import { Stepper } from '@entur/menu';
 import NavigationButtons from './NavigationButtons';
 import ConfirmNavigationDialog from 'components/ConfirmNavigationDialog';
@@ -51,6 +51,10 @@ export default ({
   const { formatMessage } = useSelector(selectIntl);
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
   const history = useHistory();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeStepperIndex]);
 
   const onStepClicked = (stepIndexClicked: number) => {
     if (isValidStepIndex(stepIndexClicked)) {
