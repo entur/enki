@@ -10,9 +10,9 @@ import {
   removeElementByIndex,
   changeElementAtIndex,
 } from 'helpers/arrays';
-import { Heading1, LeadParagraph } from '@entur/typography';
+import { Heading1, LeadParagraph, Heading3 } from '@entur/typography';
 import StopPoint from 'model/StopPoint';
-import { ExpandablePanel } from '@entur/expand';
+import { Accordion, AccordionItem } from '@entur/expand';
 import AddButton from 'components/AddButton/AddButton';
 import './styles.scss';
 import useUniqueKeys from 'hooks/useUniqueKeys';
@@ -183,33 +183,38 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               journeyPatterns[0].pointsInSequence,
               updateServiceJourney(0, journeyPatterns[0].serviceJourneys, 0)
             )
-          : journeyPatterns.flatMap((jp, jpIndex) =>
-              jp.serviceJourneys.map((sj, sjIndex) => (
-                <ExpandablePanel
-                  key={keys[jpIndex] + sjIndex}
-                  title={`${jp.name}: ${sj.name}`}
-                  defaultOpen={
-                    !sj.id &&
-                    sjIndex === journeyPatterns[0].serviceJourneys.length - 1
-                  }
-                >
-                  {children(
-                    sj,
-                    journeyPatterns[jpIndex].pointsInSequence,
-                    updateServiceJourney(
-                      sjIndex,
-                      journeyPatterns[jpIndex].serviceJourneys,
-                      jpIndex
-                    ),
-                    deleteServiceJourney(
-                      sjIndex,
-                      journeyPatterns[jpIndex].serviceJourneys,
-                      jpIndex
-                    )
-                  )}
-                </ExpandablePanel>
-              ))
-            )}
+          : journeyPatterns.map((jp, jpIndex) => (
+              <>
+                {journeyPatterns.length > 1 && <Heading3>{jp.name}</Heading3>}
+                <Accordion>
+                  {jp.serviceJourneys.map((sj, sjIndex) => (
+                    <AccordionItem
+                      key={keys[jpIndex] + sjIndex}
+                      title={sj.name}
+                      defaultOpen={
+                        jpIndex === modalSelectedJourneyPatternIndex &&
+                        (!sj.id || sjIndex === jp.serviceJourneys.length - 1)
+                      }
+                    >
+                      {children(
+                        sj,
+                        journeyPatterns[jpIndex].pointsInSequence,
+                        updateServiceJourney(
+                          sjIndex,
+                          journeyPatterns[jpIndex].serviceJourneys,
+                          jpIndex
+                        ),
+                        deleteServiceJourney(
+                          sjIndex,
+                          journeyPatterns[jpIndex].serviceJourneys,
+                          jpIndex
+                        )
+                      )}
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </>
+            ))}
         <AddButton
           onClick={() => setShowModal(true)}
           buttonTitle={formatMessage('editorAddServiceJourneys')}

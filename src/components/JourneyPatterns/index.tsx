@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useRef } from 'react';
-import { ExpandablePanel } from '@entur/expand';
+import { Accordion, AccordionItem } from '@entur/expand';
 import { replaceElement, removeElementByIndex } from 'helpers/arrays';
 import JourneyPattern, { initJourneyPattern } from 'model/JourneyPattern';
 import './styles.scss';
@@ -100,21 +100,26 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
       <div className="journey-patterns-editor">
         <Heading1>{formatMessage('editorJourneyPatternsTabLabel')}</Heading1>
         <LeadParagraph>{formatMessage('editorFillInformation')}</LeadParagraph>
-        {journeyPatterns.length === 1
-          ? children(journeyPatterns[0], updateJourneyPattern(0))
-          : journeyPatterns.map((jp: JourneyPattern, index: number) => (
-              <ExpandablePanel
+        {journeyPatterns.length === 1 ? (
+          children(journeyPatterns[0], updateJourneyPattern(0))
+        ) : (
+          <Accordion>
+            {journeyPatterns.map((jp: JourneyPattern, index: number) => (
+              <AccordionItem
                 title={jp.name}
                 key={jp.id ?? keys[index]}
-                defaultOpen={journeyPatterns.length === 1}
+                defaultOpen={!jp.id || index === journeyPatterns.length - 1}
               >
                 {children(
                   jp,
                   updateJourneyPattern(index),
                   deleteJourneyPattern(index)
                 )}
-              </ExpandablePanel>
+              </AccordionItem>
             ))}
+          </Accordion>
+        )}
+
         <AddButton
           onClick={() => setShowModal(true)}
           buttonTitle={formatMessage('editorAddJourneyPatterns')}
