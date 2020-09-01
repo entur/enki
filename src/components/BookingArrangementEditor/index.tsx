@@ -26,7 +26,7 @@ const BookingArrangementEditor = ({
   onRemove,
   trim,
 }: Props) => {
-  const [showBookingInfo, setShowBookingInfo] = useState<boolean>(false);
+  const [showModal, setshowModal] = useState<boolean>(false);
   const [bookingArrangementDraft, setBookingArrangementDraft] = useState<
     BookingArrangement
   >({});
@@ -37,14 +37,14 @@ const BookingArrangementEditor = ({
 
   const saveChanges = useCallback(() => {
     onChange(bookingArrangementDraft);
-    setShowBookingInfo(false);
-  }, [onChange, bookingArrangementDraft, setShowBookingInfo]);
+    setshowModal(false);
+  }, [onChange, bookingArrangementDraft, setshowModal]);
 
   // switch to useReducer
   const cancel = useCallback(() => {
     setBookingArrangementDraft(clone(bookingArrangement || {}));
-    setShowBookingInfo(false);
-  }, [setBookingArrangementDraft, setShowBookingInfo, bookingArrangement]);
+    setshowModal(false);
+  }, [setBookingArrangementDraft, setshowModal, bookingArrangement]);
 
   return (
     <div className="booking">
@@ -71,10 +71,7 @@ const BookingArrangementEditor = ({
               </Heading4>
             )}
             <ButtonGroup className="booking-info-buttons">
-              <Button
-                variant="secondary"
-                onClick={() => setShowBookingInfo(true)}
-              >
+              <Button variant="secondary" onClick={() => setshowModal(true)}>
                 Show / edit
               </Button>
               <Button variant="negative" onClick={() => onRemove()}>
@@ -91,10 +88,7 @@ const BookingArrangementEditor = ({
               </Heading4>
             )}
             <ButtonGroup className="booking-info-buttons">
-              <Button
-                variant="secondary"
-                onClick={() => setShowBookingInfo(true)}
-              >
+              <Button variant="secondary" onClick={() => setshowModal(true)}>
                 Add
               </Button>
             </ButtonGroup>
@@ -105,7 +99,7 @@ const BookingArrangementEditor = ({
       <Modal
         title="Booking info"
         size="large"
-        open={showBookingInfo}
+        open={showModal}
         onDismiss={cancel}
       >
         <Editor
