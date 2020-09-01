@@ -4,6 +4,11 @@
   margin-top: 2rem;
   padding: 1rem 2rem 2rem 2rem;
 
+  &.booking-info-trim {
+    margin-top: 0;
+    padding-left: 0;
+  }
+
   .booking-info-buttons {
     margin-top: 1rem;
   }

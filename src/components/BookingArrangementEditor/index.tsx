@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Contrast } from '@entur/layout';
-import { Heading3, Paragraph, Heading4 } from '@entur/typography';
+import { Heading3, Paragraph, Heading4, Heading5 } from '@entur/typography';
 import { ButtonGroup, Button } from '@entur/button';
 import { Modal } from '@entur/modal';
-import BookingArrangementEditor from './editor';
+import Editor from './editor';
 import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
 import BookingArrangement from 'model/BookingArrangement';
 import { clone } from 'ramda';
+import classNames from 'classnames';
 
 type Props = {
   bookingArrangement?: BookingArrangement;
@@ -14,14 +15,16 @@ type Props = {
   onChange: (bookingArrangement: BookingArrangement) => void;
   onRemove: () => void;
   spoilPristine: boolean;
+  trim?: boolean;
 };
 
-export default ({
+const BookingArrangementEditor = ({
   bookingArrangement,
   bookingInfoAttachment,
   spoilPristine,
   onChange,
   onRemove,
+  trim,
 }: Props) => {
   const [showBookingInfo, setShowBookingInfo] = useState<boolean>(false);
   const [bookingArrangementDraft, setBookingArrangementDraft] = useState<
@@ -45,50 +48,59 @@ export default ({
 
   return (
     <div className="booking">
-      <Contrast>
-        <section className="booking-info">
-          <Heading3>Booking information</Heading3>
-          <Paragraph>
-            Booking information can be added to the whole line, or to an
-            individual stop point in journey pattern or service journey (or all
-            of the above).
-          </Paragraph>
-          {bookingArrangement ? (
-            <>
+      <section
+        className={classNames('booking-info', { 'booking-info-trim': trim })}
+      >
+        {trim && <Heading4>Booking information</Heading4>}
+        {!trim && (
+          <>
+            <Heading3>Booking information</Heading3>
+            <Paragraph>
+              Booking information can be added to the whole line, or to an
+              individual stop point in journey pattern or service journey (or
+              all of the above).
+            </Paragraph>
+          </>
+        )}
+        {bookingArrangement ? (
+          <>
+            {!trim && (
               <Heading4>
                 This {bookingInfoAttachmentLabel(bookingInfoAttachment.type)}{' '}
                 has booking information.
               </Heading4>
-              <ButtonGroup className="booking-info-buttons">
-                <Button
-                  variant="secondary"
-                  onClick={() => setShowBookingInfo(true)}
-                >
-                  Show / edit
-                </Button>
-                <Button variant="negative" onClick={() => onRemove()}>
-                  Remove
-                </Button>
-              </ButtonGroup>
-            </>
-          ) : (
-            <>
+            )}
+            <ButtonGroup className="booking-info-buttons">
+              <Button
+                variant="secondary"
+                onClick={() => setShowBookingInfo(true)}
+              >
+                Show / edit
+              </Button>
+              <Button variant="negative" onClick={() => onRemove()}>
+                Remove
+              </Button>
+            </ButtonGroup>
+          </>
+        ) : (
+          <>
+            {!trim && (
               <Heading4>
                 This {bookingInfoAttachmentLabel(bookingInfoAttachment.type)}{' '}
                 has no booking information.
               </Heading4>
-              <ButtonGroup className="booking-info-buttons">
-                <Button
-                  variant="secondary"
-                  onClick={() => setShowBookingInfo(true)}
-                >
-                  Add
-                </Button>
-              </ButtonGroup>
-            </>
-          )}
-        </section>
-      </Contrast>
+            )}
+            <ButtonGroup className="booking-info-buttons">
+              <Button
+                variant="secondary"
+                onClick={() => setShowBookingInfo(true)}
+              >
+                Add
+              </Button>
+            </ButtonGroup>
+          </>
+        )}
+      </section>
 
       <Modal
         title="Booking info"
@@ -96,7 +108,7 @@ export default ({
         open={showBookingInfo}
         onDismiss={cancel}
       >
-        <BookingArrangementEditor
+        <Editor
           onChange={(ba) =>
             setBookingArrangementDraft({
               ...ba,
@@ -120,3 +132,17 @@ export default ({
     </div>
   );
 };
+
+const withContrast = (Component: React.ComponentType<Props>) => ({
+  trim = false,
+  ...rest
+}: Props) =>
+  trim ? (
+    <Component trim={trim} {...(rest as Props)} />
+  ) : (
+    <Contrast>
+      <Component trim={trim} {...(rest as Props)} />
+    </Contrast>
+  );
+
+export default withContrast(BookingArrangementEditor);
