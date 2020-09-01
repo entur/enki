@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Contrast } from '@entur/layout';
-import { Heading3, Paragraph, Heading4, Heading5 } from '@entur/typography';
+import { Heading3, Paragraph, Heading4 } from '@entur/typography';
 import { ButtonGroup, Button } from '@entur/button';
 import { Modal } from '@entur/modal';
 import Editor from './editor';
