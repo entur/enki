@@ -204,11 +204,13 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
                           journeyPatterns[jpIndex].serviceJourneys,
                           jpIndex
                         ),
-                        deleteServiceJourney(
-                          sjIndex,
-                          journeyPatterns[jpIndex].serviceJourneys,
-                          jpIndex
-                        )
+                        jp.serviceJourneys.length > 1
+                          ? deleteServiceJourney(
+                              sjIndex,
+                              journeyPatterns[jpIndex].serviceJourneys,
+                              jpIndex
+                            )
+                          : undefined
                       )}
                     </AccordionItem>
                   ))}
