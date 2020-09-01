@@ -154,7 +154,16 @@ export const messages = {
   linesCreateFlexibleLineIconButtonLabel: 'Opprett fleksibel linje',
   linesCreateLineIconButtonLabel: 'Opprett rutegående linje',
   linesFlexibleDataCell: 'Flexible',
-  bookingInfoHeader: 'Bestillingsinfo',
+  bookingInfoHeader: 'Bestillingsinformasjon',
+  bookingInfoHelpText: `Bestillingsinformasjon kan legges til på fleksibel linje,
+  på et stopp i et journey pattern eller på service journey. Når du legger
+  bestillingsinformasjon på flere nivåer, tar vil stopp overstyre service journey,
+  som igjen vil overstyre fleksibel linje.`,
+  bookingInfoAddButtonText: 'Legg til',
+  bookingInfoRemoveButtonText: 'Fjern',
+  bookingInfoShowEditButtonText: 'Vis / redigér',
+  bookingInfoSaveButtonText: 'Lagre',
+  bookingInfoCancelButtonText: 'Avbryt',
   bookingInfoText: 'Informasjon om hvordan tilbudet kan bestilles.',
   bookingLabel:
     'For enklere bestilling av tilbudet anbefales det å fylle ut Telefon, URL og Merknad.',

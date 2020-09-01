@@ -4,10 +4,13 @@ import { Heading3, Paragraph, Heading4 } from '@entur/typography';
 import { ButtonGroup, Button } from '@entur/button';
 import { Modal } from '@entur/modal';
 import Editor from './editor';
-import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
+import { BookingInfoAttachment } from './constants';
 import BookingArrangement from 'model/BookingArrangement';
 import { clone } from 'ramda';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
+import { selectIntl, AppIntlState } from 'i18n';
+import { GlobalState } from 'reducers';
 
 type Props = {
   bookingArrangement?: BookingArrangement;
@@ -31,6 +34,8 @@ const BookingArrangementEditor = ({
     BookingArrangement
   >({});
 
+  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+
   useEffect(() => {
     setBookingArrangementDraft(clone(bookingArrangement || {}));
   }, [setBookingArrangementDraft, bookingArrangement]);
@@ -51,53 +56,33 @@ const BookingArrangementEditor = ({
       <section
         className={classNames('booking-info', { 'booking-info-trim': trim })}
       >
-        {trim && <Heading4>Booking information</Heading4>}
+        {trim && <Heading4>{formatMessage('bookingInfoHeader')}</Heading4>}
         {!trim && (
           <>
-            <Heading3>Booking information</Heading3>
-            <Paragraph>
-              Booking information can be added to the whole line, or to an
-              individual stop point in journey pattern or service journey (or
-              all of the above).
-            </Paragraph>
+            <Heading3>{formatMessage('bookingInfoHeader')}</Heading3>
+            <Paragraph>{formatMessage('bookingInfoHelpText')}</Paragraph>
           </>
         )}
         {bookingArrangement ? (
-          <>
-            {!trim && (
-              <Heading4>
-                This {bookingInfoAttachmentLabel(bookingInfoAttachment.type)}{' '}
-                has booking information.
-              </Heading4>
-            )}
-            <ButtonGroup className="booking-info-buttons">
-              <Button variant="secondary" onClick={() => setshowModal(true)}>
-                Show / edit
-              </Button>
-              <Button variant="negative" onClick={() => onRemove()}>
-                Remove
-              </Button>
-            </ButtonGroup>
-          </>
+          <ButtonGroup className="booking-info-buttons">
+            <Button variant="secondary" onClick={() => setshowModal(true)}>
+              {formatMessage('bookingInfoShowEditButtonText')}
+            </Button>
+            <Button variant="negative" onClick={() => onRemove()}>
+              {formatMessage('bookingInfoRemoveButtonText')}
+            </Button>
+          </ButtonGroup>
         ) : (
-          <>
-            {!trim && (
-              <Heading4>
-                This {bookingInfoAttachmentLabel(bookingInfoAttachment.type)}{' '}
-                has no booking information.
-              </Heading4>
-            )}
-            <ButtonGroup className="booking-info-buttons">
-              <Button variant="secondary" onClick={() => setshowModal(true)}>
-                Add
-              </Button>
-            </ButtonGroup>
-          </>
+          <ButtonGroup className="booking-info-buttons">
+            <Button variant="secondary" onClick={() => setshowModal(true)}>
+              {formatMessage('bookingInfoAddButtonText')}
+            </Button>
+          </ButtonGroup>
         )}
       </section>
 
       <Modal
-        title="Booking info"
+        title={formatMessage('bookingInfoHeader')}
         size="large"
         open={showModal}
         onDismiss={cancel}
@@ -115,10 +100,10 @@ const BookingArrangementEditor = ({
         <div className="booking-modal-buttons">
           <ButtonGroup>
             <Button onClick={saveChanges} variant="primary">
-              Save
+              {formatMessage('bookingInfoSaveButtonText')}
             </Button>
             <Button onClick={cancel} variant="negative">
-              Cancel
+              {formatMessage('bookingInfoCancelButtonText')}
             </Button>
           </ButtonGroup>
         </div>
