@@ -272,8 +272,16 @@ export default ({
             type: BookingInfoAttachmentType.LINE,
             name: flexibleLine.name!,
           }}
-          onChange={() => {}}
-          onRemove={() => {}}
+          onChange={(bookingArrangement) => {
+            flexibleLineChange({
+              ...flexibleLine,
+              bookingArrangement,
+            });
+          }}
+          onRemove={() => {
+            const { bookingArrangement, ...updatedFlexibleLine } = flexibleLine;
+            flexibleLineChange(updatedFlexibleLine);
+          }}
         />
       )}
 

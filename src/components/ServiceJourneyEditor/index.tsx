@@ -180,8 +180,19 @@ const ServiceJourneyEditor = (props: Props) => {
               name: serviceJourney.name!,
             }}
             spoilPristine={spoilPristine}
-            onChange={() => {}}
-            onRemove={() => {}}
+            onChange={(bookingArrangement) => {
+              onChange({
+                ...serviceJourney,
+                bookingArrangement,
+              });
+            }}
+            onRemove={() => {
+              const {
+                bookingArrangement,
+                ...updatedServiceJourney
+              } = serviceJourney;
+              onChange(updatedServiceJourney);
+            }}
           />
         )}
 
