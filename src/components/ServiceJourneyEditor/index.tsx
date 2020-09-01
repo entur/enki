@@ -28,6 +28,8 @@ import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getInit, mapToItems } from 'helpers/dropdown';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import './styles.scss';
+import BookingArrangementEditor from 'components/BookingArrangementEditor';
+import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -168,6 +170,32 @@ const ServiceJourneyEditor = (props: Props) => {
             }
           />
         </div>
+
+        {flexibleLineType && (
+          <BookingArrangementEditor
+            trim
+            bookingArrangement={serviceJourney.bookingArrangement}
+            bookingInfoAttachment={{
+              type: BookingInfoAttachmentType.SERVICE_JOURNEY,
+              name: serviceJourney.name!,
+            }}
+            spoilPristine={spoilPristine}
+            onChange={(bookingArrangement) => {
+              onChange({
+                ...serviceJourney,
+                bookingArrangement,
+              });
+            }}
+            onRemove={() => {
+              const {
+                bookingArrangement,
+                ...updatedServiceJourney
+              } = serviceJourney;
+              onChange(updatedServiceJourney);
+            }}
+          />
+        )}
+
         <section className="weekday-section">
           <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
           <WeekdayPicker

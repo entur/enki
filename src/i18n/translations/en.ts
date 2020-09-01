@@ -157,7 +157,17 @@ export const messages: MessagesKey = {
   linesCreateFlexibleLineIconButtonLabel: 'Create flexible line',
   linesCreateLineIconButtonLabel: 'Create line',
   linesFlexibleDataCell: 'Flexible',
-  bookingInfoHeader: 'Booking info',
+  bookingInfoHeader: 'Booking information',
+  bookingInfoHelpText: `Booking information can be added to a flexible line, to a
+  stop point in a journey pattern, or to a service journey.
+  When you define booking information at several levels, stop points
+  take precendence over service journeys, which in turn takes precedence
+  over the flexible line.`,
+  bookingInfoAddButtonText: 'Add',
+  bookingInfoRemoveButtonText: 'Remove',
+  bookingInfoShowEditButtonText: 'Show / Edit',
+  bookingInfoSaveButtonText: 'Save',
+  bookingInfoCancelButtonText: 'Cancel',
   bookingInfoText: 'Information about how the service can be booked.',
   bookingLabel:
     'To make the booking process easier, we recommend filling out Phone, URL and Booking note.',

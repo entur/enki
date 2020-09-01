@@ -1,285 +1,127 @@
-import React, { useState, ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
-import ScrollToTop from 'components/ScrollToTop';
-import './styles.scss';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Contrast } from '@entur/layout';
+import { Heading3, Paragraph, Heading4 } from '@entur/typography';
+import { ButtonGroup, Button } from '@entur/button';
+import { Modal } from '@entur/modal';
+import Editor from './editor';
+import { BookingInfoAttachment } from './constants';
 import BookingArrangement from 'model/BookingArrangement';
-import { addOrRemove } from 'helpers/arrays';
-import {
-  BOOKING_ACCESS,
-  BOOKING_METHOD,
-  bookingMethodMessages,
-  paymentTimeMessages,
-  PURCHASE_MOMENT,
-  PURCHASE_WHEN,
-  BOOKING_LIMIT_TYPE,
-} from 'model/enums';
-import { Heading1, LeadParagraph, Label } from '@entur/typography';
-import {
-  RadioGroup,
-  Radio,
-  InputGroup,
-  TextArea,
-  TextField,
-} from '@entur/form';
-import Contact from 'model/Contact';
-import { Dropdown } from '@entur/dropdown';
-import { FilterChip } from '@entur/chip';
-import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
-import DurationPicker from 'components/DurationPicker';
-import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
+import { clone } from 'ramda';
+import classNames from 'classnames';
+import { useSelector } from 'react-redux';
+import { selectIntl, AppIntlState } from 'i18n';
 import { GlobalState } from 'reducers';
-import { AppIntlState } from 'i18n';
 
 type Props = {
-  onChange: (bookingArrangement: BookingArrangement | undefined) => void;
-  bookingArrangement: BookingArrangement;
+  bookingArrangement?: BookingArrangement;
+  bookingInfoAttachment: BookingInfoAttachment;
+  onChange: (bookingArrangement: BookingArrangement) => void;
+  onRemove: () => void;
   spoilPristine: boolean;
+  trim?: boolean;
 };
 
-const BookingArrangementEditor = (props: Props) => {
-  const intl = useSelector<GlobalState, AppIntlState>(selectIntl);
-  const { formatMessage } = intl;
-  const { bookingArrangement, onChange } = props;
-  const {
-    bookingContact,
-    bookingMethods,
-    bookWhen,
-    buyWhen,
-    bookingAccess,
-    bookingNote,
-    latestBookingTime = '',
-    minimumBookingPeriod,
-  } = bookingArrangement;
+const BookingArrangementEditor = ({
+  bookingArrangement,
+  bookingInfoAttachment,
+  spoilPristine,
+  onChange,
+  onRemove,
+  trim,
+}: Props) => {
+  const [showModal, setshowModal] = useState<boolean>(false);
+  const [bookingArrangementDraft, setBookingArrangementDraft] = useState<
+    BookingArrangement
+  >({});
 
-  const onContactChange = (contact: Contact) =>
-    onChange({
-      ...bookingArrangement,
-      bookingContact: contact,
-    });
+  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
-  const onPurchaseMomentChange = (moment: PURCHASE_MOMENT) =>
-    onChange({
-      ...bookingArrangement,
-      buyWhen: addOrRemove(moment, buyWhen ?? []),
-    });
+  useEffect(() => {
+    setBookingArrangementDraft(clone(bookingArrangement || {}));
+  }, [setBookingArrangementDraft, bookingArrangement]);
 
-  const onBookingMethodChange = (method: BOOKING_METHOD) =>
-    onChange({
-      ...bookingArrangement,
-      bookingMethods: addOrRemove(method, bookingMethods ?? []),
-    });
+  const saveChanges = useCallback(() => {
+    onChange(bookingArrangementDraft);
+    setshowModal(false);
+  }, [onChange, bookingArrangementDraft, setshowModal]);
 
-  const [bookingLimitType, setBookingLimitType] = useState(
-    minimumBookingPeriod
-      ? BOOKING_LIMIT_TYPE.PERIOD
-      : latestBookingTime
-      ? BOOKING_LIMIT_TYPE.TIME
-      : BOOKING_LIMIT_TYPE.NONE
-  );
-
-  const onBookingLimitTypeChange = (type: BOOKING_LIMIT_TYPE) => {
-    onChange({
-      ...bookingArrangement,
-      latestBookingTime: undefined,
-      minimumBookingPeriod: undefined,
-    });
-    setBookingLimitType(type);
-  };
-
-  const onLatestBookingTimeChange = (time: string) =>
-    onChange({
-      ...bookingArrangement,
-      latestBookingTime: time,
-    });
-
-  const onMinimumBookingPeriodChange = (period?: string) =>
-    onChange({
-      ...bookingArrangement,
-      minimumBookingPeriod: period,
-    });
+  // switch to useReducer
+  const cancel = useCallback(() => {
+    setBookingArrangementDraft(clone(bookingArrangement || {}));
+    setshowModal(false);
+  }, [setBookingArrangementDraft, setshowModal, bookingArrangement]);
 
   return (
-    <ScrollToTop>
-      <div className="booking-editor">
-        <Heading1>{formatMessage('bookingInfoHeader')}</Heading1>
-        <LeadParagraph>{formatMessage('bookingInfoText')}</LeadParagraph>
-        <Label>
-          <i>{formatMessage('bookingLabel')} </i>
-        </Label>
+    <div className="booking">
+      <section
+        className={classNames('booking-info', { 'booking-info-trim': trim })}
+      >
+        {trim && <Heading4>{formatMessage('bookingInfoHeader')}</Heading4>}
+        {!trim && (
+          <>
+            <Heading3>{formatMessage('bookingInfoHeader')}</Heading3>
+            <Paragraph>{formatMessage('bookingInfoHelpText')}</Paragraph>
+          </>
+        )}
+        {bookingArrangement ? (
+          <ButtonGroup className="booking-info-buttons">
+            <Button variant="secondary" onClick={() => setshowModal(true)}>
+              {formatMessage('bookingInfoShowEditButtonText')}
+            </Button>
+            <Button variant="negative" onClick={() => onRemove()}>
+              {formatMessage('bookingInfoRemoveButtonText')}
+            </Button>
+          </ButtonGroup>
+        ) : (
+          <ButtonGroup className="booking-info-buttons">
+            <Button variant="secondary" onClick={() => setshowModal(true)}>
+              {formatMessage('bookingInfoAddButtonText')}
+            </Button>
+          </ButtonGroup>
+        )}
+      </section>
 
-        <section className="booking-contact-info">
-          <InputGroup label={formatMessage('contactFieldsContactPersonTitle')}>
-            <TextField
-              defaultValue={bookingContact?.contactPerson ?? ''}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onContactChange({
-                  ...bookingContact,
-                  contactPerson: e.target.value,
-                })
-              }
-            />
-          </InputGroup>
-
-          <InputGroup label={formatMessage('contactFieldsEmailTitle')}>
-            <TextField
-              defaultValue={bookingContact?.email ?? ''}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onContactChange({ ...bookingContact, email: e.target.value })
-              }
-            />
-          </InputGroup>
-
-          <InputGroup label={formatMessage('contactFieldsPhoneTitle')}>
-            <TextField
-              defaultValue={bookingContact?.phone ?? ''}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onContactChange({ ...bookingContact, phone: e.target.value })
-              }
-            />
-          </InputGroup>
-
-          <InputGroup label={formatMessage('contactFieldsUrlTitle')}>
-            <TextField
-              defaultValue={bookingContact?.url ?? ''}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onContactChange({ ...bookingContact, url: e.target.value })
-              }
-            />
-          </InputGroup>
-
-          <InputGroup
-            label={formatMessage('bookingNoteFieldTitle')}
-            labelTooltip={formatMessage('bookingNoteTooltip')}
-            style={{ width: '100%' }}
-          >
-            <TextArea
-              value={bookingNote ?? ''}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onChange({ ...bookingArrangement, bookingNote: e.target.value })
-              }
-            />
-          </InputGroup>
-
-          <Dropdown
-            label={formatMessage('bookingAccessSelectionTitle')}
-            initialSelectedItem={getEnumInit(bookingAccess)}
-            placeholder={formatMessage('defaultOption')}
-            items={mapEnumToItems(BOOKING_ACCESS)}
-            clearable
-            onChange={(e) =>
-              onChange({
-                ...bookingArrangement,
-                bookingAccess: e?.value as BOOKING_ACCESS,
-              })
-            }
-          />
-
-          <InputGroup label={formatMessage('contactFieldsFurtherDetailsTitle')}>
-            <TextField
-              defaultValue={bookingContact?.furtherDetails ?? ''}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onContactChange({
-                  ...bookingContact,
-                  furtherDetails: e.target.value,
-                })
-              }
-            />
-          </InputGroup>
-        </section>
-
-        <section className="booking-time-info">
-          <Dropdown
-            label={formatMessage('bookingTimeSelectionTitle')}
-            initialSelectedItem={getEnumInit(bookWhen)}
-            placeholder={formatMessage('defaultOption')}
-            items={mapEnumToItems(PURCHASE_WHEN)}
-            clearable
-            onChange={(e) =>
-              onChange({
-                ...bookingArrangement,
-                bookWhen: e?.value as PURCHASE_WHEN,
-              })
-            }
-          />
-
-          <RadioGroup
-            name="booking-limit-type"
-            label={formatMessage('bookingLimitFieldsHeaderLabel')}
-            onChange={(e) =>
-              onBookingLimitTypeChange(e?.target?.value as BOOKING_LIMIT_TYPE)
-            }
-            value={bookingLimitType}
-          >
-            <Radio value={BOOKING_LIMIT_TYPE.NONE}>
-              {formatMessage('bookingLimitTypeNoneRadioButtonLabel')}
-            </Radio>
-
-            <Radio value={BOOKING_LIMIT_TYPE.TIME}>
-              {formatMessage(
-                'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'
-              )}
-            </Radio>
-
-            <TextField
-              type="time"
-              disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-              value={latestBookingTime || ''}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onLatestBookingTimeChange(e?.target?.value)
-              }
-            />
-
-            <Radio value={BOOKING_LIMIT_TYPE.PERIOD}>
-              {formatMessage(
-                'bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel'
-              )}
-            </Radio>
-
-            <DurationPicker
-              duration={minimumBookingPeriod}
-              resetOnZero
-              disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
-              position={TimeUnitPickerPosition.ABOVE}
-              showYears={false}
-              showMonths={false}
-              onChange={(period?: string) =>
-                onMinimumBookingPeriodChange(period)
-              }
-            />
-          </RadioGroup>
-
-          <InputGroup label={formatMessage('bookingMethodSelectionTitle')}>
-            <div className="filter-chip-list">
-              {Object.values(BOOKING_METHOD).map((v) => (
-                <FilterChip
-                  value={v}
-                  key={v}
-                  onClick={() => onBookingMethodChange(v)}
-                >
-                  {formatMessage(bookingMethodMessages[v])}
-                </FilterChip>
-              ))}
-            </div>
-          </InputGroup>
-
-          <InputGroup label={formatMessage('paymentSelectionTitle')}>
-            <div className="filter-chip-list">
-              {Object.values(PURCHASE_MOMENT).map((v) => (
-                <FilterChip
-                  value={v}
-                  key={v}
-                  onClick={() => onPurchaseMomentChange(v)}
-                >
-                  {formatMessage(paymentTimeMessages[v])}
-                </FilterChip>
-              ))}
-            </div>
-          </InputGroup>
-        </section>
-      </div>
-    </ScrollToTop>
+      <Modal
+        title={formatMessage('bookingInfoHeader')}
+        size="large"
+        open={showModal}
+        onDismiss={cancel}
+      >
+        <Editor
+          onChange={(ba) =>
+            setBookingArrangementDraft({
+              ...ba,
+            })
+          }
+          bookingArrangement={bookingArrangementDraft}
+          spoilPristine={spoilPristine}
+          bookingInfoAttachment={bookingInfoAttachment}
+        />
+        <div className="booking-modal-buttons">
+          <ButtonGroup>
+            <Button onClick={saveChanges} variant="primary">
+              {formatMessage('bookingInfoSaveButtonText')}
+            </Button>
+            <Button onClick={cancel} variant="negative">
+              {formatMessage('bookingInfoCancelButtonText')}
+            </Button>
+          </ButtonGroup>
+        </div>
+      </Modal>
+    </div>
   );
 };
 
-export default BookingArrangementEditor;
+const withContrast = (Component: React.ComponentType<Props>) => ({
+  trim = false,
+  ...rest
+}: Props) =>
+  trim ? (
+    <Component trim={trim} {...(rest as Props)} />
+  ) : (
+    <Contrast>
+      <Component trim={trim} {...(rest as Props)} />
+    </Contrast>
+  );
+
+export default withContrast(BookingArrangementEditor);

@@ -29,6 +29,8 @@ import {
   vehicleModeInit,
 } from 'helpers/dropdown';
 import VehicleSubModeDropdown from './VehicleSubModeDropdown';
+import BookingArrangementEditor from 'components/BookingArrangementEditor';
+import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 
 type Props = {
   flexibleLine: FlexibleLine;
@@ -260,6 +262,27 @@ export default ({
           )}
         </section>
       </section>
+
+      {isFlexibleLine && (
+        <BookingArrangementEditor
+          bookingArrangement={flexibleLine.bookingArrangement}
+          spoilPristine={spoilPristine}
+          bookingInfoAttachment={{
+            type: BookingInfoAttachmentType.LINE,
+            name: flexibleLine.name!,
+          }}
+          onChange={(bookingArrangement) => {
+            flexibleLineChange({
+              ...flexibleLine,
+              bookingArrangement,
+            });
+          }}
+          onRemove={() => {
+            const { bookingArrangement, ...updatedFlexibleLine } = flexibleLine;
+            flexibleLineChange(updatedFlexibleLine);
+          }}
+        />
+      )}
 
       <FlexibleLineTypeDrawer
         open={showDrawer}

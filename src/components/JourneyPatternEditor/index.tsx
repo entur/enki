@@ -114,7 +114,7 @@ const JourneyPatternEditor = ({
           />
         </section>
 
-        <section style={{ marginTop: '5rem' }}>
+        <section style={{ marginTop: '2em' }}>
           <Heading3>
             {formatMessage(
               flexibleLineType === 'flexibleAreasOnly'
