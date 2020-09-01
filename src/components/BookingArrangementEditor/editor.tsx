@@ -269,6 +269,7 @@ export default (props: Props) => {
               <FilterChip
                 value={v}
                 key={v}
+                checked={bookingMethods?.includes(v)}
                 onClick={() => onBookingMethodChange(v)}
               >
                 {formatMessage(bookingMethodMessages[v])}
@@ -283,6 +284,7 @@ export default (props: Props) => {
               <FilterChip
                 value={v}
                 key={v}
+                checked={buyWhen?.includes(v)}
                 onClick={() => onPurchaseMomentChange(v)}
               >
                 {formatMessage(paymentTimeMessages[v])}
