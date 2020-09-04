@@ -26,7 +26,8 @@ type Props = {
     serviceJourney: ServiceJourney,
     stopPoints: StopPoint[],
     handleUpdate: (serviceJourney: ServiceJourney) => void,
-    handleDelete?: () => void
+    handleDelete?: () => void,
+    handleCopy?: (newServiceJourneys: ServiceJourney[]) => void
   ) => ReactElement;
 };
 
@@ -115,6 +116,24 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
     );
   };
 
+  const copyServiceJourney = (
+    serviceJourneys: ServiceJourney[],
+    journeyPatternIndex: number
+  ) => {
+    return (newServiceJourneys: ServiceJourney[]) => {
+      onChange(
+        changeElementAtIndex(
+          journeyPatterns,
+          {
+            ...journeyPatterns[journeyPatternIndex],
+            serviceJourneys: serviceJourneys.concat(newServiceJourneys),
+          },
+          journeyPatternIndex
+        )
+      );
+    };
+  };
+
   return (
     <>
       <Modal
@@ -181,7 +200,9 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
           ? children(
               journeyPatterns[0].serviceJourneys[0],
               journeyPatterns[0].pointsInSequence,
-              updateServiceJourney(0, journeyPatterns[0].serviceJourneys, 0)
+              updateServiceJourney(0, journeyPatterns[0].serviceJourneys, 0),
+              undefined,
+              copyServiceJourney(journeyPatterns[0].serviceJourneys, 0)
             )
           : journeyPatterns.map((jp, jpIndex) => (
               <>
@@ -210,7 +231,11 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
                               journeyPatterns[jpIndex].serviceJourneys,
                               jpIndex
                             )
-                          : undefined
+                          : undefined,
+                        copyServiceJourney(
+                          journeyPatterns[jpIndex].serviceJourneys,
+                          jpIndex
+                        )
                       )}
                     </AccordionItem>
                   ))}

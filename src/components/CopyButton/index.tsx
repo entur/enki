@@ -1,7 +1,8 @@
-import { TertiaryButton } from '@entur/button';
-import { DeleteIcon } from '@entur/icons';
 import React from 'react';
-import './DeleteButton.scss';
+import { TertiaryButton } from '@entur/button';
+import { CopyIcon } from '@entur/icons';
+import classNames from 'classnames';
+import './styles.scss';
 import { ActionChip } from '@entur/chip';
 
 type Props = {
@@ -10,15 +11,15 @@ type Props = {
   thin?: boolean;
 };
 
-const DeleteButton = (props: Props) => (
+const CopyButton = (props: Props) => (
   <ActionChip
     onClick={(event: Event) => {
       props.onClick();
       event.stopPropagation();
     }}
   >
-    <DeleteIcon inline /> {props.title}
+    <CopyIcon inline /> {props.title}
   </ActionChip>
 );
 
-export default DeleteButton;
+export default CopyButton;
