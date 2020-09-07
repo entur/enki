@@ -1,58 +1,37 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Modal } from '@entur/modal';
 import { LeadParagraph } from '@entur/typography';
-import { RadioGroup, Radio, TextField, InputGroup } from '@entur/form';
+import { TextField, InputGroup } from '@entur/form';
 import { ButtonGroup, Button } from '@entur/button';
 import { TimePicker } from '@entur/datepicker';
 import { ClockIcon } from '@entur/icons';
 import ServiceJourney from 'model/ServiceJourney';
 import { clone } from 'ramda';
 import PassingTime from 'model/PassingTime';
+import DurationPicker from 'components/DurationPicker';
 import {
+  addDays,
+  isAfter,
   differenceInMinutes,
   addMinutes,
   differenceInCalendarDays,
-} from 'date-fns/esm';
+} from 'date-fns';
+import * as duration from 'duration-fns';
 
 type Props = {
   open: boolean;
   serviceJourney: ServiceJourney;
-  onSave: (serviceJourney: ServiceJourney) => void;
+  onSave: (serviceJourneys: ServiceJourney[]) => void;
 };
 
-// enum CopyMethod {
-//   DUPLICATE = 'DUPLICATE',
-//   MODIFY_DEPARTURE_TIME = 'MODIFY_DEPARTURE_TIME',
-//   GENERATE_DEPARTURES = 'GENERATE_DEPARTURES'
-// }
-
 const toDate = (date: string): Date => {
-  //if (!date) return;
   const [hours, minutes, seconds] = date.split(':');
   const dateObj = new Date();
   dateObj.setHours(parseInt(hours));
   dateObj.setMinutes(parseInt(minutes));
   dateObj.setSeconds(parseInt(seconds));
-
   return dateObj;
 };
-
-const createClone = (serviceJourney: ServiceJourney) => {
-  const copy = clone(serviceJourney);
-  copy.name = `${serviceJourney.name} (copy)`;
-  return copy;
-};
-
-/*
-  arrivalTime?: string;
-  arrivalDayOffset?: number;
-  departureTime?: string;
-  departureDayOffset?: number;
-  latestArrivalTime?: string;
-  latestArrivalDayOffset?: number;
-  earliestDepartureTime?: string;
-  earliestDepartureDayOffset?: number;
-*/
 
 const offsetPassingTime = (
   oldTime: string,
@@ -72,17 +51,8 @@ const offsetPassingTime = (
 
 const offsetPassingTimes = (
   passingTimes: PassingTime[],
-  newDepartureTime: string
+  offsetInMinutes: number
 ) => {
-  const oldDeparture = toDate(passingTimes[0].departureTime!);
-  const newDeparture = toDate(newDepartureTime);
-  const offset = differenceInMinutes(newDeparture!, oldDeparture!);
-
-  //const time = date?.toTimeString().split(' ')[0];
-
-  // passingTimes[0].departureTime = newDepartureTime;
-  // return passingTimes;
-
   return passingTimes.map(
     ({
       arrivalTime,
@@ -96,14 +66,14 @@ const offsetPassingTimes = (
         ...offsetPassingTime(
           arrivalTime!,
           arrivalDayOffset!,
-          offset,
+          offsetInMinutes,
           'arrivalTime',
           'arrivalDayOffset'
         ),
         ...offsetPassingTime(
           departureTime!,
           departureDayOffset!,
-          offset,
+          offsetInMinutes,
           'departureTime',
           'departureDayOffset'
         ),
@@ -112,75 +82,156 @@ const offsetPassingTimes = (
   );
 };
 
+const copyServiceJourney = (
+  serviceJourney: ServiceJourney,
+  newServiceJourneys: ServiceJourney[],
+  nameTemplate: string,
+  departureTime: string,
+  dayOffset: number,
+  untilTime: string,
+  untilDayOffset: number,
+  repeatDuration: Duration
+): ServiceJourney[] => {
+  const departure = addDays(toDate(departureTime), dayOffset);
+
+  if (isAfter(departure, addDays(toDate(untilTime), untilDayOffset))) {
+    return newServiceJourneys;
+  } else {
+    const lastActualDeparture = addDays(
+      toDate(serviceJourney.passingTimes[0].departureTime!),
+      serviceJourney.passingTimes[0].departureDayOffset!
+    );
+    const newPassingTimes = offsetPassingTimes(
+      serviceJourney.passingTimes,
+      differenceInMinutes(departure, lastActualDeparture)
+    );
+    const newServiceJourney = {
+      ...clone(serviceJourney),
+      name: nameTemplate.replace(
+        '<% time %>',
+        `${departureTime.slice(0, -3)} +${dayOffset}`
+      ),
+      passingTimes: newPassingTimes,
+    };
+    newServiceJourneys.push(newServiceJourney);
+    const nextDeparture = addMinutes(
+      departure,
+      duration.toMinutes(repeatDuration)
+    );
+    const nextDepartureTime = nextDeparture?.toTimeString().split(' ')[0];
+    const nextDayOffset = differenceInCalendarDays(
+      nextDeparture,
+      toDate(departureTime)
+    );
+    return copyServiceJourney(
+      newServiceJourney,
+      newServiceJourneys,
+      nameTemplate,
+      nextDepartureTime,
+      nextDayOffset,
+      untilTime,
+      untilDayOffset,
+      repeatDuration
+    );
+  }
+};
+
 export default ({ open, serviceJourney, onSave }: Props) => {
-  // const [copyMethod, setCopyMethod] = useState<CopyMethod>(CopyMethod.DUPLICATE);
-  // const [name, setName] = useState<string | undefined>(`${serviceJourney.name} (copy)`);
-  // const [departureTime, setDepartureTime] = useState(serviceJourney.passingTimes[0].departureTime)
+  const [nameTemplate, setNameTemplate] = useState<string>(
+    `${serviceJourney.name} (<% time %>)`
+  );
+  const [initialDepartureTime, setInitialDepartureTime] = useState<string>(
+    serviceJourney.passingTimes[0].departureTime!
+  );
+  const [initialDayOffset, setInitialDayOffset] = useState<number>(
+    serviceJourney.passingTimes[0].departureDayOffset!
+  );
+  const [repeatDuration, setRepeatDuration] = useState<string>('');
+  const [untilTime, setUntilTime] = useState<string>(
+    serviceJourney.passingTimes[0].departureTime!
+  );
+  const [untilDayOffset, setUntilDayOffset] = useState<number>(0);
 
-  const [copy, setCopy] = useState<ServiceJourney>(createClone(serviceJourney));
-
-  const setName = (name: string) => {
-    setCopy({ ...copy, name });
+  const save = () => {
+    onSave(
+      copyServiceJourney(
+        serviceJourney,
+        [],
+        nameTemplate,
+        initialDepartureTime,
+        initialDayOffset,
+        untilTime,
+        untilDayOffset,
+        duration.parse(repeatDuration)
+      )
+    );
   };
-
-  const setDepartureTime = (time: string) => {
-    setCopy({
-      ...copy,
-      passingTimes: offsetPassingTimes(serviceJourney.passingTimes, time),
-    });
-  };
-
-  console.log(copy);
 
   return (
     <Modal open={open} size="large" title="Copy Service Journey">
       <LeadParagraph>Say something useful here.</LeadParagraph>
-      {/* <RadioGroup
-        name="copy-method"
-        title="Choose how to copy"
-        value={copyMethod}
-        onChange={e => setCopyMethod(e.target.value as CopyMethod)}
-      >
-        <Radio value={CopyMethod.DUPLICATE}>Simple copy</Radio>
-        <Radio disabled value={CopyMethod.MODIFY_DEPARTURE_TIME}>Modify departure time</Radio>
-        <Radio disabled value={CopyMethod.GENERATE_DEPARTURES}>Generate departures</Radio>
-      </RadioGroup> */}
       <InputGroup label="Name">
         <TextField
-          value={copy.name}
+          value={nameTemplate}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setName(e.target.value)
+            setNameTemplate(e.target.value)
           }
         />
       </InputGroup>
-      <InputGroup label="Set departure time" className="timepicker">
+      <InputGroup label="Set initial departure time" className="timepicker">
         <TimePicker
           onChange={(date: Date | null) => {
             const time = date?.toTimeString().split(' ')[0];
-            console.log(time);
-
-            // setName(`${serviceJourney.name} (${time})`)
-            setDepartureTime(time!);
-            // onChange(
-            //   changeElementAtIndex(
-            //     passingTimes,
-            //     {
-            //       ...passingTimes[index],
-            //       departureTime: date,
-            //       arrivalTime: date,
-            //     },
-            //     index
-            //   )
-            // );
+            setNameTemplate(`${serviceJourney.name} (<% time %>)`);
+            setInitialDepartureTime(time!);
           }}
           prepend={<ClockIcon inline />}
-          selectedTime={toDate(copy.passingTimes[0].departureTime!)}
+          selectedTime={toDate(initialDepartureTime)}
         />
       </InputGroup>
-      Create a new departure every [N] [minutes, hours], until [time]
+      <InputGroup label="Set initial day offset">
+        <TextField
+          type="number"
+          value={initialDayOffset}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setInitialDayOffset(parseInt(e.target.value))
+          }
+        />
+      </InputGroup>
+      Create new departures starting at initial departure time, repeating every
+      <DurationPicker
+        onChange={(duration) => {
+          setRepeatDuration(duration!);
+        }}
+        duration={repeatDuration}
+        showSeconds={false}
+        showMinutes
+        showHours
+        showDays={false}
+        showMonths={false}
+        showYears={false}
+      />
+      until
+      <TimePicker
+        onChange={(date: Date | null) => {
+          const time = date?.toTimeString().split(' ')[0];
+          setUntilTime(time!);
+        }}
+        prepend={<ClockIcon inline />}
+        selectedTime={toDate(untilTime!)}
+      />
+      <InputGroup label="Until day offset">
+        <TextField
+          type="number"
+          value={untilDayOffset}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setUntilDayOffset(parseInt(e.target.value))
+          }
+        />
+      </InputGroup>
       <ButtonGroup>
         <Button variant="negative">Cancel</Button>
-        <Button variant="success" onClick={() => onSave(copy)}>
+        <Button variant="success" onClick={() => save()}>
           Save
         </Button>
       </ButtonGroup>

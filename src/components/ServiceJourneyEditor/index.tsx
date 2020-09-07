@@ -302,8 +302,8 @@ const ServiceJourneyEditor = (props: Props) => {
         <CopyDialog
           open={showCopyDialog}
           serviceJourney={serviceJourney}
-          onSave={(serviceJourney) => {
-            copyServiceJourney([serviceJourney]);
+          onSave={(serviceJourneys) => {
+            copyServiceJourney(serviceJourneys);
             setShowCopyDialog(false);
           }}
         />
