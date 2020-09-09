@@ -271,8 +271,8 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         <>
           <Label>Choose an interval</Label>
           <DurationPicker
-            onChange={(duration) => {
-              setRepeatDuration(duration!);
+            onChange={(newRepeatDuration) => {
+              setRepeatDuration(newRepeatDuration!);
             }}
             duration={repeatDuration}
             showSeconds={false}
@@ -297,7 +297,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                 setUntilTime(time!);
               }}
               prepend={<ClockIcon inline />}
-              selectedTime={toDate(untilTime!)}
+              selectedTime={toDate(untilTime)}
             />
             <TextField
               type="number"
