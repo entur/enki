@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
 import { InputGroup, TextField } from '@entur/form';
-import { SecondaryButton, SuccessButton, Button } from '@entur/button';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import { QuestionIcon } from '@entur/icons';
 import PassingTimesEditor from './PassingTimesEditor';
 import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
-import DeleteButton from 'components/DeleteButton/DeleteButton';
+import DeleteActionChip from 'components/DeleteActionChip';
 import {
   filterNetexOperators,
   OrganisationState,
@@ -31,7 +31,7 @@ import './styles.scss';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import CopyDialog from './CopyDialog';
-import CopyButton from 'components/CopyButton';
+import CopyActionChip from 'components/CopyActionChip';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -272,13 +272,16 @@ const ServiceJourneyEditor = (props: Props) => {
       </div>
       <div style={{ display: 'flex' }}>
         {deleteServiceJourney && (
-          <DeleteButton
+          <DeleteActionChip
             onClick={() => setShowDeleteDialog(true)}
             title={formatMessage('editorDeleteButtonText')}
           />
         )}
         {copyServiceJourney && (
-          <CopyButton title="Copy" onClick={() => setShowCopyDialog(true)} />
+          <CopyActionChip
+            title="Copy"
+            onClick={() => setShowCopyDialog(true)}
+          />
         )}
       </div>
       {deleteServiceJourney && (
