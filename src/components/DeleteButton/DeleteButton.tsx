@@ -2,7 +2,6 @@ import { TertiaryButton } from '@entur/button';
 import { DeleteIcon } from '@entur/icons';
 import React from 'react';
 import './DeleteButton.scss';
-import { ActionChip } from '@entur/chip';
 
 type Props = {
   onClick: () => void;
@@ -11,14 +10,16 @@ type Props = {
 };
 
 const DeleteButton = (props: Props) => (
-  <ActionChip
+  <TertiaryButton
+    id="delete-button"
+    className={props.thin ? 'thin' : ''}
     onClick={(event: Event) => {
       props.onClick();
       event.stopPropagation();
     }}
   >
     <DeleteIcon inline /> {props.title}
-  </ActionChip>
+  </TertiaryButton>
 );
 
 export default DeleteButton;
