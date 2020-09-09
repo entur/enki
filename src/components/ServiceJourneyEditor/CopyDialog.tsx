@@ -193,13 +193,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
       setUntilTime(initialDepartureTime);
       setUntilDayOffset(initialDayOffset);
     }
-  }, [
-    copyMethod,
-    initialDepartureTime,
-    initialDayOffset,
-    setUntilTime,
-    setUntilDayOffset,
-  ]);
+  }, [copyMethod, initialDepartureTime, initialDayOffset]);
 
   const save = () => {
     // if (!validationError.) {
