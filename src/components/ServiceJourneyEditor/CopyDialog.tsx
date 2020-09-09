@@ -186,6 +186,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         ...rest,
       });
     }
+    // eslint-disable-next-line
   }, [initialDepartureTime, initialDayOffset, untilTime, untilDayOffset]);
 
   useEffect(() => {

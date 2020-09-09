@@ -1,8 +1,7 @@
-import { TertiaryButton } from '@entur/button';
-import { DeleteIcon } from '@entur/icons';
 import React from 'react';
-import './DeleteButton.scss';
+import { DeleteIcon } from '@entur/icons';
 import { ActionChip } from '@entur/chip';
+import './DeleteButton.scss';
 
 type Props = {
   onClick: () => void;
