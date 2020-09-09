@@ -306,6 +306,7 @@ const ServiceJourneyEditor = (props: Props) => {
             copyServiceJourney(serviceJourneys);
             setShowCopyDialog(false);
           }}
+          onDismiss={() => setShowCopyDialog(false)}
         />
       )}
     </div>

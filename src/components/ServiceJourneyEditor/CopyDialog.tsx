@@ -1,7 +1,7 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Modal } from '@entur/modal';
-import { LeadParagraph } from '@entur/typography';
-import { TextField, InputGroup } from '@entur/form';
+import { LeadParagraph, Label } from '@entur/typography';
+import { TextField, InputGroup, RadioGroup, Radio } from '@entur/form';
 import { ButtonGroup, Button } from '@entur/button';
 import { TimePicker } from '@entur/datepicker';
 import { ClockIcon } from '@entur/icons';
@@ -15,6 +15,7 @@ import {
   differenceInMinutes,
   addMinutes,
   differenceInCalendarDays,
+  isBefore,
 } from 'date-fns';
 import * as duration from 'duration-fns';
 
@@ -22,7 +23,17 @@ type Props = {
   open: boolean;
   serviceJourney: ServiceJourney;
   onSave: (serviceJourneys: ServiceJourney[]) => void;
+  onDismiss: () => void;
 };
+
+type ValidationError = {
+  untilTimeIsNotAfterInitialTime?: string;
+};
+
+enum CopyMethod {
+  SINGLE = 'SINGLE',
+  MULTIPLE = 'MULTIPLE',
+}
 
 const toDate = (date: string): Date => {
   const [hours, minutes, seconds] = date.split(':');
@@ -136,7 +147,7 @@ const copyServiceJourney = (
   }
 };
 
-export default ({ open, serviceJourney, onSave }: Props) => {
+export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   const [nameTemplate, setNameTemplate] = useState<string>(
     `${serviceJourney.name} (<% time %>)`
   );
@@ -146,13 +157,54 @@ export default ({ open, serviceJourney, onSave }: Props) => {
   const [initialDayOffset, setInitialDayOffset] = useState<number>(
     serviceJourney.passingTimes[0].departureDayOffset!
   );
-  const [repeatDuration, setRepeatDuration] = useState<string>('');
+  const [repeatDuration, setRepeatDuration] = useState<string>('PT1H');
   const [untilTime, setUntilTime] = useState<string>(
     serviceJourney.passingTimes[0].departureTime!
   );
   const [untilDayOffset, setUntilDayOffset] = useState<number>(0);
 
+  const [validationError, setValidationError] = useState<ValidationError>({});
+
+  const [copyMethod, setCopyMethod] = useState<CopyMethod>(CopyMethod.SINGLE);
+
+  useEffect(() => {
+    const initialDeparture = addDays(
+      toDate(initialDepartureTime),
+      initialDayOffset
+    );
+    const until = addDays(toDate(untilTime), untilDayOffset);
+
+    if (isBefore(until, initialDeparture)) {
+      setValidationError({
+        ...validationError,
+        untilTimeIsNotAfterInitialTime:
+          "Until time can't be before initial time",
+      });
+    } else {
+      const { untilTimeIsNotAfterInitialTime, ...rest } = validationError;
+      setValidationError({
+        ...rest,
+      });
+    }
+  }, [initialDepartureTime, initialDayOffset, untilTime, untilDayOffset]);
+
+  useEffect(() => {
+    if (copyMethod === CopyMethod.SINGLE) {
+      setUntilTime(initialDepartureTime);
+      setUntilDayOffset(initialDayOffset);
+    }
+  }, [
+    copyMethod,
+    initialDepartureTime,
+    initialDayOffset,
+    setUntilTime,
+    setUntilDayOffset,
+  ]);
+
   const save = () => {
+    // if (!validationError.) {
+
+    // } else {
     onSave(
       copyServiceJourney(
         serviceJourney,
@@ -165,12 +217,24 @@ export default ({ open, serviceJourney, onSave }: Props) => {
         duration.parse(repeatDuration)
       )
     );
+    // }
   };
 
   return (
-    <Modal open={open} size="large" title="Copy Service Journey">
-      <LeadParagraph>Say something useful here.</LeadParagraph>
-      <InputGroup label="Name">
+    <Modal
+      open={open}
+      size="large"
+      title="Copy Service Journey"
+      onDismiss={onDismiss}
+    >
+      <LeadParagraph>
+        Create one or more copies of the selected service journey. Set the
+        departure time and day offset (relative to the original) of the first
+        copy. If you select "multiple", choose an interval and a latest
+        departure time. As many copies as possible will be created within the
+        allowed parameters.
+      </LeadParagraph>
+      <InputGroup label="Name template">
         <TextField
           value={nameTemplate}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -178,7 +242,10 @@ export default ({ open, serviceJourney, onSave }: Props) => {
           }
         />
       </InputGroup>
-      <InputGroup label="Set initial departure time" className="timepicker">
+      <InputGroup
+        label="Set departure time and day offset of (first) copy"
+        className="timepicker"
+      >
         <TimePicker
           onChange={(date: Date | null) => {
             const time = date?.toTimeString().split(' ')[0];
@@ -188,8 +255,6 @@ export default ({ open, serviceJourney, onSave }: Props) => {
           prepend={<ClockIcon inline />}
           selectedTime={toDate(initialDepartureTime)}
         />
-      </InputGroup>
-      <InputGroup label="Set initial day offset">
         <TextField
           type="number"
           value={initialDayOffset}
@@ -198,39 +263,62 @@ export default ({ open, serviceJourney, onSave }: Props) => {
           }
         />
       </InputGroup>
-      Create new departures starting at initial departure time, repeating every
-      <DurationPicker
-        onChange={(duration) => {
-          setRepeatDuration(duration!);
-        }}
-        duration={repeatDuration}
-        showSeconds={false}
-        showMinutes
-        showHours
-        showDays={false}
-        showMonths={false}
-        showYears={false}
-      />
-      until
-      <TimePicker
-        onChange={(date: Date | null) => {
-          const time = date?.toTimeString().split(' ')[0];
-          setUntilTime(time!);
-        }}
-        prepend={<ClockIcon inline />}
-        selectedTime={toDate(untilTime!)}
-      />
-      <InputGroup label="Until day offset">
-        <TextField
-          type="number"
-          value={untilDayOffset}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setUntilDayOffset(parseInt(e.target.value))
-          }
-        />
-      </InputGroup>
+      <RadioGroup
+        label="Copy strategy"
+        name="copy_method"
+        value={copyMethod}
+        onChange={(e) => setCopyMethod(e.target.value as CopyMethod)}
+      >
+        <Radio value={CopyMethod.SINGLE}>Single</Radio>
+        <Radio value={CopyMethod.MULTIPLE}>Multiple</Radio>
+      </RadioGroup>
+      {copyMethod === CopyMethod.MULTIPLE && (
+        <>
+          <Label>Choose an interval</Label>
+          <DurationPicker
+            onChange={(duration) => {
+              setRepeatDuration(duration!);
+            }}
+            duration={repeatDuration}
+            showSeconds={false}
+            showMinutes
+            showHours
+            showDays={false}
+            showMonths={false}
+            showYears={false}
+          />
+          <InputGroup
+            label="Set latest possible departure time and day offset"
+            variant={
+              validationError.untilTimeIsNotAfterInitialTime
+                ? 'error'
+                : undefined
+            }
+            feedback={validationError.untilTimeIsNotAfterInitialTime}
+          >
+            <TimePicker
+              onChange={(date: Date | null) => {
+                const time = date?.toTimeString().split(' ')[0];
+                setUntilTime(time!);
+              }}
+              prepend={<ClockIcon inline />}
+              selectedTime={toDate(untilTime!)}
+            />
+            <TextField
+              type="number"
+              value={untilDayOffset}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setUntilDayOffset(parseInt(e.target.value))
+              }
+            />
+          </InputGroup>
+        </>
+      )}
+
       <ButtonGroup>
-        <Button variant="negative">Cancel</Button>
+        <Button variant="negative" onClick={() => onDismiss()}>
+          Cancel
+        </Button>
         <Button variant="success" onClick={() => save()}>
           Save
         </Button>
