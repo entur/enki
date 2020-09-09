@@ -9,7 +9,7 @@ import PassingTimesEditor from './PassingTimesEditor';
 import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
-import DeleteButton from 'components/DeleteButton/DeleteButton';
+import DeleteActionChip from 'components/DeleteActionChip';
 import {
   filterNetexOperators,
   OrganisationState,
@@ -30,6 +30,8 @@ import { MessagesKey } from 'i18n/translations/translationKeys';
 import './styles.scss';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
+import CopyDialog from './CopyDialog';
+import CopyActionChip from 'components/CopyActionChip';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -37,6 +39,7 @@ type Props = {
   spoilPristine: boolean;
   onChange: (serviceJourney: ServiceJourney) => void;
   deleteServiceJourney?: (index: number) => void;
+  copyServiceJourney?: (serviceJourney: ServiceJourney[]) => void;
   flexibleLineType?: string;
 };
 
@@ -55,6 +58,7 @@ const ServiceJourneyEditor = (props: Props) => {
     stopPoints,
     serviceJourney,
     deleteServiceJourney,
+    copyServiceJourney,
     flexibleLineType,
   } = props;
 
@@ -62,6 +66,7 @@ const ServiceJourneyEditor = (props: Props) => {
     serviceJourney.operatorRef
   );
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
+  const [showCopyDialog, setShowCopyDialog] = useState<boolean>(false);
   const organisations = useSelector<GlobalState, OrganisationState>(
     (state) => state.organisations
   );
@@ -265,13 +270,21 @@ const ServiceJourneyEditor = (props: Props) => {
           />
         </section>
       </div>
+      <div style={{ display: 'flex' }}>
+        {deleteServiceJourney && (
+          <DeleteActionChip
+            onClick={() => setShowDeleteDialog(true)}
+            title={formatMessage('editorDeleteButtonText')}
+          />
+        )}
+        {copyServiceJourney && (
+          <CopyActionChip
+            title="Copy"
+            onClick={() => setShowCopyDialog(true)}
+          />
+        )}
+      </div>
       {deleteServiceJourney && (
-        <DeleteButton
-          onClick={() => setShowDeleteDialog(true)}
-          title={formatMessage('editorDeleteButtonText')}
-        />
-      )}
-      {showDeleteDialog && deleteServiceJourney && (
         <ConfirmDialog
           isOpen={showDeleteDialog}
           title={formatMessage('serviceJourneyDeleteTitle')}
@@ -285,6 +298,18 @@ const ServiceJourneyEditor = (props: Props) => {
             </SuccessButton>,
           ]}
           onDismiss={() => setShowDeleteDialog(false)}
+        />
+      )}
+
+      {copyServiceJourney && (
+        <CopyDialog
+          open={showCopyDialog}
+          serviceJourney={serviceJourney}
+          onSave={(serviceJourneys) => {
+            copyServiceJourney(serviceJourneys);
+            setShowCopyDialog(false);
+          }}
+          onDismiss={() => setShowCopyDialog(false)}
         />
       )}
     </div>

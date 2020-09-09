@@ -68,13 +68,14 @@ const LineEditorSteps = (props: Props) => {
               })
             }
           >
-            {(sj, stopPoints, handleUpdate, handleDelete) => (
+            {(sj, stopPoints, handleUpdate, handleDelete, handleCopy) => (
               <ServiceJourneyEditor
                 serviceJourney={sj}
                 stopPoints={stopPoints}
                 onChange={handleUpdate}
                 spoilPristine={props.spoilPristine}
                 deleteServiceJourney={handleDelete}
+                copyServiceJourney={handleCopy}
               />
             )}
           </ServiceJourneys>
