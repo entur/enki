@@ -112,16 +112,28 @@ const copyServiceJourney = (
       toDate(serviceJourney.passingTimes[0].departureTime!),
       serviceJourney.passingTimes[0].departureDayOffset!
     );
+
+    const {
+      id,
+      passingTimes,
+      dayTypes,
+      ...copyableServiceJourney
+    } = serviceJourney;
+
     const newPassingTimes = offsetPassingTimes(
-      serviceJourney.passingTimes,
+      passingTimes.map(({ id, ...pt }) => pt),
       differenceInMinutes(departure, lastActualDeparture)
     );
+
+    const newDayTypes = dayTypes?.map(({ id, ...dt }) => dt);
+
     const newServiceJourney = {
-      ...clone(serviceJourney),
+      ...clone(copyableServiceJourney),
       name: nameTemplate.replace(
         '<% time %>',
         `${departureTime.slice(0, -3)} +${dayOffset}`
       ),
+      dayTypes: newDayTypes,
       passingTimes: newPassingTimes,
     };
     newServiceJourneys.push(newServiceJourney);
