@@ -200,27 +200,6 @@ const ServiceJourneyEditor = (props: Props) => {
             }}
           />
         )}
-
-        <section className="weekday-section">
-          <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
-          <WeekdayPicker
-            days={dayTypes?.[0].daysOfWeek ?? []}
-            onChange={(dow) =>
-              onChange({
-                ...serviceJourney,
-                dayTypes: [
-                  {
-                    ...(serviceJourney.dayTypes?.[0] ?? {
-                      dayTypeAssignments: [newDayTypeAssignment()],
-                    }),
-                    daysOfWeek: dow,
-                  },
-                ],
-              })
-            }
-            spoilPristine={spoilPristine}
-          />
-        </section>
         <section className="day-type-section">
           <Heading4>
             {formatMessage('dayTypeEditorDateAvailability')}
@@ -250,6 +229,26 @@ const ServiceJourneyEditor = (props: Props) => {
                 ],
               })
             }
+          />
+        </section>
+        <section className="weekday-section">
+          <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
+          <WeekdayPicker
+            days={dayTypes?.[0].daysOfWeek ?? []}
+            onChange={(dow) =>
+              onChange({
+                ...serviceJourney,
+                dayTypes: [
+                  {
+                    ...(serviceJourney.dayTypes?.[0] ?? {
+                      dayTypeAssignments: [newDayTypeAssignment()],
+                    }),
+                    daysOfWeek: dow,
+                  },
+                ],
+              })
+            }
+            spoilPristine={spoilPristine}
           />
         </section>
         <section className="passing-times-section">
