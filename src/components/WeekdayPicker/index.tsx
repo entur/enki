@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { FeedbackText } from '@entur/form';
 import { FilterChip } from '@entur/chip';
 import { DAY_OF_WEEK } from 'model/enums';

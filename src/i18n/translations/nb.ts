@@ -48,6 +48,7 @@ export const messages = {
   navBarIntroduction: 'Slik kommer du i gang',
   navBarExportsMenuItemLabel: 'Eksporter',
   navBarLinesMenuItemLabel: 'Linjer',
+  navBarFlexibleOffersSubMenuHeaderLabel: 'Fleksible tilbud',
   navBarFlexibleLinesMenuItemLabel: 'Fleksible linjer',
   navBarNetworksMenuItemLabel: 'Nettverk',
   navBarRootLinkLogoAltText: 'Logo',
