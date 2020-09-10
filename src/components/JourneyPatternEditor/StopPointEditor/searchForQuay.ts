@@ -10,6 +10,7 @@ export type StopPlace = {
   id: string;
   name: { value: string };
   quays: Quay[];
+  children: StopPlace[];
 };
 
 export type SearchForQuayResponse = {
@@ -69,6 +70,14 @@ export default async function search(quayRef: string): Promise<QuaySearch> {
     foundStopPlace = undefined;
 
   data?.stopPlace?.forEach((stop) => {
+    stop.children?.forEach((child) => {
+      (child.quays || []).forEach((quay) => {
+        if (quay.id === quayRef) {
+          foundStopPlace = child;
+          foundQuay = quay;
+        }
+      });
+    });
     (stop.quays || []).forEach((quay) => {
       if (quay.id === quayRef) {
         foundStopPlace = stop;
