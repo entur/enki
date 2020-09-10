@@ -148,20 +148,25 @@ const copyServiceJourney = (
 };
 
 export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
+  const defaultDepartureTime =
+    serviceJourney.passingTimes[0].departureTime || '00:00:00';
+  const defaultDayOffset =
+    serviceJourney.passingTimes[0].departureDayOffset || 0;
+
   const [nameTemplate, setNameTemplate] = useState<string>(
-    `${serviceJourney.name} (<% time %>)`
+    `${serviceJourney.name || 'New'} (<% time %>)`
   );
   const [initialDepartureTime, setInitialDepartureTime] = useState<string>(
-    serviceJourney.passingTimes[0].departureTime!
+    defaultDepartureTime
   );
   const [initialDayOffset, setInitialDayOffset] = useState<number>(
-    serviceJourney.passingTimes[0].departureDayOffset!
+    defaultDayOffset
   );
   const [repeatDuration, setRepeatDuration] = useState<string>('PT1H');
-  const [untilTime, setUntilTime] = useState<string>(
-    serviceJourney.passingTimes[0].departureTime!
+  const [untilTime, setUntilTime] = useState<string>(defaultDepartureTime);
+  const [untilDayOffset, setUntilDayOffset] = useState<number>(
+    defaultDayOffset
   );
-  const [untilDayOffset, setUntilDayOffset] = useState<number>(0);
 
   const [validationError, setValidationError] = useState<ValidationError>({});
 
