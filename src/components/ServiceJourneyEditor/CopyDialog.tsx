@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Modal } from '@entur/modal';
-import { LeadParagraph, Label } from '@entur/typography';
-import { TextField, InputGroup, RadioGroup, Radio } from '@entur/form';
+import { Label } from '@entur/typography';
+import { TextField, InputGroup, Switch, Fieldset } from '@entur/form';
 import { ButtonGroup, Button } from '@entur/button';
 import { TimePicker } from '@entur/datepicker';
 import { ClockIcon } from '@entur/icons';
@@ -30,11 +30,6 @@ type Props = {
 type ValidationError = {
   untilTimeIsNotAfterInitialTime?: string;
 };
-
-enum CopyMethod {
-  SINGLE = 'SINGLE',
-  MULTIPLE = 'MULTIPLE',
-}
 
 const toDate = (date: string): Date => {
   const [hours, minutes, seconds] = date.split(':');
@@ -183,7 +178,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
 
   const [validationError, setValidationError] = useState<ValidationError>({});
 
-  const [copyMethod, setCopyMethod] = useState<CopyMethod>(CopyMethod.SINGLE);
+  const [multiple, setMultiple] = useState<boolean>(false);
 
   useEffect(() => {
     const initialDeparture = addDays(
@@ -208,11 +203,11 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   }, [initialDepartureTime, initialDayOffset, untilTime, untilDayOffset]);
 
   useEffect(() => {
-    if (copyMethod === CopyMethod.SINGLE) {
+    if (!multiple) {
       setUntilTime(initialDepartureTime);
       setUntilDayOffset(initialDayOffset);
     }
-  }, [copyMethod, initialDepartureTime, initialDayOffset]);
+  }, [multiple, initialDepartureTime, initialDayOffset]);
 
   const save = () => {
     // if (!validationError.) {
@@ -236,18 +231,12 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   return (
     <Modal
       open={open}
-      size="large"
+      size="small"
       title="Copy Service Journey"
       onDismiss={onDismiss}
+      className="copy-dialog"
     >
-      <LeadParagraph>
-        Create one or more copies of the selected service journey. Set the
-        departure time and day offset (relative to the original) of the first
-        copy. If you select "multiple", choose an interval and a latest
-        departure time. As many copies as possible will be created within the
-        allowed parameters.
-      </LeadParagraph>
-      <InputGroup label="Name template">
+      <InputGroup label="Name template" className="copy-dialog-wide-element">
         <TextField
           value={nameTemplate}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -255,81 +244,93 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           }
         />
       </InputGroup>
-      <InputGroup
-        label="Set departure time and day offset of (first) copy"
-        className="timepicker"
-      >
-        <TimePicker
-          onChange={(date: Date | null) => {
-            const time = date?.toTimeString().split(' ')[0];
-            setNameTemplate(`${serviceJourney.name} (<% time %>)`);
-            setInitialDepartureTime(time!);
-          }}
-          prepend={<ClockIcon inline />}
-          selectedTime={toDate(initialDepartureTime)}
-        />
-        <DayOffsetDropdown
-          initialValue={initialDayOffset}
-          onChange={(value) => setInitialDayOffset(value!)}
-        />
-      </InputGroup>
-      <RadioGroup
-        label="Copy strategy"
-        name="copy_method"
-        value={copyMethod}
-        onChange={(e) => setCopyMethod(e.target.value as CopyMethod)}
-      >
-        <Radio value={CopyMethod.SINGLE}>Single</Radio>
-        <Radio value={CopyMethod.MULTIPLE}>Multiple</Radio>
-      </RadioGroup>
-      {copyMethod === CopyMethod.MULTIPLE && (
-        <>
-          <Label>Choose an interval</Label>
-          <DurationPicker
-            onChange={(newRepeatDuration) => {
-              setRepeatDuration(newRepeatDuration!);
-            }}
-            duration={repeatDuration}
-            showSeconds={false}
-            showMinutes
-            showHours
-            showDays={false}
-            showMonths={false}
-            showYears={false}
-          />
-          <InputGroup
-            label="Set latest possible departure time and day offset"
-            variant={
-              validationError.untilTimeIsNotAfterInitialTime
-                ? 'error'
-                : undefined
-            }
-            feedback={validationError.untilTimeIsNotAfterInitialTime}
-          >
-            <TimePicker
-              onChange={(date: Date | null) => {
-                const time = date?.toTimeString().split(' ')[0];
-                setUntilTime(time!);
-              }}
-              prepend={<ClockIcon inline />}
-              selectedTime={toDate(untilTime)}
-            />
+
+      <div className="copy-dialog-section">
+        <Fieldset label="Set departure time and day offset of (first) copy">
+          <div className="copy-dialog-inputs">
+            <InputGroup label="Departure time">
+              <TimePicker
+                className="copy-dialog-timepicker"
+                onChange={(date: Date | null) => {
+                  const time = date?.toTimeString().split(' ')[0];
+                  setNameTemplate(`${serviceJourney.name} (<% time %>)`);
+                  setInitialDepartureTime(time!);
+                }}
+                prepend={<ClockIcon inline />}
+                selectedTime={toDate(initialDepartureTime)}
+              />
+            </InputGroup>
             <DayOffsetDropdown
-              initialValue={untilDayOffset}
-              onChange={(value) => setUntilDayOffset(value!)}
+              initialValue={initialDayOffset}
+              onChange={(value) => setInitialDayOffset(value!)}
             />
-          </InputGroup>
+          </div>
+        </Fieldset>
+      </div>
+      <div className="copy-dialog-section">
+        <Label>Create multiple copies</Label>
+        <Switch checked={multiple} onChange={() => setMultiple(!multiple)} />
+      </div>
+      {multiple && (
+        <>
+          <div className="copy-dialog-section">
+            <Label>Choose an interval</Label>
+            <DurationPicker
+              className="copy-dialog-wide-element"
+              onChange={(newRepeatDuration) => {
+                setRepeatDuration(newRepeatDuration!);
+              }}
+              duration={repeatDuration}
+              showSeconds={false}
+              showMinutes
+              showHours
+              showDays={false}
+              showMonths={false}
+              showYears={false}
+            />
+          </div>
+          <div className="copy-dialog-section">
+            <Fieldset label="Set latest possible departure time and day offset">
+              <div className="copy-dialog-inputs">
+                <InputGroup
+                  label="Departure time "
+                  variant={
+                    validationError.untilTimeIsNotAfterInitialTime
+                      ? 'error'
+                      : undefined
+                  }
+                  feedback={validationError.untilTimeIsNotAfterInitialTime}
+                >
+                  <TimePicker
+                    className="copy-dialog-timepicker"
+                    onChange={(date: Date | null) => {
+                      const time = date?.toTimeString().split(' ')[0];
+                      setUntilTime(time!);
+                    }}
+                    prepend={<ClockIcon inline />}
+                    selectedTime={toDate(untilTime)}
+                  />
+                </InputGroup>
+                <DayOffsetDropdown
+                  initialValue={untilDayOffset}
+                  onChange={(value) => setUntilDayOffset(value!)}
+                />
+              </div>
+            </Fieldset>
+          </div>
         </>
       )}
 
-      <ButtonGroup>
-        <Button variant="negative" onClick={() => onDismiss()}>
-          Cancel
-        </Button>
-        <Button variant="success" onClick={() => save()}>
-          Save
-        </Button>
-      </ButtonGroup>
+      <div className="copy-dialog-section">
+        <ButtonGroup>
+          <Button variant="negative" onClick={() => onDismiss()}>
+            Cancel
+          </Button>
+          <Button variant="success" onClick={() => save()}>
+            Create copies
+          </Button>
+        </ButtonGroup>
+      </div>
     </Modal>
   );
 };
