@@ -542,4 +542,11 @@ export const messages: MessagesKey = {
   timeUnitPickerSecondsLabel: 'Seconds',
   timeUnitPickerResetLabel: 'Reset',
   timeUnitPickerDoneLabel: 'Done',
+  copyServiceJourneyDialogTitle: 'Copy Service Journey',
+  copyServiceJourneyDialogNameTemplateLabel: 'Name template',
+  copyServiceJourneyDialogDepartureTimeLabel: 'Departure time',
+  copyServiceJourneyDialogLatestPossibleDepartureTimelabel:
+    'Latest possible departure time',
+  copyServiceJourneyDialogCancelButtonText: 'Cancel',
+  copyServiceJourneyDialogSaveButtonText: 'Save',
 };

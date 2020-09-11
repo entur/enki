@@ -19,6 +19,8 @@ import {
 } from 'date-fns';
 import * as duration from 'duration-fns';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
+import { useSelector } from 'react-redux';
+import { selectIntl } from 'i18n';
 
 type Props = {
   open: boolean;
@@ -180,6 +182,8 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
 
   const [multiple, setMultiple] = useState<boolean>(false);
 
+  const { formatMessage } = useSelector(selectIntl);
+
   useEffect(() => {
     const initialDeparture = addDays(
       toDate(initialDepartureTime),
@@ -232,11 +236,14 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
     <Modal
       open={open}
       size="small"
-      title="Copy Service Journey"
+      title={formatMessage('copyServiceJourneyDialogTitle')}
       onDismiss={onDismiss}
       className="copy-dialog"
     >
-      <InputGroup label="Name template" className="copy-dialog-wide-element">
+      <InputGroup
+        label={formatMessage('copyServiceJourneyDialogNameTemplateLabel')}
+        className="copy-dialog-wide-element"
+      >
         <TextField
           value={nameTemplate}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -247,7 +254,10 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
 
       <div className="copy-dialog-section">
         <div className="copy-dialog-inputs">
-          <InputGroup label="Departure time" className="copy-dialog-timepicker">
+          <InputGroup
+            label={formatMessage('copyServiceJourneyDialogDepartureTimeLabel')}
+            className="copy-dialog-timepicker"
+          >
             <TimePicker
               onChange={(date: Date | null) => {
                 const time = date?.toTimeString().split(' ')[0];
@@ -290,7 +300,9 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
             <div className="copy-dialog-inputs">
               <InputGroup
                 className="copy-dialog-timepicker"
-                label="Latest possible departure time"
+                label={formatMessage(
+                  'copyServiceJourneyDialogLatestPossibleDepartureTimelabel'
+                )}
                 variant={
                   validationError.untilTimeIsNotAfterInitialTime
                     ? 'error'
@@ -319,10 +331,10 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
       <div className="copy-dialog-section">
         <ButtonGroup>
           <Button variant="negative" onClick={() => onDismiss()}>
-            Cancel
+            {formatMessage('copyServiceJourneyDialogCancelButtonText')}
           </Button>
           <Button variant="success" onClick={() => save()}>
-            Create copies
+            {formatMessage('copyServiceJourneyDialogSaveButtonText')}
           </Button>
         </ButtonGroup>
       </div>

@@ -538,4 +538,11 @@ export const messages = {
   timeUnitPickerSecondsLabel: 'Sekunder',
   timeUnitPickerResetLabel: 'Nullstill',
   timeUnitPickerDoneLabel: 'Ferdig',
+  copyServiceJourneyDialogTitle: 'Kopiér Service Journey',
+  copyServiceJourneyDialogNameTemplateLabel: 'Navnmal',
+  copyServiceJourneyDialogDepartureTimeLabel: 'Avgangstid',
+  copyServiceJourneyDialogLatestPossibleDepartureTimelabel:
+    'Siste mulige avgangstid',
+  copyServiceJourneyDialogCancelButtonText: 'Avbryt',
+  copyServiceJourneyDialogSaveButtonText: 'Lagre',
 };
