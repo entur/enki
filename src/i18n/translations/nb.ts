@@ -464,9 +464,9 @@ export const messages = {
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Antall punkter',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kode',
   passingTimesPassingTime: 'Passeringstid *',
-  passingTimesDayTimeOffset: 'Daytime offset',
-  passingTimesDayTimeOffsetTooltip:
-    'Sett offset dersom passeringstiden er én eller flere dager senere enn tilbudets avreise',
+  passingTimesDayOffset: 'Døgnskille',
+  passingTimesDayOffsetTooltip:
+    'Sett døgnskille dersom passeringstiden er én eller flere dager senere enn tilbudets avreise',
   errorAllPassingTimesMustBeFilled: 'Alle passeringstidene må være fylt ut.',
   errorDepartureAfterArrival: 'Avgangstid kan ikke være før ankomsttid.',
   errorDepartureAfterEarliest:

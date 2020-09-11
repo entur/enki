@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
-import { Dropdown } from '@entur/dropdown';
 import { TimePicker } from '@entur/datepicker';
 import { InputGroup } from '@entur/form';
-import { ClockIcon, NightIcon } from '@entur/icons';
+import { ClockIcon } from '@entur/icons';
 import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
 import { changeElementAtIndex } from 'helpers/arrays';
@@ -16,7 +15,6 @@ import PassingTimeTitle from './PassingTimeTitle';
 import './styles.scss';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import FlexibleAreasPassingTime from './FlexibleAreasPassingTime';
-import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
 
 const toDate = (date: string | undefined): Date | undefined => {

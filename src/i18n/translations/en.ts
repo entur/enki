@@ -468,9 +468,9 @@ export const messages: MessagesKey = {
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Number of points',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
   passingTimesPassingTime: 'Passing time *',
-  passingTimesDayTimeOffset: 'Daytime offset',
-  passingTimesDayTimeOffsetTooltip:
-    'Set offset if the passing time is a day or more after the departure of the service',
+  passingTimesDayOffset: 'Day offset',
+  passingTimesDayOffsetTooltip:
+    'Set day offset if the passing time is a day or more after the departure of the service',
   errorAllPassingTimesMustBeFilled: 'All passing times must be set.',
   errorDepartureAfterArrival: 'Departure time cannot be before arrival time.',
   errorDepartureAfterEarliest:
