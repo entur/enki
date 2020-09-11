@@ -545,4 +545,6 @@ export const messages = {
     'Siste mulige avgangstid',
   copyServiceJourneyDialogCancelButtonText: 'Avbryt',
   copyServiceJourneyDialogSaveButtonText: 'Lagre',
+  copyServiceJourneyDialogValidationUntilTimeBeforeInitialTimeError:
+    'Siste mulige avgangstid kan ikke være før første avgangstid.',
 };

@@ -7,7 +7,7 @@ import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
 import { changeElementAtIndex } from 'helpers/arrays';
 import { SmallAlertBox } from '@entur/alert';
-import { validateTimes } from './validateForm';
+import { validateTimes } from 'helpers/validation';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlState } from 'react-intl-redux';
 import { selectIntl } from 'i18n';

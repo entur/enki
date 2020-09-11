@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Modal } from '@entur/modal';
 import { Label } from '@entur/typography';
-import { TextField, InputGroup, Switch } from '@entur/form';
+import { TextField, InputGroup, Switch, FeedbackText } from '@entur/form';
 import { ButtonGroup, Button } from '@entur/button';
 import { TimePicker } from '@entur/datepicker';
 import { ClockIcon } from '@entur/icons';
@@ -11,16 +11,15 @@ import PassingTime from 'model/PassingTime';
 import DurationPicker from 'components/DurationPicker';
 import {
   addDays,
-  isAfter,
   differenceInMinutes,
   addMinutes,
   differenceInCalendarDays,
-  isBefore,
 } from 'date-fns';
 import * as duration from 'duration-fns';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
+import { isBefore, isAfter } from 'helpers/validation';
 
 type Props = {
   open: boolean;
@@ -103,7 +102,7 @@ const copyServiceJourney = (
 ): ServiceJourney[] => {
   const departure = addDays(toDate(departureTime), dayOffset);
 
-  if (isAfter(departure, addDays(toDate(untilTime), untilDayOffset))) {
+  if (isAfter(departureTime, dayOffset, untilTime, untilDayOffset)) {
     return newServiceJourneys;
   } else {
     const lastActualDeparture = addDays(
@@ -185,17 +184,19 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
   useEffect(() => {
-    const initialDeparture = addDays(
-      toDate(initialDepartureTime),
-      initialDayOffset
-    );
-    const until = addDays(toDate(untilTime), untilDayOffset);
-
-    if (isBefore(until, initialDeparture)) {
+    if (
+      isBefore(
+        untilTime,
+        untilDayOffset,
+        initialDepartureTime,
+        initialDayOffset
+      )
+    ) {
       setValidationError({
         ...validationError,
-        untilTimeIsNotAfterInitialTime:
-          "Until time can't be before initial time",
+        untilTimeIsNotAfterInitialTime: formatMessage(
+          'copyServiceJourneyDialogValidationUntilTimeBeforeInitialTimeError'
+        ),
       });
     } else {
       const { untilTimeIsNotAfterInitialTime, ...rest } = validationError;
@@ -214,9 +215,6 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   }, [multiple, initialDepartureTime, initialDayOffset]);
 
   const save = () => {
-    // if (!validationError.) {
-
-    // } else {
     onSave(
       copyServiceJourney(
         serviceJourney,
@@ -229,7 +227,6 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         duration.parse(repeatDuration)
       )
     );
-    // }
   };
 
   return (
@@ -303,12 +300,6 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                 label={formatMessage(
                   'copyServiceJourneyDialogLatestPossibleDepartureTimelabel'
                 )}
-                variant={
-                  validationError.untilTimeIsNotAfterInitialTime
-                    ? 'error'
-                    : undefined
-                }
-                feedback={validationError.untilTimeIsNotAfterInitialTime}
               >
                 <TimePicker
                   onChange={(date: Date | null) => {
@@ -324,6 +315,11 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                 onChange={(value) => setUntilDayOffset(value!)}
               />
             </div>
+            {validationError.untilTimeIsNotAfterInitialTime && (
+              <FeedbackText variant="error">
+                {validationError.untilTimeIsNotAfterInitialTime}
+              </FeedbackText>
+            )}
           </div>
         </>
       )}
@@ -333,7 +329,11 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           <Button variant="negative" onClick={() => onDismiss()}>
             {formatMessage('copyServiceJourneyDialogCancelButtonText')}
           </Button>
-          <Button variant="success" onClick={() => save()}>
+          <Button
+            variant="success"
+            onClick={() => save()}
+            disabled={Object.keys(validationError).length > 0}
+          >
             {formatMessage('copyServiceJourneyDialogSaveButtonText')}
           </Button>
         </ButtonGroup>

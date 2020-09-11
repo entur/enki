@@ -137,7 +137,7 @@ export const validateServiceJourney = (sj: ServiceJourney): boolean => {
   return !isBlankName && isValid && validDayTimes;
 };
 
-const isBefore = (
+export const isBefore = (
   passingTime: string | undefined,
   dayOffset: number | undefined,
   nextPassingTime: string | undefined,
@@ -151,6 +151,22 @@ const isBefore = (
   );
 
   return date < nextDate;
+};
+
+export const isAfter = (
+  passingTime: string | undefined,
+  dayOffset: number | undefined,
+  nextPassingTime: string | undefined,
+  nextDayOffset: number | undefined
+) => {
+  if (!passingTime || !nextPassingTime) return false;
+  const date = moment(passingTime, 'HH:mm:ss').add(dayOffset ?? 0, 'days');
+  const nextDate = moment(nextPassingTime, 'HH:mm:ss').add(
+    nextDayOffset ?? 0,
+    'days'
+  );
+
+  return date > nextDate;
 };
 
 const hasAtleastOneFieldSet = (passingTime: PassingTime) => {

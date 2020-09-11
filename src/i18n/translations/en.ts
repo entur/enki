@@ -549,4 +549,6 @@ export const messages: MessagesKey = {
     'Latest possible departure time',
   copyServiceJourneyDialogCancelButtonText: 'Cancel',
   copyServiceJourneyDialogSaveButtonText: 'Save',
+  copyServiceJourneyDialogValidationUntilTimeBeforeInitialTimeError:
+    "Last possible departure time can't be before initial departure time",
 };
