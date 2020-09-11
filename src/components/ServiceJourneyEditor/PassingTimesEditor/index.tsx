@@ -3,7 +3,7 @@ import { connect, useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TimePicker } from '@entur/datepicker';
 import { InputGroup } from '@entur/form';
-import { ClockIcon } from '@entur/icons';
+import { ClockIcon, NightIcon } from '@entur/icons';
 import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
 import { changeElementAtIndex } from 'helpers/arrays';
@@ -17,6 +17,7 @@ import './styles.scss';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import FlexibleAreasPassingTime from './FlexibleAreasPassingTime';
 import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
+import DayOffsetDropdown from 'components/DayOffsetDropdown';
 
 const toDate = (date: string | undefined): Date | undefined => {
   if (!date) return;
@@ -56,21 +57,16 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const { formatMessage } = useSelector(selectIntl);
 
   const getDayOffsetDropdown = (passingTime: PassingTime, index: number) => (
-    <Dropdown
-      initialSelectedItem={getEnumInit(
-        passingTime.departureDayOffset?.toString() ?? '0'
-      )}
-      label={formatMessage('passingTimesDayTimeOffset')}
-      labelTooltip={formatMessage('passingTimesDayTimeOffsetTooltip')}
-      items={mapEnumToItems(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])}
-      onChange={(e) =>
+    <DayOffsetDropdown
+      initialValue={passingTime.departureDayOffset}
+      onChange={(value) =>
         onChange(
           changeElementAtIndex(
             passingTimes,
             {
               ...passingTimes[index],
-              departureDayOffset: e?.value as number | undefined,
-              arrivalDayOffset: e?.value as number | undefined,
+              departureDayOffset: value,
+              arrivalDayOffset: value,
             },
             index
           )

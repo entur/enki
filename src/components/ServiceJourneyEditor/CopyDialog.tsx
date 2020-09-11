@@ -18,6 +18,7 @@ import {
   isBefore,
 } from 'date-fns';
 import * as duration from 'duration-fns';
+import DayOffsetDropdown from 'components/DayOffsetDropdown';
 
 type Props = {
   open: boolean;
@@ -267,12 +268,9 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           prepend={<ClockIcon inline />}
           selectedTime={toDate(initialDepartureTime)}
         />
-        <TextField
-          type="number"
-          value={initialDayOffset}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setInitialDayOffset(parseInt(e.target.value))
-          }
+        <DayOffsetDropdown
+          initialValue={initialDayOffset}
+          onChange={(value) => setInitialDayOffset(value!)}
         />
       </InputGroup>
       <RadioGroup
@@ -316,12 +314,9 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
               prepend={<ClockIcon inline />}
               selectedTime={toDate(untilTime)}
             />
-            <TextField
-              type="number"
-              value={untilDayOffset}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setUntilDayOffset(parseInt(e.target.value))
-              }
+            <DayOffsetDropdown
+              initialValue={untilDayOffset}
+              onChange={(value) => setUntilDayOffset(value!)}
             />
           </InputGroup>
         </>
