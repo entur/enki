@@ -544,7 +544,7 @@ export const messages = {
   copyServiceJourneyDialogLatestPossibleDepartureTimelabel:
     'Siste mulige avgangstid',
   copyServiceJourneyDialogCancelButtonText: 'Avbryt',
-  copyServiceJourneyDialogSaveButtonText: 'Lagre',
+  copyServiceJourneyDialogSaveButtonText: 'Lag kopier',
   copyServiceJourneyDialogValidationUntilTimeBeforeInitialTimeError:
     'Siste mulige avgangstid kan ikke være før første avgangstid.',
   copyServiceJourneyDialogMultipleSwitchLabel: 'Lag flere kopier',
