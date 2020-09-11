@@ -547,4 +547,6 @@ export const messages = {
   copyServiceJourneyDialogSaveButtonText: 'Lagre',
   copyServiceJourneyDialogValidationUntilTimeBeforeInitialTimeError:
     'Siste mulige avgangstid kan ikke være før første avgangstid.',
+  copyServiceJourneyDialogMultipleSwitchLabel: 'Lag flere kopier',
+  copyServiceJourneyDialogIntervalLabel: 'Velg intervall',
 };

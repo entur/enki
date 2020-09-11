@@ -551,4 +551,6 @@ export const messages: MessagesKey = {
   copyServiceJourneyDialogSaveButtonText: 'Save',
   copyServiceJourneyDialogValidationUntilTimeBeforeInitialTimeError:
     "Last possible departure time can't be before initial departure time",
+  copyServiceJourneyDialogMultipleSwitchLabel: 'Create multiple copies',
+  copyServiceJourneyDialogIntervalLabel: 'Choose an interval',
 };

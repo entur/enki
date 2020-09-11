@@ -272,13 +272,17 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         </div>
       </div>
       <div className="copy-dialog-section">
-        <Label>Create multiple copies</Label>
+        <Label>
+          {formatMessage('copyServiceJourneyDialogMultipleSwitchLabel')}
+        </Label>
         <Switch checked={multiple} onChange={() => setMultiple(!multiple)} />
       </div>
       {multiple && (
         <>
           <div className="copy-dialog-section">
-            <Label>Choose an interval</Label>
+            <Label>
+              {formatMessage('copyServiceJourneyDialogIntervalLabel')}
+            </Label>
             <DurationPicker
               className="copy-dialog-wide-element"
               onChange={(newRepeatDuration) => {
