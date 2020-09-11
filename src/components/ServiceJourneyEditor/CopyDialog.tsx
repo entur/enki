@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Modal } from '@entur/modal';
 import { Label } from '@entur/typography';
-import { TextField, InputGroup, Switch, Fieldset } from '@entur/form';
+import { TextField, InputGroup, Switch } from '@entur/form';
 import { ButtonGroup, Button } from '@entur/button';
 import { TimePicker } from '@entur/datepicker';
 import { ClockIcon } from '@entur/icons';
