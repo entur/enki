@@ -246,26 +246,23 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
       </InputGroup>
 
       <div className="copy-dialog-section">
-        <Fieldset label="Set departure time and day offset of (first) copy">
-          <div className="copy-dialog-inputs">
-            <InputGroup label="Departure time">
-              <TimePicker
-                className="copy-dialog-timepicker"
-                onChange={(date: Date | null) => {
-                  const time = date?.toTimeString().split(' ')[0];
-                  setNameTemplate(`${serviceJourney.name} (<% time %>)`);
-                  setInitialDepartureTime(time!);
-                }}
-                prepend={<ClockIcon inline />}
-                selectedTime={toDate(initialDepartureTime)}
-              />
-            </InputGroup>
-            <DayOffsetDropdown
-              initialValue={initialDayOffset}
-              onChange={(value) => setInitialDayOffset(value!)}
+        <div className="copy-dialog-inputs">
+          <InputGroup label="Departure time" className="copy-dialog-timepicker">
+            <TimePicker
+              onChange={(date: Date | null) => {
+                const time = date?.toTimeString().split(' ')[0];
+                setNameTemplate(`${serviceJourney.name} (<% time %>)`);
+                setInitialDepartureTime(time!);
+              }}
+              prepend={<ClockIcon inline />}
+              selectedTime={toDate(initialDepartureTime)}
             />
-          </div>
-        </Fieldset>
+          </InputGroup>
+          <DayOffsetDropdown
+            initialValue={initialDayOffset}
+            onChange={(value) => setInitialDayOffset(value!)}
+          />
+        </div>
       </div>
       <div className="copy-dialog-section">
         <Label>Create multiple copies</Label>
@@ -290,33 +287,31 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
             />
           </div>
           <div className="copy-dialog-section">
-            <Fieldset label="Set latest possible departure time and day offset">
-              <div className="copy-dialog-inputs">
-                <InputGroup
-                  label="Departure time "
-                  variant={
-                    validationError.untilTimeIsNotAfterInitialTime
-                      ? 'error'
-                      : undefined
-                  }
-                  feedback={validationError.untilTimeIsNotAfterInitialTime}
-                >
-                  <TimePicker
-                    className="copy-dialog-timepicker"
-                    onChange={(date: Date | null) => {
-                      const time = date?.toTimeString().split(' ')[0];
-                      setUntilTime(time!);
-                    }}
-                    prepend={<ClockIcon inline />}
-                    selectedTime={toDate(untilTime)}
-                  />
-                </InputGroup>
-                <DayOffsetDropdown
-                  initialValue={untilDayOffset}
-                  onChange={(value) => setUntilDayOffset(value!)}
+            <div className="copy-dialog-inputs">
+              <InputGroup
+                className="copy-dialog-timepicker"
+                label="Latest possible departure time"
+                variant={
+                  validationError.untilTimeIsNotAfterInitialTime
+                    ? 'error'
+                    : undefined
+                }
+                feedback={validationError.untilTimeIsNotAfterInitialTime}
+              >
+                <TimePicker
+                  onChange={(date: Date | null) => {
+                    const time = date?.toTimeString().split(' ')[0];
+                    setUntilTime(time!);
+                  }}
+                  prepend={<ClockIcon inline />}
+                  selectedTime={toDate(untilTime)}
                 />
-              </div>
-            </Fieldset>
+              </InputGroup>
+              <DayOffsetDropdown
+                initialValue={untilDayOffset}
+                onChange={(value) => setUntilDayOffset(value!)}
+              />
+            </div>
           </div>
         </>
       )}
