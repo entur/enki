@@ -468,9 +468,9 @@ export const messages: MessagesKey = {
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Number of points',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
   passingTimesPassingTime: 'Passing time *',
-  passingTimesDayTimeOffset: 'Daytime offset',
-  passingTimesDayTimeOffsetTooltip:
-    'Set offset if the passing time is a day or more after the departure of the service',
+  passingTimesDayOffset: 'Day offset',
+  passingTimesDayOffsetTooltip:
+    'Set day offset if the passing time is a day or more after the departure of the service',
   errorAllPassingTimesMustBeFilled: 'All passing times must be set.',
   errorDepartureAfterArrival: 'Departure time cannot be before arrival time.',
   errorDepartureAfterEarliest:
@@ -542,4 +542,15 @@ export const messages: MessagesKey = {
   timeUnitPickerSecondsLabel: 'Seconds',
   timeUnitPickerResetLabel: 'Reset',
   timeUnitPickerDoneLabel: 'Done',
+  copyServiceJourneyDialogTitle: 'Copy Service Journey',
+  copyServiceJourneyDialogNameTemplateLabel: 'Name template',
+  copyServiceJourneyDialogDepartureTimeLabel: 'Departure time',
+  copyServiceJourneyDialogLatestPossibleDepartureTimelabel:
+    'Latest possible departure time',
+  copyServiceJourneyDialogCancelButtonText: 'Cancel',
+  copyServiceJourneyDialogSaveButtonText: 'Create copies',
+  copyServiceJourneyDialogValidationUntilTimeBeforeInitialTimeError:
+    "Last possible departure time can't be before initial departure time",
+  copyServiceJourneyDialogMultipleSwitchLabel: 'Create multiple copies',
+  copyServiceJourneyDialogIntervalLabel: 'Choose an interval',
 };

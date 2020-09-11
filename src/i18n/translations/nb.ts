@@ -464,9 +464,9 @@ export const messages = {
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Antall punkter',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kode',
   passingTimesPassingTime: 'Passeringstid *',
-  passingTimesDayTimeOffset: 'Daytime offset',
-  passingTimesDayTimeOffsetTooltip:
-    'Sett offset dersom passeringstiden er én eller flere dager senere enn tilbudets avreise',
+  passingTimesDayOffset: 'Døgnskille',
+  passingTimesDayOffsetTooltip:
+    'Sett døgnskille dersom passeringstiden er én eller flere dager senere enn tilbudets avreise',
   errorAllPassingTimesMustBeFilled: 'Alle passeringstidene må være fylt ut.',
   errorDepartureAfterArrival: 'Avgangstid kan ikke være før ankomsttid.',
   errorDepartureAfterEarliest:
@@ -538,4 +538,15 @@ export const messages = {
   timeUnitPickerSecondsLabel: 'Sekunder',
   timeUnitPickerResetLabel: 'Nullstill',
   timeUnitPickerDoneLabel: 'Ferdig',
+  copyServiceJourneyDialogTitle: 'Kopiér Service Journey',
+  copyServiceJourneyDialogNameTemplateLabel: 'Navnmal',
+  copyServiceJourneyDialogDepartureTimeLabel: 'Avgangstid',
+  copyServiceJourneyDialogLatestPossibleDepartureTimelabel:
+    'Siste mulige avgangstid',
+  copyServiceJourneyDialogCancelButtonText: 'Avbryt',
+  copyServiceJourneyDialogSaveButtonText: 'Lag kopier',
+  copyServiceJourneyDialogValidationUntilTimeBeforeInitialTimeError:
+    'Siste mulige avgangstid kan ikke være før første avgangstid.',
+  copyServiceJourneyDialogMultipleSwitchLabel: 'Lag flere kopier',
+  copyServiceJourneyDialogIntervalLabel: 'Velg intervall',
 };

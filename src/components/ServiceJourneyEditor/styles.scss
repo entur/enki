@@ -61,3 +61,23 @@
     margin-top: 4rem;
   }
 }
+
+.copy-dialog {
+  .copy-dialog-section {
+    margin-top: 1.5rem;
+  }
+
+  .copy-dialog-inputs {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .copy-dialog-timepicker {
+    width: 150px;
+    margin-right: 1rem;
+  }
+
+  .copy-dialog-wide-element {
+    max-width: 290px;
+  }
+}
