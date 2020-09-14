@@ -278,7 +278,7 @@ const ServiceJourneyEditor = (props: Props) => {
         )}
         {copyServiceJourney && (
           <CopyActionChip
-            title="Copy"
+            title={formatMessage('editorCopyButtonText')}
             onClick={() => setShowCopyDialog(true)}
           />
         )}
