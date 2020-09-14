@@ -37,7 +37,7 @@
     "@types/jest": "25.1.4",
     "@types/node": "13.9.4",
     "@types/ramda": "0.26.44",
-    "@types/react": "16.9.25",
+    "@types/react": "16.9.49",
     "@types/react-dom": "16.9.5",
     "@types/react-intl-redux": "0.1.14",
     "@types/react-leaflet": "2.5.1",
