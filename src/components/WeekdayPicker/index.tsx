@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputGroup } from '@entur/form';
+import { FeedbackText } from '@entur/form';
 import { FilterChip } from '@entur/chip';
 import { DAY_OF_WEEK } from 'model/enums';
 import usePristine from 'hooks/usePristine';
@@ -26,16 +26,14 @@ export const toggleDay = (
 const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const weekdayPristine = usePristine(days, spoilPristine);
+  const { feedback, variant } = getErrorFeedback(
+    formatMessage('weekdaysError'),
+    days.length !== 0,
+    weekdayPristine
+  );
 
   return (
-    <InputGroup
-      className="weekday-picker"
-      {...getErrorFeedback(
-        formatMessage('weekdaysError'),
-        days.length !== 0,
-        weekdayPristine
-      )}
-    >
+    <div className="weekday-picker">
       <div className="checkboxes">
         <FilterChip
           checked={days.includes(DAY_OF_WEEK.MONDAY)}
@@ -87,7 +85,8 @@ const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
           {formatMessage('weekdaysSunday')}
         </FilterChip>
       </div>
-    </InputGroup>
+      <FeedbackText variant={variant!}>{feedback}</FeedbackText>
+    </div>
   );
 };
 
