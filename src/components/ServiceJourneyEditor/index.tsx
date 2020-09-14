@@ -106,7 +106,7 @@ const ServiceJourneyEditor = (props: Props) => {
       <div className="service-journey-editor-form">
         <RequiredInputMarker />
         <div className="input-group">
-          <div className="input-fields">
+          <div className="service-journey-inputs">
             <InputGroup
               className="form-section"
               label={formatMessage('generalNameLabel')}
@@ -137,19 +137,6 @@ const ServiceJourneyEditor = (props: Props) => {
             </InputGroup>
 
             <InputGroup
-              label={formatMessage('generalPrivateCode')}
-              labelTooltip={formatMessage('generalPrivateCodeTooltip')}
-              className="form-section"
-            >
-              <TextField
-                defaultValue={privateCode}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('privateCode', e.target.value)
-                }
-              />
-            </InputGroup>
-
-            <InputGroup
               label={formatMessage('generalPublicCode')}
               labelTooltip={formatMessage('generalPublicCodeTooltip')}
               className="form-section"
@@ -158,6 +145,19 @@ const ServiceJourneyEditor = (props: Props) => {
                 defaultValue={publicCode}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   onFieldChange('publicCode', e.target.value)
+                }
+              />
+            </InputGroup>
+
+            <InputGroup
+              label={formatMessage('generalPrivateCode')}
+              labelTooltip={formatMessage('generalPrivateCodeTooltip')}
+              className="form-section"
+            >
+              <TextField
+                defaultValue={privateCode}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('privateCode', e.target.value)
                 }
               />
             </InputGroup>
