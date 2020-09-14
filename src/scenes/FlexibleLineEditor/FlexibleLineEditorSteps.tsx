@@ -74,13 +74,18 @@ const FlexibleLineEditor = (props: Props) => {
               })
             }
           >
-            {(sj, stopPoints, handleUpdate, handleDelete) => (
+            {(sj, stopPoints, handleUpdate, handleDelete, handleCopy) => (
               <ServiceJourneyEditor
                 serviceJourney={sj}
                 stopPoints={stopPoints}
                 onChange={handleUpdate}
                 spoilPristine={props.spoilPristine}
                 deleteServiceJourney={handleDelete}
+                copyServiceJourney={
+                  props.flexibleLine.flexibleLineType === 'fixed'
+                    ? handleCopy
+                    : undefined
+                }
                 flexibleLineType={props.flexibleLine.flexibleLineType}
               />
             )}

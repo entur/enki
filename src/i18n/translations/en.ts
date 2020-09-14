@@ -210,6 +210,7 @@ export const messages: MessagesKey = {
   editorBookingTabLabel: 'Booking',
   editorCreateLineHeader: 'Create line',
   editorDeleteButtonText: 'Delete',
+  editorCopyButtonText: 'Copy',
   editorDeleteConfirmationDialogCancelButtonText: 'No',
   editorDeleteConfirmationDialogConfirmButtonText: 'Yes',
   editorDeleteLineConfirmationDialogMessage:

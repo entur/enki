@@ -205,6 +205,7 @@ export const messages = {
   editorBookingTabLabel: 'Bestilling',
   editorCreateLineHeader: 'Opprett linje',
   editorDeleteButtonText: 'Slett',
+  editorCopyButtonText: 'Kopiér',
   editorDeleteConfirmationDialogCancelButtonText: 'Nei',
   editorDeleteConfirmationDialogConfirmButtonText: 'Ja',
   editorDeleteLineConfirmationDialogMessage:

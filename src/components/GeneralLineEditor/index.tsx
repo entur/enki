@@ -124,22 +124,6 @@ export default ({
         </InputGroup>
 
         <InputGroup
-          label={formatMessage('generalPrivateCodeFormGroupTitle')}
-          labelTooltip={formatMessage('generalPrivateCodeInputLabelTooltip')}
-        >
-          <TextField
-            type="text"
-            value={flexibleLine.privateCode ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              flexibleLineChange({
-                ...flexibleLine,
-                privateCode: e.target.value,
-              })
-            }
-          />
-        </InputGroup>
-
-        <InputGroup
           label={formatMessage('generalPublicCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPublicCodeInputLabelTooltip')}
           {...getErrorFeedback(
@@ -155,6 +139,22 @@ export default ({
               flexibleLineChange({
                 ...flexibleLine,
                 publicCode: e.target.value,
+              })
+            }
+          />
+        </InputGroup>
+
+        <InputGroup
+          label={formatMessage('generalPrivateCodeFormGroupTitle')}
+          labelTooltip={formatMessage('generalPrivateCodeInputLabelTooltip')}
+        >
+          <TextField
+            type="text"
+            value={flexibleLine.privateCode ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              flexibleLineChange({
+                ...flexibleLine,
+                privateCode: e.target.value,
               })
             }
           />

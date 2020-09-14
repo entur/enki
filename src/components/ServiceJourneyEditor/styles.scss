@@ -4,21 +4,20 @@
   display: flex;
   justify-content: space-between;
 
-  .service-journey-editor-form {
-    display: block;
+  .service-journey-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    > div {
+      width: 48%;
+      min-width: 20rem;
+      margin-top: $space-large;
+    }
   }
 
-  .general-tab,
-  .booking-tab {
-    width: 500px;
-    max-width: 500px;
-
-    input:not(.entur-radio-checkbox__input),
-    textarea,
-    select {
-      width: 100%;
-      margin-bottom: 30px;
-    }
+  .service-journey-editor-form {
+    display: block;
   }
 
   .day-type-section {
