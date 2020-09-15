@@ -7,10 +7,12 @@ type Props = {
   onClick: () => void;
   title: string;
   thin?: boolean;
+  className?: string;
 };
 
 const CopyButton = (props: Props) => (
   <ActionChip
+    className={props.className}
     onClick={(event: Event) => {
       props.onClick();
       event.stopPropagation();

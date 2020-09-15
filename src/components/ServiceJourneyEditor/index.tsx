@@ -269,15 +269,17 @@ const ServiceJourneyEditor = (props: Props) => {
           />
         </section>
       </div>
-      <div style={{ display: 'flex' }}>
+      <div className="service-journey-editor-action-chips">
         {deleteServiceJourney && (
           <DeleteActionChip
+            className="service-journey-editor-action-chip"
             onClick={() => setShowDeleteDialog(true)}
             title={formatMessage('editorDeleteButtonText')}
           />
         )}
         {copyServiceJourney && (
           <CopyActionChip
+            className="service-journey-editor-action-chip"
             title={formatMessage('editorCopyButtonText')}
             onClick={() => setShowCopyDialog(true)}
           />
