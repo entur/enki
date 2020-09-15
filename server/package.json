@@ -17,7 +17,7 @@
     "request": "2.88.2",
     "rsa-pem-from-mod-exp": "0.8.4",
     "url": "0.11.0",
-    "uuid": "3.3.2"
+    "uuid": "3.4.0"
   },
   "devDependencies": {
     "eslint": "4.19.1"
