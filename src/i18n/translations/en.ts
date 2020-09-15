@@ -66,30 +66,6 @@ export const messages: MessagesKey = {
   redirectYes: 'Yes, leave this page',
   redirectNo: 'No, stay on this page',
   appTitle: 'Nplan',
-  homeHeader: 'Entur Nplan',
-  homeShortcut: 'Shortcuts',
-  homeCardsGetStarted: 'Get started',
-  homeCardsGetStartedDescription:
-    'Click here if you are creating a line for the first time.',
-  homeCardsLinesDescription: 'See the overview of lines, or create new ones.',
-  homeCardsNetworkDescription:
-    'See the overview of networks, or create new ones.',
-  homeCardsStopPlacesDescription:
-    'See the overview of flexible stop places, or create new ones.',
-  getStartedRedirectButton: 'Get started',
-  getStartedPlatformIDText:
-    "You can go directly to 'Flexible lines' if you wish to use a quay id from the National stop place registry.",
-  getStartedLeadParagraph:
-    'Before you can create a new line, you have to create a stop place or an area for the service. Follow the steps provided below.',
-  headerParagraph:
-    'Welcome to Entur Nplan. This application is a tool to help organisations make their services visible through our channels.',
-  item1pre: 'Start by creating a stop place or area under ',
-  item1post: ', in the menu to the left.',
-  item2pre: 'Afterwards move on to ',
-  item2post: ' in the menu to the left, to create a new line.',
-  item3pre:
-    'For the line to be visible in our travel searches, one must export it in the ',
-  item3post: ' section which can be found in the menu.',
   exportsCreateExportButtonLabel: 'Create export',
   creatorDryRunFormLabel: 'Dry run',
   creatorDryRunFormLabelTooltip:
