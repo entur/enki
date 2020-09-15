@@ -74,6 +74,7 @@ aliases:
         -Dsonar.host.url=https://sonarcloud.io \
         -Dsonar.login=${ENTUR_SONAR_PASSWORD} \
         -Dsonar.sources=src \
+        -Dsonar.cpd.exclusions=src/i18n/translations/*.ts \
         -Dsonar.tests=src \
         -Dsonar.test.inclusions=src/**/*.spec.ts,src/**/*.spec.tsx,src/**/*.test.ts,src/**/*.test.tsx \
         -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
