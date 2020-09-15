@@ -76,7 +76,7 @@
     "redux": "3.7.2",
     "redux-devtools-extension": "2.13.8",
     "redux-logger": "3.0.6",
-    "redux-sentry-middleware": "0.1.6",
+    "redux-sentry-middleware": "0.1.8",
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
     "source-map-explorer": "2.4.1",
