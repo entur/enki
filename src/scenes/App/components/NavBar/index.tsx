@@ -5,7 +5,11 @@ import UserPreference from 'scenes/App/components/NavBar/UserPreference';
 import { Contrast } from '@entur/layout';
 import { RouteComponentProps } from 'react-router';
 import { AppIntlState, selectIntl } from 'i18n';
-import { SideNavigation, SideNavigationItem } from '@entur/menu';
+import {
+  SideNavigation,
+  SideNavigationItem,
+  SideNavigationGroup,
+} from '@entur/menu';
 import { GlobalState } from 'reducers';
 import logo from 'static/img/logo.png';
 import './styles.scss';
@@ -77,33 +81,37 @@ const NavBar = () => {
         <UserPreference />
 
         <NavBarItem
-          text={formatMessage('navBarIntroduction')}
-          path="/get-started"
-          setRedirect={setRedirect}
-        />
-        <NavBarItem
           text={formatMessage('navBarLinesMenuItemLabel')}
           path="/lines"
           setRedirect={setRedirect}
         />
+
+        <SideNavigationGroup
+          defaultOpen
+          title={formatMessage('navBarFlexibleOffersSubMenuHeaderLabel')}
+        >
+          <SideNavigation>
+            <NavBarItem
+              text={formatMessage('navBarFlexibleLinesMenuItemLabel')}
+              path="/flexible-lines"
+              setRedirect={setRedirect}
+            />
+            <NavBarItem
+              text={formatMessage('navBarStopPlacesMenuItemLabel')}
+              path="/stop-places"
+              setRedirect={setRedirect}
+            />
+          </SideNavigation>
+        </SideNavigationGroup>
+
         <NavBarItem
-          text={formatMessage('navBarFlexibleLinesMenuItemLabel')}
-          path="/flexible-lines"
-          setRedirect={setRedirect}
-        />
-        <NavBarItem
-          text={formatMessage('navBarStopPlacesMenuItemLabel')}
-          path="/stop-places"
+          text={formatMessage('navBarNetworksMenuItemLabel')}
+          path="/networks"
           setRedirect={setRedirect}
         />
         <NavBarItem
           text={formatMessage('navBarExportsMenuItemLabel')}
           path="/exports"
-          setRedirect={setRedirect}
-        />
-        <NavBarItem
-          text={formatMessage('navBarNetworksMenuItemLabel')}
-          path="/networks"
           setRedirect={setRedirect}
         />
       </SideNavigation>

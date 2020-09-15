@@ -48,6 +48,7 @@ export const messages = {
   navBarIntroduction: 'Slik kommer du i gang',
   navBarExportsMenuItemLabel: 'Eksporter',
   navBarLinesMenuItemLabel: 'Linjer',
+  navBarFlexibleOffersSubMenuHeaderLabel: 'Fleksible tilbud',
   navBarFlexibleLinesMenuItemLabel: 'Fleksible linjer',
   navBarNetworksMenuItemLabel: 'Nettverk',
   navBarRootLinkLogoAltText: 'Logo',
@@ -65,29 +66,6 @@ export const messages = {
   redirectYes: 'Ja, forlat siden',
   redirectNo: 'Nei, bli på siden',
   appTitle: 'Nplan',
-  homeHeader: 'Entur Nplan',
-  homeShortcut: 'Snarveier',
-  homeCardsGetStarted: 'Kom i gang',
-  homeCardsGetStartedDescription:
-    'Klikk her hvis du oppretter en linje for første gang.',
-  homeCardsLinesDescription: 'Se oversikt over linjer eller legg til nye.',
-  homeCardsNetworkDescription: 'Se oversikt over nettverk eller legg til nye.',
-  homeCardsStopPlacesDescription:
-    'Se oversikt over fleksible stoppesteder eller legg til nye.',
-  getStartedRedirectButton: 'Kom i gang',
-  getStartedPlatformIDText:
-    "Ønsker du å benytte Plattform-ID fra nasjonalt stoppestedsregister kan du gå direkte til 'Linjer'.",
-  getStartedLeadParagraph:
-    'Før du oppretter en ny linje må du legge til stoppesteder eller område for tilbudet. Følg stegene beskrevet under.',
-  headerParagraph:
-    'Velkommen til Entur Nplan, et verktøy som lar aktører opprette linjetilbud.',
-  item1pre: 'Start med å opprette stoppested eller område under ',
-  item1post: ' i menyen til venstre.',
-  item2pre: 'Klikk deretter på ',
-  item2post: ' i menyen til venstre for å opprette en ny linje.',
-  item3pre:
-    'For at linjen skal bli tilgjengelig i reisesøk må det opprettes en eksport under ',
-  item3post: ' i venstremenyen.',
   exportsCreateExportButtonLabel: 'Opprett eksport',
   defaultOption: 'Vennligst velg',
   creatorDryRunFormLabel: 'Tørrkjøring',
