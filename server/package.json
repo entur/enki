@@ -10,7 +10,7 @@
     "express-http-proxy": "1.6.2",
     "helmet": "3.13.0",
     "js-base64": "2.6.4",
-    "jsonwebtoken": "8.3.0",
+    "jsonwebtoken": "8.5.1",
     "node-fetch": "^2.2.0",
     "path": "0.12.7",
     "prom-client": "11.1.3",
