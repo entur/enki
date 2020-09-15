@@ -54,7 +54,7 @@
     "file-saver": "2.0.2",
     "graphql": "15.3.0",
     "graphql-request": "1.8.2",
-    "helmet": "3.22.0",
+    "helmet": "3.23.3",
     "jest-sonar-reporter": "2.0.0",
     "keycloak-js": "4.8.3",
     "leaflet": "1.6.0",
