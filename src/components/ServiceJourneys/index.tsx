@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useRef } from 'react';
+import React, { ReactElement, useState, useRef, Fragment } from 'react';
 import ServiceJourney from 'model/ServiceJourney';
 import { Modal } from '@entur/modal';
 import { selectIntl } from 'i18n';
@@ -18,6 +18,7 @@ import './styles.scss';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern from 'model/JourneyPattern';
 import { Dropdown } from '@entur/dropdown';
+import { sortByDepartureTime } from 'helpers/serviceJourneys';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
@@ -205,42 +206,44 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               copyServiceJourney(journeyPatterns[0].serviceJourneys, 0)
             )
           : journeyPatterns.map((jp, jpIndex) => (
-              <>
+              <Fragment key={keys[jpIndex]}>
                 {journeyPatterns.length > 1 && <Heading3>{jp.name}</Heading3>}
                 <Accordion>
-                  {jp.serviceJourneys.map((sj, sjIndex) => (
-                    <AccordionItem
-                      key={keys[jpIndex] + sjIndex}
-                      title={sj.name}
-                      defaultOpen={
-                        jpIndex === modalSelectedJourneyPatternIndex &&
-                        (!sj.id || sjIndex === jp.serviceJourneys.length - 1)
-                      }
-                    >
-                      {children(
-                        sj,
-                        journeyPatterns[jpIndex].pointsInSequence,
-                        updateServiceJourney(
-                          sjIndex,
-                          journeyPatterns[jpIndex].serviceJourneys,
-                          jpIndex
-                        ),
-                        jp.serviceJourneys.length > 1
-                          ? deleteServiceJourney(
-                              sjIndex,
-                              journeyPatterns[jpIndex].serviceJourneys,
-                              jpIndex
-                            )
-                          : undefined,
-                        copyServiceJourney(
-                          journeyPatterns[jpIndex].serviceJourneys,
-                          jpIndex
-                        )
-                      )}
-                    </AccordionItem>
-                  ))}
+                  {sortByDepartureTime(jp.serviceJourneys).map(
+                    (sj, sjIndex) => (
+                      <AccordionItem
+                        key={keys[jpIndex] + sjIndex}
+                        title={sj.name}
+                        defaultOpen={
+                          jpIndex === modalSelectedJourneyPatternIndex &&
+                          (!sj.id || sjIndex === jp.serviceJourneys.length - 1)
+                        }
+                      >
+                        {children(
+                          sj,
+                          journeyPatterns[jpIndex].pointsInSequence,
+                          updateServiceJourney(
+                            sjIndex,
+                            journeyPatterns[jpIndex].serviceJourneys,
+                            jpIndex
+                          ),
+                          jp.serviceJourneys.length > 1
+                            ? deleteServiceJourney(
+                                sjIndex,
+                                journeyPatterns[jpIndex].serviceJourneys,
+                                jpIndex
+                              )
+                            : undefined,
+                          copyServiceJourney(
+                            journeyPatterns[jpIndex].serviceJourneys,
+                            jpIndex
+                          )
+                        )}
+                      </AccordionItem>
+                    )
+                  )}
                 </Accordion>
-              </>
+              </Fragment>
             ))}
         <AddButton
           onClick={() => setShowModal(true)}
