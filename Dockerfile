@@ -1,4 +1,4 @@
-FROM node:9.6.1-alpine
+FROM node:9.11.2-alpine
 
 # Server
 ENV CONTENT_BASE=/app/ui
