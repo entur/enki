@@ -46,7 +46,7 @@ export default () => {
     GlobalState
   >((s) => s);
 
-  const { line, setLine, loading, error, networks } = useLine();
+  const { line, setLine, refetchLine, loading, error, networks } = useLine();
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
@@ -59,36 +59,36 @@ export default () => {
   };
 
   const onSave = useCallback(async () => {
-    if (validLine(line!)) {
-      setNextClicked(true);
-      setSaving(true);
+    setNextClicked(true);
+    setSaving(true);
 
-      try {
-        await mutateLine({
-          variables: { input: lineToPayload(line!) },
-        });
+    try {
+      await mutateLine({
+        variables: { input: lineToPayload(line!) },
+      });
 
-        // TODO: can this be handled by local state?
-        dispatch(setSavedChanges(true));
+      await refetchLine();
 
-        dispatch(
-          showSuccessNotification(
-            formatMessage('saveLineSuccessHeader'),
-            formatMessage('saveLineSuccessMessage'),
-            false
-          )
-        );
-        if (isBlank(match?.params.id)) {
-          history.push('/lines');
-        }
-      } catch (_) {
-        // noop just catching to avoid unhandled rejection
-        // error message is handled upstream
-      } finally {
-        setSaving(false);
+      // TODO: can this be handled by local state?
+      dispatch(setSavedChanges(true));
+
+      dispatch(
+        showSuccessNotification(
+          formatMessage('saveLineSuccessHeader'),
+          formatMessage('saveLineSuccessMessage'),
+          false
+        )
+      );
+      if (isBlank(match?.params.id)) {
+        history.push('/lines');
       }
-      setNextClicked(false);
+    } catch (_) {
+      // noop just catching to avoid unhandled rejection
+      // error message is handled upstream
+    } finally {
+      setSaving(false);
     }
+    setNextClicked(false);
 
     // eslint-disable-next-line
   }, [line]);
@@ -129,6 +129,7 @@ export default () => {
           steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
           isValidStepIndex={(i: number) => getMaxAllowedStepIndex(line!) >= i}
           currentStepIsValid={(i) => currentStepIsValid(i, line!)}
+          isLineValid={line ? validLine(line) : false}
           setNextClicked={setNextClicked}
           isEdit={!isBlank(match?.params.id)}
           spoilPristine={nextClicked}

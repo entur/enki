@@ -34,6 +34,9 @@ export const useUttuErrors = (
 type UseLineReturnType = {
   line: Line | undefined;
   setLine: React.Dispatch<React.SetStateAction<Line | undefined>>;
+  refetchLine: (
+    variables?: Partial<Record<string, any>> | undefined
+  ) => Promise<ApolloQueryResult<LineData>>;
   loading: boolean;
   error: ApolloError | undefined;
   networks: Network[] | undefined;
@@ -138,6 +141,7 @@ export const useLine: UseLineType = () => {
   return {
     line,
     setLine,
+    refetchLine: refetch,
     loading,
     error,
     networks: data?.networks,

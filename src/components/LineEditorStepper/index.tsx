@@ -15,6 +15,7 @@ type Props = {
   steps: string[];
   isValidStepIndex: (i: number) => boolean;
   currentStepIsValid: (i: number) => boolean;
+  isLineValid: boolean;
   isEdit: boolean;
   spoilPristine: boolean;
   setNextClicked: (b: boolean) => void;
@@ -34,6 +35,7 @@ export default ({
   steps,
   isValidStepIndex,
   currentStepIsValid,
+  isLineValid,
   isEdit,
   spoilPristine,
   setNextClicked,
@@ -116,6 +118,8 @@ export default ({
         editMode={isEdit}
         firstStep={activeStepperIndex === 0}
         lastStep={activeStepperIndex === steps.length - 1}
+        currentStepIsValid={currentStepIsValid(activeStepperIndex)}
+        isValid={isLineValid}
         onDelete={onDelete}
         onSave={onSave}
         onNext={onNextClicked}

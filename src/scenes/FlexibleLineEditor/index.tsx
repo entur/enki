@@ -124,20 +124,16 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const isEdit = !isBlank(props.match.params.id);
 
   const handleOnSaveClick = () => {
-    const valid = validFlexibleLine(line);
-
     setNextClicked(true);
-    if (valid) {
-      setSaving(true);
-      dispatch(saveFlexibleLine(line))
-        .then(() => dispatch(setSavedChanges(true)))
-        .then(() => !isEdit && goToLines())
-        // noop just catching to avoid unhandled rejection
-        // error message is handled upstream
-        .catch(() => {})
-        .finally(() => setSaving(false));
-      setNextClicked(false);
-    }
+    setSaving(true);
+    dispatch(saveFlexibleLine(line))
+      .then(() => dispatch(setSavedChanges(true)))
+      .then(() => !isEdit && goToLines())
+      // noop just catching to avoid unhandled rejection
+      // error message is handled upstream
+      .catch(() => {})
+      .finally(() => setSaving(false));
+    setNextClicked(false);
   };
 
   const handleDelete = () => {
@@ -180,6 +176,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
               isValidStepIndex={(i: number) =>
                 getMaxAllowedStepIndex(line) >= i
               }
+              isLineValid={validFlexibleLine(line)}
               currentStepIsValid={(i) => currentStepIsValid(i, line)}
               setNextClicked={setNextClicked}
               isEdit={isEdit}
