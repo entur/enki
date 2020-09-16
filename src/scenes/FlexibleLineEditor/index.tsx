@@ -180,6 +180,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
               isValidStepIndex={(i: number) =>
                 getMaxAllowedStepIndex(line) >= i
               }
+              isLineValid={validFlexibleLine(line)}
               currentStepIsValid={(i) => currentStepIsValid(i, line)}
               setNextClicked={setNextClicked}
               isEdit={isEdit}

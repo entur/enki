@@ -14,6 +14,8 @@ type Props = {
   editMode: boolean;
   lastStep: boolean;
   firstStep: boolean;
+  currentStepIsValid: boolean;
+  isValid: boolean;
   onDelete: () => void;
   onSave: () => void;
   onNext: () => void;
@@ -40,22 +42,28 @@ const NavigationButtons = (props: Props) => {
           </SecondaryButton>
         )}
         {props.editMode && !props.lastStep && (
-          <SecondaryButton onClick={props.onNext}>
+          <SecondaryButton
+            onClick={props.onNext}
+            disabled={!props.currentStepIsValid}
+          >
             {formatMessage('navigationNext')}
           </SecondaryButton>
         )}
         {!props.editMode && !props.lastStep && (
-          <PrimaryButton onClick={props.onNext}>
+          <PrimaryButton
+            onClick={props.onNext}
+            disabled={!props.currentStepIsValid}
+          >
             {formatMessage('navigationNext')}
           </PrimaryButton>
         )}
         {props.editMode && (
-          <PrimaryButton onClick={props.onSave}>
+          <PrimaryButton onClick={props.onSave} disabled={!props.isValid}>
             {formatMessage('editorSaveButtonText')}
           </PrimaryButton>
         )}
         {!props.editMode && props.lastStep && (
-          <SuccessButton onClick={props.onSave}>
+          <SuccessButton onClick={props.onSave} disabled={!props.isValid}>
             {formatMessage('editorSaveAndCreateLine')}
           </SuccessButton>
         )}
