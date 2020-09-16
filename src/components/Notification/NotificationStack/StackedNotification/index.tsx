@@ -17,13 +17,19 @@ const StackedNotification = (props: Props) => {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    const setActiveTimeout = setTimeout(() => {
       setIsActive(true);
     }, 100);
 
-    setTimeout(() => {
+    const setInactiveTimeout = setTimeout(() => {
       setIsActive(false);
     }, props.dismissAfter);
+
+    return () => {
+      clearTimeout(setActiveTimeout);
+      clearTimeout(setInactiveTimeout);
+    };
+    // eslint-disable-next-line
   }, [props.dismissAfter]);
 
   return (

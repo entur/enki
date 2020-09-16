@@ -33,8 +33,13 @@ const Note = ({
 }: Props) => {
   useEffect(() => {
     const transitionIntervall = 500;
-    setTimeout(onDismiss, (dismissAfter ?? 0) + transitionIntervall);
-  }, [dismissAfter, onDismiss]);
+    const dismissTimeout = setTimeout(
+      onDismiss,
+      (dismissAfter ?? 0) + transitionIntervall
+    );
+    return () => clearTimeout(dismissTimeout);
+    // eslint-disable-next-line
+  }, [dismissAfter]);
 
   const getTypeIcon = (type: VariantType) => {
     if (type === 'success') {
