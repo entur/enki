@@ -12,13 +12,14 @@ type Props = {
 
 const Notification = ({ notification }: Props) => {
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
-  const prevNotification = usePrevious(notification ?? {});
+  const prevNotification = usePrevious(notification ?? { key: null });
 
   useEffect(() => {
-    if (notification && notification !== prevNotification) {
+    if (notification && notification.key !== prevNotification?.key) {
       setNotifications([...notifications, notification]);
     }
-  }, [notification, notifications, prevNotification]);
+    // eslint-disable-next-line
+  }, [notification]);
 
   const handleOnRequestClose = (note: NotificationType) => {
     if (note?.key) {

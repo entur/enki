@@ -11,7 +11,7 @@ export enum NotificationTypes {
 export enum NotificationDuration {
   SHORT = 2000,
   LONG = 5000,
-  VERY_LONG = 600000,
+  VERY_LONG = 10000,
 }
 
 export const showNotification = (

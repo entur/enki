@@ -29,5 +29,6 @@ export default (
         callback();
       }
     }
-  }, [headerKey, messageKey, error, callback, intl, dispatch]);
+    // eslint-disable-next-line
+  }, [error]);
 };
