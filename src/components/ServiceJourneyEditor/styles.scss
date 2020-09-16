@@ -59,6 +59,14 @@
   .passing-times-section {
     margin-top: 4rem;
   }
+
+  .service-journey-editor-action-chips {
+    display: flex;
+
+    .service-journey-editor-action-chip {
+      margin-right: 1rem;
+    }
+  }
 }
 
 .copy-dialog {
