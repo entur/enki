@@ -46,7 +46,7 @@
     "@types/react-router-dom": "5.1.5",
     "@types/uuid": "3.4.8",
     "axios": "0.20.0",
-    "chalk": "1.1.3",
+    "chalk": "4.1.0",
     "classnames": "2.2.6",
     "date-fns": "2.16.1",
     "duration-fns": "2.0.1",
