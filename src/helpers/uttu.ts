@@ -5,6 +5,7 @@ import messages, {
 } from './uttu.messages';
 import { AppIntlState } from 'i18n';
 import { ApolloError, isApolloError } from '@apollo/client';
+import { sentryCaptureException } from 'store';
 
 type Extensions = {
   code: UttuCode;
@@ -52,8 +53,14 @@ export const getInternationalizedUttuError = (
 
     const errorMessage = messages[messageCode] ?? messages[UttuCode.UNKNOWN];
 
+    if (!messages[messageCode]) {
+      sentryCaptureException(e);
+    }
+
     return intl.formatMessage(errorMessage);
   }
 
-  return error?.message || intl.formatMessage(messages[UttuCode.UNKNOWN]);
+  sentryCaptureException(e);
+
+  return intl.formatMessage(messages[UttuCode.UNKNOWN]);
 };
