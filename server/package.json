@@ -20,7 +20,7 @@
     "uuid": "3.4.0"
   },
   "devDependencies": {
-    "eslint": "4.19.1"
+    "eslint": "7.9.0"
   },
   "prettier": {
     "singleQuote": true
