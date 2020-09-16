@@ -112,22 +112,22 @@ export default ({
               </SmallAlertBox>
             )}
           </>
+          <NavigationButtons
+            editMode={isEdit}
+            firstStep={activeStepperIndex === 0}
+            lastStep={activeStepperIndex === steps.length - 1}
+            currentStepIsValid={currentStepIsValid(activeStepperIndex)}
+            isValid={isLineValid}
+            onDelete={onDelete}
+            onSave={onSave}
+            onNext={onNextClicked}
+            onCancel={onCancel}
+            onPrevious={() => {
+              setActiveStepperIndex(Math.max(activeStepperIndex - 1, 0));
+            }}
+          />
         </OverlayLoader>
       </div>
-      <NavigationButtons
-        editMode={isEdit}
-        firstStep={activeStepperIndex === 0}
-        lastStep={activeStepperIndex === steps.length - 1}
-        currentStepIsValid={currentStepIsValid(activeStepperIndex)}
-        isValid={isLineValid}
-        onDelete={onDelete}
-        onSave={onSave}
-        onNext={onNextClicked}
-        onCancel={onCancel}
-        onPrevious={() => {
-          setActiveStepperIndex(Math.max(activeStepperIndex - 1, 0));
-        }}
-      />
       {showConfirm && (
         <ConfirmNavigationDialog
           hideDialog={() => setShowConfirm(false)}
