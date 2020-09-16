@@ -129,7 +129,7 @@ export default () => {
           steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
           isValidStepIndex={(i: number) => getMaxAllowedStepIndex(line!) >= i}
           currentStepIsValid={(i) => currentStepIsValid(i, line!)}
-          isLineValid={line ? validLine(line!) : false}
+          isLineValid={line ? validLine(line) : false}
           setNextClicked={setNextClicked}
           isEdit={!isBlank(match?.params.id)}
           spoilPristine={nextClicked}
