@@ -46,7 +46,7 @@ export default () => {
     GlobalState
   >((s) => s);
 
-  const { line, setLine, loading, error, networks } = useLine();
+  const { line, setLine, refetchLine, loading, error, networks } = useLine();
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
@@ -67,6 +67,8 @@ export default () => {
         await mutateLine({
           variables: { input: lineToPayload(line!) },
         });
+
+        await refetchLine();
 
         // TODO: can this be handled by local state?
         dispatch(setSavedChanges(true));
