@@ -59,38 +59,36 @@ export default () => {
   };
 
   const onSave = useCallback(async () => {
-    if (validLine(line!)) {
-      setNextClicked(true);
-      setSaving(true);
+    setNextClicked(true);
+    setSaving(true);
 
-      try {
-        await mutateLine({
-          variables: { input: lineToPayload(line!) },
-        });
+    try {
+      await mutateLine({
+        variables: { input: lineToPayload(line!) },
+      });
 
-        await refetchLine();
+      await refetchLine();
 
-        // TODO: can this be handled by local state?
-        dispatch(setSavedChanges(true));
+      // TODO: can this be handled by local state?
+      dispatch(setSavedChanges(true));
 
-        dispatch(
-          showSuccessNotification(
-            formatMessage('saveLineSuccessHeader'),
-            formatMessage('saveLineSuccessMessage'),
-            false
-          )
-        );
-        if (isBlank(match?.params.id)) {
-          history.push('/lines');
-        }
-      } catch (_) {
-        // noop just catching to avoid unhandled rejection
-        // error message is handled upstream
-      } finally {
-        setSaving(false);
+      dispatch(
+        showSuccessNotification(
+          formatMessage('saveLineSuccessHeader'),
+          formatMessage('saveLineSuccessMessage'),
+          false
+        )
+      );
+      if (isBlank(match?.params.id)) {
+        history.push('/lines');
       }
-      setNextClicked(false);
+    } catch (_) {
+      // noop just catching to avoid unhandled rejection
+      // error message is handled upstream
+    } finally {
+      setSaving(false);
     }
+    setNextClicked(false);
 
     // eslint-disable-next-line
   }, [line]);
