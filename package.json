@@ -98,7 +98,7 @@
     "lint-staged": "9.5.0",
     "node-sass": "4.14.1",
     "prettier": "2.1.2",
-    "snyk": "1.305.0"
+    "snyk": "1.398.1"
   },
   "prettier": {
     "singleQuote": true
