@@ -440,3 +440,16 @@ export const LINE_EDITOR_QUERY = gql`
   ${LineEditorPage.fragments.line}
   ${LineEditorPage.fragments.networks}
 `;
+
+export const GET_LINES_FOR_EXPORT = gql`
+  query GetLinesForExport {
+    lines {
+      id
+      name
+    }
+    flexibleLines {
+      id
+      name
+    }
+  }
+`;

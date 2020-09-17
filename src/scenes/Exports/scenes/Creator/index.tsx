@@ -22,6 +22,7 @@ import { Heading4, LeadParagraph, SubParagraph } from '@entur/typography';
 import { Tooltip } from '@entur/tooltip';
 import { QuestionIcon } from '@entur/icons';
 import './styles.scss';
+import LinesForExport from 'components/LinesForExport';
 
 const newExport = (): Export => {
   const today = moment().format('YYYY-MM-DD');
@@ -109,6 +110,15 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               }
             />
           </InputGroup>
+        </div>
+        <div className="export-lines-table">
+          <Heading4>Choose lines to export</Heading4>
+          <LinesForExport
+            availability={{
+              fromDate: theExport.fromDate,
+              toDate: theExport.toDate,
+            }}
+          />
         </div>
         <div className="export-dry-run">
           <Checkbox
