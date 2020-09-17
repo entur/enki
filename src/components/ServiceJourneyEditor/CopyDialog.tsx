@@ -232,7 +232,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   return (
     <Modal
       open={open}
-      size="small"
+      size="medium"
       title={formatMessage('copyServiceJourneyDialogTitle')}
       onDismiss={onDismiss}
       className="copy-dialog"
@@ -258,8 +258,9 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
             <TimePicker
               onChange={(date: Date | null) => {
                 const time = date?.toTimeString().split(' ')[0];
-                setNameTemplate(`${serviceJourney.name} (<% time %>)`);
-                setInitialDepartureTime(time!);
+                if (time) {
+                  setInitialDepartureTime(time);
+                }
               }}
               prepend={<ClockIcon inline />}
               selectedTime={toDate(initialDepartureTime)}
@@ -308,7 +309,9 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                 <TimePicker
                   onChange={(date: Date | null) => {
                     const time = date?.toTimeString().split(' ')[0];
-                    setUntilTime(time!);
+                    if (time) {
+                      setUntilTime(time);
+                    }
                   }}
                   prepend={<ClockIcon inline />}
                   selectedTime={toDate(untilTime)}
