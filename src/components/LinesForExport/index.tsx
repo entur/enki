@@ -6,6 +6,7 @@ import {
   HeaderCell,
   TableBody,
   DataCell,
+  useSortableData,
 } from '@entur/table';
 import { Checkbox } from '@entur/form';
 import OperatingPeriod from 'model/OperatingPeriod';
@@ -26,14 +27,33 @@ interface LinesData {
 
 export default (props: Props) => {
   const { loading, data, error } = useQuery<LinesData>(GET_LINES_FOR_EXPORT);
+
+  const lines: Line[] = [
+    ...(data ? data?.lines : []),
+    ...(data ? data?.flexibleLines : []),
+  ];
+
+  const {
+    sortedData,
+    getSortableHeaderProps,
+    getSortableTableProps,
+  } = useSortableData<Line>(lines);
+
   return (
-    <Table spacing="small">
+    <Table spacing="small" {...getSortableTableProps}>
       <TableHead>
         <TableRow>
           <HeaderCell padding="checkbox">
             <Checkbox name="all" checked="indeterminate" onChange={() => {}} />
           </HeaderCell>
-          <HeaderCell>Line</HeaderCell>
+          <HeaderCell
+            {
+              // @ts-ignore
+              ...getSortableHeaderProps({ name: 'name' })
+            }
+          >
+            Line
+          </HeaderCell>
           <HeaderCell>Status</HeaderCell>
           <HeaderCell>Availability</HeaderCell>
         </TableRow>
@@ -41,8 +61,7 @@ export default (props: Props) => {
       <TableBody style={{ verticalAlign: 'top' }}>
         {!loading &&
           !error &&
-          data &&
-          data.lines.concat(data.flexibleLines).map((line) => (
+          sortedData.map((line: Line) => (
             <TableRow key={line.id}>
               <DataCell padding="checkbox">
                 <Checkbox name={line.id} checked={false} onChange={() => {}} />
