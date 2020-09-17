@@ -232,7 +232,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   return (
     <Modal
       open={open}
-      size="small"
+      size="medium"
       title={formatMessage('copyServiceJourneyDialogTitle')}
       onDismiss={onDismiss}
       className="copy-dialog"
