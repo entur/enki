@@ -15,6 +15,10 @@ import FlexibleLine from 'model/FlexibleLine';
 import Line from 'model/Line';
 import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
 import { SmallText, StrongText } from '@entur/typography';
+import JourneyPattern from 'model/JourneyPattern';
+import parseDate from 'date-fns/parseISO';
+import { isBefore, differenceInCalendarDays } from 'date-fns';
+import { isAfter } from 'date-fns/esm';
 
 type Props = {
   availability: OperatingPeriod;
@@ -28,14 +32,80 @@ type LinesData = {
 type ExportableLine = {
   id: string;
   name: string;
+  status: string;
+  from: Date;
+  to: Date;
   selected: boolean;
 };
 
-const mapLine = ({ id, name }: Line): ExportableLine => ({
-  id: id!,
-  name: name!,
-  selected: false,
-});
+type Availability = {
+  from: Date;
+  to: Date;
+};
+
+const union = (left: Availability, right: Availability): Availability => {
+  return {
+    from: isBefore(right.from, left.from) ? right.from : left.from,
+    to: isAfter(right.to, left.to) ? right.to : left.to,
+  };
+};
+
+const getAvailability = (journeyPatterns?: JourneyPattern[]): Availability => {
+  let availability = { from: new Date(), to: new Date() };
+
+  journeyPatterns?.forEach((jp) =>
+    jp.serviceJourneys.forEach((sj) =>
+      sj.dayTypes?.forEach((dt) =>
+        dt.dayTypeAssignments.forEach(
+          (dta) =>
+            (availability = union(availability, {
+              from: parseDate(dta.operatingPeriod.fromDate),
+              to: parseDate(dta.operatingPeriod.toDate),
+            }))
+        )
+      )
+    )
+  );
+
+  return availability;
+};
+
+const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
+  const today = new Date();
+  const availability = getAvailability(journeyPatterns);
+  const availableForDaysFromNow = differenceInCalendarDays(
+    availability.to,
+    today
+  );
+
+  let status;
+
+  if (availableForDaysFromNow > 121) {
+    status = 'positive';
+  } else if (availableForDaysFromNow > 0) {
+    status = 'neutral';
+  } else {
+    status = 'negative';
+  }
+
+  return {
+    id: id!,
+    name: name!,
+    status,
+    ...availability,
+    selected: false,
+  };
+};
+
+const mapStatusToText = (status: string): string => {
+  if (status === 'positive') {
+    return 'Available next 120 days';
+  } else if (status === 'neutral') {
+    return 'Becomes unavailable in less than 120 days';
+  } else {
+    return 'No availability';
+  }
+};
 
 export default (props: Props) => {
   const [lines, setLines] = useState<ExportableLine[]>([]);
@@ -103,8 +173,22 @@ export default (props: Props) => {
           >
             Line
           </HeaderCell>
-          <HeaderCell>Status</HeaderCell>
-          <HeaderCell>Availability</HeaderCell>
+          <HeaderCell
+            {
+              // @ts-ignore
+              ...getSortableHeaderProps({ name: 'status' })
+            }
+          >
+            Status
+          </HeaderCell>
+          <HeaderCell
+            {
+              // @ts-ignore
+              ...getSortableHeaderProps({ name: 'to' })
+            }
+          >
+            Availability
+          </HeaderCell>
         </TableRow>
       </TableHead>
       <TableBody style={{ verticalAlign: 'top' }}>
@@ -124,8 +208,10 @@ export default (props: Props) => {
                 <br />
                 <SmallText>{line.id}</SmallText>
               </DataCell>
-              <DataCell status="positive">Available next 120 days</DataCell>
-              <DataCell>01.01.2020 - 31.12.2020</DataCell>
+              <DataCell status={line.status}>
+                {mapStatusToText(line.status)}
+              </DataCell>
+              <DataCell>{`${line.from.toLocaleDateString()} - ${line.to.toLocaleDateString()}`}</DataCell>
             </TableRow>
           ))}
       </TableBody>
