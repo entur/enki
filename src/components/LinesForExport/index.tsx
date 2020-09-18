@@ -19,6 +19,7 @@ import JourneyPattern from 'model/JourneyPattern';
 import parseDate from 'date-fns/parseISO';
 import { isBefore, differenceInCalendarDays } from 'date-fns';
 import { isAfter } from 'date-fns/esm';
+import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 
 type Props = {
   availability: OperatingPeriod;
@@ -109,7 +110,11 @@ const mapStatusToText = (status: string): string => {
 
 export default (props: Props) => {
   const [lines, setLines] = useState<ExportableLine[]>([]);
-  const { loading, data, error } = useQuery<LinesData>(GET_LINES_FOR_EXPORT);
+  const { loading, data, error, refetch } = useQuery<LinesData>(
+    GET_LINES_FOR_EXPORT
+  );
+
+  useRefetchOnLocationChange(refetch);
 
   useEffect(() => {
     if (data) {
