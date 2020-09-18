@@ -18,7 +18,7 @@ import './styles.scss';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern from 'model/JourneyPattern';
 import { Dropdown } from '@entur/dropdown';
-import { sortByDepartureTime } from 'helpers/serviceJourneys';
+import { isBefore } from 'helpers/validation';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
@@ -30,6 +30,26 @@ type Props = {
     handleDelete?: () => void,
     handleCopy?: (newServiceJourneys: ServiceJourney[]) => void
   ) => ReactElement;
+};
+
+type Sortable = {
+  sj: ServiceJourney;
+  render: any;
+};
+
+export const sortByDepartureTime = (sortable: Sortable[]): Sortable[] => {
+  return sortable
+    .slice()
+    .sort((a, b) =>
+      isBefore(
+        a.sj.passingTimes[0].departureTime,
+        a.sj.passingTimes[0].departureDayOffset,
+        b.sj.passingTimes[0].departureTime,
+        b.sj.passingTimes[0].departureDayOffset
+      )
+        ? -1
+        : 1
+    );
 };
 
 export default ({ journeyPatterns, onChange, children }: Props) => {
@@ -135,6 +155,47 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
     };
   };
 
+  const renderServiceJourneys = (jp: JourneyPattern, jpIndex: number) => {
+    const mappedServiceJourneys = jp.serviceJourneys.map((sj, sjIndex) => ({
+      sj,
+      render: () => (
+        <AccordionItem
+          key={keys[jpIndex] + sjIndex}
+          title={sj.name}
+          defaultOpen={
+            jpIndex === modalSelectedJourneyPatternIndex &&
+            (!sj.id || sjIndex === jp.serviceJourneys.length - 1)
+          }
+        >
+          {children(
+            sj,
+            journeyPatterns[jpIndex].pointsInSequence,
+            updateServiceJourney(
+              sjIndex,
+              journeyPatterns[jpIndex].serviceJourneys,
+              jpIndex
+            ),
+            jp.serviceJourneys.length > 1
+              ? deleteServiceJourney(
+                  sjIndex,
+                  journeyPatterns[jpIndex].serviceJourneys,
+                  jpIndex
+                )
+              : undefined,
+            copyServiceJourney(
+              journeyPatterns[jpIndex].serviceJourneys,
+              jpIndex
+            )
+          )}
+        </AccordionItem>
+      ),
+    }));
+
+    return sortByDepartureTime(mappedServiceJourneys).map((mapped) =>
+      mapped.render()
+    );
+  };
+
   return (
     <>
       <Modal
@@ -208,41 +269,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
           : journeyPatterns.map((jp, jpIndex) => (
               <Fragment key={keys[jpIndex]}>
                 {journeyPatterns.length > 1 && <Heading3>{jp.name}</Heading3>}
-                <Accordion>
-                  {sortByDepartureTime(jp.serviceJourneys).map(
-                    (sj, sjIndex) => (
-                      <AccordionItem
-                        key={keys[jpIndex] + sjIndex}
-                        title={sj.name}
-                        defaultOpen={
-                          jpIndex === modalSelectedJourneyPatternIndex &&
-                          (!sj.id || sjIndex === jp.serviceJourneys.length - 1)
-                        }
-                      >
-                        {children(
-                          sj,
-                          journeyPatterns[jpIndex].pointsInSequence,
-                          updateServiceJourney(
-                            sjIndex,
-                            journeyPatterns[jpIndex].serviceJourneys,
-                            jpIndex
-                          ),
-                          jp.serviceJourneys.length > 1
-                            ? deleteServiceJourney(
-                                sjIndex,
-                                journeyPatterns[jpIndex].serviceJourneys,
-                                jpIndex
-                              )
-                            : undefined,
-                          copyServiceJourney(
-                            journeyPatterns[jpIndex].serviceJourneys,
-                            jpIndex
-                          )
-                        )}
-                      </AccordionItem>
-                    )
-                  )}
-                </Accordion>
+                <Accordion>{renderServiceJourneys(jp, jpIndex)}</Accordion>
               </Fragment>
             ))}
         <AddButton
