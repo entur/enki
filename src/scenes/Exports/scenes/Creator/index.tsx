@@ -23,6 +23,7 @@ import { Tooltip } from '@entur/tooltip';
 import { QuestionIcon } from '@entur/icons';
 import './styles.scss';
 import LinesForExport from 'components/LinesForExport';
+import { parseISO } from 'date-fns/esm';
 
 const newExport = (): Export => {
   const today = moment().format('YYYY-MM-DD');
@@ -115,8 +116,8 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           <Heading4>Choose lines to export</Heading4>
           <LinesForExport
             availability={{
-              fromDate: theExport.fromDate,
-              toDate: theExport.toDate,
+              from: parseISO(theExport.fromDate),
+              to: parseISO(theExport.toDate),
             }}
           />
         </div>

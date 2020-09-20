@@ -9,7 +9,6 @@ import {
   useSortableData,
 } from '@entur/table';
 import { Checkbox } from '@entur/form';
-import OperatingPeriod from 'model/OperatingPeriod';
 import { useQuery } from '@apollo/client';
 import FlexibleLine from 'model/FlexibleLine';
 import Line from 'model/Line';
@@ -17,12 +16,16 @@ import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
 import { SmallText, StrongText } from '@entur/typography';
 import JourneyPattern from 'model/JourneyPattern';
 import parseDate from 'date-fns/parseISO';
-import { isBefore, differenceInCalendarDays } from 'date-fns';
+import {
+  isBefore,
+  differenceInCalendarDays,
+  areIntervalsOverlapping,
+} from 'date-fns';
 import { isAfter } from 'date-fns/esm';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 
 type Props = {
-  availability: OperatingPeriod;
+  availability: Availability;
 };
 
 type LinesData = {
@@ -36,6 +39,7 @@ type ExportableLine = {
   status: string;
   from: Date;
   to: Date;
+  enable: boolean;
   selected: boolean;
 };
 
@@ -71,11 +75,14 @@ const getAvailability = (journeyPatterns?: JourneyPattern[]): Availability => {
   return availability;
 };
 
-const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
+const mapLine = (
+  { id, name, journeyPatterns }: Line,
+  availability: Availability
+): ExportableLine => {
   const today = new Date();
-  const availability = getAvailability(journeyPatterns);
+  const jpAvailability = getAvailability(journeyPatterns);
   const availableForDaysFromNow = differenceInCalendarDays(
-    availability.to,
+    jpAvailability.to,
     today
   );
 
@@ -89,12 +96,18 @@ const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
     status = 'negative';
   }
 
+  const enable = areIntervalsOverlapping(
+    { start: jpAvailability.from, end: jpAvailability.to },
+    { start: availability.from, end: availability.to }
+  );
+
   return {
     id: id!,
     name: name!,
     status,
-    ...availability,
-    selected: false,
+    ...jpAvailability,
+    enable,
+    selected: enable,
   };
 };
 
@@ -104,7 +117,7 @@ const mapStatusToText = (status: string): string => {
   } else if (status === 'neutral') {
     return 'Becomes unavailable in less than 120 days';
   } else {
-    return 'No availability';
+    return 'No longer available';
   }
 };
 
@@ -119,11 +132,11 @@ export default (props: Props) => {
   useEffect(() => {
     if (data) {
       setLines([
-        ...data?.lines.map(mapLine),
-        ...data?.flexibleLines.map(mapLine),
+        ...data?.lines.map((line) => mapLine(line, props.availability)),
+        ...data?.flexibleLines.map((line) => mapLine(line, props.availability)),
       ]);
     }
-  }, [data]);
+  }, [data, props.availability]);
 
   const isEverythingSelected = Object.values(lines).every(
     (value) => value.selected
@@ -203,6 +216,7 @@ export default (props: Props) => {
             <TableRow key={line.id}>
               <DataCell padding="checkbox" style={{ padding: '.5rem 1rem' }}>
                 <Checkbox
+                  disabled={!line.enable}
                   name={line.id}
                   checked={line.selected}
                   onChange={() => handleRegularChange(line.id)}
