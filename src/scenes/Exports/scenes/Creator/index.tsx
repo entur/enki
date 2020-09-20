@@ -10,7 +10,7 @@ import { saveExport } from 'actions/exports';
 import OverlayLoader from 'components/OverlayLoader';
 import { AppIntlState, selectIntl } from 'i18n';
 import { RouteComponentProps } from 'react-router';
-import { exportIsValid, toDateIsAfterFromDate } from './validateForm';
+import { exportIsValid, toDateIsBeforeFromDate } from './validateForm';
 import { Export } from 'model/Export';
 import { GlobalState } from 'reducers';
 import usePristine from 'hooks/usePristine';
@@ -24,6 +24,7 @@ import { QuestionIcon } from '@entur/icons';
 import './styles.scss';
 import LinesForExport from 'components/LinesForExport';
 import { parseISO } from 'date-fns/esm';
+import { isBefore, isAfter } from 'date-fns';
 
 const newExport = (): Export => {
   const today = moment().format('YYYY-MM-DD');
@@ -91,24 +92,48 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           <InputGroup label={formatMessage('creatorFromDateFormLabel')}>
             <DatePicker
               selectedDate={moment(theExport.fromDate).toDate()}
-              onChange={(date: Date | null) =>
-                onFieldChange('fromDate', dateToString(date))
-              }
+              onChange={(date: Date | null) => {
+                if (
+                  date &&
+                  theExport.toDate &&
+                  isAfter(date, parseISO(theExport.toDate))
+                ) {
+                  setTheExport({
+                    ...theExport,
+                    fromDate: dateToString(date),
+                    toDate: dateToString(date),
+                  });
+                } else {
+                  onFieldChange('fromDate', dateToString(date));
+                }
+              }}
             />
           </InputGroup>
           <InputGroup
             label={formatMessage('creatorToDateFormLabel')}
             {...getErrorFeedback(
               formatMessage('validateFormErrorExportFromDateIsAfterToDate'),
-              toDateIsAfterFromDate(theExport.fromDate, theExport.toDate),
+              !toDateIsBeforeFromDate(theExport.fromDate, theExport.toDate),
               toDatePristine
             )}
           >
             <DatePicker
               selectedDate={moment(theExport.toDate).toDate()}
-              onChange={(date: Date | null) =>
-                onFieldChange('toDate', dateToString(date))
-              }
+              onChange={(date: Date | null) => {
+                if (
+                  date &&
+                  theExport.fromDate &&
+                  isBefore(date, parseISO(theExport.fromDate))
+                ) {
+                  setTheExport({
+                    ...theExport,
+                    fromDate: dateToString(date),
+                    toDate: dateToString(date),
+                  });
+                } else {
+                  onFieldChange('toDate', dateToString(date));
+                }
+              }}
             />
           </InputGroup>
         </div>
