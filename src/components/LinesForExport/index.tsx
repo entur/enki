@@ -25,6 +25,8 @@ import {
 import { isAfter } from 'date-fns/esm';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import { ExportLineAssociation } from 'model/Export';
+import { useSelector } from 'react-redux';
+import { selectIntl } from 'i18n';
 
 type Props = {
   fromDate: string;
@@ -140,6 +142,8 @@ export default ({ fromDate, toDate, onChange }: Props) => {
 
   useRefetchOnLocationChange(refetch);
 
+  const { formatMessage } = useSelector(selectIntl);
+
   useEffect(() => {
     if (data) {
       setLines([
@@ -213,7 +217,7 @@ export default ({ fromDate, toDate, onChange }: Props) => {
               ...getSortableHeaderProps({ name: 'name' })
             }
           >
-            Line
+            {formatMessage('exportCreatorLinesForExportTableLineHeader')}
           </HeaderCell>
           <HeaderCell
             {
@@ -221,7 +225,7 @@ export default ({ fromDate, toDate, onChange }: Props) => {
               ...getSortableHeaderProps({ name: 'status' })
             }
           >
-            Status
+            {formatMessage('exportCreatorLinesForExportTableStatusHeader')}
           </HeaderCell>
           <HeaderCell
             {
@@ -229,7 +233,9 @@ export default ({ fromDate, toDate, onChange }: Props) => {
               ...getSortableHeaderProps({ name: 'to' })
             }
           >
-            Availability
+            {formatMessage(
+              'exportCreatorLinesForExportTableAvailabilityHeader'
+            )}
           </HeaderCell>
         </TableRow>
       </TableHead>

@@ -63,18 +63,20 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
     <Page
       className="export-editor"
       backButtonTitle={formatMessage('navBarExportsMenuItemLabel')}
-      title={formatMessage('creatorHeader')}
+      title={formatMessage('exportCreatorHeader')}
     >
       <OverlayLoader
         className=""
         isLoading={isSaving}
-        text={formatMessage('creatorSavingOverlayLoaderText')}
+        text={formatMessage('exportCreatorSavingOverlayLoaderText')}
       >
-        <LeadParagraph>{formatMessage('creatorDescription')}</LeadParagraph>
+        <LeadParagraph>
+          {formatMessage('exportCreatorDescription')}
+        </LeadParagraph>
         <RequiredInputMarker />
         <InputGroup
           className="export-name"
-          label={formatMessage('creatorNameFormLabel')}
+          label={formatMessage('exportCreatorNameFormLabel')}
           {...getErrorFeedback(
             formatMessage('validateFormErrorExportNameIsEmpty'),
             !isBlank(theExport.name),
@@ -89,10 +91,12 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           />
         </InputGroup>
 
-        <Heading4>{formatMessage('creatorDateForExport')}</Heading4>
-        <SubParagraph>{formatMessage('creatorDateForExportDesc')}</SubParagraph>
+        <Heading4>{formatMessage('exportCreatorDateForExport')}</Heading4>
+        <SubParagraph>
+          {formatMessage('exportCreatorDateForExportDesc')}
+        </SubParagraph>
         <div className="export-dates">
-          <InputGroup label={formatMessage('creatorFromDateFormLabel')}>
+          <InputGroup label={formatMessage('exportCreatorFromDateFormLabel')}>
             <DatePicker
               selectedDate={moment(theExport.fromDate).toDate()}
               onChange={(date: Date | null) => {
@@ -113,7 +117,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
             />
           </InputGroup>
           <InputGroup
-            label={formatMessage('creatorToDateFormLabel')}
+            label={formatMessage('exportCreatorToDateFormLabel')}
             {...getErrorFeedback(
               formatMessage('validateFormErrorExportFromDateIsAfterToDate'),
               !toDateIsBeforeFromDate(theExport.fromDate, theExport.toDate),
@@ -141,7 +145,9 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           </InputGroup>
         </div>
         <div className="export-lines-table">
-          <Heading4>Choose lines to export</Heading4>
+          <Heading4>
+            {formatMessage('exportCreatorLinesForExportHeader')}
+          </Heading4>
           <LinesForExport
             fromDate={theExport.fromDate}
             toDate={theExport.toDate}
@@ -158,11 +164,11 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               onFieldChange('dryRun', e.target.checked)
             }
           >
-            {formatMessage('creatorDryRunFormLabel')}
+            {formatMessage('exportCreatorDryRunFormLabel')}
           </Checkbox>
           <Tooltip
             placement="right"
-            content={formatMessage('creatorDryRunFormLabelTooltip')}
+            content={formatMessage('exportCreatorDryRunFormLabelTooltip')}
           >
             <span className="question-icon">
               <QuestionIcon />
@@ -170,7 +176,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           </Tooltip>
         </div>
         <SuccessButton className="export-save" onClick={handleOnSaveClick}>
-          {formatMessage('creatorSaveButtonLabelText')}
+          {formatMessage('exportCreatorSaveButtonLabelText')}
         </SuccessButton>
       </OverlayLoader>
     </Page>

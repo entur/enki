@@ -67,20 +67,24 @@ export const messages: MessagesKey = {
   redirectNo: 'No, stay on this page',
   appTitle: 'Nplan',
   exportsCreateExportButtonLabel: 'Create export',
-  creatorDryRunFormLabel: 'Dry run',
-  creatorDryRunFormLabelTooltip:
+  exportCreatorDryRunFormLabel: 'Dry run',
+  exportCreatorDryRunFormLabelTooltip:
     'Will not export the service to travel search, but creates a NeTEx-file to look at',
-  creatorFromDateFormLabel: 'From date *',
-  creatorHeader: 'Create export',
-  creatorDescription:
+  exportCreatorFromDateFormLabel: 'From date *',
+  exportCreatorHeader: 'Create export',
+  exportCreatorDescription:
     'Export services so that they are available in travel search',
-  creatorNameFormLabel: 'Name *',
-  creatorSaveButtonLabelText: 'Create export',
-  creatorSavingOverlayLoaderText: 'Saving export...',
-  creatorToDateFormLabel: 'To date *',
-  creatorDateForExport: 'Date for export',
-  creatorDateForExportDesc:
+  exportCreatorNameFormLabel: 'Name *',
+  exportCreatorSaveButtonLabelText: 'Create export',
+  exportCreatorSavingOverlayLoaderText: 'Saving export...',
+  exportCreatorToDateFormLabel: 'To date *',
+  exportCreatorDateForExport: 'Date for export',
+  exportCreatorDateForExportDesc:
     'Export services with availability within the selected time span',
+  exportCreatorLinesForExportHeader: 'Choose lines to export',
+  exportCreatorLinesForExportTableLineHeader: 'Line',
+  exportCreatorLinesForExportTableStatusHeader: 'Status',
+  exportCreatorLinesForExportTableAvailabilityHeader: 'Availability',
   defaultOption: 'Select an option',
   validateFormErrorExportFromDateIsAfterToDate:
     'To-date must be after from-date',
