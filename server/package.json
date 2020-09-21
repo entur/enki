@@ -10,7 +10,7 @@
     "express-http-proxy": "1.6.2",
     "helmet": "3.23.3",
     "js-base64": "2.6.4",
-    "prom-client": "11.5.3",
+    "prom-client": "12.0.0",
     "url": "0.11.0",
     "uuid": "3.4.0"
   },
