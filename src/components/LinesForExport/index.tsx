@@ -22,7 +22,7 @@ import {
   areIntervalsOverlapping,
   parseISO,
 } from 'date-fns';
-import { isAfter } from 'date-fns/esm';
+import { isAfter } from 'date-fns';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import { ExportLineAssociation } from 'model/Export';
 import { useSelector } from 'react-redux';

@@ -23,7 +23,7 @@ import { Tooltip } from '@entur/tooltip';
 import { QuestionIcon } from '@entur/icons';
 import './styles.scss';
 import LinesForExport from 'components/LinesForExport';
-import { parseISO } from 'date-fns/esm';
+import { parseISO } from 'date-fns';
 import { isBefore, isAfter } from 'date-fns';
 
 const newExport = (): Export => {
