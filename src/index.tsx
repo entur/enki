@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'normalize.css';
 import { Provider } from 'react-intl-redux';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
 
