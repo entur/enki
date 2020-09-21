@@ -9,7 +9,7 @@ console.log(`stopPlaces proxy forwarding to ${apiUrl}`);
 
 router.use(
   '/stopPlaces',
-  proxy([OPTION, POST], req => '')
+  proxy([OPTION, POST], (req) => '')
 );
 
 module.exports = router;

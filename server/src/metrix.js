@@ -1,13 +1,13 @@
 const client = require('prom-client');
 
-const withMetrix = app => {
+const withMetrix = (app) => {
   const collectDefaultMetrics = client.collectDefaultMetrics;
   collectDefaultMetrics();
 
   const counter = new client.Counter({
     name: 'http_request',
     help: 'Number of http requests grouped by response code.',
-    labelNames: ['code']
+    labelNames: ['code'],
   });
 
   return app

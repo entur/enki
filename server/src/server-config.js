@@ -20,7 +20,7 @@ const configureApp = (app, mountpath = '') =>
           name: 'enki',
           environment: process.env.ENVIRONMENT,
           version: process.env.IMAGE_TAG || 'N/A',
-          buildDate: process.env.BUILD_DATE
+          buildDate: process.env.BUILD_DATE,
         })
       )
       .use(compression())
@@ -36,7 +36,7 @@ const configureApp = (app, mountpath = '') =>
         res.status(500);
         res.send({
           code: 'INTERNAL_ERROR',
-          message: 'Ooops. Something broke back here. Sorry!'
+          message: 'Ooops. Something broke back here. Sorry!',
         });
       })
   );

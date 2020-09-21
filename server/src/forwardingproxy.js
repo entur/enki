@@ -7,7 +7,7 @@ const { requestLog, usernameFromHeader } = require('./log');
 const correlationIdHeader = 'correlation-id';
 const authorizationHeader = 'authorization';
 
-const requireOAuth = req =>
+const requireOAuth = (req) =>
   !req.headers.authorization || req.headers.authorization.startsWith('Bearer ');
 
 const requestJsonBody = (bodyContent, contentType) =>
@@ -18,12 +18,12 @@ const requestJsonBody = (bodyContent, contentType) =>
 const objFilter = (obj, predicate) =>
   obj
     ? Object.keys(obj)
-        .filter(k => predicate(k))
+        .filter((k) => predicate(k))
         .reduce((res, key) => ((res[key] = obj[key]), res), {})
     : obj;
 
-const filterSensitiveHeaders = headers =>
-  objFilter(headers, k => k.toLowerCase() !== authorizationHeader);
+const filterSensitiveHeaders = (headers) =>
+  objFilter(headers, (k) => k.toLowerCase() !== authorizationHeader);
 
 const logRequest = (type, bodyContent, req) =>
   requestLog({
@@ -36,7 +36,7 @@ const logRequest = (type, bodyContent, req) =>
     path: req.originalUrl,
     headers: filterSensitiveHeaders(req.headers),
     body: requestJsonBody(bodyContent, req.headers['content-type']),
-    username: usernameFromHeader(req.headers['authorization'])
+    username: usernameFromHeader(req.headers['authorization']),
   });
 
 const droppedHeaders = [
@@ -44,7 +44,7 @@ const droppedHeaders = [
   'access-control-allow-headers',
   'access-control-allow-origin',
   'access-control-allow-methods',
-  'accept-language'
+  'accept-language',
 ];
 
 const uploadLimitMb = process.env.UPLOAD_LIMIT_MB || 200;
@@ -59,8 +59,8 @@ const proxyConfig = (
     throw Error('proxyReqPathResolver is not a function!');
   }
 
-  const filterAllowedHeaders = headers =>
-    objFilter(headers, h => !droppedHeaders.includes(h));
+  const filterAllowedHeaders = (headers) =>
+    objFilter(headers, (h) => !droppedHeaders.includes(h));
 
   return {
     // filter: req => httpMethods.includes(req.method) && requireOAuth(req),
@@ -72,7 +72,7 @@ const proxyConfig = (
         additionalHeaders(srcReq.headers),
         {
           [correlationIdHeader]:
-            proxyReqOpts.headers[correlationIdHeader] || uuid.v4()
+            proxyReqOpts.headers[correlationIdHeader] || uuid.v4(),
         }
       );
       return proxyReqOpts;
@@ -85,15 +85,15 @@ const proxyConfig = (
     userResHeaderDecorator: (headers, userReq, userRes, proxyReq, proxyRes) => {
       return filterAllowedHeaders(headers);
     },
-    limit: `${uploadLimitMb}mb`
+    limit: `${uploadLimitMb}mb`,
   };
 };
 
-const stripTrailingSlash = url =>
+const stripTrailingSlash = (url) =>
   url.endsWith('/') ? url.substring(0, url.length - 1) : url;
 
 // forwards a call of a specific url / set of methods to a remote server
-const forwardingProxy = apiUrl => (method, forwardPath) =>
+const forwardingProxy = (apiUrl) => (method, forwardPath) =>
   proxy(
     apiUrl,
     proxyConfig(
@@ -103,10 +103,10 @@ const forwardingProxy = apiUrl => (method, forwardPath) =>
     )
   );
 
-const urlQuery = obj => {
+const urlQuery = (obj) => {
   const params = Object.keys(obj)
-    .filter(k => obj[k] !== undefined)
-    .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(obj[k])}`)
+    .filter((k) => obj[k] !== undefined)
+    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(obj[k])}`)
     .join('&');
   return params ? `?${params}` : '';
 };

@@ -1,7 +1,7 @@
 const Base64 = require('js-base64').Base64;
 const uuid = require('uuid');
 
-const usernameFromHeader = authHeader =>
+const usernameFromHeader = (authHeader) =>
   authHeader
     ? JSON.parse(Base64.decode(authHeader.split(' ')[1].split('.')[1]))
         .preferred_username
@@ -21,7 +21,7 @@ const appLog = (
     severity: level,
     username: usernameFromHeader(authHeader),
     correlationId,
-    message
+    message,
   });
   if (level === errorLevel) {
     console.error(logMessage);
@@ -30,7 +30,7 @@ const appLog = (
   }
 };
 
-const requestLog = message => console.log(JSON.stringify(message));
+const requestLog = (message) => console.log(JSON.stringify(message));
 
 module.exports = {
   appLog,
@@ -38,5 +38,5 @@ module.exports = {
   usernameFromHeader,
   errorLevel,
   infoLevel,
-  debugLevel
+  debugLevel,
 };
