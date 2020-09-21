@@ -11,7 +11,7 @@ import OverlayLoader from 'components/OverlayLoader';
 import { AppIntlState, selectIntl } from 'i18n';
 import { RouteComponentProps } from 'react-router';
 import { exportIsValid, toDateIsBeforeFromDate } from './validateForm';
-import { Export } from 'model/Export';
+import { Export, ExportLineAssociation } from 'model/Export';
 import { GlobalState } from 'reducers';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -52,7 +52,10 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
     setSaveClicked(true);
   };
 
-  const onFieldChange = (field: keyof Export, value: string | boolean) => {
+  const onFieldChange = (
+    field: keyof Export,
+    value: string | boolean | ExportLineAssociation[]
+  ) => {
     setTheExport({ ...theExport, [field]: value });
   };
 
@@ -140,9 +143,10 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
         <div className="export-lines-table">
           <Heading4>Choose lines to export</Heading4>
           <LinesForExport
-            availability={{
-              from: parseISO(theExport.fromDate),
-              to: parseISO(theExport.toDate),
+            fromDate={theExport.fromDate}
+            toDate={theExport.toDate}
+            onChange={(lines) => {
+              onFieldChange('lineAssociations', lines);
             }}
           />
         </div>

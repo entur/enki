@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Table,
   TableHead,
@@ -20,12 +20,16 @@ import {
   isBefore,
   differenceInCalendarDays,
   areIntervalsOverlapping,
+  parseISO,
 } from 'date-fns';
 import { isAfter } from 'date-fns/esm';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
+import { ExportLineAssociation } from 'model/Export';
 
 type Props = {
-  availability: Availability;
+  fromDate: string;
+  toDate: string;
+  onChange: (lines: ExportLineAssociation[]) => void;
 };
 
 type LinesData = {
@@ -121,7 +125,14 @@ const mapStatusToText = (status: string): string => {
   }
 };
 
-export default (props: Props) => {
+export default ({ fromDate, toDate, onChange }: Props) => {
+  const availability = useMemo(
+    () => ({
+      from: parseISO(fromDate),
+      to: parseISO(toDate),
+    }),
+    [fromDate, toDate]
+  );
   const [lines, setLines] = useState<ExportableLine[]>([]);
   const { loading, data, error, refetch } = useQuery<LinesData>(
     GET_LINES_FOR_EXPORT
@@ -132,11 +143,28 @@ export default (props: Props) => {
   useEffect(() => {
     if (data) {
       setLines([
-        ...data?.lines.map((line) => mapLine(line, props.availability)),
-        ...data?.flexibleLines.map((line) => mapLine(line, props.availability)),
+        ...data?.lines.map((line) => mapLine(line, availability)),
+        ...data?.flexibleLines.map((line) => mapLine(line, availability)),
       ]);
     }
-  }, [data, props.availability]);
+  }, [data, availability]);
+
+  useEffect(() => {
+    onChange(
+      lines
+        .filter((line) => line.selected)
+        .map(({ id }) => ({
+          lineRef: id,
+        }))
+    );
+    // eslint-disable-next-line
+  }, [lines]);
+
+  const {
+    sortedData,
+    getSortableHeaderProps,
+    getSortableTableProps,
+  } = useSortableData<ExportableLine>(lines);
 
   const isEverythingSelected = Object.values(lines).every(
     (value) => value.selected
@@ -148,7 +176,7 @@ export default (props: Props) => {
 
   const isSomeSelected = !isEverythingSelected && !isNothingSelected;
 
-  const handleAllOrNothingChange = () =>
+  const handleAllOrNothingChange = () => {
     setLines((prev) =>
       prev.map((prevItem) =>
         isEverythingSelected
@@ -156,8 +184,9 @@ export default (props: Props) => {
           : { ...prevItem, selected: true }
       )
     );
+  };
 
-  const handleRegularChange = (id: string) =>
+  const handleRegularChange = (id: string) => {
     setLines((prev) =>
       prev.map((prevItem) =>
         prevItem.id === id
@@ -165,12 +194,7 @@ export default (props: Props) => {
           : prevItem
       )
     );
-
-  const {
-    sortedData,
-    getSortableHeaderProps,
-    getSortableTableProps,
-  } = useSortableData<ExportableLine>(lines);
+  };
 
   return (
     <Table spacing="small" {...getSortableTableProps}>
