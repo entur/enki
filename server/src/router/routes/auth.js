@@ -8,7 +8,7 @@ router.get('/keycloak.json', (req, res) =>
     'auth-server-url': authURL,
     'ssl-required': 'external',
     resource: authClientId,
-    'public-client': true
+    'public-client': true,
   })
 );
 

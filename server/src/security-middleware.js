@@ -5,11 +5,11 @@ const { appLog, errorLevel } = require('./log');
 
 const reportUri = '/csp-violation-report';
 
-const withCsp = app => {
+const withCsp = (app) => {
   app.use(
     reportUri,
     bodyParser.json({
-      type: ['json', 'application/csp-report']
+      type: ['json', 'application/csp-report'],
     })
   );
 
@@ -28,15 +28,15 @@ const withCsp = app => {
   return app;
 };
 
-const withSecurity = app => {
-  const inQuote = str => `'${str}'`;
+const withSecurity = (app) => {
+  const inQuote = (str) => `'${str}'`;
   const cspConfig = () => {
     const devExtras = {
       scriptSrc: [
         inQuote('self'),
         inQuote('unsafe-eval'),
-        inQuote('unsafe-inline')
-      ]
+        inQuote('unsafe-inline'),
+      ],
     };
 
     const directives = Object.assign(
@@ -47,12 +47,12 @@ const withSecurity = app => {
           inQuote('self'),
           openIDConnectUrl,
           'ws:',
-          'https://sentry.io'
+          'https://sentry.io',
         ],
         styleSrc: [inQuote('self'), inQuote('unsafe-inline')],
         imgSrc: ['*', 'data:'],
         frameSrc: ['blob:'],
-        reportUri
+        reportUri,
       },
       process.env.NODE_ENV === 'development' ? devExtras : undefined
     );

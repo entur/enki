@@ -11,10 +11,7 @@ const contentRoot = path.resolve(process.env.CONTENT_BASE || '../../build');
 const app = configureApp(express(), mountPath);
 
 const server = app.listen(port, () => {
-  appLog(
-    infoLevel,
-    `Enki running on port: ${server.address().port}`
-  );
+  appLog(infoLevel, `Enki running on port: ${server.address().port}`);
   if (mountPath) {
     appLog(infoLevel, `Mount path: ${mountPath}`);
   }
