@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'utils/test-utils';
-import { geti18n, getIntl } from 'i18n';
+import { geti18n } from 'i18n';
 
 const { locale, messages } = geti18n();
 
