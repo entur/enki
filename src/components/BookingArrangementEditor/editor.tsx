@@ -20,6 +20,7 @@ import {
   InputGroup,
   TextArea,
   TextField,
+  Fieldset,
 } from '@entur/form';
 import Contact from 'model/Contact';
 import { Dropdown } from '@entur/dropdown';
@@ -263,35 +264,33 @@ export default (props: Props) => {
           />
         </RadioGroup>
 
-        <InputGroup label={formatMessage('bookingMethodSelectionTitle')}>
+        <Fieldset label={formatMessage('bookingMethodSelectionTitle')}>
           <div className="filter-chip-list">
             {Object.values(BOOKING_METHOD).map((v) => (
               <FilterChip
                 value={v}
                 key={v}
-                checked={bookingMethods?.includes(v)}
                 onClick={() => onBookingMethodChange(v)}
               >
                 {formatMessage(bookingMethodMessages[v])}
               </FilterChip>
             ))}
           </div>
-        </InputGroup>
+        </Fieldset>
 
-        <InputGroup label={formatMessage('paymentSelectionTitle')}>
+        <Fieldset label={formatMessage('paymentSelectionTitle')}>
           <div className="filter-chip-list">
             {Object.values(PURCHASE_MOMENT).map((v) => (
               <FilterChip
                 value={v}
                 key={v}
-                checked={buyWhen?.includes(v)}
                 onClick={() => onPurchaseMomentChange(v)}
               >
                 {formatMessage(paymentTimeMessages[v])}
               </FilterChip>
             ))}
           </div>
-        </InputGroup>
+        </Fieldset>
       </section>
     </div>
   );
