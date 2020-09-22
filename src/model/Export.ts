@@ -5,6 +5,7 @@ import token from 'http/token';
 import { VersionedType } from 'model/VersionedType';
 import { EXPORT_STATUS } from 'model/enums';
 import Line from './Line';
+import { format } from 'date-fns';
 
 export type ExportLineAssociation = VersionedType & {
   lineRef?: string;
@@ -20,6 +21,11 @@ export type Export = VersionedType & {
   downloadUrl?: string;
   messages?: Message[];
   lineAssociations?: ExportLineAssociation[];
+};
+
+export const newExport = (): Export => {
+  const today = format(new Date(), 'yyyy-MM-dd');
+  return { name: '', fromDate: today, toDate: today, dryRun: false };
 };
 
 export const toPayload = (selectedExport: Export): Export => {

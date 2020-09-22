@@ -11,7 +11,7 @@ import OverlayLoader from 'components/OverlayLoader';
 import { AppIntlState, selectIntl } from 'i18n';
 import { RouteComponentProps } from 'react-router';
 import { exportIsValid, toDateIsBeforeFromDate } from './validateForm';
-import { Export, ExportLineAssociation } from 'model/Export';
+import { Export, ExportLineAssociation, newExport } from 'model/Export';
 import { GlobalState } from 'reducers';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -25,11 +25,6 @@ import './styles.scss';
 import LinesForExport from 'components/LinesForExport';
 import { parseISO } from 'date-fns';
 import { isBefore, isAfter } from 'date-fns';
-
-const newExport = (): Export => {
-  const today = moment().format('YYYY-MM-DD');
-  return { name: '', fromDate: today, toDate: today, dryRun: false };
-};
 
 const ExportsCreator = ({ history }: RouteComponentProps) => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
