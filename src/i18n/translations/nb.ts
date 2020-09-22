@@ -68,20 +68,24 @@ export const messages = {
   appTitle: 'Nplan',
   exportsCreateExportButtonLabel: 'Opprett eksport',
   defaultOption: 'Vennligst velg',
-  creatorDryRunFormLabel: 'Tørrkjøring',
-  creatorDryRunFormLabelTooltip:
+  exportCreatorDryRunFormLabel: 'Tørrkjøring',
+  exportCreatorDryRunFormLabelTooltip:
     'Eksporterer ikke tilbudet til reisesøk, men genererer en NeTEx-fil man kan se på',
-  creatorFromDateFormLabel: 'Fra dato *',
-  creatorHeader: 'Opprett eksport',
-  creatorDescription:
+  exportCreatorFromDateFormLabel: 'Fra dato *',
+  exportCreatorHeader: 'Opprett eksport',
+  exportCreatorDescription:
     'Eksportér tilbud, slik at de blir tilgjengelige i reisesøk',
-  creatorNameFormLabel: 'Navn *',
-  creatorSaveButtonLabelText: 'Opprett eksport',
-  creatorSavingOverlayLoaderText: 'Lagrer eksporten...',
-  creatorToDateFormLabel: 'Til dato *',
-  creatorDateForExport: 'Dato for eksport',
-  creatorDateForExportDesc:
-    'Eksportér tilbud som har tilgjengelighet innenfor dette datospennet',
+  exportCreatorNameFormLabel: 'Navn *',
+  exportCreatorSaveButtonLabelText: 'Opprett eksport',
+  exportCreatorSavingOverlayLoaderText: 'Lagrer eksporten...',
+  exportCreatorToDateFormLabel: 'Til dato *',
+  exportCreatorDateForExport: 'Dato for eksport',
+  exportCreatorDateForExportDesc:
+    'Eksportér tilbud som har tilgjengelighet innenfor denne perioden',
+  exportCreatorLinesForExportHeader: 'Velg linjer som skal eksporteres',
+  exportCreatorLinesForExportTableLineHeader: 'Linje',
+  exportCreatorLinesForExportTableStatusHeader: 'Status',
+  exportCreatorLinesForExportTableAvailabilityHeader: 'Tilgjengelighet',
   validateFormErrorExportFromDateIsAfterToDate:
     'Til-dato må være etter fra-dato',
   validateFormErrorExportNameIsEmpty: 'Navn må fylles ut.',

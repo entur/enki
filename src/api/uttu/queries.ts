@@ -440,3 +440,42 @@ export const LINE_EDITOR_QUERY = gql`
   ${LineEditorPage.fragments.line}
   ${LineEditorPage.fragments.networks}
 `;
+
+const ExportPage = {
+  fragments: {
+    journeyPatterns: gql`
+      fragment ExportPageJourneyPatterns on JourneyPattern {
+        serviceJourneys {
+          dayTypes {
+            dayTypeAssignments {
+              operatingPeriod {
+                fromDate
+                toDate
+              }
+            }
+          }
+        }
+      }
+    `,
+  },
+};
+
+export const GET_LINES_FOR_EXPORT = gql`
+  query GetLinesForExport {
+    lines {
+      id
+      name
+      journeyPatterns {
+        ...ExportPageJourneyPatterns
+      }
+    }
+    flexibleLines {
+      id
+      name
+      journeyPatterns {
+        ...ExportPageJourneyPatterns
+      }
+    }
+  }
+  ${ExportPage.fragments.journeyPatterns}
+`;

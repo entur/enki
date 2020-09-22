@@ -10,8 +10,8 @@ import { saveExport } from 'actions/exports';
 import OverlayLoader from 'components/OverlayLoader';
 import { AppIntlState, selectIntl } from 'i18n';
 import { RouteComponentProps } from 'react-router';
-import { exportIsValid, toDateIsAfterFromDate } from './validateForm';
-import { Export } from 'model/Export';
+import { exportIsValid, toDateIsBeforeFromDate } from './validateForm';
+import { Export, ExportLineAssociation, newExport } from 'model/Export';
 import { GlobalState } from 'reducers';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -22,11 +22,9 @@ import { Heading4, LeadParagraph, SubParagraph } from '@entur/typography';
 import { Tooltip } from '@entur/tooltip';
 import { QuestionIcon } from '@entur/icons';
 import './styles.scss';
-
-const newExport = (): Export => {
-  const today = moment().format('YYYY-MM-DD');
-  return { name: '', fromDate: today, toDate: today, dryRun: false };
-};
+import LinesForExport from 'components/LinesForExport';
+import { parseISO } from 'date-fns';
+import { isBefore, isAfter } from 'date-fns';
 
 const ExportsCreator = ({ history }: RouteComponentProps) => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
@@ -49,7 +47,10 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
     setSaveClicked(true);
   };
 
-  const onFieldChange = (field: keyof Export, value: string | boolean) => {
+  const onFieldChange = (
+    field: keyof Export,
+    value: string | boolean | ExportLineAssociation[]
+  ) => {
     setTheExport({ ...theExport, [field]: value });
   };
 
@@ -57,18 +58,20 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
     <Page
       className="export-editor"
       backButtonTitle={formatMessage('navBarExportsMenuItemLabel')}
-      title={formatMessage('creatorHeader')}
+      title={formatMessage('exportCreatorHeader')}
     >
       <OverlayLoader
         className=""
         isLoading={isSaving}
-        text={formatMessage('creatorSavingOverlayLoaderText')}
+        text={formatMessage('exportCreatorSavingOverlayLoaderText')}
       >
-        <LeadParagraph>{formatMessage('creatorDescription')}</LeadParagraph>
+        <LeadParagraph>
+          {formatMessage('exportCreatorDescription')}
+        </LeadParagraph>
         <RequiredInputMarker />
         <InputGroup
           className="export-name"
-          label={formatMessage('creatorNameFormLabel')}
+          label={formatMessage('exportCreatorNameFormLabel')}
           {...getErrorFeedback(
             formatMessage('validateFormErrorExportNameIsEmpty'),
             !isBlank(theExport.name),
@@ -83,32 +86,70 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           />
         </InputGroup>
 
-        <Heading4>{formatMessage('creatorDateForExport')}</Heading4>
-        <SubParagraph>{formatMessage('creatorDateForExportDesc')}</SubParagraph>
+        <Heading4>{formatMessage('exportCreatorDateForExport')}</Heading4>
+        <SubParagraph>
+          {formatMessage('exportCreatorDateForExportDesc')}
+        </SubParagraph>
         <div className="export-dates">
-          <InputGroup label={formatMessage('creatorFromDateFormLabel')}>
+          <InputGroup label={formatMessage('exportCreatorFromDateFormLabel')}>
             <DatePicker
               selectedDate={moment(theExport.fromDate).toDate()}
-              onChange={(date: Date | null) =>
-                onFieldChange('fromDate', dateToString(date))
-              }
+              onChange={(date: Date | null) => {
+                if (
+                  date &&
+                  theExport.toDate &&
+                  isAfter(date, parseISO(theExport.toDate))
+                ) {
+                  setTheExport({
+                    ...theExport,
+                    fromDate: dateToString(date),
+                    toDate: dateToString(date),
+                  });
+                } else {
+                  onFieldChange('fromDate', dateToString(date));
+                }
+              }}
             />
           </InputGroup>
           <InputGroup
-            label={formatMessage('creatorToDateFormLabel')}
+            label={formatMessage('exportCreatorToDateFormLabel')}
             {...getErrorFeedback(
               formatMessage('validateFormErrorExportFromDateIsAfterToDate'),
-              toDateIsAfterFromDate(theExport.fromDate, theExport.toDate),
+              !toDateIsBeforeFromDate(theExport.fromDate, theExport.toDate),
               toDatePristine
             )}
           >
             <DatePicker
               selectedDate={moment(theExport.toDate).toDate()}
-              onChange={(date: Date | null) =>
-                onFieldChange('toDate', dateToString(date))
-              }
+              onChange={(date: Date | null) => {
+                if (
+                  date &&
+                  theExport.fromDate &&
+                  isBefore(date, parseISO(theExport.fromDate))
+                ) {
+                  setTheExport({
+                    ...theExport,
+                    fromDate: dateToString(date),
+                    toDate: dateToString(date),
+                  });
+                } else {
+                  onFieldChange('toDate', dateToString(date));
+                }
+              }}
             />
           </InputGroup>
+        </div>
+        <div className="export-lines-table">
+          <Heading4>
+            {formatMessage('exportCreatorLinesForExportHeader')}
+          </Heading4>
+          <LinesForExport
+            fromDate={theExport.fromDate}
+            toDate={theExport.toDate}
+            onChange={(lines) => {
+              onFieldChange('lineAssociations', lines);
+            }}
+          />
         </div>
         <div className="export-dry-run">
           <Checkbox
@@ -118,11 +159,11 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
               onFieldChange('dryRun', e.target.checked)
             }
           >
-            {formatMessage('creatorDryRunFormLabel')}
+            {formatMessage('exportCreatorDryRunFormLabel')}
           </Checkbox>
           <Tooltip
             placement="right"
-            content={formatMessage('creatorDryRunFormLabelTooltip')}
+            content={formatMessage('exportCreatorDryRunFormLabelTooltip')}
           >
             <span className="question-icon">
               <QuestionIcon />
@@ -130,7 +171,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           </Tooltip>
         </div>
         <SuccessButton className="export-save" onClick={handleOnSaveClick}>
-          {formatMessage('creatorSaveButtonLabelText')}
+          {formatMessage('exportCreatorSaveButtonLabelText')}
         </SuccessButton>
       </OverlayLoader>
     </Page>

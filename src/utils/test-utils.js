@@ -4,9 +4,11 @@ import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { intlReducer as intl } from 'react-intl-redux';
 import thunk from 'redux-thunk';
-import reducers from '../reducers';
 import { getIntl } from 'i18n';
+import reducers from '../reducers';
+import { geti18n } from 'i18n';
 
+const { locale, messages } = geti18n();
 const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
 const enhancer = applyMiddleware(...middlewares);
 
@@ -18,7 +20,13 @@ const combinedReducers = combineReducers({
 function render(
   ui,
   {
-    initialState,
+    initialState = {
+      intl: {
+        locale,
+        messages,
+      },
+      user: {},
+    },
     store = createStore(combinedReducers, initialState, enhancer),
     ...renderOptions
   } = {}
