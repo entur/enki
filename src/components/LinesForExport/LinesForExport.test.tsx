@@ -2,7 +2,7 @@ import React from 'react';
 import { render, act } from 'utils/test-utils';
 import { MockedProvider } from '@apollo/client/testing';
 
-import LinesForExport from './';
+import LinesForExport from '.';
 import { MemoryRouter } from 'react-router-dom';
 
 import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
@@ -101,7 +101,6 @@ it('renders without crashing', async () => {
   render(
     <MockedProvider
       mocks={mocks}
-      useTypeName={false}
       defaultOptions={{
         watchQuery: { fetchPolicy: 'no-cache' },
         query: { fetchPolicy: 'no-cache' },
