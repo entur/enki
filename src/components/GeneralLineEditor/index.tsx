@@ -86,7 +86,7 @@ export default ({
           pointsInSequence: [{}, {}],
         })
       ),
-      flexibleLineType,
+      flexibleLineType: newFlexibleLineType,
     });
   };
 
