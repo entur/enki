@@ -1,5 +1,5 @@
 # Enki
-[![CircleCI](https://circleci.com/gh/entur/enki.svg?style=svg)](https://circleci.com/gh/entur/enki) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=entur_enki&metric=alert_status)](https://sonarcloud.io/dashboard?id=entur_enki) [![Known Vulnerabilities](https://snyk.io/test/github/entur/enki/badge.svg)](https://snyk.io/test/github/entur/enki)
+[![CircleCI](https://circleci.com/gh/entur/enki.svg?style=svg)](https://circleci.com/gh/entur/enki) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=entur_enki&metric=alert_status)](https://sonarcloud.io/dashboard?id=entur_enki) [![Known Vulnerabilities](https://snyk.io/test/github/entur/flexible-transport/badge.svg)](https://snyk.io/test/github/entur/flexible-transport)
 
 Frontend app for Nplan - a simple timetable editor. Backend is [Uttu](https://github.com/entur/uttu).
 
