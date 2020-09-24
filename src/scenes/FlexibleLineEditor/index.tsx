@@ -80,7 +80,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     providers,
   } = useSelector<GlobalState, GlobalState>((s) => s);
 
-  const isLoadingDependencies = useLoadDependencies({
+  const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies({
     match: props.match,
     history: props.history,
   } as RouteComponentProps<MatchParams>);
@@ -129,6 +129,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     dispatch(saveFlexibleLine(line))
       .then(() => dispatch(setSavedChanges(true)))
       .then(() => !isEdit && goToLines())
+      .then(() => isEdit && refetchFlexibleLine())
       // noop just catching to avoid unhandled rejection
       // error message is handled upstream
       .catch(() => {})
