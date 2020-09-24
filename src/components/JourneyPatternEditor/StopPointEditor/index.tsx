@@ -111,7 +111,7 @@ const StopPointEditor = ({
       <div className="stop-point-element">
         <div className="stop-point-key-info">
           <Paragraph>{index + 1}</Paragraph>
-          {flexibleLineType && (
+          {flexibleLineType && flexibleLineType !== 'flexibleAreasOnly' && (
             <RadioGroup
               name={`stopPointMode-${index}`}
               value={selectMode}
