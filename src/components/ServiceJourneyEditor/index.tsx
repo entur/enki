@@ -265,7 +265,6 @@ const ServiceJourneyEditor = (props: Props) => {
             stopPoints={stopPoints}
             onChange={(pts) => onFieldChange('passingTimes', pts)}
             spoilPristine={spoilPristine}
-            flexibleLineType={flexibleLineType}
           />
         </section>
       </div>

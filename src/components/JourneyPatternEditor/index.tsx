@@ -11,7 +11,6 @@ import AddButton from 'components/AddButton/AddButton';
 import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import JourneyPattern from 'model/JourneyPattern';
-import FlexibleAreasOnlyEditor from './FlexibleAreasStopPointsEditor';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
@@ -89,17 +88,6 @@ const JourneyPatternEditor = ({
       ),
     });
 
-  const updateStopPoints = (stopPoints: StopPoint[]) => {
-    onJourneyPatternChange({
-      ...journeyPattern,
-      pointsInSequence: stopPoints,
-      serviceJourneys: serviceJourneys.map((serviceJourney) => {
-        const [firstTime, secondTime] = serviceJourney.passingTimes;
-        return { ...serviceJourney, passingTimes: [firstTime, secondTime] };
-      }),
-    });
-  };
-
   const keys = useUniqueKeys(pointsInSequence);
 
   return (
@@ -115,54 +103,37 @@ const JourneyPatternEditor = ({
         </section>
 
         <section style={{ marginTop: '2em' }}>
-          <Heading3>
-            {formatMessage(
-              flexibleLineType === 'flexibleAreasOnly'
-                ? 'editorStopPointFlexibleAreaOnly'
-                : 'editorStopPoints'
-            )}
-          </Heading3>
+          <Heading3>{formatMessage('editorStopPoints')}</Heading3>
           <Paragraph>
             {flexibleLineType
-              ? flexibleLineType !== 'flexibleAreasOnly'
-                ? formatMessage('stopPointsInfo')
-                : ''
+              ? formatMessage('stopPointsInfo')
               : formatMessage('stopPointsInfoFixed')}
           </Paragraph>
           <div className="stop-point-editor">
-            {flexibleLineType === 'flexibleAreasOnly' ? (
-              <FlexibleAreasOnlyEditor
-                stopPoints={pointsInSequence}
-                updateStopPoints={updateStopPoints}
+            {pointsInSequence.map((stopPoint, pointIndex) => (
+              <StopPointEditor
+                key={keys[pointIndex]}
+                index={pointIndex}
+                isFirstStop={pointIndex === 0}
+                stopPoint={stopPoint}
+                errors={validateStopPoint(
+                  stopPoint,
+                  pointIndex === 0,
+                  pointIndex === pointsInSequence.length - 1
+                )}
+                deleteStopPoint={
+                  pointsInSequence.length > 2
+                    ? () => deleteStopPoint(pointIndex)
+                    : undefined
+                }
+                stopPointChange={(updatedStopPoint: StopPoint) =>
+                  updateStopPoint(pointIndex, updatedStopPoint)
+                }
                 flexibleStopPlaces={flexibleStopPlaces}
                 spoilPristine={spoilPristine}
+                flexibleLineType={flexibleLineType}
               />
-            ) : (
-              pointsInSequence.map((stopPoint, pointIndex) => (
-                <StopPointEditor
-                  key={keys[pointIndex]}
-                  index={pointIndex}
-                  isFirstStop={pointIndex === 0}
-                  stopPoint={stopPoint}
-                  errors={validateStopPoint(
-                    stopPoint,
-                    pointIndex === 0,
-                    pointIndex === pointsInSequence.length - 1
-                  )}
-                  deleteStopPoint={
-                    pointsInSequence.length > 2
-                      ? () => deleteStopPoint(pointIndex)
-                      : undefined
-                  }
-                  stopPointChange={(updatedStopPoint: StopPoint) =>
-                    updateStopPoint(pointIndex, updatedStopPoint)
-                  }
-                  flexibleStopPlaces={flexibleStopPlaces}
-                  spoilPristine={spoilPristine}
-                  flexibleLineType={flexibleLineType}
-                />
-              ))
-            )}
+            ))}
           </div>
           {flexibleLineType !== 'flexibleAreasOnly' && (
             <AddButton
