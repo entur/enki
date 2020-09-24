@@ -55,7 +55,9 @@ export const useLoadDependencies = ({
     dispatchLoadFlexibleStopPlaces,
     dispatchLoadFlexibleLineById,
   ]);
-  return (
-    networksIsLoading || flexibleLineIsLoading || flexibleStopPlacesIsLoading
-  );
+  return {
+    isLoadingDependencies:
+      networksIsLoading || flexibleLineIsLoading || flexibleStopPlacesIsLoading,
+    refetchFlexibleLine: dispatchLoadFlexibleLineById,
+  };
 };
