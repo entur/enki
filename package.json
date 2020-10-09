@@ -17,7 +17,7 @@
     "@apollo/client": "3.2.2",
     "@entur/alert": "0.6.8",
     "@entur/button": "2.3.4",
-    "@entur/chip": "0.3.31",
+    "@entur/chip": "0.3.33",
     "@entur/datepicker": "0.3.36",
     "@entur/dropdown": "1.3.14",
     "@entur/expand": "3.2.15",
