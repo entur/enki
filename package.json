@@ -29,7 +29,7 @@
     "@entur/table": "4.1.1",
     "@entur/tokens": "2.0.0",
     "@entur/tooltip": "2.4.5",
-    "@entur/typography": "1.4.1",
+    "@entur/typography": "1.5.0",
     "@formatjs/intl-pluralrules": "1.5.9",
     "@sentry/browser": "5.27.1",
     "@testing-library/jest-dom": "5.11.4",
