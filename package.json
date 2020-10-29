@@ -82,7 +82,7 @@
     "redux-devtools-extension": "2.13.8",
     "redux-sentry-middleware": "0.1.8",
     "redux-thunk": "2.3.0",
-    "snyk": "1.421.0",
+    "snyk": "1.421.1",
     "source-map-explorer": "2.5.0",
     "typescript": "3.8.3",
     "uuid": "3.4.0"
