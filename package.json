@@ -61,7 +61,7 @@
     "helmet": "3.23.3",
     "husky": "3.1.0",
     "jest-sonar-reporter": "2.0.0",
-    "keycloak-js": "4.8.3",
+    "keycloak-js": "11.0.3",
     "leaflet": "1.7.1",
     "lint-staged": "9.5.0",
     "moment": "2.29.1",
