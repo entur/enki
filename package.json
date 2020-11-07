@@ -33,7 +33,7 @@
     "@formatjs/intl-pluralrules": "1.5.9",
     "@sentry/browser": "5.27.3",
     "@testing-library/jest-dom": "5.11.5",
-    "@testing-library/react": "11.1.0",
+    "@testing-library/react": "11.1.1",
     "@types/file-saver": "2.0.1",
     "@types/jest": "25.2.3",
     "@types/leaflet": "1.5.19",
