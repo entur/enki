@@ -31,7 +31,7 @@
     "@entur/tooltip": "2.4.7",
     "@entur/typography": "1.5.0",
     "@formatjs/intl-pluralrules": "1.5.9",
-    "@sentry/browser": "5.27.2",
+    "@sentry/browser": "5.27.3",
     "@testing-library/jest-dom": "5.11.5",
     "@testing-library/react": "11.1.0",
     "@types/file-saver": "2.0.1",
