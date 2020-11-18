@@ -3,7 +3,7 @@ import ServiceJourney from 'model/ServiceJourney';
 import { Modal } from '@entur/modal';
 import { selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
-import { InputGroup, TextField } from '@entur/form';
+import { TextField } from '@entur/form';
 import { SecondaryButton, PrimaryButton } from '@entur/button';
 import {
   replaceElement,
@@ -207,15 +207,12 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
       >
         {formatMessage('newServiceJourneyModalSubTitle')}
         <div className="modal-content">
-          <InputGroup
+          <TextField
             label={formatMessage('newServiceJourneyModalNameLabel')}
             className="modal-input"
-          >
-            <TextField
-              placeholder={formatMessage('newServiceJourneyModalPlaceholder')}
-              ref={textFieldRef}
-            />
-          </InputGroup>
+            placeholder={formatMessage('newServiceJourneyModalPlaceholder')}
+            ref={textFieldRef}
+          />
           <Dropdown
             label={formatMessage('newServiceJourneyModalJourneyPatternLabel')}
             className="modal-input"
