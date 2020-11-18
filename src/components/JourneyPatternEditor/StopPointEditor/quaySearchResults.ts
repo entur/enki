@@ -1,8 +1,8 @@
-import { InputGroupProps } from '@entur/form';
+import { FeedbackTextProps } from '@entur/form';
 import { QuaySearch } from './searchForQuay';
 
 export type QuaySearchResults =
-  | Pick<InputGroupProps, 'variant' | 'feedback'>
+  | Pick<FeedbackTextProps, 'variant' | 'feedback'>
   | undefined;
 
 export function quaySearchResults(
