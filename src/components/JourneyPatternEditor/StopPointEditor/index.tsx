@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { InputGroup, Radio, RadioGroup, TextField } from '@entur/form';
+import { Radio, RadioGroup, TextField } from '@entur/form';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import searchForQuay, { QuaySearch } from './searchForQuay';
 import { quaySearchResults } from './quaySearchResults';
@@ -56,6 +56,8 @@ const StopPointEditor = ({
     undefined
   );
 
+  const [quayRefInputValue, setQuayRefInputValue] = useState(stopPoint.quayRef);
+
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
   const stopPointValue = stopPoint.flexibleStopPlaceRef;
@@ -76,6 +78,10 @@ const StopPointEditor = ({
     }
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    setQuayRefInputValue(stopPoint.quayRef);
+  }, [stopPoint.quayRef]);
 
   const debouncedSearchForQuay = useCallback(
     debounce(async (quayRef: string) => {
@@ -157,8 +163,8 @@ const StopPointEditor = ({
           )}
 
           {selectMode === 'nsr' && (
-            <InputGroup
-              className="nsr-input-group"
+            <TextField
+              className="stop-point-info-item"
               label={formatMessage('labelQuayRef')}
               {...getErrorFeedback(
                 stopPlaceError ? formatMessage(stopPlaceError) : '',
@@ -166,21 +172,20 @@ const StopPointEditor = ({
                 quayRefPristine
               )}
               {...quaySearchResults(quaySearch)}
-            >
-              <TextField
-                defaultValue={stopPoint.quayRef}
-                placeholder="NSR:Quay:69"
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  debouncedSearchForQuay(e.target.value)
-                }
-                onBlur={(e: ChangeEvent<HTMLInputElement>) =>
-                  stopPointChange({ ...stopPoint, quayRef: e.target.value })
-                }
-              />
-            </InputGroup>
+              value={quayRefInputValue}
+              placeholder="NSR:Quay:69"
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setQuayRefInputValue(e.target.value);
+                debouncedSearchForQuay(e.target.value);
+              }}
+              onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+                stopPointChange({ ...stopPoint, quayRef: e.target.value })
+              }
+            />
           )}
 
-          <InputGroup
+          <TextField
+            className="stop-point-info-item"
             label={formatMessage(
               isFirstStop ? 'labelFrontTextRequired' : 'labelFrontText'
             )}
@@ -190,19 +195,17 @@ const StopPointEditor = ({
               frontTextPristine
             )}
             labelTooltip={formatMessage('frontTextTooltip')}
-          >
-            <TextField
-              defaultValue={frontTextValue}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                stopPointChange({
-                  ...stopPoint,
-                  destinationDisplay: { frontText: e.target.value },
-                })
-              }
-            />
-          </InputGroup>
+            value={frontTextValue}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              stopPointChange({
+                ...stopPoint,
+                destinationDisplay: { frontText: e.target.value },
+              })
+            }
+          />
+
           <Dropdown
-            className="stop-point-dropdown"
+            className="stop-point-info-item"
             label={formatMessage('labelBoarding')}
             initialSelectedItem={convertBoardingToDropdown(stopPoint)}
             placeholder={formatMessage('defaultOption')}

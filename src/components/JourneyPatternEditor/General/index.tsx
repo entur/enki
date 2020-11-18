@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
-import { InputGroup, TextField } from '@entur/form';
+import { TextField } from '@entur/form';
 import { isBlank } from 'helpers/forms';
 import { selectIntl } from 'i18n';
 import JourneyPattern from 'model/JourneyPattern';
@@ -21,42 +21,35 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
 
   return (
     <div className="journey-pattern-inputs">
-      <InputGroup
+      <TextField
         label={formatMessage('generalNameLabel')}
         {...getErrorFeedback(
           formatMessage('generalValidationName'),
           !isBlank(journeyPattern.name),
           namePristine
         )}
-      >
-        <TextField
-          defaultValue={journeyPattern.name}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onFieldChange({ ...journeyPattern, name: e.target.value })
-          }
-        />
-      </InputGroup>
+        value={journeyPattern.name}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          onFieldChange({ ...journeyPattern, name: e.target.value })
+        }
+      />
 
-      <InputGroup label={formatMessage('generalDescriptionLabel')}>
-        <TextField
-          value={journeyPattern.description || ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onFieldChange({ ...journeyPattern, description: e.target.value })
-          }
-        />
-      </InputGroup>
+      <TextField
+        label={formatMessage('generalDescriptionLabel')}
+        value={journeyPattern.description || ''}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          onFieldChange({ ...journeyPattern, description: e.target.value })
+        }
+      />
 
-      <InputGroup
+      <TextField
         label={formatMessage('generalPrivateCodeLabel')}
         labelTooltip={formatMessage('generalPrivateCodeLabelTooltip')}
-      >
-        <TextField
-          value={journeyPattern.privateCode || ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onFieldChange({ ...journeyPattern, privateCode: e.target.value })
-          }
-        />
-      </InputGroup>
+        value={journeyPattern.privateCode || ''}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          onFieldChange({ ...journeyPattern, privateCode: e.target.value })
+        }
+      />
     </div>
   );
 };

@@ -14,14 +14,7 @@ import {
   BOOKING_LIMIT_TYPE,
 } from 'model/enums';
 import { LeadParagraph, Label } from '@entur/typography';
-import {
-  RadioGroup,
-  Radio,
-  InputGroup,
-  TextArea,
-  TextField,
-  Fieldset,
-} from '@entur/form';
+import { RadioGroup, Radio, TextArea, TextField, Fieldset } from '@entur/form';
 import Contact from 'model/Contact';
 import { Dropdown } from '@entur/dropdown';
 import { FilterChip } from '@entur/chip';
@@ -117,66 +110,59 @@ export default (props: Props) => {
 
       {bookingInfoAttachmentType && bookingInfoAttachmentName && (
         <section className="booking-contact-info">
-          <InputGroup
+          <TextField
             label={bookingInfoAttachmentLabel(bookingInfoAttachmentType)}
-          >
-            <TextField defaultValue={bookingInfoAttachmentName} disabled />
-          </InputGroup>
+            value={bookingInfoAttachmentName}
+            disabled
+          />
         </section>
       )}
 
       <section className="booking-contact-info">
-        <InputGroup label={formatMessage('contactFieldsContactPersonTitle')}>
-          <TextField
-            defaultValue={bookingContact?.contactPerson ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onContactChange({
-                ...bookingContact,
-                contactPerson: e.target.value,
-              })
-            }
-          />
-        </InputGroup>
+        <TextField
+          label={formatMessage('contactFieldsContactPersonTitle')}
+          defaultValue={bookingContact?.contactPerson ?? ''}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onContactChange({
+              ...bookingContact,
+              contactPerson: e.target.value,
+            })
+          }
+        />
 
-        <InputGroup label={formatMessage('contactFieldsEmailTitle')}>
-          <TextField
-            defaultValue={bookingContact?.email ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onContactChange({ ...bookingContact, email: e.target.value })
-            }
-          />
-        </InputGroup>
+        <TextField
+          label={formatMessage('contactFieldsEmailTitle')}
+          defaultValue={bookingContact?.email ?? ''}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onContactChange({ ...bookingContact, email: e.target.value })
+          }
+        />
 
-        <InputGroup label={formatMessage('contactFieldsPhoneTitle')}>
-          <TextField
-            defaultValue={bookingContact?.phone ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onContactChange({ ...bookingContact, phone: e.target.value })
-            }
-          />
-        </InputGroup>
+        <TextField
+          label={formatMessage('contactFieldsPhoneTitle')}
+          defaultValue={bookingContact?.phone ?? ''}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onContactChange({ ...bookingContact, phone: e.target.value })
+          }
+        />
 
-        <InputGroup label={formatMessage('contactFieldsUrlTitle')}>
-          <TextField
-            defaultValue={bookingContact?.url ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onContactChange({ ...bookingContact, url: e.target.value })
-            }
-          />
-        </InputGroup>
+        <TextField
+          label={formatMessage('contactFieldsUrlTitle')}
+          value={bookingContact?.url ?? ''}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onContactChange({ ...bookingContact, url: e.target.value })
+          }
+        />
 
-        <InputGroup
+        <TextArea
           label={formatMessage('bookingNoteFieldTitle')}
           labelTooltip={formatMessage('bookingNoteTooltip')}
           style={{ width: '100%' }}
-        >
-          <TextArea
-            value={bookingNote ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onChange({ ...bookingArrangement, bookingNote: e.target.value })
-            }
-          />
-        </InputGroup>
+          value={bookingNote ?? ''}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onChange({ ...bookingArrangement, bookingNote: e.target.value })
+          }
+        />
 
         <Dropdown
           label={formatMessage('bookingAccessSelectionTitle')}
@@ -192,17 +178,16 @@ export default (props: Props) => {
           }
         />
 
-        <InputGroup label={formatMessage('contactFieldsFurtherDetailsTitle')}>
-          <TextField
-            defaultValue={bookingContact?.furtherDetails ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onContactChange({
-                ...bookingContact,
-                furtherDetails: e.target.value,
-              })
-            }
-          />
-        </InputGroup>
+        <TextField
+          label={formatMessage('contactFieldsFurtherDetailsTitle')}
+          value={bookingContact?.furtherDetails || ''}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onContactChange({
+              ...bookingContact,
+              furtherDetails: e.target.value,
+            })
+          }
+        />
       </section>
 
       <section className="booking-time-info">

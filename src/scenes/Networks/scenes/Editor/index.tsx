@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { InputGroup, TextArea, TextField } from '@entur/form';
+import { TextArea, TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
 import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { Paragraph } from '@entur/typography';
@@ -147,7 +147,8 @@ const NetworkEditor = ({
           >
             <div className="network-form">
               <RequiredInputMarker />
-              <InputGroup
+
+              <TextField
                 className="form-section"
                 label={formatMessage('editorNameLabelText')}
                 {...getErrorFeedback(
@@ -155,36 +156,30 @@ const NetworkEditor = ({
                   !isBlank(network.name),
                   namePristine
                 )}
-              >
-                <TextField
-                  defaultValue={network.name ?? ''}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onFieldChange('name', e.target.value)
-                  }
-                />
-              </InputGroup>
-              <InputGroup
+                value={network.name ?? ''}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('name', e.target.value)
+                }
+              />
+
+              <TextArea
                 className="form-section"
                 label={formatMessage('editorDescriptionLabelText')}
-              >
-                <TextArea
-                  value={network.description ?? ''}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onFieldChange('description', e.target.value)
-                  }
-                />
-              </InputGroup>
-              <InputGroup
+                value={network.description ?? ''}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('description', e.target.value)
+                }
+              />
+
+              <TextField
                 className="form-section"
                 label={formatMessage('editorPrivateCodeLabelText')}
-              >
-                <TextField
-                  value={network.privateCode ?? ''}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onFieldChange('privateCode', e.target.value)
-                  }
-                />
-              </InputGroup>
+                value={network.privateCode ?? ''}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('privateCode', e.target.value)
+                }
+              />
+
               <Dropdown
                 className="form-section"
                 initialSelectedItem={getInit(authorities, network.authorityRef)}

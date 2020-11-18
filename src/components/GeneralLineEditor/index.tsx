@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
-import { InputGroup, TextField } from '@entur/form';
+import { TextField } from '@entur/form';
 import { Heading1 } from '@entur/typography';
 import {
   FLEXIBLE_LINE_TYPE,
@@ -95,70 +95,60 @@ export default ({
       <Heading1> {formatMessage('editorAbout')}</Heading1>
       <RequiredInputMarker />
       <section className="inputs">
-        <InputGroup
+        <TextField
           label={formatMessage('generalNameFormGroupTitle')}
+          value={flexibleLine.name}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            flexibleLineChange({ ...flexibleLine, name: e.target.value })
+          }
           {...getErrorFeedback(
             formatMessage('nameEmpty'),
             !isBlank(flexibleLine.name),
             namePristine
           )}
-        >
-          <TextField
-            defaultValue={flexibleLine.name ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              flexibleLineChange({ ...flexibleLine, name: e.target.value })
-            }
-          />
-        </InputGroup>
+        />
 
-        <InputGroup label={formatMessage('generalDescriptionFormGroupTitle')}>
-          <TextField
-            value={flexibleLine.description ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              flexibleLineChange({
-                ...flexibleLine,
-                description: e.target.value,
-              })
-            }
-          />
-        </InputGroup>
+        <TextField
+          label={formatMessage('generalDescriptionFormGroupTitle')}
+          value={flexibleLine.description ?? ''}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            flexibleLineChange({
+              ...flexibleLine,
+              description: e.target.value,
+            })
+          }
+        />
 
-        <InputGroup
+        <TextField
           label={formatMessage('generalPublicCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPublicCodeInputLabelTooltip')}
+          type="text"
+          value={flexibleLine.publicCode}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            flexibleLineChange({
+              ...flexibleLine,
+              publicCode: e.target.value,
+            })
+          }
           {...getErrorFeedback(
             formatMessage('publicCodeEmpty'),
             !isBlank(flexibleLine.publicCode),
             publicCodePristine
           )}
-        >
-          <TextField
-            type="text"
-            defaultValue={flexibleLine.publicCode ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              flexibleLineChange({
-                ...flexibleLine,
-                publicCode: e.target.value,
-              })
-            }
-          />
-        </InputGroup>
+        />
 
-        <InputGroup
+        <TextField
           label={formatMessage('generalPrivateCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPrivateCodeInputLabelTooltip')}
-        >
-          <TextField
-            type="text"
-            value={flexibleLine.privateCode ?? ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              flexibleLineChange({
-                ...flexibleLine,
-                privateCode: e.target.value,
-              })
-            }
-          />
-        </InputGroup>
+          type="text"
+          value={flexibleLine.privateCode ?? ''}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            flexibleLineChange({
+              ...flexibleLine,
+              privateCode: e.target.value,
+            })
+          }
+        />
 
         <Dropdown
           initialSelectedItem={getInit(operators, flexibleLine.operatorRef)}

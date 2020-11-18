@@ -7,7 +7,7 @@ import { LeadParagraph, Heading1 } from '@entur/typography';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Modal } from '@entur/modal';
-import { InputGroup, TextField } from '@entur/form';
+import { TextField } from '@entur/form';
 import { SecondaryButton, PrimaryButton } from '@entur/button';
 import AddButton from 'components/AddButton/AddButton';
 import useUniqueKeys from 'hooks/useUniqueKeys';
@@ -70,15 +70,12 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
       >
         {formatMessage('newJourneyPatternModalSubTitle')}
         <div className="modal-content">
-          <InputGroup
+          <TextField
             label={formatMessage('newJourneyPatternModalLabel')}
             className="modal-input"
-          >
-            <TextField
-              placeholder={formatMessage('newJourneyPatternModalPlaceholder')}
-              ref={textFieldRef}
-            />
-          </InputGroup>
+            placeholder={formatMessage('newJourneyPatternModalPlaceholder')}
+            ref={textFieldRef}
+          />
           <div>
             <SecondaryButton
               onClick={() => setShowModal(false)}

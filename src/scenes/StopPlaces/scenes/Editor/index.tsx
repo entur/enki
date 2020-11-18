@@ -2,7 +2,7 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { InputGroup, TextArea, TextField } from '@entur/form';
+import { TextArea, TextField } from '@entur/form';
 import {
   PrimaryButton,
   NegativeButton,
@@ -237,54 +237,47 @@ const FlexibleStopPlaceEditor = ({
             <div className="stop-place-form-container">
               <div className="stop-place-form">
                 <RequiredInputMarker />
-                <InputGroup
+
+                <TextField
                   label={formatMessage('editorNameFormLabelText')}
                   {...getErrorFeedback(
                     errors.name ? formatMessage(errors.name) : '',
                     !errors.name,
                     namePristine
                   )}
-                >
-                  <TextField
-                    defaultValue={name}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setFlexibleStopPlace({
-                        ...flexibleStopPlace,
-                        name: e.target.value,
-                      })
-                    }
-                  />
-                </InputGroup>
-                <InputGroup
+                  value={name}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFlexibleStopPlace({
+                      ...flexibleStopPlace,
+                      name: e.target.value,
+                    })
+                  }
+                />
+
+                <TextArea
                   label={formatMessage('editorDescriptionFormLabelText')}
-                >
-                  <TextArea
-                    type="text"
-                    value={flexibleStopPlace.description ?? ''}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setFlexibleStopPlace({
-                        ...flexibleStopPlace,
-                        description: e.target.value,
-                      })
-                    }
-                  />
-                </InputGroup>
+                  type="text"
+                  value={flexibleStopPlace.description ?? ''}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFlexibleStopPlace({
+                      ...flexibleStopPlace,
+                      description: e.target.value,
+                    })
+                  }
+                />
 
-                <InputGroup
+                <TextField
                   label={formatMessage('editorPrivateCodeFormLabelText')}
-                >
-                  <TextField
-                    value={flexibleStopPlace.privateCode ?? ''}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setFlexibleStopPlace({
-                        ...flexibleStopPlace,
-                        privateCode: e.target.value,
-                      })
-                    }
-                  />
-                </InputGroup>
+                  value={flexibleStopPlace.privateCode ?? ''}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFlexibleStopPlace({
+                      ...flexibleStopPlace,
+                      privateCode: e.target.value,
+                    })
+                  }
+                />
 
-                <InputGroup
+                <TextArea
                   label={formatMessage('editorCoordinatesFormLabelText')}
                   variant={
                     coordinateHolder === '' ||
@@ -293,23 +286,21 @@ const FlexibleStopPlaceEditor = ({
                       : 'error'
                   }
                   feedback={formatMessage('errorCoordinates')}
-                >
-                  <TextArea
-                    rows="12"
-                    value={coordinateHolder}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setCoordinateHolder(e.target.value)
-                    }
-                    onBlur={(e: ChangeEvent<HTMLInputElement>) =>
-                      stringIsValidCoordinates(coordinateHolder)
-                        ? changeCoordinates(
-                            transformTextToCoordinates(e.target.value)
-                          )
-                        : undefined
-                    }
-                    placeholder={coordinatesPlaceholder}
-                  />
-                </InputGroup>
+                  rows="12"
+                  value={coordinateHolder}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setCoordinateHolder(e.target.value)
+                  }
+                  onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+                    stringIsValidCoordinates(coordinateHolder)
+                      ? changeCoordinates(
+                          transformTextToCoordinates(e.target.value)
+                        )
+                      : undefined
+                  }
+                  placeholder={coordinatesPlaceholder}
+                />
+
                 <PrimaryButton
                   className="draw-polygon-button"
                   onClick={handleDrawPolygonClick}

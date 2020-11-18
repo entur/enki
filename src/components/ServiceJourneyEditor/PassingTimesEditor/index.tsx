@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { TimePicker } from '@entur/datepicker';
-import { InputGroup } from '@entur/form';
 import { ClockIcon } from '@entur/icons';
 import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
@@ -76,27 +75,27 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     label: string
   ) => {
     return (
-      <InputGroup label={label} className="timepicker">
-        <TimePicker
-          onChange={(e: Date | null) => {
-            const date = e?.toTimeString().split(' ')[0];
+      <TimePicker
+        label={label}
+        className="timepicker"
+        onChange={(e: Date | null) => {
+          const date = e?.toTimeString().split(' ')[0];
 
-            onChange(
-              changeElementAtIndex(
-                passingTimes,
-                {
-                  ...passingTimes[index],
-                  departureTime: date,
-                  arrivalTime: date,
-                },
-                index
-              )
-            );
-          }}
-          prepend={<ClockIcon inline />}
-          selectedTime={toDate(passingTime.departureTime)}
-        />
-      </InputGroup>
+          onChange(
+            changeElementAtIndex(
+              passingTimes,
+              {
+                ...passingTimes[index],
+                departureTime: date,
+                arrivalTime: date,
+              },
+              index
+            )
+          );
+        }}
+        prepend={<ClockIcon inline />}
+        selectedTime={toDate(passingTime.departureTime)}
+      />
     );
   };
 

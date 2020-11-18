@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Modal } from '@entur/modal';
 import { Label } from '@entur/typography';
-import { TextField, InputGroup, Switch, FeedbackText } from '@entur/form';
+import { TextField, Switch, FeedbackText } from '@entur/form';
 import { ButtonGroup, Button } from '@entur/button';
 import { TimePicker } from '@entur/datepicker';
 import { ClockIcon } from '@entur/icons';
@@ -237,24 +237,22 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
       onDismiss={onDismiss}
       className="copy-dialog"
     >
-      <InputGroup
+      <TextField
         label={formatMessage('copyServiceJourneyDialogNameTemplateLabel')}
         className="copy-dialog-wide-element"
-      >
-        <TextField
-          value={nameTemplate}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setNameTemplate(e.target.value)
-          }
-        />
-      </InputGroup>
+        value={nameTemplate}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setNameTemplate(e.target.value)
+        }
+      />
 
       <div className="copy-dialog-section">
         <div className="copy-dialog-inputs">
-          <InputGroup
-            label={formatMessage('copyServiceJourneyDialogDepartureTimeLabel')}
-            className="copy-dialog-timepicker"
-          >
+          <div className="copy-dialog-timepicker">
+            <Label>
+              {formatMessage('copyServiceJourneyDialogDepartureTimeLabel')}
+            </Label>
+
             <TimePicker
               onChange={(date: Date | null) => {
                 const time = date?.toTimeString().split(' ')[0];
@@ -265,7 +263,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
               prepend={<ClockIcon inline />}
               selectedTime={toDate(initialDepartureTime)}
             />
-          </InputGroup>
+          </div>
           <DayOffsetDropdown
             initialValue={initialDayOffset}
             onChange={(value) => setInitialDayOffset(value!)}
@@ -300,12 +298,12 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           </div>
           <div className="copy-dialog-section">
             <div className="copy-dialog-inputs">
-              <InputGroup
-                className="copy-dialog-timepicker"
-                label={formatMessage(
-                  'copyServiceJourneyDialogLatestPossibleDepartureTimelabel'
-                )}
-              >
+              <div className="copy-dialog-timepicker">
+                <Label>
+                  {formatMessage(
+                    'copyServiceJourneyDialogLatestPossibleDepartureTimelabel'
+                  )}
+                </Label>
                 <TimePicker
                   onChange={(date: Date | null) => {
                     const time = date?.toTimeString().split(' ')[0];
@@ -316,7 +314,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                   prepend={<ClockIcon inline />}
                   selectedTime={toDate(untilTime)}
                 />
-              </InputGroup>
+              </div>
               <DayOffsetDropdown
                 initialValue={untilDayOffset}
                 onChange={(value) => setUntilDayOffset(value!)}

@@ -7,7 +7,6 @@ import { TertiaryButton } from '@entur/button';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import { DatePicker } from '@entur/datepicker';
-import { InputGroup } from '@entur/form';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
@@ -62,29 +61,27 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
       <div className="day-type-assignments-editor">
         {operatingPeriods.map((op, index) => (
           <div key={uniqueKeys[index]} className="day-type-assignment">
-            <InputGroup label={formatMessage('dayTypeEditorFromDate')}>
-              <DatePicker
-                selectedDate={moment(op.fromDate).toDate()}
-                onChange={(date: Date | null) =>
-                  changeDay({ ...op, fromDate: dateJsToIso(date) }, index)
-                }
-              />
-            </InputGroup>
-            <InputGroup
+            <DatePicker
+              label={formatMessage('dayTypeEditorFromDate')}
+              selectedDate={moment(op.fromDate).toDate()}
+              onChange={(date: Date | null) =>
+                changeDay({ ...op, fromDate: dateJsToIso(date) }, index)
+              }
+            />
+
+            <DatePicker
               label={formatMessage('dayTypeEditorToDate')}
               {...getErrorFeedback(
                 formatMessage('dayTypeEditorToDateValidation'),
                 isNotBefore(op.toDate ?? '', op.fromDate ?? ''),
                 false
               )}
-            >
-              <DatePicker
-                selectedDate={moment(op.toDate).toDate()}
-                onChange={(date: Date | null) =>
-                  changeDay({ ...op, toDate: dateJsToIso(date) }, index)
-                }
-              />
-            </InputGroup>
+              selectedDate={moment(op.toDate).toDate()}
+              onChange={(date: Date | null) =>
+                changeDay({ ...op, toDate: dateJsToIso(date) }, index)
+              }
+            />
+
             {dayTypeAssignments.length > 1 && (
               <DeleteButton
                 onClick={() =>
