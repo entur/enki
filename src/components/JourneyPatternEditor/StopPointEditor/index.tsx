@@ -56,7 +56,7 @@ const StopPointEditor = ({
     undefined
   );
 
-  const [quayRef, setQuayRef] = useState(stopPoint.quayRef);
+  const [quayRefInputValue, setQuayRefInputValue] = useState(stopPoint.quayRef);
 
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
@@ -80,7 +80,7 @@ const StopPointEditor = ({
   }, []);
 
   useEffect(() => {
-    setQuayRef(stopPoint.quayRef);
+    setQuayRefInputValue(stopPoint.quayRef);
   }, [stopPoint.quayRef]);
 
   const debouncedSearchForQuay = useCallback(
@@ -172,10 +172,10 @@ const StopPointEditor = ({
                 quayRefPristine
               )}
               {...quaySearchResults(quaySearch)}
-              value={quayRef}
+              value={quayRefInputValue}
               placeholder="NSR:Quay:69"
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setQuayRef(e.target.value);
+                setQuayRefInputValue(e.target.value);
                 debouncedSearchForQuay(e.target.value);
               }}
               onBlur={(e: ChangeEvent<HTMLInputElement>) =>
