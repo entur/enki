@@ -449,7 +449,8 @@ export const messages: MessagesKey = {
   stopPlacesNoStopPlacesFoundText: 'No stop places found.',
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Number of points',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
-  passingTimesPassingTime: 'Passing time *',
+  passingTimesArrivalTime: 'Arrival time',
+  passingTimesDepartureTime: 'Departure time',
   passingTimesDayOffset: 'Day offset',
   passingTimesDayOffsetTooltip:
     'Set day offset if the passing time is a day or more after the departure of the service',

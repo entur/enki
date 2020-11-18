@@ -92,8 +92,6 @@ const ServiceJourneyEditor = (props: Props) => {
     switch (flexibleLineType) {
       case undefined:
         return 'passingTimesInfoFixed';
-      case 'flexibleAreasOnly':
-        return 'businessHoursInfo';
       default:
         return 'passingTimesInfo';
     }
@@ -240,13 +238,7 @@ const ServiceJourneyEditor = (props: Props) => {
           />
         </section>
         <section className="passing-times-section">
-          <Heading4>
-            {formatMessage(
-              flexibleLineType === 'flexibleAreasOnly'
-                ? 'serviceJourneyBusinessHours'
-                : 'serviceJourneyPassingTimes'
-            )}
-          </Heading4>
+          <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
           <Paragraph>{formatMessage(getParagraphMessageKey())}</Paragraph>
           <PassingTimesEditor
             passingTimes={passingTimes ?? []}

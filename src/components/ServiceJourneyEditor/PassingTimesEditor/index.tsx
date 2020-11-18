@@ -47,6 +47,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
     flexibleStopPlaces,
     spoilPristine,
   } = props;
+
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
   const { formatMessage } = useSelector(selectIntl);
 
@@ -72,30 +73,58 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const getTimePicker = (
     passingTime: PassingTime,
     index: number,
-    label: string
+    isLast: boolean
   ) => {
     return (
-      <TimePicker
-        label={label}
-        className="timepicker"
-        onChange={(e: Date | null) => {
-          const date = e?.toTimeString().split(' ')[0];
+      <>
+        <TimePicker
+          disabled={index === 0}
+          label={formatMessage('passingTimesArrivalTime')}
+          className="timepicker"
+          onChange={(e: Date | null) => {
+            const date = e?.toTimeString().split(' ')[0];
 
-          onChange(
-            changeElementAtIndex(
-              passingTimes,
-              {
-                ...passingTimes[index],
-                departureTime: date,
-                arrivalTime: date,
-              },
-              index
-            )
-          );
-        }}
-        prepend={<ClockIcon inline />}
-        selectedTime={toDate(passingTime.departureTime)}
-      />
+            onChange(
+              changeElementAtIndex(
+                passingTimes,
+                {
+                  ...passingTimes[index],
+                  arrivalTime: date,
+                  departureTime: isLast
+                    ? date
+                    : passingTimes[index].departureTime,
+                },
+                index
+              )
+            );
+          }}
+          prepend={<ClockIcon inline />}
+          selectedTime={toDate(passingTime.arrivalTime)}
+        />
+        <TimePicker
+          disabled={isLast}
+          label={formatMessage('passingTimesDepartureTime')}
+          className="timepicker"
+          onChange={(e: Date | null) => {
+            const date = e?.toTimeString().split(' ')[0];
+
+            onChange(
+              changeElementAtIndex(
+                passingTimes,
+                {
+                  ...passingTimes[index],
+                  arrivalTime:
+                    index === 0 ? date : passingTimes[index].arrivalTime,
+                  departureTime: date,
+                },
+                index
+              )
+            );
+          }}
+          prepend={<ClockIcon inline />}
+          selectedTime={toDate(passingTime.departureTime)}
+        />
+      </>
     );
   };
 
@@ -103,7 +132,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
 
   return (
     <>
-      {error.feedback && (
+      {error?.feedback && (
         <SmallAlertBox variant="error">{error.feedback}</SmallAlertBox>
       )}
       <div className="passing-times-editor">
@@ -114,11 +143,7 @@ const PassingTimesEditor = (props: Props & StateProps) => {
               flexibleStopPlaces={flexibleStopPlaces}
               stopPoint={stopPoints[index]}
             />
-            {getTimePicker(
-              passingTime,
-              index,
-              formatMessage('passingTimesPassingTime')
-            )}
+            {getTimePicker(passingTime, index, index === stopPoints.length - 1)}
             {getDayOffsetDropdown(passingTime, index)}
           </div>
         ))}
