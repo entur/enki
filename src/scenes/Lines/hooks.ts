@@ -7,8 +7,8 @@ export const useConfirmDeleteLine = (id: string, callback: () => void) => {
     variables: { id },
   });
 
-  const confirmDeleteLine = useCallback(() => {
-    deleteLine();
+  const confirmDeleteLine = useCallback(async () => {
+    await deleteLine();
     callback();
   }, [callback, deleteLine]);
   return [confirmDeleteLine];
