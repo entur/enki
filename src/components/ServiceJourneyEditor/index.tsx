@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
-import { InputGroup, TextField } from '@entur/form';
+import { TextField } from '@entur/form';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { QuestionIcon } from '@entur/icons';
 import PassingTimesEditor from './PassingTimesEditor';
@@ -107,7 +107,7 @@ const ServiceJourneyEditor = (props: Props) => {
         <RequiredInputMarker />
         <div className="input-group">
           <div className="service-journey-inputs">
-            <InputGroup
+            <TextField
               className="form-section"
               label={formatMessage('generalNameLabel')}
               {...getErrorFeedback(
@@ -115,52 +115,40 @@ const ServiceJourneyEditor = (props: Props) => {
                 !isBlank(name),
                 namePristine
               )}
-            >
-              <TextField
-                defaultValue={name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('name', e.target.value)
-                }
-              />
-            </InputGroup>
+              value={name}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('name', e.target.value)
+              }
+            />
 
-            <InputGroup
+            <TextField
               label={formatMessage('generalDescription')}
               className="form-section"
-            >
-              <TextField
-                defaultValue={description}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('description', e.target.value)
-                }
-              />
-            </InputGroup>
+              value={description}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('description', e.target.value)
+              }
+            />
 
-            <InputGroup
+            <TextField
               label={formatMessage('generalPublicCode')}
               labelTooltip={formatMessage('generalPublicCodeTooltip')}
               className="form-section"
-            >
-              <TextField
-                defaultValue={publicCode}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('publicCode', e.target.value)
-                }
-              />
-            </InputGroup>
+              value={publicCode}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('publicCode', e.target.value)
+              }
+            />
 
-            <InputGroup
+            <TextField
               label={formatMessage('generalPrivateCode')}
               labelTooltip={formatMessage('generalPrivateCodeTooltip')}
               className="form-section"
-            >
-              <TextField
-                defaultValue={privateCode}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('privateCode', e.target.value)
-                }
-              />
-            </InputGroup>
+              value={privateCode}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('privateCode', e.target.value)
+              }
+            />
           </div>
 
           <Dropdown
