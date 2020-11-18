@@ -135,12 +135,10 @@ const JourneyPatternEditor = ({
               />
             ))}
           </div>
-          {flexibleLineType !== 'flexibleAreasOnly' && (
-            <AddButton
-              onClick={addStopPoint}
-              buttonTitle={formatMessage('editorAddStopPoint')}
-            />
-          )}
+          <AddButton
+            onClick={addStopPoint}
+            buttonTitle={formatMessage('editorAddStopPoint')}
+          />
         </section>
       </div>
       {onDelete && (

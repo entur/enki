@@ -446,7 +446,8 @@ export const messages = {
   stopPlacesNoStopPlacesFoundText: 'Ingen stoppesteder ble funnet.',
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Antall punkter',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kode',
-  passingTimesPassingTime: 'Passeringstid *',
+  passingTimesArrivalTime: 'Ankomsttid',
+  passingTimesDepartureTime: 'Avgangstid *',
   passingTimesDayOffset: 'Døgnskille',
   passingTimesDayOffsetTooltip:
     'Sett døgnskille dersom passeringstiden er én eller flere dager senere enn tilbudets avreise',
