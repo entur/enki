@@ -14,6 +14,7 @@ export default ({ initialValue, onChange }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   return (
     <Dropdown
+      style={{ minWidth: '120px' }}
       prepend={<NightIcon inline />}
       initialSelectedItem={getEnumInit(initialValue?.toString() ?? '0')}
       label={formatMessage('passingTimesDayOffset')}
