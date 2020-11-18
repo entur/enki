@@ -1,6 +1,6 @@
-import { InputGroupProps } from '@entur/form';
+import { FeedbackTextProps } from '@entur/form';
 
-type ErrorHandling = Pick<InputGroupProps, 'variant' | 'feedback'>;
+type ErrorHandling = Pick<FeedbackTextProps, 'variant' | 'feedback'> | {};
 export const getErrorFeedback = (
   feedback: string,
   isValid: boolean,
