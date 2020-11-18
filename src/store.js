@@ -10,9 +10,9 @@ import { geti18n, getIntl } from 'i18n';
 import { normalizeAllUrls } from 'helpers/url';
 import { captureException } from '@sentry/browser';
 
-const SENTRY_DSN = 'https://cc3cacbc67234cc7bfe1cf391010414b@sentry.io/1769954';
+const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
 
-const useSentry = process.env.NODE_ENV === 'production';
+const useSentry = process.env.NODE_ENV === 'production' && SENTRY_DSN;
 
 const getMiddlewares = () => {
   const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
