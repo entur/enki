@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { SuccessButton } from '@entur/button';
-import { Checkbox, InputGroup, TextField } from '@entur/form';
+import { Checkbox, TextField } from '@entur/form';
 import { DatePicker } from '@entur/datepicker';
 import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
@@ -69,7 +69,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           {formatMessage('exportCreatorDescription')}
         </LeadParagraph>
         <RequiredInputMarker />
-        <InputGroup
+        <TextField
           className="export-name"
           label={formatMessage('exportCreatorNameFormLabel')}
           {...getErrorFeedback(
@@ -77,67 +77,61 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
             !isBlank(theExport.name),
             namePristine
           )}
-        >
-          <TextField
-            defaultValue={theExport.name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onFieldChange('name', e.target.value)
-            }
-          />
-        </InputGroup>
+          defaultValue={theExport.name}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onFieldChange('name', e.target.value)
+          }
+        />
 
         <Heading4>{formatMessage('exportCreatorDateForExport')}</Heading4>
         <SubParagraph>
           {formatMessage('exportCreatorDateForExportDesc')}
         </SubParagraph>
         <div className="export-dates">
-          <InputGroup label={formatMessage('exportCreatorFromDateFormLabel')}>
-            <DatePicker
-              selectedDate={moment(theExport.fromDate).toDate()}
-              onChange={(date: Date | null) => {
-                if (
-                  date &&
-                  theExport.toDate &&
-                  isAfter(date, parseISO(theExport.toDate))
-                ) {
-                  setTheExport({
-                    ...theExport,
-                    fromDate: dateToString(date),
-                    toDate: dateToString(date),
-                  });
-                } else {
-                  onFieldChange('fromDate', dateToString(date));
-                }
-              }}
-            />
-          </InputGroup>
-          <InputGroup
+          <DatePicker
+            label={formatMessage('exportCreatorFromDateFormLabel')}
+            selectedDate={moment(theExport.fromDate).toDate()}
+            onChange={(date: Date | null) => {
+              if (
+                date &&
+                theExport.toDate &&
+                isAfter(date, parseISO(theExport.toDate))
+              ) {
+                setTheExport({
+                  ...theExport,
+                  fromDate: dateToString(date),
+                  toDate: dateToString(date),
+                });
+              } else {
+                onFieldChange('fromDate', dateToString(date));
+              }
+            }}
+          />
+
+          <DatePicker
             label={formatMessage('exportCreatorToDateFormLabel')}
             {...getErrorFeedback(
               formatMessage('validateFormErrorExportFromDateIsAfterToDate'),
               !toDateIsBeforeFromDate(theExport.fromDate, theExport.toDate),
               toDatePristine
             )}
-          >
-            <DatePicker
-              selectedDate={moment(theExport.toDate).toDate()}
-              onChange={(date: Date | null) => {
-                if (
-                  date &&
-                  theExport.fromDate &&
-                  isBefore(date, parseISO(theExport.fromDate))
-                ) {
-                  setTheExport({
-                    ...theExport,
-                    fromDate: dateToString(date),
-                    toDate: dateToString(date),
-                  });
-                } else {
-                  onFieldChange('toDate', dateToString(date));
-                }
-              }}
-            />
-          </InputGroup>
+            selectedDate={moment(theExport.toDate).toDate()}
+            onChange={(date: Date | null) => {
+              if (
+                date &&
+                theExport.fromDate &&
+                isBefore(date, parseISO(theExport.fromDate))
+              ) {
+                setTheExport({
+                  ...theExport,
+                  fromDate: dateToString(date),
+                  toDate: dateToString(date),
+                });
+              } else {
+                onFieldChange('toDate', dateToString(date));
+              }
+            }}
+          />
         </div>
         <div className="export-lines-table">
           <Heading4>
