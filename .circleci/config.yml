@@ -138,7 +138,7 @@ workflows:
             - master
     - build:
         name: npm-build
-        context: org-carbon
+        context: global
         requires:
         - npm-install
         filters:
