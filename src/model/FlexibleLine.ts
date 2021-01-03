@@ -8,6 +8,14 @@ type FlexibleLine = Line & {
 
 export const initFlexibleLine = initLine;
 
-export const flexibleLineToPayload = lineToPayload;
+export const flexibleLineToPayload = (line: Line) => {
+  const payload: any = lineToPayload(line);
+
+  if (payload.bookingArrangement === undefined) {
+    payload.bookingArrangement = null;
+  }
+
+  return payload;
+};
 
 export default FlexibleLine;
