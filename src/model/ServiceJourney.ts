@@ -16,4 +16,14 @@ type ServiceJourney = VersionedType & {
   notices?: Notice[];
 };
 
+export const serviceJourneyToPayload = (serviceJourney: ServiceJourney) => {
+  const payload = serviceJourney as any;
+
+  if (payload.bookingArrangement === undefined) {
+    payload.bookingArrangement = null;
+  }
+
+  return payload;
+};
+
 export default ServiceJourney;

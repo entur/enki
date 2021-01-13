@@ -20,7 +20,13 @@ type StopPoint = VersionedType & {
 
 export const stopPointToPayload = (stopPoint: StopPoint) => {
   const { flexibleStopPlace, ...rest } = stopPoint;
-  return rest;
+  const payload = rest as any;
+
+  if (payload.bookingArrangement === undefined) {
+    payload.bookingArrangement = null;
+  }
+
+  return payload;
 };
 
 export default StopPoint;
