@@ -11,6 +11,8 @@ import './styles.scss';
 import JourneyPatternEditor from 'components/JourneyPatternEditor';
 import ServiceJourneys from 'components/ServiceJourneys';
 import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
+import JourneyPattern from 'model/JourneyPattern';
+import ServiceJourney from 'model/ServiceJourney';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
@@ -22,18 +24,48 @@ type Props = RouteComponentProps<MatchParams> & {
 };
 
 const FlexibleLineEditor = (props: Props) => {
+  const onFlexibleLineTypeChange = (
+    newFlexibleLineType: string | undefined
+  ) => {
+    if (newFlexibleLineType !== 'flexibleAreasOnly') {
+      return props.changeFlexibleLine({
+        ...props.flexibleLine,
+        flexibleLineType: newFlexibleLineType,
+      });
+    }
+
+    const journeyPatterns = props.flexibleLine.journeyPatterns ?? [];
+
+    props.changeFlexibleLine({
+      ...props.flexibleLine,
+      journeyPatterns: journeyPatterns.map(
+        (journeyPattern: JourneyPattern) => ({
+          ...journeyPattern,
+          serviceJourneys: journeyPattern.serviceJourneys.map(
+            (serviceJourney: ServiceJourney) => ({
+              ...serviceJourney,
+              passingTimes: [{}, {}],
+            })
+          ),
+          pointsInSequence: [{}, {}],
+        })
+      ),
+      flexibleLineType: newFlexibleLineType,
+    });
+  };
+
   return (
     <>
       {props.activeStep === 0 && (
         <>
           <section className="general-line-info">
             <General
-              flexibleLine={props.flexibleLine}
+              line={props.flexibleLine}
               operators={props.operators}
               networks={props.networks}
-              flexibleLineChange={props.changeFlexibleLine}
+              onChange={props.changeFlexibleLine}
+              onFlexibleLineTypeChange={onFlexibleLineTypeChange}
               spoilPristine={props.spoilPristine}
-              isFlexibleLine
             />
           </section>
         </>

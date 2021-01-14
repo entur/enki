@@ -24,10 +24,10 @@ const LineEditorSteps = (props: Props) => {
         <>
           <section className="general-line-info">
             <General
-              flexibleLine={props.line}
+              line={props.line}
               operators={props.operators}
               networks={props.networks}
-              flexibleLineChange={props.changeLine}
+              onChange={props.changeLine}
               spoilPristine={props.spoilPristine}
             />
           </section>

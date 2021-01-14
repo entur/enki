@@ -1,10 +1,10 @@
 import BookingArrangement from './BookingArrangement';
 import Line, { initLine, lineToPayload } from './Line';
 
-type FlexibleLine = Line & {
+interface FlexibleLine extends Line {
   flexibleLineType?: string;
   bookingArrangement?: BookingArrangement;
-};
+}
 
 export const initFlexibleLine = initLine;
 
