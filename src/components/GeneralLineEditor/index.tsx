@@ -30,11 +30,10 @@ import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import Line from 'model/Line';
-import FlexibleLine from 'model/FlexibleLine';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 
-interface Props<T> {
+interface Props<T extends Line> {
   line: T;
   operators: Organisation[];
   networks: Network[];
@@ -108,7 +107,7 @@ export default <T extends Line>({
           label={formatMessage('generalNameFormGroupTitle')}
           value={line.name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange({ ...line, name: e.target.value })
+            onChange<Line>({ ...line, name: e.target.value })
           }
           {...getErrorFeedback(
             formatMessage('nameEmpty'),
@@ -121,7 +120,7 @@ export default <T extends Line>({
           label={formatMessage('generalDescriptionFormGroupTitle')}
           value={line.description ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange({
+            onChange<Line>({
               ...line,
               description: e.target.value,
             })
@@ -134,7 +133,7 @@ export default <T extends Line>({
           type="text"
           value={line.publicCode}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange({
+            onChange<Line>({
               ...line,
               publicCode: e.target.value,
             })
@@ -152,7 +151,7 @@ export default <T extends Line>({
           type="text"
           value={line.privateCode ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange({
+            onChange<Line>({
               ...line,
               privateCode: e.target.value,
             })
@@ -166,7 +165,7 @@ export default <T extends Line>({
           clearable
           label={formatMessage('generalOperatorFormGroupTitle')}
           onChange={(element) =>
-            onChange({ ...line, operatorRef: element?.value })
+            onChange<Line>({ ...line, operatorRef: element?.value })
           }
           {...getErrorFeedback(
             formatMessage('operatorRefEmpty'),
@@ -182,7 +181,7 @@ export default <T extends Line>({
           clearable
           label={formatMessage('generalNetworkFormGroupTitle')}
           onChange={(element) =>
-            onChange({ ...line, networkRef: element?.value })
+            onChange<Line>({ ...line, networkRef: element?.value })
           }
           {...getErrorFeedback(
             formatMessage('networkRefEmpty'),
@@ -238,7 +237,7 @@ export default <T extends Line>({
             clearable
             label={formatMessage('transportModeTitle')}
             onChange={(element) =>
-              onChange({
+              onChange<Line>({
                 ...line,
                 transportMode: element?.value as VEHICLE_MODE,
                 transportSubmode: undefined,
@@ -256,7 +255,7 @@ export default <T extends Line>({
               transportMode={line.transportMode}
               transportSubmode={line.transportSubmode}
               submodeChange={(submode) =>
-                onChange({
+                onChange<Line>({
                   ...line,
                   transportSubmode: submode,
                 })
