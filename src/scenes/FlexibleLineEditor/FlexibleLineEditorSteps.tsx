@@ -15,7 +15,7 @@ import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
   flexibleLine: FlexibleLine;
-  changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
+  changeFlexibleLine: <FlexibleLine>(flexibleLine: FlexibleLine) => void;
   networks: Network[];
   operators: Organisation[];
   spoilPristine: boolean;

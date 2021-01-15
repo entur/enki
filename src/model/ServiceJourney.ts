@@ -6,14 +6,14 @@ import VersionedType from 'model/VersionedType';
 
 type ServiceJourney = VersionedType & {
   name?: string;
-  description?: string;
-  privateCode?: string;
-  publicCode?: string;
-  operatorRef?: string;
+  description?: string | null;
+  privateCode?: string | null;
+  publicCode?: string | null;
+  operatorRef?: string | null;
   bookingArrangement?: BookingArrangement | null;
   passingTimes: PassingTime[];
-  dayTypes?: DayType[];
-  notices?: Notice[];
+  dayTypes?: DayType[] | null;
+  notices?: Notice[] | null;
 };
 
 export default ServiceJourney;

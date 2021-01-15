@@ -11,7 +11,7 @@ import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
 type Props = {
   activeStep: number;
   line: Line;
-  changeLine: (line: Line) => void;
+  changeLine: <Line>(line: Line) => void;
   networks: Network[];
   operators: Organisation[];
   spoilPristine: boolean;
