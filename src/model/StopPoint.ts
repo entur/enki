@@ -11,7 +11,7 @@ type StopPoint = VersionedType & {
   flexibleStopPlace?: FlexibleStopPlace;
   flexibleStopPlaceRef?: string; // Either flexibleStopPlace or flexibleStopPlaceRef seems useless
   quayRef?: string;
-  bookingArrangement?: BookingArrangement;
+  bookingArrangement?: BookingArrangement | null;
   destinationDisplay?: DestinationDisplay;
   forBoarding?: boolean;
   forAlighting?: boolean;

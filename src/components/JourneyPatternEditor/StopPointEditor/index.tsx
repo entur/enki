@@ -265,9 +265,9 @@ const StopPointEditor = ({
               });
             }}
             onRemove={() => {
-              const { bookingArrangement, ...rest } = stopPoint;
               stopPointChange({
-                ...rest,
+                ...stopPoint,
+                bookingArrangement: null,
               });
             }}
           />

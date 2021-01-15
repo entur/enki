@@ -178,11 +178,10 @@ const ServiceJourneyEditor = (props: Props) => {
               });
             }}
             onRemove={() => {
-              const {
-                bookingArrangement,
-                ...updatedServiceJourney
-              } = serviceJourney;
-              onChange(updatedServiceJourney);
+              onChange({
+                ...serviceJourney,
+                bookingArrangement: null,
+              });
             }}
           />
         )}
