@@ -113,8 +113,8 @@ export const validateStopPoint = (
   };
 
   const getBoardingError = (): keyof MessagesKey | undefined => {
-    if (isFirst && forAlighting) return 'frontTextAlighting';
-    if (isLast && forBoarding) return 'frontTextBoarding';
+    if (isFirst && (forAlighting || !forBoarding)) return 'frontTextAlighting';
+    if (isLast && (forBoarding || !forAlighting)) return 'frontTextBoarding';
     return undefined;
   };
 
