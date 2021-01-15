@@ -6,12 +6,12 @@ import VersionedType from 'model/VersionedType';
 
 export type JourneyPattern = VersionedType & {
   name?: string;
-  description?: string;
-  privateCode?: string;
-  directionType?: DIRECTION_TYPE;
+  description?: string | null;
+  privateCode?: string | null;
+  directionType?: DIRECTION_TYPE | null;
   pointsInSequence: StopPoint[];
   serviceJourneys: ServiceJourney[];
-  notices?: Notice[];
+  notices?: Notice[] | null;
 };
 
 export const initJourneyPatterns = (): JourneyPattern[] => [
