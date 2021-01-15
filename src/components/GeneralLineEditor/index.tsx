@@ -31,13 +31,14 @@ import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import Line from 'model/Line';
 import FlexibleLine from 'model/FlexibleLine';
+import JourneyPattern from 'model/JourneyPattern';
+import ServiceJourney from 'model/ServiceJourney';
 
 interface Props<T> {
   line: T;
   operators: Organisation[];
   networks: Network[];
   onChange: <T>(line: T) => void;
-  onFlexibleLineTypeChange?: (newFlexibleLineType: string | undefined) => void;
   spoilPristine: boolean;
 }
 
@@ -46,7 +47,6 @@ export default <T extends Line>({
   operators,
   networks,
   onChange,
-  onFlexibleLineTypeChange,
   spoilPristine,
 }: Props<T>) => {
   const { formatMessage } = useSelector(selectIntl);
@@ -59,6 +59,36 @@ export default <T extends Line>({
     isFlexibleLine = true;
     flexibleLineType = (line as FlexibleLine).flexibleLineType;
   }
+
+  const onFlexibleLineTypeChange = (
+    newFlexibleLineType: string | undefined
+  ) => {
+    if (newFlexibleLineType !== 'flexibleAreasOnly') {
+      return onChange<FlexibleLine>({
+        ...line,
+        flexibleLineType: newFlexibleLineType,
+      });
+    }
+
+    const journeyPatterns = line.journeyPatterns ?? [];
+
+    onChange<FlexibleLine>({
+      ...line,
+      journeyPatterns: journeyPatterns.map(
+        (journeyPattern: JourneyPattern) => ({
+          ...journeyPattern,
+          serviceJourneys: journeyPattern.serviceJourneys.map(
+            (serviceJourney: ServiceJourney) => ({
+              ...serviceJourney,
+              passingTimes: [{}, {}],
+            })
+          ),
+          pointsInSequence: [{}, {}],
+        })
+      ),
+      flexibleLineType: newFlexibleLineType,
+    });
+  };
 
   const [showDrawer, setDrawer] = useState<boolean>(false);
 
