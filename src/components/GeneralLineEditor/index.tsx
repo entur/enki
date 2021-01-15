@@ -30,15 +30,16 @@ import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import Line from 'model/Line';
+import FlexibleLine from 'model/FlexibleLine';
 
-type Props<T> = {
+interface Props<T> {
   line: T;
   operators: Organisation[];
   networks: Network[];
-  onChange: (line: T) => void;
+  onChange: <T>(line: T) => void;
   onFlexibleLineTypeChange?: (newFlexibleLineType: string | undefined) => void;
   spoilPristine: boolean;
-};
+}
 
 export default <T extends Line>({
   line,
@@ -245,13 +246,13 @@ export default <T extends Line>({
             name: line.name!,
           }}
           onChange={(bookingArrangement) => {
-            onChange({
+            onChange<FlexibleLine>({
               ...line,
               bookingArrangement,
             });
           }}
           onRemove={() => {
-            onChange({
+            onChange<FlexibleLine>({
               ...line,
               bookingArrangement: null,
             });
