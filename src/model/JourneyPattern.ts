@@ -1,5 +1,5 @@
 import StopPoint, { stopPointToPayload } from './StopPoint';
-import ServiceJourney, { serviceJourneyToPayload } from './ServiceJourney';
+import ServiceJourney from './ServiceJourney';
 import Notice from './Notice';
 import { DIRECTION_TYPE } from 'model/enums';
 import VersionedType from 'model/VersionedType';
@@ -25,9 +25,6 @@ export const initJourneyPattern = (): JourneyPattern => ({
 
 export const journeyPatternToPayload = (journeyPattern: JourneyPattern) => ({
   ...journeyPattern,
-  serviceJourneys: journeyPattern.serviceJourneys.map((sj) =>
-    serviceJourneyToPayload(sj)
-  ),
   pointsInSequence: journeyPattern.pointsInSequence.map((pis) =>
     stopPointToPayload(pis)
   ),
