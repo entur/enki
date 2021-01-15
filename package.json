@@ -59,7 +59,7 @@
     "graphql": "15.4.0",
     "graphql-request": "1.8.2",
     "helmet": "3.23.3",
-    "husky": "3.1.0",
+    "husky": "4.3.8",
     "jest-sonar-reporter": "2.0.0",
     "keycloak-js": "4.8.3",
     "leaflet": "1.7.1",
