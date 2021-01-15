@@ -3,7 +3,7 @@ import Line, { initLine, lineToPayload } from './Line';
 
 interface FlexibleLine extends Line {
   flexibleLineType?: string;
-  bookingArrangement?: BookingArrangement;
+  bookingArrangement?: BookingArrangement | null;
 }
 
 export const initFlexibleLine = initLine;
