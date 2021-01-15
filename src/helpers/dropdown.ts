@@ -14,7 +14,7 @@ type GenericDropdownItem<E> = {
 
 export const getInit = <E>(
   items: GenericDropdownItem<E>[],
-  init: string | undefined
+  init: string | undefined | null
 ): NormalizedDropdownItemType | null => {
   const op = items.find((o) => o.id === init);
   return op

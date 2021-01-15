@@ -75,15 +75,15 @@ const ServiceJourneyEditor = (props: Props) => {
   const handleOperatorSelectionChange = (
     newOperatorSelection: string | undefined
   ) => {
-    onFieldChange('operatorRef', newOperatorSelection);
+    onFieldChange('operatorRef', newOperatorSelection || null);
     setOperatorSelection(newOperatorSelection);
   };
 
   const operators = filterNetexOperators(organisations ?? []);
 
-  const onFieldChange = (
-    field: keyof ServiceJourney,
-    value: ServiceJourney[keyof ServiceJourney]
+  const onFieldChange = <T extends keyof ServiceJourney>(
+    field: T,
+    value: ServiceJourney[T]
   ) => {
     onChange({ ...serviceJourney, [field]: value });
   };
@@ -122,9 +122,9 @@ const ServiceJourneyEditor = (props: Props) => {
             <TextField
               label={formatMessage('generalDescription')}
               className="form-section"
-              value={description}
+              value={description || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                onFieldChange('description', e.target.value)
+                onFieldChange('description', e.target.value || null)
               }
             />
 
@@ -132,9 +132,9 @@ const ServiceJourneyEditor = (props: Props) => {
               label={formatMessage('generalPublicCode')}
               labelTooltip={formatMessage('generalPublicCodeTooltip')}
               className="form-section"
-              value={publicCode}
+              value={publicCode || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                onFieldChange('publicCode', e.target.value)
+                onFieldChange('publicCode', e.target.value || null)
               }
             />
 
@@ -142,10 +142,10 @@ const ServiceJourneyEditor = (props: Props) => {
               label={formatMessage('generalPrivateCode')}
               labelTooltip={formatMessage('generalPrivateCodeTooltip')}
               className="form-section"
-              value={privateCode}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                onFieldChange('privateCode', e.target.value)
-              }
+              value={privateCode || ''}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onFieldChange('privateCode', e.target.value || null);
+              }}
             />
           </div>
 
@@ -178,11 +178,10 @@ const ServiceJourneyEditor = (props: Props) => {
               });
             }}
             onRemove={() => {
-              const {
-                bookingArrangement,
-                ...updatedServiceJourney
-              } = serviceJourney;
-              onChange(updatedServiceJourney);
+              onChange({
+                ...serviceJourney,
+                bookingArrangement: null,
+              });
             }}
           />
         )}

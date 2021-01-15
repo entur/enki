@@ -1,21 +1,15 @@
 import BookingArrangement from './BookingArrangement';
 import Line, { initLine, lineToPayload } from './Line';
 
-type FlexibleLine = Line & {
+interface FlexibleLine extends Line {
   flexibleLineType?: string;
-  bookingArrangement?: BookingArrangement;
-};
+  bookingArrangement?: BookingArrangement | null;
+}
 
 export const initFlexibleLine = initLine;
 
-export const flexibleLineToPayload = (line: Line) => {
-  const payload: any = lineToPayload(line);
-
-  if (payload.bookingArrangement === undefined) {
-    payload.bookingArrangement = null;
-  }
-
-  return payload;
+export const flexibleLineToPayload = (line: FlexibleLine) => {
+  return lineToPayload(line);
 };
 
 export default FlexibleLine;

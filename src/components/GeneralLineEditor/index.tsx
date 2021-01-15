@@ -16,8 +16,6 @@ import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
-import ServiceJourney from 'model/ServiceJourney';
-import JourneyPattern from 'model/JourneyPattern';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { Network } from 'model/Network';
 import {
@@ -31,49 +29,50 @@ import {
 import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
+import Line from 'model/Line';
+import JourneyPattern from 'model/JourneyPattern';
+import ServiceJourney from 'model/ServiceJourney';
 
-type Props = {
-  flexibleLine: FlexibleLine;
+interface Props<T extends Line> {
+  line: T;
   operators: Organisation[];
   networks: Network[];
-  flexibleLineChange: (flexibleLine: FlexibleLine) => void;
+  onChange: <T>(line: T) => void;
   spoilPristine: boolean;
-  isFlexibleLine?: boolean;
-};
+}
 
-export default ({
-  flexibleLine,
+export default <T extends Line>({
+  line,
   operators,
   networks,
-  flexibleLineChange,
+  onChange,
   spoilPristine,
-  isFlexibleLine = false,
-}: Props) => {
+}: Props<T>) => {
   const { formatMessage } = useSelector(selectIntl);
-  const { publicCode, flexibleLineType } = flexibleLine;
-  const [showDrawer, setDrawer] = useState<boolean>(false);
+  const { publicCode } = line;
 
-  const namePristine = usePristine(flexibleLine.name, spoilPristine);
-  const publicCodePristine = usePristine(publicCode, spoilPristine);
-  const operatorPristine = usePristine(flexibleLine.operatorRef, spoilPristine);
-  const networkPristine = usePristine(flexibleLine.networkRef, spoilPristine);
-  const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
-  const modePristine = usePristine(flexibleLine.transportMode, spoilPristine);
+  let flexibleLineType: string | undefined;
+  let isFlexibleLine = false;
+
+  if ((line as FlexibleLine).flexibleLineType) {
+    isFlexibleLine = true;
+    flexibleLineType = (line as FlexibleLine).flexibleLineType;
+  }
 
   const onFlexibleLineTypeChange = (
     newFlexibleLineType: string | undefined
   ) => {
     if (newFlexibleLineType !== 'flexibleAreasOnly') {
-      return flexibleLineChange({
-        ...flexibleLine,
+      return onChange<FlexibleLine>({
+        ...(line as FlexibleLine),
         flexibleLineType: newFlexibleLineType,
       });
     }
 
-    const journeyPatterns = flexibleLine.journeyPatterns ?? [];
+    const journeyPatterns = line.journeyPatterns ?? [];
 
-    flexibleLineChange({
-      ...flexibleLine,
+    onChange<FlexibleLine>({
+      ...(line as FlexibleLine),
       journeyPatterns: journeyPatterns.map(
         (journeyPattern: JourneyPattern) => ({
           ...journeyPattern,
@@ -90,6 +89,15 @@ export default ({
     });
   };
 
+  const [showDrawer, setDrawer] = useState<boolean>(false);
+
+  const namePristine = usePristine(line.name, spoilPristine);
+  const publicCodePristine = usePristine(publicCode, spoilPristine);
+  const operatorPristine = usePristine(line.operatorRef, spoilPristine);
+  const networkPristine = usePristine(line.networkRef, spoilPristine);
+  const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
+  const modePristine = usePristine(line.transportMode, spoilPristine);
+
   return (
     <div className="lines-editor-general">
       <Heading1> {formatMessage('editorAbout')}</Heading1>
@@ -97,24 +105,27 @@ export default ({
       <section className="inputs">
         <TextField
           label={formatMessage('generalNameFormGroupTitle')}
-          value={flexibleLine.name}
+          value={line.name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            flexibleLineChange({ ...flexibleLine, name: e.target.value })
+            onChange<Line>({
+              ...(line as Line),
+              name: e.target.value,
+            })
           }
           {...getErrorFeedback(
             formatMessage('nameEmpty'),
-            !isBlank(flexibleLine.name),
+            !isBlank(line.name),
             namePristine
           )}
         />
 
         <TextField
           label={formatMessage('generalDescriptionFormGroupTitle')}
-          value={flexibleLine.description ?? ''}
+          value={line.description ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            flexibleLineChange({
-              ...flexibleLine,
-              description: e.target.value,
+            onChange<Line>({
+              ...(line as Line),
+              description: e.target.value || null,
             })
           }
         />
@@ -123,16 +134,16 @@ export default ({
           label={formatMessage('generalPublicCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPublicCodeInputLabelTooltip')}
           type="text"
-          value={flexibleLine.publicCode}
+          value={line.publicCode}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            flexibleLineChange({
-              ...flexibleLine,
+            onChange<Line>({
+              ...(line as Line),
               publicCode: e.target.value,
             })
           }
           {...getErrorFeedback(
             formatMessage('publicCodeEmpty'),
-            !isBlank(flexibleLine.publicCode),
+            !isBlank(line.publicCode),
             publicCodePristine
           )}
         />
@@ -141,43 +152,49 @@ export default ({
           label={formatMessage('generalPrivateCodeFormGroupTitle')}
           labelTooltip={formatMessage('generalPrivateCodeInputLabelTooltip')}
           type="text"
-          value={flexibleLine.privateCode ?? ''}
+          value={line.privateCode ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            flexibleLineChange({
-              ...flexibleLine,
-              privateCode: e.target.value,
+            onChange<Line>({
+              ...(line as Line),
+              privateCode: e.target.value || null,
             })
           }
         />
 
         <Dropdown
-          initialSelectedItem={getInit(operators, flexibleLine.operatorRef)}
+          initialSelectedItem={getInit(operators, line.operatorRef)}
           placeholder={formatMessage('defaultOption')}
           items={mapToItems(operators)}
           clearable
           label={formatMessage('generalOperatorFormGroupTitle')}
           onChange={(element) =>
-            flexibleLineChange({ ...flexibleLine, operatorRef: element?.value })
+            onChange<Line>({
+              ...(line as Line),
+              operatorRef: element?.value,
+            })
           }
           {...getErrorFeedback(
             formatMessage('operatorRefEmpty'),
-            !isBlank(flexibleLine.operatorRef),
+            !isBlank(line.operatorRef),
             operatorPristine
           )}
         />
 
         <Dropdown
-          initialSelectedItem={getInit(networks, flexibleLine.networkRef)}
+          initialSelectedItem={getInit(networks, line.networkRef)}
           placeholder={formatMessage('defaultOption')}
           items={mapToItems(networks)}
           clearable
           label={formatMessage('generalNetworkFormGroupTitle')}
           onChange={(element) =>
-            flexibleLineChange({ ...flexibleLine, networkRef: element?.value })
+            onChange<Line>({
+              ...(line as Line),
+              networkRef: element?.value,
+            })
           }
           {...getErrorFeedback(
             formatMessage('networkRefEmpty'),
-            !isBlank(flexibleLine.networkRef),
+            !isBlank(line.networkRef),
             networkPristine
           )}
         />
@@ -198,23 +215,28 @@ export default ({
                 placeholder={formatMessage('defaultOption')}
                 items={mapEnumToItems(FLEXIBLE_LINE_TYPE)}
                 clearable
+                value={flexibleLineType}
                 label={formatMessage('generalTypeFormGroupTitle')}
-                onChange={(element) => onFlexibleLineTypeChange(element?.value)}
+                onChange={(element) =>
+                  onFlexibleLineTypeChange &&
+                  onFlexibleLineTypeChange(element?.value)
+                }
                 {...getErrorFeedback(
                   formatMessage('flexibleLineTypeEmpty'),
-                  !isBlank(flexibleLine.flexibleLineType),
+                  !isBlank((line as FlexibleLine).flexibleLineType),
                   lineTypePristine
                 )}
               />
             }
           </section>
         )}
+
         <section className="transport-mode-dropdowns">
           <Dropdown
             initialSelectedItem={vehicleModeInit(
               vehicleModeMessages,
               formatMessage,
-              flexibleLine.transportMode
+              line.transportMode
             )}
             placeholder={formatMessage('defaultOption')}
             items={mapVehicleModeAndLabelToItems(
@@ -224,26 +246,26 @@ export default ({
             clearable
             label={formatMessage('transportModeTitle')}
             onChange={(element) =>
-              flexibleLineChange({
-                ...flexibleLine,
+              onChange<Line>({
+                ...(line as Line),
                 transportMode: element?.value as VEHICLE_MODE,
                 transportSubmode: undefined,
               })
             }
             {...getErrorFeedback(
               formatMessage('transportModeEmpty'),
-              !isBlank(flexibleLine.transportMode),
+              !isBlank(line.transportMode),
               modePristine
             )}
           />
 
-          {flexibleLine.transportMode && (
+          {line.transportMode && (
             <VehicleSubModeDropdown
-              transportMode={flexibleLine.transportMode}
-              transportSubmode={flexibleLine.transportSubmode}
+              transportMode={line.transportMode}
+              transportSubmode={line.transportSubmode}
               submodeChange={(submode) =>
-                flexibleLineChange({
-                  ...flexibleLine,
+                onChange<Line>({
+                  ...(line as Line),
                   transportSubmode: submode,
                 })
               }
@@ -255,21 +277,23 @@ export default ({
 
       {isFlexibleLine && (
         <BookingArrangementEditor
-          bookingArrangement={flexibleLine.bookingArrangement}
+          bookingArrangement={(line as FlexibleLine).bookingArrangement}
           spoilPristine={spoilPristine}
           bookingInfoAttachment={{
             type: BookingInfoAttachmentType.LINE,
-            name: flexibleLine.name!,
+            name: line.name!,
           }}
           onChange={(bookingArrangement) => {
-            flexibleLineChange({
-              ...flexibleLine,
+            onChange<FlexibleLine>({
+              ...(line as FlexibleLine),
               bookingArrangement,
             });
           }}
           onRemove={() => {
-            const { bookingArrangement, ...updatedFlexibleLine } = flexibleLine;
-            flexibleLineChange(updatedFlexibleLine);
+            onChange<FlexibleLine>({
+              ...(line as FlexibleLine),
+              bookingArrangement: null,
+            });
           }}
         />
       )}

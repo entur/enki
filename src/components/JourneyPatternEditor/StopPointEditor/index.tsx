@@ -199,7 +199,9 @@ const StopPointEditor = ({
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               stopPointChange({
                 ...stopPoint,
-                destinationDisplay: { frontText: e.target.value },
+                destinationDisplay: e.target.value
+                  ? { frontText: e.target.value }
+                  : null,
               })
             }
           />
@@ -213,8 +215,12 @@ const StopPointEditor = ({
             onChange={(element) =>
               stopPointChange({
                 ...stopPoint,
-                forBoarding: element?.value === '0' || element?.value === '2',
-                forAlighting: element?.value === '1' || element?.value === '2',
+                forBoarding: element?.value
+                  ? element?.value === '0' || element?.value === '2'
+                  : null,
+                forAlighting: element?.value
+                  ? element?.value === '1' || element?.value === '2'
+                  : null,
               })
             }
             items={boardingItems}
@@ -265,9 +271,9 @@ const StopPointEditor = ({
               });
             }}
             onRemove={() => {
-              const { bookingArrangement, ...rest } = stopPoint;
               stopPointChange({
-                ...rest,
+                ...stopPoint,
+                bookingArrangement: null,
               });
             }}
           />

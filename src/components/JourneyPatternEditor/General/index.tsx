@@ -38,7 +38,10 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
         label={formatMessage('generalDescriptionLabel')}
         value={journeyPattern.description || ''}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          onFieldChange({ ...journeyPattern, description: e.target.value })
+          onFieldChange({
+            ...journeyPattern,
+            description: e.target.value || null,
+          })
         }
       />
 
@@ -47,7 +50,10 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
         labelTooltip={formatMessage('generalPrivateCodeLabelTooltip')}
         value={journeyPattern.privateCode || ''}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          onFieldChange({ ...journeyPattern, privateCode: e.target.value })
+          onFieldChange({
+            ...journeyPattern,
+            privateCode: e.target.value || null,
+          })
         }
       />
     </div>

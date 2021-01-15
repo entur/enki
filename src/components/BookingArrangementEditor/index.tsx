@@ -13,7 +13,7 @@ import { selectIntl, AppIntlState } from 'i18n';
 import { GlobalState } from 'reducers';
 
 type Props = {
-  bookingArrangement?: BookingArrangement;
+  bookingArrangement?: BookingArrangement | null;
   bookingInfoAttachment: BookingInfoAttachment;
   onChange: (bookingArrangement: BookingArrangement) => void;
   onRemove: () => void;

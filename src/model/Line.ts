@@ -9,8 +9,8 @@ import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 
 interface Line extends VersionedType {
   name?: string;
-  description?: string;
-  privateCode?: string;
+  description?: string | null;
+  privateCode?: string | null;
   publicCode?: string;
   transportMode?: VEHICLE_MODE;
   transportSubmode?: VEHICLE_SUBMODE;

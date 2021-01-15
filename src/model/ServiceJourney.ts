@@ -6,24 +6,14 @@ import VersionedType from 'model/VersionedType';
 
 type ServiceJourney = VersionedType & {
   name?: string;
-  description?: string;
-  privateCode?: string;
-  publicCode?: string;
-  operatorRef?: string;
-  bookingArrangement?: BookingArrangement;
+  description?: string | null;
+  privateCode?: string | null;
+  publicCode?: string | null;
+  operatorRef?: string | null;
+  bookingArrangement?: BookingArrangement | null;
   passingTimes: PassingTime[];
   dayTypes?: DayType[];
-  notices?: Notice[];
-};
-
-export const serviceJourneyToPayload = (serviceJourney: ServiceJourney) => {
-  const payload = serviceJourney as any;
-
-  if (payload.bookingArrangement === undefined) {
-    payload.bookingArrangement = null;
-  }
-
-  return payload;
+  notices?: Notice[] | null;
 };
 
 export default ServiceJourney;
