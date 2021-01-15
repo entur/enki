@@ -12,7 +12,7 @@ type ServiceJourney = VersionedType & {
   operatorRef?: string | null;
   bookingArrangement?: BookingArrangement | null;
   passingTimes: PassingTime[];
-  dayTypes?: DayType[] | null;
+  dayTypes?: DayType[];
   notices?: Notice[] | null;
 };
 
