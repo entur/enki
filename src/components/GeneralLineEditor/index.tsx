@@ -64,7 +64,7 @@ export default <T extends Line>({
   ) => {
     if (newFlexibleLineType !== 'flexibleAreasOnly') {
       return onChange<FlexibleLine>({
-        ...line,
+        ...(line as FlexibleLine),
         flexibleLineType: newFlexibleLineType,
       });
     }
@@ -72,7 +72,7 @@ export default <T extends Line>({
     const journeyPatterns = line.journeyPatterns ?? [];
 
     onChange<FlexibleLine>({
-      ...line,
+      ...(line as FlexibleLine),
       journeyPatterns: journeyPatterns.map(
         (journeyPattern: JourneyPattern) => ({
           ...journeyPattern,
@@ -107,7 +107,10 @@ export default <T extends Line>({
           label={formatMessage('generalNameFormGroupTitle')}
           value={line.name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange<Line>({ ...line, name: e.target.value })
+            onChange<Line>({
+              ...(line as Line),
+              name: e.target.value,
+            })
           }
           {...getErrorFeedback(
             formatMessage('nameEmpty'),
@@ -121,8 +124,8 @@ export default <T extends Line>({
           value={line.description ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onChange<Line>({
-              ...line,
-              description: e.target.value,
+              ...(line as Line),
+              description: e.target.value || null,
             })
           }
         />
@@ -134,7 +137,7 @@ export default <T extends Line>({
           value={line.publicCode}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onChange<Line>({
-              ...line,
+              ...(line as Line),
               publicCode: e.target.value,
             })
           }
@@ -152,8 +155,8 @@ export default <T extends Line>({
           value={line.privateCode ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onChange<Line>({
-              ...line,
-              privateCode: e.target.value,
+              ...(line as Line),
+              privateCode: e.target.value || null,
             })
           }
         />
@@ -165,7 +168,10 @@ export default <T extends Line>({
           clearable
           label={formatMessage('generalOperatorFormGroupTitle')}
           onChange={(element) =>
-            onChange<Line>({ ...line, operatorRef: element?.value })
+            onChange<Line>({
+              ...(line as Line),
+              operatorRef: element?.value,
+            })
           }
           {...getErrorFeedback(
             formatMessage('operatorRefEmpty'),
@@ -181,7 +187,10 @@ export default <T extends Line>({
           clearable
           label={formatMessage('generalNetworkFormGroupTitle')}
           onChange={(element) =>
-            onChange<Line>({ ...line, networkRef: element?.value })
+            onChange<Line>({
+              ...(line as Line),
+              networkRef: element?.value,
+            })
           }
           {...getErrorFeedback(
             formatMessage('networkRefEmpty'),
@@ -238,7 +247,7 @@ export default <T extends Line>({
             label={formatMessage('transportModeTitle')}
             onChange={(element) =>
               onChange<Line>({
-                ...line,
+                ...(line as Line),
                 transportMode: element?.value as VEHICLE_MODE,
                 transportSubmode: undefined,
               })
@@ -256,7 +265,7 @@ export default <T extends Line>({
               transportSubmode={line.transportSubmode}
               submodeChange={(submode) =>
                 onChange<Line>({
-                  ...line,
+                  ...(line as Line),
                   transportSubmode: submode,
                 })
               }
@@ -276,13 +285,13 @@ export default <T extends Line>({
           }}
           onChange={(bookingArrangement) => {
             onChange<FlexibleLine>({
-              ...line,
+              ...(line as FlexibleLine),
               bookingArrangement,
             });
           }}
           onRemove={() => {
             onChange<FlexibleLine>({
-              ...line,
+              ...(line as FlexibleLine),
               bookingArrangement: null,
             });
           }}
