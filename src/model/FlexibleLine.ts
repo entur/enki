@@ -6,7 +6,13 @@ interface FlexibleLine extends Line {
   bookingArrangement?: BookingArrangement | null;
 }
 
-export const initFlexibleLine = initLine;
+export const initFlexibleLine = () => {
+  const line = {
+    ...initLine(),
+    flexibleLineType: 'flexibleAreasOnly',
+  };
+  return line;
+};
 
 export const flexibleLineToPayload = (line: FlexibleLine) => {
   return lineToPayload(line);
