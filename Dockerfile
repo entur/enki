@@ -1,4 +1,6 @@
-FROM node:9.11.2-alpine
+FROM node:10.23.2-alpine3.10
+
+RUN addgroup appuser && adduser --disabled-password --gecos '' appuser --ingroup appuser
 
 # Server
 ENV CONTENT_BASE=/app/ui
@@ -8,6 +10,10 @@ RUN npm install --production
 
 # Application
 COPY build /app/ui/
+
+RUN chown -R appuser:appuser /app
+USER appuser
+
 ARG BUILD_DATE
 ENV BUILD_DATE=$BUILD_DATE
 
