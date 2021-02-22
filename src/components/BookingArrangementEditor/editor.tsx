@@ -85,6 +85,10 @@ export default (props: Props) => {
       ...bookingArrangement,
       latestBookingTime: undefined,
       minimumBookingPeriod: undefined,
+      bookWhen:
+        type === BOOKING_LIMIT_TYPE.PERIOD
+          ? undefined
+          : bookingArrangement.bookWhen,
     });
     setBookingLimitType(type);
   };
@@ -192,8 +196,9 @@ export default (props: Props) => {
 
       <section className="booking-time-info">
         <Dropdown
+          disabled={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
           label={formatMessage('bookingTimeSelectionTitle')}
-          initialSelectedItem={getEnumInit(bookWhen)}
+          selectedItem={getEnumInit(bookWhen)}
           placeholder={formatMessage('defaultOption')}
           items={mapEnumToItems(PURCHASE_WHEN)}
           clearable
