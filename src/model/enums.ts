@@ -205,7 +205,6 @@ export enum BOOKING_ACCESS {
 }
 
 export enum PURCHASE_WHEN {
-  TIME_OF_TRAVEL_ONLY = 'timeOfTravelOnly',
   DAY_OF_TRAVEL_ONLY = 'dayOfTravelOnly',
   UNTIL_PREVIOUS_DAY = 'untilPreviousDay',
   ADVANCE_AND_DAY_OF_TRAVEL = 'advanceAndDayOfTravel',
@@ -257,7 +256,6 @@ export const bookingAccessMessages: Record<
 };
 
 export const bookingTimeMessages: Record<PURCHASE_WHEN, keyof MessagesKey> = {
-  [PURCHASE_WHEN.TIME_OF_TRAVEL_ONLY]: 'purchaseWhenTimeOfTravelOnly',
   [PURCHASE_WHEN.DAY_OF_TRAVEL_ONLY]: 'purchaseWhenDayOfTravelOnly',
   [PURCHASE_WHEN.UNTIL_PREVIOUS_DAY]: 'purchaseWhenUntilPreviousDay',
   [PURCHASE_WHEN.ADVANCE_AND_DAY_OF_TRAVEL]:

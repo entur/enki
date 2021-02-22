@@ -170,7 +170,6 @@ export const messages = {
   bookingNoteTooltip: 'Informasjon som kan vises sammen med reiseforslaget.',
   purchaseWhenAdvanceAndDayOfTravel: 'Frem til og med samme dag',
   purchaseWhenDayOfTravelOnly: 'Samme dag',
-  purchaseWhenTimeOfTravelOnly: 'Ved reisetidspunkt',
   purchaseWhenUntilPreviousDay: 'Inntil dagen før',
   contactFieldsContactPersonTitle: 'Kontaktperson',
   contactFieldsEmailTitle: 'E-post',

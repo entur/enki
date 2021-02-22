@@ -174,7 +174,6 @@ export const messages: MessagesKey = {
     'Information that can be presented along with the travel detail.',
   purchaseWhenAdvanceAndDayOfTravel: 'Advance and day of travel',
   purchaseWhenDayOfTravelOnly: 'Day of travel only',
-  purchaseWhenTimeOfTravelOnly: 'Time of travel only',
   purchaseWhenUntilPreviousDay: 'Until previous day',
   contactFieldsContactPersonTitle: 'Contact person',
   contactFieldsEmailTitle: 'E-mail',
