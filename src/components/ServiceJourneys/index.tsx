@@ -182,10 +182,12 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
                   jpIndex
                 )
               : undefined,
-            copyServiceJourney(
-              journeyPatterns[jpIndex].serviceJourneys,
-              jpIndex
-            )
+            sj.id
+              ? copyServiceJourney(
+                  journeyPatterns[jpIndex].serviceJourneys,
+                  jpIndex
+                )
+              : undefined
           )}
         </AccordionItem>
       ),
