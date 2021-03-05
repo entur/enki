@@ -32,6 +32,7 @@ import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/c
 import Line from 'model/Line';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
+import Notices from 'components/Notices';
 
 interface Props<T extends Line> {
   line: T;
@@ -274,6 +275,17 @@ export default <T extends Line>({
           )}
         </section>
       </section>
+
+      <Notices
+        notices={line.notices}
+        setNotices={(notices) => {
+          onChange<Line>({
+            ...(line as Line),
+            notices,
+          });
+        }}
+        formatMessage={formatMessage}
+      />
 
       {isFlexibleLine && (
         <BookingArrangementEditor

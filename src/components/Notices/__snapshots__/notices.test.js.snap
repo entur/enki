@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notices should render multiple notices 1`] = `
+<section
+  className="notices"
+>
+  <Heading4>
+    noticesHeader
+  </Heading4>
+  <Table
+    fixed={true}
+  >
+    <TableBody>
+      <TableRow
+        className="notices-row"
+        hover={true}
+        key="0"
+      >
+        <EditableCell
+          className="notices-editable-cell"
+        >
+          <ForwardRef
+            className="notices-text-area"
+            onChange={[Function]}
+            value="This a notice"
+          />
+        </EditableCell>
+        <ForwardRef
+          align="right"
+        >
+          <Tooltip
+            content="deleteNoticeTooltip"
+            placement="bottom"
+          >
+            <ForwardRef
+              className="notices-icon-button"
+              onClick={[Function]}
+            >
+              <DeleteIcon />
+            </ForwardRef>
+          </Tooltip>
+        </ForwardRef>
+      </TableRow>
+      <TableRow
+        className="notices-row"
+        hover={true}
+        key="1"
+      >
+        <EditableCell
+          className="notices-editable-cell"
+        >
+          <ForwardRef
+            className="notices-text-area"
+            onChange={[Function]}
+            value="This is another notice"
+          />
+        </EditableCell>
+        <ForwardRef
+          align="right"
+        >
+          <Tooltip
+            content="deleteNoticeTooltip"
+            placement="bottom"
+          >
+            <ForwardRef
+              className="notices-icon-button"
+              onClick={[Function]}
+            >
+              <DeleteIcon />
+            </ForwardRef>
+          </Tooltip>
+        </ForwardRef>
+      </TableRow>
+      <TableRow
+        hover={true}
+      >
+        <EditableCell
+          className="notices-editable-cell"
+        >
+          <ForwardRef
+            className="notices-text-area"
+            label="newNoticeLabel"
+            onChange={[Function]}
+            value=""
+          />
+        </EditableCell>
+        <ForwardRef
+          align="right"
+        >
+          <Tooltip
+            content="addNoticeTooltip"
+            placement="bottom"
+          >
+            <ForwardRef
+              className="notices-icon-button"
+              onClick={[Function]}
+            >
+              <AddIcon />
+            </ForwardRef>
+          </Tooltip>
+        </ForwardRef>
+      </TableRow>
+    </TableBody>
+  </Table>
+</section>
+`;
+
+exports[`Notices should render no notices 1`] = `
+<section
+  className="notices"
+>
+  <Heading4>
+    noticesHeader
+  </Heading4>
+  <Table
+    fixed={true}
+  >
+    <TableBody>
+      <TableRow
+        hover={true}
+      >
+        <EditableCell
+          className="notices-editable-cell"
+        >
+          <ForwardRef
+            className="notices-text-area"
+            label="newNoticeLabel"
+            onChange={[Function]}
+            value=""
+          />
+        </EditableCell>
+        <ForwardRef
+          align="right"
+        >
+          <Tooltip
+            content="addNoticeTooltip"
+            placement="bottom"
+          >
+            <ForwardRef
+              className="notices-icon-button"
+              onClick={[Function]}
+            >
+              <AddIcon />
+            </ForwardRef>
+          </Tooltip>
+        </ForwardRef>
+      </TableRow>
+    </TableBody>
+  </Table>
+</section>
+`;
+
+exports[`Notices should render single notices 1`] = `
+<section
+  className="notices"
+>
+  <Heading4>
+    noticesHeader
+  </Heading4>
+  <Table
+    fixed={true}
+  >
+    <TableBody>
+      <TableRow
+        className="notices-row"
+        hover={true}
+        key="0"
+      >
+        <EditableCell
+          className="notices-editable-cell"
+        >
+          <ForwardRef
+            className="notices-text-area"
+            onChange={[Function]}
+            value="This a notice"
+          />
+        </EditableCell>
+        <ForwardRef
+          align="right"
+        >
+          <Tooltip
+            content="deleteNoticeTooltip"
+            placement="bottom"
+          >
+            <ForwardRef
+              className="notices-icon-button"
+              onClick={[Function]}
+            >
+              <DeleteIcon />
+            </ForwardRef>
+          </Tooltip>
+        </ForwardRef>
+      </TableRow>
+      <TableRow
+        hover={true}
+      >
+        <EditableCell
+          className="notices-editable-cell"
+        >
+          <ForwardRef
+            className="notices-text-area"
+            label="newNoticeLabel"
+            onChange={[Function]}
+            value=""
+          />
+        </EditableCell>
+        <ForwardRef
+          align="right"
+        >
+          <Tooltip
+            content="addNoticeTooltip"
+            placement="bottom"
+          >
+            <ForwardRef
+              className="notices-icon-button"
+              onClick={[Function]}
+            >
+              <AddIcon />
+            </ForwardRef>
+          </Tooltip>
+        </ForwardRef>
+      </TableRow>
+    </TableBody>
+  </Table>
+</section>
+`;

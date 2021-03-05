@@ -535,4 +535,8 @@ export const messages: MessagesKey = {
     "Last possible departure time can't be before initial departure time",
   copyServiceJourneyDialogMultipleSwitchLabel: 'Create multiple copies',
   copyServiceJourneyDialogIntervalLabel: 'Choose an interval',
+  noticesHeader: 'Notices',
+  newNoticeLabel: 'New notice',
+  deleteNoticeTooltip: 'Delete notice',
+  addNoticeTooltip: 'Add notice',
 };
