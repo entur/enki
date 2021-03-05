@@ -284,6 +284,7 @@ export default <T extends Line>({
             notices,
           });
         }}
+        formatMessage={formatMessage}
       />
 
       {isFlexibleLine && (

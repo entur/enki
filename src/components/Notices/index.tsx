@@ -13,17 +13,16 @@ import { TextArea } from '@entur/form';
 import { Heading4 } from '@entur/typography';
 import Notice from 'model/Notice';
 import './styles.scss';
-import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
+import { FormatMessage } from 'i18n';
 type Props = {
   notices?: Notice[];
   setNotices: (notices: Notice[]) => void;
+  formatMessage: FormatMessage;
 };
 
-export default ({ notices = [], setNotices }: Props) => {
+export default ({ notices = [], setNotices, formatMessage }: Props) => {
   const [newNotice, setNewNotice] = useState<Notice>({ text: '' });
   const newNoticeInputEl = useRef<HTMLTextAreaElement>(null);
-  const { formatMessage } = useSelector(selectIntl);
 
   const addNotice = () => {
     if (newNotice.text !== '') {

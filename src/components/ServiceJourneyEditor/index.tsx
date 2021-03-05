@@ -171,6 +171,7 @@ const ServiceJourneyEditor = (props: Props) => {
               notices,
             });
           }}
+          formatMessage={formatMessage}
         />
 
         {flexibleLineType && (
