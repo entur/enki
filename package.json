@@ -54,6 +54,9 @@
     "cross-env": "5.2.1",
     "date-fns": "2.16.1",
     "duration-fns": "2.0.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.1",
     "express-history-api-fallback": "2.2.1",
     "file-saver": "2.0.2",
     "graphql": "15.4.0",
@@ -67,7 +70,6 @@
     "moment": "2.29.1",
     "node-sass": "4.14.1",
     "prettier": "2.1.2",
-    "pretty": "^2.0.0",
     "prop-types": "15.7.2",
     "ramda": "0.27.1",
     "react": "16.14.0",
@@ -89,6 +91,11 @@
     "uuid": "3.4.0"
   },
   "devDependencies": {},
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  },
   "prettier": {
     "singleQuote": true
   },
