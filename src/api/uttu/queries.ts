@@ -81,6 +81,7 @@ export const getFlexibleLineByIdQuery = `
       transportSubmode,
       operatorRef,
       flexibleLineType,
+      notices { text }
       bookingArrangement { ...bookingArrangementFields },
       network {
         id
@@ -111,6 +112,7 @@ export const getFlexibleLineByIdQuery = `
           privateCode,
           publicCode,
           operatorRef,
+          notices { text }
           bookingArrangement { ...bookingArrangementFields },
           passingTimes {
             id,
@@ -174,6 +176,7 @@ export const getlineByIdQuery = `
       transportMode,
       transportSubmode,
       operatorRef,
+      notices { text }
       network {
         id
       },
@@ -201,6 +204,7 @@ export const getlineByIdQuery = `
           privateCode,
           publicCode,
           operatorRef,
+          notices { text }
           passingTimes {
             id,
             arrivalTime,
