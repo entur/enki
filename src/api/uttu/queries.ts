@@ -41,28 +41,6 @@ export const getNetworkByIdQuery = `
   }
 `;
 
-export const getLinesQuery = `
-  query getLines {
-    lines {
-      id,
-      name,
-      description,
-      privateCode,
-      operatorRef,
-      network {
-        id
-      },
-      journeyPatterns {
-        pointsInSequence {
-          flexibleStopPlace {
-            id
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const getFlexibleLinesQuery = `
 query getFlexibleLines {
   flexibleLines {
