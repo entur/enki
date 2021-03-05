@@ -1,0 +1,16 @@
+.notices {
+  .notices-row,
+  .notices-editable-cell {
+    width: 90%;
+  }
+
+  .notices-text-area {
+    .eds-textarea {
+      min-height: 1.25rem;
+    }
+  }
+
+  .notices-icon-button {
+    display: 'inline-block';
+  }
+}

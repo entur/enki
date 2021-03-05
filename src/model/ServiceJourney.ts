@@ -13,7 +13,7 @@ type ServiceJourney = VersionedType & {
   bookingArrangement?: BookingArrangement | null;
   passingTimes: PassingTime[];
   dayTypes?: DayType[];
-  notices?: Notice[] | null;
+  notices?: Notice[];
 };
 
 export default ServiceJourney;

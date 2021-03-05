@@ -532,4 +532,8 @@ export const messages = {
     'Siste mulige avgangstid kan ikke være før første avgangstid.',
   copyServiceJourneyDialogMultipleSwitchLabel: 'Lag flere kopier',
   copyServiceJourneyDialogIntervalLabel: 'Velg intervall',
+  noticesHeader: 'Notices',
+  newNoticeLabel: 'Ny notice',
+  deleteNoticeTooltip: 'Slett notice',
+  addNoticeTooltip: 'Legg til notice',
 };

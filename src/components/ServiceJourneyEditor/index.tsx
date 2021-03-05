@@ -32,6 +32,7 @@ import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import CopyDialog from './CopyDialog';
 import CopyActionChip from 'components/CopyActionChip';
+import Notices from 'components/Notices';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -161,6 +162,16 @@ const ServiceJourneyEditor = (props: Props) => {
             }
           />
         </div>
+
+        <Notices
+          notices={serviceJourney.notices}
+          setNotices={(notices) => {
+            onChange({
+              ...serviceJourney,
+              notices,
+            });
+          }}
+        />
 
         {flexibleLineType && (
           <BookingArrangementEditor
