@@ -74,16 +74,7 @@ exports[`Notices should render multiple notices 1`] = `
       <TableRow
         hover={true}
       >
-        <EditableCell
-          className="notices-editable-cell"
-        >
-          <ForwardRef
-            className="notices-text-area"
-            label="newNoticeLabel"
-            onChange={[Function]}
-            value=""
-          />
-        </EditableCell>
+        <ForwardRef />
         <ForwardRef
           align="right"
         >
@@ -119,16 +110,7 @@ exports[`Notices should render no notices 1`] = `
       <TableRow
         hover={true}
       >
-        <EditableCell
-          className="notices-editable-cell"
-        >
-          <ForwardRef
-            className="notices-text-area"
-            label="newNoticeLabel"
-            onChange={[Function]}
-            value=""
-          />
-        </EditableCell>
+        <ForwardRef />
         <ForwardRef
           align="right"
         >
@@ -194,16 +176,7 @@ exports[`Notices should render single notices 1`] = `
       <TableRow
         hover={true}
       >
-        <EditableCell
-          className="notices-editable-cell"
-        >
-          <ForwardRef
-            className="notices-text-area"
-            label="newNoticeLabel"
-            onChange={[Function]}
-            value=""
-          />
-        </EditableCell>
+        <ForwardRef />
         <ForwardRef
           align="right"
         >

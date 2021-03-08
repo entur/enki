@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Tooltip } from '@entur/tooltip';
 import { IconButton } from '@entur/button';
 import { AddIcon, DeleteIcon } from '@entur/icons';
@@ -21,20 +21,13 @@ type Props = {
 };
 
 export default ({ notices = [], setNotices, formatMessage }: Props) => {
-  const [newNotice, setNewNotice] = useState<Notice>({ text: '' });
-  const newNoticeInputEl = useRef<HTMLTextAreaElement>(null);
-
   const addNotice = () => {
-    if (newNotice.text !== '') {
-      setNotices([...notices, newNotice]);
-      setNewNotice({ text: '' });
-    }
+    setNotices([...notices, { text: '' }]);
   };
 
   const updateNotice = (index: number, text: string) => {
     if (text === '') {
       removeNotice(index);
-      newNoticeInputEl?.current?.focus();
     } else {
       const copy = notices.slice();
       copy[index] = { text };
@@ -78,15 +71,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
             </TableRow>
           ))}
           <TableRow hover>
-            <EditableCell className="notices-editable-cell">
-              <TextArea
-                className="notices-text-area"
-                ref={newNoticeInputEl}
-                label={formatMessage('newNoticeLabel')}
-                value={newNotice.text}
-                onChange={(e: any) => setNewNotice({ text: e.target.value })}
-              />
-            </EditableCell>
+            <DataCell></DataCell>
             <DataCell align="right">
               <Tooltip
                 placement="bottom"
