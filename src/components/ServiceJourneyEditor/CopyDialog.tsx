@@ -38,6 +38,7 @@ const toDate = (date: string): Date => {
   dateObj.setHours(parseInt(hours));
   dateObj.setMinutes(parseInt(minutes));
   dateObj.setSeconds(parseInt(seconds));
+  dateObj.setMilliseconds(0);
   return dateObj;
 };
 
@@ -90,7 +91,7 @@ const offsetPassingTimes = (
   );
 };
 
-const copyServiceJourney = (
+export const copyServiceJourney = (
   serviceJourney: ServiceJourney,
   newServiceJourneys: ServiceJourney[],
   nameTemplate: string,
