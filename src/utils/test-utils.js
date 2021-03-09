@@ -25,7 +25,7 @@ function render(
         locale,
         messages,
       },
-      user: {},
+      auth: {},
     },
     store = createStore(combinedReducers, initialState, enhancer),
     ...renderOptions
