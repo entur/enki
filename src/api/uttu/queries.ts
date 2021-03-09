@@ -343,6 +343,9 @@ const LineEditorPage = {
         transportMode
         transportSubmode
         operatorRef
+        notices {
+          text
+        }
         network {
           id
           authorityRef
@@ -371,6 +374,9 @@ const LineEditorPage = {
             privateCode
             publicCode
             operatorRef
+            notices {
+              text
+            }
             passingTimes {
               id
               arrivalTime
