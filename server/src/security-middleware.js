@@ -45,6 +45,7 @@ const withSecurity = (app) => {
         defaultSrc: [inQuote('self')],
         connectSrc: [
           inQuote('self'),
+          process.env.AUTH0_DOMAIN,
           openIDConnectUrl,
           'ws:',
           'https://sentry.io',

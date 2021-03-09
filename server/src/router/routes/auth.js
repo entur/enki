@@ -13,4 +13,8 @@ router.get('/keycloak.json', (req, res) =>
   })
 );
 
+router.get('/auth0.json', (req, res) => {
+  res.json(auth0Config);
+});
+
 module.exports = router;
