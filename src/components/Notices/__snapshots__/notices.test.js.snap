@@ -73,6 +73,7 @@ exports[`Notices should render multiple notices 1`] = `
       </TableRow>
       <TableRow
         hover={true}
+        onClick={[Function]}
       >
         <ForwardRef />
         <ForwardRef
@@ -109,6 +110,7 @@ exports[`Notices should render no notices 1`] = `
     <TableBody>
       <TableRow
         hover={true}
+        onClick={[Function]}
       >
         <ForwardRef />
         <ForwardRef
@@ -175,6 +177,7 @@ exports[`Notices should render single notices 1`] = `
       </TableRow>
       <TableRow
         hover={true}
+        onClick={[Function]}
       >
         <ForwardRef />
         <ForwardRef
