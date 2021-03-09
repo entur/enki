@@ -1,5 +1,5 @@
 import notification, { NotificationState } from 'reducers/notification';
-import user, { UserState } from './user';
+import auth, { AuthState } from './auth';
 import organisations, { OrganisationState } from './organisations';
 import providers, { ProvidersState } from './providers';
 import exports, { ExportsState } from './exports';
@@ -13,7 +13,7 @@ import { AppIntlState } from 'i18n';
 
 export type GlobalState = {
   notification: NotificationState;
-  user: UserState;
+  auth: AuthState;
   organisations: OrganisationState;
   providers: ProvidersState;
   exports: ExportsState;
@@ -26,7 +26,7 @@ export type GlobalState = {
 
 const reducers = {
   notification,
-  user,
+  auth,
   organisations,
   providers,
   exports,

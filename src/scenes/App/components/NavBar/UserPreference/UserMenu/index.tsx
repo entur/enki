@@ -4,19 +4,17 @@ import { UserIcon } from '@entur/icons';
 
 import './styles.scss';
 import { GlobalState } from 'reducers';
-import { User } from 'reducers/user';
+import { AuthState } from 'reducers/auth';
 
 const UserMenu = () => {
-  const { familyName, givenName } = useSelector<GlobalState, User>(
-    (state) => state.user as User
-  );
+  const { user } = useSelector<GlobalState, AuthState>((state) => state.auth);
 
   return (
     <div className="user-menu">
       <div className="user-icon">
         <UserIcon />
       </div>
-      <div className="name">{`${givenName} ${familyName}`}</div>
+      <div className="name">{`${user?.name}`}</div>
     </div>
   );
 };

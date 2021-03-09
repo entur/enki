@@ -58,7 +58,8 @@ export const loadFlexibleStopPlaces = () => async (
     const data = await UttuQuery(
       activeProvider,
       getFlexibleStopPlacesQuery,
-      {}
+      {},
+      await getState().auth.getAccessToken()
     );
     const flexibleStopPlaces = data.flexibleStopPlaces;
     dispatch(receiveFlexibleStopPlacesActionCreator(flexibleStopPlaces));
@@ -89,7 +90,8 @@ export const loadFlexibleStopPlaceById = (id: string) => async (
     const data = await UttuQuery(
       activeProvider,
       getFlexibleStopPlaceByIdQuery,
-      { id }
+      { id },
+      await getState().auth.getAccessToken()
     );
     dispatch(receiveFlexibleStopPlaceActionCreator(data.flexibleStopPlace));
   } catch (e) {
@@ -113,9 +115,14 @@ export const saveFlexibleStopPlace = (
   const intl = getIntl(getState());
 
   try {
-    await UttuQuery(activeProvider, flexibleStopPlaceMutation, {
-      input: flexibleStopPlace,
-    });
+    await UttuQuery(
+      activeProvider,
+      flexibleStopPlaceMutation,
+      {
+        input: flexibleStopPlace,
+      },
+      await getState().auth.getAccessToken()
+    );
     dispatch(
       showSuccessNotification(
         intl.formatMessage('flexibleStopPlacesSaveStopPlaceSuccessHeader'),
@@ -143,7 +150,12 @@ export const deleteFlexibleStopPlaceById = (id: string) => async (
   const activeProvider = getState().providers.active?.code ?? '';
   const intl = getIntl(getState());
   try {
-    await UttuQuery(activeProvider, deleteFlexibleStopPlace, { id });
+    await UttuQuery(
+      activeProvider,
+      deleteFlexibleStopPlace,
+      { id },
+      await getState().auth.getAccessToken()
+    );
     dispatch(
       showSuccessNotification(
         intl.formatMessage('flexibleStopPlacesDeleteStopPlaceSuccessHeader'),

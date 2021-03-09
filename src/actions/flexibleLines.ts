@@ -62,7 +62,9 @@ export const loadFlexibleLines = () => async (
     const activeProvider = getState().providers.active?.code ?? '';
     const { flexibleLines } = await UttuQuery(
       activeProvider,
-      getFlexibleLinesQuery
+      getFlexibleLinesQuery,
+      {},
+      await getState().auth.getAccessToken()
     );
     dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
   } catch (e) {
@@ -94,7 +96,8 @@ export const loadFlexibleLineById = (
       queryById,
       {
         id,
-      }
+      },
+      await getState().auth.getAccessToken()
     );
 
     dispatch(receiveFlexibleLineActionCreator(flexibleLine ?? line ?? {}));
@@ -137,9 +140,14 @@ export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
       };
 
   try {
-    await UttuQuery(activeProvider, mutation, {
-      input: flexibleLineToPayload(flexibleLine),
-    });
+    await UttuQuery(
+      activeProvider,
+      mutation,
+      {
+        input: flexibleLineToPayload(flexibleLine),
+      },
+      await getState().auth.getAccessToken()
+    );
     dispatch(showSuccessNotification(header, message, isNewLine));
   } catch (e) {
     dispatch(
@@ -166,7 +174,12 @@ export const deleteLine = (flexibleLine: FlexibleLine) => async (
   const deleteQuery = flexibleLineType ? deleteFlexibleLine : deleteline;
 
   try {
-    await UttuQuery(activeProvider, deleteQuery, { id });
+    await UttuQuery(
+      activeProvider,
+      deleteQuery,
+      { id },
+      await getState().auth.getAccessToken()
+    );
     dispatch(
       showSuccessNotification(
         intl.formatMessage('deleteLineSuccessHeader'),
