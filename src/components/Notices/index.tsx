@@ -70,7 +70,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
               </DataCell>
             </TableRow>
           ))}
-          <TableRow hover>
+          <TableRow hover onClick={() => addNotice()}>
             <DataCell></DataCell>
             <DataCell align="right">
               <Tooltip
