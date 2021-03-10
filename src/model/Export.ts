@@ -1,7 +1,6 @@
 import Message from './Message';
 import http from 'http/http';
 import { saveAs } from 'file-saver';
-import token from 'http/token';
 import { VersionedType } from 'model/VersionedType';
 import { EXPORT_STATUS } from 'model/enums';
 import Line from './Line';
@@ -33,7 +32,7 @@ export const toPayload = (selectedExport: Export): Export => {
   return rest;
 };
 
-export const download = async (selectedExport: Export) => {
+export const download = async (selectedExport: Export, token: string) => {
   try {
     // feature detection
     // eslint-disable-next-line
@@ -42,7 +41,7 @@ export const download = async (selectedExport: Export) => {
     const { data } = await http.get(`/uttu/${selectedExport.downloadUrl}`, {
       responseType: 'blob',
       headers: {
-        Authorization: token.getBearer(),
+        Authorization: `Bearer ${token}`,
       },
     });
 

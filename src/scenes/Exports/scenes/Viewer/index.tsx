@@ -23,6 +23,7 @@ import { download, Export } from 'model/Export';
 import Page from 'components/Page';
 import uttuMessages, { isOfUttuMessage, UttuCode } from 'helpers/uttu.messages';
 import './styles.scss';
+import { useAuth } from '@entur/auth-provider';
 
 const ExportItem = ({
   label,
@@ -70,6 +71,8 @@ const ExportsViewer = ({
   useEffect(() => {
     setTheExport(currentExport);
   }, [currentExport]);
+
+  const auth = useAuth();
 
   return (
     <Page
@@ -121,9 +124,9 @@ const ExportsViewer = ({
               <div className="export-download">
                 <Label>{formatMessage('viewerDownloadLabel')}</Label>
                 <PrimaryButton
-                  onClick={(event: ChangeEvent) => {
+                  onClick={async (event: ChangeEvent) => {
                     event.stopPropagation();
-                    download(theExport!);
+                    download(theExport!, await auth.getAccessToken());
                   }}
                 >
                   <DownloadIcon />

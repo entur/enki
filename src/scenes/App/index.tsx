@@ -26,14 +26,18 @@ L.Icon.Default.mergeOptions({
 const App = () => {
   const dispatch = useDispatch<any>();
 
-  useEffect(() => {
-    dispatch(getProviders());
-    dispatch(getOrganisations());
-  }, [dispatch]);
+  const { providers, organisations, auth } = useSelector<
+    GlobalState,
+    GlobalState
+  >((state) => state);
 
-  const { providers, organisations } = useSelector<GlobalState, GlobalState>(
-    (state) => state
-  );
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      dispatch(getProviders());
+      dispatch(getOrganisations());
+    }
+  }, [dispatch, auth.isAuthenticated]);
+
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
   const basename = '';
@@ -51,7 +55,12 @@ const App = () => {
                 <Loading
                   className="app-loader"
                   text="Laster inn dataleverandører og organisasjoner..."
-                  isLoading={!providers.providers || !organisations}
+                  isLoading={
+                    !providers.providers ||
+                    !organisations ||
+                    auth.isLoading ||
+                    !auth.isAuthenticated
+                  }
                 >
                   <Routes />
                 </Loading>

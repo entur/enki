@@ -11,22 +11,24 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 import { API_BASE } from 'http/http';
-import token from 'http/token';
 import { Variables } from 'graphql-request/dist/src/types';
 import { useSelector } from 'react-redux';
 import { ReactElement } from 'react';
 import { GlobalState } from 'reducers';
+import { useAuth } from '@entur/auth-provider';
+import { AuthState } from 'reducers/auth';
 
 const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 
 export const UttuQuery = (
   provider: string,
   query: string,
-  variables?: Variables
+  variables?: Variables,
+  accessToken?: string
 ) => {
   const endpoint = API_BASE + '/uttu/' + provider;
   const client = new GraphQLClient(endpoint, {
-    headers: { ...staticHeaders, authorization: token.getBearer() },
+    headers: { ...staticHeaders, authorization: `Bearer ${accessToken}` },
   });
   return client.request(query, variables);
 };
@@ -56,17 +58,17 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
   });
 });
 
-const apolloClient = (provider: string) => {
+const apolloClient = (provider: string, auth: AuthState) => {
   const httpLink = createHttpLink({
     uri: API_BASE + '/uttu/' + provider,
   });
 
-  const authLink = setContext((_, { headers }) => {
+  const authLink = setContext(async (_, { headers }) => {
     return {
       headers: {
         ...headers,
         ...staticHeaders,
-        authorization: token ? `${token.getBearer()}` : '',
+        authorization: `Bearer ${await auth.getAccessToken()}`,
       },
     };
   });
@@ -85,7 +87,11 @@ export const Apollo = ({ children }: ApolloProps) => {
   const provider = useSelector<GlobalState, string | undefined>(
     (state) => state.providers.active?.code
   );
+  const auth = useAuth();
+
   return (
-    <ApolloProvider client={apolloClient(provider!)}>{children}</ApolloProvider>
+    <ApolloProvider client={apolloClient(provider!, auth)}>
+      {children}
+    </ApolloProvider>
   );
 };

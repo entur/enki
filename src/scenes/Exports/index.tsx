@@ -24,6 +24,7 @@ import { GlobalState } from 'reducers';
 import { ExportsState } from 'reducers/exports';
 import { download } from 'model/Export';
 import './styles.scss';
+import { useAuth } from '@entur/auth-provider';
 
 const Exports = ({ history }: RouteComponentProps) => {
   const exports = useSelector<GlobalState, ExportsState>(
@@ -35,6 +36,8 @@ const Exports = ({ history }: RouteComponentProps) => {
   useEffect(() => {
     dispatch(loadExports());
   }, [dispatch]);
+
+  const auth = useAuth();
 
   const handleOnRowClick = (id: string) => {
     history.push(`/exports/view/${id}`);
@@ -50,9 +53,9 @@ const Exports = ({ history }: RouteComponentProps) => {
             <DataCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
                 <SecondarySquareButton
-                  onClick={(event: ChangeEvent) => {
+                  onClick={async (event: ChangeEvent) => {
                     event.stopPropagation();
-                    download(e);
+                    download(e, await auth.getAccessToken());
                   }}
                 >
                   <DownloadIcon />

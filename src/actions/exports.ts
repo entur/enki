@@ -45,9 +45,14 @@ export const loadExports = () => async (
   const intl = getIntl(getState());
 
   try {
-    const data = await UttuQuery(activeProvider, getExportsQuery, {
-      historicDays: 30,
-    });
+    const data = await UttuQuery(
+      activeProvider,
+      getExportsQuery,
+      {
+        historicDays: 30,
+      },
+      await getState().auth.getAccessToken()
+    );
     dispatch(receiveExportsActionCreator(data.exports));
   } catch (e) {
     dispatch(
@@ -71,7 +76,12 @@ export const loadExportById = (id: string) => async (
   const intl = getIntl(getState());
 
   try {
-    const data = await UttuQuery(activeProvider, getExportByIdQuery, { id });
+    const data = await UttuQuery(
+      activeProvider,
+      getExportByIdQuery,
+      { id },
+      await getState().auth.getAccessToken()
+    );
     dispatch(receiveExportActionCreator(data.export));
   } catch (e) {
     dispatch(
@@ -95,9 +105,14 @@ export const saveExport = (theExport: Export) => async (
   const intl = getIntl(getState());
 
   try {
-    await UttuQuery(activeProvider, exportMutation, {
-      input: toPayload(theExport),
-    });
+    await UttuQuery(
+      activeProvider,
+      exportMutation,
+      {
+        input: toPayload(theExport),
+      },
+      await getState().auth.getAccessToken()
+    );
     dispatch(
       showSuccessNotification(
         intl.formatMessage('exportsSaveExportSuccessHeader'),
