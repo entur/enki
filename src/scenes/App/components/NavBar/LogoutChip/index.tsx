@@ -18,7 +18,10 @@ const LogoutChip = () => {
     })
   );
   return (
-    <ActionChip onClick={() => logout()} className="logout">
+    <ActionChip
+      onClick={() => logout({ returnTo: window.location.origin })}
+      className="logout"
+    >
       <BackArrowIcon />
       {formatMessage('userMenuLogoutLinkText')}
     </ActionChip>

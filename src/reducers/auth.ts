@@ -8,7 +8,7 @@ interface Auth {
   user: User | null;
   roleAssignments: string[] | null;
   getAccessToken: () => Promise<string>;
-  logout: () => void;
+  logout: (options: any) => void;
 }
 
 interface User {
