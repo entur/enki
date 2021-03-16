@@ -7,9 +7,9 @@ configMap:
   organisationsApiUrl: https://api.staging.entur.io/organisations/v1/register
   publicUrl: /
   uttuApiUrl: https://api.staging.entur.io/timetable-admin/v1/flexible-lines
-  auth0Domain: ror-entur-dev.eu.auth0.com
+  auth0Domain: ror-entur-staging.eu.auth0.com
   auth0Client: xTqJ1vELDAFV3cixZmO5ibqdKXXuFpFW
-  auth0Audience: https://ror.api.dev.entur.io
+  auth0Audience: https://ror.api.staging.entur.io
   auth0ClaimsNamespace: https://ror.entur.io/role_assignments
 
 ingress:
