@@ -250,11 +250,10 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
       <div className="copy-dialog-section">
         <div className="copy-dialog-inputs">
           <div className="copy-dialog-timepicker">
-            <Label>
-              {formatMessage('copyServiceJourneyDialogDepartureTimeLabel')}
-            </Label>
-
             <TimePicker
+              label={formatMessage(
+                'copyServiceJourneyDialogDepartureTimeLabel'
+              )}
               onChange={(date: Date | null) => {
                 const time = date?.toTimeString().split(' ')[0];
                 if (time) {
@@ -300,12 +299,10 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           <div className="copy-dialog-section">
             <div className="copy-dialog-inputs">
               <div className="copy-dialog-timepicker">
-                <Label>
-                  {formatMessage(
+                <TimePicker
+                  label={formatMessage(
                     'copyServiceJourneyDialogLatestPossibleDepartureTimelabel'
                   )}
-                </Label>
-                <TimePicker
                   onChange={(date: Date | null) => {
                     const time = date?.toTimeString().split(' ')[0];
                     if (time) {
