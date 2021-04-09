@@ -243,7 +243,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
                   textFieldRef?.current?.value ?? '',
                   jp.serviceJourneys,
                   jp.pointsInSequence,
-                  0
+                  modalSelectedJourneyPatternIndex
                 );
               }}
             >
