@@ -44,13 +44,12 @@ import GeoJSON, {
   Coordinate,
   stringIsValidCoordinates,
 } from 'model/GeoJSON';
-import { equals, F } from 'ramda';
+import { equals } from 'ramda';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { LeafletMouseEvent } from 'leaflet';
 import { Dropdown } from '@entur/dropdown';
-import { MessagesKey } from 'i18n/translations/translationKeys';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 
 const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
@@ -301,9 +300,6 @@ const FlexibleStopPlaceEditor = ({
                     setFlexibleStopPlace({
                       ...flexibleStopPlace,
                       keyValues: [
-                        ...(flexibleStopPlace.keyValues
-                          ? flexibleStopPlace.keyValues
-                          : []),
                         {
                           key: 'FlexibleStopAreaType',
                           values: [selectedItem.value],
