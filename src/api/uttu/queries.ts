@@ -241,6 +241,10 @@ export const getFlexibleStopPlacesQuery = `
       name,
       description,
       privateCode,
+      keyValues {
+        key
+        values
+      }
       flexibleArea {
         polygon {
           coordinates

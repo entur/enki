@@ -15,6 +15,10 @@ import {
 } from 'actions/flexibleStopPlaces';
 import Loading from 'components/Loading';
 import { selectIntl } from 'i18n';
+import {
+  flexibleStopAreaTypeMessages,
+  FLEXIBLE_STOP_AREA_TYPE,
+} from 'model/enums';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -48,6 +52,17 @@ const StopPlaces = ({ history }: RouteComponentProps) => {
     [history]
   );
 
+  const getStopAreaTypeMessageKey = (stopPlace: FlexibleStopPlace) => {
+    const type = stopPlace.keyValues?.find(
+      (v) => v.key === 'FlexibleStopAreaType'
+    )?.values[0];
+    if (type !== undefined) {
+      return flexibleStopAreaTypeMessages[type as FLEXIBLE_STOP_AREA_TYPE];
+    } else {
+      return 'flexibleStopAreaTypeNotSet';
+    }
+  };
+
   const renderTableRows = (stopPlaces: FlexibleStopPlace[]) => (
     <>
       {stopPlaces.map((sp) => (
@@ -57,6 +72,7 @@ const StopPlaces = ({ history }: RouteComponentProps) => {
           title={sp.description}
         >
           <DataCell>{sp.name}</DataCell>
+          <DataCell>{formatMessage(getStopAreaTypeMessageKey(sp))}</DataCell>
           <DataCell>{sp.privateCode}</DataCell>
           <DataCell>
             {(sp.flexibleArea?.polygon?.coordinates?.length ?? 1) - 1}
@@ -106,6 +122,9 @@ const StopPlaces = ({ history }: RouteComponentProps) => {
                 <TableRow>
                   <HeaderCell>
                     {formatMessage('stopPlacesNameTableHeaderLabelText')}
+                  </HeaderCell>
+                  <HeaderCell>
+                    {formatMessage('flexibleStopAreaType')}
                   </HeaderCell>
                   <HeaderCell>
                     {formatMessage('stopPlacesPrivateCodeTableHeaderLabelText')}
