@@ -536,4 +536,9 @@ export const messages = {
   newNoticeLabel: 'Ny notice',
   deleteNoticeTooltip: 'Slett notice',
   addNoticeTooltip: 'Legg til notice',
+  flexibleStopAreaType: 'Stoppestedstype',
+  flexibleStopAreaTypeUnrestrictedRoadNetwork:
+    'Kun på stoppesteder i polygonet',
+  flexibleStopAreaTypeUnrestrictedPublicTransportAreas:
+    'Hvor som helst i polygonet',
 };

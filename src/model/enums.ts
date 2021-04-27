@@ -246,6 +246,11 @@ export enum SEVERITY {
   ERROR = 'error',
 }
 
+export enum FLEXIBLE_STOP_AREA_TYPE {
+  UNRESTRICTED_ROAD_NETWORK = 'UnrestrictedRoadNetwork',
+  UNRESTRICTED_PUBLIC_TRANSPORT_AREAS = 'UnrestrictedPublicTransportAreas',
+}
+
 export const bookingAccessMessages: Record<
   BOOKING_ACCESS,
   keyof MessagesKey
@@ -278,4 +283,14 @@ export const paymentTimeMessages: Record<PURCHASE_MOMENT, keyof MessagesKey> = {
   [PURCHASE_MOMENT.BEFORE_BOARDING]: 'purchaseMomentBeforeBoarding',
   [PURCHASE_MOMENT.AFTER_BOARDING]: 'purchaseMomentAfterBoarding',
   [PURCHASE_MOMENT.ON_CHECK_OUT]: 'purchaseMomentOnCheckOut',
+};
+
+export const flexibleStopAreaTypeMessages: Record<
+  FLEXIBLE_STOP_AREA_TYPE,
+  keyof MessagesKey
+> = {
+  [FLEXIBLE_STOP_AREA_TYPE.UNRESTRICTED_ROAD_NETWORK]:
+    'flexibleStopAreaTypeUnrestrictedRoadNetwork',
+  [FLEXIBLE_STOP_AREA_TYPE.UNRESTRICTED_PUBLIC_TRANSPORT_AREAS]:
+    'flexibleStopAreaTypeUnrestrictedPublicTransportAreas',
 };

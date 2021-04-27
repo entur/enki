@@ -1,6 +1,7 @@
 import FlexibleArea from './FlexibleArea';
 import HailAndRideArea from './HailAndRideArea';
 import VersionedType from 'model/VersionedType';
+import { KeyValues } from './KeyValues';
 
 type FlexibleStopPlace = VersionedType & {
   name?: string;
@@ -9,6 +10,7 @@ type FlexibleStopPlace = VersionedType & {
   transportMode?: string;
   flexibleArea?: FlexibleArea;
   hailAndRideArea?: HailAndRideArea;
+  keyValues?: KeyValues[];
 };
 
 export default FlexibleStopPlace;

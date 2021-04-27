@@ -14,7 +14,12 @@ import { SmallAlertBox } from '@entur/alert';
 import { Paragraph } from '@entur/typography';
 
 import ConfirmDialog from 'components/ConfirmDialog';
-import { GEOMETRY_TYPE, VEHICLE_MODE } from 'model/enums';
+import {
+  flexibleStopAreaTypeMessages,
+  FLEXIBLE_STOP_AREA_TYPE,
+  GEOMETRY_TYPE,
+  VEHICLE_MODE,
+} from 'model/enums';
 import {
   deleteFlexibleStopPlaceById,
   loadFlexibleStopPlaceById,
@@ -44,6 +49,8 @@ import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { LeafletMouseEvent } from 'leaflet';
+import { Dropdown } from '@entur/dropdown';
+import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 
 const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
   JSON.stringify(polygonCoordinates);
@@ -273,6 +280,31 @@ const FlexibleStopPlaceEditor = ({
                     setFlexibleStopPlace({
                       ...flexibleStopPlace,
                       privateCode: e.target.value,
+                    })
+                  }
+                />
+
+                <Dropdown
+                  label={formatMessage('flexibleStopAreaType')}
+                  items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map((v) => ({
+                    value: v,
+                    label: formatMessage(flexibleStopAreaTypeMessages[v]),
+                  }))}
+                  value={
+                    flexibleStopPlace.keyValues?.find(
+                      (v) => v.key === 'FlexibleStopAreaType'
+                    )?.values[0] ?? null
+                  }
+                  onChange={(selectedItem: NormalizedDropdownItemType | null) =>
+                    selectedItem &&
+                    setFlexibleStopPlace({
+                      ...flexibleStopPlace,
+                      keyValues: [
+                        {
+                          key: 'FlexibleStopAreaType',
+                          values: [selectedItem.value],
+                        },
+                      ],
                     })
                   }
                 />
