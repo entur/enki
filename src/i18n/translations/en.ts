@@ -539,4 +539,9 @@ export const messages: MessagesKey = {
   newNoticeLabel: 'New notice',
   deleteNoticeTooltip: 'Delete notice',
   addNoticeTooltip: 'Add notice',
+  flexibleStopAreaType: 'Stop place type',
+  flexibleStopAreaTypeUnrestrictedRoadNetwork:
+    'Only on stop places within polygon',
+  flexibleStopAreaTypeUnrestrictedPublicTransportAreas:
+    'Anywhere within polygon',
 };
