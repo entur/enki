@@ -537,6 +537,7 @@ export const messages = {
   deleteNoticeTooltip: 'Slett notice',
   addNoticeTooltip: 'Legg til notice',
   flexibleStopAreaType: 'Stoppestedstype',
+  flexibleStopAreaTypeNotSet: 'Ikke valgt',
   flexibleStopAreaTypeUnrestrictedRoadNetwork:
     'Kun på stoppesteder i polygonet',
   flexibleStopAreaTypeUnrestrictedPublicTransportAreas:
