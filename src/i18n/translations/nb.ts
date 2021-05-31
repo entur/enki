@@ -541,4 +541,12 @@ export const messages = {
   flexibleStopAreaTypeUnrestrictedRoadNetwork: 'Hvor som helst i polygonet',
   flexibleStopAreaTypeUnrestrictedPublicTransportAreas:
     'Kun på stoppesteder i polygonet',
+  openBulkDeleteDialogButtonLabel: 'Slett flere',
+  bulkDeleteDialogTitle: 'Slett flere',
+  bulkDeleteDialogNameHeader: 'Navn',
+  bulkDeleteDialogDepartureHeader: 'Avgangstid',
+  bulkDeleteDialogDepartureDayOffsetHeader: 'Døgnskille',
+  bulkDeleteDialogValidityHeader: 'Gyldighet',
+  bulkDeleteDialogCancelButtonLabel: 'Avbrytt',
+  bulkDeleteDialogConfirmButtonLabel: 'Slette',
 };

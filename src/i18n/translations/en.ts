@@ -544,4 +544,12 @@ export const messages: MessagesKey = {
   flexibleStopAreaTypeUnrestrictedRoadNetwork: 'Anywhere within polygon',
   flexibleStopAreaTypeUnrestrictedPublicTransportAreas:
     'Only on stop places within polygon',
+  openBulkDeleteDialogButtonLabel: 'Bulk delete',
+  bulkDeleteDialogTitle: 'Bulk delete',
+  bulkDeleteDialogNameHeader: 'Name',
+  bulkDeleteDialogDepartureHeader: 'Departure',
+  bulkDeleteDialogDepartureDayOffsetHeader: 'Day offset',
+  bulkDeleteDialogValidityHeader: 'Validity',
+  bulkDeleteDialogCancelButtonLabel: 'Cancel',
+  bulkDeleteDialogConfirmButtonLabel: 'Delete',
 };

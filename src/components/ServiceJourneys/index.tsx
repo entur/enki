@@ -1,24 +1,23 @@
-import React, { ReactElement, useState, useRef, Fragment } from 'react';
-import ServiceJourney from 'model/ServiceJourney';
-import { Modal } from '@entur/modal';
-import { selectIntl } from 'i18n';
-import { useSelector } from 'react-redux';
-import { TextField } from '@entur/form';
-import { SecondaryButton, PrimaryButton } from '@entur/button';
-import {
-  replaceElement,
-  removeElementByIndex,
-  changeElementAtIndex,
-} from 'helpers/arrays';
-import { Heading1, LeadParagraph, Heading3 } from '@entur/typography';
-import StopPoint from 'model/StopPoint';
+import { TertiaryButton } from '@entur/button';
 import { Accordion, AccordionItem } from '@entur/expand';
+import { Heading1, Heading3, LeadParagraph } from '@entur/typography';
 import AddButton from 'components/AddButton/AddButton';
-import './styles.scss';
-import useUniqueKeys from 'hooks/useUniqueKeys';
-import JourneyPattern from 'model/JourneyPattern';
-import { Dropdown } from '@entur/dropdown';
+import {
+  changeElementAtIndex,
+  removeElementByIndex,
+  replaceElement,
+} from 'helpers/arrays';
 import { isBefore } from 'helpers/validation';
+import useUniqueKeys from 'hooks/useUniqueKeys';
+import { selectIntl } from 'i18n';
+import JourneyPattern from 'model/JourneyPattern';
+import ServiceJourney from 'model/ServiceJourney';
+import StopPoint from 'model/StopPoint';
+import React, { Fragment, ReactElement, useState } from 'react';
+import { useSelector } from 'react-redux';
+import BulkDeleteDialog from './BulkDeleteDialog';
+import NewServiceJourneyDialog from './NewServiceJourneyDialog';
+import './styles.scss';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
@@ -53,12 +52,16 @@ export const sortByDepartureTime = (sortable: Sortable[]): Sortable[] => {
 };
 
 export default ({ journeyPatterns, onChange, children }: Props) => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const { formatMessage } = useSelector(selectIntl);
-  const textFieldRef = useRef<HTMLInputElement>(null);
   const [
-    modalSelectedJourneyPatternIndex,
-    setModalSelectedJourneyPatternIndex,
+    showNewServiceJourneyDialog,
+    setShowNewServiceJourneyDialog,
+  ] = useState<boolean>(false);
+  const [showBulkDeleteDialog, setShowBulkDeleteDialog] = useState<number>(-1);
+  const { formatMessage } = useSelector(selectIntl);
+
+  const [
+    selectedJourneyPatternIndex,
+    setSelectedJourneyPatternIndex,
   ] = useState<number>(0);
 
   const keys = useUniqueKeys(journeyPatterns);
@@ -107,6 +110,28 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
     };
   };
 
+  const bulkDeleteServiceJourneys = (
+    ids: string[],
+    serviceJourneys: ServiceJourney[],
+    journeyPatternIndex: number
+  ) => {
+    if (serviceJourneys.length > 1) {
+      setShowBulkDeleteDialog(-1);
+      onChange(
+        changeElementAtIndex(
+          journeyPatterns,
+          {
+            ...journeyPatterns[journeyPatternIndex],
+            serviceJourneys: serviceJourneys.filter(
+              (sj) => !ids.includes(sj.id!)
+            ),
+          },
+          journeyPatternIndex
+        )
+      );
+    }
+  };
+
   const addNewServiceJourney = (
     name: string,
     serviceJourneys: ServiceJourney[],
@@ -130,7 +155,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
         journeyPatternIndex
       )
     );
-    setShowModal(false);
+    setShowNewServiceJourneyDialog(false);
     setTimeout(
       () => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }),
       100
@@ -163,7 +188,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
           key={keys[jpIndex] + sjIndex}
           title={sj.name}
           defaultOpen={
-            jpIndex === modalSelectedJourneyPatternIndex &&
+            jpIndex === selectedJourneyPatternIndex &&
             (!sj.id || sjIndex === jp.serviceJourneys.length - 1)
           }
         >
@@ -200,58 +225,27 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
 
   return (
     <>
-      <Modal
-        size="small"
-        open={showModal}
-        title={formatMessage('newServiceJourneyModalTitle')}
-        onDismiss={() => setShowModal(false)}
-        className="modal"
-      >
-        {formatMessage('newServiceJourneyModalSubTitle')}
-        <div className="modal-content">
-          <TextField
-            label={formatMessage('newServiceJourneyModalNameLabel')}
-            className="modal-input"
-            placeholder={formatMessage('newServiceJourneyModalPlaceholder')}
-            ref={textFieldRef}
-          />
-          <Dropdown
-            label={formatMessage('newServiceJourneyModalJourneyPatternLabel')}
-            className="modal-input"
-            items={journeyPatterns?.map((jp, i) => ({
-              value: keys[i],
-              label: jp.name || '',
-            }))}
-            value={keys[modalSelectedJourneyPatternIndex]}
-            onChange={(selected) =>
-              setModalSelectedJourneyPatternIndex(
-                keys.indexOf(selected?.value!)
-              )
-            }
-          />
-          <div>
-            <SecondaryButton
-              onClick={() => setShowModal(false)}
-              className="margin-right"
-            >
-              {formatMessage('newServiceJourneyModalCancel')}
-            </SecondaryButton>
-            <PrimaryButton
-              onClick={() => {
-                const jp = journeyPatterns[modalSelectedJourneyPatternIndex];
-                addNewServiceJourney(
-                  textFieldRef?.current?.value ?? '',
-                  jp.serviceJourneys,
-                  jp.pointsInSequence,
-                  modalSelectedJourneyPatternIndex
-                );
-              }}
-            >
-              {formatMessage('newServiceJourneyModalCreate')}
-            </PrimaryButton>
-          </div>
-        </div>
-      </Modal>
+      <NewServiceJourneyDialog
+        open={showNewServiceJourneyDialog}
+        setOpen={setShowNewServiceJourneyDialog}
+        journeyPatterns={journeyPatterns}
+        keys={keys}
+        selectedJourneyPatternIndex={selectedJourneyPatternIndex}
+        setSelectedJourneyPatternIndex={setSelectedJourneyPatternIndex}
+        addNewServiceJourney={addNewServiceJourney}
+      />
+
+      {showBulkDeleteDialog > -1 && (
+        <BulkDeleteDialog
+          open={showBulkDeleteDialog > -1}
+          dismiss={() => setShowBulkDeleteDialog(-1)}
+          serviceJourneys={
+            journeyPatterns[showBulkDeleteDialog].serviceJourneys
+          }
+          journeyPatternIndex={showBulkDeleteDialog}
+          onConfirm={bulkDeleteServiceJourneys}
+        />
+      )}
 
       <div className="service-journeys-editor">
         <Heading1>{formatMessage('editorServiceJourneys')}</Heading1>
@@ -267,15 +261,42 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
             )
           : journeyPatterns.map((jp, jpIndex) => (
               <Fragment key={keys[jpIndex]}>
-                {journeyPatterns.length > 1 && <Heading3>{jp.name}</Heading3>}
+                <ServiceJourneyPerJourneyPatternWrapper>
+                  {journeyPatterns.length > 1 && <Heading3>{jp.name}</Heading3>}
+                  {jp.serviceJourneys.length > 1 && (
+                    <ServiceJourneyBulkDeleteHeader>
+                      <TertiaryButton
+                        onClick={() => setShowBulkDeleteDialog(jpIndex)}
+                      >
+                        {formatMessage('openBulkDeleteDialogButtonLabel')}
+                      </TertiaryButton>
+                    </ServiceJourneyBulkDeleteHeader>
+                  )}
+                </ServiceJourneyPerJourneyPatternWrapper>
                 <Accordion>{renderServiceJourneys(jp, jpIndex)}</Accordion>
               </Fragment>
             ))}
         <AddButton
-          onClick={() => setShowModal(true)}
+          onClick={() => setShowNewServiceJourneyDialog(true)}
           buttonTitle={formatMessage('editorAddServiceJourneys')}
         />
       </div>
     </>
   );
 };
+
+const ServiceJourneyPerJourneyPatternWrapper = ({ children }: any) => (
+  <div
+    style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    }}
+  >
+    {children}
+  </div>
+);
+
+const ServiceJourneyBulkDeleteHeader = ({ children }: any) => (
+  <div style={{ alignContent: 'flex-end' }}>{children}</div>
+);

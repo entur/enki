@@ -30,7 +30,7 @@ export const UttuQuery = (
   const client = new GraphQLClient(endpoint, {
     headers: { ...staticHeaders, authorization: `Bearer ${accessToken}` },
   });
-  return client.request(query, variables);
+  return client.request(query, variables) as Promise<any>;
 };
 
 export const StopPlacesQuery = (
