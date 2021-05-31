@@ -547,6 +547,6 @@ export const messages = {
   bulkDeleteDialogDepartureHeader: 'Avgangstid',
   bulkDeleteDialogDepartureDayOffsetHeader: 'Døgnskille',
   bulkDeleteDialogValidityHeader: 'Gyldighet',
-  bulkDeleteDialogCancelButtonLabel: 'Avbrytt',
-  bulkDeleteDialogConfirmButtonLabel: 'Slette',
+  bulkDeleteDialogCancelButtonLabel: 'Avbryt',
+  bulkDeleteDialogConfirmButtonLabel: 'Slett',
 };
