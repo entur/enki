@@ -117,7 +117,7 @@ export default (props: Props) => {
         </TableBody>
       </Table>
 
-      <ButtonGroup>
+      <ButtonGroup style={{ marginTop: '1rem' }}>
         <SecondaryButton onClick={() => dismiss()}>
           {formatMessage('bulkDeleteDialogCancelButtonLabel')}
         </SecondaryButton>
