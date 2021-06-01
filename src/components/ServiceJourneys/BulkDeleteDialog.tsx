@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from '@entur/modal';
 import { ButtonGroup, PrimaryButton, SecondaryButton } from '@entur/button';
 import {
@@ -11,9 +11,10 @@ import {
 } from '@entur/table';
 import { StrongText, SubParagraph } from '@entur/typography';
 import ServiceJourney from 'model/ServiceJourney';
-import { Checkbox } from '@entur/form';
+import { Checkbox, TextField } from '@entur/form';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
+import { SearchIcon } from '@entur/icons';
 
 type Props = {
   open: boolean;
@@ -39,6 +40,20 @@ export default (props: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [data, setData] = useState<ServiceJourney[]>(serviceJourneys);
+
+  const [filterSearch, setFilterSearch] = React.useState('');
+
+  useEffect(() => {
+    const textSearchRegex = new RegExp(filterSearch, 'i');
+    const filtered = serviceJourneys.filter(
+      (item) => textSearchRegex.test(item.name!) || filterSearch === ''
+    );
+    setData(filtered);
+    setSelectedIds((s) =>
+      s.filter((id) => filtered.some((item) => item.id === id))
+    );
+  }, [filterSearch, serviceJourneys]);
 
   const add = (id: string) => {
     setSelectedIds([...selectedIds, id]);
@@ -55,21 +70,28 @@ export default (props: Props) => {
       title={formatMessage('bulkDeleteDialogTitle')}
       onDismiss={dismiss}
     >
-      <Table spacing="small">
+      <TextField
+        label={formatMessage('bulkDeleteDialogFilterSearchLabel')}
+        style={{ width: '15rem' }}
+        prepend={<SearchIcon inline />}
+        value={filterSearch}
+        placeholder=""
+        onChange={(e: any) => setFilterSearch(e.target.value)}
+      />
+      <Table spacing="small" style={{ marginTop: '1rem' }}>
         <TableHead>
           <HeaderCell padding="checkbox">
             <Checkbox
               name="all"
               checked={
-                selectedIds.length > 0 &&
-                selectedIds.length < serviceJourneys.length
+                selectedIds.length > 0 && selectedIds.length < data.length
                   ? 'indeterminate'
                   : selectedIds.length > 0
               }
               onChange={() =>
                 selectedIds.length > 0
                   ? setSelectedIds([])
-                  : setSelectedIds(serviceJourneys.map((sj) => sj.id!))
+                  : setSelectedIds(data.map((sj) => sj.id!))
               }
             />
           </HeaderCell>
@@ -85,7 +107,7 @@ export default (props: Props) => {
           </HeaderCell>
         </TableHead>
         <TableBody>
-          {serviceJourneys.map((sj, index) => (
+          {data.map((sj, index) => (
             <TableRow key={index}>
               <DataCell>
                 <Checkbox

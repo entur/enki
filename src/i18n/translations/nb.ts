@@ -543,6 +543,7 @@ export const messages = {
     'Kun på stoppesteder i polygonet',
   openBulkDeleteDialogButtonLabel: 'Slett flere',
   bulkDeleteDialogTitle: 'Slett flere',
+  bulkDeleteDialogFilterSearchLabel: 'Søk på Navn',
   bulkDeleteDialogNameHeader: 'Navn',
   bulkDeleteDialogDepartureHeader: 'Avgangstid',
   bulkDeleteDialogDepartureDayOffsetHeader: 'Døgnskille',

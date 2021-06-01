@@ -546,6 +546,7 @@ export const messages: MessagesKey = {
     'Only on stop places within polygon',
   openBulkDeleteDialogButtonLabel: 'Bulk delete',
   bulkDeleteDialogTitle: 'Bulk delete',
+  bulkDeleteDialogFilterSearchLabel: 'Filter by Name',
   bulkDeleteDialogNameHeader: 'Name',
   bulkDeleteDialogDepartureHeader: 'Departure',
   bulkDeleteDialogDepartureDayOffsetHeader: 'Day offset',
