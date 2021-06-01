@@ -20,6 +20,7 @@ import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { isBefore, isAfter } from 'helpers/validation';
+import { createUuid } from 'helpers/generators';
 
 type Props = {
   open: boolean;
@@ -127,6 +128,7 @@ export const copyServiceJourney = (
 
     const newServiceJourney = {
       ...clone(copyableServiceJourney),
+      id: `new_${createUuid()}`,
       name: nameTemplate.replace(
         '<% time %>',
         `${departureTime.slice(0, -3)} +${dayOffset}`

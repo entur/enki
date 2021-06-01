@@ -16,4 +16,12 @@ type ServiceJourney = VersionedType & {
   notices?: Notice[];
 };
 
+export const serviceJourneyToPayload = (sj: ServiceJourney) => {
+  if (sj.id?.startsWith('new_')) {
+    delete sj.id;
+  }
+
+  return sj;
+};
+
 export default ServiceJourney;

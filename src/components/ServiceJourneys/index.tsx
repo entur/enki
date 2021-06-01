@@ -7,6 +7,7 @@ import {
   removeElementByIndex,
   replaceElement,
 } from 'helpers/arrays';
+import { createUuid } from 'helpers/generators';
 import { isBefore } from 'helpers/validation';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import { selectIntl } from 'i18n';
@@ -141,6 +142,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
     const newServiceJourneys = [
       ...serviceJourneys,
       {
+        id: `new_${createUuid()}`,
         name,
         passingTimes: stopPoints.map((_) => ({})),
       },
