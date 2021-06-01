@@ -45,7 +45,10 @@ export default (props: Props) => {
   const [filterSearch, setFilterSearch] = React.useState('');
 
   useEffect(() => {
-    const textSearchRegex = new RegExp(filterSearch, 'i');
+    const textSearchRegex = new RegExp(
+      filterSearch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+      'i'
+    );
     const filtered = serviceJourneys.filter(
       (item) => textSearchRegex.test(item.name!) || filterSearch === ''
     );
