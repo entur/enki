@@ -323,8 +323,8 @@ export const validateDayTypes = (dayTypes?: DayType[]) => {
   }
 
   const dayType = dayTypes[0];
-
-  const daysOfWeek = dayType.daysOfWeek.map((dow) => WEEKDAYS.indexOf(dow));
+  const daysOfWeek =
+    dayType.daysOfWeek?.map((dow) => WEEKDAYS.indexOf(dow)) || [];
 
   return dayType.dayTypeAssignments.every((dta) => {
     let from = parseISO(dta.operatingPeriod.fromDate);
