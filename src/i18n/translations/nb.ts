@@ -550,4 +550,6 @@ export const messages = {
   bulkDeleteDialogValidityHeader: 'Gyldighet',
   bulkDeleteDialogCancelButtonLabel: 'Avbryt',
   bulkDeleteDialogConfirmButtonLabel: 'Slett',
+  dayTypesValidationError:
+    'Minst en gyldighetsperiode må ha en tilgjengelig ukedag',
 };

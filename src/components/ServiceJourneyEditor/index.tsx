@@ -33,6 +33,8 @@ import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/c
 import CopyDialog from './CopyDialog';
 import CopyActionChip from 'components/CopyActionChip';
 import Notices from 'components/Notices';
+import { FeedbackText } from '@entur/form';
+import { validateDayTypes } from 'helpers/validation';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -99,6 +101,12 @@ const ServiceJourneyEditor = (props: Props) => {
   };
 
   const namePristine = usePristine(name, spoilPristine);
+  const dayTypesPristine = usePristine(dayTypes, spoilPristine);
+  const dayTypesFeedback = getErrorFeedback(
+    formatMessage('dayTypesValidationError'),
+    validateDayTypes(dayTypes),
+    dayTypesPristine
+  );
 
   return (
     <div className="service-journey-editor">
@@ -247,7 +255,14 @@ const ServiceJourneyEditor = (props: Props) => {
             }
             spoilPristine={spoilPristine}
           />
+
+          {dayTypesFeedback.feedback && (
+            <FeedbackText variant={dayTypesFeedback.variant!}>
+              {dayTypesFeedback.feedback}
+            </FeedbackText>
+          )}
         </section>
+
         <section className="passing-times-section">
           <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
           <Paragraph>{formatMessage(getParagraphMessageKey())}</Paragraph>

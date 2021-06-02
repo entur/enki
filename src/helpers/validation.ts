@@ -9,6 +9,8 @@ import StopPoint from 'model/StopPoint';
 import PassingTime from 'model/PassingTime';
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import { MessagesKey } from 'i18n/translations/translationKeys';
+import DayType from 'model/DayType';
+import { addDays, getDay, isBefore as isDateBefore, parseISO } from 'date-fns';
 
 export const validLine = (line: Line): boolean =>
   aboutLineStepIsValid(line) &&
@@ -133,8 +135,9 @@ export const validateServiceJourney = (sj: ServiceJourney): boolean => {
   const isBlankName = isBlank(sj.name);
   const validDayTimes = (sj.dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
   const { isValid } = validateTimes(sj.passingTimes ?? []);
+  const validDayTypes = validateDayTypes(sj.dayTypes);
 
-  return !isBlankName && isValid && validDayTimes;
+  return !isBlankName && isValid && validDayTimes && validDayTypes;
 };
 
 export const isBefore = (
@@ -302,4 +305,38 @@ export const validateTimes = (
     .find((e) => !e.isValid);
 
   return firstError || { isValid: true, errorMessage: '' };
+};
+
+const WEEKDAYS = [
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+];
+
+export const validateDayTypes = (dayTypes?: DayType[]) => {
+  if (dayTypes?.length !== 1) {
+    return false;
+  }
+
+  const dayType = dayTypes[0];
+
+  const daysOfWeek = dayType.daysOfWeek.map((dow) => WEEKDAYS.indexOf(dow));
+
+  return dayType.dayTypeAssignments.every((dta) => {
+    let from = parseISO(dta.operatingPeriod.fromDate);
+    const to = parseISO(dta.operatingPeriod.toDate);
+
+    while (isDateBefore(from, to)) {
+      if (daysOfWeek.includes(getDay(from))) {
+        return true;
+      }
+      from = addDays(from, 1);
+    }
+
+    return false;
+  });
 };

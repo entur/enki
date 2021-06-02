@@ -553,4 +553,6 @@ export const messages: MessagesKey = {
   bulkDeleteDialogValidityHeader: 'Validity',
   bulkDeleteDialogCancelButtonLabel: 'Cancel',
   bulkDeleteDialogConfirmButtonLabel: 'Delete',
+  dayTypesValidationError:
+    'At least one validity period does not have an available weekday',
 };
