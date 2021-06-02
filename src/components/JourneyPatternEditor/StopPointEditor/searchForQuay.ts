@@ -20,70 +20,17 @@ export type SearchForQuayResponse = {
 export type QuaySearch = { stopPlace?: StopPlace; quay?: Quay };
 
 export default async function search(quayRef: string): Promise<QuaySearch> {
-  const endpoint = '/api/stopPlaces';
+  const endpoint = `/api/stopPlacesRead/quays/${quayRef}/stop-place`;
 
-  const query = /* GraphQL */ `
-    query getQuay($quayRef: String!) {
-      stopPlace(query: $quayRef) {
-        id
-        name {
-          value
-        }
-        ... on ParentStopPlace {
-          children {
-            id
-            name {
-              value
-            }
-            quays {
-              id
-              publicCode
-              name {
-                value
-              }
-            }
-          }
-        }
-        ... on StopPlace {
-          quays {
-            id
-            publicCode
-            name {
-              value
-            }
-          }
-        }
-      }
-    }
-  `;
+  const data = await StopPlacesQuery(endpoint);
 
-  const variables = {
-    quayRef,
-  };
-
-  const data: null | SearchForQuayResponse = await StopPlacesQuery(
-    endpoint,
-    query,
-    variables
-  );
   let foundQuay = undefined,
     foundStopPlace = undefined;
 
-  data?.stopPlace?.forEach((stop) => {
-    stop.children?.forEach((child) => {
-      (child.quays || []).forEach((quay) => {
-        if (quay.id === quayRef) {
-          foundStopPlace = child;
-          foundQuay = quay;
-        }
-      });
-    });
-    (stop.quays || []).forEach((quay) => {
-      if (quay.id === quayRef) {
-        foundStopPlace = stop;
-        foundQuay = quay;
-      }
-    });
-  });
+  if (data) {
+    foundStopPlace = data;
+    foundQuay = data.quays.quayRefOrQuay.find((q: Quay) => q.id === quayRef);
+  }
+
   return { stopPlace: foundStopPlace, quay: foundQuay };
 }

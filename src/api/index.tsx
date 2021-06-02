@@ -18,7 +18,7 @@ import { GlobalState } from 'reducers';
 import { useAuth } from '@entur/auth-provider';
 import { AuthState } from 'reducers/auth';
 
-const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
+export const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 
 export const UttuQuery = (
   provider: string,
@@ -33,15 +33,12 @@ export const UttuQuery = (
   return client.request(query, variables) as Promise<any>;
 };
 
-export const StopPlacesQuery = (
-  endpoint: string,
-  query: string,
-  variables?: Variables
-) => {
-  const client = new GraphQLClient(endpoint, {
+export const StopPlacesQuery = async (endpoint: string) => {
+  const response = await fetch(endpoint, {
     headers: { ...staticHeaders },
   });
-  return client.request(query, variables);
+
+  return response.json();
 };
 
 const cleanTypeName = new ApolloLink((operation, forward) => {
