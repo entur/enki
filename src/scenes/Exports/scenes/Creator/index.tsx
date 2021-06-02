@@ -1,16 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import moment from 'moment';
 import { SuccessButton } from '@entur/button';
 import { Checkbox, TextField } from '@entur/form';
-import { DatePicker } from '@entur/datepicker';
-import { dateToString } from 'helpers/dates';
 import { saveExport } from 'actions/exports';
 import OverlayLoader from 'components/OverlayLoader';
 import { AppIntlState, selectIntl } from 'i18n';
 import { RouteComponentProps } from 'react-router';
-import { exportIsValid, toDateIsBeforeFromDate } from './validateForm';
+import { exportIsValid } from './validateForm';
 import { Export, ExportLineAssociation, newExport } from 'model/Export';
 import { GlobalState } from 'reducers';
 import usePristine from 'hooks/usePristine';
@@ -23,8 +20,6 @@ import { Tooltip } from '@entur/tooltip';
 import { QuestionIcon } from '@entur/icons';
 import './styles.scss';
 import LinesForExport from 'components/LinesForExport';
-import { parseISO } from 'date-fns';
-import { isBefore, isAfter } from 'date-fns';
 
 const ExportsCreator = ({ history }: RouteComponentProps) => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
@@ -35,7 +30,6 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
   const dispatch = useDispatch<any>();
 
   const namePristine = usePristine(theExport.name, saveClicked);
-  const toDatePristine = usePristine(theExport.toDate, saveClicked);
 
   const handleOnSaveClick = () => {
     if (exportIsValid(theExport)) {
@@ -87,59 +81,11 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
         <SubParagraph>
           {formatMessage('exportCreatorDateForExportDesc')}
         </SubParagraph>
-        <div className="export-dates">
-          <DatePicker
-            label={formatMessage('exportCreatorFromDateFormLabel')}
-            selectedDate={moment(theExport.fromDate).toDate()}
-            onChange={(date: Date | null) => {
-              if (
-                date &&
-                theExport.toDate &&
-                isAfter(date, parseISO(theExport.toDate))
-              ) {
-                setTheExport({
-                  ...theExport,
-                  fromDate: dateToString(date),
-                  toDate: dateToString(date),
-                });
-              } else {
-                onFieldChange('fromDate', dateToString(date));
-              }
-            }}
-          />
-
-          <DatePicker
-            label={formatMessage('exportCreatorToDateFormLabel')}
-            {...getErrorFeedback(
-              formatMessage('validateFormErrorExportFromDateIsAfterToDate'),
-              !toDateIsBeforeFromDate(theExport.fromDate, theExport.toDate),
-              toDatePristine
-            )}
-            selectedDate={moment(theExport.toDate).toDate()}
-            onChange={(date: Date | null) => {
-              if (
-                date &&
-                theExport.fromDate &&
-                isBefore(date, parseISO(theExport.fromDate))
-              ) {
-                setTheExport({
-                  ...theExport,
-                  fromDate: dateToString(date),
-                  toDate: dateToString(date),
-                });
-              } else {
-                onFieldChange('toDate', dateToString(date));
-              }
-            }}
-          />
-        </div>
         <div className="export-lines-table">
           <Heading4>
             {formatMessage('exportCreatorLinesForExportHeader')}
           </Heading4>
           <LinesForExport
-            fromDate={theExport.fromDate}
-            toDate={theExport.toDate}
             onChange={(lines) => {
               onFieldChange('lineAssociations', lines);
             }}

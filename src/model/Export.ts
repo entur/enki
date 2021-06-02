@@ -14,8 +14,6 @@ export type ExportLineAssociation = VersionedType & {
 export type Export = VersionedType & {
   name: string;
   exportStatus?: EXPORT_STATUS;
-  fromDate: string;
-  toDate: string;
   dryRun: boolean;
   downloadUrl?: string;
   messages?: Message[];
@@ -24,7 +22,7 @@ export type Export = VersionedType & {
 
 export const newExport = (): Export => {
   const today = format(new Date(), 'yyyy-MM-dd');
-  return { name: '', fromDate: today, toDate: today, dryRun: false };
+  return { name: '', dryRun: false };
 };
 
 export const toPayload = (selectedExport: Export): Export => {
