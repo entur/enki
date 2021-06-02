@@ -29,7 +29,7 @@ export default async function search(quayRef: string): Promise<QuaySearch> {
 
   if (data) {
     foundStopPlace = data;
-    foundQuay = data.quays.quayRefOrQuay.find((q: Quay) => q.id === quayRef);
+    foundQuay = data.quays?.quayRefOrQuay.find((q: Quay) => q.id === quayRef);
   }
 
   return { stopPlace: foundStopPlace, quay: foundQuay };
