@@ -330,7 +330,7 @@ export const validateDayTypes = (dayTypes?: DayType[]) => {
     let from = parseISO(dta.operatingPeriod.fromDate);
     const to = parseISO(dta.operatingPeriod.toDate);
 
-    while (isDateBefore(from, to)) {
+    while (!isDateBefore(to, from)) {
       if (daysOfWeek.includes(getDay(from))) {
         return true;
       }

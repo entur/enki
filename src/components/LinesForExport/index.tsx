@@ -104,7 +104,8 @@ const mapLine = (
 
   const enable = areIntervalsOverlapping(
     { start: jpAvailability.from, end: jpAvailability.to },
-    { start: availability.from, end: availability.to }
+    { start: availability.from, end: availability.to },
+    { inclusive: true }
   );
 
   return {
