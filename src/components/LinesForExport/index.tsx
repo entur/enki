@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Table,
   TableHead,
@@ -16,12 +16,7 @@ import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
 import { SmallText, StrongText } from '@entur/typography';
 import JourneyPattern from 'model/JourneyPattern';
 import parseDate from 'date-fns/parseISO';
-import {
-  isBefore,
-  differenceInCalendarDays,
-  areIntervalsOverlapping,
-  parseISO,
-} from 'date-fns';
+import { isBefore, differenceInCalendarDays } from 'date-fns';
 import { isAfter } from 'date-fns';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import { ExportLineAssociation } from 'model/Export';
