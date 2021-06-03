@@ -2,9 +2,7 @@ import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import moment from 'moment';
 import { AddIcon, DownloadIcon } from '@entur/icons';
-import { FormattedDate } from 'react-intl';
 import {
   DataCell,
   HeaderCell,
@@ -67,12 +65,6 @@ const Exports = ({ history }: RouteComponentProps) => {
                 ? formatMessage('exportsDryRunYes')
                 : formatMessage('exportsDryRunNo')}
             </DataCell>
-            <DataCell>
-              <FormattedDate value={moment(e.fromDate).toDate()} />
-            </DataCell>
-            <DataCell>
-              <FormattedDate value={moment(e.toDate).toDate()} />
-            </DataCell>
           </TableRow>
         ))
       ) : (
@@ -125,12 +117,6 @@ const Exports = ({ history }: RouteComponentProps) => {
             </HeaderCell>
             <HeaderCell>
               {formatMessage('exportsTableHeaderLabelDryrun')}
-            </HeaderCell>
-            <HeaderCell>
-              {formatMessage('exportsTableHeaderLabelFromDate')}
-            </HeaderCell>
-            <HeaderCell>
-              {formatMessage('exportsTableHeaderLabelToDate')}
             </HeaderCell>
           </TableRow>
         </TableHead>

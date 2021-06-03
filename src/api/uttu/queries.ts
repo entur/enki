@@ -292,8 +292,6 @@ export const getExportsQuery = `
       changedBy,
       name,
       exportStatus,
-      fromDate,
-      toDate,
       dryRun,
       downloadUrl
     }
@@ -311,8 +309,6 @@ export const getExportByIdQuery = `
       changedBy,
       name,
       exportStatus,
-      fromDate,
-      toDate,
       dryRun,
       downloadUrl,
       messages {

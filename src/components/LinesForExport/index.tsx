@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Table,
   TableHead,
@@ -16,12 +16,7 @@ import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
 import { SmallText, StrongText } from '@entur/typography';
 import JourneyPattern from 'model/JourneyPattern';
 import parseDate from 'date-fns/parseISO';
-import {
-  isBefore,
-  differenceInCalendarDays,
-  areIntervalsOverlapping,
-  parseISO,
-} from 'date-fns';
+import { isBefore, differenceInCalendarDays } from 'date-fns';
 import { isAfter } from 'date-fns';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import { ExportLineAssociation } from 'model/Export';
@@ -29,8 +24,6 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 
 type Props = {
-  fromDate: string;
-  toDate: string;
   onChange: (lines: ExportLineAssociation[]) => void;
 };
 
@@ -45,7 +38,6 @@ type ExportableLine = {
   status: string;
   from: Date;
   to: Date;
-  enable: boolean;
   selected: boolean;
 };
 
@@ -81,10 +73,7 @@ const getAvailability = (journeyPatterns?: JourneyPattern[]): Availability => {
   return availability;
 };
 
-const mapLine = (
-  { id, name, journeyPatterns }: Line,
-  availability: Availability
-): ExportableLine => {
+const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
   const today = new Date();
   const jpAvailability = getAvailability(journeyPatterns);
   const availableForDaysFromNow = differenceInCalendarDays(
@@ -102,19 +91,12 @@ const mapLine = (
     status = 'negative';
   }
 
-  const enable = areIntervalsOverlapping(
-    { start: jpAvailability.from, end: jpAvailability.to },
-    { start: availability.from, end: availability.to },
-    { inclusive: true }
-  );
-
   return {
     id: id!,
     name: name!,
     status,
     ...jpAvailability,
-    enable,
-    selected: enable,
+    selected: true,
   };
 };
 
@@ -128,14 +110,7 @@ const mapStatusToText = (status: string): string => {
   }
 };
 
-export default ({ fromDate, toDate, onChange }: Props) => {
-  const availability = useMemo(
-    () => ({
-      from: parseISO(fromDate),
-      to: parseISO(toDate),
-    }),
-    [fromDate, toDate]
-  );
+export default ({ onChange }: Props) => {
   const [lines, setLines] = useState<ExportableLine[]>([]);
   const { loading, data, error, refetch } = useQuery<LinesData>(
     GET_LINES_FOR_EXPORT
@@ -148,11 +123,11 @@ export default ({ fromDate, toDate, onChange }: Props) => {
   useEffect(() => {
     if (data) {
       setLines([
-        ...data?.lines.map((line) => mapLine(line, availability)),
-        ...data?.flexibleLines.map((line) => mapLine(line, availability)),
+        ...data?.lines.map(mapLine),
+        ...data?.flexibleLines.map(mapLine),
       ]);
     }
-  }, [data, availability]);
+  }, [data]);
 
   useEffect(() => {
     onChange(
@@ -247,7 +222,6 @@ export default ({ fromDate, toDate, onChange }: Props) => {
             <TableRow key={line.id}>
               <DataCell padding="checkbox" style={{ padding: '.5rem 1rem' }}>
                 <Checkbox
-                  disabled={!line.enable}
                   name={line.id}
                   checked={line.selected}
                   onChange={() => handleRegularChange(line.id)}

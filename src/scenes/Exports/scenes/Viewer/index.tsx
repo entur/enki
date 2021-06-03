@@ -8,7 +8,6 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import moment from 'moment';
 import { PrimaryButton } from '@entur/button';
 import { Label } from '@entur/typography';
 import { DownloadIcon } from '@entur/icons';
@@ -91,14 +90,6 @@ const ExportsViewer = ({
               <ExportItem
                 label={formatMessage('viewerNameLabel')}
                 value={theExport!.name}
-              />
-              <ExportItem
-                label={formatMessage('viewerFromDateLabel')}
-                value={moment(theExport!.fromDate).format('DD-MM-YYYY')}
-              />
-              <ExportItem
-                label={formatMessage('viewerToDateLabel')}
-                value={moment(theExport!.toDate).format('DD-MM-YYYY')}
               />
               <ExportItem
                 label={formatMessage('viewerDryRunLabel')}
