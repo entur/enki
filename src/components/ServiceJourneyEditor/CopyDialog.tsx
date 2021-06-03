@@ -267,7 +267,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
             />
           </div>
           <DayOffsetDropdown
-            initialValue={initialDayOffset}
+            value={initialDayOffset}
             onChange={(value) => setInitialDayOffset(value!)}
           />
         </div>
@@ -316,7 +316,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                 />
               </div>
               <DayOffsetDropdown
-                initialValue={untilDayOffset}
+                value={untilDayOffset}
                 onChange={(value) => setUntilDayOffset(value!)}
               />
             </div>
