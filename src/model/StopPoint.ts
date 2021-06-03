@@ -9,8 +9,8 @@ type DestinationDisplay = {
 
 type StopPoint = VersionedType & {
   flexibleStopPlace?: FlexibleStopPlace;
-  flexibleStopPlaceRef?: string;
-  quayRef?: string;
+  flexibleStopPlaceRef?: string | null;
+  quayRef?: string | null;
   bookingArrangement?: BookingArrangement | null;
   destinationDisplay?: DestinationDisplay | null;
   forBoarding?: boolean | null;

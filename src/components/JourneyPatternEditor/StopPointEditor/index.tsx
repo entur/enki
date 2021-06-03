@@ -126,8 +126,8 @@ const StopPointEditor = ({
                 setQuaySearch(undefined);
                 stopPointChange({
                   ...stopPoint,
-                  quayRef: undefined,
-                  flexibleStopPlaceRef: undefined,
+                  quayRef: null,
+                  flexibleStopPlaceRef: null,
                   flexibleStopPlace: undefined,
                 });
               }}
