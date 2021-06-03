@@ -15,7 +15,7 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import Page from 'components/Page';
-import { Heading4, LeadParagraph, SubParagraph } from '@entur/typography';
+import { Heading4, LeadParagraph } from '@entur/typography';
 import { Tooltip } from '@entur/tooltip';
 import { QuestionIcon } from '@entur/icons';
 import './styles.scss';
