@@ -77,10 +77,6 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
           }
         />
 
-        <Heading4>{formatMessage('exportCreatorDateForExport')}</Heading4>
-        <SubParagraph>
-          {formatMessage('exportCreatorDateForExportDesc')}
-        </SubParagraph>
         <div className="export-lines-table">
           <Heading4>
             {formatMessage('exportCreatorLinesForExportHeader')}
