@@ -51,17 +51,29 @@ const PassingTimesEditor = (props: Props & StateProps) => {
   const { isValid, errorMessage } = validateTimes(passingTimes, intl);
   const { formatMessage } = useSelector(selectIntl);
 
-  const getDayOffsetDropdown = (passingTime: PassingTime, index: number) => (
+  type DayOffsetKey = 'arrivalDayOffset' | 'departureDayOffset';
+
+  const getDayOffsetDropdown = (
+    passingTime: PassingTime,
+    index: number,
+    dayOffsetKey: DayOffsetKey,
+    otherDayOffsetKey: DayOffsetKey,
+    disabled: boolean,
+    overrideOther: boolean
+  ) => (
     <DayOffsetDropdown
-      initialValue={passingTime.departureDayOffset}
+      value={passingTime[dayOffsetKey] as number}
+      disabled={disabled}
       onChange={(value) =>
         onChange(
           changeElementAtIndex(
             passingTimes,
             {
               ...passingTimes[index],
-              departureDayOffset: value,
-              arrivalDayOffset: value,
+              [dayOffsetKey]: value,
+              [otherDayOffsetKey]: overrideOther
+                ? value
+                : passingTimes[index][otherDayOffsetKey],
             },
             index
           )
@@ -101,6 +113,14 @@ const PassingTimesEditor = (props: Props & StateProps) => {
           prepend={<ClockIcon inline />}
           selectedTime={toDate(passingTime.arrivalTime)}
         />
+        {getDayOffsetDropdown(
+          passingTime,
+          index,
+          'arrivalDayOffset',
+          'departureDayOffset',
+          index === 0,
+          isLast
+        )}
         <TimePicker
           disabled={isLast}
           label={formatMessage('passingTimesDepartureTime')}
@@ -124,6 +144,14 @@ const PassingTimesEditor = (props: Props & StateProps) => {
           prepend={<ClockIcon inline />}
           selectedTime={toDate(passingTime.departureTime)}
         />
+        {getDayOffsetDropdown(
+          passingTime,
+          index,
+          'departureDayOffset',
+          'arrivalDayOffset',
+          isLast,
+          index === 0
+        )}
       </>
     );
   };
@@ -144,7 +172,6 @@ const PassingTimesEditor = (props: Props & StateProps) => {
               stopPoint={stopPoints[index]}
             />
             {getTimePicker(passingTime, index, index === stopPoints.length - 1)}
-            {getDayOffsetDropdown(passingTime, index)}
           </div>
         ))}
       </div>
