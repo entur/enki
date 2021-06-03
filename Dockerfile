@@ -1,4 +1,4 @@
-FROM node:10.23.2-alpine3.10
+FROM node:10.24.1-alpine3.10
 
 RUN addgroup appuser && adduser --disabled-password --gecos '' appuser --ingroup appuser
 
