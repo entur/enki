@@ -50,7 +50,7 @@
     "@types/react-router-dom": "5.1.7",
     "@types/uuid": "3.4.9",
     "axios": "0.21.1",
-    "check-node-version": "4.0.3",
+    "check-node-version": "4.1.0",
     "classnames": "2.2.6",
     "cross-env": "5.2.1",
     "date-fns": "2.16.1",
