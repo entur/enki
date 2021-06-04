@@ -45,7 +45,7 @@
     "@types/react-helmet": "5.0.16",
     "@types/react-intl-redux": "0.1.14",
     "@types/react-leaflet": "2.8.1",
-    "@types/react-modal": "3.10.6",
+    "@types/react-modal": "3.12.0",
     "@types/react-redux": "7.1.16",
     "@types/react-router-dom": "5.1.7",
     "@types/uuid": "3.4.9",
