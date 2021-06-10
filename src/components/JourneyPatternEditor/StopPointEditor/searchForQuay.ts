@@ -1,21 +1,10 @@
-import { StopPlacesRead, StopPlacesQuery } from 'api';
-
-export type Quay = {
-  id: string;
-  publicCode: null | string;
-  name: null | string;
-};
-
-export type StopPlace = {
-  id: string;
-  name: { value: string };
-  quays: Quay[];
-  children: StopPlace[];
-};
-
-export type SearchForQuayResponse = {
-  stopPlace: null | StopPlace[];
-};
+import {
+  StopPlacesRead,
+  StopPlacesQuery,
+  StopPlace,
+  Quay,
+  SearchForQuayResponse,
+} from 'api';
 
 export type QuaySearch = { stopPlace?: StopPlace; quay?: Quay };
 

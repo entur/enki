@@ -20,6 +20,23 @@ import { AuthState } from 'reducers/auth';
 
 export const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 
+export type SearchForQuayResponse = {
+  stopPlace: null | StopPlace[];
+};
+
+export type Quay = {
+  id: string;
+  publicCode: null | string;
+  name: null | string;
+};
+
+export type StopPlace = {
+  id: string;
+  name: { value: string };
+  quays: Quay[];
+  children: StopPlace[];
+};
+
 export const UttuQuery = (
   provider: string,
   query: string,
@@ -49,7 +66,8 @@ export const StopPlacesQuery = async (
   const client = new GraphQLClient(endpoint, {
     headers: { ...staticHeaders },
   });
-  return client.request(query, variables);
+  const response = await client.request(query, variables);
+  return response as null | SearchForQuayResponse;
 };
 
 const cleanTypeName = new ApolloLink((operation, forward) => {
