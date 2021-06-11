@@ -13,6 +13,8 @@ configMap:
   auth0Client: VXdzUbFV8ws953UWLrizuaQY9C991w0i
   auth0Audience: https://ror.api.entur.io
   auth0ClaimsNamespace: https://ror.entur.io/role_assignments
+  stopPlacesApiUrl: https://api.entur.io/stop-places/v1/graphql
+  stopPlacesReadApiUrl: https://api.entur.io/stop-places/v1/read
 
 ingress:
     enabled: true

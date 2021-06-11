@@ -76,6 +76,16 @@ spec:
             configMapKeyRef:
               key: AUTH0_CLAIMS_NAMESPACE
               name: {{ .Values.configMapMount.name }}
+        - name: STOP_PLACES_API_URL
+          valueFrom:
+            configMapKeyRef:
+              key: STOP_PLACES_API_URL
+              name: {{ .Values.configMapMount.name }}
+        - name: STOP_PLACES_READ_API_URL
+          valueFrom:
+            configMapKeyRef:
+              key: STOP_PLACES_READ_API_URL
+              name: {{ .Values.configMapMount.name }}
         - name: TZ
           value: Europe/Oslo
         - name: ENVIRONMENT
