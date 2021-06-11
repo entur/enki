@@ -2,7 +2,7 @@ const { GET, OPTION } = require('../index');
 const { forwardingProxy } = require('../../forwardingproxy');
 
 const router = require('express').Router();
-const apiUrl = 'https://api.entur.io/stop-places/v1/read';
+const apiUrl = require('../../config/app').stopPlacesReadApiUrl;
 const proxy = forwardingProxy(apiUrl);
 
 console.log(`stopPlacesRead proxy forwarding to ${apiUrl}`);
