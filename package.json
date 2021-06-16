@@ -14,7 +14,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "dependencies": {
-    "@apollo/client": "3.3.19",
+    "@apollo/client": "3.3.20",
     "@entur/alert": "0.7.15",
     "@entur/auth-provider": "0.2.0",
     "@entur/button": "2.3.6",
