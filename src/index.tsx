@@ -35,6 +35,7 @@ const renderIndex = async () => {
 
   const {
     claimsNamespace: auth0ClaimsNamespace,
+    defaultAuthMethod,
     ...auth0Config
   } = await response.json();
 
@@ -46,7 +47,7 @@ const renderIndex = async () => {
         redirectUri: window.location.origin,
       }}
       auth0ClaimsNamespace={auth0ClaimsNamespace}
-      defaultAuthMethod="kc"
+      defaultAuthMethod={defaultAuthMethod}
     >
       <AuthenticatedApp />
     </AuthProvider>,
