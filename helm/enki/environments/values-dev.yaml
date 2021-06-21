@@ -11,6 +11,7 @@ configMap:
   auth0Client: YBG7NvM9lT3pLmcVKeRZCrPFtU7bll4g
   auth0Audience: https://ror.api.dev.entur.io
   auth0ClaimsNamespace: https://ror.entur.io/role_assignments
+  defaultAuthMethod: auth0
   stopPlacesApiUrl: https://api.dev.entur.io/stop-places/v1/graphql
   stopPlacesReadApiUrl: https://api.dev.entur.io/stop-places/v1/read
 

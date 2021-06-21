@@ -76,6 +76,11 @@ spec:
             configMapKeyRef:
               key: AUTH0_CLAIMS_NAMESPACE
               name: {{ .Values.configMapMount.name }}
+        - name: DEFAULT_AUTH_METHOD
+          valueFrom:
+            configMapKeyRef:
+              key: DEFAULT_AUTH_METHOD
+              name: {{ .Values.configMapMount.name }}
         - name: STOP_PLACES_API_URL
           valueFrom:
             configMapKeyRef:

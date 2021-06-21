@@ -11,6 +11,7 @@ configMap:
   auth0Client: xTqJ1vELDAFV3cixZmO5ibqdKXXuFpFW
   auth0Audience: https://ror.api.staging.entur.io
   auth0ClaimsNamespace: https://ror.entur.io/role_assignments
+  defaultAuthMethod: kc
   stopPlacesApiUrl: https://api.staging.entur.io/stop-places/v1/graphql
   stopPlacesReadApiUrl: https://api.staging.entur.io/stop-places/v1/read
 
