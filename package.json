@@ -46,7 +46,7 @@
     "@types/react-intl-redux": "0.1.15",
     "@types/react-leaflet": "2.8.2",
     "@types/react-modal": "3.12.1",
-    "@types/react-redux": "7.1.16",
+    "@types/react-redux": "7.1.18",
     "@types/react-router-dom": "5.1.7",
     "@types/uuid": "3.4.9",
     "axios": "0.21.1",
