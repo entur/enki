@@ -52,7 +52,7 @@ const withSecurity = (app) => {
         ],
         styleSrc: [inQuote('self'), inQuote('unsafe-inline')],
         imgSrc: ['*', 'data:'],
-        frameSrc: ['blob:'],
+        frameSrc: ['https://' + process.env.AUTH0_DOMAIN, 'blob:'],
         reportUri,
       },
       process.env.NODE_ENV === 'development' ? devExtras : undefined
