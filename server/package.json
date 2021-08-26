@@ -8,7 +8,7 @@
     "express": "4.17.1",
     "express-history-api-fallback": "2.2.1",
     "express-http-proxy": "1.6.2",
-    "helmet": "3.23.3",
+    "helmet": "4.6.0",
     "js-base64": "2.6.4",
     "prom-client": "11.5.3",
     "url": "0.11.0",
