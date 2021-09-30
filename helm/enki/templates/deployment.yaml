@@ -36,16 +36,6 @@ spec:
             configMapKeyRef:
               key: ORGANISATIONS_API_URL
               name: {{ .Values.configMapMount.name }}
-        - name: AUTH_SERVER_URL
-          valueFrom:
-            configMapKeyRef:
-              key: AUTH_SERVER_URL
-              name: {{ .Values.configMapMount.name }}
-        - name: AUTH_CLIENT_ID
-          valueFrom:
-            configMapKeyRef:
-              key: AUTH_CLIENT_ID
-              name: {{ .Values.configMapMount.name }}
         - name: LOG_FORWARD_PATHS
           valueFrom:
             configMapKeyRef:
@@ -75,11 +65,6 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: AUTH0_CLAIMS_NAMESPACE
-              name: {{ .Values.configMapMount.name }}
-        - name: DEFAULT_AUTH_METHOD
-          valueFrom:
-            configMapKeyRef:
-              key: DEFAULT_AUTH_METHOD
               name: {{ .Values.configMapMount.name }}
         - name: STOP_PLACES_API_URL
           valueFrom:

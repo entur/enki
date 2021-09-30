@@ -33,21 +33,16 @@ const renderIndex = async () => {
   const root = document.getElementById('root');
   const response: any = await fetch(API_BASE + '/auth0.json');
 
-  const {
-    claimsNamespace: auth0ClaimsNamespace,
-    defaultAuthMethod,
-    ...auth0Config
-  } = await response.json();
+  const { claimsNamespace: auth0ClaimsNamespace, ...auth0Config } =
+    await response.json();
 
   ReactDOM.render(
     <AuthProvider
-      keycloakConfigUrl={API_BASE + '/keycloak.json'}
       auth0Config={{
         ...auth0Config,
         redirectUri: window.location.origin,
       }}
       auth0ClaimsNamespace={auth0ClaimsNamespace}
-      defaultAuthMethod={defaultAuthMethod}
     >
       <AuthenticatedApp />
     </AuthProvider>,

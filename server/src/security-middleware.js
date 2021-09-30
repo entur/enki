@@ -1,6 +1,5 @@
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const openIDConnectUrl = require('./config/auth').openIDConnectUrl;
 const { appLog, errorLevel } = require('./log');
 
 const reportUri = '/csp-violation-report';
@@ -46,7 +45,6 @@ const withSecurity = (app) => {
         connectSrc: [
           inQuote('self'),
           'https://' + process.env.AUTH0_DOMAIN,
-          openIDConnectUrl,
           'ws:',
           'https://sentry.io',
         ],

@@ -16,7 +16,7 @@
   "dependencies": {
     "@apollo/client": "3.4.9",
     "@entur/alert": "0.8.0",
-    "@entur/auth-provider": "0.4.0",
+    "@entur/auth-provider": "^1.0.0",
     "@entur/button": "2.3.6",
     "@entur/chip": "0.3.37",
     "@entur/datepicker": "0.9.3",

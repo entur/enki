@@ -6,8 +6,6 @@ metadata:
   labels:
   {{- include "common.labels" . | indent 4 }}
 data:
-  AUTH_SERVER_URL: {{ .Values.configMap.authServerUrl }}
-  AUTH_CLIENT_ID: {{ .Values.configMap.authClientId }}
   LOG_FORWARD_PATHS: {{ .Values.configMap.logForwardPaths }}
   ORGANISATIONS_API_URL: {{ .Values.configMap.organisationsApiUrl }}
   PUBLIC_URL: {{ .Values.configMap.publicUrl }}
@@ -16,6 +14,5 @@ data:
   AUTH0_CLIENT_ID: {{ .Values.configMap.auth0Client }}
   AUTH0_AUDIENCE: {{ .Values.configMap.auth0Audience }}
   AUTH0_CLAIMS_NAMESPACE: {{ .Values.configMap.auth0ClaimsNamespace }}
-  DEFAULT_AUTH_METHOD: {{ .Values.configMap.defaultAuthMethod }}
   STOP_PLACES_API_URL: {{ .Values.configMap.stopPlacesApiUrl }}
   STOP_PLACES_READ_API_URL: {{ .Values.configMap.stopPlacesReadApiUrl }}

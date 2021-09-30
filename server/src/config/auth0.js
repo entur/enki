@@ -3,5 +3,4 @@ module.exports = {
     clientId: process.env.AUTH0_CLIENT_ID,
     audience: process.env.AUTH0_AUDIENCE,
     claimsNamespace: process.env.AUTH0_CLAIMS_NAMESPACE,
-    defaultAuthMethod: process.env.DEFAULT_AUTH_METHOD
 };

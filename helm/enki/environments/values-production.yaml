@@ -3,8 +3,6 @@ env: production
 replicas: 2
 
 configMap:
-  authServerUrl: https://auth.entur.org/auth
-  authClientId: enki
   logForwardPaths: "true"
   organisationsApiUrl: https://api.entur.io/organisations/v1/register
   publicUrl: /
@@ -13,7 +11,6 @@ configMap:
   auth0Client: VXdzUbFV8ws953UWLrizuaQY9C991w0i
   auth0Audience: https://ror.api.entur.io
   auth0ClaimsNamespace: https://ror.entur.io/role_assignments
-  defaultAuthMethod: auth0
   stopPlacesApiUrl: https://api.entur.io/stop-places/v1/graphql
   stopPlacesReadApiUrl: https://api.entur.io/stop-places/v1/read
 

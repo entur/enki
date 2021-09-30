@@ -21,7 +21,7 @@ UTTU_API_URL=http://localhost:11701/services/flexible-lines
 
 ## Authentication
 
-Uses [Keycloak](http://www.keycloak.org/) to authenticate users.
+Uses Auth0 to authenticate users.
 
 ## Testing
 
