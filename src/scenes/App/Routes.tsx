@@ -12,6 +12,8 @@ import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import ExportsOverview from '../Exports';
 import ExportsEditor from '../Exports/scenes/Creator';
 import ExportsViewer from '../Exports/scenes/Viewer';
+import Providers from 'scenes/Providers';
+import ProviderEditor from 'scenes/Providers/Editor';
 
 const Routes = () => (
   <div className="routes">
@@ -46,6 +48,9 @@ const Routes = () => (
       <Route exact path="/exports" component={ExportsOverview} />
       <Route exact path="/exports/create" component={ExportsEditor} />
       <Route exact path="/exports/view/:id" component={ExportsViewer} />
+      <Route exact path="/providers" component={Providers} />
+      <Route exact path="/providers/create" component={ProviderEditor} />
+      <Route exact path="/providers/edit/:id" component={ProviderEditor} />
     </Switch>
   </div>
 );

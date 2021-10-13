@@ -158,9 +158,9 @@ const NetworkEditor = ({
 
               <TextField
                 className="form-section"
-                label={formatMessage('editorNameLabelText')}
+                label={formatMessage('editorNetworkNameLabelText')}
                 {...getErrorFeedback(
-                  formatMessage('editorValidationName'),
+                  formatMessage('editorNetworkValidationName'),
                   !isBlank(network.name),
                   namePristine
                 )}
@@ -172,7 +172,7 @@ const NetworkEditor = ({
 
               <TextArea
                 className="form-section"
-                label={formatMessage('editorDescriptionLabelText')}
+                label={formatMessage('editorNetworkDescriptionLabelText')}
                 value={network.description ?? ''}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   onFieldChange('description', e.target.value)
@@ -181,7 +181,7 @@ const NetworkEditor = ({
 
               <TextField
                 className="form-section"
-                label={formatMessage('editorPrivateCodeLabelText')}
+                label={formatMessage('editorNetworkPrivateCodeLabelText')}
                 value={network.privateCode ?? ''}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   onFieldChange('privateCode', e.target.value)
@@ -199,12 +199,12 @@ const NetworkEditor = ({
                 )}
                 placeholder={formatMessage('defaultOption')}
                 clearable
-                label={formatMessage('editorAuthorityLabelText')}
+                label={formatMessage('editorNetworkAuthorityLabelText')}
                 onChange={(organisation) =>
                   handleAuthoritySelectionChange(organisation?.value ?? '')
                 }
                 {...getErrorFeedback(
-                  formatMessage('editorValidationAuthority'),
+                  formatMessage('editorNetworkValidationAuthority'),
                   !isBlank(network.authorityRef),
                   authorityPristine
                 )}

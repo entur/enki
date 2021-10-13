@@ -3,6 +3,7 @@ import { getProvidersQuery } from 'api/uttu/queries';
 import Provider from 'model/Provider';
 import { Dispatch } from 'redux';
 import { GlobalState } from 'reducers';
+import { mutateCodespace, mutateProvider } from 'api/uttu/mutations';
 
 export const RECEIVE_PROVIDERS = 'RECEIVE_PROVIDERS';
 export const FAILED_RECEIVING_PROVIDERS = 'FAILED_RECEIVING_PROVIDERS';
@@ -45,4 +46,29 @@ export const getProviders =
         dispatch(failedReceivingProviders);
         return Promise.reject();
       });
+  };
+
+export const saveProvider =
+  (provider: Provider) =>
+  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+    const { codespace, ...providerWithoutCodespace } = provider;
+
+    await UttuQuery(
+      'providers',
+      mutateCodespace,
+      { input: provider.codespace },
+      await getState().auth.getAccessToken()
+    );
+
+    await UttuQuery(
+      'providers',
+      mutateProvider,
+      {
+        input: {
+          ...providerWithoutCodespace,
+          codespaceXmlns: provider.codespace?.xmlns,
+        },
+      },
+      await getState().auth.getAccessToken()
+    );
   };
