@@ -24,6 +24,7 @@ import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
 import { GlobalState } from 'reducers';
 import { AppIntlState } from 'i18n';
 import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
+import { TimePicker } from '@entur/datepicker';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -53,6 +54,15 @@ export default (props: Props) => {
     latestBookingTime = '',
     minimumBookingPeriod,
   } = bookingArrangement;
+
+  let latestbookingTimeAsDate: Date | undefined = undefined;
+  if (latestBookingTime !== '') {
+    latestbookingTimeAsDate = new Date();
+    latestbookingTimeAsDate.setHours(parseInt(latestBookingTime.split(':')[0]));
+    latestbookingTimeAsDate.setMinutes(
+      parseInt(latestBookingTime.split(':')[1])
+    );
+  }
 
   const onContactChange = (contact: Contact) =>
     onChange({
@@ -228,13 +238,21 @@ export default (props: Props) => {
             )}
           </Radio>
 
-          <TextField
-            type="time"
+          <TimePicker
+            label={formatMessage(
+              'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'
+            )}
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-            value={latestBookingTime || ''}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onLatestBookingTimeChange(e?.target?.value)
-            }
+            selectedTime={latestbookingTimeAsDate}
+            onChange={(date: Date | null) => {
+              if (date !== null) {
+                onLatestBookingTimeChange(
+                  `${date.getHours()}:${date.getMinutes()}`
+                );
+              } else {
+                onLatestBookingTimeChange('');
+              }
+            }}
           />
 
           <Radio value={BOOKING_LIMIT_TYPE.PERIOD}>
