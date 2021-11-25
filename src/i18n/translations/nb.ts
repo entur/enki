@@ -139,7 +139,7 @@ export const messages = {
   bookingInfoHeader: 'Bestillingsinformasjon',
   bookingInfoHelpText: `Bestillingsinformasjon kan legges til på fleksibel linje,
   på et stopp i et journey pattern eller på service journey. Når du legger
-  bestillingsinformasjon på flere nivåer, tar vil stopp overstyre service journey,
+  bestillingsinformasjon på flere nivåer, vil stopp overstyre service journey,
   som igjen vil overstyre fleksibel linje.`,
   bookingInfoAddButtonText: 'Legg til',
   bookingInfoRemoveButtonText: 'Fjern',
