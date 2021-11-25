@@ -209,9 +209,9 @@ export const messages = {
   generalPrivateCodeFormGroupTitle: 'Privat kode',
   generalPrivateCodeInputLabelTooltip:
     'Privat kode er det som kjennetegner linjen internt hos en operatør',
-  generalPublicCodeFormGroupTitle: 'Offentlig kode *',
+  generalPublicCodeFormGroupTitle: 'Publikumskode *',
   generalPublicCodeInputLabelTooltip:
-    'Offentlig kode er det som kjennetegner linjen ut mot publikum',
+    'Publikumskode er det som kjennetegner linjen ut mot publikum',
   generalTypeFormGroupTitle: 'Fleksibel linje-type *',
   typeFormGroupTitleTooltip: 'Les mer om linjetypene',
   editorGeneralTabLabel: 'Generelt',
@@ -360,9 +360,9 @@ export const messages = {
   generalPrivateCode: 'Privat kode',
   generalPrivateCodeTooltip:
     'Privat kode er det som kjennetegner service journeyen internt hos en operatør',
-  generalPublicCode: 'Offentlig kode',
+  generalPublicCode: 'Publikumskode',
   generalPublicCodeTooltip:
-    'Offentlig kode er det som kjennetegner service journeyen ut mot publikum',
+    'Publikumskode er det som kjennetegner service journeyen ut mot publikum',
   generalOperator: 'Operatør',
   journeyPatternDeleteDialogTitle: 'Slette journey pattern',
   journeyPatternDeleteDialogMessage:
@@ -374,9 +374,10 @@ export const messages = {
   linesNameTableHeaderLabel: 'Navn',
   linesNoLinesFoundText: 'Ingen linjer ble funnet.',
   linesOperatorTableHeader: 'Operatør',
+  linesPublicCodeTableHeaderLabel: 'Publikumskode',
   linesPrivateCodeTableHeaderLabel: 'Privat kode',
   nameEmpty: 'Navn må fylles inn.',
-  publicCodeEmpty: 'Offentlig kode må fylles inn.',
+  publicCodeEmpty: 'Publikumskode må fylles inn.',
   networkRefEmpty: 'Du må velge et nettverk.',
   operatorRefEmpty: 'Du må velge en operatør.',
   transportModeEmpty: 'Du må velge en transportgruppe.',

@@ -378,6 +378,7 @@ export const messages: MessagesKey = {
   linesNameTableHeaderLabel: 'Name',
   linesNoLinesFoundText: 'No lines found.',
   linesOperatorTableHeader: 'Operator',
+  linesPublicCodeTableHeaderLabel: 'Public code',
   linesPrivateCodeTableHeaderLabel: 'Private code',
   nameEmpty: 'Name is required.',
   publicCodeEmpty: 'Public code is required.',

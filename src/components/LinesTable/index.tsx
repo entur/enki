@@ -32,6 +32,9 @@ export default (props: Props) => {
   const { formatMessage } = useSelector(selectIntl);
 
   const nameTableHeader = formatMessage('linesNameTableHeaderLabel');
+  const publicCodeTableHeader = formatMessage(
+    'linesPublicCodeTableHeaderLabel'
+  );
   const privateCodeTableHeader = formatMessage(
     'linesPrivateCodeTableHeaderLabel'
   );
@@ -56,6 +59,7 @@ export default (props: Props) => {
       <TableHead>
         <TableRow>
           <HeaderCell>{nameTableHeader}</HeaderCell>
+          <HeaderCell>{publicCodeTableHeader}</HeaderCell>
           <HeaderCell>{privateCodeTableHeader}</HeaderCell>
           <HeaderCell>{operatorTableHeader}</HeaderCell>
           <HeaderCell>{''}</HeaderCell>
@@ -90,6 +94,7 @@ const renderTableRows = (props: Props) => {
   return lines?.map((line) => (
     <TableRow key={line.id} onClick={() => onRowClick(line)}>
       <DataCell title={line.description}>{line.name}</DataCell>
+      <DataCell>{line.publicCode}</DataCell>
       <DataCell>{line.privateCode}</DataCell>
       <DataCell>
         {organisations?.find((op) => op.id === line.operatorRef)?.name ?? '-'}
