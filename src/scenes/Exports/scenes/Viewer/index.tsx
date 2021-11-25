@@ -137,7 +137,7 @@ const ExportsViewer = ({
                       <div>
                         {m?.message && isOfUttuMessage(m.message)
                           ? formatMessage(uttuMessages[m.message])
-                          : formatMessage(uttuMessages[UttuCode.UNKNOWN])}
+                          : m.message}
                       </div>
                     </div>
                   ))}

@@ -35,100 +35,91 @@ const receiveExportActionCreator = (receivedExport: Export) => ({
   export: receivedExport,
 });
 
-export const loadExports = () => async (
-  dispatch: Dispatch<GlobalState>,
-  getState: () => GlobalState
-) => {
-  dispatch(requestExportsActionCreator());
+export const loadExports =
+  () =>
+  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+    dispatch(requestExportsActionCreator());
 
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
+    const activeProvider = getState().providers.active?.code ?? '';
+    const intl = getIntl(getState());
 
-  try {
-    const data = await UttuQuery(
-      activeProvider,
-      getExportsQuery,
-      {
-        historicDays: 30,
-      },
-      await getState().auth.getAccessToken()
-    );
-    dispatch(receiveExportsActionCreator(data.exports));
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('exportsLoadExportsErrorHeader'),
-        intl.formatMessage(
-          'exportsLoadExportsErrorMessage',
-          getInternationalizedUttuError(intl, e)
+    try {
+      const data = await UttuQuery(
+        activeProvider,
+        getExportsQuery,
+        {
+          historicDays: 30,
+        },
+        await getState().auth.getAccessToken()
+      );
+      dispatch(receiveExportsActionCreator(data.exports));
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('exportsLoadExportsErrorHeader'),
+          intl.formatMessage(
+            'exportsLoadExportsErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
         )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
+      );
+      sentryCaptureException(e);
+    }
+  };
 
-export const loadExportById = (id: string) => async (
-  dispatch: Dispatch<GlobalState>,
-  getState: () => GlobalState
-) => {
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
+export const loadExportById =
+  (id: string) =>
+  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+    const activeProvider = getState().providers.active?.code ?? '';
+    const intl = getIntl(getState());
 
-  try {
-    const data = await UttuQuery(
-      activeProvider,
-      getExportByIdQuery,
-      { id },
-      await getState().auth.getAccessToken()
-    );
-    dispatch(receiveExportActionCreator(data.export));
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('exportsLoadExportByIdErrorHeader'),
-        intl.formatMessage(
-          'exportsLoadExportByIdErrorMessage',
-          getInternationalizedUttuError(intl, e)
+    try {
+      const data = await UttuQuery(
+        activeProvider,
+        getExportByIdQuery,
+        { id },
+        await getState().auth.getAccessToken()
+      );
+      dispatch(receiveExportActionCreator(data.export));
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('exportsLoadExportByIdErrorHeader'),
+          intl.formatMessage(
+            'exportsLoadExportByIdErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
         )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
+      );
+      sentryCaptureException(e);
+    }
+  };
 
-export const saveExport = (theExport: Export) => async (
-  dispatch: Dispatch<GlobalState>,
-  getState: () => GlobalState
-) => {
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
+export const saveExport =
+  (theExport: Export) =>
+  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+    const activeProvider = getState().providers.active?.code ?? '';
+    const intl = getIntl(getState());
 
-  try {
-    await UttuQuery(
-      activeProvider,
-      exportMutation,
-      {
-        input: toPayload(theExport),
-      },
-      await getState().auth.getAccessToken()
-    );
-    dispatch(
-      showSuccessNotification(
-        intl.formatMessage('exportsSaveExportSuccessHeader'),
-        intl.formatMessage('exportsSaveExportSuccessMessage')
-      )
-    );
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('exportsSaveExportErrorHeader'),
-        intl.formatMessage(
-          'exportsSaveExportErrorMessage',
-          getInternationalizedUttuError(intl, e)
+    try {
+      await UttuQuery(
+        activeProvider,
+        exportMutation,
+        {
+          input: toPayload(theExport),
+        },
+        await getState().auth.getAccessToken()
+      );
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('exportsSaveExportErrorHeader'),
+          intl.formatMessage(
+            'exportsSaveExportErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
         )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
+      );
+      sentryCaptureException(e);
+    }
+  };
