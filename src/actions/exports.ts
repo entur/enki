@@ -1,10 +1,7 @@
 import { UttuQuery } from 'api';
 import { exportMutation } from 'api/uttu/mutations';
 import { getExportByIdQuery, getExportsQuery } from 'api/uttu/queries';
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from 'actions/notification';
+import { showErrorNotification } from 'actions/notification';
 import { getIntl } from 'i18n';
 import { Export, toPayload } from 'model/Export';
 import { Dispatch } from 'redux';

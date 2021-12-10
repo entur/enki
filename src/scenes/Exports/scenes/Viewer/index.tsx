@@ -20,7 +20,7 @@ import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import { download, Export } from 'model/Export';
 import Page from 'components/Page';
-import uttuMessages, { isOfUttuMessage, UttuCode } from 'helpers/uttu.messages';
+import uttuMessages, { isOfUttuMessage } from 'helpers/uttu.messages';
 import './styles.scss';
 import { useAuth } from '@entur/auth-provider';
 
