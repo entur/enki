@@ -56,7 +56,7 @@ export default (props: Props) => {
   } = bookingArrangement;
 
   let latestbookingTimeAsDate: Date | undefined = undefined;
-  if (latestBookingTime !== '') {
+  if (latestBookingTime && latestBookingTime !== '') {
     latestbookingTimeAsDate = new Date();
     latestbookingTimeAsDate.setHours(parseInt(latestBookingTime.split(':')[0]));
     latestbookingTimeAsDate.setMinutes(
