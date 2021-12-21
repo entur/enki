@@ -13,7 +13,3 @@ configMap:
   auth0ClaimsNamespace: https://ror.entur.io/role_assignments
   stopPlacesApiUrl: https://api.entur.io/stop-places/v1/graphql
   stopPlacesReadApiUrl: https://api.entur.io/stop-places/v1/read
-
-ingress:
-    enabled: true
-    productionIp: 104.199.93.228

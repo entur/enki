@@ -3,16 +3,10 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   labels:
+  traffic-type: public
     {{- include "common.labels" . | indent 4 }}
   annotations:
     kubernetes.io/ingress.class: traefik
-    {{- if eq .Values.env "production"}}
-    external-dns.alpha.kubernetes.io/target: {{ .Values.ingress.productionIp }}
-    {{ else if eq .Values.env "staging"}}
-    external-dns.alpha.kubernetes.io/target: {{ .Values.ingress.stagingIp }}
-    {{ else if eq .Values.env "dev"}}
-    external-dns.alpha.kubernetes.io/target: {{ .Values.ingress.devIp }}
-    {{- end}}
   name: enki
   namespace: {{ .Release.Namespace }}
 spec:
