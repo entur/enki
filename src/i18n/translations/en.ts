@@ -353,9 +353,6 @@ export const messages: MessagesKey = {
   serviceJourneyBusinessHours: 'Business hours',
   passingTimesInfo:
     'Enter the passing times for the different stops. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
-  businessHoursInfo:
-    'Enter the business hour for the area or stop. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
-  passingTimesInfoFixed: 'Enter the passing times for the different stops.',
   serviceJourneyBooking: 'Booking',
   generalName: 'Name *',
   nameIsRequired: 'Name is required.',
@@ -451,6 +448,8 @@ export const messages: MessagesKey = {
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
   passingTimesArrivalTime: 'Arrival time',
   passingTimesDepartureTime: 'Departure time',
+  passingTimesLatestArrivalTime: 'Latest arrival time',
+  passingTimesEarliestDepartureTime: 'Earliest departure time',
   passingTimesDayOffset: 'Day offset',
   passingTimesDayOffsetTooltip:
     'Set day offset if the passing time is a day or more after the departure of the service',

@@ -5,7 +5,7 @@ import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { QuestionIcon } from '@entur/icons';
-import PassingTimesEditor from './PassingTimesEditor';
+import { PassingTimesEditor } from './PassingTimesEditor';
 import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -26,7 +26,6 @@ import { newDayTypeAssignment } from 'model/DayTypeAssignment';
 import { Tooltip } from '@entur/tooltip';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getInit, mapToItems } from 'helpers/dropdown';
-import { MessagesKey } from 'i18n/translations/translationKeys';
 import './styles.scss';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -89,15 +88,6 @@ const ServiceJourneyEditor = (props: Props) => {
     value: ServiceJourney[T]
   ) => {
     onChange({ ...serviceJourney, [field]: value });
-  };
-
-  const getParagraphMessageKey = (): keyof MessagesKey => {
-    switch (flexibleLineType) {
-      case undefined:
-        return 'passingTimesInfoFixed';
-      default:
-        return 'passingTimesInfo';
-    }
   };
 
   const namePristine = usePristine(name, spoilPristine);
@@ -265,7 +255,7 @@ const ServiceJourneyEditor = (props: Props) => {
 
         <section className="passing-times-section">
           <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
-          <Paragraph>{formatMessage(getParagraphMessageKey())}</Paragraph>
+          <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
           <PassingTimesEditor
             passingTimes={passingTimes ?? []}
             stopPoints={stopPoints}

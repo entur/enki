@@ -347,11 +347,7 @@ export const messages = {
   serviceJourneyAvailability: 'Tilgjengelighet',
   serviceJourneyPassingTimes: 'Passeringstider',
   serviceJourneyBusinessHours: 'Åpningstid',
-  passingTimesInfo:
-    'Fyll inn passeringstider for de ulike stoppene. Hvis du lager et områdebasert tilbud fyller du inn åpningstidene, med starttidspunkt på første stopp og sluttidspunkt på det siste.',
-  businessHoursInfo:
-    'Fyll inn åpningstid for stoppet eller området. Hvis du lager et områdebasert tilbud fyller du inn åpningstidene, med starttidspunkt på første stopp og sluttidspunkt på det siste.',
-  passingTimesInfoFixed: 'Fyll inn passeringstider for de ulike stoppene.',
+  passingTimesInfo: 'Fyll inn passeringstider for de ulike stoppene.',
   serviceJourneyBooking: 'Bestilling',
   generalName: 'Navn *',
   nameIsRequired: 'Navn må fylles inn.',
@@ -448,6 +444,8 @@ export const messages = {
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kode',
   passingTimesArrivalTime: 'Ankomsttid',
   passingTimesDepartureTime: 'Avgangstid *',
+  passingTimesLatestArrivalTime: 'Seneste ankomsttid',
+  passingTimesEarliestDepartureTime: 'Tidligste avgangstid',
   passingTimesDayOffset: 'Døgnskille',
   passingTimesDayOffsetTooltip:
     'Sett døgnskille dersom passeringstiden er én eller flere dager senere enn tilbudets avreise',
