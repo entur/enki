@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Radio, RadioGroup } from '@entur/form';
 import PassingTime from 'model/PassingTime';
 import { TimePicker } from '@entur/datepicker';
@@ -29,6 +29,39 @@ export const PassingTimeEditor = ({
   const [type, setType] = useState(PassingTimeType.NORMAL);
   const { formatMessage } = useSelector(selectIntl);
 
+  const changeType = useCallback(
+    (type: PassingTimeType) => {
+      setType(type);
+
+      if (type === PassingTimeType.NORMAL) {
+        onChange({
+          ...passingTime,
+          arrivalTime: passingTime.latestArrivalTime,
+          arrivalDayOffset: passingTime.latestArrivalDayOffset,
+          departureTime: passingTime.earliestDepartureTime,
+          departureDayOffset: passingTime.earliestDepartureDayOffset,
+          latestArrivalTime: undefined,
+          latestArrivalDayOffset: undefined,
+          earliestDepartureTime: undefined,
+          earliestDepartureDayOffset: undefined,
+        });
+      } else {
+        onChange({
+          ...passingTime,
+          arrivalTime: undefined,
+          arrivalDayOffset: undefined,
+          departureTime: undefined,
+          departureDayOffset: undefined,
+          latestArrivalTime: passingTime.arrivalTime,
+          latestArrivalDayOffset: passingTime.arrivalDayOffset,
+          earliestDepartureTime: passingTime.departureTime,
+          earliestDepartureDayOffset: passingTime.departureDayOffset,
+        });
+      }
+    },
+    [passingTime, onChange]
+  );
+
   const arrivalField =
     type === PassingTimeType.NORMAL ? 'arrivalTime' : 'latestArrivalTime';
   const arrivalDayOffsetField =
@@ -56,7 +89,7 @@ export const PassingTimeEditor = ({
         style={{ padding: '0 2rem' }}
         label=" "
         name={`passing-time-type-${index}`}
-        onChange={(e) => setType(e.target.value as PassingTimeType)}
+        onChange={(e) => changeType(e.target.value as PassingTimeType)}
         value={type}
       >
         <Radio value={PassingTimeType.NORMAL}>Vanlig</Radio>
