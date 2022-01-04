@@ -53,8 +53,9 @@ export const PassingTimeEditor = ({
   return (
     <>
       <RadioGroup
+        style={{ padding: '0 2rem' }}
+        label=" "
         name={`passing-time-type-${index}`}
-        label="Velg passeringstype"
         onChange={(e) => setType(e.target.value as PassingTimeType)}
         value={type}
       >
