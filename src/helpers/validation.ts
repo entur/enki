@@ -216,12 +216,19 @@ export const validateTimes = (
           isValid: false,
           errorMessage: getMessage('errorAllPassingTimesMustBeFilled'),
         };
+
       if (
         isBefore(
-          departureTime,
-          departureDayOffset,
-          arrivalTime,
-          arrivalDayOffset
+          departureTime!,
+          departureDayOffset!,
+          arrivalTime!,
+          arrivalDayOffset!
+        ) ||
+        isBefore(
+          earliestDepartureTime!,
+          earliestDepartureDayOffset!,
+          latestArrivalTime!,
+          latestArrivalDayOffset!
         )
       )
         return {
@@ -230,10 +237,10 @@ export const validateTimes = (
         };
       if (
         isBefore(
-          departureTime,
-          departureDayOffset,
-          earliestDepartureTime,
-          earliestDepartureDayOffset
+          departureTime!,
+          departureDayOffset!,
+          earliestDepartureTime!,
+          earliestDepartureDayOffset!
         )
       )
         return {
@@ -242,10 +249,10 @@ export const validateTimes = (
         };
       if (
         isBefore(
-          latestArrivalTime,
-          latestArrivalDayOffset,
-          arrivalTime,
-          arrivalDayOffset
+          latestArrivalTime!,
+          latestArrivalDayOffset!,
+          arrivalTime!,
+          arrivalDayOffset!
         )
       )
         return {
@@ -268,28 +275,28 @@ export const validateTimes = (
 
       if (
         isBefore(
-          departureTime,
-          departureDayOffset,
-          prevPassingTime.departureTime,
-          prevPassingTime.departureDayOffset
+          departureTime!,
+          departureDayOffset!,
+          prevPassingTime.departureTime!,
+          prevPassingTime.departureDayOffset!
         ) ||
         isBefore(
-          arrivalTime,
-          arrivalDayOffset,
-          prevPassingTime.arrivalTime,
-          prevPassingTime.arrivalDayOffset
+          arrivalTime!,
+          arrivalDayOffset!,
+          prevPassingTime.arrivalTime!,
+          prevPassingTime.arrivalDayOffset!
         ) ||
         isBefore(
-          latestArrivalTime,
-          latestArrivalDayOffset,
-          prevPassingTime.latestArrivalTime,
-          prevPassingTime.latestArrivalDayOffset
+          latestArrivalTime!,
+          latestArrivalDayOffset!,
+          prevPassingTime.latestArrivalTime!,
+          prevPassingTime.latestArrivalDayOffset!
         ) ||
         isBefore(
-          earliestDepartureTime,
-          earliestDepartureDayOffset,
-          prevPassingTime.earliestDepartureTime,
-          prevPassingTime.earliestDepartureDayOffset
+          earliestDepartureTime!,
+          earliestDepartureDayOffset!,
+          prevPassingTime.earliestDepartureTime!,
+          prevPassingTime.earliestDepartureDayOffset!
         )
       ) {
         return {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Radio, RadioGroup } from '@entur/form';
 import PassingTime from 'model/PassingTime';
 import { TimePicker } from '@entur/datepicker';
@@ -29,6 +29,15 @@ export const PassingTimeEditor = ({
   const [type, setType] = useState(PassingTimeType.NORMAL);
   const { formatMessage } = useSelector(selectIntl);
 
+  useEffect(() => {
+    if (passingTime.arrivalTime) {
+      setType(PassingTimeType.NORMAL);
+      return;
+    } else {
+      setType(PassingTimeType.FLEXIBLE);
+    }
+  }, [passingTime]);
+
   const changeType = useCallback(
     (type: PassingTimeType) => {
       setType(type);
@@ -40,18 +49,18 @@ export const PassingTimeEditor = ({
           arrivalDayOffset: passingTime.latestArrivalDayOffset,
           departureTime: passingTime.earliestDepartureTime,
           departureDayOffset: passingTime.earliestDepartureDayOffset,
-          latestArrivalTime: undefined,
-          latestArrivalDayOffset: undefined,
-          earliestDepartureTime: undefined,
-          earliestDepartureDayOffset: undefined,
+          latestArrivalTime: null,
+          latestArrivalDayOffset: 0,
+          earliestDepartureTime: null,
+          earliestDepartureDayOffset: 0,
         });
       } else {
         onChange({
           ...passingTime,
-          arrivalTime: undefined,
-          arrivalDayOffset: undefined,
-          departureTime: undefined,
-          departureDayOffset: undefined,
+          arrivalTime: null,
+          arrivalDayOffset: 0,
+          departureTime: null,
+          departureDayOffset: 0,
           latestArrivalTime: passingTime.arrivalTime,
           latestArrivalDayOffset: passingTime.arrivalDayOffset,
           earliestDepartureTime: passingTime.departureTime,
@@ -111,7 +120,7 @@ export const PassingTimeEditor = ({
           });
         }}
         prepend={<ClockIcon inline />}
-        selectedTime={toDate(passingTime[arrivalField])}
+        selectedTime={toDate(passingTime[arrivalField]!)}
       />
       <DayOffsetDropdown
         value={passingTime[arrivalDayOffsetField] as number}
@@ -143,7 +152,7 @@ export const PassingTimeEditor = ({
           });
         }}
         prepend={<ClockIcon inline />}
-        selectedTime={toDate(passingTime[departureField])}
+        selectedTime={toDate(passingTime[departureField]!)}
       />
       <DayOffsetDropdown
         value={passingTime[departureDayOffsetField] as number}

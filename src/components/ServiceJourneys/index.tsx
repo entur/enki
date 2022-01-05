@@ -42,10 +42,14 @@ export const sortByDepartureTime = (sortable: Sortable[]): Sortable[] => {
     .slice()
     .sort((a, b) =>
       isBefore(
-        a.sj.passingTimes[0].departureTime,
-        a.sj.passingTimes[0].departureDayOffset,
-        b.sj.passingTimes[0].departureTime,
-        b.sj.passingTimes[0].departureDayOffset
+        a.sj.passingTimes[0].departureTime ||
+          a.sj.passingTimes[0].earliestDepartureTime!,
+        a.sj.passingTimes[0].departureDayOffset ||
+          a.sj.passingTimes[0].earliestDepartureDayOffset!,
+        b.sj.passingTimes[0].departureTime ||
+          b.sj.passingTimes[0].earliestDepartureTime!,
+        b.sj.passingTimes[0].departureDayOffset ||
+          b.sj.passingTimes[0].earliestDepartureDayOffset!
       )
         ? -1
         : 1
@@ -53,17 +57,13 @@ export const sortByDepartureTime = (sortable: Sortable[]): Sortable[] => {
 };
 
 export default ({ journeyPatterns, onChange, children }: Props) => {
-  const [
-    showNewServiceJourneyDialog,
-    setShowNewServiceJourneyDialog,
-  ] = useState<boolean>(false);
+  const [showNewServiceJourneyDialog, setShowNewServiceJourneyDialog] =
+    useState<boolean>(false);
   const [showBulkDeleteDialog, setShowBulkDeleteDialog] = useState<number>(-1);
   const { formatMessage } = useSelector(selectIntl);
 
-  const [
-    selectedJourneyPatternIndex,
-    setSelectedJourneyPatternIndex,
-  ] = useState<number>(0);
+  const [selectedJourneyPatternIndex, setSelectedJourneyPatternIndex] =
+    useState<number>(0);
 
   const keys = useUniqueKeys(journeyPatterns);
 

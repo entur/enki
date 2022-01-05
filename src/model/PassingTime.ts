@@ -5,13 +5,13 @@ type PassingTime = VersionedType & {
   name?: string;
   description?: string;
   privateCode?: string;
-  arrivalTime?: string;
+  arrivalTime?: string | null;
   arrivalDayOffset?: number;
-  departureTime?: string;
+  departureTime?: string | null;
   departureDayOffset?: number;
-  latestArrivalTime?: string;
+  latestArrivalTime?: string | null;
   latestArrivalDayOffset?: number;
-  earliestDepartureTime?: string;
+  earliestDepartureTime?: string | null;
   earliestDepartureDayOffset?: number;
   notices?: Notice[];
 };
