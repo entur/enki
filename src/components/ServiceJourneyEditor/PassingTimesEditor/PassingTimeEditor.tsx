@@ -45,10 +45,10 @@ export const PassingTimeEditor = ({
       if (type === PassingTimeType.NORMAL) {
         onChange({
           ...passingTime,
-          arrivalTime: passingTime.latestArrivalTime,
-          arrivalDayOffset: passingTime.latestArrivalDayOffset,
-          departureTime: passingTime.earliestDepartureTime,
-          departureDayOffset: passingTime.earliestDepartureDayOffset,
+          arrivalTime: passingTime.earliestDepartureTime,
+          arrivalDayOffset: passingTime.earliestDepartureDayOffset,
+          departureTime: passingTime.latestArrivalTime,
+          departureDayOffset: passingTime.latestArrivalDayOffset,
           latestArrivalTime: null,
           latestArrivalDayOffset: 0,
           earliestDepartureTime: null,
@@ -61,10 +61,10 @@ export const PassingTimeEditor = ({
           arrivalDayOffset: 0,
           departureTime: null,
           departureDayOffset: 0,
-          latestArrivalTime: passingTime.arrivalTime,
-          latestArrivalDayOffset: passingTime.arrivalDayOffset,
-          earliestDepartureTime: passingTime.departureTime,
-          earliestDepartureDayOffset: passingTime.departureDayOffset,
+          latestArrivalTime: passingTime.departureTime,
+          latestArrivalDayOffset: passingTime.departureDayOffset,
+          earliestDepartureTime: passingTime.arrivalTime,
+          earliestDepartureDayOffset: passingTime.arrivalDayOffset,
         });
       }
     },
@@ -72,25 +72,25 @@ export const PassingTimeEditor = ({
   );
 
   const arrivalField =
-    type === PassingTimeType.NORMAL ? 'arrivalTime' : 'latestArrivalTime';
+    type === PassingTimeType.NORMAL ? 'arrivalTime' : 'earliestDepartureTime';
   const arrivalDayOffsetField =
     type === PassingTimeType.NORMAL
       ? 'arrivalDayOffset'
-      : 'latestArrivalDayOffset';
+      : 'earliestDepartureDayOffset';
   const arrivalLabel =
     type === PassingTimeType.NORMAL
       ? 'passingTimesArrivalTime'
-      : 'passingTimesLatestArrivalTime';
+      : 'passingTimesEarliestDepartureTime';
   const departureField =
-    type === PassingTimeType.NORMAL ? 'departureTime' : 'earliestDepartureTime';
+    type === PassingTimeType.NORMAL ? 'departureTime' : 'latestArrivalTime';
   const departureDayOffsetField =
     type === PassingTimeType.NORMAL
       ? 'departureDayOffset'
-      : 'earliestDepartureDayOffset';
+      : 'latestArrivalDayOffset';
   const departureLabel =
     type === PassingTimeType.NORMAL
       ? 'passingTimesDepartureTime'
-      : 'passingTimesEarliestDepartureTime';
+      : 'passingTimesLatestArrivalTime';
 
   return (
     <>
@@ -116,7 +116,7 @@ export const PassingTimeEditor = ({
             [departureField]:
               isLast && type === PassingTimeType.NORMAL
                 ? date
-                : passingTime.departureTime,
+                : passingTime[departureField],
           });
         }}
         prepend={<ClockIcon inline />}

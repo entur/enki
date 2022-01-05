@@ -225,10 +225,10 @@ export const validateTimes = (
           arrivalDayOffset!
         ) ||
         isBefore(
-          earliestDepartureTime!,
-          earliestDepartureDayOffset!,
           latestArrivalTime!,
-          latestArrivalDayOffset!
+          latestArrivalDayOffset!,
+          earliestDepartureTime!,
+          earliestDepartureDayOffset!
         )
       )
         return {
