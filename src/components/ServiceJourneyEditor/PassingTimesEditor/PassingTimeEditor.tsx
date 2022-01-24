@@ -101,9 +101,14 @@ export const PassingTimeEditor = ({
         onChange={(e) => changeType(e.target.value as PassingTimeType)}
         value={type}
       >
-        <Radio value={PassingTimeType.NORMAL}>Vanlig</Radio>
-        <Radio value={PassingTimeType.FLEXIBLE}>Fleksibel</Radio>
+        <Radio value={PassingTimeType.NORMAL}>
+          {formatMessage('passingTimesTypeFixed')}
+        </Radio>
+        <Radio value={PassingTimeType.FLEXIBLE}>
+          {formatMessage('passingTimesTypeFlexible')}
+        </Radio>
       </RadioGroup>
+
       <TimePicker
         disabled={index === 0 && type === PassingTimeType.NORMAL}
         label={formatMessage(arrivalLabel)}

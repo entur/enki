@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { IconButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { QuestionIcon } from '@entur/icons';
 import { PassingTimesEditor } from './PassingTimesEditor';
 import StopPoint from 'model/StopPoint';
@@ -34,6 +34,7 @@ import CopyActionChip from 'components/CopyActionChip';
 import Notices from 'components/Notices';
 import { FeedbackText } from '@entur/form';
 import { validateDayTypes } from 'helpers/validation';
+import { PassingTimeTypeDrawer } from './PassingTimesEditor/PassingTimeTypeDrawer';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -74,6 +75,9 @@ const ServiceJourneyEditor = (props: Props) => {
   );
   const { formatMessage } = useSelector(selectIntl);
 
+  const [openPassingTimeTypeDrawer, setOpenPassingTimeTypeDrawer] =
+    useState(false);
+
   const handleOperatorSelectionChange = (
     newOperatorSelection: string | undefined
   ) => {
@@ -100,6 +104,13 @@ const ServiceJourneyEditor = (props: Props) => {
 
   return (
     <div className="service-journey-editor">
+      <PassingTimeTypeDrawer
+        open={openPassingTimeTypeDrawer}
+        title="Passing times"
+        onDismiss={() => {
+          setOpenPassingTimeTypeDrawer(false);
+        }}
+      />
       <div className="service-journey-editor-form">
         <RequiredInputMarker />
         <div className="input-group">
@@ -255,7 +266,15 @@ const ServiceJourneyEditor = (props: Props) => {
 
         <section className="passing-times-section">
           <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
-          <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
+          <Paragraph>
+            {formatMessage('passingTimesInfo')}
+            <IconButton
+              style={{ display: 'inline-block' }}
+              onClick={() => setOpenPassingTimeTypeDrawer(true)}
+            >
+              <QuestionIcon />
+            </IconButton>
+          </Paragraph>
           <PassingTimesEditor
             passingTimes={passingTimes ?? []}
             stopPoints={stopPoints}
