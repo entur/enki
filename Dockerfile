@@ -6,7 +6,6 @@ RUN addgroup appuser && adduser --disabled-password --gecos '' appuser --ingroup
 ENV CONTENT_BASE=/app/ui
 COPY server /app/server
 WORKDIR /app/server
-RUN npm install --production
 
 # Application
 COPY build /app/ui/
