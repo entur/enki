@@ -135,7 +135,7 @@ workflows:
             only:
             - master
     - deploy-docker:
-        depends_on:
+        requires:
           - build
         context: global
         filters:
