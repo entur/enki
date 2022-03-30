@@ -78,7 +78,7 @@ aliases:
 jobs:
   test-build:
     docker:
-      - image: cimg/node:16.14.2
+      - image: cimg/python:3.10.4-node
     steps:
     - checkout
     - restore_cache: *restore-dependency-cache
@@ -89,7 +89,7 @@ jobs:
     - sonarcloud/scan
   build:
     docker:
-      - image: cimg/node:16.14.2
+      - image: cimg/python:3.10.4-node
     steps:
     - checkout
     - restore_cache: *restore-dependency-cache
@@ -123,14 +123,20 @@ workflows:
   install-test-build-deploy:
     jobs:
     - test-build:
-        name: npm-test-build
         context: global
         filters:
           branches:
             ignore:
             - master
     - build:
-        name: npm-build
+        context: global
+        filters:
+          branches:
+            only:
+            - master
+    - deploy-docker:
+        depends_on:
+          - build
         context: global
         filters:
           branches:
