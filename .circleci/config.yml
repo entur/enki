@@ -78,7 +78,7 @@ aliases:
 jobs:
   test-build:
     docker:
-      - image: cimg/python:3.10.4-node
+      - image: cimg/python:2.7-node
     steps:
     - checkout
     - restore_cache: *restore-dependency-cache
@@ -89,7 +89,7 @@ jobs:
     - sonarcloud/scan
   build:
     docker:
-      - image: cimg/python:3.10.4-node
+      - image: cimg/python:2.7-node
     steps:
     - checkout
     - restore_cache: *restore-dependency-cache

@@ -1,10 +1,4 @@
-FROM node:16.14.2-alpine3.15
-
-RUN apk --no-cache add --virtual native-deps \
-  g++ gcc libgcc libstdc++ linux-headers make python && \
-  npm install --quiet node-gyp -g &&\
-  npm install --quiet && \
-  apk del native-deps
+FROM node:12.22.11-alpine3.15
 
 RUN addgroup appuser && adduser --disabled-password --gecos '' appuser --ingroup appuser
 
