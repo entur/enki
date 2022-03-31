@@ -68,7 +68,7 @@ aliases:
   paths:
   - node_modules
   - server/node_modules
-  key: node_modules-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum "./server/package-lock.json" }}
+  key: node_modules-v2-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum "./server/package-lock.json" }}
 - &restore-dependency-cache
   name: Restore dependency cache
   keys:
