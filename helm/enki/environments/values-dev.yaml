@@ -2,7 +2,7 @@ env: dev
 
 configMap:
   logForwardPaths: "true"
-  organisationsApiUrl: https://api.dev.entur.io/organisations/v1/register
+  organisationsApiUrl: https://api.dev.entur.io/timetable-admin/v1/flexible-lines
   publicUrl: /
   uttuApiUrl: https://api.dev.entur.io/timetable-admin/v1/flexible-lines
   auth0Domain: ror-entur-dev.eu.auth0.com
