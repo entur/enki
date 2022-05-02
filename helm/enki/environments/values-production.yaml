@@ -4,7 +4,7 @@ replicas: 2
 
 configMap:
   logForwardPaths: "true"
-  organisationsApiUrl: https://api.dev.entur.io/timetable-admin/v1/flexible-lines
+  organisationsApiUrl: https://api.entur.io/timetable-admin/v1/flexible-lines
   publicUrl: /
   uttuApiUrl: https://api.entur.io/timetable-admin/v1/flexible-lines
   auth0Domain: auth2.entur.org

@@ -2,7 +2,7 @@ env: staging
 
 configMap:
   logForwardPaths: "true"
-  organisationsApiUrl: https://api.dev.entur.io/timetable-admin/v1/flexible-lines
+  organisationsApiUrl: https://api.entur.io/timetable-admin/v1/flexible-lines
   publicUrl: /
   uttuApiUrl: https://api.staging.entur.io/timetable-admin/v1/flexible-lines
   auth0Domain: ror-entur-staging.eu.auth0.com
