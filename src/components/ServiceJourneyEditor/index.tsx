@@ -35,6 +35,8 @@ import Notices from 'components/Notices';
 import { FeedbackText } from '@entur/form';
 import { validateDayTypes } from 'helpers/validation';
 import { PassingTimeTypeDrawer } from './PassingTimesEditor/PassingTimeTypeDrawer';
+import { DayTypes } from 'components/DayTypes';
+import DayType from 'model/DayType';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -93,6 +95,8 @@ const ServiceJourneyEditor = (props: Props) => {
   ) => {
     onChange({ ...serviceJourney, [field]: value });
   };
+
+  const [openDayTypeModal, setOpenDayTypeModal] = useState(false);
 
   const namePristine = usePristine(name, spoilPristine);
   const dayTypesPristine = usePristine(dayTypes, spoilPristine);
@@ -207,61 +211,25 @@ const ServiceJourneyEditor = (props: Props) => {
           />
         )}
         <section className="day-type-section">
-          <Heading4>
-            {formatMessage('dayTypeEditorDateAvailability')}
-            <Tooltip
-              content={formatMessage('dayTypeEditorDateTooltip')}
-              placement="right"
-            >
-              <span className="question-icon">
-                <QuestionIcon />
-              </span>
-            </Tooltip>
-          </Heading4>
-          <DayTypeAssignmentsEditor
-            dayTypeAssignments={
-              dayTypes?.[0].dayTypeAssignments?.length
-                ? dayTypes[0].dayTypeAssignments
-                : [newDayTypeAssignment()]
-            }
-            onChange={(dta) =>
+          <ul>
+            {serviceJourney.dayTypes?.map((dt) => (
+              <li>{dt.name || dt.id}</li>
+            ))}
+          </ul>
+          <SecondaryButton onClick={() => setOpenDayTypeModal(true)}>
+            Select day types
+          </SecondaryButton>
+          <DayTypes
+            open={openDayTypeModal}
+            setOpen={setOpenDayTypeModal}
+            selectedDayTypes={serviceJourney.dayTypes || []}
+            selectDayTypes={(dayTypes: DayType[]) => {
               onChange({
                 ...serviceJourney,
-                dayTypes: [
-                  {
-                    ...serviceJourney.dayTypes?.[0]!,
-                    dayTypeAssignments: dta,
-                  },
-                ],
-              })
-            }
+                dayTypes,
+              });
+            }}
           />
-        </section>
-        <section className="weekday-section">
-          <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
-          <WeekdayPicker
-            days={dayTypes?.[0].daysOfWeek ?? []}
-            onChange={(dow) =>
-              onChange({
-                ...serviceJourney,
-                dayTypes: [
-                  {
-                    ...(serviceJourney.dayTypes?.[0] ?? {
-                      dayTypeAssignments: [newDayTypeAssignment()],
-                    }),
-                    daysOfWeek: dow,
-                  },
-                ],
-              })
-            }
-            spoilPristine={spoilPristine}
-          />
-
-          {dayTypesFeedback.feedback && (
-            <FeedbackText variant={dayTypesFeedback.variant!}>
-              {dayTypesFeedback.feedback}
-            </FeedbackText>
-          )}
         </section>
 
         <section className="passing-times-section">

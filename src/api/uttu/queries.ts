@@ -471,3 +471,20 @@ export const GET_LINES_FOR_EXPORT = gql`
   }
   ${ExportPage.fragments.journeyPatterns}
 `;
+
+export const GET_DAY_TYPES = gql`
+  query GetDayTypes {
+    dayTypes {
+      id
+      daysOfWeek
+      dayTypeAssignments {
+        isAvailable
+        date
+        operatingPeriod {
+          fromDate
+          toDate
+        }
+      }
+    }
+  }
+`;

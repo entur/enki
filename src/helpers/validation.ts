@@ -325,25 +325,26 @@ const WEEKDAYS = [
 ];
 
 export const validateDayTypes = (dayTypes?: DayType[]) => {
-  if (dayTypes?.length !== 1) {
-    return false;
-  }
+  return (
+    (dayTypes &&
+      dayTypes.every((dayType) => {
+        const daysOfWeek =
+          dayType.daysOfWeek?.map((dow) => WEEKDAYS.indexOf(dow)) || [];
 
-  const dayType = dayTypes[0];
-  const daysOfWeek =
-    dayType.daysOfWeek?.map((dow) => WEEKDAYS.indexOf(dow)) || [];
+        return dayType.dayTypeAssignments.every((dta) => {
+          let from = parseISO(dta.operatingPeriod.fromDate);
+          const to = parseISO(dta.operatingPeriod.toDate);
 
-  return dayType.dayTypeAssignments.every((dta) => {
-    let from = parseISO(dta.operatingPeriod.fromDate);
-    const to = parseISO(dta.operatingPeriod.toDate);
+          while (!isDateBefore(to, from)) {
+            if (daysOfWeek.includes(getDay(from))) {
+              return true;
+            }
+            from = addDays(from, 1);
+          }
 
-    while (!isDateBefore(to, from)) {
-      if (daysOfWeek.includes(getDay(from))) {
-        return true;
-      }
-      from = addDays(from, 1);
-    }
-
-    return false;
-  });
+          return false;
+        });
+      })) ||
+    false
+  );
 };

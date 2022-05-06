@@ -3,6 +3,7 @@ import { DAY_OF_WEEK } from './enums';
 import { VersionedType } from 'model/VersionedType';
 
 type DayType = VersionedType & {
+  name?: string;
   daysOfWeek: DAY_OF_WEEK[];
   dayTypeAssignments: DayTypeAssignment[];
 };

@@ -59,6 +59,7 @@ export default () => {
   };
 
   const onSave = useCallback(async () => {
+    debugger;
     setNextClicked(true);
     setSaving(true);
 
@@ -82,9 +83,10 @@ export default () => {
       if (isBlank(match?.params.id)) {
         history.push('/lines');
       }
-    } catch (_) {
+    } catch (e) {
       // noop just catching to avoid unhandled rejection
       // error message is handled upstream
+      console.error(e);
     } finally {
       setSaving(false);
     }
