@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { Dropdown } from '@entur/dropdown';
+import { Dropdown, MultiSelect } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { IconButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { QuestionIcon } from '@entur/icons';
@@ -35,8 +35,14 @@ import Notices from 'components/Notices';
 import { FeedbackText } from '@entur/form';
 import { validateDayTypes } from 'helpers/validation';
 import { PassingTimeTypeDrawer } from './PassingTimesEditor/PassingTimeTypeDrawer';
-import { DayTypes } from 'components/DayTypes';
+import { DayTypesModal } from 'components/DayTypesModal';
 import DayType from 'model/DayType';
+import { useQuery } from '@apollo/client';
+import { GET_DAY_TYPES } from 'api/uttu/queries';
+
+type DayTypesData = {
+  dayTypes: DayType[];
+};
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -66,6 +72,8 @@ const ServiceJourneyEditor = (props: Props) => {
     copyServiceJourney,
     flexibleLineType,
   } = props;
+
+  const { data: allDayTypesData } = useQuery<DayTypesData>(GET_DAY_TYPES);
 
   const [operatorSelection, setOperatorSelection] = useState(
     serviceJourney.operatorRef
@@ -211,24 +219,32 @@ const ServiceJourneyEditor = (props: Props) => {
           />
         )}
         <section className="day-type-section">
-          <ul>
-            {serviceJourney.dayTypes?.map((dt) => (
-              <li>{dt.name || dt.id}</li>
-            ))}
-          </ul>
-          <SecondaryButton onClick={() => setOpenDayTypeModal(true)}>
-            Select day types
-          </SecondaryButton>
-          <DayTypes
-            open={openDayTypeModal}
-            setOpen={setOpenDayTypeModal}
-            selectedDayTypes={serviceJourney.dayTypes || []}
-            selectDayTypes={(dayTypes: DayType[]) => {
+          <MultiSelect
+            label="Select day types for this service journey"
+            items={() => allDayTypesData?.dayTypes.map((dt) => dt.id!) || []}
+            selectedItems={dayTypes?.map((dt) => ({
+              label: dt.name || dt.id!,
+              value: dt.id!,
+            }))}
+            onSelectedItemsChange={(items) => {
+              const selectedIds = items.selectedItems?.map(
+                (item) => item.value
+              );
               onChange({
                 ...serviceJourney,
-                dayTypes,
+                dayTypes: allDayTypesData?.dayTypes.filter((dt) =>
+                  selectedIds?.includes(dt.id!)
+                ),
               });
             }}
+          />
+          <SecondaryButton onClick={() => setOpenDayTypeModal(true)}>
+            Edit day types
+          </SecondaryButton>
+          <DayTypesModal
+            open={openDayTypeModal}
+            setOpen={setOpenDayTypeModal}
+            dayTypes={allDayTypesData?.dayTypes!}
           />
         </section>
 

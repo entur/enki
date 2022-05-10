@@ -403,6 +403,7 @@ const LineEditorPage = {
                   toDate
                 }
               }
+              name
             }
           }
         }
@@ -475,6 +476,7 @@ export const GET_LINES_FOR_EXPORT = gql`
 export const GET_DAY_TYPES = gql`
   query GetDayTypes {
     dayTypes {
+      changed
       id
       daysOfWeek
       dayTypeAssignments {
@@ -485,6 +487,7 @@ export const GET_DAY_TYPES = gql`
           toDate
         }
       }
+      name
     }
   }
 `;
