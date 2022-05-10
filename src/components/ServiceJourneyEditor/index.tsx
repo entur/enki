@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { Dropdown, MultiSelect } from '@entur/dropdown';
+import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { IconButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { QuestionIcon } from '@entur/icons';
@@ -20,10 +20,6 @@ import ServiceJourney from 'model/ServiceJourney';
 import { Heading4, Paragraph } from '@entur/typography';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import WeekdayPicker from 'components/WeekdayPicker';
-import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
-import { newDayTypeAssignment } from 'model/DayTypeAssignment';
-import { Tooltip } from '@entur/tooltip';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getInit, mapToItems } from 'helpers/dropdown';
 import './styles.scss';
@@ -32,17 +28,8 @@ import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/c
 import CopyDialog from './CopyDialog';
 import CopyActionChip from 'components/CopyActionChip';
 import Notices from 'components/Notices';
-import { FeedbackText } from '@entur/form';
-import { validateDayTypes } from 'helpers/validation';
 import { PassingTimeTypeDrawer } from './PassingTimesEditor/PassingTimeTypeDrawer';
-import { DayTypesModal } from 'components/DayTypesModal';
-import DayType from 'model/DayType';
-import { useQuery } from '@apollo/client';
-import { GET_DAY_TYPES } from 'api/uttu/queries';
-
-type DayTypesData = {
-  dayTypes: DayType[];
-};
+import { DayTypesEditor } from 'components/DayTypesEditor/DayTypesEditor';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -72,9 +59,6 @@ const ServiceJourneyEditor = (props: Props) => {
     copyServiceJourney,
     flexibleLineType,
   } = props;
-
-  const { data: allDayTypesData } = useQuery<DayTypesData>(GET_DAY_TYPES);
-
   const [operatorSelection, setOperatorSelection] = useState(
     serviceJourney.operatorRef
   );
@@ -104,15 +88,7 @@ const ServiceJourneyEditor = (props: Props) => {
     onChange({ ...serviceJourney, [field]: value });
   };
 
-  const [openDayTypeModal, setOpenDayTypeModal] = useState(false);
-
   const namePristine = usePristine(name, spoilPristine);
-  const dayTypesPristine = usePristine(dayTypes, spoilPristine);
-  const dayTypesFeedback = getErrorFeedback(
-    formatMessage('dayTypesValidationError'),
-    validateDayTypes(dayTypes),
-    dayTypesPristine
-  );
 
   return (
     <div className="service-journey-editor">
@@ -219,32 +195,14 @@ const ServiceJourneyEditor = (props: Props) => {
           />
         )}
         <section className="day-type-section">
-          <MultiSelect
-            label="Select day types for this service journey"
-            items={() => allDayTypesData?.dayTypes.map((dt) => dt.id!) || []}
-            selectedItems={dayTypes?.map((dt) => ({
-              label: dt.name || dt.id!,
-              value: dt.id!,
-            }))}
-            onSelectedItemsChange={(items) => {
-              const selectedIds = items.selectedItems?.map(
-                (item) => item.value
-              );
+          <DayTypesEditor
+            dayTypes={serviceJourney.dayTypes!}
+            onChange={(dayTypes) => {
               onChange({
                 ...serviceJourney,
-                dayTypes: allDayTypesData?.dayTypes.filter((dt) =>
-                  selectedIds?.includes(dt.id!)
-                ),
+                dayTypes,
               });
             }}
-          />
-          <SecondaryButton onClick={() => setOpenDayTypeModal(true)}>
-            Edit day types
-          </SecondaryButton>
-          <DayTypesModal
-            open={openDayTypeModal}
-            setOpen={setOpenDayTypeModal}
-            dayTypes={allDayTypesData?.dayTypes!}
           />
         </section>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal } from '@entur/modal';
 import DayType from 'model/DayType';
 import { DayTypesModalContent } from './DayTypesModalContent';
+import './styles.scss';
 
 export const DayTypesModal = ({
   open,
@@ -15,7 +16,7 @@ export const DayTypesModal = ({
   return (
     <Modal
       open={open}
-      size="large"
+      size="extraLarge"
       title={'Select day types'}
       onDismiss={() => setOpen(false)}
       className="copy-dialog"

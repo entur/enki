@@ -473,6 +473,15 @@ export const GET_LINES_FOR_EXPORT = gql`
   ${ExportPage.fragments.journeyPatterns}
 `;
 
+export const GET_DAY_TYPES_BY_IDS = gql`
+  query GetDayTypesByIds($ids: [ID!]!) {
+    dayTypesByIds(ids: $ids) {
+      id
+      numberOfServiceJourneys
+    }
+  }
+`;
+
 export const GET_DAY_TYPES = gql`
   query GetDayTypes {
     dayTypes {

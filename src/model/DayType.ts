@@ -5,6 +5,7 @@ import { VersionedType } from 'model/VersionedType';
 type DayType = VersionedType & {
   changed?: string;
   name?: string;
+  numberOfServiceJourneys?: number;
   daysOfWeek: DAY_OF_WEEK[];
   dayTypeAssignments: DayTypeAssignment[];
 };

@@ -6,7 +6,7 @@ import { Tooltip } from '@entur/tooltip';
 import { Heading4 } from '@entur/typography';
 import { DELETE_DAY_TYPE, MUTATE_DAY_TYPE } from 'api/uttu/mutations';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
-import DayTypeAssignmentsEditor from 'components/ServiceJourneyEditor/DayTypeAssignmentsEditor';
+import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
 import WeekdayPicker from 'components/WeekdayPicker';
 import { selectIntl } from 'i18n';
 import DayType from 'model/DayType';
@@ -47,6 +47,16 @@ export const DayTypeEditor = ({
       });
     },
   });
+
+  /*
+    const dayTypesPristine = usePristine(dayTypes, spoilPristine);
+
+    const dayTypesFeedback = getErrorFeedback(
+      formatMessage('dayTypesValidationError'),
+      validateDayTypes(dayTypes),
+      dayTypesPristine
+    );
+    */
 
   return (
     <div style={{ padding: '1.5rem' }}>

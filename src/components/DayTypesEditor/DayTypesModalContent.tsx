@@ -1,4 +1,4 @@
-import { ButtonGroup, SecondaryButton } from '@entur/button';
+import { SecondaryButton } from '@entur/button';
 import { Pagination } from '@entur/menu';
 import {
   HeaderCell,
@@ -8,9 +8,11 @@ import {
   TableRow,
 } from '@entur/table';
 import DayType, { createNewDayType } from 'model/DayType';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { DayTypeEditor } from './DayTypeEditor';
 import { DayTypesTableExpRow } from './DayTypesTableExpRow';
+import { usePreparedDayTypes } from './usePreparedDayTypes';
+import { useServiceJourneysPerDayType } from './useServiceJourneysPerDayType';
 
 export const DayTypesModalContent = ({ dayTypes }: { dayTypes: DayType[] }) => {
   const [currentPage, setPage] = React.useState(1);
@@ -24,34 +26,17 @@ export const DayTypesModalContent = ({ dayTypes }: { dayTypes: DayType[] }) => {
     setNewDayType(createNewDayType());
   }, []);
 
-  const processed = useMemo<DayType[]>(() => {
-    console.log('process');
-    return [...dayTypes]
-      ?.sort((a, b) => {
-        if (new Date(a.changed!).getTime() > new Date(b.changed!).getTime()) {
-          return -1;
-        } else if (
-          new Date(a.changed!).getTime() < new Date(b.changed!).getTime()
-        ) {
-          return 1;
-        } else {
-          return 0;
-        }
-      })
-      ?.filter(
-        (_, index) =>
-          index + 1 >= (currentPage - 1) * results + 1 &&
-          index + 1 <= currentPage * results
-      );
-  }, [dayTypes, currentPage, results]);
+  const preparedDayTypes = usePreparedDayTypes(dayTypes, currentPage, results);
+  const serviceJourneysPerDayType =
+    useServiceJourneysPerDayType(preparedDayTypes);
 
   return (
     <>
-      <ButtonGroup>
+      <div className="day-types-modal_new-day-type-button">
         <SecondaryButton onClick={() => addNewDayType()}>
           New day type
         </SecondaryButton>
-      </ButtonGroup>
+      </div>
       <Pagination
         pageCount={pageCount}
         currentPage={currentPage}
@@ -66,20 +51,29 @@ export const DayTypesModalContent = ({ dayTypes }: { dayTypes: DayType[] }) => {
             <HeaderCell padding="radio">{''}</HeaderCell>
             <HeaderCell>Id</HeaderCell>
             <HeaderCell>Name</HeaderCell>
+            <HeaderCell>Used by # service journeys</HeaderCell>
             <HeaderCell padding="radio">{''}</HeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {newDayType && (
-            <DayTypesTableExpRow dayType={newDayType} key="_new">
+            <DayTypesTableExpRow
+              dayType={newDayType}
+              key="_new"
+              numberOfServiceJourneys={0}
+            >
               <DayTypeEditor
                 onSave={() => setNewDayType(null)}
                 dayType={newDayType}
               />
             </DayTypesTableExpRow>
           )}
-          {processed?.map((dayType: DayType) => (
-            <DayTypesTableExpRow dayType={dayType} key={dayType.id}>
+          {preparedDayTypes?.map((dayType: DayType) => (
+            <DayTypesTableExpRow
+              dayType={dayType}
+              key={dayType.id}
+              numberOfServiceJourneys={serviceJourneysPerDayType[dayType.id!]}
+            >
               <DayTypeEditor onSave={() => {}} dayType={dayType} />
             </DayTypesTableExpRow>
           ))}

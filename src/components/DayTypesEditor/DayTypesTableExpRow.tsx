@@ -9,9 +9,11 @@ import React, { useState } from 'react';
 
 export const DayTypesTableExpRow = ({
   dayType,
+  numberOfServiceJourneys,
   children,
 }: {
   dayType: DayType;
+  numberOfServiceJourneys: number;
   children: any;
 }) => {
   const [open, setopen] = useState(false);
@@ -24,6 +26,7 @@ export const DayTypesTableExpRow = ({
         </DataCell>
         <DataCell>{dayType.id}</DataCell>
         <DataCell>{dayType.name || 'No name'}</DataCell>
+        <DataCell>{numberOfServiceJourneys}</DataCell>
       </TableRow>
       <ExpandableRow colSpan={3} open={open}>
         {children}
