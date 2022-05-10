@@ -34,7 +34,7 @@ export const useServiceJourneysPerDayType = (dayTypes: DayType[]) => {
     if (dayTypes.some((v) => !serviceJourneysPerDayType[v.id!])) {
       fetchDayTypes();
     }
-  }, [dayTypes]);
+  }, [dayTypes, apolloClient, serviceJourneysPerDayType]);
 
   return serviceJourneysPerDayType;
 };

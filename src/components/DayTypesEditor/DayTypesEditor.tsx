@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { ButtonGroup, SecondaryButton } from '@entur/button';
+import { SecondaryButton } from '@entur/button';
 import { MultiSelect } from '@entur/dropdown';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
 import DayType from 'model/DayType';

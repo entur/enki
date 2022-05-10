@@ -49,7 +49,6 @@ const ServiceJourneyEditor = (props: Props) => {
       privateCode,
       publicCode,
       passingTimes,
-      dayTypes,
     },
     spoilPristine,
     onChange,
