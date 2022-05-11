@@ -84,6 +84,7 @@ export const MUTATE_DAY_TYPE = gql`
         }
       }
       name
+      changed
     }
   }
 `;

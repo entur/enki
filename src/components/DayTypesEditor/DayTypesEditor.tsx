@@ -17,7 +17,8 @@ export const DayTypesEditor = ({
   dayTypes: DayType[];
   onChange: (dayTypes: DayType[]) => void;
 }) => {
-  const { data: allDayTypesData } = useQuery<DayTypesData>(GET_DAY_TYPES);
+  const { data: allDayTypesData, refetch } =
+    useQuery<DayTypesData>(GET_DAY_TYPES);
   const [openDayTypeModal, setOpenDayTypeModal] = useState(false);
 
   return (
@@ -54,6 +55,7 @@ export const DayTypesEditor = ({
         open={openDayTypeModal}
         setOpen={setOpenDayTypeModal}
         dayTypes={allDayTypesData?.dayTypes!}
+        refetchDayTypes={refetch}
       />
     </>
   );

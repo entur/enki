@@ -14,9 +14,7 @@ export const useServiceJourneysPerDayType = (dayTypes: DayType[]) => {
   const apolloClient = useApolloClient();
 
   useEffect(() => {
-    console.log('fetchDayTypes useEffect');
     const fetchDayTypes = async () => {
-      console.log('fetchDayTypes useEffect - inside fetch');
       const { data } = await apolloClient.query<DayTypesByIdsData>({
         query: GET_DAY_TYPES_BY_IDS,
         variables: { ids: dayTypes.map((dt) => dt.id) },

@@ -8,10 +8,12 @@ export const DayTypesModal = ({
   open,
   setOpen,
   dayTypes,
+  refetchDayTypes,
 }: {
   open: boolean;
   setOpen: Function;
   dayTypes: DayType[];
+  refetchDayTypes: Function;
 }) => {
   return (
     <Modal
@@ -21,7 +23,10 @@ export const DayTypesModal = ({
       onDismiss={() => setOpen(false)}
       className="copy-dialog"
     >
-      <DayTypesModalContent dayTypes={dayTypes} />
+      <DayTypesModalContent
+        dayTypes={dayTypes}
+        refetchDayTypes={refetchDayTypes}
+      />
     </Modal>
   );
 };

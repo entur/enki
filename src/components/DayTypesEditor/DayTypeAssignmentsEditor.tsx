@@ -2,14 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import moment from 'moment/moment';
-import { AddIcon } from '@entur/icons';
-import { TertiaryButton } from '@entur/button';
+import { AddIcon, DeleteIcon } from '@entur/icons';
+import { IconButton, TertiaryButton } from '@entur/button';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import { DatePicker } from '@entur/datepicker';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import DeleteButton from 'components/DeleteButton/DeleteButton';
 import './styles.scss';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import { Switch } from '@entur/form';
@@ -41,7 +40,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
   };
 
   const changeIsAvailable = (isAvailable: boolean, index: number) => {
-    const updated = { ...dayTypeAssignments[index], index, isAvailable };
+    const updated = { ...dayTypeAssignments[index], isAvailable };
     onChange(replaceElement(dayTypeAssignments, index, updated));
   };
 
@@ -114,14 +113,15 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
                 <DataCell>
                   {dayTypeAssignments.length > 1 && (
-                    <DeleteButton
+                    <IconButton
                       onClick={() =>
                         onChange(
                           removeElementByIndex(dayTypeAssignments, index)
                         )
                       }
-                      title={formatMessage('delete')}
-                    />
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   )}
                 </DataCell>
               </TableRow>

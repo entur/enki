@@ -5,7 +5,6 @@ import { DeleteIcon, QuestionIcon, SaveIcon } from '@entur/icons';
 import { Tooltip } from '@entur/tooltip';
 import { Heading4 } from '@entur/typography';
 import { DELETE_DAY_TYPE, MUTATE_DAY_TYPE } from 'api/uttu/mutations';
-import { GET_DAY_TYPES } from 'api/uttu/queries';
 import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
 import WeekdayPicker from 'components/WeekdayPicker';
 import { selectIntl } from 'i18n';
@@ -16,36 +15,18 @@ import { useSelector } from 'react-redux';
 
 export const DayTypeEditor = ({
   dayType,
-  onSave,
+  refetchDayTypes,
 }: {
   dayType: DayType;
-  onSave: Function;
+  refetchDayTypes: Function;
 }) => {
   const { formatMessage } = useSelector(selectIntl);
   const [mutableDayType, setMutableDayType] = useState(dayType);
   const [mutateDayType] = useMutation(MUTATE_DAY_TYPE, {
-    update: (cache, { data }) => {
-      const { dayTypes } = cache.readQuery({ query: GET_DAY_TYPES }) as {
-        dayTypes: DayType[];
-      };
-      cache.writeQuery({
-        query: GET_DAY_TYPES,
-        data: { dayTypes: [data, ...dayTypes] },
-      });
-    },
+    onCompleted: () => refetchDayTypes(),
   });
   const [deleteDayType] = useMutation(DELETE_DAY_TYPE, {
-    update: (cache) => {
-      const { dayTypes } = cache.readQuery({ query: GET_DAY_TYPES }) as {
-        dayTypes: DayType[];
-      };
-      cache.writeQuery({
-        query: GET_DAY_TYPES,
-        data: {
-          dayTypes: dayTypes.filter((dt: DayType) => dt.id !== dayType.id),
-        },
-      });
-    },
+    onCompleted: () => refetchDayTypes(),
   });
 
   /*
@@ -111,7 +92,6 @@ export const DayTypeEditor = ({
 
         <TertiaryButton
           onClick={() => {
-            onSave();
             mutateDayType({ variables: { input: mutableDayType } });
           }}
         >
@@ -119,7 +99,6 @@ export const DayTypeEditor = ({
         </TertiaryButton>
         <TertiaryButton
           onClick={() => {
-            onSave();
             deleteDayType({ variables: { id: dayType.id } });
           }}
         >

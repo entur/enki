@@ -7,7 +7,6 @@ export const usePreparedDayTypes = (
   results: number
 ) => {
   const sortedDayTypes = useMemo(() => {
-    console.log('sort');
     return [...dayTypes]?.sort((a, b) => {
       if (new Date(a.changed!).getTime() > new Date(b.changed!).getTime()) {
         return -1;
@@ -22,7 +21,6 @@ export const usePreparedDayTypes = (
   }, [dayTypes]);
 
   const filteredDayTypes = useMemo(() => {
-    console.log('filter');
     return sortedDayTypes?.filter(
       (_, index) =>
         index + 1 >= (currentPage - 1) * results + 1 &&

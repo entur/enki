@@ -14,7 +14,13 @@ import { DayTypesTableExpRow } from './DayTypesTableExpRow';
 import { usePreparedDayTypes } from './usePreparedDayTypes';
 import { useServiceJourneysPerDayType } from './useServiceJourneysPerDayType';
 
-export const DayTypesModalContent = ({ dayTypes }: { dayTypes: DayType[] }) => {
+export const DayTypesModalContent = ({
+  dayTypes,
+  refetchDayTypes,
+}: {
+  dayTypes: DayType[];
+  refetchDayTypes: Function;
+}) => {
   const [currentPage, setPage] = React.useState(1);
   const [results, setResults] = React.useState(10);
   const [newDayType, setNewDayType] = React.useState<DayType | null>(null);
@@ -67,7 +73,10 @@ export const DayTypesModalContent = ({ dayTypes }: { dayTypes: DayType[] }) => {
               openInitial
             >
               <DayTypeEditor
-                onSave={() => setNewDayType(null)}
+                refetchDayTypes={() => {
+                  refetchDayTypes();
+                  setNewDayType(null);
+                }}
                 dayType={newDayType}
               />
             </DayTypesTableExpRow>
@@ -78,7 +87,10 @@ export const DayTypesModalContent = ({ dayTypes }: { dayTypes: DayType[] }) => {
               key={dayType.id}
               numberOfServiceJourneys={serviceJourneysPerDayType[dayType.id!]}
             >
-              <DayTypeEditor onSave={() => {}} dayType={dayType} />
+              <DayTypeEditor
+                refetchDayTypes={refetchDayTypes}
+                dayType={dayType}
+              />
             </DayTypesTableExpRow>
           ))}
         </TableBody>
