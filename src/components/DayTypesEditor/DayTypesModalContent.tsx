@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@entur/table';
 import DayType, { createNewDayType } from 'model/DayType';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { DayTypeEditor } from './DayTypeEditor';
 import { DayTypesTableExpRow } from './DayTypesTableExpRow';
 import { usePreparedDayTypes } from './usePreparedDayTypes';
@@ -19,8 +19,11 @@ export const DayTypesModalContent = ({ dayTypes }: { dayTypes: DayType[] }) => {
   const [results, setResults] = React.useState(10);
   const [newDayType, setNewDayType] = React.useState<DayType | null>(null);
 
-  const numberOfResults = dayTypes.length;
-  const pageCount = Math.ceil(numberOfResults / results);
+  const numberOfResults = useMemo(() => dayTypes.length, [dayTypes.length]);
+  const pageCount = useMemo(
+    () => Math.ceil(numberOfResults / results),
+    [numberOfResults, results]
+  );
 
   const addNewDayType = useCallback(() => {
     setNewDayType(createNewDayType());
@@ -61,6 +64,7 @@ export const DayTypesModalContent = ({ dayTypes }: { dayTypes: DayType[] }) => {
               dayType={newDayType}
               key="_new"
               numberOfServiceJourneys={0}
+              openInitial
             >
               <DayTypeEditor
                 onSave={() => setNewDayType(null)}

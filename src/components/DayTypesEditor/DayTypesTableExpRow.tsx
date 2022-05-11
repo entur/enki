@@ -11,12 +11,14 @@ export const DayTypesTableExpRow = ({
   dayType,
   numberOfServiceJourneys,
   children,
+  openInitial = false,
 }: {
   dayType: DayType;
   numberOfServiceJourneys: number;
   children: any;
+  openInitial?: boolean;
 }) => {
-  const [open, setopen] = useState(false);
+  const [open, setopen] = useState(openInitial);
 
   return (
     <>
