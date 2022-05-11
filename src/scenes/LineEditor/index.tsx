@@ -59,7 +59,6 @@ export default () => {
   };
 
   const onSave = useCallback(async () => {
-    debugger;
     setNextClicked(true);
     setSaving(true);
 
