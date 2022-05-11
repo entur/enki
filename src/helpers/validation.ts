@@ -137,6 +137,10 @@ export const validateServiceJourney = (sj: ServiceJourney): boolean => {
   const { isValid } = validateTimes(sj.passingTimes ?? []);
   const validDayTypes = validateDayTypes(sj.dayTypes);
 
+  if (!validDayTypes) {
+    console.log('validateServiceJourney', { sj });
+  }
+
   return !isBlankName && isValid && validDayTimes && validDayTypes;
 };
 
@@ -324,27 +328,25 @@ const WEEKDAYS = [
   'saturday',
 ];
 
+export const validateDayType = (dayType: DayType) => {
+  const daysOfWeek =
+    dayType.daysOfWeek?.map((dow) => WEEKDAYS.indexOf(dow)) || [];
+
+  return dayType.dayTypeAssignments.every((dta) => {
+    let from = parseISO(dta.operatingPeriod.fromDate);
+    const to = parseISO(dta.operatingPeriod.toDate);
+
+    while (!isDateBefore(to, from)) {
+      if (daysOfWeek.includes(getDay(from))) {
+        return true;
+      }
+      from = addDays(from, 1);
+    }
+
+    return false;
+  });
+};
+
 export const validateDayTypes = (dayTypes?: DayType[]) => {
-  return (
-    (dayTypes &&
-      dayTypes.every((dayType) => {
-        const daysOfWeek =
-          dayType.daysOfWeek?.map((dow) => WEEKDAYS.indexOf(dow)) || [];
-
-        return dayType.dayTypeAssignments.every((dta) => {
-          let from = parseISO(dta.operatingPeriod.fromDate);
-          const to = parseISO(dta.operatingPeriod.toDate);
-
-          while (!isDateBefore(to, from)) {
-            if (daysOfWeek.includes(getDay(from))) {
-              return true;
-            }
-            from = addDays(from, 1);
-          }
-
-          return false;
-        });
-      })) ||
-    false
-  );
+  return (dayTypes && dayTypes.every(validateDayType)) || false;
 };

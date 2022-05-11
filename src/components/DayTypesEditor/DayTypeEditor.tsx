@@ -10,8 +10,12 @@ import WeekdayPicker from 'components/WeekdayPicker';
 import { selectIntl } from 'i18n';
 import DayType from 'model/DayType';
 import { newDayTypeAssignment } from 'model/DayTypeAssignment';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import usePristine from 'hooks/usePristine';
+import { validateDayType } from 'helpers/validation';
+import { SmallAlertBox } from '@entur/alert';
 
 export const DayTypeEditor = ({
   dayType,
@@ -29,15 +33,19 @@ export const DayTypeEditor = ({
     onCompleted: () => refetchDayTypes(),
   });
 
-  /*
-    const dayTypesPristine = usePristine(dayTypes, spoilPristine);
-
-    const dayTypesFeedback = getErrorFeedback(
-      formatMessage('dayTypesValidationError'),
-      validateDayTypes(dayTypes),
-      dayTypesPristine
-    );
-    */
+  const validationMessage = useMemo(() => {
+    return formatMessage('dayTypesValidationError');
+  }, [formatMessage]);
+  const dayTypesPristine = usePristine(mutableDayType, false);
+  const dayTypesFeedback = useMemo(
+    () =>
+      getErrorFeedback(
+        validationMessage,
+        validateDayType(mutableDayType),
+        dayTypesPristine
+      ),
+    [mutableDayType, dayTypesPristine, validationMessage]
+  );
 
   return (
     <div style={{ padding: '1.5rem' }}>
@@ -105,6 +113,11 @@ export const DayTypeEditor = ({
           <DeleteIcon /> Delete
         </TertiaryButton>
       </ButtonGroup>
+      {dayTypesFeedback?.feedback && (
+        <SmallAlertBox variant="error">
+          {dayTypesFeedback.feedback}
+        </SmallAlertBox>
+      )}
     </div>
   );
 };
