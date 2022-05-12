@@ -35,10 +35,12 @@ export const DayTypesEditor = ({
               value: dt.id!,
             })) || []
           }
-          selectedItems={dayTypes?.map((dt) => ({
-            label: dt.name || dt.id!,
-            value: dt.id!,
-          }))}
+          selectedItems={
+            dayTypes?.map((dt) => ({
+              label: dt.name || dt.id!,
+              value: dt.id!,
+            })) || []
+          }
           onSelectedItemsChange={(items) => {
             const selectedIds = items.selectedItems?.map((item) => item.value);
             onChange(
