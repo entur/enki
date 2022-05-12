@@ -19,9 +19,11 @@ import { SmallAlertBox } from '@entur/alert';
 
 export const DayTypeEditor = ({
   dayType,
+  canDelete,
   refetchDayTypes,
 }: {
   dayType: DayType;
+  canDelete: boolean;
   refetchDayTypes: Function;
 }) => {
   const { formatMessage } = useSelector(selectIntl);
@@ -105,13 +107,16 @@ export const DayTypeEditor = ({
         >
           <SaveIcon /> Save
         </TertiaryButton>
-        <TertiaryButton
-          onClick={() => {
-            deleteDayType({ variables: { id: dayType.id } });
-          }}
-        >
-          <DeleteIcon /> Delete
-        </TertiaryButton>
+        {dayType.id && (
+          <TertiaryButton
+            disabled={!canDelete}
+            onClick={() => {
+              deleteDayType({ variables: { id: dayType.id } });
+            }}
+          >
+            <DeleteIcon /> Delete
+          </TertiaryButton>
+        )}
       </ButtonGroup>
       {dayTypesFeedback?.feedback && (
         <SmallAlertBox variant="error">

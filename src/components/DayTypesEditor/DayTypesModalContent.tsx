@@ -77,6 +77,7 @@ export const DayTypesModalContent = ({
                   refetchDayTypes();
                   setNewDayType(null);
                 }}
+                canDelete
                 dayType={newDayType}
               />
             </DayTypesTableExpRow>
@@ -89,6 +90,7 @@ export const DayTypesModalContent = ({
             >
               <DayTypeEditor
                 refetchDayTypes={refetchDayTypes}
+                canDelete={serviceJourneysPerDayType[dayType.id!] === 0}
                 dayType={dayType}
               />
             </DayTypesTableExpRow>
