@@ -137,6 +137,10 @@ export const validateServiceJourney = (sj: ServiceJourney): boolean => {
   const { isValid } = validateTimes(sj.passingTimes ?? []);
   const validDayTypes = validateDayTypes(sj.dayTypes);
 
+  if (!validDayTypes) {
+    console.log('validateServiceJourney', { sj });
+  }
+
   return !isBlankName && isValid && validDayTimes && validDayTypes;
 };
 
@@ -324,12 +328,7 @@ const WEEKDAYS = [
   'saturday',
 ];
 
-export const validateDayTypes = (dayTypes?: DayType[]) => {
-  if (dayTypes?.length !== 1) {
-    return false;
-  }
-
-  const dayType = dayTypes[0];
+export const validateDayType = (dayType: DayType) => {
   const daysOfWeek =
     dayType.daysOfWeek?.map((dow) => WEEKDAYS.indexOf(dow)) || [];
 
@@ -346,4 +345,8 @@ export const validateDayTypes = (dayTypes?: DayType[]) => {
 
     return false;
   });
+};
+
+export const validateDayTypes = (dayTypes?: DayType[]) => {
+  return (dayTypes && dayTypes.every(validateDayType)) || false;
 };

@@ -69,3 +69,30 @@ export const DELETE_LINE = gql`
     }
   }
 `;
+
+export const MUTATE_DAY_TYPE = gql`
+  mutation MutateDayType($input: DayTypeInput!) {
+    mutateDayType(input: $input) {
+      id
+      daysOfWeek
+      dayTypeAssignments {
+        isAvailable
+        date
+        operatingPeriod {
+          fromDate
+          toDate
+        }
+      }
+      name
+      changed
+    }
+  }
+`;
+
+export const DELETE_DAY_TYPE = gql`
+  mutation DeleteDayType($id: ID!) {
+    deleteDayType(id: $id) {
+      id
+    }
+  }
+`;

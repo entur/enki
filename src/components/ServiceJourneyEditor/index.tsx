@@ -20,10 +20,6 @@ import ServiceJourney from 'model/ServiceJourney';
 import { Heading4, Paragraph } from '@entur/typography';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import WeekdayPicker from 'components/WeekdayPicker';
-import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
-import { newDayTypeAssignment } from 'model/DayTypeAssignment';
-import { Tooltip } from '@entur/tooltip';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getInit, mapToItems } from 'helpers/dropdown';
 import './styles.scss';
@@ -32,9 +28,8 @@ import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/c
 import CopyDialog from './CopyDialog';
 import CopyActionChip from 'components/CopyActionChip';
 import Notices from 'components/Notices';
-import { FeedbackText } from '@entur/form';
-import { validateDayTypes } from 'helpers/validation';
 import { PassingTimeTypeDrawer } from './PassingTimesEditor/PassingTimeTypeDrawer';
+import { DayTypesEditor } from 'components/DayTypesEditor/DayTypesEditor';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -54,7 +49,6 @@ const ServiceJourneyEditor = (props: Props) => {
       privateCode,
       publicCode,
       passingTimes,
-      dayTypes,
     },
     spoilPristine,
     onChange,
@@ -64,7 +58,6 @@ const ServiceJourneyEditor = (props: Props) => {
     copyServiceJourney,
     flexibleLineType,
   } = props;
-
   const [operatorSelection, setOperatorSelection] = useState(
     serviceJourney.operatorRef
   );
@@ -95,12 +88,6 @@ const ServiceJourneyEditor = (props: Props) => {
   };
 
   const namePristine = usePristine(name, spoilPristine);
-  const dayTypesPristine = usePristine(dayTypes, spoilPristine);
-  const dayTypesFeedback = getErrorFeedback(
-    formatMessage('dayTypesValidationError'),
-    validateDayTypes(dayTypes),
-    dayTypesPristine
-  );
 
   return (
     <div className="service-journey-editor">
@@ -207,61 +194,15 @@ const ServiceJourneyEditor = (props: Props) => {
           />
         )}
         <section className="day-type-section">
-          <Heading4>
-            {formatMessage('dayTypeEditorDateAvailability')}
-            <Tooltip
-              content={formatMessage('dayTypeEditorDateTooltip')}
-              placement="right"
-            >
-              <span className="question-icon">
-                <QuestionIcon />
-              </span>
-            </Tooltip>
-          </Heading4>
-          <DayTypeAssignmentsEditor
-            dayTypeAssignments={
-              dayTypes?.[0].dayTypeAssignments?.length
-                ? dayTypes[0].dayTypeAssignments
-                : [newDayTypeAssignment()]
-            }
-            onChange={(dta) =>
+          <DayTypesEditor
+            dayTypes={serviceJourney.dayTypes!}
+            onChange={(dayTypes) => {
               onChange({
                 ...serviceJourney,
-                dayTypes: [
-                  {
-                    ...serviceJourney.dayTypes?.[0]!,
-                    dayTypeAssignments: dta,
-                  },
-                ],
-              })
-            }
+                dayTypes,
+              });
+            }}
           />
-        </section>
-        <section className="weekday-section">
-          <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
-          <WeekdayPicker
-            days={dayTypes?.[0].daysOfWeek ?? []}
-            onChange={(dow) =>
-              onChange({
-                ...serviceJourney,
-                dayTypes: [
-                  {
-                    ...(serviceJourney.dayTypes?.[0] ?? {
-                      dayTypeAssignments: [newDayTypeAssignment()],
-                    }),
-                    daysOfWeek: dow,
-                  },
-                ],
-              })
-            }
-            spoilPristine={spoilPristine}
-          />
-
-          {dayTypesFeedback.feedback && (
-            <FeedbackText variant={dayTypesFeedback.variant!}>
-              {dayTypesFeedback.feedback}
-            </FeedbackText>
-          )}
         </section>
 
         <section className="passing-times-section">

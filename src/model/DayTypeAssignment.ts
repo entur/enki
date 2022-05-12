@@ -1,7 +1,8 @@
 import OperatingPeriod from './OperatingPeriod';
 import moment from 'moment';
+import VersionedType from './VersionedType';
 
-export type DayTypeAssignment = {
+export type DayTypeAssignment = VersionedType & {
   isAvailable: boolean;
   date?: string;
   operatingPeriod: OperatingPeriod;

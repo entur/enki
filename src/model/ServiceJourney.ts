@@ -13,6 +13,7 @@ type ServiceJourney = VersionedType & {
   bookingArrangement?: BookingArrangement | null;
   passingTimes: PassingTime[];
   dayTypes?: DayType[];
+  dayTypesRefs?: string[];
   notices?: Notice[];
 };
 
@@ -21,7 +22,11 @@ export const serviceJourneyToPayload = (sj: ServiceJourney) => {
     delete sj.id;
   }
 
-  return sj;
+  return {
+    ...sj,
+    dayTypes: undefined,
+    dayTypesRefs: sj.dayTypes?.map((dt) => dt.id!),
+  };
 };
 
 export default ServiceJourney;
