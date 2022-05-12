@@ -7,8 +7,10 @@ import {
   TableHead,
   TableRow,
 } from '@entur/table';
+import { selectIntl } from 'i18n';
 import DayType, { createNewDayType } from 'model/DayType';
 import React, { useCallback, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { DayTypeEditor } from './DayTypeEditor';
 import { DayTypesTableExpRow } from './DayTypesTableExpRow';
 import { usePreparedDayTypes } from './usePreparedDayTypes';
@@ -39,11 +41,13 @@ export const DayTypesModalContent = ({
   const serviceJourneysPerDayType =
     useServiceJourneysPerDayType(preparedDayTypes);
 
+  const { formatMessage } = useSelector(selectIntl);
+
   return (
     <>
       <div className="day-types-modal_new-day-type-button">
         <SecondaryButton onClick={() => addNewDayType()}>
-          New day type
+          {formatMessage('dayTypesModalAddNewButtonLabel')}
         </SecondaryButton>
       </div>
       <Pagination
@@ -58,9 +62,11 @@ export const DayTypesModalContent = ({
         <TableHead>
           <TableRow>
             <HeaderCell padding="radio">{''}</HeaderCell>
-            <HeaderCell>Id</HeaderCell>
-            <HeaderCell>Name</HeaderCell>
-            <HeaderCell>Used by # service journeys</HeaderCell>
+            <HeaderCell>{formatMessage('dayTypesModalIdHeader')}</HeaderCell>
+            <HeaderCell>{formatMessage('dayTypesModalNameHeader')}</HeaderCell>
+            <HeaderCell>
+              {formatMessage('dayTypesModalUsedByHeader')}
+            </HeaderCell>
             <HeaderCell padding="radio">{''}</HeaderCell>
           </TableRow>
         </TableHead>

@@ -3,6 +3,8 @@ import { Modal } from '@entur/modal';
 import DayType from 'model/DayType';
 import { DayTypesModalContent } from './DayTypesModalContent';
 import './styles.scss';
+import { useSelector } from 'react-redux';
+import { selectIntl } from 'i18n';
 
 export const DayTypesModal = ({
   open,
@@ -15,11 +17,12 @@ export const DayTypesModal = ({
   dayTypes: DayType[];
   refetchDayTypes: Function;
 }) => {
+  const { formatMessage } = useSelector(selectIntl);
   return (
     <Modal
       open={open}
       size="extraLarge"
-      title={'Select day types'}
+      title={formatMessage('dayTypesModalTitle')}
       onDismiss={() => setOpen(false)}
       className="copy-dialog"
     >

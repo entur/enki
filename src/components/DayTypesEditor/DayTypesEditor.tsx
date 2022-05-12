@@ -2,8 +2,10 @@ import { useQuery } from '@apollo/client';
 import { SecondaryButton } from '@entur/button';
 import { MultiSelect } from '@entur/dropdown';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
+import { selectIntl } from 'i18n';
 import DayType from 'model/DayType';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { DayTypesModal } from './DayTypesModal';
 
 type DayTypesData = {
@@ -20,12 +22,13 @@ export const DayTypesEditor = ({
   const { data: allDayTypesData, refetch } =
     useQuery<DayTypesData>(GET_DAY_TYPES);
   const [openDayTypeModal, setOpenDayTypeModal] = useState(false);
+  const { formatMessage } = useSelector(selectIntl);
 
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'end' }}>
         <MultiSelect
-          label="Select day types for this service journey"
+          label={formatMessage('dayTypesEditorSelectLabel')}
           items={() =>
             allDayTypesData?.dayTypes.map((dt) => ({
               label: dt.name || dt.id!,

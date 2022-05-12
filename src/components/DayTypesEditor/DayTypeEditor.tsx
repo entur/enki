@@ -52,8 +52,8 @@ export const DayTypeEditor = ({
   return (
     <div style={{ padding: '1.5rem' }}>
       <TextField
-        label="Name"
-        labelTooltip="To help identify the day type entity within Nplan"
+        label={formatMessage('dayTypeEditorNameFieldLabel')}
+        labelTooltip={formatMessage('dayTypeEditorNameFieldLabelTooltip')}
         className="form-section"
         value={mutableDayType.name || ''}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

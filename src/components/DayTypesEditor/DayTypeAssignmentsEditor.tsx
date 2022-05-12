@@ -107,7 +107,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                       changeIsAvailable(e.target.checked, index);
                     }}
                   >
-                    Available
+                    {formatMessage('dayTypeAssignmentAvailableLabel')}
                   </Switch>
                 </DataCell>
 
