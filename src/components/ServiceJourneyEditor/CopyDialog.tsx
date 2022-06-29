@@ -112,19 +112,13 @@ export const copyServiceJourney = (
       serviceJourney.passingTimes[0].departureDayOffset!
     );
 
-    const {
-      id,
-      passingTimes,
-      dayTypes,
-      ...copyableServiceJourney
-    } = serviceJourney;
+    const { id, passingTimes, dayTypesRefs, ...copyableServiceJourney } =
+      serviceJourney;
 
     const newPassingTimes = offsetPassingTimes(
       passingTimes.map(({ id, ...pt }) => pt),
       differenceInMinutes(departure, lastActualDeparture)
     );
-
-    const newDayTypes = dayTypes?.map(({ id, ...dt }) => dt);
 
     const newServiceJourney = {
       ...clone(copyableServiceJourney),
@@ -133,7 +127,7 @@ export const copyServiceJourney = (
         '<% time %>',
         `${departureTime.slice(0, -3)} +${dayOffset}`
       ),
-      dayTypes: newDayTypes,
+      dayTypesRefs,
       passingTimes: newPassingTimes,
     };
     newServiceJourneys.push(newServiceJourney);
@@ -168,17 +162,14 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   const [nameTemplate, setNameTemplate] = useState<string>(
     `${serviceJourney.name || 'New'} (<% time %>)`
   );
-  const [initialDepartureTime, setInitialDepartureTime] = useState<string>(
-    defaultDepartureTime
-  );
-  const [initialDayOffset, setInitialDayOffset] = useState<number>(
-    defaultDayOffset
-  );
+  const [initialDepartureTime, setInitialDepartureTime] =
+    useState<string>(defaultDepartureTime);
+  const [initialDayOffset, setInitialDayOffset] =
+    useState<number>(defaultDayOffset);
   const [repeatDuration, setRepeatDuration] = useState<string>('PT1H');
   const [untilTime, setUntilTime] = useState<string>(defaultDepartureTime);
-  const [untilDayOffset, setUntilDayOffset] = useState<number>(
-    defaultDayOffset
-  );
+  const [untilDayOffset, setUntilDayOffset] =
+    useState<number>(defaultDayOffset);
 
   const [validationError, setValidationError] = useState<ValidationError>({});
 
