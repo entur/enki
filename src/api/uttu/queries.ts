@@ -487,6 +487,7 @@ export const GET_DAY_TYPES = gql`
     dayTypes {
       changed
       id
+      numberOfServiceJourneys
       daysOfWeek
       dayTypeAssignments {
         isAvailable
