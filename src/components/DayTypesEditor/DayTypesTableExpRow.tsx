@@ -1,3 +1,4 @@
+import { Checkbox } from '@entur/form';
 import {
   DataCell,
   ExpandableRow,
@@ -9,11 +10,15 @@ import React, { useState } from 'react';
 
 export const DayTypesTableExpRow = ({
   dayType,
+  selected,
+  onSelect,
   numberOfServiceJourneys,
   children,
   openInitial = false,
 }: {
   dayType: DayType;
+  selected: boolean;
+  onSelect: (selected: boolean) => void;
   numberOfServiceJourneys: number;
   children: any;
   openInitial?: boolean;
@@ -23,6 +28,15 @@ export const DayTypesTableExpRow = ({
   return (
     <>
       <TableRow>
+        <DataCell>
+          <Checkbox
+            name={dayType.name}
+            checked={selected}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              onSelect(event.target.checked)
+            }
+          />
+        </DataCell>
         <DataCell>
           <ExpandRowButton onClick={() => setopen(!open)} open={open} />
         </DataCell>

@@ -96,3 +96,11 @@ export const DELETE_DAY_TYPE = gql`
     }
   }
 `;
+
+export const DELETE_DAY_TYPES = gql`
+  mutation DeleteDayTypes($ids: [ID!]!) {
+    deleteDayTypes(ids: $ids) {
+      id
+    }
+  }
+`;
