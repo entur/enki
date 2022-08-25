@@ -61,17 +61,20 @@ export const DayTypesModalContent = ({
       setError({ title: 'Error deleting day types', message: e.message }),
   });
 
-  const onDeleteDayTypes = useCallback(async (ids) => {
-    setLoading(true);
-    setError(null);
-    await deleteDayTypes({
-      variables: {
-        ids: ids,
-      },
-    });
-    setSelectedIds([]);
-    setLoading(false);
-  }, []);
+  const onDeleteDayTypes = useCallback(
+    async (ids) => {
+      setLoading(true);
+      setError(null);
+      await deleteDayTypes({
+        variables: {
+          ids: ids,
+        },
+      });
+      setSelectedIds([]);
+      setLoading(false);
+    },
+    [deleteDayTypes]
+  );
 
   return (
     <>
