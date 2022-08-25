@@ -127,6 +127,7 @@ export const getFlexibleLineByIdQuery = `
           },
           dayTypes {
             id,
+            name,
             daysOfWeek,
             dayTypeAssignments {
               isAvailable,
@@ -218,6 +219,7 @@ export const getlineByIdQuery = `
           },
           dayTypes {
             id,
+            name,
             daysOfWeek,
             dayTypeAssignments {
               isAvailable,
@@ -394,6 +396,7 @@ const LineEditorPage = {
             }
             dayTypes {
               id
+              name
               daysOfWeek
               dayTypeAssignments {
                 isAvailable
@@ -476,17 +479,9 @@ export const GET_LINES_FOR_EXPORT = gql`
 export const GET_DAY_TYPES_BY_IDS = gql`
   query GetDayTypesByIds($ids: [ID!]!) {
     dayTypesByIds(ids: $ids) {
-      id
-      numberOfServiceJourneys
-    }
-  }
-`;
-
-export const GET_DAY_TYPES = gql`
-  query GetDayTypes {
-    dayTypes {
       changed
       id
+      name
       numberOfServiceJourneys
       daysOfWeek
       dayTypeAssignments {
@@ -498,6 +493,26 @@ export const GET_DAY_TYPES = gql`
         }
       }
       name
+    }
+  }
+`;
+
+export const GET_DAY_TYPES = gql`
+  query GetDayTypes {
+    dayTypes {
+      changed
+      id
+      name
+      numberOfServiceJourneys
+      daysOfWeek
+      dayTypeAssignments {
+        isAvailable
+        date
+        operatingPeriod {
+          fromDate
+          toDate
+        }
+      }
     }
   }
 `;
