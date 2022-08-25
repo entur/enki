@@ -4,7 +4,7 @@ import { MultiSelect } from '@entur/dropdown';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
 import { selectIntl } from 'i18n';
 import DayType from 'model/DayType';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DayTypesModal } from './DayTypesModal';
 
@@ -21,8 +21,19 @@ export const DayTypesEditor = ({
 }) => {
   const { data: allDayTypesData, refetch } =
     useQuery<DayTypesData>(GET_DAY_TYPES);
+
   const [openDayTypeModal, setOpenDayTypeModal] = useState(false);
   const { formatMessage } = useSelector(selectIntl);
+
+  const onOpenDayTypeModal = useCallback(
+    (open: boolean) => {
+      if (open) {
+        refetch();
+      }
+      setOpenDayTypeModal(open);
+    },
+    [refetch]
+  );
 
   return (
     <>
@@ -51,14 +62,14 @@ export const DayTypesEditor = ({
           }}
         />
         <div style={{ marginLeft: '1rem' }}>
-          <SecondaryButton onClick={() => setOpenDayTypeModal(true)}>
+          <SecondaryButton onClick={() => onOpenDayTypeModal(true)}>
             Edit day types
           </SecondaryButton>
         </div>
       </div>
       <DayTypesModal
         open={openDayTypeModal}
-        setOpen={setOpenDayTypeModal}
+        setOpen={(open: boolean) => onOpenDayTypeModal(open)}
         dayTypes={allDayTypesData?.dayTypes!}
         refetchDayTypes={refetch}
       />
