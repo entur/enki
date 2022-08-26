@@ -72,13 +72,8 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
 
   const { formatMessage } = useSelector(selectIntl);
   const dispatch = useDispatch<any>();
-  const {
-    flexibleLines,
-    organisations,
-    networks,
-    editor,
-    providers,
-  } = useSelector<GlobalState, GlobalState>((s) => s);
+  const { flexibleLines, organisations, networks, editor, providers } =
+    useSelector<GlobalState, GlobalState>((s) => s);
 
   const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies({
     match: props.match,
@@ -107,12 +102,9 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     if (networkRef) {
       setLine({ ...newFlexibleLine, networkRef });
     } else {
-      createAndGetNetwork(
-        dispatch,
-        authorities[0].id,
-        providers.active
-      ).then((newNetworkRef) =>
-        setLine({ ...newFlexibleLine, networkRef: newNetworkRef })
+      createAndGetNetwork(dispatch, authorities[0].id, providers.active).then(
+        (newNetworkRef) =>
+          setLine({ ...newFlexibleLine, networkRef: newNetworkRef })
       );
     }
     // eslint-disable-next-line

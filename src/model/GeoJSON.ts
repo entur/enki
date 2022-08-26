@@ -27,7 +27,8 @@ export const removeLastCoordinate = (
   }
 };
 
-const coordinateListRegEx = /^\[(\[\d+(\.\d*)?,\d+(\.\d*)?\])?(,\[\d+(\.\d*)?,\d+(\.\d*)?\])*\]$/;
+const coordinateListRegEx =
+  /^\[(\[\d+(\.\d*)?,\d+(\.\d*)?\])?(,\[\d+(\.\d*)?,\d+(\.\d*)?\])*\]$/;
 
 export const stringIsValidCoordinates = (s: string) => {
   const strippedString = s.replace(/\s/g, '');

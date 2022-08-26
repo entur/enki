@@ -30,9 +30,8 @@ const BookingArrangementEditor = ({
   trim,
 }: Props) => {
   const [showModal, setshowModal] = useState<boolean>(false);
-  const [bookingArrangementDraft, setBookingArrangementDraft] = useState<
-    BookingArrangement
-  >({});
+  const [bookingArrangementDraft, setBookingArrangementDraft] =
+    useState<BookingArrangement>({});
 
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
@@ -112,16 +111,15 @@ const BookingArrangementEditor = ({
   );
 };
 
-const withContrast = (Component: React.ComponentType<Props>) => ({
-  trim = false,
-  ...rest
-}: Props) =>
-  trim ? (
-    <Component trim={trim} {...(rest as Props)} />
-  ) : (
-    <Contrast>
+const withContrast =
+  (Component: React.ComponentType<Props>) =>
+  ({ trim = false, ...rest }: Props) =>
+    trim ? (
       <Component trim={trim} {...(rest as Props)} />
-    </Contrast>
-  );
+    ) : (
+      <Contrast>
+        <Component trim={trim} {...(rest as Props)} />
+      </Contrast>
+    );
 
 export default withContrast(BookingArrangementEditor);

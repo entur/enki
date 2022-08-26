@@ -12,5 +12,4 @@ router.use(
   proxy([OPTION, GET], (req) => `/quays/${req.params.quayId}/stop-place`)
 );
 
-
 module.exports = router;

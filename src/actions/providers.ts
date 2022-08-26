@@ -28,22 +28,21 @@ export const setActiveProvider = (
   provider,
 });
 
-export const getProviders = () => async (
-  dispatch: Dispatch<GlobalState>,
-  getState: () => GlobalState
-) => {
-  return UttuQuery(
-    'providers',
-    getProvidersQuery,
-    {},
-    await getState().auth.getAccessToken()
-  )
-    .then((data) => {
-      dispatch(receiveProviders(data.providers));
-      return Promise.resolve();
-    })
-    .catch((e) => {
-      dispatch(failedReceivingProviders);
-      return Promise.reject();
-    });
-};
+export const getProviders =
+  () =>
+  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+    return UttuQuery(
+      'providers',
+      getProvidersQuery,
+      {},
+      await getState().auth.getAccessToken()
+    )
+      .then((data) => {
+        dispatch(receiveProviders(data.providers));
+        return Promise.resolve();
+      })
+      .catch((e) => {
+        dispatch(failedReceivingProviders);
+        return Promise.reject();
+      });
+  };

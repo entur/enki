@@ -45,133 +45,129 @@ const receiveFlexibleStopPlaceActionCreator = (
   stopPlace,
 });
 
-export const loadFlexibleStopPlaces = () => async (
-  dispatch: Dispatch<any>,
-  getState: () => GlobalState
-) => {
-  dispatch(requestFlexibleStopPlacesActionCreator());
+export const loadFlexibleStopPlaces =
+  () => async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+    dispatch(requestFlexibleStopPlacesActionCreator());
 
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
+    const activeProvider = getState().providers.active?.code ?? '';
+    const intl = getIntl(getState());
 
-  try {
-    const data = await UttuQuery(
-      activeProvider,
-      getFlexibleStopPlacesQuery,
-      {},
-      await getState().auth.getAccessToken()
-    );
-    const flexibleStopPlaces = data.flexibleStopPlaces;
-    dispatch(receiveFlexibleStopPlacesActionCreator(flexibleStopPlaces));
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('flexibleStopPlacesLoadStopPlacesErrorHeader'),
-        intl.formatMessage(
-          'flexibleStopPlacesLoadStopPlacesErrorMessage',
-          getInternationalizedUttuError(intl, e)
+    try {
+      const data = await UttuQuery(
+        activeProvider,
+        getFlexibleStopPlacesQuery,
+        {},
+        await getState().auth.getAccessToken()
+      );
+      const flexibleStopPlaces = data.flexibleStopPlaces;
+      dispatch(receiveFlexibleStopPlacesActionCreator(flexibleStopPlaces));
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('flexibleStopPlacesLoadStopPlacesErrorHeader'),
+          intl.formatMessage(
+            'flexibleStopPlacesLoadStopPlacesErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
         )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
+      );
+      sentryCaptureException(e);
+    }
+  };
 
-export const loadFlexibleStopPlaceById = (id: string) => async (
-  dispatch: Dispatch<any>,
-  getState: () => GlobalState
-) => {
-  dispatch(requestFlexibleStopPlaceActionCreator());
+export const loadFlexibleStopPlaceById =
+  (id: string) =>
+  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+    dispatch(requestFlexibleStopPlaceActionCreator());
 
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
+    const activeProvider = getState().providers.active?.code ?? '';
+    const intl = getIntl(getState());
 
-  try {
-    const data = await UttuQuery(
-      activeProvider,
-      getFlexibleStopPlaceByIdQuery,
-      { id },
-      await getState().auth.getAccessToken()
-    );
-    dispatch(receiveFlexibleStopPlaceActionCreator(data.flexibleStopPlace));
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('flexibleStopPlacesLoadStopPlaceErrorHeader'),
-        intl.formatMessage(
-          'flexibleStopPlacesLoadStopPlaceErrorMessage',
-          getInternationalizedUttuError(intl, e)
+    try {
+      const data = await UttuQuery(
+        activeProvider,
+        getFlexibleStopPlaceByIdQuery,
+        { id },
+        await getState().auth.getAccessToken()
+      );
+      dispatch(receiveFlexibleStopPlaceActionCreator(data.flexibleStopPlace));
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('flexibleStopPlacesLoadStopPlaceErrorHeader'),
+          intl.formatMessage(
+            'flexibleStopPlacesLoadStopPlaceErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
         )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
+      );
+      sentryCaptureException(e);
+    }
+  };
 
-export const saveFlexibleStopPlace = (
-  flexibleStopPlace: FlexibleStopPlace
-) => async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
+export const saveFlexibleStopPlace =
+  (flexibleStopPlace: FlexibleStopPlace) =>
+  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+    const activeProvider = getState().providers.active?.code ?? '';
+    const intl = getIntl(getState());
 
-  try {
-    await UttuQuery(
-      activeProvider,
-      flexibleStopPlaceMutation,
-      {
-        input: flexibleStopPlace,
-      },
-      await getState().auth.getAccessToken()
-    );
-    dispatch(
-      showSuccessNotification(
-        intl.formatMessage('flexibleStopPlacesSaveStopPlaceSuccessHeader'),
-        intl.formatMessage('flexibleStopPlacesSaveStopPlaceSuccessMessage')
-      )
-    );
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('flexibleStopPlacesSaveStopPlaceErrorHeader'),
-        intl.formatMessage(
-          'flexibleStopPlacesSaveStopPlaceErrorMessage',
-          getInternationalizedUttuError(intl, e)
+    try {
+      await UttuQuery(
+        activeProvider,
+        flexibleStopPlaceMutation,
+        {
+          input: flexibleStopPlace,
+        },
+        await getState().auth.getAccessToken()
+      );
+      dispatch(
+        showSuccessNotification(
+          intl.formatMessage('flexibleStopPlacesSaveStopPlaceSuccessHeader'),
+          intl.formatMessage('flexibleStopPlacesSaveStopPlaceSuccessMessage')
         )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
-
-export const deleteFlexibleStopPlaceById = (id: string) => async (
-  dispatch: Dispatch<any>,
-  getState: () => GlobalState
-) => {
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
-  try {
-    await UttuQuery(
-      activeProvider,
-      deleteFlexibleStopPlace,
-      { id },
-      await getState().auth.getAccessToken()
-    );
-    dispatch(
-      showSuccessNotification(
-        intl.formatMessage('flexibleStopPlacesDeleteStopPlaceSuccessHeader'),
-        intl.formatMessage('flexibleStopPlacesDeleteStopPlaceSuccessMessage')
-      )
-    );
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('flexibleStopPlacesDeleteStopPlaceErrorHeader'),
-        intl.formatMessage(
-          'flexibleStopPlacesDeleteStopPlaceErrorMessage',
-          getInternationalizedUttuError(intl, e)
+      );
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('flexibleStopPlacesSaveStopPlaceErrorHeader'),
+          intl.formatMessage(
+            'flexibleStopPlacesSaveStopPlaceErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
         )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
+      );
+      sentryCaptureException(e);
+    }
+  };
+
+export const deleteFlexibleStopPlaceById =
+  (id: string) =>
+  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+    const activeProvider = getState().providers.active?.code ?? '';
+    const intl = getIntl(getState());
+    try {
+      await UttuQuery(
+        activeProvider,
+        deleteFlexibleStopPlace,
+        { id },
+        await getState().auth.getAccessToken()
+      );
+      dispatch(
+        showSuccessNotification(
+          intl.formatMessage('flexibleStopPlacesDeleteStopPlaceSuccessHeader'),
+          intl.formatMessage('flexibleStopPlacesDeleteStopPlaceSuccessMessage')
+        )
+      );
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('flexibleStopPlacesDeleteStopPlaceErrorHeader'),
+          intl.formatMessage(
+            'flexibleStopPlacesDeleteStopPlaceErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
+        )
+      );
+      sentryCaptureException(e);
+    }
+  };

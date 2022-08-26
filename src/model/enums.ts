@@ -251,14 +251,12 @@ export enum FLEXIBLE_STOP_AREA_TYPE {
   UNRESTRICTED_PUBLIC_TRANSPORT_AREAS = 'UnrestrictedPublicTransportAreas',
 }
 
-export const bookingAccessMessages: Record<
-  BOOKING_ACCESS,
-  keyof MessagesKey
-> = {
-  [BOOKING_ACCESS.PUBLIC]: 'bookingAccessPublic',
-  [BOOKING_ACCESS.AUTHORISED_PUBLIC]: 'bookingAccessAuthorisedPublic',
-  [BOOKING_ACCESS.STAFF]: 'bookingAccessStaff',
-};
+export const bookingAccessMessages: Record<BOOKING_ACCESS, keyof MessagesKey> =
+  {
+    [BOOKING_ACCESS.PUBLIC]: 'bookingAccessPublic',
+    [BOOKING_ACCESS.AUTHORISED_PUBLIC]: 'bookingAccessAuthorisedPublic',
+    [BOOKING_ACCESS.STAFF]: 'bookingAccessStaff',
+  };
 
 export const bookingTimeMessages: Record<PURCHASE_WHEN, keyof MessagesKey> = {
   [PURCHASE_WHEN.DAY_OF_TRAVEL_ONLY]: 'purchaseWhenDayOfTravelOnly',
@@ -267,16 +265,14 @@ export const bookingTimeMessages: Record<PURCHASE_WHEN, keyof MessagesKey> = {
     'purchaseWhenAdvanceAndDayOfTravel',
 };
 
-export const bookingMethodMessages: Record<
-  BOOKING_METHOD,
-  keyof MessagesKey
-> = {
-  [BOOKING_METHOD.CALL_DRIVER]: 'bookingMethodCallDriver',
-  [BOOKING_METHOD.CALL_OFFICE]: 'bookingMethodCallOffice',
-  [BOOKING_METHOD.ONLINE]: 'bookingMethodOnline',
-  [BOOKING_METHOD.PHONE_AT_STOP]: 'bookingMethodPhoneAtStop',
-  [BOOKING_METHOD.TEXT]: 'bookingMethodText',
-};
+export const bookingMethodMessages: Record<BOOKING_METHOD, keyof MessagesKey> =
+  {
+    [BOOKING_METHOD.CALL_DRIVER]: 'bookingMethodCallDriver',
+    [BOOKING_METHOD.CALL_OFFICE]: 'bookingMethodCallOffice',
+    [BOOKING_METHOD.ONLINE]: 'bookingMethodOnline',
+    [BOOKING_METHOD.PHONE_AT_STOP]: 'bookingMethodPhoneAtStop',
+    [BOOKING_METHOD.TEXT]: 'bookingMethodText',
+  };
 
 export const paymentTimeMessages: Record<PURCHASE_MOMENT, keyof MessagesKey> = {
   [PURCHASE_MOMENT.ON_RESERVATION]: 'purchaseMomentOnReservation',

@@ -112,9 +112,8 @@ const mapStatusToText = (status: string): string => {
 
 export default ({ onChange }: Props) => {
   const [lines, setLines] = useState<ExportableLine[]>([]);
-  const { loading, data, error, refetch } = useQuery<LinesData>(
-    GET_LINES_FOR_EXPORT
-  );
+  const { loading, data, error, refetch } =
+    useQuery<LinesData>(GET_LINES_FOR_EXPORT);
 
   useRefetchOnLocationChange(refetch);
 
@@ -140,11 +139,8 @@ export default ({ onChange }: Props) => {
     // eslint-disable-next-line
   }, [lines]);
 
-  const {
-    sortedData,
-    getSortableHeaderProps,
-    getSortableTableProps,
-  } = useSortableData<ExportableLine>(lines);
+  const { sortedData, getSortableHeaderProps, getSortableTableProps } =
+    useSortableData<ExportableLine>(lines);
 
   const isEverythingSelected = Object.values(lines).every(
     (value) => value.selected

@@ -29,13 +29,8 @@ type Props = {
 };
 
 export default (props: Props) => {
-  const {
-    open,
-    dismiss,
-    serviceJourneys,
-    journeyPatternIndex,
-    onConfirm,
-  } = props;
+  const { open, dismiss, serviceJourneys, journeyPatternIndex, onConfirm } =
+    props;
 
   const { formatMessage } = useSelector(selectIntl);
 

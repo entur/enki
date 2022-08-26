@@ -54,148 +54,143 @@ const receiveFlexibleLineActionCreator = (
   line,
 });
 
-export const loadFlexibleLines = () => async (
-  dispatch: Dispatch<any>,
-  getState: () => GlobalState
-) => {
-  try {
+export const loadFlexibleLines =
+  () => async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+    try {
+      const activeProvider = getState().providers.active?.code ?? '';
+      const { flexibleLines } = await UttuQuery(
+        activeProvider,
+        getFlexibleLinesQuery,
+        {},
+        await getState().auth.getAccessToken()
+      );
+      dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
+    } catch (e) {
+      const intl = getIntl(getState());
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('loadLinesErrorHeader'),
+          intl.formatMessage(
+            'loadLinesErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
+        )
+      );
+      sentryCaptureException(e);
+    }
+  };
+
+export const loadFlexibleLineById =
+  (id: string, isFlexibleLine: boolean) =>
+  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+    try {
+      const queryById = isFlexibleLine
+        ? getFlexibleLineByIdQuery
+        : getlineByIdQuery;
+
+      const { line, flexibleLine } = await UttuQuery(
+        getState().providers.active?.code ?? '',
+        queryById,
+        {
+          id,
+        },
+        await getState().auth.getAccessToken()
+      );
+
+      dispatch(receiveFlexibleLineActionCreator(flexibleLine ?? line ?? {}));
+    } catch (e) {
+      const intl = getIntl(getState());
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('loadLineByIdErrorHeader'),
+          intl.formatMessage(
+            'loadLineByIdErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
+        )
+      );
+      sentryCaptureException(e);
+    }
+  };
+
+export const saveFlexibleLine =
+  (flexibleLine: FlexibleLine) =>
+  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     const activeProvider = getState().providers.active?.code ?? '';
-    const { flexibleLines } = await UttuQuery(
-      activeProvider,
-      getFlexibleLinesQuery,
-      {},
-      await getState().auth.getAccessToken()
-    );
-    dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
-  } catch (e) {
     const intl = getIntl(getState());
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('loadLinesErrorHeader'),
-        intl.formatMessage(
-          'loadLinesErrorMessage',
-          getInternationalizedUttuError(intl, e)
+    const isNewLine = flexibleLine.id === undefined;
+    const mutation = flexibleLine.flexibleLineType
+      ? flexibleLineMutation
+      : lineMutation;
+
+    const { header, message } = isNewLine
+      ? {
+          header: intl.formatMessage('modalSaveLineSuccessHeader'),
+          message: `${flexibleLine.name} ${intl.formatMessage(
+            'modalSaveLineSuccessMessage'
+          )}`,
+        }
+      : {
+          header: intl.formatMessage('saveLineSuccessHeader'),
+          message: intl.formatMessage('saveLineSuccessMessage'),
+        };
+
+    try {
+      await UttuQuery(
+        activeProvider,
+        mutation,
+        {
+          input: flexibleLineToPayload(flexibleLine),
+        },
+        await getState().auth.getAccessToken()
+      );
+      dispatch(showSuccessNotification(header, message, isNewLine));
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('saveLineErrorHeader'),
+          intl.formatMessage(
+            'saveLineErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
         )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
+      );
+      sentryCaptureException(e);
+      throw e;
+    }
+  };
 
-export const loadFlexibleLineById = (
-  id: string,
-  isFlexibleLine: boolean
-) => async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
-  try {
-    const queryById = isFlexibleLine
-      ? getFlexibleLineByIdQuery
-      : getlineByIdQuery;
-
-    const { line, flexibleLine } = await UttuQuery(
-      getState().providers.active?.code ?? '',
-      queryById,
-      {
-        id,
-      },
-      await getState().auth.getAccessToken()
-    );
-
-    dispatch(receiveFlexibleLineActionCreator(flexibleLine ?? line ?? {}));
-  } catch (e) {
+export const deleteLine =
+  (flexibleLine: FlexibleLine) =>
+  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+    const { id, flexibleLineType } = flexibleLine;
+    const activeProvider = getState().providers.active?.code ?? '';
     const intl = getIntl(getState());
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('loadLineByIdErrorHeader'),
-        intl.formatMessage(
-          'loadLineByIdErrorMessage',
-          getInternationalizedUttuError(intl, e)
+    const deleteQuery = flexibleLineType ? deleteFlexibleLine : deleteline;
+
+    try {
+      await UttuQuery(
+        activeProvider,
+        deleteQuery,
+        { id },
+        await getState().auth.getAccessToken()
+      );
+      dispatch(
+        showSuccessNotification(
+          intl.formatMessage('deleteLineSuccessHeader'),
+          intl.formatMessage('deleteLineSuccessMessage')
         )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
-
-export const saveFlexibleLine = (flexibleLine: FlexibleLine) => async (
-  dispatch: Dispatch<any>,
-  getState: () => GlobalState
-) => {
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
-  const isNewLine = flexibleLine.id === undefined;
-  const mutation = flexibleLine.flexibleLineType
-    ? flexibleLineMutation
-    : lineMutation;
-
-  const { header, message } = isNewLine
-    ? {
-        header: intl.formatMessage('modalSaveLineSuccessHeader'),
-        message: `${flexibleLine.name} ${intl.formatMessage(
-          'modalSaveLineSuccessMessage'
-        )}`,
-      }
-    : {
-        header: intl.formatMessage('saveLineSuccessHeader'),
-        message: intl.formatMessage('saveLineSuccessMessage'),
-      };
-
-  try {
-    await UttuQuery(
-      activeProvider,
-      mutation,
-      {
-        input: flexibleLineToPayload(flexibleLine),
-      },
-      await getState().auth.getAccessToken()
-    );
-    dispatch(showSuccessNotification(header, message, isNewLine));
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('saveLineErrorHeader'),
-        intl.formatMessage(
-          'saveLineErrorMessage',
-          getInternationalizedUttuError(intl, e)
+      );
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('deleteLineErrorHeader'),
+          intl.formatMessage(
+            'deleteLineErrorMessage',
+            getInternationalizedUttuError(intl, e)
+          )
         )
-      )
-    );
-    sentryCaptureException(e);
-    throw e;
-  }
-};
-
-export const deleteLine = (flexibleLine: FlexibleLine) => async (
-  dispatch: Dispatch<any>,
-  getState: () => GlobalState
-) => {
-  const { id, flexibleLineType } = flexibleLine;
-  const activeProvider = getState().providers.active?.code ?? '';
-  const intl = getIntl(getState());
-  const deleteQuery = flexibleLineType ? deleteFlexibleLine : deleteline;
-
-  try {
-    await UttuQuery(
-      activeProvider,
-      deleteQuery,
-      { id },
-      await getState().auth.getAccessToken()
-    );
-    dispatch(
-      showSuccessNotification(
-        intl.formatMessage('deleteLineSuccessHeader'),
-        intl.formatMessage('deleteLineSuccessMessage')
-      )
-    );
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        intl.formatMessage('deleteLineErrorHeader'),
-        intl.formatMessage(
-          'deleteLineErrorMessage',
-          getInternationalizedUttuError(intl, e)
-        )
-      )
-    );
-    sentryCaptureException(e);
-  }
-};
+      );
+      sentryCaptureException(e);
+    }
+  };

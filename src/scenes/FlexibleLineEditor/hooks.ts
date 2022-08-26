@@ -12,10 +12,8 @@ export const useLoadDependencies = ({
 }: RouteComponentProps<MatchParams>) => {
   const [networksIsLoading, setNetworksIsLoading] = useState(true);
   const [flexibleLineIsLoading, setFlexibleLineIsLoading] = useState(true);
-  const [
-    flexibleStopPlacesIsLoading,
-    setFlexibleStopPlacesIsLoading,
-  ] = useState(true);
+  const [flexibleStopPlacesIsLoading, setFlexibleStopPlacesIsLoading] =
+    useState(true);
 
   const dispatch = useDispatch<any>();
 
