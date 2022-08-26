@@ -20,4 +20,11 @@ export const createNewDayType = () => {
 export const dayTypeIsEmpty = (dayType: DayType) =>
   dayType.daysOfWeek.length === 0 && dayType.dayTypeAssignments.length === 0;
 
+export const dayTypeToPayload = (dayType: DayType) => {
+  const { numberOfServiceJourneys, ...payloadFields } = dayType;
+  return {
+    ...payloadFields,
+  };
+};
+
 export default DayType;

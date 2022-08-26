@@ -8,7 +8,7 @@ import { DELETE_DAY_TYPE, MUTATE_DAY_TYPE } from 'api/uttu/mutations';
 import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
 import WeekdayPicker from 'components/WeekdayPicker';
 import { selectIntl } from 'i18n';
-import DayType from 'model/DayType';
+import DayType, { dayTypeToPayload } from 'model/DayType';
 import { newDayTypeAssignment } from 'model/DayTypeAssignment';
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -102,7 +102,9 @@ export const DayTypeEditor = ({
 
         <TertiaryButton
           onClick={() => {
-            mutateDayType({ variables: { input: mutableDayType } });
+            mutateDayType({
+              variables: { input: dayTypeToPayload(mutableDayType) },
+            });
           }}
         >
           <SaveIcon /> Save
