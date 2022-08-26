@@ -61,7 +61,7 @@ export const DayTypesEditor = ({
         />
         <div style={{ marginLeft: '1rem' }}>
           <SecondaryButton onClick={() => onOpenDayTypeModal(true)}>
-            Edit day types
+            {formatMessage('dayTypesEditButton')}
           </SecondaryButton>
         </div>
       </div>

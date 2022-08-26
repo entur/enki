@@ -58,7 +58,10 @@ export const DayTypesModalContent = ({
   const [deleteDayTypes] = useMutation(DELETE_DAY_TYPES, {
     onCompleted: () => refetchDayTypes(),
     onError: (e) =>
-      setError({ title: 'Error deleting day types', message: e.message }),
+      setError({
+        title: formatMessage('deleteDayTypesErrorTitle'),
+        message: e.message,
+      }),
   });
 
   const onDeleteDayTypes = useCallback(
@@ -98,7 +101,7 @@ export const DayTypesModalContent = ({
             disabled={selectedIds.length === 0}
             onClick={() => onDeleteDayTypes(selectedIds)}
           >
-            Slett markerte day types
+            {formatMessage('deleteSelectedDayTypesButtonLabel')}
           </SecondaryButton>
         </ButtonGroup>
       </div>
