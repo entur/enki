@@ -27,9 +27,7 @@ export const DayTypesEditor = ({
 
   const onOpenDayTypeModal = useCallback(
     (open: boolean) => {
-      if (open) {
-        refetch();
-      }
+      refetch();
       setOpenDayTypeModal(open);
     },
     [refetch]
