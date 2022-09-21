@@ -87,7 +87,7 @@ jobs:
     - save_cache: *save-dependency-cache
     - run: *build
     - run: *test
-    - sonarcloud/scan
+    # - sonarcloud/scan
   build:
     docker:
       - image: cimg/python:2.7-node
@@ -98,7 +98,7 @@ jobs:
     - save_cache: *save-dependency-cache
     - run: *test
     - run: *build
-    - sonarcloud/scan
+    # - sonarcloud/scan
     - run: *create-image-version
     - run: *tag-git-version
     - persist_to_workspace:
