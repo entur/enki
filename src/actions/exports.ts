@@ -45,7 +45,7 @@ export const loadExports =
         activeProvider,
         getExportsQuery,
         {
-          historicDays: 30,
+          historicDays: 365,
         },
         await getState().auth.getAccessToken()
       );
