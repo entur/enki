@@ -15,7 +15,11 @@ const exportsReducer = (exports: ExportsState = null, action: AnyAction) => {
       return null;
 
     case RECEIVE_EXPORTS:
-      return action.exports;
+      return action.exports.sort((a: Export, b: Export) => {
+        const aDate = new Date(a.created!);
+        const bDate = new Date(b.created!);
+        return bDate.getTime() - aDate.getTime();
+      });
 
     case RECEIVE_EXPORT:
       return exports

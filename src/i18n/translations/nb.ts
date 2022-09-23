@@ -100,6 +100,7 @@ export const messages = {
   exportsTableHeaderLabelFromDate: 'Fra dato',
   exportsTableHeaderLabelName: 'Navn',
   exportsTableHeaderLabelStatus: 'Status',
+  exportsTableHeaderLabelCreated: 'Tidspunkt',
   exportsTableHeaderLabelToDate: 'Til dato',
   viewerDownloadLabel: 'Last ned eksporterte filer',
   viewerDownloadLinkText: 'Last ned',

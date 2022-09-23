@@ -100,6 +100,7 @@ export const messages: MessagesKey = {
   exportsTableHeaderLabelFromDate: 'From date',
   exportsTableHeaderLabelName: 'Name',
   exportsTableHeaderLabelStatus: 'Status',
+  exportsTableHeaderLabelCreated: 'Time',
   exportsTableHeaderLabelToDate: 'To date',
   viewerDownloadLabel: 'Download exported files',
   viewerDownloadLinkText: 'Download',

@@ -28,7 +28,9 @@ const Exports = ({ history }: RouteComponentProps) => {
   const exports = useSelector<GlobalState, ExportsState>(
     (state) => state.exports
   );
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage, locale } = useSelector<GlobalState, AppIntlState>(
+    selectIntl
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const Exports = ({ history }: RouteComponentProps) => {
           <TableRow key={e.id} onClick={() => handleOnRowClick(e.id ?? '')}>
             <DataCell>{e.name}</DataCell>
             <DataCell>{getIconForStatus(e.exportStatus)}</DataCell>
+            <DataCell>{new Date(e.created!).toLocaleString(locale)}</DataCell>
             <DataCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
                 <SecondarySquareButton
@@ -111,6 +114,9 @@ const Exports = ({ history }: RouteComponentProps) => {
             </HeaderCell>
             <HeaderCell>
               {formatMessage('exportsTableHeaderLabelStatus')}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage('exportsTableHeaderLabelCreated')}
             </HeaderCell>
             <HeaderCell>
               {formatMessage('exportsTableHeaderLabelDownload')}
