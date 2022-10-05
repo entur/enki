@@ -25,6 +25,7 @@ import { GlobalState } from 'reducers';
 import { AppIntlState } from 'i18n';
 import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
 import { TimePicker } from '@entur/datepicker';
+import { format } from 'date-fns';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -246,9 +247,7 @@ export default (props: Props) => {
             selectedTime={latestbookingTimeAsDate}
             onChange={(date: Date | null) => {
               if (date !== null) {
-                onLatestBookingTimeChange(
-                  `${date.getHours()}:${date.getMinutes()}`
-                );
+                onLatestBookingTimeChange(format(date, 'HH:mm'));
               } else {
                 onLatestBookingTimeChange('');
               }
