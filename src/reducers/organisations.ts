@@ -44,7 +44,6 @@ export const filterAuthorities = (
 ) =>
   organisations.filter(
     (org) =>
-      org.types.includes(ORGANISATION_TYPE.AUTHORITY) &&
       org.references.netexAuthorityId &&
       org.references.codeSpace === activeProvider?.codespace?.xmlns
   );
@@ -52,10 +51,6 @@ export const filterAuthorities = (
 export const filterNetexOperators = (
   organisations: Organisation[]
 ): Organisation[] =>
-  organisations.filter(
-    (org) =>
-      org.types.includes(ORGANISATION_TYPE.OPERATOR) &&
-      org.references.netexOperatorId
-  );
+  organisations.filter((org) => org.references.netexOperatorId);
 
 export default organisationsReducer;
