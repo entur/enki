@@ -237,7 +237,7 @@ export const messages = {
     'Et journey pattern definerer linjen eller området for tjenesten, og består av stoppene langs ruten eller området tjenesten opererer innenfor.',
   stepperAbout: 'Om linjen',
   stepperJourneyPattern: 'Journey Patterns',
-  stepperServiceJourney: 'Service Journey',
+  stepperServiceJourney: 'Service Journeys',
   stepperBooking: 'Bestillingsinfo',
   editorStopPoints: 'Legg til stopp for tilbudet',
   editorStopPointFlexibleAreaOnly:

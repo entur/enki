@@ -240,8 +240,8 @@ export const messages: MessagesKey = {
   editorFillInformation:
     'A Journey Pattern describes the line pattern or area of the service, consisting of the stops along the line or the area(s) the service operates within.',
   stepperAbout: 'General',
-  stepperJourneyPattern: 'Journey Pattern',
-  stepperServiceJourney: 'Service Journey',
+  stepperJourneyPattern: 'Journey Patterns',
+  stepperServiceJourney: 'Service Journeys',
   stepperBooking: 'Booking info',
   editorStopPoints: 'Add stop points defining the service',
   editorStopPointFlexibleAreaOnly:
