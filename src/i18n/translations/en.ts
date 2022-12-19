@@ -135,6 +135,7 @@ export const messages: MessagesKey = {
   uttuErrorORGANISATION_NOT_VALID_OPERATOR: 'Invalid operator',
   uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
     'Found no valid lines in data space, while exporting',
+  uttuErrorNO_EMPTY_NOTICES: 'Empty notices are not allowed.',
   uttuErrorUNKNOWN: 'Unknown error',
   linesCreateFlexibleLineIconButtonLabel: 'Create flexible line',
   linesCreateLineIconButtonLabel: 'Create line',

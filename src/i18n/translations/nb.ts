@@ -133,6 +133,7 @@ export const messages = {
   uttuErrorORGANISATION_NOT_VALID_OPERATOR: 'Ugyldig operatør',
   uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
     'Fant ingen gyldige linjer i eksporten',
+  uttuErrorNO_EMPTY_NOTICES: 'Tomme notices er ikke tillatt',
   uttuErrorUNKNOWN: 'Ukjent feil',
   linesCreateFlexibleLineIconButtonLabel: 'Opprett fleksibel linje',
   linesCreateLineIconButtonLabel: 'Opprett rutegående linje',
