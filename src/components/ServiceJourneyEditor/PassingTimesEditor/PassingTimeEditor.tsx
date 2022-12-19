@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Radio, RadioGroup } from '@entur/form';
 import PassingTime from 'model/PassingTime';
 import { TimePicker } from '@entur/datepicker';
