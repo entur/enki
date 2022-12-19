@@ -40,6 +40,10 @@ export const passingTimeToPayload = (
       earliestDepartureDayOffset,
       latestArrivalTime,
       latestArrivalDayOffset,
+      arrivalTime: null,
+      arrivalDayOffset: 0,
+      departureTime: null,
+      departureDayOffset: 0,
     };
   }
 
@@ -56,6 +60,10 @@ export const passingTimeToPayload = (
         departureDayOffset,
         arrivalTime: null,
         arrivalDayOffset: 0,
+        earliestDepartureTime: null,
+        earliestDepartureDayOffset: 0,
+        latestArrivalTime: null,
+        latestArrivalDayOffset: 0,
       };
     } else if (i === length - 1) {
       return {
@@ -64,6 +72,10 @@ export const passingTimeToPayload = (
         arrivalDayOffset,
         departureTime: null,
         departureDayOffset: 0,
+        earliestDepartureTime: null,
+        earliestDepartureDayOffset: 0,
+        latestArrivalTime: null,
+        latestArrivalDayOffset: 0,
       };
     }
   }
@@ -75,6 +87,10 @@ export const passingTimeToPayload = (
       departureDayOffset,
       arrivalTime: null,
       arrivalDayOffset: 0,
+      earliestDepartureTime: null,
+      earliestDepartureDayOffset: 0,
+      latestArrivalTime: null,
+      latestArrivalDayOffset: 0,
     };
   } else if (i === length - 1) {
     return {
@@ -83,6 +99,10 @@ export const passingTimeToPayload = (
       arrivalDayOffset,
       departureTime: null,
       departureDayOffset: 0,
+      earliestDepartureTime: null,
+      earliestDepartureDayOffset: 0,
+      latestArrivalTime: null,
+      latestArrivalDayOffset: 0,
     };
   }
 
@@ -92,6 +112,10 @@ export const passingTimeToPayload = (
     departureDayOffset,
     arrivalTime,
     arrivalDayOffset,
+    earliestDepartureTime: null,
+    earliestDepartureDayOffset: 0,
+    latestArrivalTime: null,
+    latestArrivalDayOffset: 0,
   };
 };
 
