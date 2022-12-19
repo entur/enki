@@ -484,7 +484,7 @@ export const messages = {
   passingTimesTypeFixed: 'Faste',
   passingTimesTypeFlexible: 'Fleksible',
   passingTimesArrivalTime: 'Ankomsttid',
-  passingTimesDepartureTime: 'Avgangstid *',
+  passingTimesDepartureTime: 'Avgangstid',
   passingTimesLatestArrivalTime: 'Seneste ankomsttid',
   passingTimesEarliestDepartureTime: 'Tidligste avgangstid',
   passingTimesDayOffset: 'Døgnskille',

@@ -54,12 +54,16 @@ export const passingTimeToPayload = (
         ...rest,
         departureTime,
         departureDayOffset,
+        arrivalTime: null,
+        arrivalDayOffset: 0,
       };
     } else if (i === length - 1) {
       return {
         ...rest,
         arrivalTime,
         arrivalDayOffset,
+        departureTime: null,
+        departureDayOffset: 0,
       };
     }
   }
@@ -69,12 +73,16 @@ export const passingTimeToPayload = (
       ...rest,
       departureTime,
       departureDayOffset,
+      arrivalTime: null,
+      arrivalDayOffset: 0,
     };
   } else if (i === length - 1) {
     return {
       ...rest,
       arrivalTime,
       arrivalDayOffset,
+      departureTime: null,
+      departureDayOffset: 0,
     };
   }
 

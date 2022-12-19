@@ -110,7 +110,7 @@ export const PassingTimeEditor = ({
 
       <TimePicker
         disabled={index === 0 && type === PassingTimeType.NORMAL}
-        label={formatMessage(arrivalLabel)}
+        label={`${formatMessage(arrivalLabel)}${isLast ? ' *' : ''}`}
         className="timepicker"
         onChange={(e: Date | null) => {
           const date = e?.toTimeString().split(' ')[0];
@@ -142,7 +142,7 @@ export const PassingTimeEditor = ({
       />
       <TimePicker
         disabled={isLast && type === PassingTimeType.NORMAL}
-        label={formatMessage(departureLabel)}
+        label={`${formatMessage(departureLabel)}${index === 0 ? ' *' : ''}`}
         className="timepicker"
         onChange={(e: Date | null) => {
           const date = e?.toTimeString().split(' ')[0];
