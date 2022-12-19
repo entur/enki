@@ -21,6 +21,7 @@ type Props = {
   stopPoints: StopPoint[];
   onChange: (pts: PassingTime[]) => void;
   spoilPristine: boolean;
+  showFlexible: boolean;
 };
 
 export const PassingTimesEditor = (props: Props) => {
@@ -64,6 +65,7 @@ export const PassingTimesEditor = (props: Props) => {
                   changeElementAtIndex(passingTimes, changedPassingTime, index)
                 );
               }}
+              showFlexible={props.showFlexible}
             />
           </div>
         ))}

@@ -18,6 +18,7 @@ type Props = {
   index: number;
   isLast: boolean;
   onChange: (passingTime: PassingTime) => void;
+  showFlexible: boolean;
 };
 
 export const PassingTimeEditor = ({
@@ -25,18 +26,14 @@ export const PassingTimeEditor = ({
   index,
   isLast,
   onChange,
+  showFlexible,
 }: Props) => {
-  const [type, setType] = useState(PassingTimeType.NORMAL);
+  const [type, setType] = useState(
+    passingTime.latestArrivalTime || passingTime.earliestDepartureTime
+      ? PassingTimeType.FLEXIBLE
+      : PassingTimeType.NORMAL
+  );
   const { formatMessage } = useSelector(selectIntl);
-
-  useEffect(() => {
-    if (passingTime.arrivalTime) {
-      setType(PassingTimeType.NORMAL);
-      return;
-    } else {
-      setType(PassingTimeType.FLEXIBLE);
-    }
-  }, [passingTime]);
 
   const changeType = useCallback(
     (type: PassingTimeType) => {
@@ -94,20 +91,22 @@ export const PassingTimeEditor = ({
 
   return (
     <>
-      <RadioGroup
-        style={{ padding: '0 2rem' }}
-        label=" "
-        name={`passing-time-type-${index}`}
-        onChange={(e) => changeType(e.target.value as PassingTimeType)}
-        value={type}
-      >
-        <Radio value={PassingTimeType.NORMAL}>
-          {formatMessage('passingTimesTypeFixed')}
-        </Radio>
-        <Radio value={PassingTimeType.FLEXIBLE}>
-          {formatMessage('passingTimesTypeFlexible')}
-        </Radio>
-      </RadioGroup>
+      {showFlexible && (
+        <RadioGroup
+          style={{ padding: '0 2rem' }}
+          label=" "
+          name={`passing-time-type-${index}`}
+          onChange={(e) => changeType(e.target.value as PassingTimeType)}
+          value={type}
+        >
+          <Radio value={PassingTimeType.NORMAL}>
+            {formatMessage('passingTimesTypeFixed')}
+          </Radio>
+          <Radio value={PassingTimeType.FLEXIBLE}>
+            {formatMessage('passingTimesTypeFlexible')}
+          </Radio>
+        </RadioGroup>
+      )}
 
       <TimePicker
         disabled={index === 0 && type === PassingTimeType.NORMAL}
