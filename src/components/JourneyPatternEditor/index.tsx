@@ -115,6 +115,7 @@ const JourneyPatternEditor = ({
                 key={keys[pointIndex]}
                 index={pointIndex}
                 isFirstStop={pointIndex === 0}
+                isLastStop={pointIndex === pointsInSequence.length - 1}
                 stopPoint={stopPoint}
                 errors={validateStopPoint(
                   stopPoint,

@@ -32,6 +32,7 @@ type Props = {
   stopPointChange: (stopPoint: StopPoint) => void;
   stopPoint: StopPoint;
   isFirstStop: boolean;
+  isLastStop: boolean;
   deleteStopPoint?: () => void;
   spoilPristine: boolean;
   flexibleLineType: string | undefined;
@@ -44,6 +45,7 @@ const StopPointEditor = ({
   stopPointChange,
   stopPoint,
   isFirstStop,
+  isLastStop,
   deleteStopPoint,
   spoilPristine,
   flexibleLineType,
@@ -194,6 +196,7 @@ const StopPointEditor = ({
               !frontTextError,
               frontTextPristine
             )}
+            disabled={isLastStop}
             labelTooltip={formatMessage('frontTextTooltip')}
             value={frontTextValue}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
