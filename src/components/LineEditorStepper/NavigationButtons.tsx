@@ -67,7 +67,7 @@ const NavigationButtons = (props: Props) => {
             {formatMessage('editorSaveAndCreateLine')}
           </SuccessButton>
         )}
-        {props.editMode && (
+        {props.editMode && props.firstStep && (
           <NegativeButton
             onClick={() => setDeleteDialogOpen(true)}
             className="delete"
