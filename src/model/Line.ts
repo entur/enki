@@ -32,6 +32,9 @@ export const lineToPayload = (line: Line) => {
     journeyPatterns: line.journeyPatterns?.map((journeyPattern) =>
       journeyPatternToPayload(journeyPattern)
     ),
+    notices: line.notices?.filter(
+      (notice) => notice && notice.text && notice.text !== ''
+    ),
   };
 };
 

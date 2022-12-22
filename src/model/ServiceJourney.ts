@@ -29,6 +29,9 @@ export const serviceJourneyToPayload = (sj: ServiceJourney) => {
     ),
     dayTypes: undefined,
     dayTypesRefs: sj.dayTypes?.map((dt) => dt.id!),
+    notices: sj.notices?.filter(
+      (notice) => notice && notice.text && notice.text !== ''
+    ),
   };
 };
 

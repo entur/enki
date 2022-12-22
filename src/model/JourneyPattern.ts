@@ -32,6 +32,9 @@ export const journeyPatternToPayload = (journeyPattern: JourneyPattern) => ({
   pointsInSequence: journeyPattern.pointsInSequence.map((pis) =>
     stopPointToPayload(pis)
   ),
+  notices: journeyPattern.notices?.filter(
+    (notice) => notice && notice.text && notice.text !== ''
+  ),
 });
 
 export default JourneyPattern;
