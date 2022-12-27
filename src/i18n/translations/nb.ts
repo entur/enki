@@ -188,6 +188,8 @@ export const messages = {
   paymentSelectionTitle: 'Betalingstidspunkt',
   bookingTimeSelectionTitle: 'Kan bestilles',
   editorBookingTabLabel: 'Bestilling',
+  bookingValidationError:
+    'Bestillingsinformasjon må inneholde informasjon om bestillingstidspunkt',
   editorCreateLineHeader: 'Opprett linje',
   editorDeleteButtonText: 'Slett',
   editorCopyButtonText: 'Kopiér',

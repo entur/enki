@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Contrast } from '@entur/layout';
 import { Heading3, Paragraph, Heading4 } from '@entur/typography';
 import { ButtonGroup, Button } from '@entur/button';
@@ -11,6 +11,10 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { selectIntl, AppIntlState } from 'i18n';
 import { GlobalState } from 'reducers';
+import { validateBookingArrangement } from 'helpers/validation';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import usePristine from 'hooks/usePristine';
+import { SmallAlertBox } from '@entur/alert';
 
 type Props = {
   bookingArrangement?: BookingArrangement | null;
@@ -49,6 +53,23 @@ const BookingArrangementEditor = ({
     setBookingArrangementDraft(clone(bookingArrangement || {}));
     setshowModal(false);
   }, [setBookingArrangementDraft, setshowModal, bookingArrangement]);
+
+  const validationMessage = useMemo(() => {
+    return formatMessage('bookingValidationError');
+  }, [formatMessage]);
+  const bookingArrangementPristine = usePristine(
+    bookingArrangementDraft,
+    false
+  );
+  const bookingArrangementFeedback = useMemo(
+    () =>
+      getErrorFeedback(
+        validationMessage,
+        validateBookingArrangement(bookingArrangementDraft),
+        bookingArrangementPristine
+      ),
+    [bookingArrangementDraft, bookingArrangementPristine, validationMessage]
+  );
 
   return (
     <div className="booking">
@@ -96,9 +117,21 @@ const BookingArrangementEditor = ({
           spoilPristine={spoilPristine}
           bookingInfoAttachment={bookingInfoAttachment}
         />
+
+        {bookingArrangementFeedback?.feedback && (
+          <div className="booking-modal-buttons">
+            <SmallAlertBox variant="error">
+              {bookingArrangementFeedback.feedback}
+            </SmallAlertBox>
+          </div>
+        )}
         <div className="booking-modal-buttons">
           <ButtonGroup>
-            <Button onClick={saveChanges} variant="primary">
+            <Button
+              onClick={saveChanges}
+              variant="primary"
+              disabled={bookingArrangementFeedback?.feedback}
+            >
               {formatMessage('bookingInfoSaveButtonText')}
             </Button>
             <Button onClick={cancel} variant="negative">

@@ -11,6 +11,7 @@ import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import DayType from 'model/DayType';
 import { addDays, getDay, isBefore as isDateBefore, parseISO } from 'date-fns';
+import BookingArrangement from 'model/BookingArrangement';
 
 export const validLine = (line: Line): boolean =>
   aboutLineStepIsValid(line) &&
@@ -349,4 +350,29 @@ export const validateDayType = (dayType: DayType) => {
 
 export const validateDayTypes = (dayTypes?: DayType[]) => {
   return (dayTypes && dayTypes.every(validateDayType)) || false;
+};
+
+export const validateBookingArrangement = (
+  bookingArrangement?: BookingArrangement
+) => {
+  if (
+    bookingArrangement?.minimumBookingPeriod &&
+    bookingArrangement?.bookWhen
+  ) {
+    return false;
+  }
+
+  if (!bookingArrangement?.bookWhen && bookingArrangement?.latestBookingTime) {
+    return false;
+  }
+
+  if (
+    !bookingArrangement?.minimumBookingPeriod &&
+    !bookingArrangement?.latestBookingTime &&
+    !bookingArrangement?.bookWhen
+  ) {
+    return false;
+  }
+
+  return true;
 };

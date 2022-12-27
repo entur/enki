@@ -192,6 +192,8 @@ export const messages: MessagesKey = {
   paymentSelectionTitle: 'Payment',
   bookingTimeSelectionTitle: 'Booking time',
   editorBookingTabLabel: 'Booking',
+  bookingValidationError:
+    'Booking information must have booking time or minimum booking period',
   editorCreateLineHeader: 'Create line',
   editorDeleteButtonText: 'Delete',
   editorCopyButtonText: 'Copy',
