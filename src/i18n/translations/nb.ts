@@ -133,6 +133,8 @@ export const messages = {
   uttuErrorORGANISATION_NOT_VALID_OPERATOR: 'Ugyldig operatør',
   uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
     'Fant ingen gyldige linjer i eksporten',
+  uttuErrorFLEXIBLE_LINE_REQUIRES_BOOKING:
+    'Fleksible linjer må ha bestillingsinformasjon på linje, journey pattern eller service journey',
   uttuErrorNO_EMPTY_NOTICES: 'Tomme notices er ikke tillatt',
   uttuErrorUNKNOWN: 'Ukjent feil',
   linesCreateFlexibleLineIconButtonLabel: 'Opprett fleksibel linje',

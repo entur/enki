@@ -136,6 +136,8 @@ export const messages: MessagesKey = {
   uttuErrorNO_VALID_LINES_IN_DATA_SPACE:
     'Found no valid lines in data space, while exporting',
   uttuErrorNO_EMPTY_NOTICES: 'Empty notices are not allowed.',
+  uttuErrorFLEXIBLE_LINE_REQUIRES_BOOKING:
+    'Flexible lines require booking information on line, journey pattern or stop point',
   uttuErrorUNKNOWN: 'Unknown error',
   linesCreateFlexibleLineIconButtonLabel: 'Create flexible line',
   linesCreateLineIconButtonLabel: 'Create line',
