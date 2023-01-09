@@ -213,12 +213,15 @@ export default (props: Props) => {
           placeholder={formatMessage('defaultOption')}
           items={mapEnumToItems(PURCHASE_WHEN)}
           clearable
-          onChange={(e) =>
+          onChange={(e) => {
+            onBookingLimitTypeChange(
+              e?.value ? BOOKING_LIMIT_TYPE.TIME : BOOKING_LIMIT_TYPE.NONE
+            );
             onChange({
               ...bookingArrangement,
               bookWhen: e?.value as PURCHASE_WHEN,
-            })
-          }
+            });
+          }}
         />
 
         <RadioGroup

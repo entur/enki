@@ -366,6 +366,10 @@ export const validateBookingArrangement = (
     return false;
   }
 
+  if (bookingArrangement?.bookWhen && !bookingArrangement?.latestBookingTime) {
+    return false;
+  }
+
   if (
     !bookingArrangement?.minimumBookingPeriod &&
     !bookingArrangement?.latestBookingTime &&
