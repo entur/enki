@@ -50,6 +50,7 @@ const offsetPassingTime = (
   timeKey: string,
   dayOffsetKey: string
 ) => {
+  if (oldTime === null) return undefined;
   const newTime = addMinutes(toDate(oldTime), offset);
   const offsetDays = differenceInCalendarDays(newTime, toDate(oldTime));
 
