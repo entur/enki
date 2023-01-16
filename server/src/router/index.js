@@ -10,7 +10,7 @@ const OPTION = 'OPTION';
 
 const createRouter = () => {
   const router = expressRouter();
-  ['auth', 'organisations', 'uttu', 'stopPlaces', 'stopPlacesRead'].forEach(
+  ['auth', 'organisations', 'uttu'].forEach(
     (route) => router.use(require(`./routes/${route}`))
   );
   return router;
