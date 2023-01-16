@@ -1,14 +1,24 @@
 import { InputGroupProps } from '@entur/form';
-import { QuaySearch } from './searchForQuay';
+import { Quay, StopPlace } from 'api';
+
+export type QuaySearch = { stopPlace?: StopPlace; quay?: Quay };
 
 export type QuaySearchResults =
   | Pick<InputGroupProps, 'variant' | 'feedback'>
   | undefined;
 
 export function quaySearchResults(
-  quaySearch: QuaySearch | undefined
+  quaySearch: QuaySearch | undefined,
+  loading: boolean
 ): QuaySearchResults {
   if (!quaySearch) return undefined;
+
+  if (loading) {
+    return {
+      feedback: 'Søker...',
+      variant: 'info',
+    };
+  }
 
   if (quaySearch.stopPlace && quaySearch.quay) {
     const name = quaySearch.stopPlace.name.value;

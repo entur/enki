@@ -516,3 +516,18 @@ export const GET_DAY_TYPES = gql`
     }
   }
 `;
+
+export const STOP_PLACE_BY_QUAY_REF_QUERY = gql`
+  query StopPlaceByQuayRefQuery($id: ID!) {
+    stopPlaceByQuayRef(id: $id) {
+      id
+      name {
+        value
+      }
+      quays {
+        id
+        publicCode
+      }
+    }
+  }
+`;

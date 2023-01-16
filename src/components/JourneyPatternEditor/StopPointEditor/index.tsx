@@ -1,11 +1,7 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Radio, RadioGroup, TextField } from '@entur/form';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
-import searchForQuay, { QuaySearch } from './searchForQuay';
-import { quaySearchResults } from './quaySearchResults';
 import StopPoint from 'model/StopPoint';
-import debounce from './debounce';
-import { isBlank } from 'helpers/forms';
 import { Dropdown } from '@entur/dropdown';
 import { Paragraph } from '@entur/typography';
 import { SecondaryButton, SuccessButton } from '@entur/button';
@@ -22,6 +18,7 @@ import './styles.scss';
 import { StopPointsFormError } from 'helpers/validation';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
+import { QuayRefField } from './QuayRefField';
 
 type StopPlaceMode = 'nsr' | 'custom';
 
@@ -54,11 +51,6 @@ const StopPointEditor = ({
   const [selectMode, setSelectMode] = useState<StopPlaceMode>(
     stopPoint.quayRef || !flexibleLineType ? 'nsr' : 'custom'
   );
-  const [quaySearch, setQuaySearch] = useState<QuaySearch | undefined>(
-    undefined
-  );
-
-  const [quayRefInputValue, setQuayRefInputValue] = useState(stopPoint.quayRef);
 
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
@@ -68,30 +60,6 @@ const StopPointEditor = ({
   const stopPlacePristine = usePristine(stopPointValue, spoilPristine);
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
   const frontTextPristine = usePristine(frontTextValue, spoilPristine);
-
-  useEffect(() => {
-    const quayRef = stopPoint.quayRef;
-    if (quayRef) {
-      const search = async () => {
-        const result = await searchForQuay(quayRef);
-        setQuaySearch(result);
-      };
-      search();
-    }
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    setQuayRefInputValue(stopPoint.quayRef);
-  }, [stopPoint.quayRef]);
-
-  const debouncedSearchForQuay = useCallback(
-    debounce(async (quayRef: string) => {
-      if (isBlank(quayRef)) return setQuaySearch({});
-      setQuaySearch(await searchForQuay(quayRef));
-    }, 1000),
-    []
-  );
 
   const stopPlaceError = errors.flexibleStopPlaceRefAndQuayRef;
   const frontTextError = errors.frontText;
@@ -125,7 +93,6 @@ const StopPointEditor = ({
               value={selectMode}
               onChange={(e) => {
                 setSelectMode(e.target.value as StopPlaceMode);
-                setQuaySearch(undefined);
                 stopPointChange({
                   ...stopPoint,
                   quayRef: null,
@@ -165,24 +132,14 @@ const StopPointEditor = ({
           )}
 
           {selectMode === 'nsr' && (
-            <TextField
-              className="stop-point-info-item"
-              label={formatMessage('labelQuayRef')}
-              {...getErrorFeedback(
+            <QuayRefField
+              initialQuayRef={stopPoint.quayRef}
+              errorFeedback={getErrorFeedback(
                 stopPlaceError ? formatMessage(stopPlaceError) : '',
                 !stopPlaceError,
                 quayRefPristine
               )}
-              {...quaySearchResults(quaySearch)}
-              value={quayRefInputValue}
-              placeholder="NSR:Quay:69"
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setQuayRefInputValue(e.target.value);
-                debouncedSearchForQuay(e.target.value);
-              }}
-              onBlur={(e: ChangeEvent<HTMLInputElement>) =>
-                stopPointChange({ ...stopPoint, quayRef: e.target.value })
-              }
+              onChange={(quayRef) => stopPointChange({ ...stopPoint, quayRef })}
             />
           )}
 
