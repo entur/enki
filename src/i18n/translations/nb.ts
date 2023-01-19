@@ -366,6 +366,8 @@ export const messages = {
   frontTextAlighting: 'Første stopp kan kun ha påstigning',
   frontTextBoarding: 'Siste stopp kan kun ha avstigning',
   quayRefInvalid: 'Ugyldig plattform-ID',
+  quaySearchResults_loadingLabel: 'Søker...',
+  quaySearchResults_quayNotFoundLabel: 'Fant ikke platform',
   serviceJourneyAvailability: 'Tilgjengelighet',
   serviceJourneyPassingTimes: 'Passeringstider',
   serviceJourneyBusinessHours: 'Åpningstid',

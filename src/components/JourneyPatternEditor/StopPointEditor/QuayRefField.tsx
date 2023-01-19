@@ -24,7 +24,12 @@ export const QuayRefField = ({
 
   const { stopPlace, quay, refetch, loading } = useQuaySearch(initialQuayRef);
 
-  const quaySearchFeedback = quaySearchResults({ stopPlace, quay }, loading);
+  const quaySearchFeedback = quaySearchResults(
+    { stopPlace, quay },
+    loading,
+    formatMessage('quaySearchResults_loadingLabel'),
+    formatMessage('quaySearchResults_quayNotFoundLabel')
+  );
 
   const debouncedSearchForQuay = useCallback(
     debounce(async (quayRef: string) => {

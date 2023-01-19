@@ -9,13 +9,15 @@ export type QuaySearchResults =
 
 export function quaySearchResults(
   quaySearch: QuaySearch | undefined,
-  loading: boolean
+  loading: boolean,
+  loadingLabel: string,
+  quayNotFoundLabel: string
 ): QuaySearchResults {
   if (!quaySearch) return undefined;
 
   if (loading) {
     return {
-      feedback: 'Søker...',
+      feedback: loadingLabel,
       variant: 'info',
     };
   }
@@ -30,7 +32,7 @@ export function quaySearchResults(
     };
   } else {
     return {
-      feedback: 'Fant ikke plattform.',
+      feedback: quayNotFoundLabel,
       variant: 'warning',
     };
   }

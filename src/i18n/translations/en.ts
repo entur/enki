@@ -359,6 +359,8 @@ export const messages: MessagesKey = {
   frontTextAlighting: 'First stop can only be for boarding',
   frontTextBoarding: 'Last stop can only be for alighting',
   quayRefInvalid: 'Invalid platform ID',
+  quaySearchResults_loadingLabel: 'Searching...',
+  quaySearchResults_quayNotFoundLabel: 'Quay not found',
   yes: 'Yes',
   no: 'No',
   tableName: 'Name',
