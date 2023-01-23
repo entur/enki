@@ -25,8 +25,8 @@ export const useQuaySearch = (
 
   if (data?.stopPlaceByQuayRef) {
     foundStopPlace = data.stopPlaceByQuayRef;
-    foundQuay = data.stopPlaceByQuayRef.quays?.find((q: Quay) =>
-      q.id === quayRefInput ? quayRefInput : initialQuayRef
+    foundQuay = data.stopPlaceByQuayRef.quays?.find(
+      (q: Quay) => q.id === (quayRefInput ? quayRefInput : initialQuayRef)
     );
   }
 

@@ -22,7 +22,10 @@ export const QuayRefField = ({
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const [quayRefInputValue, setQuayRefInputValue] = useState(initialQuayRef);
 
-  const { stopPlace, quay, refetch, loading } = useQuaySearch(initialQuayRef);
+  const { stopPlace, quay, refetch, loading } = useQuaySearch(
+    initialQuayRef,
+    quayRefInputValue
+  );
 
   const quaySearchFeedback = quaySearchResults(
     { stopPlace, quay },
