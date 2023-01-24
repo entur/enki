@@ -10,6 +10,8 @@ import { API_BASE } from 'http/http';
 import './styles/index.scss';
 import { Apollo } from 'api';
 import AuthProvider, { useAuth } from '@entur/auth-provider';
+import { fetchConfig } from 'config/fetchConfig';
+import { ConfigContext } from 'config/ConfigContext';
 
 const AuthenticatedApp = () => {
   const auth = useAuth();
@@ -32,6 +34,7 @@ const AuthenticatedApp = () => {
 const renderIndex = async () => {
   const root = document.getElementById('root');
   const response: any = await fetch(API_BASE + '/auth0.json');
+  const config = await fetchConfig(API_BASE);
 
   const { claimsNamespace: auth0ClaimsNamespace, ...auth0Config } =
     await response.json();
@@ -44,7 +47,9 @@ const renderIndex = async () => {
       }}
       auth0ClaimsNamespace={auth0ClaimsNamespace}
     >
-      <AuthenticatedApp />
+      <ConfigContext.Provider value={config}>
+        <AuthenticatedApp />
+      </ConfigContext.Provider>
     </AuthProvider>,
     root
   );

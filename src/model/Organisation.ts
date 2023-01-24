@@ -1,3 +1,5 @@
+import Provider from './Provider';
+
 type MultilingualString = {
   lang: string;
   value: string;
@@ -25,3 +27,38 @@ export type Organisation = {
   contactDetails: ContactDetails;
   keyList?: KeyList;
 };
+
+/**
+ * Legacy behavior: Filter out organisations that do not have a netexAuthorityId with current provider's codespace
+ */
+export const filterAuthorities = (
+  organisations: Organisation[],
+  activeProvider: Provider | null,
+  enableFilter?: boolean
+) =>
+  enableFilter
+    ? organisations.filter((org) =>
+        org.keyList?.keyValue
+          ?.find((kv) => kv.key === 'LegacyId')
+          ?.value?.split(',')
+          .find((v) => v.indexOf('Authority'))
+          ?.startsWith(activeProvider?.codespace?.xmlns || 'INVALID')
+      )
+    : organisations;
+
+/**
+ * Legacy behavior: Filter out organisations that do not have a netexOperatorId
+ */
+export const filterNetexOperators = (
+  organisations: Organisation[],
+  enableFilter?: boolean
+): Organisation[] =>
+  enableFilter
+    ? organisations.filter(
+        (org) =>
+          org.keyList?.keyValue
+            ?.find((kv) => kv.key === 'LegacyId')
+            ?.value?.split(',')
+            .find((v) => v.indexOf('Authority')) !== undefined
+      )
+    : organisations;

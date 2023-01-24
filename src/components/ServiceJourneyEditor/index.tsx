@@ -10,10 +10,7 @@ import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
 import DeleteActionChip from 'components/DeleteActionChip';
-import {
-  filterNetexOperators,
-  OrganisationState,
-} from 'reducers/organisations';
+import { OrganisationState } from 'reducers/organisations';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { GlobalState } from 'reducers';
 import ServiceJourney from 'model/ServiceJourney';
@@ -30,6 +27,8 @@ import CopyActionChip from 'components/CopyActionChip';
 import Notices from 'components/Notices';
 import { PassingTimeTypeDrawer } from './PassingTimesEditor/PassingTimeTypeDrawer';
 import { DayTypesEditor } from 'components/DayTypesEditor/DayTypesEditor';
+import { filterNetexOperators } from 'model/Organisation';
+import { useConfig } from 'config/ConfigContext';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -78,7 +77,12 @@ const ServiceJourneyEditor = (props: Props) => {
     setOperatorSelection(newOperatorSelection);
   };
 
-  const operators = filterNetexOperators(organisations ?? []);
+  const config = useConfig();
+
+  const operators = filterNetexOperators(
+    organisations ?? [],
+    config.enableLegacyOrganisationsFilter
+  );
 
   const onFieldChange = <T extends keyof ServiceJourney>(
     field: T,

@@ -14,3 +14,4 @@ data:
   AUTH0_CLIENT_ID: {{ .Values.configMap.auth0Client }}
   AUTH0_AUDIENCE: {{ .Values.configMap.auth0Audience }}
   AUTH0_CLAIMS_NAMESPACE: {{ .Values.configMap.auth0ClaimsNamespace }}
+  ENABLE_LEGACY_ORGANISATIONS_FILTER: {{ .Values.configMap.enableLegacyOrganisationsFilter }}

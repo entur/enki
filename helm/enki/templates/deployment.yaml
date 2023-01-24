@@ -66,6 +66,11 @@ spec:
             configMapKeyRef:
               key: AUTH0_CLAIMS_NAMESPACE
               name: {{ .Values.configMapMount.name }}
+        - name: ENABLE_LEGACY_ORGANISATIONS_FILTER
+          valueFrom:
+            configMapKeyRef:
+              key: ENABLE_LEGACY_ORGANISATIONS_FILTER
+              name: {{ .Values.configMapMount.name }}
         - name: TZ
           value: Europe/Oslo
         - name: ENVIRONMENT

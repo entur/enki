@@ -11,3 +11,4 @@ configMap:
   auth0Client: VXdzUbFV8ws953UWLrizuaQY9C991w0i
   auth0Audience: https://ror.api.entur.io
   auth0ClaimsNamespace: https://ror.entur.io/role_assignments
+  enableLegacyOrganisationsFilter: true

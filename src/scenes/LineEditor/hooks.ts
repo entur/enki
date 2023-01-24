@@ -5,13 +5,14 @@ import { useState, useEffect } from 'react';
 import Line, { initLine } from 'model/Line';
 import { isBlank } from 'helpers/forms';
 import { MatchParams } from 'http/http';
-import { filterAuthorities } from 'reducers/organisations';
+import { filterAuthorities } from 'model/Organisation';
 import Provider from 'model/Provider';
 import { Network } from 'model/Network';
 import { useDispatch, useSelector } from 'react-redux';
 import { LINE_EDITOR_QUERY } from 'api/uttu/queries';
 import { GlobalState } from 'reducers';
 import { saveNetwork } from 'actions/networks';
+import { useConfig } from 'config/ConfigContext';
 
 export const useUttuErrors = (
   error: ApolloError | undefined,
@@ -110,13 +111,19 @@ export const useLine: UseLineType = () => {
     }
   }, [data]);
 
+  const config = useConfig();
+
   useEffect(() => {
     if (!data?.networks) {
       return;
     }
     if (isBlank(match?.params.id)) {
       const newLine = initLine();
-      const authorities = filterAuthorities(organisations!, activeProvider);
+      const authorities = filterAuthorities(
+        organisations!,
+        activeProvider,
+        config.enableLegacyOrganisationsFilter
+      );
       if (data?.networks?.length > 1 || authorities.length === 0) {
         setLine(newLine);
       } else {
@@ -136,7 +143,15 @@ export const useLine: UseLineType = () => {
         }
       }
     }
-  }, [match, data, activeProvider, dispatch, organisations, refetch]);
+  }, [
+    match,
+    data,
+    activeProvider,
+    dispatch,
+    organisations,
+    refetch,
+    config.enableLegacyOrganisationsFilter,
+  ]);
 
   return {
     line,
