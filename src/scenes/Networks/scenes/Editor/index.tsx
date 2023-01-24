@@ -21,7 +21,7 @@ import { AppIntlState, selectIntl } from 'i18n';
 import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
-import { filterAuthorities, OrganisationState } from 'reducers/organisations';
+import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -29,6 +29,8 @@ import RequiredInputMarker from 'components/RequiredInputMarker';
 import Provider from 'model/Provider';
 import { getInit, mapToItems } from 'helpers/dropdown';
 import './styles.scss';
+import { filterAuthorities } from 'model/Organisation';
+import { useConfig } from 'config/ConfigContext';
 
 const getCurrentNetwork = (
   state: GlobalState,
@@ -115,7 +117,13 @@ const NetworkEditor = ({
     );
   };
 
-  const authorities = filterAuthorities(organisations ?? [], activeProvider);
+  const config = useConfig();
+
+  const authorities = filterAuthorities(
+    organisations ?? [],
+    activeProvider,
+    config.enableLegacyOrganisationsFilter
+  );
 
   const isDeleteDisabled =
     !network ||
@@ -182,8 +190,13 @@ const NetworkEditor = ({
 
               <Dropdown
                 className="form-section"
-                initialSelectedItem={getInit(authorities, network.authorityRef)}
-                items={mapToItems(authorities)}
+                initialSelectedItem={getInit(
+                  authorities.map((v) => ({ ...v, name: v.name.value })),
+                  network.authorityRef
+                )}
+                items={mapToItems(
+                  authorities.map((v) => ({ ...v, name: v.name.value }))
+                )}
                 placeholder={formatMessage('defaultOption')}
                 clearable
                 label={formatMessage('editorAuthorityLabelText')}

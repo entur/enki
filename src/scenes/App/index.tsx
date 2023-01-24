@@ -34,9 +34,12 @@ const App = () => {
   useEffect(() => {
     if (auth.isAuthenticated) {
       dispatch(getProviders());
-      dispatch(getOrganisations());
     }
   }, [dispatch, auth.isAuthenticated]);
+
+  useEffect(() => {
+    dispatch(getOrganisations());
+  }, [dispatch, providers.active]);
 
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 

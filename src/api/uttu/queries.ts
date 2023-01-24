@@ -531,3 +531,24 @@ export const STOP_PLACE_BY_QUAY_REF_QUERY = gql`
     }
   }
 `;
+
+export const getOrganisationsQuery = `
+  query OrganisationsQuery {
+    organisations {
+      id
+      name { value }
+      legalName { value }
+      contactDetails {
+        email
+        phone
+        url
+      }
+      keyList {
+        keyValue {
+          key
+          value
+        }
+      }
+    }
+  }
+`;

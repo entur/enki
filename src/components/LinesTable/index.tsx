@@ -12,12 +12,12 @@ import {
 } from '@entur/table';
 
 import Line from 'model/Line';
-import { Organisation } from 'reducers/organisations';
 
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import Loading from 'components/Loading';
 
 import './styles.scss';
+import { Organisation } from 'model/Organisation';
 
 export type Props = {
   lines?: Line[];
@@ -97,7 +97,8 @@ const renderTableRows = (props: Props) => {
       <DataCell>{line.publicCode}</DataCell>
       <DataCell>{line.privateCode}</DataCell>
       <DataCell>
-        {organisations?.find((op) => op.id === line.operatorRef)?.name ?? '-'}
+        {organisations?.find((op) => op.id === line.operatorRef)?.name?.value ??
+          '-'}
       </DataCell>
       <DataCell className="delete-row-cell">
         <DeleteButton onClick={() => onDeleteRowClick(line)} title="" thin />

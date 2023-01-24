@@ -9,10 +9,7 @@ import Loading from 'components/Loading';
 import { isBlank } from 'helpers/forms';
 import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
 import { GlobalState } from 'reducers';
-import {
-  filterNetexOperators,
-  filterAuthorities,
-} from 'reducers/organisations';
+import { filterNetexOperators, filterAuthorities } from 'model/Organisation';
 import { setSavedChanges } from 'actions/editor';
 import {
   validLine,
@@ -26,6 +23,7 @@ import LineEditorStepper from 'components/LineEditorStepper';
 import { FIXED_LINE_STEPS } from './constants';
 import LineEditorSteps from './LineEditorSteps';
 import './styles.scss';
+import { useConfig } from 'config/ConfigContext';
 
 interface MatchParams {
   id: string;
@@ -113,9 +111,15 @@ export default () => {
   const onBackButtonClicked = () =>
     editor.isSaved ? history.push('/lines') : setShowConfirm(true);
 
+  const config = useConfig();
+
   const authoritiesMissing =
     organisations &&
-    filterAuthorities(organisations, providers.active).length === 0;
+    filterAuthorities(
+      organisations,
+      providers.active,
+      config.enableLegacyOrganisationsFilter
+    ).length === 0;
 
   return (
     <Page
@@ -149,7 +153,10 @@ export default () => {
               activeStep={activeStep}
               line={line!}
               changeLine={onChange}
-              operators={filterNetexOperators(organisations ?? [])}
+              operators={filterNetexOperators(
+                organisations ?? [],
+                config.enableLegacyOrganisationsFilter
+              )}
               networks={networks || []}
               spoilPristine={nextClicked}
             />

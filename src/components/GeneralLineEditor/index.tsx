@@ -11,7 +11,6 @@ import {
 import { selectIntl } from 'i18n';
 import './styles.scss';
 import FlexibleLine from 'model/FlexibleLine';
-import { Organisation } from 'reducers/organisations';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -33,6 +32,7 @@ import Line from 'model/Line';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import Notices from 'components/Notices';
+import { Organisation } from 'model/Organisation';
 
 interface Props<T extends Line> {
   line: T;
@@ -163,9 +163,14 @@ export default <T extends Line>({
         />
 
         <Dropdown
-          initialSelectedItem={getInit(operators, line.operatorRef)}
+          initialSelectedItem={getInit(
+            operators.map((op) => ({ ...op, name: op.name.value })),
+            line.operatorRef
+          )}
           placeholder={formatMessage('defaultOption')}
-          items={mapToItems(operators)}
+          items={mapToItems(
+            operators.map((op) => ({ ...op, name: op.name.value }))
+          )}
           clearable
           label={formatMessage('generalOperatorFormGroupTitle')}
           onChange={(element) =>

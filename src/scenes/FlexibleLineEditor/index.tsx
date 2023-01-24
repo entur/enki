@@ -8,10 +8,7 @@ import { selectIntl } from 'i18n';
 import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
 import { GlobalState } from 'reducers';
 import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
-import {
-  filterAuthorities,
-  filterNetexOperators,
-} from 'reducers/organisations';
+import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
 import {
   currentStepIsValid,
   getMaxAllowedStepIndex,
@@ -30,6 +27,7 @@ import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
 import { FLEXIBLE_LINE_STEPS } from './steps';
 import './styles.scss';
 import LineEditorStepper from 'components/LineEditorStepper';
+import { useConfig } from 'config/ConfigContext';
 
 const findNetworkIdByProvider = (
   provider: Provider,
@@ -80,6 +78,8 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     history: props.history,
   } as RouteComponentProps<MatchParams>);
 
+  const config = useConfig();
+
   useEffect(() => {
     if (
       isLoadingDependencies ||
@@ -89,7 +89,11 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
     )
       return;
 
-    const authorities = filterAuthorities(organisations, providers.active);
+    const authorities = filterAuthorities(
+      organisations,
+      providers.active,
+      config.enableLegacyOrganisationsFilter
+    );
     if (!isBlank(props.match.params.id))
       return setLine(getFlexibleLineFromPath(flexibleLines ?? [], props.match));
 
@@ -146,7 +150,11 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
 
   const authoritiesMissing =
     organisations &&
-    filterAuthorities(organisations, providers.active).length === 0;
+    filterAuthorities(
+      organisations,
+      providers.active,
+      config.enableLegacyOrganisationsFilter
+    ).length === 0;
 
   return (
     <Page
@@ -189,7 +197,10 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
                   activeStep={activeStep}
                   flexibleLine={line}
                   changeFlexibleLine={onFlexibleLineChange}
-                  operators={filterNetexOperators(organisations ?? [])}
+                  operators={filterNetexOperators(
+                    organisations ?? [],
+                    config.enableLegacyOrganisationsFilter
+                  )}
                   networks={networks || []}
                   spoilPristine={nextClicked}
                 />
