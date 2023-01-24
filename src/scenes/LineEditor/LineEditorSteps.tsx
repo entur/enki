@@ -2,11 +2,11 @@ import React from 'react';
 import JourneyPattern from 'components/JourneyPatterns';
 import JourneyPatternEditor from 'components/JourneyPatternEditor';
 import General from 'components/GeneralLineEditor';
-import { Organisation } from 'reducers/organisations';
 import { Network } from 'model/Network';
 import Line from 'model/Line';
 import ServiceJourneys from 'components/ServiceJourneys';
 import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
+import { Organisation } from 'model/Organisation';
 
 type Props = {
   activeStep: number;

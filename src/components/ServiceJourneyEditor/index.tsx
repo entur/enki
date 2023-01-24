@@ -149,9 +149,14 @@ const ServiceJourneyEditor = (props: Props) => {
           <Dropdown
             className="form-section operator-selector"
             label={formatMessage('generalOperator')}
-            initialSelectedItem={getInit(operators, operatorSelection)}
+            initialSelectedItem={getInit(
+              operators.map((op) => ({ ...op, name: op.name.value })),
+              operatorSelection
+            )}
             placeholder={formatMessage('defaultOption')}
-            items={mapToItems(operators)}
+            items={mapToItems(
+              operators.map((op) => ({ ...op, name: op.name.value }))
+            )}
             clearable
             onChange={(e: NormalizedDropdownItemType | null) =>
               handleOperatorSelectionChange(e?.value)

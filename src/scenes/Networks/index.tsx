@@ -17,11 +17,11 @@ import { selectIntl } from 'i18n';
 import './styles.scss';
 import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
-import { Organisation } from 'reducers/organisations';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
+import { Organisation } from 'model/Organisation';
 
 const Networks = ({ history }: RouteComponentProps) => {
   const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
@@ -63,7 +63,8 @@ const Networks = ({ history }: RouteComponentProps) => {
           <DataCell>{n.name}</DataCell>
           <DataCell>{n.privateCode}</DataCell>
           <DataCell>
-            {organisationList.find((o) => o.id === n.authorityRef)?.name ?? '-'}
+            {organisationList.find((o) => o.id === n.authorityRef)?.name
+              ?.value ?? '-'}
           </DataCell>
           <DataCell className="delete-row-cell">
             <DeleteButton

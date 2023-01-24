@@ -182,8 +182,13 @@ const NetworkEditor = ({
 
               <Dropdown
                 className="form-section"
-                initialSelectedItem={getInit(authorities, network.authorityRef)}
-                items={mapToItems(authorities)}
+                initialSelectedItem={getInit(
+                  authorities.map((v) => ({ ...v, name: v.name.value })),
+                  network.authorityRef
+                )}
+                items={mapToItems(
+                  authorities.map((v) => ({ ...v, name: v.name.value }))
+                )}
                 placeholder={formatMessage('defaultOption')}
                 clearable
                 label={formatMessage('editorAuthorityLabelText')}

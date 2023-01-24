@@ -2,7 +2,6 @@ import React from 'react';
 import JourneyPatterns from 'components/JourneyPatterns';
 import General from 'components/GeneralLineEditor';
 import { withRouter } from 'react-router-dom';
-import { Organisation } from 'reducers/organisations';
 import { RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
 import FlexibleLine from 'model/FlexibleLine';
@@ -11,6 +10,7 @@ import './styles.scss';
 import JourneyPatternEditor from 'components/JourneyPatternEditor';
 import ServiceJourneys from 'components/ServiceJourneys';
 import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
+import { Organisation } from 'model/Organisation';
 
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
