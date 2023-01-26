@@ -4,6 +4,10 @@ import Provider from 'model/Provider';
 import { Dispatch } from 'redux';
 import { GlobalState } from 'reducers';
 import { mutateCodespace, mutateProvider } from 'api/uttu/mutations';
+import { showErrorNotification } from './notification';
+import { getStyledUttuError } from 'helpers/uttu';
+import { sentryCaptureException } from 'store';
+import { getIntl } from 'i18n';
 
 export const RECEIVE_PROVIDERS = 'RECEIVE_PROVIDERS';
 export const FAILED_RECEIVING_PROVIDERS = 'FAILED_RECEIVING_PROVIDERS';
@@ -51,24 +55,39 @@ export const getProviders =
 export const saveProvider =
   (provider: Provider) =>
   async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+    const intl = getIntl(getState());
     const { codespace, ...providerWithoutCodespace } = provider;
 
-    await UttuQuery(
-      'providers',
-      mutateCodespace,
-      { input: provider.codespace },
-      await getState().auth.getAccessToken()
-    );
+    try {
+      await UttuQuery(
+        'providers',
+        mutateCodespace,
+        { input: provider.codespace },
+        await getState().auth.getAccessToken()
+      );
 
-    await UttuQuery(
-      'providers',
-      mutateProvider,
-      {
-        input: {
-          ...providerWithoutCodespace,
-          codespaceXmlns: provider.codespace?.xmlns,
+      await UttuQuery(
+        'providers',
+        mutateProvider,
+        {
+          input: {
+            ...providerWithoutCodespace,
+            codespaceXmlns: provider.codespace?.xmlns,
+          },
         },
-      },
-      await getState().auth.getAccessToken()
-    );
+        await getState().auth.getAccessToken()
+      );
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage('saveProviderError'),
+          getStyledUttuError(
+            e as any,
+            intl.formatMessage('saveProviderError'),
+            intl.formatMessage('saveProviderErrorFallback')
+          )
+        )
+      );
+      sentryCaptureException(e);
+    }
   };

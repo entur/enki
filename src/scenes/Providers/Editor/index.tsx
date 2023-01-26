@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { TextField } from '@entur/form';
 import { SuccessButton } from '@entur/button';
-import { Paragraph } from '@entur/typography';
 import { RouteComponentProps } from 'react-router';
 import { isBlank } from 'helpers/forms';
 import OverlayLoader from 'components/OverlayLoader';
@@ -91,13 +90,11 @@ const ProviderEditor = ({
       }
     >
       <div className="provider-editor">
-        <Paragraph>{formatMessage('editorProviderDescription')}</Paragraph>
-
         {(provider && (
           <OverlayLoader
             className=""
             isLoading={isSaving}
-            text={formatMessage('editorSavingNetworkLoadingText')}
+            text={formatMessage('editorSavingProviderLoadingText')}
           >
             <div className="provider-form">
               <RequiredInputMarker />
