@@ -16,12 +16,13 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import Provider from 'model/Provider';
 import './styles.scss';
-import Codespace from 'model/Codespace';
 import { getProviders, saveProvider } from 'actions/providers';
+import { useConfig } from 'config/ConfigContext';
 
 const getCurrentProvider = (
   state: GlobalState,
-  match: { params: MatchParams }
+  match: { params: MatchParams },
+  xmlnsUrlPrefix?: string
 ): Provider =>
   state.providers?.providers?.find(
     (provider) => provider.code === match.params.id
@@ -29,8 +30,8 @@ const getCurrentProvider = (
     name: '',
     code: '',
     codespace: {
-      xmlns: '',
-      xmlnsUrl: '',
+      xmlns: ' ',
+      xmlnsUrl: xmlnsUrlPrefix || '',
     },
   };
 
@@ -39,9 +40,9 @@ const ProviderEditor = ({
   history,
 }: RouteComponentProps<MatchParams>) => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
-
+  const { xmlnsUrlPrefix } = useConfig();
   const currentProvider = useSelector<GlobalState, Provider>((state) =>
-    getCurrentProvider(state, match)
+    getCurrentProvider(state, match, xmlnsUrlPrefix)
   );
 
   const [isSaving, setSaving] = useState<boolean>(false);
@@ -54,13 +55,6 @@ const ProviderEditor = ({
 
   const onFieldChange = (field: keyof Provider, value: string) => {
     setProvider({ ...provider, [field]: value });
-  };
-
-  const onCodespaceFieldChange = (field: keyof Codespace, value: string) => {
-    setProvider({
-      ...provider,
-      codespace: { ...provider.codespace, [field]: value },
-    });
   };
 
   const validProvider =
@@ -118,9 +112,16 @@ const ProviderEditor = ({
                 label={formatMessage('editorProviderCodeLabelText')}
                 value={provider.code ?? ''}
                 disabled={!!match.params.id}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('code', e.target.value)
-                }
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setProvider({
+                    ...provider,
+                    code: e.target.value.toLowerCase(),
+                    codespace: {
+                      xmlns: e.target.value.toUpperCase(),
+                      xmlnsUrl: `${xmlnsUrlPrefix}${e.target.value.toLowerCase()}`,
+                    },
+                  });
+                }}
                 {...getErrorFeedback(
                   formatMessage('editorProviderValidationField'),
                   !isBlank(provider.code),
@@ -131,16 +132,8 @@ const ProviderEditor = ({
               <TextField
                 className="form-section"
                 label={formatMessage('editorProviderCodespaceXmlnsLabelText')}
+                disabled
                 value={provider.codespace?.xmlns ?? ''}
-                disabled={match.params.id}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onCodespaceFieldChange('xmlns', e.target.value)
-                }
-                {...getErrorFeedback(
-                  formatMessage('editorProviderValidationField'),
-                  !isBlank(provider.codespace?.xmlns),
-                  namePristine
-                )}
               />
 
               <TextField
@@ -148,15 +141,8 @@ const ProviderEditor = ({
                 label={formatMessage(
                   'editorProviderCodespaceXmlnsUrlLabelText'
                 )}
+                disabled
                 value={provider.codespace?.xmlnsUrl ?? ''}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onCodespaceFieldChange('xmlnsUrl', e.target.value)
-                }
-                {...getErrorFeedback(
-                  formatMessage('editorProviderValidationField'),
-                  !isBlank(provider.codespace?.xmlnsUrl),
-                  namePristine
-                )}
               />
 
               <div className="buttons">
