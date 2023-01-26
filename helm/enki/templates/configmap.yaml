@@ -15,3 +15,4 @@ data:
   AUTH0_AUDIENCE: {{ .Values.configMap.auth0Audience }}
   AUTH0_CLAIMS_NAMESPACE: {{ .Values.configMap.auth0ClaimsNamespace }}
   ENABLE_LEGACY_ORGANISATIONS_FILTER: {{ .Values.configMap.enableLegacyOrganisationsFilter }}
+  ADMIN_ROLE: "{\"r\":\"adminEditRouteData\",\"o\":\"RB\"}"

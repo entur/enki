@@ -71,6 +71,11 @@ spec:
             configMapKeyRef:
               key: ENABLE_LEGACY_ORGANISATIONS_FILTER
               name: {{ .Values.configMapMount.name }}
+        - name: ADMIN_ROLE
+          valueFrom:
+            configMapKeyRef:
+              key: ADMIN_ROLE
+              name: {{ .Values.configMapMount.name }}
         - name: TZ
           value: Europe/Oslo
         - name: ENVIRONMENT
