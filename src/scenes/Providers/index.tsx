@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
@@ -19,6 +19,22 @@ import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
 import Provider from 'model/Provider';
 
+const sortProviders = (a: Provider, b: Provider) => {
+  if (!a.name) {
+    return -1;
+  }
+  if (!b.name) {
+    return 1;
+  }
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+};
+
 const Providers = ({ history }: RouteComponentProps) => {
   const { formatMessage } = useSelector(selectIntl);
   const { providers: providersState } = useSelector<GlobalState, GlobalState>(
@@ -32,7 +48,10 @@ const Providers = ({ history }: RouteComponentProps) => {
     [history]
   );
 
-  const providers = providersState.providers;
+  const providers = useMemo(
+    () => providersState?.providers?.slice().sort(sortProviders) || [],
+    [providersState]
+  );
 
   const RenderTableRows = ({
     providerList,
