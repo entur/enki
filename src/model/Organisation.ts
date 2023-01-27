@@ -59,6 +59,6 @@ export const filterNetexOperators = (
           org.keyList?.keyValue
             ?.find((kv) => kv.key === 'LegacyId')
             ?.value?.split(',')
-            .find((v) => v.indexOf('Authority')) !== undefined
+            .find((v) => v.indexOf('Operator')) !== undefined
       )
     : organisations;
