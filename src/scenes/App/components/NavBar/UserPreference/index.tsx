@@ -42,9 +42,9 @@ const UserPreference = ({ history }: RouteComponentProps) => {
         <Contrast>
           <Dropdown
             className="provider-wrapper"
-            items={items}
+            items={() => items}
             label={formatMessage('navBarDataProvider')}
-            value={active?.code ?? ''}
+            value={active?.code}
             onChange={(e) => handleActiveProviderChange(e?.value)}
           />
         </Contrast>
