@@ -16,4 +16,4 @@ data:
   AUTH0_CLAIMS_NAMESPACE: {{ .Values.configMap.auth0ClaimsNamespace }}
   ENABLE_LEGACY_ORGANISATIONS_FILTER: {{ .Values.configMap.enableLegacyOrganisationsFilter }}
   ADMIN_ROLE: "{\"r\":\"adminEditRouteData\",\"o\":\"RB\"}"
-  XMLNS_URL_PREFIX: http://www.rutebanken.org/ns/vkt
+  XMLNS_URL_PREFIX: http://www.rutebanken.org/ns/
