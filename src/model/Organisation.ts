@@ -41,7 +41,7 @@ export const filterAuthorities = (
         org.keyList?.keyValue
           ?.find((kv) => kv.key === 'LegacyId')
           ?.value?.split(',')
-          .find((v) => v.indexOf('Authority'))
+          .find((v) => v.indexOf('Authority') > -1)
           ?.startsWith(activeProvider?.codespace?.xmlns || 'INVALID')
       )
     : organisations;
@@ -54,11 +54,10 @@ export const filterNetexOperators = (
   enableFilter?: boolean
 ): Organisation[] =>
   enableFilter
-    ? organisations.filter(
-        (org) =>
-          org.keyList?.keyValue
-            ?.find((kv) => kv.key === 'LegacyId')
-            ?.value?.split(',')
-            .find((v) => v.indexOf('Operator')) !== undefined
+    ? organisations.filter((org) =>
+        org.keyList?.keyValue
+          ?.find((kv) => kv.key === 'LegacyId')
+          ?.value?.split(',')
+          .find((v) => v.indexOf('Operator') > -1)
       )
     : organisations;
