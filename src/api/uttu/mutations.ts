@@ -54,6 +54,18 @@ export const deleteline = `
   }
 `;
 
+export const mutateCodespace = `
+  mutation SaveCodespace($input: CodespaceInput!) {
+    mutateCodespace(input: $input) { xmlns }
+  }
+`;
+
+export const mutateProvider = `
+  mutation SaveProvider($input: ProviderInput!) {
+    mutateProvider(input: $input) { code }
+  }
+`;
+
 export const MUTATE_LINE = gql`
   mutation Mutateline($input: LineInput!) {
     mutateLine(input: $input) {

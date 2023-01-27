@@ -1,6 +1,4 @@
-import VersionedType from 'model/VersionedType';
-
-type Codespace = VersionedType & {
+type Codespace = {
   xmlns?: string;
   xmlnsUrl?: string;
 };

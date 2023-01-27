@@ -16,6 +16,9 @@ import './styles.scss';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 import LanguagePicker from './LanguagePicker';
 import LogoutChip from './LogoutChip';
+import { ClosedLockIcon } from '@entur/icons';
+import { useAuth } from '@entur/auth-provider';
+import { useConfig } from 'config/ConfigContext';
 
 const isActive = (pathname: string, path: string) =>
   pathname.split('/')[1] === path.split('/')[1];
@@ -30,10 +33,11 @@ type NavBarItemProps = RouteComponentProps & {
   path: string;
   className?: string;
   setRedirect: (redirect: RedirectType) => void;
+  icon?: React.ReactNode;
 };
 
 const NavBarItem = withRouter(
-  ({ location, text, path, className, setRedirect }: NavBarItemProps) => {
+  ({ location, text, path, className, setRedirect, icon }: NavBarItemProps) => {
     const isSaved = useSelector<GlobalState, boolean>(
       (state) => state.editor.isSaved
     );
@@ -50,6 +54,7 @@ const NavBarItem = withRouter(
         as={Link}
         to={path}
         className={className}
+        icon={icon}
       >
         {text}
       </SideNavigationItem>
@@ -63,6 +68,9 @@ const NavBar = () => {
     showConfirm: false,
     path: '',
   });
+
+  const { roleAssignments } = useAuth();
+  const { adminRole } = useConfig();
 
   return (
     <Contrast as="nav" className="navbar-wrapper">
@@ -114,6 +122,15 @@ const NavBar = () => {
           path="/exports"
           setRedirect={setRedirect}
         />
+
+        {roleAssignments?.includes(adminRole) && (
+          <NavBarItem
+            icon={<ClosedLockIcon />}
+            text={formatMessage('navBarProvidersMenuItemLabel')}
+            path="/providers"
+            setRedirect={setRedirect}
+          />
+        )}
       </SideNavigation>
 
       <div className="bottom-chips">

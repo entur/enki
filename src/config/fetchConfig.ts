@@ -1,4 +1,4 @@
 export const fetchConfig = async (apiBase?: string) => {
-  const config = await fetch(`${apiBase}/app.json`);
-  return config.json();
+  const resp = await fetch(`${apiBase}/app.json`);
+  return resp.json();
 };

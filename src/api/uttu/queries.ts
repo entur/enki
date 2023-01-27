@@ -6,7 +6,8 @@ export const getProvidersQuery = `
       name,
       code,
       codespace {
-        xmlns
+        xmlns,
+        xmlnsUrl
       }
     }
   }

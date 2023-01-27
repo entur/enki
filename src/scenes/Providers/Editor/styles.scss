@@ -1,0 +1,33 @@
+.provider-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .buttons {
+    display: flex;
+    margin-top: 50px;
+  }
+
+  .provider-form {
+    max-width: 450px;
+    min-width: 250px;
+  }
+
+  .loader {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .required-marker {
+    display: block;
+    margin-bottom: 20px;
+  }
+}
