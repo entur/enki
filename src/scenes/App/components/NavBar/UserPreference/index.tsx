@@ -10,6 +10,7 @@ import { GlobalState } from 'reducers';
 import { ProvidersState } from 'reducers/providers';
 import { RouteComponentProps } from 'react-router';
 import './styles.scss';
+import { sortProviders } from 'model/Provider';
 
 const UserPreference = ({ history }: RouteComponentProps) => {
   const { providers, active } = useSelector<GlobalState, ProvidersState>(
@@ -21,13 +22,14 @@ const UserPreference = ({ history }: RouteComponentProps) => {
   const handleActiveProviderChange = (providerCode: string | undefined) => {
     const provider = providers?.find((p) => p.code === providerCode);
     if (provider) {
+      window.localStorage.setItem('ACTIVE_PROVIDER', provider.code!);
       dispatch(setActiveProvider(provider));
       history.replace('/');
     }
   };
 
   const items = providers
-    ? providers.map((p) => ({
+    ? providers.sort(sortProviders).map((p) => ({
         value: p.code ?? '',
         label: p.name ?? '',
       }))

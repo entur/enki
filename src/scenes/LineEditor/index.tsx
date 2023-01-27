@@ -46,6 +46,8 @@ export default () => {
 
   const { line, setLine, refetchLine, loading, error, networks } = useLine();
 
+  console.log({ networks });
+
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
 

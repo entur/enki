@@ -19,43 +19,12 @@ import { isEmpty } from 'ramda';
 import { getFlexibleLineFromPath } from 'helpers/url';
 import Loading from 'components/Loading';
 import { setSavedChanges } from 'actions/editor';
-import { loadNetworks, saveNetwork } from 'actions/networks';
-import { Network } from 'model/Network';
-import Provider from 'model/Provider';
 import Page from 'components/Page';
 import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
 import { FLEXIBLE_LINE_STEPS } from './steps';
 import './styles.scss';
 import LineEditorStepper from 'components/LineEditorStepper';
 import { useConfig } from 'config/ConfigContext';
-
-const findNetworkIdByProvider = (
-  provider: Provider,
-  networks: Network[]
-): string | undefined =>
-  networks.find(
-    (network) =>
-      network.id?.split(':')?.[0]?.toUpperCase() === provider.codespace?.xmlns
-  )?.id;
-
-const createAndGetNetwork = (
-  dispatch: any,
-  authorityRef: string,
-  activeProvider: Provider
-): Promise<string> =>
-  dispatch(
-    saveNetwork(
-      {
-        name: activeProvider.codespace?.xmlns ?? 'New network',
-        authorityRef: authorityRef,
-      },
-      false
-    )
-  )
-    .then(() => dispatch(loadNetworks()))
-    .then((newNetworks: Network[]) =>
-      findNetworkIdByProvider(activeProvider, newNetworks)
-    );
 
 const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const [line, setLine] = useState<FlexibleLine>({});
@@ -81,38 +50,13 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const config = useConfig();
 
   useEffect(() => {
-    if (
-      isLoadingDependencies ||
-      !providers.active ||
-      !organisations ||
-      !networks
-    )
-      return;
-
-    const authorities = filterAuthorities(
-      organisations,
-      providers.active,
-      config.enableLegacyOrganisationsFilter
-    );
     if (!isBlank(props.match.params.id))
       return setLine(getFlexibleLineFromPath(flexibleLines ?? [], props.match));
 
-    const newFlexibleLine: FlexibleLine = initFlexibleLine();
+    return setLine(initFlexibleLine());
 
-    if (networks.length > 1 || authorities.length === 0)
-      return setLine(newFlexibleLine);
-
-    const networkRef = findNetworkIdByProvider(providers.active, networks);
-    if (networkRef) {
-      setLine({ ...newFlexibleLine, networkRef });
-    } else {
-      createAndGetNetwork(dispatch, authorities[0].id, providers.active).then(
-        (newNetworkRef) =>
-          setLine({ ...newFlexibleLine, networkRef: newNetworkRef })
-      );
-    }
     // eslint-disable-next-line
-  }, [flexibleLines, isLoadingDependencies]);
+  }, [flexibleLines, props.match.params.id]);
 
   const goToLines = () =>
     props.history.push(isFlexibleLine ? '/flexible-lines' : '/lines');

@@ -19,6 +19,7 @@ import LogoutChip from './LogoutChip';
 import { ClosedLockIcon } from '@entur/icons';
 import { useAuth } from '@entur/auth-provider';
 import { useConfig } from 'config/ConfigContext';
+import { ProvidersState } from 'reducers/providers';
 
 const isActive = (pathname: string, path: string) =>
   pathname.split('/')[1] === path.split('/')[1];
@@ -64,6 +65,9 @@ const NavBarItem = withRouter(
 
 const NavBar = () => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { providers, active } = useSelector<GlobalState, ProvidersState>(
+    (state) => state.providers
+  );
   const [redirect, setRedirect] = useState<RedirectType>({
     showConfirm: false,
     path: '',
@@ -86,42 +90,46 @@ const NavBar = () => {
           </div>
         </Link>
 
-        <UserPreference />
+        {providers && providers.length > 0 && <UserPreference />}
 
-        <NavBarItem
-          text={formatMessage('navBarLinesMenuItemLabel')}
-          path="/lines"
-          setRedirect={setRedirect}
-        />
-
-        <SideNavigationGroup
-          defaultOpen
-          title={formatMessage('navBarFlexibleOffersSubMenuHeaderLabel')}
-        >
-          <SideNavigation>
+        {active && (
+          <>
             <NavBarItem
-              text={formatMessage('navBarFlexibleLinesMenuItemLabel')}
-              path="/flexible-lines"
+              text={formatMessage('navBarLinesMenuItemLabel')}
+              path="/lines"
+              setRedirect={setRedirect}
+            />
+
+            <SideNavigationGroup
+              defaultOpen
+              title={formatMessage('navBarFlexibleOffersSubMenuHeaderLabel')}
+            >
+              <SideNavigation>
+                <NavBarItem
+                  text={formatMessage('navBarFlexibleLinesMenuItemLabel')}
+                  path="/flexible-lines"
+                  setRedirect={setRedirect}
+                />
+                <NavBarItem
+                  text={formatMessage('navBarStopPlacesMenuItemLabel')}
+                  path="/stop-places"
+                  setRedirect={setRedirect}
+                />
+              </SideNavigation>
+            </SideNavigationGroup>
+
+            <NavBarItem
+              text={formatMessage('navBarNetworksMenuItemLabel')}
+              path="/networks"
               setRedirect={setRedirect}
             />
             <NavBarItem
-              text={formatMessage('navBarStopPlacesMenuItemLabel')}
-              path="/stop-places"
+              text={formatMessage('navBarExportsMenuItemLabel')}
+              path="/exports"
               setRedirect={setRedirect}
             />
-          </SideNavigation>
-        </SideNavigationGroup>
-
-        <NavBarItem
-          text={formatMessage('navBarNetworksMenuItemLabel')}
-          path="/networks"
-          setRedirect={setRedirect}
-        />
-        <NavBarItem
-          text={formatMessage('navBarExportsMenuItemLabel')}
-          path="/exports"
-          setRedirect={setRedirect}
-        />
+          </>
+        )}
 
         {roleAssignments?.includes(adminRole) && (
           <NavBarItem

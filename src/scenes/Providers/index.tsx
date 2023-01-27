@@ -11,29 +11,13 @@ import {
   TableRow,
 } from '@entur/table';
 import Loading from 'components/Loading';
-import { Heading1 } from '@entur/typography';
+import { Heading1, Paragraph } from '@entur/typography';
 import { selectIntl } from 'i18n';
 import './styles.scss';
 import { GlobalState } from 'reducers';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
-import Provider from 'model/Provider';
-
-const sortProviders = (a: Provider, b: Provider) => {
-  if (!a.name) {
-    return -1;
-  }
-  if (!b.name) {
-    return 1;
-  }
-  if (a.name < b.name) {
-    return -1;
-  }
-  if (a.name > b.name) {
-    return 1;
-  }
-  return 0;
-};
+import Provider, { sortProviders } from 'model/Provider';
 
 const Providers = ({ history }: RouteComponentProps) => {
   const { formatMessage } = useSelector(selectIntl);
@@ -77,6 +61,9 @@ const Providers = ({ history }: RouteComponentProps) => {
   return (
     <div className="providers">
       <Heading1>{formatMessage('providersHeaderText')}</Heading1>
+      {providers.length === 0 && (
+        <Paragraph>{formatMessage('noProvidersDescriptionText')}</Paragraph>
+      )}
 
       <SecondaryButton className="create" as={Link} to="/providers/create">
         <AddIcon />

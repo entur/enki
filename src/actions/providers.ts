@@ -14,9 +14,15 @@ export const FAILED_RECEIVING_PROVIDERS = 'FAILED_RECEIVING_PROVIDERS';
 
 export const SET_ACTIVE_PROVIDER = 'SET_ACTIVE_PROVIDER';
 
-const receiveProviders = (providers: Provider[]) => ({
+const receiveProviders = (
+  providers: Provider[],
+  activeCode?: string | null
+) => ({
   type: RECEIVE_PROVIDERS,
-  providers,
+  payload: {
+    providers,
+    activeCode,
+  },
 });
 
 const failedReceivingProviders = { type: FAILED_RECEIVING_PROVIDERS };
@@ -43,7 +49,8 @@ export const getProviders =
       await getState().auth.getAccessToken()
     )
       .then((data) => {
-        dispatch(receiveProviders(data.providers));
+        const activeCode = window.localStorage.getItem('ACTIVE_PROVIDER');
+        dispatch(receiveProviders(data.providers, activeCode));
         return Promise.resolve();
       })
       .catch((e) => {

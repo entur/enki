@@ -20,20 +20,31 @@ const initialState = {
   exports: null,
 };
 
+const getActiveProvider = (
+  state: ProvidersState = initialState,
+  action: AnyAction
+): Provider | null => {
+  if (!state.active && action.payload.activeCode) {
+    return action.payload.providers.find(
+      (p: Provider) => p.code === action.payload.activeCode
+    );
+  } else if (!state.active && action.payload.providers.length > 0) {
+    return action.payload.providers[0];
+  } else {
+    return state.active;
+  }
+};
+
 const providersReducer = (
   state: ProvidersState = initialState,
   action: AnyAction
 ): ProvidersState => {
   switch (action.type) {
     case RECEIVE_PROVIDERS: {
-      const active =
-        !state.active && action.providers.length > 0
-          ? action.providers[0]
-          : state.active;
       return {
         ...state,
-        providers: action.providers,
-        active,
+        providers: action.payload.providers,
+        active: getActiveProvider(state, action),
       };
     }
 

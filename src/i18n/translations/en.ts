@@ -623,4 +623,6 @@ export const messages: MessagesKey = {
   editorLoadingProviderText: 'Loading provider',
   saveProviderError: 'Error saving provider',
   saveProviderErrorFallback: 'Unknown error saving provider',
+  noProvidersDescriptionText:
+    'Your Nplan installation needs at least one provider',
 };

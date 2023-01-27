@@ -37,7 +37,7 @@ export const filterAuthorities = (
   enableFilter?: boolean
 ) =>
   enableFilter
-    ? organisations.filter((org) =>
+    ? organisations?.filter((org) =>
         org.keyList?.keyValue
           ?.find((kv) => kv.key === 'LegacyId')
           ?.value?.split(',')

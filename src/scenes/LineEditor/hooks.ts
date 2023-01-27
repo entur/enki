@@ -5,13 +5,10 @@ import { useState, useEffect } from 'react';
 import Line, { initLine } from 'model/Line';
 import { isBlank } from 'helpers/forms';
 import { MatchParams } from 'http/http';
-import { filterAuthorities } from 'model/Organisation';
-import Provider from 'model/Provider';
 import { Network } from 'model/Network';
 import { useDispatch, useSelector } from 'react-redux';
 import { LINE_EDITOR_QUERY } from 'api/uttu/queries';
 import { GlobalState } from 'reducers';
-import { saveNetwork } from 'actions/networks';
 import { useConfig } from 'config/ConfigContext';
 
 export const useUttuErrors = (
@@ -28,7 +25,6 @@ export const useUttuErrors = (
   );
 
   useUttuError('deleteLineErrorHeader', 'deleteLineErrorMessage', deleteError);
-
   useUttuError('saveLineErrorHeader', 'saveLineErrorMessage', mutationError);
 };
 
@@ -44,38 +40,6 @@ type UseLineReturnType = {
 };
 
 type UseLineType = () => UseLineReturnType;
-
-const findNetworkIdByProvider = (
-  provider: Provider,
-  networks: Network[]
-): string | undefined =>
-  networks.find(
-    (network) =>
-      network.id?.split(':')?.[0]?.toUpperCase() === provider.codespace?.xmlns
-  )?.id;
-
-// TODO: refactor with apollo hooks
-const createAndGetNetwork = (
-  dispatch: any,
-  authorityRef: string,
-  activeProvider: Provider,
-  refetch: (
-    variables?: Partial<Record<string, any>> | undefined
-  ) => Promise<ApolloQueryResult<LineData>>
-): Promise<string> =>
-  dispatch(
-    saveNetwork(
-      {
-        name: activeProvider.codespace?.xmlns ?? 'New network',
-        authorityRef: authorityRef,
-      },
-      false
-    )
-  )
-    .then(() => refetch())
-    .then((newNetworks: Network[]) =>
-      findNetworkIdByProvider(activeProvider, newNetworks)
-    );
 
 interface LineData {
   line: Line;
@@ -114,34 +78,8 @@ export const useLine: UseLineType = () => {
   const config = useConfig();
 
   useEffect(() => {
-    if (!data?.networks) {
-      return;
-    }
     if (isBlank(match?.params.id)) {
-      const newLine = initLine();
-      const authorities = filterAuthorities(
-        organisations!,
-        activeProvider,
-        config.enableLegacyOrganisationsFilter
-      );
-      if (data?.networks?.length > 1 || authorities.length === 0) {
-        setLine(newLine);
-      } else {
-        const networkRef = findNetworkIdByProvider(
-          activeProvider!,
-          data?.networks
-        );
-        if (networkRef) {
-          setLine({ ...newLine, networkRef });
-        } else {
-          createAndGetNetwork(
-            dispatch,
-            authorities[0].id,
-            activeProvider!,
-            refetch
-          ).then((ref) => setLine({ ...newLine, networkRef: ref }));
-        }
-      }
+      setLine(initLine());
     }
   }, [
     match,
