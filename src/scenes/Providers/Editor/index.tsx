@@ -113,12 +113,13 @@ const ProviderEditor = ({
                 value={provider.code ?? ''}
                 disabled={!!match.params.id}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  const sanitized = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
                   setProvider({
                     ...provider,
-                    code: e.target.value.toLowerCase(),
+                    code: sanitized.toLowerCase(),
                     codespace: {
-                      xmlns: e.target.value.toUpperCase(),
-                      xmlnsUrl: `${xmlnsUrlPrefix}${e.target.value.toLowerCase()}`,
+                      xmlns: sanitized.toUpperCase(),
+                      xmlnsUrl: `${xmlnsUrlPrefix}${sanitized.toLowerCase()}`,
                     },
                   });
                 }}
