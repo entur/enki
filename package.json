@@ -10,7 +10,8 @@
     "start-devenv": "cross-env npm run start",
     "build": "react-scripts build",
     "snyk-protect": "snyk protect",
-    "format": "prettier --write '{src,server}/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "dependencies": {
