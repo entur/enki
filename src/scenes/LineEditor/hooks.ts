@@ -74,7 +74,7 @@ export const useLine: UseLineType = () => {
         ...data.line,
         networkRef: data.line.network?.id,
       });
-    } else if (called && !loading) {
+    } else if (called && !loading && match?.params.id) {
       setNotFound(true);
     }
   }, [data, called, loading]);
