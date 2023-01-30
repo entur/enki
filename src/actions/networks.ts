@@ -38,6 +38,7 @@ export const loadNetworks =
   async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
     try {
       const data = await UttuQuery(
+        getState().config.uttuApiUrl,
         getState().providers.active?.code ?? '',
         getNetworksQuery,
         {},
@@ -65,6 +66,7 @@ export const loadNetworkById =
   async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
     try {
       const data = await UttuQuery(
+        getState().config.uttuApiUrl,
         getState().providers.active?.code ?? '',
         getNetworkByIdQuery,
         { id },
@@ -91,6 +93,7 @@ export const saveNetwork =
   async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
     try {
       await UttuQuery(
+        getState().config.uttuApiUrl,
         getState().providers.active?.code ?? '',
         networkMutation,
         {
@@ -125,6 +128,7 @@ export const deleteNetworkById =
 
     try {
       await UttuQuery(
+        getState().config.uttuApiUrl,
         getState().providers.active?.code ?? '',
         deleteNetwork,
         {

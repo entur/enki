@@ -50,10 +50,12 @@ export const loadFlexibleStopPlaces =
     dispatch(requestFlexibleStopPlacesActionCreator());
 
     const activeProvider = getState().providers.active?.code ?? '';
+    const uttuApiUrl = getState().config.uttuApiUrl;
     const intl = getIntl(getState());
 
     try {
       const data = await UttuQuery(
+        uttuApiUrl,
         activeProvider,
         getFlexibleStopPlacesQuery,
         {},
@@ -81,10 +83,12 @@ export const loadFlexibleStopPlaceById =
     dispatch(requestFlexibleStopPlaceActionCreator());
 
     const activeProvider = getState().providers.active?.code ?? '';
+    const uttuApiUrl = getState().config.uttuApiUrl;
     const intl = getIntl(getState());
 
     try {
       const data = await UttuQuery(
+        uttuApiUrl,
         activeProvider,
         getFlexibleStopPlaceByIdQuery,
         { id },
@@ -109,10 +113,12 @@ export const saveFlexibleStopPlace =
   (flexibleStopPlace: FlexibleStopPlace) =>
   async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     const activeProvider = getState().providers.active?.code ?? '';
+    const uttuApiUrl = getState().config.uttuApiUrl;
     const intl = getIntl(getState());
 
     try {
       await UttuQuery(
+        uttuApiUrl,
         activeProvider,
         flexibleStopPlaceMutation,
         {
@@ -144,9 +150,11 @@ export const deleteFlexibleStopPlaceById =
   (id: string) =>
   async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     const activeProvider = getState().providers.active?.code ?? '';
+    const uttuApiUrl = getState().config.uttuApiUrl;
     const intl = getIntl(getState());
     try {
       await UttuQuery(
+        uttuApiUrl,
         activeProvider,
         deleteFlexibleStopPlace,
         { id },

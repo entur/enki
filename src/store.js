@@ -35,7 +35,7 @@ const getMiddlewares = () => {
 export const sentryCaptureException = (e) =>
   useSentry ? captureException(e) : console.error({ e });
 
-export const configureStore = (auth) => {
+export const configureStore = (auth, config) => {
   const combinedReducers = combineReducers({
     ...reducers,
     intl,
@@ -48,6 +48,7 @@ export const configureStore = (auth) => {
       messages,
     },
     auth,
+    config,
   };
 
   const middlewares = getMiddlewares();

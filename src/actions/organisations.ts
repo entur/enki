@@ -30,6 +30,7 @@ export const getOrganisations =
         return;
       }
       const { organisations } = await UttuQuery(
+        getState().config.uttuApiUrl,
         activeProvider,
         getOrganisationsQuery,
         {},
