@@ -77,7 +77,7 @@ export const useLine: UseLineType = () => {
     } else if (called && !loading && match?.params.id) {
       setNotFound(true);
     }
-  }, [data, called, loading]);
+  }, [data, called, loading, match]);
 
   const config = useConfig();
 
