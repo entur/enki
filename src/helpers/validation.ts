@@ -137,11 +137,6 @@ export const validateServiceJourney = (sj: ServiceJourney): boolean => {
   const validDayTimes = (sj.dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
   const { isValid } = validateTimes(sj.passingTimes ?? []);
   const validDayTypes = validateDayTypes(sj.dayTypes);
-
-  if (!validDayTypes) {
-    console.log('validateServiceJourney', { sj });
-  }
-
   return !isBlankName && isValid && validDayTimes && validDayTypes;
 };
 

@@ -37,6 +37,7 @@ type UseLineReturnType = {
   loading: boolean;
   error: ApolloError | undefined;
   networks: Network[] | undefined;
+  notFound: boolean;
 };
 
 type UseLineType = () => UseLineReturnType;
@@ -47,6 +48,7 @@ interface LineData {
 }
 
 export const useLine: UseLineType = () => {
+  const [notFound, setNotFound] = useState(false);
   const [line, setLine] = useState<Line>();
   const match = useRouteMatch<MatchParams>('/lines/edit/:id');
   const dispatch = useDispatch<any>();
@@ -56,7 +58,7 @@ export const useLine: UseLineType = () => {
     providers: { active: activeProvider },
   } = useSelector<GlobalState, GlobalState>((s) => s);
 
-  const { loading, error, data, refetch } = useQuery<LineData>(
+  const { loading, error, data, refetch, called } = useQuery<LineData>(
     LINE_EDITOR_QUERY,
     {
       variables: {
@@ -72,8 +74,10 @@ export const useLine: UseLineType = () => {
         ...data.line,
         networkRef: data.line.network?.id,
       });
+    } else if (called && !loading) {
+      setNotFound(true);
     }
-  }, [data]);
+  }, [data, called, loading]);
 
   const config = useConfig();
 
@@ -98,5 +102,6 @@ export const useLine: UseLineType = () => {
     loading,
     error,
     networks: data?.networks,
+    notFound,
   };
 };

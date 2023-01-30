@@ -16,6 +16,5 @@ export const normalizeAllUrls = (data: Event): Event => {
 export const getFlexibleLineFromPath = (
   flexibleLines: FlexibleLine[],
   match: { params: MatchParams }
-): FlexibleLine =>
-  flexibleLines.find((flexibleLine) => flexibleLine.id === match.params.id) ??
-  flexibleLines[0];
+): FlexibleLine | undefined =>
+  flexibleLines.find((flexibleLine) => flexibleLine.id === match.params.id);

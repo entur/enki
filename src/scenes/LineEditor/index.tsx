@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { Redirect, useHistory, useRouteMatch } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Page from 'components/Page';
 import Line from 'model/Line';
@@ -44,9 +44,8 @@ export default () => {
     GlobalState
   >((s) => s);
 
-  const { line, setLine, refetchLine, loading, error, networks } = useLine();
-
-  console.log({ networks });
+  const { line, setLine, refetchLine, loading, error, networks, notFound } =
+    useLine();
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
@@ -128,43 +127,46 @@ export default () => {
       backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
       onBackButtonClick={onBackButtonClicked}
     >
-      <Loading
-        isLoading={loading || !line}
-        text={formatMessage('editorLoadingLineText')}
-      >
-        <LineEditorStepper
-          steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
-          isValidStepIndex={(i: number) => getMaxAllowedStepIndex(line!) >= i}
-          currentStepIsValid={(i) => currentStepIsValid(i, line!)}
-          isLineValid={line ? validLine(line) : false}
-          setNextClicked={setNextClicked}
-          isEdit={!isBlank(match?.params.id)}
-          spoilPristine={nextClicked}
-          onDelete={onDelete}
-          isDeleting={isDeleting}
-          onSave={onSave}
-          isSaving={isSaving}
-          isSaved={editor.isSaved}
-          redirectTo="/lines"
-          showConfirm={showConfirm}
-          setShowConfirm={setShowConfirm}
-          authoritiesMissing={authoritiesMissing}
+      <>
+        {notFound && <Redirect to="/lines" />}
+        <Loading
+          isLoading={loading || !line}
+          text={formatMessage('editorLoadingLineText')}
         >
-          {(activeStep) => (
-            <LineEditorSteps
-              activeStep={activeStep}
-              line={line!}
-              changeLine={onChange}
-              operators={filterNetexOperators(
-                organisations ?? [],
-                config.enableLegacyOrganisationsFilter
-              )}
-              networks={networks || []}
-              spoilPristine={nextClicked}
-            />
-          )}
-        </LineEditorStepper>
-      </Loading>
+          <LineEditorStepper
+            steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
+            isValidStepIndex={(i: number) => getMaxAllowedStepIndex(line!) >= i}
+            currentStepIsValid={(i) => currentStepIsValid(i, line!)}
+            isLineValid={line ? validLine(line) : false}
+            setNextClicked={setNextClicked}
+            isEdit={!isBlank(match?.params.id)}
+            spoilPristine={nextClicked}
+            onDelete={onDelete}
+            isDeleting={isDeleting}
+            onSave={onSave}
+            isSaving={isSaving}
+            isSaved={editor.isSaved}
+            redirectTo="/lines"
+            showConfirm={showConfirm}
+            setShowConfirm={setShowConfirm}
+            authoritiesMissing={authoritiesMissing}
+          >
+            {(activeStep) => (
+              <LineEditorSteps
+                activeStep={activeStep}
+                line={line!}
+                changeLine={onChange}
+                operators={filterNetexOperators(
+                  organisations ?? [],
+                  config.enableLegacyOrganisationsFilter
+                )}
+                networks={networks || []}
+                spoilPristine={nextClicked}
+              />
+            )}
+          </LineEditorStepper>
+        </Loading>
+      </>
     </Page>
   );
 };

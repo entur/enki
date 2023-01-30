@@ -27,7 +27,7 @@ import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import Provider from 'model/Provider';
-import { getInit, mapToItems } from 'helpers/dropdown';
+import { mapToItems } from 'helpers/dropdown';
 import './styles.scss';
 import { filterAuthorities } from 'model/Organisation';
 import { useConfig } from 'config/ConfigContext';
@@ -91,6 +91,12 @@ const NetworkEditor = ({
     dispatchLoadFlexibleLines();
     dispatchLoadNetwork();
   }, [dispatchLoadFlexibleLines, dispatchLoadNetwork]);
+
+  useEffect(() => {
+    if (match.params.id) {
+      setNetwork(currentNetwork);
+    }
+  }, [currentNetwork, match.params.id]);
 
   const handleOnSaveClick = () => {
     if (network.name && network.authorityRef) {
@@ -164,7 +170,7 @@ const NetworkEditor = ({
                   !isBlank(network.name),
                   namePristine
                 )}
-                value={network.name ?? ''}
+                value={network.name}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   onFieldChange('name', e.target.value)
                 }
@@ -173,7 +179,7 @@ const NetworkEditor = ({
               <TextArea
                 className="form-section"
                 label={formatMessage('editorNetworkDescriptionLabelText')}
-                value={network.description ?? ''}
+                value={network.description}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   onFieldChange('description', e.target.value)
                 }
@@ -182,21 +188,21 @@ const NetworkEditor = ({
               <TextField
                 className="form-section"
                 label={formatMessage('editorNetworkPrivateCodeLabelText')}
-                value={network.privateCode ?? ''}
+                value={network.privateCode}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   onFieldChange('privateCode', e.target.value)
                 }
               />
 
+              {}
               <Dropdown
                 className="form-section"
-                initialSelectedItem={getInit(
-                  authorities.map((v) => ({ ...v, name: v.name.value })),
-                  network.authorityRef
-                )}
-                items={mapToItems(
-                  authorities.map((v) => ({ ...v, name: v.name.value }))
-                )}
+                value={network.authorityRef}
+                items={() =>
+                  mapToItems(
+                    authorities.map((v) => ({ ...v, name: v.name.value }))
+                  )
+                }
                 placeholder={formatMessage('defaultOption')}
                 clearable
                 label={formatMessage('editorNetworkAuthorityLabelText')}

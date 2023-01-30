@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLoadDependencies } from './hooks';
-import { RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
 import { withRouter, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,6 @@ import {
   validFlexibleLine,
 } from 'helpers/validation';
 import { isBlank } from 'helpers/forms';
-import { isEmpty } from 'ramda';
 import { getFlexibleLineFromPath } from 'helpers/url';
 import Loading from 'components/Loading';
 import { setSavedChanges } from 'actions/editor';
@@ -27,7 +26,7 @@ import LineEditorStepper from 'components/LineEditorStepper';
 import { useConfig } from 'config/ConfigContext';
 
 const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
-  const [line, setLine] = useState<FlexibleLine>({});
+  const [line, setLine] = useState<FlexibleLine | undefined>();
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
@@ -66,7 +65,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const handleOnSaveClick = () => {
     setNextClicked(true);
     setSaving(true);
-    dispatch(saveFlexibleLine(line))
+    dispatch(saveFlexibleLine(line!))
       .then(() => dispatch(setSavedChanges(true)))
       .then(() => !isEdit && goToLines())
       .then(() => isEdit && refetchFlexibleLine())
@@ -78,7 +77,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   };
 
   const handleDelete = () => {
-    if (line.id) {
+    if (line?.id) {
       setDeleting(true);
       dispatch(deleteLine(line)).then(() => goToLines());
     }
@@ -112,44 +111,49 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
       <>
         <Loading
           className=""
-          isLoading={isLoadingDependencies || isEmpty(line)}
+          isLoading={isLoadingDependencies}
           text={formatMessage('editorLoadingLineText')}
         >
           <>
-            <LineEditorStepper
-              steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
-              isValidStepIndex={(i: number) =>
-                getMaxAllowedStepIndex(line) >= i
-              }
-              isLineValid={validFlexibleLine(line)}
-              currentStepIsValid={(i) => currentStepIsValid(i, line)}
-              setNextClicked={setNextClicked}
-              isEdit={isEdit}
-              spoilPristine={nextClicked}
-              onDelete={handleDelete}
-              isDeleting={isDeleting}
-              onSave={handleOnSaveClick}
-              isSaving={isSaving}
-              isSaved={editor.isSaved}
-              redirectTo="/flexible-lines"
-              showConfirm={showConfirm}
-              setShowConfirm={setShowConfirm}
-              authoritiesMissing={authoritiesMissing}
-            >
-              {(activeStep) => (
-                <FlexibleLineEditorSteps
-                  activeStep={activeStep}
-                  flexibleLine={line}
-                  changeFlexibleLine={onFlexibleLineChange}
-                  operators={filterNetexOperators(
-                    organisations ?? [],
-                    config.enableLegacyOrganisationsFilter
-                  )}
-                  networks={networks || []}
-                  spoilPristine={nextClicked}
-                />
-              )}
-            </LineEditorStepper>
+            {!isLoadingDependencies && !line && (
+              <Redirect to="/flexible-lines" />
+            )}
+            {!isLoadingDependencies && line && (
+              <LineEditorStepper
+                steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
+                isValidStepIndex={(i: number) =>
+                  getMaxAllowedStepIndex(line!) >= i
+                }
+                isLineValid={validFlexibleLine(line!)}
+                currentStepIsValid={(i) => currentStepIsValid(i, line!)}
+                setNextClicked={setNextClicked}
+                isEdit={isEdit}
+                spoilPristine={nextClicked}
+                onDelete={handleDelete}
+                isDeleting={isDeleting}
+                onSave={handleOnSaveClick}
+                isSaving={isSaving}
+                isSaved={editor.isSaved}
+                redirectTo="/flexible-lines"
+                showConfirm={showConfirm}
+                setShowConfirm={setShowConfirm}
+                authoritiesMissing={authoritiesMissing}
+              >
+                {(activeStep) => (
+                  <FlexibleLineEditorSteps
+                    activeStep={activeStep}
+                    flexibleLine={line!}
+                    changeFlexibleLine={onFlexibleLineChange}
+                    operators={filterNetexOperators(
+                      organisations ?? [],
+                      config.enableLegacyOrganisationsFilter
+                    )}
+                    networks={networks || []}
+                    spoilPristine={nextClicked}
+                  />
+                )}
+              </LineEditorStepper>
+            )}
           </>
         </Loading>
       </>
