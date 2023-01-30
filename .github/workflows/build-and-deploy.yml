@@ -33,7 +33,7 @@ jobs:
         run: npm list
       - run: npm ci
       - run: npm run check
-      - run: npm run test -- --coverage
+      - run: npm run test -- --coverage --testResultsProcessor=jest-sonar-reporter
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
