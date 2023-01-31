@@ -6,6 +6,7 @@ export interface Config {
   adminRole?: string;
   xmlnsUrlPrefix?: string;
   claimsNamespace?: string;
+  sentryDsn?: string;
   auth0?: {
     domain: string;
     clientId: string;

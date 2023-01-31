@@ -10,17 +10,13 @@ import { geti18n, getIntl } from 'i18n';
 import { normalizeAllUrls } from 'helpers/url';
 import { captureException } from '@sentry/browser';
 
-const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
-
-const useSentry = process.env.NODE_ENV === 'production' && SENTRY_DSN;
-
-const getMiddlewares = () => {
+const getMiddlewares = (sentryDsn) => {
   const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
 
-  if (useSentry) {
+  if (process.env.NODE_ENV === 'production' && sentryDsn) {
     Sentry.init({
-      dsn: SENTRY_DSN,
-      release: process.env.IMAGE_TAG,
+      dsn: sentryDsn,
+      release: process.env.REACT_APP_VERSION,
       attachStacktrace: true,
       environment: process.env.NODE_ENV,
       beforeSend(e) {
@@ -51,7 +47,7 @@ export const configureStore = (auth, config) => {
     config,
   };
 
-  const middlewares = getMiddlewares();
+  const middlewares = getMiddlewares(config.sentryDsn);
   const enhancer = applyMiddleware(...middlewares);
 
   return {
