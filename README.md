@@ -1,5 +1,6 @@
 # Enki
-[![CircleCI](https://circleci.com/gh/entur/enki.svg?style=svg)](https://circleci.com/gh/entur/enki) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=entur_enki&metric=alert_status)](https://sonarcloud.io/dashboard?id=entur_enki)
+![Build and deploy](https://github.com/entur/enki/actions/workflows/build-and-deploy.yml/badge.svg)
+ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=entur_enki&metric=alert_status)](https://sonarcloud.io/dashboard?id=entur_enki)
 
 Frontend app for Nplan - a simple timetable editor. Backend is [Uttu](https://github.com/entur/uttu).
 
@@ -9,15 +10,12 @@ To run for development, simply do:
 
 ```
 npm install
-npm run start-devenv
+npm start
 ```
-Note: The app use Node v8. `nvm use v8.17.0`
 
-To run together with a local instance of [Uttu](https://github.com/entur/uttu) on port 11701, add the following to [.env.development.local](.env.development.local).
+Note: The app use Node v14. `nvm use v14`
 
-```
-UTTU_API_URL=http://localhost:11701/services/flexible-lines
-```
+To run together with a local instance of [Uttu](https://github.com/entur/uttu) on port 11701, change `uttuApiUrl` in `src/config/environments/dev.json`.
 
 ## Authentication
 
@@ -29,20 +27,4 @@ Uses [Jest](https://facebook.github.io/jest) for unit and reducer testing.
 
 ```
 npm test
-```
-
-### Testing with GraphiQL
-```
-brew cask install graphiql
-```
-
-    POST https://api.dev.entur.io/timetable-admin/v1/flexible-lines/<provider>/graphql
-
-Replace `<provider>` with the provider codespace of your choice.
-
-HTTP-header:
-```json
-{
-    "Authorization": "Bearer <token>"
-}
 ```
