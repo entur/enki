@@ -11,6 +11,51 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-XSS-Protection",
+            "value": "0"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'self'; connect-src 'self' api.dev.entur.io api.staging.entur.io api.entur.io *.ingest.sentry.io ror-entur-dev.eu.auth0.com ror-entur-staging.eu.auth0.com auth2.entur.org; font-src 'self' fonts.gstatic.com; frame-src 'self' ror-entur-dev.eu.auth0.com ror-entur-staging.eu.auth0.com auth2.entur.org; img-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests; report-uri https://o209253.ingest.sentry.io/api/1769954/security/?sentry_key=cc3cacbc67234cc7bfe1cf391010414b"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          }
+        ]
+      },
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=60"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(eot|otf|ttf|ttc|woff|woff2|css|js|map|json)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000"
+          }
+        ]
+      }
     ]
   }
 }
