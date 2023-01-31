@@ -28,18 +28,25 @@ export const toPayload = (selectedExport: Export): Export => {
   return rest;
 };
 
-export const download = async (selectedExport: Export, token: string) => {
+export const download = async (
+  apiBase: string | undefined,
+  selectedExport: Export,
+  token: string
+) => {
   try {
     // feature detection
     // eslint-disable-next-line
     const isFileSaverSupported = !!new Blob();
 
-    const { data } = await http.get(`/uttu/${selectedExport.downloadUrl}`, {
-      responseType: 'blob',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await http.get(
+      `${apiBase || ''}/uttu/${selectedExport.downloadUrl}`,
+      {
+        responseType: 'blob',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const id = selectedExport.id ?? 'EXPORT_ID';
 

@@ -10,6 +10,7 @@ import flexibleStopPlaces, {
 } from './flexibleStopPlaces';
 import editor, { EditorState } from './editor';
 import { AppIntlState } from 'i18n';
+import config, { ConfigState } from './config';
 
 export type GlobalState = {
   notification: NotificationState;
@@ -22,6 +23,7 @@ export type GlobalState = {
   flexibleStopPlaces: FlexibleStopPlacesState;
   editor: EditorState;
   intl: AppIntlState;
+  config: ConfigState;
 };
 
 const reducers = {
@@ -34,6 +36,7 @@ const reducers = {
   flexibleLines,
   flexibleStopPlaces,
   editor,
+  config,
 };
 
 export default reducers;

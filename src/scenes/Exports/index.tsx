@@ -23,6 +23,7 @@ import { ExportsState } from 'reducers/exports';
 import { download } from 'model/Export';
 import './styles.scss';
 import { useAuth } from '@entur/auth-provider';
+import { useConfig } from 'config/ConfigContext';
 
 const Exports = ({ history }: RouteComponentProps) => {
   const exports = useSelector<GlobalState, ExportsState>(
@@ -38,6 +39,8 @@ const Exports = ({ history }: RouteComponentProps) => {
   }, [dispatch]);
 
   const auth = useAuth();
+
+  const { uttuApiUrl } = useConfig();
 
   const handleOnRowClick = (id: string) => {
     history.push(`/exports/view/${id}`);
@@ -56,7 +59,7 @@ const Exports = ({ history }: RouteComponentProps) => {
                 <SecondarySquareButton
                   onClick={async (event: ChangeEvent) => {
                     event.stopPropagation();
-                    download(e, await auth.getAccessToken());
+                    download(uttuApiUrl, e, await auth.getAccessToken());
                   }}
                 >
                   <DownloadIcon />

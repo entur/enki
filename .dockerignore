@@ -1,8 +1,0 @@
-*
-!server/src
-!server/*.json
-!build/*.*
-!build/static/*.js
-!build/static/css
-!build/static/js
-!build/static/media

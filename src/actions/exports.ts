@@ -38,10 +38,12 @@ export const loadExports =
     dispatch(requestExportsActionCreator());
 
     const activeProvider = getState().providers.active?.code ?? '';
+    const uttuApiUrl = getState().config.uttuApiUrl;
     const intl = getIntl(getState());
 
     try {
       const data = await UttuQuery(
+        uttuApiUrl,
         activeProvider,
         getExportsQuery,
         {
@@ -68,10 +70,12 @@ export const loadExportById =
   (id: string) =>
   async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
     const activeProvider = getState().providers.active?.code ?? '';
+    const uttuApiUrl = getState().config.uttuApiUrl;
     const intl = getIntl(getState());
 
     try {
       const data = await UttuQuery(
+        uttuApiUrl,
         activeProvider,
         getExportByIdQuery,
         { id },
@@ -96,10 +100,12 @@ export const saveExport =
   (theExport: Export) =>
   async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
     const activeProvider = getState().providers.active?.code ?? '';
+    const uttuApiUrl = getState().config.uttuApiUrl;
     const intl = getIntl(getState());
 
     try {
       await UttuQuery(
+        uttuApiUrl,
         activeProvider,
         exportMutation,
         {

@@ -43,6 +43,7 @@ export const getProviders =
   () =>
   async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
     return UttuQuery(
+      getState().config.uttuApiUrl,
       'providers',
       getProvidersQuery,
       {},
@@ -67,6 +68,7 @@ export const saveProvider =
 
     try {
       await UttuQuery(
+        getState().config.uttuApiUrl,
         'providers',
         mutateCodespace,
         { input: provider.codespace },
@@ -74,6 +76,7 @@ export const saveProvider =
       );
 
       await UttuQuery(
+        getState().config.uttuApiUrl,
         'providers',
         mutateProvider,
         {

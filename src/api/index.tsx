@@ -10,13 +10,13 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { API_BASE } from 'http/http';
 import { Variables } from 'graphql-request/dist/src/types';
 import { useSelector } from 'react-redux';
 import { ReactElement } from 'react';
 import { GlobalState } from 'reducers';
 import { useAuth } from '@entur/auth-provider';
 import { AuthState } from 'reducers/auth';
+import { useConfig } from 'config/ConfigContext';
 
 export const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 
@@ -38,36 +38,17 @@ export type StopPlace = {
 };
 
 export const UttuQuery = (
+  apiBase: string | undefined,
   provider: string,
   query: string,
   variables?: Variables,
   accessToken?: string
 ) => {
-  const endpoint = API_BASE + '/uttu/' + provider;
+  const endpoint = (apiBase || '') + '/' + provider + '/graphql';
   const client = new GraphQLClient(endpoint, {
     headers: { ...staticHeaders, authorization: `Bearer ${accessToken}` },
   });
   return client.request(query, variables) as Promise<any>;
-};
-
-export const StopPlacesRead = async (endpoint: string) => {
-  const response = await fetch(endpoint, {
-    headers: { ...staticHeaders },
-  });
-
-  return response.json();
-};
-
-export const StopPlacesQuery = async (
-  endpoint: string,
-  query: string,
-  variables?: Variables
-) => {
-  const client = new GraphQLClient(endpoint, {
-    headers: { ...staticHeaders },
-  });
-  const response = await client.request(query, variables);
-  return response as null | SearchForQuayResponse;
 };
 
 const cleanTypeName = new ApolloLink((operation, forward) => {
@@ -84,9 +65,9 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
   });
 });
 
-const apolloClient = (provider: string, auth: AuthState) => {
+const apolloClient = (apiBase: string, provider: string, auth: AuthState) => {
   const httpLink = createHttpLink({
-    uri: API_BASE + '/uttu/' + provider,
+    uri: apiBase + '/' + provider + '/graphql',
   });
 
   const authLink = setContext(async (_, { headers }) => {
@@ -115,8 +96,10 @@ export const Apollo = ({ children }: ApolloProps) => {
   );
   const auth = useAuth();
 
+  const { uttuApiUrl } = useConfig();
+
   return (
-    <ApolloProvider client={apolloClient(provider!, auth)}>
+    <ApolloProvider client={apolloClient(uttuApiUrl!, provider!, auth)}>
       {children}
     </ApolloProvider>
   );

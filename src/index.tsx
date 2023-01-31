@@ -5,17 +5,17 @@ import { Provider } from 'react-intl-redux';
 import App from 'scenes/App';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { configureStore } from './store';
-import { API_BASE } from 'http/http';
 
 import './styles/index.scss';
 import { Apollo } from 'api';
 import AuthProvider, { useAuth } from '@entur/auth-provider';
 import { fetchConfig } from 'config/fetchConfig';
-import { ConfigContext } from 'config/ConfigContext';
+import { ConfigContext, useConfig } from 'config/ConfigContext';
 
 const AuthenticatedApp = () => {
   const auth = useAuth();
-  const { store, sentry } = configureStore(auth);
+  const config = useConfig();
+  const { store, sentry } = configureStore(auth, config);
 
   return (
     <ErrorBoundary sentry={sentry}>
@@ -33,11 +33,9 @@ const AuthenticatedApp = () => {
 
 const renderIndex = async () => {
   const root = document.getElementById('root');
-  const response: any = await fetch(API_BASE + '/auth0.json');
-  const config = await fetchConfig(API_BASE);
+  const config = await fetchConfig();
 
-  const { claimsNamespace: auth0ClaimsNamespace, ...auth0Config } =
-    await response.json();
+  const { claimsNamespace, auth0: auth0Config } = config;
 
   ReactDOM.render(
     <AuthProvider
@@ -45,7 +43,7 @@ const renderIndex = async () => {
         ...auth0Config,
         redirectUri: window.location.origin,
       }}
-      auth0ClaimsNamespace={auth0ClaimsNamespace}
+      auth0ClaimsNamespace={claimsNamespace}
     >
       <ConfigContext.Provider value={config}>
         <AuthenticatedApp />

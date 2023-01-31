@@ -30,3 +30,6 @@ src/i18n/build
 
 #SASS
 *.css.map
+
+# firebase
+.firebase/
