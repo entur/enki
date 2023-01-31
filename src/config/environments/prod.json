@@ -1,5 +1,5 @@
 {
-  "uttuApiUrl": "https://api.dev.entur.io/timetable-admin/v1/flexible-lines",
+  "uttuApiUrl": "https://api.entur.io/timetable-admin/v1/flexible-lines",
   "enableLegacyOrganisationsFilter": true,
   "adminRole": "{\"r\":\"adminEditRouteData\",\"o\":\"RB\"}",
   "xmlnsUrlPrefix": "http://www.rutebanken.org/ns/",
