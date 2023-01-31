@@ -87,7 +87,7 @@
     "redux-thunk": "2.3.0",
     "snyk": "1.689.0",
     "source-map-explorer": "2.5.2",
-    "typescript": "3.9.10",
+    "typescript": "4.9.5",
     "uuid": "3.4.0"
   },
   "devDependencies": {},
