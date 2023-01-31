@@ -10,10 +10,13 @@ import { geti18n, getIntl } from 'i18n';
 import { normalizeAllUrls } from 'helpers/url';
 import { captureException } from '@sentry/browser';
 
+let useSentry = false;
+
 const getMiddlewares = (sentryDsn) => {
   const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
 
   if (process.env.NODE_ENV === 'production' && sentryDsn) {
+    useSentry = true;
     Sentry.init({
       dsn: sentryDsn,
       release: process.env.REACT_APP_VERSION,
