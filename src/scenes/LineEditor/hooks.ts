@@ -58,7 +58,7 @@ export const useLine: UseLineType = () => {
     providers: { active: activeProvider },
   } = useSelector<GlobalState, GlobalState>((s) => s);
 
-  const { loading, error, data, refetch, called } = useQuery<LineData>(
+  const { loading, error, data, refetch } = useQuery<LineData>(
     LINE_EDITOR_QUERY,
     {
       variables: {
@@ -69,15 +69,15 @@ export const useLine: UseLineType = () => {
   );
 
   useEffect(() => {
-    if (data?.line) {
+    if (data?.line && !line) {
       setLine({
         ...data.line,
         networkRef: data.line.network?.id,
       });
-    } else if (called && !loading && match?.params.id) {
+    } else if (data?.line === null && !isBlank(match?.params.id) && !notFound) {
       setNotFound(true);
     }
-  }, [data, called, loading, match]);
+  }, [data, match, notFound, line]);
 
   const config = useConfig();
 
