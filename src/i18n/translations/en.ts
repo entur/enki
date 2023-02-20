@@ -58,6 +58,7 @@ export const messages: MessagesKey = {
   userMenuMenuItemTextEnglish: 'English',
   userMenuMenuItemTextLanguage: 'Language',
   userMenuMenuItemTextNorwegian: 'Norsk',
+  userMenuMenuItemTextSwedish: 'Svenska',
   languagePickerAriaLabel: 'Choose language',
   navBarDataProvider: 'Choose data provider',
   redirectTitle: 'Unsaved changes!',
@@ -119,7 +120,7 @@ export const messages: MessagesKey = {
   viewerNameLabel: 'Name',
   viewerStatusLabel: 'Status',
   viewerToDateLabel: 'To date',
-  uttuErrorCONSTRAINT_VIOLATION: 'Ikke unikt navn',
+  uttuErrorCONSTRAINT_VIOLATION: 'Not a unique name',
   uttuErrorCONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME:
     'Service journey must have a unique name',
   uttuErrorCONSTRAINT_VIOLATION_LINE_UNIQUE_NAME:

@@ -3,15 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateIntl } from 'react-intl-redux';
 import { FloatingButton } from '@entur/button';
 import { DownArrowIcon, CheckIcon, UpArrowIcon } from '@entur/icons';
-import { NorwayIcon, UKIcon } from '@entur/icons';
+import { NorwayIcon, UKIcon, SwedenIcon } from '@entur/icons';
 import { getMessages, SUPPORTED_LOCALES, LOCALE_KEY, selectIntl } from 'i18n';
 import './styles.scss';
 import { GlobalState } from 'reducers';
+import { MessagesKey } from 'i18n/translations/translationKeys';
 
 const getFlagIcon = (locale: string) => {
   switch (locale) {
     case 'nb':
       return <NorwayIcon inline />;
+    case 'sv':
+      return <SwedenIcon inline />;
     case 'en':
       return <UKIcon inline />;
     default: {
@@ -20,14 +23,16 @@ const getFlagIcon = (locale: string) => {
   }
 };
 
-const getLocaleString = (locale: string): string => {
+const getLocaleString = (locale: string): keyof MessagesKey => {
   switch (locale) {
     case 'en':
-      return 'English';
+      return 'userMenuMenuItemTextEnglish';
+    case 'sv':
+      return 'userMenuMenuItemTextSwedish';
     case 'nb':
-      return 'Bokmål';
+      return 'userMenuMenuItemTextNorwegian';
     default:
-      return 'Bokmål';
+      return 'userMenuMenuItemTextNorwegian';
   }
 };
 
@@ -90,7 +95,7 @@ const LanguagePicker = () => {
               size="small"
             >
               {flagIcon(locale)}
-              <span>{getLocaleString(locale)}</span>
+              <span>{formatMessage(getLocaleString(locale))}</span>
               {checkIcon(locale)}
             </FloatingButton>
           ))}
@@ -103,7 +108,7 @@ const LanguagePicker = () => {
         size="small"
       >
         {flagIcon(selectedLocale)}
-        {getLocaleString(selectedLocale)}
+        {formatMessage(getLocaleString(selectedLocale))}
         {arrowIcon}
       </FloatingButton>
     </div>
