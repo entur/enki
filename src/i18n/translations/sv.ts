@@ -46,7 +46,7 @@ export const messages = {
   flexibleStopPlacesSaveStopPlaceSuccessHeader: 'Spara hållplatser',
   flexibleStopPlacesSaveStopPlaceSuccessMessage: 'Stoppestedet sparades.',
   navBarIntroduction: 'Så här kommer du i gång',
-  navBarExportsMenuItemLabel: 'exportera',
+  navBarExportsMenuItemLabel: 'Exportera',
   navBarLinesMenuItemLabel: 'Linjer',
   navBarFlexibleOffersSubMenuHeaderLabel: 'Flexibel trafik',
   navBarFlexibleLinesMenuItemLabel: 'Flexibla linjer',
@@ -137,9 +137,9 @@ export const messages = {
     'Flexibla linjer måste ha bästallningsinformation på linje, journey pattern eller service journey',
   uttuErrorNO_EMPTY_NOTICES: 'Tomma notices är inte tillåtet',
   uttuErrorUNKNOWN: 'Okänt fel',
-  linesCreateFlexiblaLineIconButtonLabel: 'Skapa flexibel linje',
+  linesCreateFlexibleLineIconButtonLabel: 'Skapa flexibel linje',
   linesCreateLineIconButtonLabel: 'Skapa fast linje',
-  linesFlexiblaDataCell: 'Flexibla',
+  linesFlexibleDataCell: 'Flexibla',
   bookingInfoHeader: 'Beställningsinformation',
   bookingInfoHelpText: `Beställningsinformation kan läggas till på flexibel linje,
   på en hållplats i ett journey pattern eller på service journey. När du lägger
@@ -227,11 +227,11 @@ export const messages = {
   generalDrawerTitle: 'Flexibla linjetyper.',
   drawerFixed:
     'Fast linje med fasta tider, men måste förhandsbeställas för att den ska köras.',
-  drawerMainRouteWithFlexiblaEnds:
+  drawerMainRouteWithFlexibleEnds:
     'Fast linje med fasta tider, med möjlighet för på-/avstigning på hållplatser utanför definerat körmönster på beställning.',
   drawerFixedStopAreaWide:
     'Flexibel linje definerad av ett eller flera områden, där varje område kan ha olika förbestämda stopp (t.ex. mötesplatser, knutpunkter eller hållplatser).',
-  drawerFlexiblaAreasOnly:
+  drawerFlexibleAreasOnly:
     'Kunden hämtas och körs till och från valfritt punkt innanför ett definerat område, i en angiven tidsperiod (öppettid).',
   drawerHailAndRideSections:
     'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
@@ -246,7 +246,7 @@ export const messages = {
   stepperServiceJourney: 'Service Journeys',
   stepperBooking: 'Beställningsinformation',
   editorStopPoints: 'Lägg till hållplatser',
-  editorStopPointFlexiblaAreaOnly:
+  editorStopPointFlexibleAreaOnly:
     'Lägg till flexibel hållplats som definerer resan',
   stopPointsInfo:
     'Du måste lägga till minst två hållplatser; ett första och ett sista. Välj mellan flexibla eller fasta hållplatser.',
@@ -455,7 +455,7 @@ export const messages = {
   editorCoordinatesFormLabelText: 'Koordinater i GeoJson-orning [Long, Lat]',
   editorDrawPolygonButtonText: 'Rita koordinater på karta',
   editorSavingOverlayLoaderText: 'Sparar hållplatsen...',
-  validateFormErrorFlexiblaAreaNotEnoughPolygons:
+  validateFormErrorFlexibleAreaNotEnoughPolygons:
     'Du måste lägga till flera punkter i kartan',
   validateFormErrorNameEmpty: 'Du måste ge hållplatsen ett namn',
   stopPlaceText: 'flexibel hållplats',
@@ -472,12 +472,12 @@ export const messages = {
     En fast linje med fasta passeringstider som har ankomst- och avgångstider
 	på varje hållplats.
   `,
-  passingTimeTypeDrawerFlexiblaText1: `
+  passingTimeTypeDrawerFlexibleText1: `
     Flexibla passeringstider användas för att beskriva öppettider på en områdesbaserad
 	linje, eller tilgängligt tidsfönster för på- eller avstigning på hållplatser
 	i linjen.
   `,
-  passingTimeTypeDrawerFlexiblaText2: `
+  passingTimeTypeDrawerFlexibleText2: `
     Öppettider eller tidsfönster för på- eller avstigning defineras med
 	"tidigaste avgångstid" och "senaste ankomsttid":
   `,
@@ -488,7 +488,7 @@ export const messages = {
     Resor kan inte avslutas på den här hållplatsen eller området före den angivna tidspunkten.
   `,
   passingTimesTypeFixed: 'Fasta',
-  passingTimesTypeFlexibla: 'Flexibla',
+  passingTimesTypeFlexible: 'Flexibla',
   passingTimesArrivalTime: 'Ankomsttid',
   passingTimesDepartureTime: 'Avgångstid',
   passingTimesLatestArrivalTime: 'Senaste ankomsttid',
@@ -619,5 +619,5 @@ export const messages = {
   saveProviderError: 'Fel vid sparning av dataleverantör',
   saveProviderErrorFallback: 'Okänt fel vid sparning av dataleverantör',
   noProvidersDescriptionText:
-    'Your Nplan installation needs at least one provider',
+    'Din Nplan-installation behöver minst en dataleverantör',
 };
