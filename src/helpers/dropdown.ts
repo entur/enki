@@ -33,13 +33,11 @@ export const mapToItems = <E>(
     label: name ?? '',
   }));
 
-export const getEnumInit = (
-  init: string | undefined
-): NormalizedDropdownItemType | null =>
+export const getEnumInit = <E>(init?: E): NormalizedDropdownItemType | null =>
   init
     ? {
-        value: init,
-        label: init,
+        value: `${init}`,
+        label: `${init}`,
       }
     : null;
 

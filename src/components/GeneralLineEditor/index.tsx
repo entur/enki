@@ -3,14 +3,10 @@ import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { Heading1 } from '@entur/typography';
-import {
-  FLEXIBLE_LINE_TYPE,
-  VEHICLE_MODE,
-  vehicleModeMessages,
-} from 'model/enums';
+import { VEHICLE_MODE, vehicleModeMessages } from 'model/enums';
 import { selectIntl } from 'i18n';
 import './styles.scss';
-import FlexibleLine from 'model/FlexibleLine';
+import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -50,7 +46,7 @@ export default <T extends Line>({
   const { formatMessage } = useSelector(selectIntl);
   const { publicCode } = line;
 
-  let flexibleLineType: string | undefined;
+  let flexibleLineType: FlexibleLineType | undefined;
   let isFlexibleLine = false;
 
   if ((line as FlexibleLine).flexibleLineType) {
@@ -59,7 +55,7 @@ export default <T extends Line>({
   }
 
   const onFlexibleLineTypeChange = (
-    newFlexibleLineType: string | undefined
+    newFlexibleLineType: FlexibleLineType | undefined
   ) => {
     if (newFlexibleLineType !== 'flexibleAreasOnly') {
       return onChange<FlexibleLine>({
@@ -224,13 +220,13 @@ export default <T extends Line>({
                 className="flexible-line-type"
                 initialSelectedItem={getEnumInit(flexibleLineType)}
                 placeholder={formatMessage('defaultOption')}
-                items={mapEnumToItems(FLEXIBLE_LINE_TYPE)}
+                items={mapEnumToItems(FlexibleLineType)}
                 clearable
                 value={flexibleLineType}
                 label={formatMessage('generalTypeFormGroupTitle')}
                 onChange={(element) =>
                   onFlexibleLineTypeChange &&
-                  onFlexibleLineTypeChange(element?.value)
+                  onFlexibleLineTypeChange(element?.value as FlexibleLineType)
                 }
                 {...getErrorFeedback(
                   formatMessage('flexibleLineTypeEmpty'),
