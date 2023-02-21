@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { Drawer } from '@entur/modal';
 import { selectIntl } from 'i18n';
 import { Heading4 } from '@entur/typography';
+import { useConfig } from 'config/ConfigContext';
+import { MessagesKey } from 'i18n/translations/translationKeys';
 
 type Props = {
   open: boolean;
@@ -11,6 +13,7 @@ type Props = {
 };
 const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
+  const { supportedFlexibleLineTypes } = useConfig();
 
   return (
     <Drawer title={title} onDismiss={onDismiss} open={open}>
@@ -18,30 +21,18 @@ const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
         {formatMessage('generalDrawer')}
       </header>
 
-      <section className="flexible-line-type-drawer">
-        <Heading4>fixed</Heading4>
-        {formatMessage('drawerFixed')}
-      </section>
-
-      <section className="flexible-line-type-drawer">
-        <Heading4>mainRouteWithFlexibleEnds</Heading4>
-        {formatMessage('drawerMainRouteWithFlexibleEnds')}
-      </section>
-
-      <section className="flexible-line-type-drawer">
-        <Heading4>fixedStopAreaWide</Heading4>
-        {formatMessage('drawerFixedStopAreaWide')}
-      </section>
-
-      <section className="flexible-line-type-drawer">
-        <Heading4>flexibleAreasOnly</Heading4>
-        {formatMessage('drawerFlexibleAreasOnly')}
-      </section>
-
-      <section className="flexible-line-type-drawer">
-        <Heading4>hailAndRideSections</Heading4>
-        {formatMessage('drawerHailAndRideSections')}
-      </section>
+      {supportedFlexibleLineTypes?.map((flexibleLineType) => (
+        <section className="flexible-line-type-drawer">
+          <Heading4>
+            {formatMessage(
+              `flexibleLineTypeDrawer_header_${flexibleLineType}` as keyof MessagesKey
+            )}
+          </Heading4>
+          {formatMessage(
+            `flexibleLineTypeDrawer_${flexibleLineType}` as keyof MessagesKey
+          )}
+        </section>
+      ))}
     </Drawer>
   );
 };

@@ -225,16 +225,21 @@ export const messages = {
   generalDrawer: 'Her er en kort beskrivelse av de ulike linjetypene.',
   drawerAria: 'Les mer om de ulike linjetypene.',
   generalDrawerTitle: 'Fleksible linjetyper.',
-  drawerFixed:
+  flexibleLineTypeDrawer_header_fixed: 'Fast rute',
+  flexibleLineTypeDrawer_header_flexibleAreasOnly: 'Fleksibelt område',
+  flexibleLineTypeDrawer_header_mixedFlexible: 'Blandet fleksibel',
+  flexibleLineTypeDrawer_fixed:
     'Fast rute til faste tider, men må forhåndsbestilles for at ruten skal kjøres.',
-  drawerMainRouteWithFlexibleEnds:
+  flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
     'Fast rute til faste tider, med mulighet for på-/avstigning på stoppesteder utenfor oppsatt kjøremønster ved bestilling.',
-  drawerFixedStopAreaWide:
+  flexibleLineTypeDrawer_fixedStopAreaWide:
     'Fleksibel rute definert av ett eller flere områder, der hvert område kan ha ulike forhåndsbestemte stopp (møteplass, knutepunkt, kommune-senter, holdeplasser).',
-  drawerFlexibleAreasOnly:
+  flexibleLineTypeDrawer_flexibleAreasOnly:
     'Hentes og kjøres til/fra valgfritt sted innenfor et definert område og gitte åpningstider.',
-  drawerHailAndRideSections:
+  flexibleLineTypeDrawer_hailAndRideSections:
     'Ruten er definert og har noen faste holdeplasser. Langs bestemte strekninger på ruten kan på-/avstigning skje hvor som helst ved signal til sjåfør.',
+  flexibleLineTypeDrawer_mixedFlexible:
+    'Ruten kan bestå av både faste stopp og fleksible områder, med åpningstider og faste på-/avstigningstidspunkt.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Legg til journey pattern',
   journeyPatternsUnsavedChanges: 'Du har endringer som ikke er lagret.',
   journeyPatternsSaveAndContinue: 'Lagre og gå videre',

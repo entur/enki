@@ -229,16 +229,21 @@ export const messages: MessagesKey = {
   generalDrawer: 'Underneath is a short description of each line type.',
   drawerAria: 'Read more about the different line types.',
   generalDrawerTitle: 'Flexible line types.',
-  drawerFixed:
+  flexibleLineTypeDrawer_header_fixed: 'Fixed',
+  flexibleLineTypeDrawer_header_flexibleAreasOnly: 'Flexible areas only',
+  flexibleLineTypeDrawer_header_mixedFlexible: 'Mixed flexible',
+  flexibleLineTypeDrawer_fixed:
     'Fixed route at fixed times, has to be booked beforehand for the bus to drive.',
-  drawerMainRouteWithFlexibleEnds:
+  flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
     'Fixed route at fixed times, with the possibility to book boarding or alighting at stop points outside the designated route.',
-  drawerFixedStopAreaWide:
+  flexibleLineTypeDrawer_fixedStopAreaWide:
     'Flexible route defined by one or more areas, where each area can have different pre-defined stops.',
-  drawerFlexibleAreasOnly:
+  flexibleLineTypeDrawer_flexibleAreasOnly:
     'Pickup and dropoff anywhere within a defined area and given opening hours.',
-  drawerHailAndRideSections:
+  flexibleLineTypeDrawer_hailAndRideSections:
     'The route is defined, but along selected streches there is the possibility for boarding/alighting at any time.',
+  flexibleLineTypeDrawer_mixedFlexible:
+    'A mix of pre-defined stops and flexible areas, with time windows and fixed times for boarding and alighting.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Add journey pattern',
   journeyPatternsUnsavedChanges: 'You have unsaved changes.',
   journeyPatternsSaveAndContinue: 'Save and continue',
