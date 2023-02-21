@@ -235,6 +235,21 @@ export const messages = {
     'Kunden hämtas och körs till och från valfritt punkt innanför ett definerat område, i en angiven tidsperiod (öppettid).',
   drawerHailAndRideSections:
     'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
+  flexibleLineTypeDrawer_header_fixed: 'Fast',
+  flexibleLineTypeDrawer_header_flexibleAreasOnly: 'Endast flexibla områden',
+  flexibleLineTypeDrawer_header_mixedFlexible: 'Blandat',
+  flexibleLineTypeDrawer_fixed:
+    'Fast linje med fasta tider, men måste förhandsbeställas för att den ska köras.',
+  flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
+    'Fast linje med fasta tider, med möjlighet för på-/avstigning på hållplatser utanför definerat körmönster på beställning.',
+  flexibleLineTypeDrawer_fixedStopAreaWide:
+    'Flexibel linje definerad av ett eller flera områden, där varje område kan ha olika förbestämda stopp (t.ex. mötesplatser, knutpunkter eller hållplatser).',
+  flexibleLineTypeDrawer_flexibleAreasOnly:
+    'Kunden hämtas och körs till och från valfritt punkt innanför ett definerat område, i en angiven tidsperiod (öppettid).',
+  flexibleLineTypeDrawer_hailAndRideSections:
+    'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
+  flexibleLineTypeDrawer_mixedFlexible:
+    'En blandning av förhandsdefinerade hållplatser och flexibla områden, med tidsrum och fasta tider för ombord- och avstigning.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Lägg till journey pattern',
   journeyPatternsUnsavedChanges: 'Du har ändringar som inte är sparade.',
   journeyPatternsSaveAndContinue: 'Spara och gå vidare',
