@@ -7,7 +7,7 @@ import { IntlState } from 'react-intl-redux';
 import { GlobalState } from 'reducers';
 
 export const defaultLocale = 'nb';
-export const SUPPORTED_LOCALES = ['nb', 'en'];
+export const SUPPORTED_LOCALES = ['nb', 'en', 'sv'];
 
 export const LOCALE_KEY = 'OT::locale';
 

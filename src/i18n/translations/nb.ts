@@ -58,6 +58,7 @@ export const messages = {
   userMenuMenuItemTextEnglish: 'English',
   userMenuMenuItemTextLanguage: 'Språk',
   userMenuMenuItemTextNorwegian: 'Norsk',
+  userMenuMenuItemTextSwedish: 'Svenska',
   languagePickerAriaLabel: 'Velg språk',
   navBarDataProvider: 'Velg dataleverandør',
   redirectTitle: 'Endringer er ikke lagret!',
@@ -118,7 +119,7 @@ export const messages = {
   viewerNameLabel: 'Navn',
   viewerStatusLabel: 'Status',
   viewerToDateLabel: 'Til dato',
-  uttuErrorCONSTRAINT_VIOLATION: 'Not a unique name',
+  uttuErrorCONSTRAINT_VIOLATION: 'Ikke unikt navn',
   uttuErrorCONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME:
     'Service journeyen må ha et unikt navn',
   uttuErrorCONSTRAINT_VIOLATION_LINE_UNIQUE_NAME: 'Linjen må ha et unikt navn',
@@ -367,7 +368,7 @@ export const messages = {
   frontTextBoarding: 'Siste stopp kan kun ha avstigning',
   quayRefInvalid: 'Ugyldig plattform-ID',
   quaySearchResults_loadingLabel: 'Søker...',
-  quaySearchResults_quayNotFoundLabel: 'Fant ikke platform',
+  quaySearchResults_quayNotFoundLabel: 'Fant ikke plattform',
   serviceJourneyAvailability: 'Tilgjengelighet',
   serviceJourneyPassingTimes: 'Passeringstider',
   serviceJourneyBusinessHours: 'Åpningstid',
@@ -620,5 +621,5 @@ export const messages = {
   saveProviderError: 'Feil ved lagring av dataleverandør',
   saveProviderErrorFallback: 'Ukjent feil ved lagring av dataleverandør',
   noProvidersDescriptionText:
-    'Din  Nplan installasjon trenger minst en dataleverandør',
+    'Din Nplan-installasjon trenger minst en dataleverandør',
 };
