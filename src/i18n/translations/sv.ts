@@ -71,10 +71,10 @@ export const messages = {
   defaultOption: 'Vänligen välj',
   exportCreatorDryRunFormLabel: 'Skriv endast fil',
   exportCreatorDryRunFormLabelTooltip:
-    'exporterar inte data till sökbar data, men skriver endast en NeTEx-fil som man kan ladda hem och se på',
+    'Exporterar inte data till sökbar data, men skriver endast en NeTEx-fil som man kan ladda hem och se på',
   exportCreatorFromDateFormLabel: 'Från datum *',
   exportCreatorHeader: 'Skapa export',
-  exportCreatorDescription: 'exportera data till resesökmotor',
+  exportCreatorDescription: 'Exportera data till resesökmotor',
   exportCreatorNameFormLabel: 'Namn *',
   exportCreatorSaveButtonLabelText: 'Skapa export',
   exportCreatorSavingOverlayLoaderText: 'Sparar exporten...',
@@ -92,7 +92,7 @@ export const messages = {
   exportsDownloadLinkText: 'Ladda ner',
   exportsDryRunNo: 'Nej',
   exportsDryRunYes: 'Ja',
-  exportsHeader: 'exportera',
+  exportsHeader: 'Exportera',
   exportsLoadingExportsText: 'Hämtar exporter...',
   exportsNoExportsFoundText: 'Inga exporter hittades.',
   exportsTableHeaderLabelDownload: 'Ladda ner',
@@ -112,7 +112,7 @@ export const messages = {
   in_progress: 'Pågår',
   success: 'Klart',
   viewerFromDateLabel: 'Från datum',
-  viewerHeader: 'export',
+  viewerHeader: 'Export',
   viewerLoadingText: 'Hämtar export...',
   viewerMessagesLabel: 'Meddelanden',
   viewerNameLabel: 'Namn',
@@ -256,7 +256,7 @@ export const messages = {
   deleteStopPointDialogMessage:
     'Är du säker på att du vill ta bort den här hållplatspunkten?',
   selectCustom: 'Flexibel hållplats',
-  selectNsr: 'Hållplatsen',
+  selectNsr: 'Hållplats',
   editorServiceJourneys: 'Service Journeys',
   newServiceJourneyModalTitle: 'Ny service journey',
   newServiceJourneyModalSubTitle:
@@ -407,7 +407,7 @@ export const messages = {
   homePage: 'Startsidan',
   networkAuthorityMissing: 'Nätverk saknas',
   networkAuthorityMissingDetails:
-    'Det finns ingea Auktoriteter för den här dataleverantören. Vänligen kontakta en administrator.',
+    'Det finns inga auktoriteter för den här dataleverantören. Vänligen kontakta en administrator.',
   networksAuthorityTableHeaderLabel: 'Auktoritet',
   editorNetworkAuthorityLabelText: 'Auktoritet *',
   editorCreateNetworkHeaderText: 'Skapa nätverk',
@@ -452,7 +452,7 @@ export const messages = {
   editorLoadingStopPlaceText: 'Läser in hållplatsen',
   editorNameFormLabelText: 'Namn *',
   editorPrivateCodeFormLabelText: 'Privat kod',
-  editorCoordinatesFormLabelText: 'Koordinater i GeoJson-orning [Long, Lat]',
+  editorCoordinatesFormLabelText: 'Koordinater i GeoJson-ordning [Long, Lat]',
   editorDrawPolygonButtonText: 'Rita koordinater på karta',
   editorSavingOverlayLoaderText: 'Sparar hållplatsen...',
   validateFormErrorFlexibleAreaNotEnoughPolygons:

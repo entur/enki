@@ -620,5 +620,6 @@ export const messages = {
   editorLoadingProviderText: 'Laster dataleverandør',
   saveProviderError: 'Feil ved lagring av dataleverandør',
   saveProviderErrorFallback: 'Ukjent feil ved lagring av dataleverandør',
-  noProvidersDescriptionText: 'Nplan trenger minst en dataleverandør',
+  noProvidersDescriptionText:
+    'Din Nplan-installasjon trenger minst en dataleverandør',
 };
