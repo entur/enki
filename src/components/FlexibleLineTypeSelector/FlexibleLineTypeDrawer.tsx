@@ -25,7 +25,7 @@ const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
         <section className="flexible-line-type-drawer">
           <Heading4>
             {formatMessage(
-              `flexibleLineTypeDrawer_header_${flexibleLineType}` as keyof MessagesKey
+              `flexibleLineType_${flexibleLineType}` as keyof MessagesKey
             )}
           </Heading4>
           {formatMessage(

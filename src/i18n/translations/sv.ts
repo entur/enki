@@ -235,9 +235,9 @@ export const messages = {
     'Kunden hämtas och körs till och från valfritt punkt innanför ett definerat område, i en angiven tidsperiod (öppettid).',
   drawerHailAndRideSections:
     'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
-  flexibleLineTypeDrawer_header_fixed: 'Fast',
-  flexibleLineTypeDrawer_header_flexibleAreasOnly: 'Endast flexibla områden',
-  flexibleLineTypeDrawer_header_mixedFlexible: 'Blandat',
+  flexibleLineType_fixed: 'Fast',
+  flexibleLineType_flexibleAreasOnly: 'Endast flexibla områden',
+  flexibleLineType_mixedFlexible: 'Blandat',
   flexibleLineTypeDrawer_fixed:
     'Fast linje med fasta tider, men måste förhandsbeställas för att den ska köras.',
   flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:

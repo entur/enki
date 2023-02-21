@@ -1,12 +1,12 @@
 import { Dropdown } from '@entur/dropdown';
 import { useConfig } from 'config/ConfigContext';
-import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
+import { mapFlexibleLineTypeAndLabelToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import { selectIntl } from 'i18n';
 import { FlexibleLineType } from 'model/FlexibleLine';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
 import './styles.scss';
@@ -26,13 +26,17 @@ export const FlexibleLineTypeSelector = ({
   const { formatMessage } = useSelector(selectIntl);
   const flexibleLineTypePristine = usePristine(flexibleLineType, spoilPristine);
   const { supportedFlexibleLineTypes } = useConfig();
-  const mappedFlexibleLineTypes = useMemo(
-    () =>
-      (Object.values(FlexibleLineType) as Array<FlexibleLineType>).filter((e) =>
-        supportedFlexibleLineTypes?.includes(e)
-      ),
-    [supportedFlexibleLineTypes]
-  );
+
+  const getDropdownItems = useCallback(() => {
+    const mappedFlexibleLineTypes = (
+      Object.values(FlexibleLineType) as Array<FlexibleLineType>
+    ).filter((e) => supportedFlexibleLineTypes?.includes(e));
+
+    return mapFlexibleLineTypeAndLabelToItems(
+      mappedFlexibleLineTypes,
+      formatMessage
+    );
+  }, [supportedFlexibleLineTypes, formatMessage]);
 
   return (
     <>
@@ -46,11 +50,10 @@ export const FlexibleLineTypeSelector = ({
       {
         <Dropdown
           className="flexible-line-type"
-          initialSelectedItem={getEnumInit(flexibleLineType)}
-          placeholder={formatMessage('defaultOption')}
-          items={mapEnumToItems(mappedFlexibleLineTypes)}
-          clearable
           value={flexibleLineType}
+          placeholder={formatMessage('defaultOption')}
+          items={getDropdownItems}
+          clearable
           label={formatMessage('generalTypeFormGroupTitle')}
           onChange={(element) => onChange(element?.value as FlexibleLineType)}
           {...getErrorFeedback(

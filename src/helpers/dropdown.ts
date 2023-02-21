@@ -6,6 +6,7 @@ import {
   VEHICLE_SUBMODE,
   vehicleSubmodeMessages,
 } from '../model/enums';
+import { FlexibleLineType } from 'model/FlexibleLine';
 
 type GenericDropdownItem<E> = {
   id?: string;
@@ -67,5 +68,15 @@ export const mapVehicleSubmodeAndLabelToItems = (
   ...Object.values(e).map((type: VEHICLE_SUBMODE) => ({
     value: type,
     label: formatMessage(vehicleSubmodeMessages[type]),
+  })),
+];
+
+export const mapFlexibleLineTypeAndLabelToItems = (
+  e: FlexibleLineType[],
+  formatMessage: FormatMessage
+): NormalizedDropdownItemType[] => [
+  ...Object.values(e).map((type: FlexibleLineType) => ({
+    value: type,
+    label: formatMessage(`flexibleLineType_${type}` as keyof MessagesKey),
   })),
 ];

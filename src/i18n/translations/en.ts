@@ -229,9 +229,9 @@ export const messages: MessagesKey = {
   generalDrawer: 'Underneath is a short description of each line type.',
   drawerAria: 'Read more about the different line types.',
   generalDrawerTitle: 'Flexible line types.',
-  flexibleLineTypeDrawer_header_fixed: 'Fixed',
-  flexibleLineTypeDrawer_header_flexibleAreasOnly: 'Flexible areas only',
-  flexibleLineTypeDrawer_header_mixedFlexible: 'Mixed flexible',
+  flexibleLineType_fixed: 'Fixed',
+  flexibleLineType_flexibleAreasOnly: 'Flexible areas only',
+  flexibleLineType_mixedFlexible: 'Mixed flexible',
   flexibleLineTypeDrawer_fixed:
     'Fixed route at fixed times, has to be booked beforehand for the bus to drive.',
   flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:

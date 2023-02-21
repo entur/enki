@@ -225,9 +225,9 @@ export const messages = {
   generalDrawer: 'Her er en kort beskrivelse av de ulike linjetypene.',
   drawerAria: 'Les mer om de ulike linjetypene.',
   generalDrawerTitle: 'Fleksible linjetyper.',
-  flexibleLineTypeDrawer_header_fixed: 'Fast',
-  flexibleLineTypeDrawer_header_flexibleAreasOnly: 'Kune fleksible områder',
-  flexibleLineTypeDrawer_header_mixedFlexible: 'Blandet',
+  flexibleLineType_fixed: 'Fast',
+  flexibleLineType_flexibleAreasOnly: 'Kun fleksible områder',
+  flexibleLineType_mixedFlexible: 'Blandet',
   flexibleLineTypeDrawer_fixed:
     'Fast rute til faste tider, men må forhåndsbestilles for at ruten skal kjøres.',
   flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
