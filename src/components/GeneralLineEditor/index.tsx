@@ -19,7 +19,6 @@ import RequiredInputMarker from 'components/RequiredInputMarker';
 import { Network } from 'model/Network';
 import {
   getEnumInit,
-  getInit,
   mapEnumToItems,
   mapToItems,
   mapVehicleModeAndLabelToItems,
@@ -103,6 +102,13 @@ export default <T extends Line>({
   const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
   const modePristine = usePristine(line.transportMode, spoilPristine);
 
+  const getOperatorItems = useCallback(
+    () => mapToItems(operators.map((op) => ({ ...op, name: op.name.value }))),
+    [operators]
+  );
+
+  const getNetworkItems = useCallback(() => mapToItems(networks), [networks]);
+
   return (
     <div className="lines-editor-general">
       <Heading1> {formatMessage('editorAbout')}</Heading1>
@@ -167,14 +173,9 @@ export default <T extends Line>({
         />
 
         <Dropdown
-          initialSelectedItem={getInit(
-            operators.map((op) => ({ ...op, name: op.name.value })),
-            line.operatorRef
-          )}
+          value={line.operatorRef || null}
           placeholder={formatMessage('defaultOption')}
-          items={mapToItems(
-            operators.map((op) => ({ ...op, name: op.name.value }))
-          )}
+          items={getOperatorItems}
           clearable
           label={formatMessage('generalOperatorFormGroupTitle')}
           onChange={(element) =>
@@ -191,9 +192,9 @@ export default <T extends Line>({
         />
 
         <Dropdown
-          initialSelectedItem={getInit(networks, line.networkRef)}
+          value={line.networkRef || null}
           placeholder={formatMessage('defaultOption')}
-          items={mapToItems(networks)}
+          items={getNetworkItems}
           clearable
           label={formatMessage('generalNetworkFormGroupTitle')}
           onChange={(element) =>
