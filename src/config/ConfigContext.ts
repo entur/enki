@@ -1,3 +1,4 @@
+import { FlexibleLineType } from 'model/FlexibleLine';
 import { createContext, useContext } from 'react';
 
 export interface Config {
@@ -14,6 +15,7 @@ export interface Config {
     useRefreshTokens: boolean;
     cacheLocation: string;
   };
+  supportedFlexibleLineTypes?: FlexibleLineType[];
 }
 
 export const ConfigContext = createContext<Config>({});
