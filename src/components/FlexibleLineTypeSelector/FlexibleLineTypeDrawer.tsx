@@ -22,7 +22,7 @@ const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
       </header>
 
       {supportedFlexibleLineTypes?.map((flexibleLineType) => (
-        <section className="flexible-line-type-drawer">
+        <section className="flexible-line-type-drawer" key={flexibleLineType}>
           <Heading4>
             {formatMessage(
               `flexibleLineType_${flexibleLineType}` as keyof MessagesKey
