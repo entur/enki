@@ -50,34 +50,6 @@ export const mapEnumToItems = <E>(e: E): NormalizedDropdownItemType[] => [
   })),
 ];
 
-export const vehicleModeInit = (
-  e: Record<VEHICLE_MODE, keyof MessagesKey>,
-  formatMessage: FormatMessage,
-  init: VEHICLE_MODE | undefined
-): NormalizedDropdownItemType | null => {
-  const mapped = [
-    ...Object.entries(e).map(([key, label]) => ({
-      id: key,
-      name: formatMessage(label),
-    })),
-  ];
-  return getInit(mapped, init);
-};
-
-export const vehicleSubmodeInit = (
-  e: VEHICLE_SUBMODE[],
-  formatMessage: FormatMessage,
-  init: VEHICLE_SUBMODE | undefined
-): NormalizedDropdownItemType | null => {
-  const mapped = [
-    ...Object.values(e).map((type) => ({
-      id: type,
-      name: formatMessage(vehicleSubmodeMessages[type]),
-    })),
-  ];
-  return getInit(mapped, init);
-};
-
 export const mapVehicleModeAndLabelToItems = (
   e: Record<VEHICLE_MODE, keyof MessagesKey>,
   formatMessage: FormatMessage

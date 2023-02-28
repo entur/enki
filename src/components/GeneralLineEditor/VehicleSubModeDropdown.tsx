@@ -1,10 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Dropdown } from '@entur/dropdown';
 import { useSelector } from 'react-redux';
-import {
-  mapVehicleSubmodeAndLabelToItems,
-  vehicleSubmodeInit,
-} from 'helpers/dropdown';
+import { mapVehicleSubmodeAndLabelToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import { selectIntl } from 'i18n';
@@ -28,23 +25,23 @@ const VehicleSubModeDropdown = (props: Props) => {
     props.transportSubmode,
     props.spoilPristine
   );
-  const subModeItems = props.transportMode
-    ? mapVehicleSubmodeAndLabelToItems(
-        VEHICLE_SUBMODE_LINK[props.transportMode],
-        formatMessage
-      )
-    : [];
+  const getSubModeItems = useCallback(
+    () =>
+      props.transportMode
+        ? mapVehicleSubmodeAndLabelToItems(
+            VEHICLE_SUBMODE_LINK[props.transportMode],
+            formatMessage
+          )
+        : [],
+    [props.transportMode, formatMessage]
+  );
 
   return (
     <div key={props.transportMode}>
       <Dropdown
-        initialSelectedItem={vehicleSubmodeInit(
-          VEHICLE_SUBMODE_LINK[props.transportMode],
-          formatMessage,
-          props.transportSubmode
-        )}
+        value={props.transportSubmode}
         placeholder={formatMessage('defaultOption')}
-        items={subModeItems}
+        items={getSubModeItems}
         clearable
         label={formatMessage('transportSubModeTitle')}
         onChange={(element) =>

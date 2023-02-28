@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
@@ -23,7 +23,6 @@ import {
   mapEnumToItems,
   mapToItems,
   mapVehicleModeAndLabelToItems,
-  vehicleModeInit,
 } from 'helpers/dropdown';
 import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
@@ -89,6 +88,11 @@ export default <T extends Line>({
       flexibleLineType: newFlexibleLineType,
     });
   };
+
+  const getModeItems = useCallback(
+    () => mapVehicleModeAndLabelToItems(vehicleModeMessages, formatMessage),
+    [formatMessage]
+  );
 
   const [showDrawer, setDrawer] = useState<boolean>(false);
 
@@ -239,16 +243,9 @@ export default <T extends Line>({
 
         <section className="transport-mode-dropdowns">
           <Dropdown
-            initialSelectedItem={vehicleModeInit(
-              vehicleModeMessages,
-              formatMessage,
-              line.transportMode
-            )}
+            value={line.transportMode}
             placeholder={formatMessage('defaultOption')}
-            items={mapVehicleModeAndLabelToItems(
-              vehicleModeMessages,
-              formatMessage
-            )}
+            items={getModeItems}
             clearable
             label={formatMessage('transportModeTitle')}
             onChange={(element) =>
