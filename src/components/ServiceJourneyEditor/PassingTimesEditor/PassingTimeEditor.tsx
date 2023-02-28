@@ -116,10 +116,10 @@ export const PassingTimeEditor = ({
           const date = e?.toTimeString().split(' ')[0];
           onChange({
             ...passingTime,
-            [arrivalField]: date,
+            [arrivalField]: date || null,
             [departureField]:
               isLast && type === PassingTimeType.NORMAL
-                ? date
+                ? null
                 : passingTime[departureField],
           });
         }}
@@ -135,7 +135,7 @@ export const PassingTimeEditor = ({
             [arrivalDayOffsetField]: value,
             [departureDayOffsetField]:
               isLast && type === PassingTimeType.NORMAL
-                ? value
+                ? null
                 : passingTime[departureDayOffsetField],
           })
         }
@@ -148,10 +148,10 @@ export const PassingTimeEditor = ({
           const date = e?.toTimeString().split(' ')[0];
           onChange({
             ...passingTime,
-            [departureField]: date,
+            [departureField]: date || null,
             [arrivalField]:
               index === 0 && type === PassingTimeType.NORMAL
-                ? date
+                ? null
                 : passingTime[arrivalField],
           });
         }}
@@ -167,7 +167,7 @@ export const PassingTimeEditor = ({
             [departureDayOffsetField]: value,
             [arrivalDayOffsetField]:
               index === 0 && type === PassingTimeType.NORMAL
-                ? value
+                ? null
                 : passingTime[departureDayOffsetField],
           })
         }
