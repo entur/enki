@@ -39,7 +39,7 @@ export const download = async (
     const isFileSaverSupported = !!new Blob();
 
     const { data } = await http.get(
-      `${apiBase || ''}/uttu/${selectedExport.downloadUrl}`,
+      `${apiBase || ''}/${selectedExport.downloadUrl}`,
       {
         responseType: 'blob',
         headers: {
