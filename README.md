@@ -15,7 +15,11 @@ npm start
 
 Note: The app use Node v14. `nvm use v14`
 
-To run together with a local instance of [Uttu](https://github.com/entur/uttu) on port 11701, change `uttuApiUrl` in `src/config/environments/dev.json`.
+To run together with a local instance of [Uttu](https://github.com/entur/uttu) on port 11701, add the following to `.env.development.local`.
+
+```
+REACT_APP_UTTU_API_URL=http://localhost:11701/services/flexible-lines
+```
 
 ## Authentication
 
