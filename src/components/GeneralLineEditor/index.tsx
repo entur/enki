@@ -12,10 +12,7 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { Network } from 'model/Network';
-import {
-  mapToItems,
-  mapVehicleModeAndLabelToItems,
-} from 'helpers/dropdown';
+import { mapToItems, mapVehicleModeAndLabelToItems } from 'helpers/dropdown';
 import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -44,16 +41,13 @@ export default <T extends Line>({
   const { formatMessage } = useSelector(selectIntl);
   const { publicCode } = line;
 
-  const {
-    flexibleLineType,
-    isFlexibleLine
-  } = useMemo(() => {
+  const { flexibleLineType, isFlexibleLine } = useMemo(() => {
     const flexibleLineType = (line as FlexibleLine).flexibleLineType;
     const isFlexibleLine = !!flexibleLineType;
 
     return {
       flexibleLineType,
-      isFlexibleLine
+      isFlexibleLine,
     };
   }, [line]);
 
