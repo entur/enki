@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
-import General from './General';
-import { Paragraph, Heading3 } from '@entur/typography';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import ConfirmDialog from 'components/ConfirmDialog';
+import DeleteButton from 'components/DeleteButton/DeleteButton';
+import RequiredInputMarker from 'components/RequiredInputMarker';
+import { StopPointsEditor } from 'components/StopPointsEditor/StopPointsEditor';
 import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
-import StopPoint from 'model/StopPoint';
-import AddButton from 'components/AddButton/AddButton';
-import { GlobalState } from 'reducers';
+import { selectIntl } from 'i18n';
+import { FlexibleLineType } from 'model/FlexibleLine';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import JourneyPattern from 'model/JourneyPattern';
-import RequiredInputMarker from 'components/RequiredInputMarker';
-import useUniqueKeys from 'hooks/useUniqueKeys';
-import DeleteButton from 'components/DeleteButton/DeleteButton';
-import ConfirmDialog from 'components/ConfirmDialog';
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import StopPoint from 'model/StopPoint';
+import React, { useState } from 'react';
+import { connect, useSelector } from 'react-redux';
+import { GlobalState } from 'reducers';
+import General from './General';
 import './styles.scss';
-import { useStopPointEditor } from 'components/StopPointEditor';
-import { FlexibleLineType } from 'model/FlexibleLine';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -88,10 +85,6 @@ const JourneyPatternEditor = ({
       ),
     });
 
-  const keys = useUniqueKeys(pointsInSequence);
-
-  const StopPointEditor = useStopPointEditor(flexibleLineType);
-
   return (
     <div className="journey-pattern-editor">
       <div>
@@ -104,35 +97,14 @@ const JourneyPatternEditor = ({
           />
         </section>
 
-        <section style={{ marginTop: '2em' }}>
-          <Heading3>{formatMessage('editorStopPoints')}</Heading3>
-          <Paragraph>
-            {flexibleLineType
-              ? formatMessage('stopPointsInfo')
-              : formatMessage('stopPointsInfoFixed')}
-          </Paragraph>
-          <div className="stop-point-editor">
-            {pointsInSequence.map((stopPoint, pointIndex) => (
-              <StopPointEditor
-                key={keys[pointIndex]}
-                order={pointIndex + 1}
-                stopPoint={stopPoint}
-                spoilPristine={spoilPristine}
-                isFirst={pointIndex === 0}
-                isLast={pointIndex === pointsInSequence.length - 1}
-                onChange={(updatedStopPoint: StopPoint) =>
-                  updateStopPoint(pointIndex, updatedStopPoint)
-                }
-                onDelete={() => deleteStopPoint(pointIndex)}
-                canDelete={pointsInSequence.length > 2}
-              />
-            ))}
-          </div>
-          <AddButton
-            onClick={addStopPoint}
-            buttonTitle={formatMessage('editorAddStopPoint')}
-          />
-        </section>
+        <StopPointsEditor
+          pointsInSequence={pointsInSequence}
+          flexibleLineType={flexibleLineType}
+          spoilPristine={spoilPristine}
+          updateStopPoint={updateStopPoint}
+          deleteStopPoint={deleteStopPoint}
+          addStopPoint={addStopPoint}
+        />
       </div>
       {onDelete && (
         <DeleteButton
