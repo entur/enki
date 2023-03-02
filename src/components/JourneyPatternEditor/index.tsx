@@ -3,9 +3,7 @@ import { connect, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import General from './General';
 import { Paragraph, Heading3 } from '@entur/typography';
-import { validateStopPoint } from 'helpers/validation';
 import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
-import StopPointEditor from './StopPointEditor';
 import StopPoint from 'model/StopPoint';
 import AddButton from 'components/AddButton/AddButton';
 import { GlobalState } from 'reducers';
@@ -17,13 +15,15 @@ import DeleteButton from 'components/DeleteButton/DeleteButton';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import './styles.scss';
+import { useStopPointEditor } from 'components/StopPointEditor';
+import { FlexibleLineType } from 'model/FlexibleLine';
 
 type Props = {
   journeyPattern: JourneyPattern;
   onSave: (journeyPattern: JourneyPattern) => void;
   onDelete?: () => void;
   spoilPristine: boolean;
-  flexibleLineType?: string;
+  flexibleLineType?: FlexibleLineType;
 };
 
 type StateProps = {
@@ -90,6 +90,8 @@ const JourneyPatternEditor = ({
 
   const keys = useUniqueKeys(pointsInSequence);
 
+  const StopPointEditor = useStopPointEditor(flexibleLineType);
+
   return (
     <div className="journey-pattern-editor">
       <div>
@@ -113,26 +115,16 @@ const JourneyPatternEditor = ({
             {pointsInSequence.map((stopPoint, pointIndex) => (
               <StopPointEditor
                 key={keys[pointIndex]}
-                index={pointIndex}
-                isFirstStop={pointIndex === 0}
-                isLastStop={pointIndex === pointsInSequence.length - 1}
+                order={pointIndex + 1}
                 stopPoint={stopPoint}
-                errors={validateStopPoint(
-                  stopPoint,
-                  pointIndex === 0,
-                  pointIndex === pointsInSequence.length - 1
-                )}
-                deleteStopPoint={
-                  pointsInSequence.length > 2
-                    ? () => deleteStopPoint(pointIndex)
-                    : undefined
-                }
-                stopPointChange={(updatedStopPoint: StopPoint) =>
+                spoilPristine={spoilPristine}
+                isFirst={pointIndex === 0}
+                isLast={pointIndex === pointsInSequence.length - 1}
+                onChange={(updatedStopPoint: StopPoint) =>
                   updateStopPoint(pointIndex, updatedStopPoint)
                 }
-                flexibleStopPlaces={flexibleStopPlaces}
-                spoilPristine={spoilPristine}
-                flexibleLineType={flexibleLineType}
+                onDelete={() => deleteStopPoint(pointIndex)}
+                canDelete={pointsInSequence.length > 2}
               />
             ))}
           </div>

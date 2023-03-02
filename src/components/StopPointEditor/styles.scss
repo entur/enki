@@ -1,0 +1,65 @@
+@import '~@entur/tokens/dist/styles.scss';
+
+.stop-point-editor {
+  .stop-point {
+    padding-bottom: 0.7rem;
+    border-bottom: 2px solid $colors-greys-grey20;
+
+    .stop-point-element {
+      display: flex;
+      justify-content: space-between;
+      margin-top: $space-extra-large;
+
+      .stop-point-key-info {
+        display: flex;
+        min-width: fit-content;
+
+        > :first-child {
+          margin: auto 2rem auto 0;
+        }
+
+        > fieldset {
+          margin: auto 0;
+          min-width: fit-content;
+        }
+
+        .radio-buttons {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+      }
+
+      .stop-point-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 50rem;
+        flex-basis: 100%;
+        margin-left: 1rem;
+
+        .eds-input-group + .eds-input-group {
+          margin-top: 0;
+        }
+
+        > div {
+          min-width: 200px;
+          margin-right: 3px;
+          margin-bottom: 1rem;
+        }
+
+        .stop-point-info-item {
+          width: 260px;
+        }
+
+        > :last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    > :last-child {
+      border-bottom: none;
+    }
+  }
+}
