@@ -49,6 +49,7 @@ query getFlexibleLines {
     name,
     description,
     privateCode,
+    publicCode,
     flexibleLineType,
     operatorRef,
     network {
@@ -328,6 +329,7 @@ export const GET_LINES = gql`
       id
       name
       privateCode
+      publicCode
       operatorRef
     }
   }
