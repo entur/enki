@@ -257,6 +257,7 @@ export const messages = {
     'Du må legge til minst to stopp; ett for start og ett for slutt. Velg mellom fleksible stoppesteder eller platform-IDer fra Nasjonalt stoppestedsregister.',
   stopPointsInfoFixed:
     'Du må legge til minst to stopp; ett for start og ett for slutt. Skriv inn platform-ID fra stoppestedsregisteret.',
+  stopPointsInfoFlexibleAreaOnly: 'TODO: ADD DESCRIPTION HERE',
   deleteStopPointDialogTitle: 'Slette stoppepunkt',
   deleteStopPointDialogMessage:
     'Er du sikker på at du ønsker å slette dette stoppepunktet?',

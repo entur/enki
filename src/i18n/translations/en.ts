@@ -255,12 +255,12 @@ export const messages: MessagesKey = {
   stepperServiceJourney: 'Service Journeys',
   stepperBooking: 'Booking info',
   editorStopPoints: 'Add stop points defining the service',
-  editorStopPointFlexibleAreaOnly:
-    'Add flexible stop place defining the service',
+  editorStopPointFlexibleAreaOnly: 'Flexible stop place defining the service',
   stopPointsInfo:
     'You have to add at least two stop points; one for start and one for stop. Choose between flexible stop places and quay IDs from the National stop place registry.',
   stopPointsInfoFixed:
     'You have to add at least two stop points; one for start and one for stop. Enter quay id from the National stop place registry.',
+  stopPointsInfoFlexibleAreaOnly: 'TODO: ADD DESCRIPTION HERE',
   deleteStopPointDialogTitle: 'Delete stop point',
   deleteStopPointDialogMessage:
     'Are you sure you want to delete this stop point?',

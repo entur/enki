@@ -1,7 +1,6 @@
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
-import { TextField } from '@entur/form';
 import { Paragraph } from '@entur/typography';
 import ConfirmDialog from 'components/ConfirmDialog';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
@@ -9,12 +8,13 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
 import { AppIntlState, selectIntl } from 'i18n';
-import React, { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
-import { StopPointEditorProps } from '.';
-import { QuayRefField } from './QuayRefField';
-import './styles.scss';
+import { StopPointEditorProps } from '../common/StopPointEditorProps';
+import { FrontTextTextField } from '../common/FrontTextTextField';
+import { useOnFrontTextChange } from '../common/hooks';
+import { QuayRefField } from '../common/QuayRefField';
 
 export const GenericStopPointEditor = ({
   order,
@@ -28,15 +28,12 @@ export const GenericStopPointEditor = ({
 }: StopPointEditorProps) => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const {
-    flexibleStopPlaceRefAndQuayRef: flexibleStopPlaceRefAndQuayRefError,
+    quayRef: quayRefError,
     boarding: boardingError,
     frontText: frontTextError,
-  } = validateStopPoint(stopPoint, isFirst, isLast);
+  } = validateStopPoint(stopPoint, isFirst!, isLast!);
+
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
-  const frontTextPristine = usePristine(
-    stopPoint.destinationDisplay?.frontText,
-    spoilPristine
-  );
 
   const boardingItems = useMemo(
     () => [
@@ -62,16 +59,7 @@ export const GenericStopPointEditor = ({
     [onChange, stopPoint]
   );
 
-  const onFrontTextChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) =>
-      onChange({
-        ...stopPoint,
-        destinationDisplay: e.target.value
-          ? { frontText: e.target.value }
-          : null,
-      }),
-    [onChange, stopPoint]
-  );
+  const onFrontTextChange = useOnFrontTextChange(stopPoint, onChange);
 
   const onBoardingChange = useCallback(
     (element: NormalizedDropdownItemType | null) =>
@@ -99,28 +87,19 @@ export const GenericStopPointEditor = ({
           <QuayRefField
             initialQuayRef={stopPoint.quayRef}
             errorFeedback={getErrorFeedback(
-              flexibleStopPlaceRefAndQuayRefError
-                ? formatMessage(flexibleStopPlaceRefAndQuayRefError)
-                : '',
-              !flexibleStopPlaceRefAndQuayRefError,
+              quayRefError ? formatMessage(quayRefError) : '',
+              !quayRefError,
               quayRefPristine
             )}
             onChange={onQuayRefChange}
           />
-          <TextField
-            className="stop-point-info-item"
-            label={formatMessage(
-              isFirst ? 'labelFrontTextRequired' : 'labelFrontText'
-            )}
-            {...getErrorFeedback(
-              frontTextError ? formatMessage(frontTextError) : '',
-              !frontTextError,
-              frontTextPristine
-            )}
-            disabled={isLast}
-            labelTooltip={formatMessage('frontTextTooltip')}
+
+          <FrontTextTextField
             value={stopPoint.destinationDisplay?.frontText}
             onChange={onFrontTextChange}
+            disabled={isLast}
+            spoilPristine={spoilPristine}
+            frontTextError={frontTextError}
           />
 
           <Dropdown

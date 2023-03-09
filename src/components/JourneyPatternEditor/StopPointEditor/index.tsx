@@ -20,6 +20,32 @@ import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import { QuayRefField } from './QuayRefField';
 
+/** Old usage:
+               // <StopPointEditor
+              //   key={keys[pointIndex]}
+              //   index={pointIndex}
+              //   isFirstStop={pointIndex === 0}
+              //   isLastStop={pointIndex === pointsInSequence.length - 1}
+              //   stopPoint={stopPoint}
+              //   errors={validateStopPoint(
+              //     stopPoint,
+              //     pointIndex === 0,
+              //     pointIndex === pointsInSequence.length - 1
+              //   )}
+              //   deleteStopPoint={
+              //     pointsInSequence.length > 2
+              //       ? () => deleteStopPoint(pointIndex)
+              //       : undefined
+              //   }
+              //   stopPointChange={(updatedStopPoint: StopPoint) =>
+              //     updateStopPoint(pointIndex, updatedStopPoint)
+              //   }
+              //   flexibleStopPlaces={flexibleStopPlaces}
+              //   spoilPristine={spoilPristine}
+              //   flexibleLineType={flexibleLineType}
+              // />
+ */
+
 type StopPlaceMode = 'nsr' | 'custom';
 
 type Props = {
@@ -61,7 +87,7 @@ const StopPointEditor = ({
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
   const frontTextPristine = usePristine(frontTextValue, spoilPristine);
 
-  const stopPlaceError = errors.flexibleStopPlaceRefAndQuayRef;
+  const stopPlaceError = errors.quayRef;
   const frontTextError = errors.frontText;
 
   const boardingItems = [

@@ -10,7 +10,7 @@ import { GlobalState } from 'reducers';
 import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
 import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
 import {
-  currentStepIsValid,
+  currentFlexibleLineStepIsValid,
   getMaxAllowedStepIndex,
   validFlexibleLine,
 } from 'helpers/validation';
@@ -125,7 +125,9 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
                   getMaxAllowedStepIndex(line!) >= i
                 }
                 isLineValid={validFlexibleLine(line!)}
-                currentStepIsValid={(i) => currentStepIsValid(i, line!)}
+                currentStepIsValid={(i) =>
+                  currentFlexibleLineStepIsValid(i, line!)
+                }
                 setNextClicked={setNextClicked}
                 isEdit={isEdit}
                 spoilPristine={nextClicked}

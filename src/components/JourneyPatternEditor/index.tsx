@@ -2,16 +2,14 @@ import { SecondaryButton, SuccessButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import { StopPointsEditor } from 'components/StopPointsEditor/StopPointsEditor';
+import { useStopPointsEditor } from 'components/StopPointsEditor';
 import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
 import { selectIntl } from 'i18n';
 import { FlexibleLineType } from 'model/FlexibleLine';
-import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import JourneyPattern from 'model/JourneyPattern';
 import StopPoint from 'model/StopPoint';
-import React, { useState } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { GlobalState } from 'reducers';
+import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 import General from './General';
 import './styles.scss';
 
@@ -23,67 +21,75 @@ type Props = {
   flexibleLineType?: FlexibleLineType;
 };
 
-type StateProps = {
-  flexibleStopPlaces: FlexibleStopPlace[];
-};
-
 const JourneyPatternEditor = ({
   journeyPattern,
   onSave,
   onDelete,
-  flexibleStopPlaces,
   spoilPristine,
   flexibleLineType,
-}: Props & StateProps) => {
+}: Props) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
 
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const { formatMessage } = useSelector(selectIntl);
 
-  const onJourneyPatternChange = (newJourneyPattern: JourneyPattern) => {
-    onSave(newJourneyPattern);
-  };
+  const deleteStopPoint = useCallback(
+    (stopPointIndex: number) => {
+      const newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
+        ...serviceJourney,
+        passingTimes: serviceJourney.passingTimes
+          ? removeElementByIndex(serviceJourney.passingTimes, stopPointIndex)
+          : [],
+      }));
 
-  const deleteStopPoint = (stopPointIndex: number) => {
-    const newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
-      ...serviceJourney,
-      passingTimes: serviceJourney.passingTimes
-        ? removeElementByIndex(serviceJourney.passingTimes, stopPointIndex)
-        : [],
-    }));
+      onSave({
+        ...journeyPattern,
+        serviceJourneys: newServiceJourneys,
+        pointsInSequence: removeElementByIndex(
+          journeyPattern.pointsInSequence,
+          stopPointIndex
+        ),
+      });
+    },
+    [journeyPattern, onSave, serviceJourneys]
+  );
 
-    onJourneyPatternChange({
-      ...journeyPattern,
-      serviceJourneys: newServiceJourneys,
-      pointsInSequence: removeElementByIndex(
-        journeyPattern.pointsInSequence,
-        stopPointIndex
-      ),
-    });
-  };
-
-  const addStopPoint = () => {
+  const addStopPoint = useCallback(() => {
     const newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
       ...serviceJourney,
       passingTimes: [...serviceJourney.passingTimes, {}],
     }));
 
-    onJourneyPatternChange({
+    onSave({
       ...journeyPattern,
       pointsInSequence: [...journeyPattern.pointsInSequence, {}],
       serviceJourneys: newServiceJourneys,
     });
-  };
+  }, [journeyPattern, onSave, serviceJourneys]);
 
-  const updateStopPoint = (pointIndex: number, stopPlace: StopPoint) =>
-    onJourneyPatternChange({
-      ...journeyPattern,
-      pointsInSequence: changeElementAtIndex(
-        journeyPattern.pointsInSequence,
-        stopPlace,
-        pointIndex
-      ),
-    });
+  const updateStopPoint = useCallback(
+    (pointIndex: number, stopPlace: StopPoint) =>
+      onSave({
+        ...journeyPattern,
+        pointsInSequence: changeElementAtIndex(
+          journeyPattern.pointsInSequence,
+          stopPlace,
+          pointIndex
+        ),
+      }),
+    [journeyPattern, onSave]
+  );
+
+  const onPointsInSequenceChange = useCallback(
+    (pointsInSequence: StopPoint[]) =>
+      onSave({
+        ...journeyPattern,
+        pointsInSequence,
+      }),
+    [journeyPattern, onSave]
+  );
+
+  const StopPointsEditor = useStopPointsEditor(flexibleLineType);
 
   return (
     <div className="journey-pattern-editor">
@@ -92,7 +98,7 @@ const JourneyPatternEditor = ({
           <RequiredInputMarker />
           <General
             journeyPattern={journeyPattern}
-            onFieldChange={onJourneyPatternChange}
+            onFieldChange={onSave}
             spoilPristine={spoilPristine}
           />
         </section>
@@ -104,6 +110,7 @@ const JourneyPatternEditor = ({
           updateStopPoint={updateStopPoint}
           deleteStopPoint={deleteStopPoint}
           addStopPoint={addStopPoint}
+          onPointsInSequenceChange={onPointsInSequenceChange}
         />
       </div>
       {onDelete && (
@@ -132,8 +139,4 @@ const JourneyPatternEditor = ({
   );
 };
 
-const mapStateToProps = ({ flexibleStopPlaces }: GlobalState): StateProps => ({
-  flexibleStopPlaces: flexibleStopPlaces ?? [],
-});
-
-export default connect(mapStateToProps)(JourneyPatternEditor);
+export default JourneyPatternEditor;

@@ -2,7 +2,7 @@ import moment from 'moment';
 import { getIntl } from 'i18n';
 import { IntlState } from 'react-intl-redux';
 import Line from 'model/Line';
-import FlexibleLine from 'model/FlexibleLine';
+import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
@@ -44,6 +44,23 @@ export const currentStepIsValid = (currentStep: number, line: Line) => {
   else return false;
 };
 
+export const currentFlexibleLineStepIsValid = (
+  currentStep: number,
+  line: FlexibleLine
+) => {
+  if (currentStep === 0) return aboutFlexibleLineStepIsValid(line);
+  else if (currentStep === 1)
+    return line.journeyPatterns!.every((jp) =>
+      validFlexibleLineJourneyPattern(jp, line.flexibleLineType)
+    );
+  else if (currentStep === 2)
+    return line.journeyPatterns!.every((jp) =>
+      validServiceJourneys(jp.serviceJourneys)
+    );
+  else if (currentStep === 3) return true;
+  else return false;
+};
+
 export const aboutLineStepIsValid = (line: Line): boolean =>
   !isBlank(line.name) &&
   !isBlank(line.publicCode) &&
@@ -55,7 +72,9 @@ export const aboutLineStepIsValid = (line: Line): boolean =>
 export const validFlexibleLine = (line: FlexibleLine): boolean =>
   aboutFlexibleLineStepIsValid(line) &&
   line.journeyPatterns!.every(
-    (jp) => validJourneyPattern(jp) && validServiceJourneys(jp.serviceJourneys)
+    (jp) =>
+      validFlexibleLineJourneyPattern(jp, line.flexibleLineType) &&
+      validServiceJourneys(jp.serviceJourneys)
   );
 
 export const aboutFlexibleLineStepIsValid = (line: FlexibleLine): boolean =>
@@ -68,8 +87,35 @@ export const validJourneyPattern = (
   !isBlank(journeyPatterns.name) &&
   validateStopPoints(journeyPatterns.pointsInSequence ?? []);
 
+export const validFlexibleLineJourneyPattern = (
+  journeyPatterns?: JourneyPattern,
+  flexibleLineType?: FlexibleLineType
+): boolean => {
+  console.log({
+    journeyPatterns,
+  });
+  if (flexibleLineType === FlexibleLineType.FLEXIBLE_AREAS_ONLY) {
+    return (
+      !!journeyPatterns &&
+      !isBlank(journeyPatterns.name) &&
+      validateFlexibleAreasOnlyStopPoints(
+        journeyPatterns.pointsInSequence ?? []
+      )
+    );
+  } else {
+    return validJourneyPattern(journeyPatterns);
+  }
+};
+
 export const validateStopPoints = (stopPoints: StopPoint[]): boolean =>
   getStopPointsErrors(stopPoints).every((stopPointErrors) =>
+    objectValuesAreEmpty(stopPointErrors)
+  );
+
+export const validateFlexibleAreasOnlyStopPoints = (
+  stopPoints: StopPoint[]
+): boolean =>
+  getFlexibleAreasOnlyStopPointsErrors(stopPoints).every((stopPointErrors) =>
     objectValuesAreEmpty(stopPointErrors)
   );
 
@@ -80,8 +126,15 @@ export const getStopPointsErrors = (
     validateStopPoint(stopPoint, index === 0, index === stopPoints.length - 1)
   );
 
+export const getFlexibleAreasOnlyStopPointsErrors = (
+  stopPoints: StopPoint[]
+): StopPointsFormError[] =>
+  stopPoints.map((stopPoint, index) =>
+    validateFlexibleAreasOnlyStopPoint(stopPoint, index === 0)
+  );
+
 export type StopPointsFormError = {
-  flexibleStopPlaceRefAndQuayRef: keyof MessagesKey | undefined;
+  quayRef: keyof MessagesKey | undefined;
   frontText: keyof MessagesKey | undefined;
   boarding: keyof MessagesKey | undefined;
 };
@@ -91,21 +144,11 @@ export const validateStopPoint = (
   isFirst: boolean,
   isLast: boolean
 ): StopPointsFormError => {
-  const {
-    quayRef,
-    flexibleStopPlaceRef,
-    destinationDisplay,
-    forAlighting,
-    forBoarding,
-  } = stopPoint;
+  const { quayRef, destinationDisplay, forAlighting, forBoarding } = stopPoint;
 
-  const getFlexibleStopPlaceRefAndQuayRefError = ():
-    | keyof MessagesKey
-    | undefined => {
-    if (isBlank(quayRef) && !flexibleStopPlaceRef)
-      return 'flexibleStopPlaceRefAndQuayRefNoValues';
-    if (!isBlank(quayRef) && flexibleStopPlaceRef)
-      return 'flexibleStopPlaceRefAndQuayRefBothValues';
+  const getQuayRefError = (): keyof MessagesKey | undefined => {
+    if (isBlank(quayRef)) return 'flexibleStopPlaceRefAndQuayRefNoValues';
+    if (!isBlank(quayRef)) return 'flexibleStopPlaceRefAndQuayRefBothValues';
     return undefined;
   };
 
@@ -122,9 +165,38 @@ export const validateStopPoint = (
   };
 
   return {
-    flexibleStopPlaceRefAndQuayRef: getFlexibleStopPlaceRefAndQuayRefError(),
+    quayRef: getQuayRefError(),
     frontText: getFrontTextError(),
     boarding: getBoardingError(),
+  };
+};
+
+export const validateFlexibleAreasOnlyStopPoint = (
+  stopPoint: StopPoint,
+  isFirst?: boolean
+): StopPointsFormError => {
+  console.log({
+    stopPoint,
+    isFirst,
+  });
+
+  const { flexibleStopPlaceRef, destinationDisplay } = stopPoint;
+
+  const getQuayRefError = (): keyof MessagesKey | undefined => {
+    if (!flexibleStopPlaceRef) return 'flexibleStopPlaceRefAndQuayRefNoValues';
+    return undefined;
+  };
+
+  const getFrontTextError = (): keyof MessagesKey | undefined => {
+    if (isFirst && isBlank(destinationDisplay?.frontText))
+      return 'frontTextNoValue';
+    return undefined;
+  };
+
+  return {
+    quayRef: getQuayRefError(),
+    frontText: getFrontTextError(),
+    boarding: undefined,
   };
 };
 
