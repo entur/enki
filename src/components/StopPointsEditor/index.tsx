@@ -5,6 +5,7 @@ import { FlexibleAreasOnlyStopPointsEditor } from './FlexibleAreasOnly/FlexibleA
 import { GenericStopPointsEditor } from './Generic/GenericStopPointsEditor';
 import { MixedFlexibleStopPointsEditor } from './MixedFlexible/MixedFlexibleStopPointsEditor';
 import './styles.scss';
+
 export type StopPointsEditorProps = {
   flexibleLineType?: FlexibleLineType | undefined;
   pointsInSequence: StopPoint[];

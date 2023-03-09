@@ -13,10 +13,6 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
 }: StopPointsEditorProps) => {
   const { formatMessage } = useSelector(selectIntl);
 
-  console.log('FlexibleAreasOnlyStopPointsEditor', {
-    pointsInSequence,
-  });
-
   const onStopPointUpdate = useCallback(
     (updatedStopPoint: StopPoint) => {
       onPointsInSequenceChange([

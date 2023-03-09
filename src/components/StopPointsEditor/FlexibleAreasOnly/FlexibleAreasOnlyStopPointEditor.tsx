@@ -8,8 +8,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
-import { FrontTextTextField } from '../common/FrontTextTextField';
-import { useOnFrontTextChange } from '../common/hooks';
+import {
+  FrontTextTextField,
+  useOnFrontTextChange,
+} from '../common/FrontTextTextField';
+import BookingArrangementEditor from 'components/BookingArrangementEditor';
+import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 
 export const FlexibleAreasOnlyStopPointEditor = ({
   stopPoint,
@@ -17,7 +21,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
   spoilPristine,
 }: StopPointEditorProps) => {
   console.log('FlexibleAreasOnlyStopPointEditor');
-  const { quayRef: stopPlaceError, frontText: frontTextError } =
+  const { stopPlace: stopPlaceError, frontText: frontTextError } =
     validateFlexibleAreasOnlyStopPoint(stopPoint);
   const { formatMessage } = useSelector(selectIntl);
   const flexibleStopPlaces = useSelector(
@@ -68,6 +72,29 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             )}
           />
         </div>
+      </div>
+      <div>
+        <BookingArrangementEditor
+          trim
+          bookingArrangement={stopPoint.bookingArrangement}
+          spoilPristine={spoilPristine}
+          bookingInfoAttachment={{
+            type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
+            name: stopPoint.flexibleStopPlace?.name! || stopPoint.quayRef!,
+          }}
+          onChange={(bookingArrangement) => {
+            onChange({
+              ...stopPoint,
+              bookingArrangement,
+            });
+          }}
+          onRemove={() => {
+            onChange({
+              ...stopPoint,
+              bookingArrangement: null,
+            });
+          }}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,4 @@
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { Paragraph } from '@entur/typography';
 import ConfirmDialog from 'components/ConfirmDialog';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
@@ -8,13 +6,22 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
 import { AppIntlState, selectIntl } from 'i18n';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
-import { FrontTextTextField } from '../common/FrontTextTextField';
-import { useOnFrontTextChange } from '../common/hooks';
-import { QuayRefField } from '../common/QuayRefField';
+import {
+  FrontTextTextField,
+  useOnFrontTextChange,
+} from '../common/FrontTextTextField';
+import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
+import {
+  BoardingTypeSelect,
+  useOnBoardingTypeChange,
+  useSelectedBoardingType,
+} from '../common/BoardingTypeSelect';
+import BookingArrangementEditor from 'components/BookingArrangementEditor';
+import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 
 export const GenericStopPointEditor = ({
   order,
@@ -25,55 +32,21 @@ export const GenericStopPointEditor = ({
   onChange,
   onDelete,
   canDelete,
+  flexibleLineType,
 }: StopPointEditorProps) => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const {
-    quayRef: quayRefError,
+    stopPlace: stopPlaceError,
     boarding: boardingError,
     frontText: frontTextError,
   } = validateStopPoint(stopPoint, isFirst!, isLast!);
 
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
 
-  const boardingItems = useMemo(
-    () => [
-      { value: '0', label: formatMessage('labelForBoarding') },
-      { value: '1', label: formatMessage('labelForAlighting') },
-      {
-        value: '2',
-        label: formatMessage('labelForBoardingAndAlighting'),
-      },
-    ],
-    [formatMessage]
-  );
-
-  const selectedBoardingItem = useMemo((): string | undefined => {
-    if (stopPoint.forBoarding && stopPoint.forAlighting) return '2';
-    else if (stopPoint.forBoarding) return '0';
-    else if (stopPoint.forAlighting) return '1';
-    else return undefined;
-  }, [stopPoint]);
-
-  const onQuayRefChange = useCallback(
-    (quayRef: string) => onChange({ ...stopPoint, quayRef }),
-    [onChange, stopPoint]
-  );
-
+  const onQuayRefChange = useOnQuayRefChange(stopPoint, onChange);
   const onFrontTextChange = useOnFrontTextChange(stopPoint, onChange);
-
-  const onBoardingChange = useCallback(
-    (element: NormalizedDropdownItemType | null) =>
-      onChange({
-        ...stopPoint,
-        forBoarding: element?.value
-          ? element?.value === '0' || element?.value === '2'
-          : null,
-        forAlighting: element?.value
-          ? element?.value === '1' || element?.value === '2'
-          : null,
-      }),
-    [onChange, stopPoint]
-  );
+  const selectedBoardingType = useSelectedBoardingType(stopPoint);
+  const onBoardingTypeChange = useOnBoardingTypeChange(stopPoint, onChange);
 
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
@@ -87,8 +60,8 @@ export const GenericStopPointEditor = ({
           <QuayRefField
             initialQuayRef={stopPoint.quayRef}
             errorFeedback={getErrorFeedback(
-              quayRefError ? formatMessage(quayRefError) : '',
-              !quayRefError,
+              stopPlaceError ? formatMessage(stopPlaceError) : '',
+              !stopPlaceError,
               quayRefPristine
             )}
             onChange={onQuayRefChange}
@@ -102,15 +75,10 @@ export const GenericStopPointEditor = ({
             frontTextError={frontTextError}
           />
 
-          <Dropdown
-            className="stop-point-info-item"
-            label={formatMessage('labelBoarding')}
-            value={selectedBoardingItem}
-            placeholder={formatMessage('defaultOption')}
-            onChange={onBoardingChange}
-            items={boardingItems}
-            feedback={boardingError && formatMessage(boardingError)}
-            variant={boardingError ? 'error' : undefined}
+          <BoardingTypeSelect
+            boardingType={selectedBoardingType}
+            onChange={onBoardingTypeChange}
+            error={boardingError}
           />
         </div>
 
@@ -138,6 +106,32 @@ export const GenericStopPointEditor = ({
           onDismiss={() => setDeleteDialogOpen(false)}
         />
       </div>
+
+      {flexibleLineType && (
+        <div>
+          <BookingArrangementEditor
+            trim
+            bookingArrangement={stopPoint.bookingArrangement}
+            spoilPristine={spoilPristine}
+            bookingInfoAttachment={{
+              type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
+              name: stopPoint.flexibleStopPlace?.name! || stopPoint.quayRef!,
+            }}
+            onChange={(bookingArrangement) => {
+              onChange({
+                ...stopPoint,
+                bookingArrangement,
+              });
+            }}
+            onRemove={() => {
+              onChange({
+                ...stopPoint,
+                bookingArrangement: null,
+              });
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };

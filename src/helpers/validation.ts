@@ -134,7 +134,7 @@ export const getFlexibleAreasOnlyStopPointsErrors = (
   );
 
 export type StopPointsFormError = {
-  quayRef: keyof MessagesKey | undefined;
+  stopPlace: keyof MessagesKey | undefined;
   frontText: keyof MessagesKey | undefined;
   boarding: keyof MessagesKey | undefined;
 };
@@ -144,10 +144,17 @@ export const validateStopPoint = (
   isFirst: boolean,
   isLast: boolean
 ): StopPointsFormError => {
-  const { quayRef, destinationDisplay, forAlighting, forBoarding } = stopPoint;
+  const {
+    quayRef,
+    flexibleStopPlaceRef,
+    destinationDisplay,
+    forAlighting,
+    forBoarding,
+  } = stopPoint;
 
-  const getQuayRefError = (): keyof MessagesKey | undefined => {
-    if (isBlank(quayRef)) return 'flexibleStopPlaceRefAndQuayRefNoValues';
+  const getStopPlaceError = (): keyof MessagesKey | undefined => {
+    if (isBlank(quayRef) && isBlank(flexibleStopPlaceRef))
+      return 'flexibleStopPlaceRefAndQuayRefNoValues';
     return undefined;
   };
 
@@ -164,7 +171,7 @@ export const validateStopPoint = (
   };
 
   return {
-    quayRef: getQuayRefError(),
+    stopPlace: getStopPlaceError(),
     frontText: getFrontTextError(),
     boarding: getBoardingError(),
   };
@@ -181,7 +188,7 @@ export const validateFlexibleAreasOnlyStopPoint = (
 
   const { flexibleStopPlaceRef, destinationDisplay } = stopPoint;
 
-  const getQuayRefError = (): keyof MessagesKey | undefined => {
+  const getStopPlaceError = (): keyof MessagesKey | undefined => {
     if (!flexibleStopPlaceRef) return 'flexibleStopPlaceRefAndQuayRefNoValues';
     return undefined;
   };
@@ -193,7 +200,7 @@ export const validateFlexibleAreasOnlyStopPoint = (
   };
 
   return {
-    quayRef: getQuayRefError(),
+    stopPlace: getStopPlaceError(),
     frontText: getFrontTextError(),
     boarding: undefined,
   };

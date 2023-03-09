@@ -1,3 +1,4 @@
+import { FlexibleLineType } from 'model/FlexibleLine';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import StopPoint from 'model/StopPoint';
 
@@ -11,4 +12,5 @@ export type StopPointEditorProps = {
   onDelete?: () => void;
   canDelete?: boolean;
   flexibleStopPlaces?: FlexibleStopPlace[];
+  flexibleLineType?: FlexibleLineType;
 };

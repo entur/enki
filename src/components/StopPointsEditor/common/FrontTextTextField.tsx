@@ -3,6 +3,7 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import usePristine from 'hooks/usePristine';
 import { useIntl } from 'i18n';
 import { MessagesKey } from 'i18n/translations/translationKeys';
+import StopPoint from 'model/StopPoint';
 import React, { ChangeEvent, useCallback } from 'react';
 
 type Props = {
@@ -11,6 +12,20 @@ type Props = {
   disabled?: boolean;
   frontTextError?: keyof MessagesKey;
   spoilPristine: boolean;
+};
+
+export const useOnFrontTextChange = (
+  stopPoint: StopPoint,
+  onChange: (stopPoint: StopPoint) => void
+) => {
+  return useCallback(
+    (value: string) =>
+      onChange({
+        ...stopPoint,
+        destinationDisplay: value ? { frontText: value } : null,
+      }),
+    [onChange, stopPoint]
+  );
 };
 
 export const FrontTextTextField = ({

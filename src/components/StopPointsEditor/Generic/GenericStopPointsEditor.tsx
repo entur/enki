@@ -14,6 +14,7 @@ export const GenericStopPointsEditor = ({
   updateStopPoint,
   deleteStopPoint,
   addStopPoint,
+  flexibleLineType,
 }: StopPointsEditorProps) => {
   const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useSelector(selectIntl);
@@ -36,6 +37,7 @@ export const GenericStopPointsEditor = ({
             }
             onDelete={() => deleteStopPoint(pointIndex)}
             canDelete={pointsInSequence.length > 2}
+            flexibleLineType={flexibleLineType}
           />
         ))}
       </div>
