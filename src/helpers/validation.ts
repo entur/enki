@@ -148,7 +148,6 @@ export const validateStopPoint = (
 
   const getQuayRefError = (): keyof MessagesKey | undefined => {
     if (isBlank(quayRef)) return 'flexibleStopPlaceRefAndQuayRefNoValues';
-    if (!isBlank(quayRef)) return 'flexibleStopPlaceRefAndQuayRefBothValues';
     return undefined;
   };
 
