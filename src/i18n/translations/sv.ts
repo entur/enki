@@ -267,7 +267,9 @@ export const messages = {
     'Du måste lägga till minst två hållplatser; ett första och ett sista. Välj mellan flexibla eller fasta hållplatser.',
   stopPointsInfoFixed:
     'Du måste lägga till minst två hållplatser; ett första och ett sista. Fyll i en giltig ID.',
-  stopPointsInfoFlexibleAreaOnly: 'TODO: ADD DESCRIPTION HERE',
+  stopPointsInfoFlexibleAreaOnly:
+    'Den här typen av flexibel linje tillåter endast en flexibel hållplats där all ombord- och avstigning sker.',
+  stopPointsInfoMixedFlexible: 'TODO: Add info about mixed flexible',
   deleteStopPointDialogTitle: 'Ta bort hållplatspunkt',
   deleteStopPointDialogMessage:
     'Är du säker på att du vill ta bort den här hållplatspunkten?',

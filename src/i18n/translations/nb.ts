@@ -257,7 +257,9 @@ export const messages = {
     'Du må legge til minst to stopp; ett for start og ett for slutt. Velg mellom fleksible stoppesteder eller platform-IDer fra Nasjonalt stoppestedsregister.',
   stopPointsInfoFixed:
     'Du må legge til minst to stopp; ett for start og ett for slutt. Skriv inn platform-ID fra stoppestedsregisteret.',
-  stopPointsInfoFlexibleAreaOnly: 'TODO: ADD DESCRIPTION HERE',
+  stopPointsInfoFlexibleAreaOnly:
+    'Denne typen fleksibel linje tillater kun et fleksibelt stoppested der all ombord- og avstigning skjer.',
+  stopPointsInfoMixedFlexible: 'TODO: Add info about mixed flexible',
   deleteStopPointDialogTitle: 'Slette stoppepunkt',
   deleteStopPointDialogMessage:
     'Er du sikker på at du ønsker å slette dette stoppepunktet?',
