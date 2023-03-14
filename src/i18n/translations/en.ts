@@ -503,8 +503,8 @@ export const messages: MessagesKey = {
   passingTimesTypeFlexible: 'Flexible',
   passingTimesArrivalTime: 'Arrival time',
   passingTimesDepartureTime: 'Departure time',
-  passingTimesLatestArrivalTime: 'Latest arrival time',
-  passingTimesEarliestDepartureTime: 'Earliest departure time',
+  passingTimesLatestArrivalTime: 'End',
+  passingTimesEarliestDepartureTime: 'Start',
   passingTimesDayOffset: 'Day offset',
   passingTimesDayOffsetTooltip:
     'Set day offset if the passing time is a day or more after the departure of the service',

@@ -509,8 +509,8 @@ export const messages = {
   passingTimesTypeFlexible: 'Flexibla',
   passingTimesArrivalTime: 'Ankomsttid',
   passingTimesDepartureTime: 'Avgångstid',
-  passingTimesLatestArrivalTime: 'Senaste ankomsttid',
-  passingTimesEarliestDepartureTime: 'Tidigaste avgångstid',
+  passingTimesLatestArrivalTime: 'Slut',
+  passingTimesEarliestDepartureTime: 'Start',
   passingTimesDayOffset: 'Dygnsjustering',
   passingTimesDayOffsetTooltip:
     'Justera dygn om passeringstiden är en eller flera dager senare än avgångstiden på första hållplatsen',

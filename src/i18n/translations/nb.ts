@@ -501,8 +501,8 @@ export const messages = {
   passingTimesTypeFlexible: 'Fleksible',
   passingTimesArrivalTime: 'Ankomsttid',
   passingTimesDepartureTime: 'Avgangstid',
-  passingTimesLatestArrivalTime: 'Seneste ankomsttid',
-  passingTimesEarliestDepartureTime: 'Tidligste avgangstid',
+  passingTimesLatestArrivalTime: 'Slutt',
+  passingTimesEarliestDepartureTime: 'Start',
   passingTimesDayOffset: 'Døgnskille',
   passingTimesDayOffsetTooltip:
     'Sett døgnskille dersom passeringstiden er én eller flere dager senere enn tilbudets avreise',
