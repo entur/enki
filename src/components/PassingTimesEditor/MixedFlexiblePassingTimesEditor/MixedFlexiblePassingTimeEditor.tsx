@@ -4,7 +4,7 @@ import PassingTime from 'model/PassingTime';
 import StopPoint from 'model/StopPoint';
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { FlexibleAreasOnlyPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
+import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
 import { FixedPassingTimeEditor } from '../FixedPassingTimeEditor/FixedPassingTimeEditor';
 
 type Props = {
@@ -94,7 +94,7 @@ export const MixedFlexiblePassingTimeEditor = ({
         />
       )}
       {type === PassingTimeType.TIME_WINDOW && (
-        <FlexibleAreasOnlyPassingTimeEditor
+        <TimeWindowPassingTimeEditor
           passingTime={passingTime}
           stopPoint={stopPoint}
           onChange={onChange}

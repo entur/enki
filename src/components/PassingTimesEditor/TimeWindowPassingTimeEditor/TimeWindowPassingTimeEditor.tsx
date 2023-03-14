@@ -14,7 +14,7 @@ type Props = {
   onChange: (passingTime: PassingTime) => void;
 };
 
-export const FlexibleAreasOnlyPassingTimeEditor = ({
+export const TimeWindowPassingTimeEditor = ({
   passingTime,
   stopPoint,
   onChange,
