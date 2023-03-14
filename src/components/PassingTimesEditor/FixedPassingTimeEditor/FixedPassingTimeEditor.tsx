@@ -5,16 +5,20 @@ import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import { ClockIcon } from '@entur/icons';
 import { useIntl } from 'i18n';
 import { toDate } from '../common/toDate';
+import FixedPassingTimeTitle from './FixedPassingTimeTitle';
+import StopPoint from 'model/StopPoint';
 
 type Props = {
   passingTime: PassingTime;
+  stopPoint: StopPoint;
   index: number;
   isLast: boolean;
   onChange: (passingTime: PassingTime) => void;
 };
 
-export const GenericPassingTimeEditor = ({
+export const FixedPassingTimeEditor = ({
   passingTime,
+  stopPoint,
   index,
   isLast,
   onChange,
@@ -23,6 +27,7 @@ export const GenericPassingTimeEditor = ({
 
   return (
     <>
+      <FixedPassingTimeTitle stopPoint={stopPoint} />
       <TimePicker
         disabled={index === 0}
         label={`${formatMessage('passingTimesArrivalTime')}${

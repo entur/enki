@@ -2,8 +2,7 @@ import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
 import { useIntl } from 'i18n';
 import { PassingTimesEditorProps } from '..';
-import { FlexibleAreasOnlyPassingTimeEditor } from './FlexibleAreasOnlyPassingTimeEditor';
-import PassingTimeTitle from './PassingTimeTitle';
+import { FlexibleAreasOnlyPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
 
 export const FlexibleAreasOnlyPassingTimesEditor = ({
   passingTimes,
@@ -18,9 +17,9 @@ export const FlexibleAreasOnlyPassingTimesEditor = ({
       <Paragraph>Add FLEXIBLE_AREAS_ONLY description</Paragraph>
       <div className="passing-times-editor">
         <div className="passing-time">
-          <PassingTimeTitle stopPoint={stopPoints[0]} />
           <FlexibleAreasOnlyPassingTimeEditor
             passingTime={passingTimes[0]}
+            stopPoint={stopPoints[0]}
             onChange={(changedPassingTime) => {
               onChange([changedPassingTime, changedPassingTime]);
             }}

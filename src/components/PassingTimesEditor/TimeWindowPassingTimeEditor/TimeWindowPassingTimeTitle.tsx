@@ -11,7 +11,7 @@ type StateProps = {
   flexibleStopPlaces: FlexibleStopPlace[];
 };
 
-const PassingTimeTitle = ({ stopPoint }: Props): ReactElement => {
+const TimeWindowPassingTimeTitle = ({ stopPoint }: Props): ReactElement => {
   const { flexibleStopPlaces } = useSelector(
     ({ flexibleStopPlaces }: StateProps) => ({
       flexibleStopPlaces,
@@ -29,4 +29,4 @@ const PassingTimeTitle = ({ stopPoint }: Props): ReactElement => {
   );
 };
 
-export default PassingTimeTitle;
+export default TimeWindowPassingTimeTitle;

@@ -2,11 +2,10 @@ import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
 import { useIntl } from 'i18n';
 import { PassingTimesEditorProps } from '..';
-import PassingTimeTitle from './PassingTimeTitle';
-import { GenericPassingTimeEditor } from './GenericPassingTimeEditor';
+import { FixedPassingTimeEditor } from '../FixedPassingTimeEditor/FixedPassingTimeEditor';
 import { changeElementAtIndex } from 'helpers/arrays';
 
-export const GenericPassingTimesEditor = ({
+export const TimeWindowPassingTimesEditor = ({
   passingTimes,
   stopPoints,
   onChange,
@@ -20,9 +19,9 @@ export const GenericPassingTimesEditor = ({
         {passingTimes.map((passingTime, index) => (
           <div key={index} className="passing-time">
             <div className="time-number">{index + 1}</div>
-            <PassingTimeTitle stopPoint={stopPoints[index]} />
-            <GenericPassingTimeEditor
+            <FixedPassingTimeEditor
               passingTime={passingTime}
+              stopPoint={stopPoints[index]}
               index={index}
               isLast={index === stopPoints.length - 1}
               onChange={(changedPassingTime) => {

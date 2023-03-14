@@ -5,20 +5,25 @@ import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import { ClockIcon } from '@entur/icons';
 import { useIntl } from 'i18n';
 import { toDate } from '../common/toDate';
+import TimeWindowPassingTimeTitle from './TimeWindowPassingTimeTitle';
+import StopPoint from 'model/StopPoint';
 
 type Props = {
   passingTime: PassingTime;
+  stopPoint: StopPoint;
   onChange: (passingTime: PassingTime) => void;
 };
 
 export const FlexibleAreasOnlyPassingTimeEditor = ({
   passingTime,
+  stopPoint,
   onChange,
 }: Props) => {
   const { formatMessage } = useIntl();
 
   return (
     <>
+      <TimeWindowPassingTimeTitle stopPoint={stopPoint} />
       <TimePicker
         label={`${formatMessage('passingTimesEarliestDepartureTime')}${' *'}`}
         className="timepicker"
