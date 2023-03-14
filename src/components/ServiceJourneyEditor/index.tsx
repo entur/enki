@@ -3,9 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
-import { IconButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { QuestionIcon } from '@entur/icons';
-import { PassingTimesEditor } from './PassingTimesEditor';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import StopPoint from 'model/StopPoint';
 import { isBlank } from 'helpers/forms';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -14,7 +12,6 @@ import { OrganisationState } from 'reducers/organisations';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { GlobalState } from 'reducers';
 import ServiceJourney from 'model/ServiceJourney';
-import { Heading4, Paragraph } from '@entur/typography';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
@@ -29,6 +26,8 @@ import { PassingTimeTypeDrawer } from './PassingTimesEditor/PassingTimeTypeDrawe
 import { DayTypesEditor } from 'components/DayTypesEditor/DayTypesEditor';
 import { filterNetexOperators } from 'model/Organisation';
 import { useConfig } from 'config/ConfigContext';
+import { usePassingTimesEditor } from 'components/PassingTimesEditor';
+import { FlexibleLineType } from 'model/FlexibleLine';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -37,7 +36,7 @@ type Props = {
   onChange: (serviceJourney: ServiceJourney) => void;
   deleteServiceJourney?: (index: number) => void;
   copyServiceJourney?: (serviceJourney: ServiceJourney[]) => void;
-  flexibleLineType?: string;
+  flexibleLineType?: FlexibleLineType;
 };
 
 const ServiceJourneyEditor = (props: Props) => {
@@ -92,6 +91,8 @@ const ServiceJourneyEditor = (props: Props) => {
   };
 
   const namePristine = usePristine(name, spoilPristine);
+
+  const PassingTimesEditor = usePassingTimesEditor(flexibleLineType);
 
   return (
     <div className="service-journey-editor">
@@ -215,22 +216,12 @@ const ServiceJourneyEditor = (props: Props) => {
         </section>
 
         <section className="passing-times-section">
-          <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
-          <Paragraph>
-            {formatMessage('passingTimesInfo')}
-            <IconButton
-              style={{ display: 'inline-block' }}
-              onClick={() => setOpenPassingTimeTypeDrawer(true)}
-            >
-              <QuestionIcon />
-            </IconButton>
-          </Paragraph>
           <PassingTimesEditor
             passingTimes={passingTimes ?? []}
             stopPoints={stopPoints}
             onChange={(pts) => onFieldChange('passingTimes', pts)}
             spoilPristine={spoilPristine}
-            showFlexible={!!flexibleLineType}
+            flexibleLineType={flexibleLineType}
           />
         </section>
       </div>

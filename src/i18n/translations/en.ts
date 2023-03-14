@@ -383,8 +383,7 @@ export const messages: MessagesKey = {
   serviceJourneyAvailability: 'Availability',
   serviceJourneyPassingTimes: 'Passing times',
   serviceJourneyBusinessHours: 'Business hours',
-  passingTimesInfo:
-    'Enter the passing times for the different stops. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
+  passingTimesInfo: 'Enter the passing times for the different stops.',
   serviceJourneyBooking: 'Booking',
   generalName: 'Name *',
   nameIsRequired: 'Name is required.',
