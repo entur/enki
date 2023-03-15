@@ -600,7 +600,7 @@ export const messages = {
   bulkDeleteDialogCancelButtonLabel: 'Avbryt',
   bulkDeleteDialogConfirmButtonLabel: 'Ta bort',
   dayTypesValidationError:
-    'Minst en giltighetsperiod måste ha en tilgänglig veckodag',
+    'Minst en giltighetsperiod har ingen tilgänglig veckodag',
   provider: 'dataleverantör',
   providersHeaderText: 'Dataleverantörer',
   createProviderHeaderText: 'Skapa dataleverantör',

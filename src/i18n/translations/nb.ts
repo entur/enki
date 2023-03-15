@@ -591,7 +591,7 @@ export const messages = {
   bulkDeleteDialogCancelButtonLabel: 'Avbryt',
   bulkDeleteDialogConfirmButtonLabel: 'Slett',
   dayTypesValidationError:
-    'Minst en gyldighetsperiode må ha en tilgjengelig ukedag',
+    'Minst en gyldighetsperiode har ingen tilgjengelig ukedag',
   provider: 'dataleverandør',
   providersHeaderText: 'Dataleverandører',
   createProviderHeaderText: 'Opprett dataleverandør',
