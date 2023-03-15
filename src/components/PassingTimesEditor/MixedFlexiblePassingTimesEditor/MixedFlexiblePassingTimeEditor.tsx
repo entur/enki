@@ -1,9 +1,6 @@
-import { Radio, RadioGroup } from '@entur/form';
-import { selectIntl } from 'i18n';
+import React from 'react';
 import PassingTime from 'model/PassingTime';
 import StopPoint from 'model/StopPoint';
-import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
 import { FixedPassingTimeEditor } from '../FixedPassingTimeEditor/FixedPassingTimeEditor';
 
@@ -27,63 +24,13 @@ export const MixedFlexiblePassingTimeEditor = ({
   isLast,
   onChange,
 }: Props) => {
-  const { formatMessage } = useSelector(selectIntl);
-
-  const [type, setType] = useState(
+  const type =
     passingTime.latestArrivalTime || passingTime.earliestDepartureTime
       ? PassingTimeType.TIME_WINDOW
-      : PassingTimeType.FIXED
-  );
-
-  const changeType = useCallback(
-    (type: PassingTimeType) => {
-      setType(type);
-
-      if (type === PassingTimeType.FIXED) {
-        onChange({
-          ...passingTime,
-          arrivalTime: passingTime.earliestDepartureTime,
-          arrivalDayOffset: passingTime.earliestDepartureDayOffset,
-          departureTime: passingTime.latestArrivalTime,
-          departureDayOffset: passingTime.latestArrivalDayOffset,
-          latestArrivalTime: null,
-          latestArrivalDayOffset: 0,
-          earliestDepartureTime: null,
-          earliestDepartureDayOffset: 0,
-        });
-      } else {
-        onChange({
-          ...passingTime,
-          arrivalTime: null,
-          arrivalDayOffset: 0,
-          departureTime: null,
-          departureDayOffset: 0,
-          latestArrivalTime: passingTime.departureTime,
-          latestArrivalDayOffset: passingTime.departureDayOffset,
-          earliestDepartureTime: passingTime.arrivalTime,
-          earliestDepartureDayOffset: passingTime.arrivalDayOffset,
-        });
-      }
-    },
-    [passingTime, onChange]
-  );
+      : PassingTimeType.FIXED;
 
   return (
     <>
-      <RadioGroup
-        style={{ padding: '0 2rem' }}
-        label=" "
-        name={`passing-time-type-${index}`}
-        onChange={(e) => changeType(e.target.value as PassingTimeType)}
-        value={type}
-      >
-        <Radio value={PassingTimeType.FIXED}>
-          {formatMessage('passingTimesTypeFixed')}
-        </Radio>
-        <Radio value={PassingTimeType.TIME_WINDOW}>
-          {formatMessage('passingTimesTypeFlexible')}
-        </Radio>
-      </RadioGroup>
       {type === PassingTimeType.FIXED && (
         <FixedPassingTimeEditor
           passingTime={passingTime}
