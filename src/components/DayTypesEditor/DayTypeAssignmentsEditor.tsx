@@ -24,11 +24,12 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
   const addNewDayTypeAssignment = () => {
     const today: string = moment().format('YYYY-MM-DD');
+    const tomorrow: string = moment().add(1, 'days').format('YYYY-MM-DD');
     const dayTypeAssignment = {
       isAvailable: true,
       operatingPeriod: {
         fromDate: today,
-        toDate: today,
+        toDate: tomorrow,
       },
     };
     onChange([...dayTypeAssignments, dayTypeAssignment]);
@@ -44,8 +45,8 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
     onChange(replaceElement(dayTypeAssignments, index, updated));
   };
 
-  const isNotBefore = (toDate: string, fromDate: string): boolean =>
-    !moment(toDate).isBefore(moment(fromDate));
+  const isAtLeastOneDayAfter = (toDate: string, fromDate: string): boolean =>
+    !moment(toDate).isBefore(moment(fromDate).add(1, 'days'));
 
   if (dayTypeAssignments.length === 0) addNewDayTypeAssignment();
 
@@ -84,7 +85,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                     label={formatMessage('dayTypeEditorToDate')}
                     {...getErrorFeedback(
                       formatMessage('dayTypeEditorToDateValidation'),
-                      isNotBefore(
+                      isAtLeastOneDayAfter(
                         dta.operatingPeriod.toDate ?? '',
                         dta.operatingPeriod.fromDate ?? ''
                       ),

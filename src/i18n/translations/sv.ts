@@ -309,7 +309,7 @@ export const messages = {
   dayTypeEditorDate: 'Datum',
   dayTypeEditorFromAndToDate: 'Använd från- och till-datum',
   dayTypeEditorFromDate: 'Från *',
-  dayTypeEditorToDate: 'till *',
+  dayTypeEditorToDate: 'fram till (inte med) *',
   dayTypeEditorToDateValidation: 'inte före från-datum',
   dayTypesEditButton: 'Redigera day types',
   deleteDayTypesErrorTitle: 'Fel uppstod under borttagning av day types',
