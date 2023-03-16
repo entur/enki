@@ -35,7 +35,7 @@ type Props = {
   stopPoints: StopPoint[];
   spoilPristine: boolean;
   onChange: (serviceJourney: ServiceJourney) => void;
-  deleteServiceJourney?: (index: number) => void;
+  deleteServiceJourney?: () => void;
   copyServiceJourney?: (serviceJourney: ServiceJourney[]) => void;
   flexibleLineType?: string;
 };
@@ -259,7 +259,7 @@ const ServiceJourneyEditor = (props: Props) => {
             <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
               {formatMessage('no')}
             </SecondaryButton>,
-            <SuccessButton key={1} onClick={deleteServiceJourney}>
+            <SuccessButton key={1} onClick={() => deleteServiceJourney()}>
               {formatMessage('yes')}
             </SuccessButton>,
           ]}

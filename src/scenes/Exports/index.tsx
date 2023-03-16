@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
@@ -57,7 +57,7 @@ const Exports = ({ history }: RouteComponentProps) => {
             <DataCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
                 <SecondarySquareButton
-                  onClick={async (event: ChangeEvent) => {
+                  onClick={async (event: any) => {
                     event.stopPropagation();
                     download(uttuApiUrl, e, await auth.getAccessToken());
                   }}

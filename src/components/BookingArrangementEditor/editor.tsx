@@ -174,7 +174,7 @@ export default (props: Props) => {
           labelTooltip={formatMessage('bookingNoteTooltip')}
           style={{ width: '100%' }}
           value={bookingNote ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             onChange({ ...bookingArrangement, bookingNote: e.target.value })
           }
         />

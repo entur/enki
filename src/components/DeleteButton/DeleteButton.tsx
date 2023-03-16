@@ -13,7 +13,7 @@ const DeleteButton = (props: Props) => (
   <TertiaryButton
     id="delete-button"
     className={props.thin ? 'thin' : ''}
-    onClick={(event: Event) => {
+    onClick={(event: any) => {
       props.onClick();
       event.stopPropagation();
     }}

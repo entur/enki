@@ -50,6 +50,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
             <TableRow key={'' + i} hover className="notices-row">
               <EditableCell className="notices-editable-cell">
                 <TextArea
+                  label=""
                   onBlur={() => notice.text === '' && removeNotice(i)}
                   className="notices-text-area"
                   value={notice.text}
@@ -72,7 +73,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
             </TableRow>
           ))}
           <TableRow hover onClick={() => addNotice()}>
-            <DataCell></DataCell>
+            <DataCell>{}</DataCell>
             <DataCell align="right">
               <Tooltip
                 placement="bottom"

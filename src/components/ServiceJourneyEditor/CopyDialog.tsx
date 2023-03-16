@@ -4,7 +4,6 @@ import { Label } from '@entur/typography';
 import { TextField, Switch, FeedbackText } from '@entur/form';
 import { ButtonGroup, Button } from '@entur/button';
 import { TimePicker } from '@entur/datepicker';
-import { ClockIcon } from '@entur/icons';
 import ServiceJourney from 'model/ServiceJourney';
 import { clone } from 'ramda';
 import PassingTime from 'model/PassingTime';
@@ -254,7 +253,6 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                   setInitialDepartureTime(time);
                 }
               }}
-              prepend={<ClockIcon inline />}
               selectedTime={toDate(initialDepartureTime)}
             />
           </div>
@@ -303,7 +301,6 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                       setUntilTime(time);
                     }
                   }}
-                  prepend={<ClockIcon inline />}
                   selectedTime={toDate(untilTime)}
                 />
               </div>

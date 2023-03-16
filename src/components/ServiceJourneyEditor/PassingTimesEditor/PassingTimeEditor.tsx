@@ -4,7 +4,6 @@ import PassingTime from 'model/PassingTime';
 import { TimePicker } from '@entur/datepicker';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { ClockIcon } from '@entur/icons';
 import { toDate } from './toDate';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
 
@@ -123,7 +122,6 @@ export const PassingTimeEditor = ({
                 : passingTime[departureField],
           });
         }}
-        prepend={<ClockIcon inline />}
         selectedTime={toDate(passingTime[arrivalField]!)}
       />
       <DayOffsetDropdown
@@ -155,7 +153,6 @@ export const PassingTimeEditor = ({
                 : passingTime[arrivalField],
           });
         }}
-        prepend={<ClockIcon inline />}
         selectedTime={toDate(passingTime[departureField]!)}
       />
       <DayOffsetDropdown

@@ -133,7 +133,7 @@ const StopPointEditor = ({
 
           {selectMode === 'nsr' && (
             <QuayRefField
-              initialQuayRef={stopPoint.quayRef}
+              initialQuayRef={stopPoint.quayRef || undefined}
               errorFeedback={getErrorFeedback(
                 stopPlaceError ? formatMessage(stopPlaceError) : '',
                 !stopPlaceError,

@@ -35,7 +35,7 @@ type LinesData = {
 type ExportableLine = {
   id: string;
   name: string;
-  status: string;
+  status: 'positive' | 'neutral' | 'negative';
   from: Date;
   to: Date;
   selected: boolean;
@@ -81,7 +81,7 @@ const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
     today
   );
 
-  let status;
+  let status: 'positive' | 'neutral' | 'negative';
 
   if (availableForDaysFromNow > 121) {
     status = 'positive';

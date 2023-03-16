@@ -263,9 +263,8 @@ const FlexibleStopPlaceEditor = ({
 
                 <TextArea
                   label={formatMessage('editorDescriptionFormLabelText')}
-                  type="text"
                   value={flexibleStopPlace.description ?? ''}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     setFlexibleStopPlace({
                       ...flexibleStopPlace,
                       description: e.target.value,
@@ -318,12 +317,12 @@ const FlexibleStopPlaceEditor = ({
                       : 'error'
                   }
                   feedback={formatMessage('errorCoordinates')}
-                  rows="12"
+                  rows={12}
                   value={coordinateHolder}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     setCoordinateHolder(e.target.value)
                   }
-                  onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+                  onBlur={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     stringIsValidCoordinates(coordinateHolder)
                       ? changeCoordinates(
                           transformTextToCoordinates(e.target.value)

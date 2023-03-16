@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
@@ -118,7 +112,7 @@ const ExportsViewer = ({
               <div className="export-download">
                 <Label>{formatMessage('viewerDownloadLabel')}</Label>
                 <PrimaryButton
-                  onClick={async (event: ChangeEvent) => {
+                  onClick={async (event: any) => {
                     event.stopPropagation();
                     download(
                       uttuApiUrl,

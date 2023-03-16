@@ -13,7 +13,7 @@ type Props = {
 const DeleteButton = (props: Props) => (
   <ActionChip
     className={props.className}
-    onClick={(event: Event) => {
+    onClick={(event) => {
       props.onClick();
       event.stopPropagation();
     }}

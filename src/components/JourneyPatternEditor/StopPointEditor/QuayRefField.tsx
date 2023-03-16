@@ -9,7 +9,7 @@ import { ErrorHandling } from 'helpers/errorHandling';
 import { useQuaySearch } from 'api/useQuaySearch';
 
 interface Props {
-  initialQuayRef?: string | null;
+  initialQuayRef?: string;
   errorFeedback: ErrorHandling;
   onChange: (quayRef: string) => void;
 }
