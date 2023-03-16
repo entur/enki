@@ -7,11 +7,11 @@ exports[`Notices should render multiple notices 1`] = `
   <Heading4>
     noticesHeader
   </Heading4>
-  <Table
+  <ForwardRef
     fixed={true}
   >
-    <TableBody>
-      <TableRow
+    <ForwardRef>
+      <ForwardRef
         className="notices-row"
         hover={true}
         key="0"
@@ -21,6 +21,7 @@ exports[`Notices should render multiple notices 1`] = `
         >
           <ForwardRef
             className="notices-text-area"
+            label=""
             onBlur={[Function]}
             onChange={[Function]}
             value="This a notice"
@@ -41,8 +42,8 @@ exports[`Notices should render multiple notices 1`] = `
             </ForwardRef>
           </Tooltip>
         </ForwardRef>
-      </TableRow>
-      <TableRow
+      </ForwardRef>
+      <ForwardRef
         className="notices-row"
         hover={true}
         key="1"
@@ -52,6 +53,7 @@ exports[`Notices should render multiple notices 1`] = `
         >
           <ForwardRef
             className="notices-text-area"
+            label=""
             onBlur={[Function]}
             onChange={[Function]}
             value="This is another notice"
@@ -72,8 +74,8 @@ exports[`Notices should render multiple notices 1`] = `
             </ForwardRef>
           </Tooltip>
         </ForwardRef>
-      </TableRow>
-      <TableRow
+      </ForwardRef>
+      <ForwardRef
         hover={true}
         onClick={[Function]}
       >
@@ -93,9 +95,9 @@ exports[`Notices should render multiple notices 1`] = `
             </ForwardRef>
           </Tooltip>
         </ForwardRef>
-      </TableRow>
-    </TableBody>
-  </Table>
+      </ForwardRef>
+    </ForwardRef>
+  </ForwardRef>
 </section>
 `;
 
@@ -106,11 +108,11 @@ exports[`Notices should render no notices 1`] = `
   <Heading4>
     noticesHeader
   </Heading4>
-  <Table
+  <ForwardRef
     fixed={true}
   >
-    <TableBody>
-      <TableRow
+    <ForwardRef>
+      <ForwardRef
         hover={true}
         onClick={[Function]}
       >
@@ -130,9 +132,9 @@ exports[`Notices should render no notices 1`] = `
             </ForwardRef>
           </Tooltip>
         </ForwardRef>
-      </TableRow>
-    </TableBody>
-  </Table>
+      </ForwardRef>
+    </ForwardRef>
+  </ForwardRef>
 </section>
 `;
 
@@ -143,11 +145,11 @@ exports[`Notices should render single notices 1`] = `
   <Heading4>
     noticesHeader
   </Heading4>
-  <Table
+  <ForwardRef
     fixed={true}
   >
-    <TableBody>
-      <TableRow
+    <ForwardRef>
+      <ForwardRef
         className="notices-row"
         hover={true}
         key="0"
@@ -157,6 +159,7 @@ exports[`Notices should render single notices 1`] = `
         >
           <ForwardRef
             className="notices-text-area"
+            label=""
             onBlur={[Function]}
             onChange={[Function]}
             value="This a notice"
@@ -177,8 +180,8 @@ exports[`Notices should render single notices 1`] = `
             </ForwardRef>
           </Tooltip>
         </ForwardRef>
-      </TableRow>
-      <TableRow
+      </ForwardRef>
+      <ForwardRef
         hover={true}
         onClick={[Function]}
       >
@@ -198,8 +201,8 @@ exports[`Notices should render single notices 1`] = `
             </ForwardRef>
           </Tooltip>
         </ForwardRef>
-      </TableRow>
-    </TableBody>
-  </Table>
+      </ForwardRef>
+    </ForwardRef>
+  </ForwardRef>
 </section>
 `;
