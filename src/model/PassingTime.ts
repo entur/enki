@@ -33,7 +33,7 @@ export const passingTimeToPayload = (
     ...rest
   } = pt;
 
-  if (earliestDepartureTime && latestArrivalTime) {
+  if (!departureTime && !arrivalTime) {
     return {
       ...rest,
       earliestDepartureTime,

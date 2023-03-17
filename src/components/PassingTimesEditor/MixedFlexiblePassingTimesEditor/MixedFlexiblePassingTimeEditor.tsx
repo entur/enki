@@ -24,10 +24,9 @@ export const MixedFlexiblePassingTimeEditor = ({
   isLast,
   onChange,
 }: Props) => {
-  const type =
-    passingTime.latestArrivalTime || passingTime.earliestDepartureTime
-      ? PassingTimeType.TIME_WINDOW
-      : PassingTimeType.FIXED;
+  const type = stopPoint.quayRef
+    ? PassingTimeType.FIXED
+    : PassingTimeType.TIME_WINDOW;
 
   return (
     <>
