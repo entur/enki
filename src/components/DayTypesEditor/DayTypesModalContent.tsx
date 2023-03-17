@@ -65,7 +65,7 @@ export const DayTypesModalContent = ({
   });
 
   const onDeleteDayTypes = useCallback(
-    async (ids) => {
+    async (ids: string[]) => {
       setLoading(true);
       setError(null);
       await deleteDayTypes({

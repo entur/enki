@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Routes as ReactRoutes, Navigate } from 'react-router-dom';
 
 import NetworksOverview from '../Networks';
 import NetworkEditor from '../Networks/scenes/Editor';
@@ -17,41 +17,27 @@ import ProviderEditor from 'scenes/Providers/Editor';
 
 const Routes = () => (
   <div className="routes">
-    <Switch>
-      <Route
-        exact
-        path="/"
-        render={() => {
-          return <Redirect to="/lines" />;
-        }}
-      />
-      <Route exact path="/networks" component={NetworksOverview} />
-      <Route exact path="/networks/create" component={NetworkEditor} />
-      <Route exact path="/networks/edit/:id" component={NetworkEditor} />
-      <Route exact path="/lines" component={LinesOverview} />
-      <Route exact path="/lines/edit/:id" component={LineEditor} />
-      <Route exact path="/lines/create" component={LineEditor} />
-      <Route exact path="/flexible-lines" component={FlexibleLinesOverview} />
-      <Route
-        exact
-        path="/flexible-lines/create"
-        component={FlexibleLineEditor}
-      />
-      <Route
-        exact
-        path="/flexible-lines/edit/:id"
-        component={FlexibleLineEditor}
-      />
-      <Route exact path="/stop-places" component={StopPlacesOverview} />
-      <Route exact path="/stop-places/create" component={StopPlacesEditor} />
-      <Route exact path="/stop-places/edit/:id" component={StopPlacesEditor} />
-      <Route exact path="/exports" component={ExportsOverview} />
-      <Route exact path="/exports/create" component={ExportsEditor} />
-      <Route exact path="/exports/view/:id" component={ExportsViewer} />
-      <Route exact path="/providers" component={Providers} />
-      <Route exact path="/providers/create" component={ProviderEditor} />
-      <Route exact path="/providers/edit/:id" component={ProviderEditor} />
-    </Switch>
+    <ReactRoutes>
+      <Route path="/" element={<Navigate to="/lines" replace />} />
+      <Route path="/networks" element={<NetworksOverview />} />
+      <Route path="/networks/create" element={<NetworkEditor />} />
+      <Route path="/networks/edit/:id" element={<NetworkEditor />} />
+      <Route path="/lines" element={<LinesOverview />} />
+      <Route path="/lines/edit/:id" element={<LineEditor />} />
+      <Route path="/lines/create" element={<LineEditor />} />
+      <Route path="/flexible-lines" element={<FlexibleLinesOverview />} />
+      <Route path="/flexible-lines/create" element={<FlexibleLineEditor />} />
+      <Route path="/flexible-lines/edit/:id" element={<FlexibleLineEditor />} />
+      <Route path="/stop-places" element={<StopPlacesOverview />} />
+      <Route path="/stop-places/create" element={<StopPlacesEditor />} />
+      <Route path="/stop-places/edit/:id" element={<StopPlacesEditor />} />
+      <Route path="/exports" element={<ExportsOverview />} />
+      <Route path="/exports/create" element={<ExportsEditor />} />
+      <Route path="/exports/view/:id" element={<ExportsViewer />} />
+      <Route path="/providers" element={<Providers />} />
+      <Route path="/providers/create" element={<ProviderEditor />} />
+      <Route path="/providers/edit/:id" element={<ProviderEditor />} />
+    </ReactRoutes>
   </div>
 );
 

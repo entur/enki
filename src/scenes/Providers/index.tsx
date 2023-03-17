@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   DataCell,
   HeaderCell,
@@ -19,15 +18,16 @@ import { AddIcon } from '@entur/icons';
 import { SecondaryButton } from '@entur/button';
 import Provider, { sortProviders } from 'model/Provider';
 
-const Providers = ({ history }: RouteComponentProps) => {
+const Providers = () => {
+  const navigate = useNavigate();
   const { formatMessage } = useSelector(selectIntl);
   const { providers: providersState } = useSelector<GlobalState, GlobalState>(
     (s) => s
   );
 
   const handleOnRowClick = useCallback(
-    (id) => {
-      history.push(`/providers/edit/${id}`);
+    (id: string) => {
+      navigate(`/providers/edit/${id}`);
     },
     [history]
   );
@@ -46,7 +46,7 @@ const Providers = ({ history }: RouteComponentProps) => {
       {providerList?.map((n) => (
         <TableRow
           key={n.code}
-          onClick={() => handleOnRowClick(n.code)}
+          onClick={() => handleOnRowClick(n.code!)}
           title={n.name}
         >
           <DataCell>{n.name}</DataCell>
@@ -99,4 +99,4 @@ const Providers = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(Providers);
+export default Providers;

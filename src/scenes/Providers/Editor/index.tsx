@@ -1,15 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { TextField } from '@entur/form';
 import { SuccessButton } from '@entur/button';
-import { RouteComponentProps } from 'react-router';
 import { isBlank } from 'helpers/forms';
 import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import Page from 'components/Page';
 import { AppIntlState, selectIntl } from 'i18n';
-import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -18,14 +15,15 @@ import Provider from 'model/Provider';
 import './styles.scss';
 import { getProviders, saveProvider } from 'actions/providers';
 import { useConfig } from 'config/ConfigContext';
+import { Params, useNavigate, useParams } from 'react-router-dom';
 
 const getCurrentProvider = (
   state: GlobalState,
-  match: { params: MatchParams },
+  params: Params,
   xmlnsUrlPrefix?: string
 ): Provider =>
   state.providers?.providers?.find(
-    (provider) => provider.code === match.params.id
+    (provider) => provider.code === params.id
   ) ?? {
     name: '',
     code: '',
@@ -35,14 +33,13 @@ const getCurrentProvider = (
     },
   };
 
-const ProviderEditor = ({
-  match,
-  history,
-}: RouteComponentProps<MatchParams>) => {
+const ProviderEditor = () => {
+  const params = useParams();
+  const navigate = useNavigate();
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const { xmlnsUrlPrefix } = useConfig();
   const currentProvider = useSelector<GlobalState, Provider>((state) =>
-    getCurrentProvider(state, match, xmlnsUrlPrefix)
+    getCurrentProvider(state, params, xmlnsUrlPrefix)
   );
 
   const [isSaving, setSaving] = useState<boolean>(false);
@@ -68,7 +65,7 @@ const ProviderEditor = ({
       setSaving(true);
       dispatch(saveProvider(provider))
         .then(() => dispatch(getProviders()))
-        .then(() => history.push('/providers'))
+        .then(() => navigate('/providers'))
         .finally(() => setSaving(false));
     }
     setSaveClicked(true);
@@ -78,7 +75,7 @@ const ProviderEditor = ({
     <Page
       backButtonTitle={formatMessage('navBarProvidersMenuItemLabel')}
       title={
-        match.params.id
+        params.id
           ? formatMessage('editorEditProviderHeaderText')
           : formatMessage('editorCreateProviderHeaderText')
       }
@@ -111,7 +108,7 @@ const ProviderEditor = ({
                 className="form-section"
                 label={formatMessage('editorProviderCodeLabelText')}
                 value={provider.code ?? ''}
-                disabled={!!match.params.id}
+                disabled={!!params.id}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   const sanitized = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
                   setProvider({
@@ -151,7 +148,7 @@ const ProviderEditor = ({
                   disabled={!validProvider}
                   onClick={handleOnSaveClick}
                 >
-                  {match.params.id
+                  {params.id
                     ? formatMessage('editorSaveButtonText')
                     : formatMessage(
                         'editorDetailedCreate',
@@ -175,4 +172,4 @@ const ProviderEditor = ({
   );
 };
 
-export default withRouter(ProviderEditor);
+export default ProviderEditor;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Redirect } from 'react-router-dom';
+import { BrowserRouter, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -60,7 +60,7 @@ const App = () => {
                 {providers.providers &&
                   providers.providers.length === 0 &&
                   auth.roleAssignments?.includes(adminRole!) && (
-                    <Redirect to="/providers" />
+                    <Navigate to="/providers" replace />
                   )}
                 <Loading
                   className="app-loader"

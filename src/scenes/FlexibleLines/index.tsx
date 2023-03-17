@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AddIcon } from '@entur/icons';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { Heading1 } from '@entur/typography';
@@ -32,10 +32,10 @@ export default () => {
     dispatch(loadFlexibleLines());
   }, [dispatch]);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleOnRowClick = (line: FlexibleLine) =>
-    history.push(`/flexible-lines/edit/${line.id}`);
+    navigate(`/flexible-lines/edit/${line.id}`);
   const handleOnRowDeleteClick = (line: FlexibleLine) => {
     setSelectedLine(line);
     setShowDeleteDialogue(true);

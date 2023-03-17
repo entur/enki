@@ -6,8 +6,6 @@ import React, {
   useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
 import { PrimaryButton } from '@entur/button';
 import { Label } from '@entur/typography';
 import { DownloadIcon } from '@entur/icons';
@@ -16,7 +14,6 @@ import Loading from 'components/Loading';
 import { EXPORT_STATUS } from 'model/enums';
 import { getIconForSeverity, getIconForStatus } from '../icons';
 import { AppIntlState, selectIntl } from 'i18n';
-import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import { download, Export } from 'model/Export';
 import Page from 'components/Page';
@@ -24,6 +21,7 @@ import uttuMessages, { isOfUttuMessage } from 'helpers/uttu.messages';
 import './styles.scss';
 import { useAuth } from '@entur/auth-provider';
 import { useConfig } from 'config/ConfigContext';
+import { useParams, Params, useNavigate } from 'react-router-dom';
 
 const ExportItem = ({
   label,
@@ -40,29 +38,26 @@ const ExportItem = ({
 
 const getCurrentExport = (
   state: GlobalState,
-  match: { params: MatchParams }
-): Export | undefined => state.exports?.find((e) => e.id === match.params.id);
+  params: Params
+): Export | undefined => state.exports?.find((e) => e.id === params.id);
 
-const ExportsViewer = ({
-  match,
-  history,
-}: RouteComponentProps<MatchParams>) => {
+const ExportsViewer = () => {
+  const params = useParams();
+  const navigate = useNavigate();
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const currentExport = useSelector<GlobalState, Export | undefined>((state) =>
-    getCurrentExport(state, match)
+    getCurrentExport(state, params)
   );
   const [theExport, setTheExport] = useState(currentExport);
   const dispatch = useDispatch<any>();
 
   const dispatchLoadExport = useCallback(() => {
-    if (match.params.id) {
-      dispatch(loadExportById(match.params.id)).catch(() =>
-        history.push('/exports')
-      );
+    if (params.id) {
+      dispatch(loadExportById(params.id)).catch(() => navigate('/exports'));
     } else {
-      history.push('/exports');
+      navigate('/exports');
     }
-  }, [dispatch, match.params.id, history]);
+  }, [dispatch, params.id, navigate]);
 
   useEffect(() => {
     dispatchLoadExport();
@@ -158,4 +153,4 @@ const ExportsViewer = ({
   );
 };
 
-export default withRouter(ExportsViewer);
+export default ExportsViewer;

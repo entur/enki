@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import OverlayLoader from 'components/OverlayLoader';
 import { SmallAlertBox } from '@entur/alert';
-import { useHistory } from 'react-router-dom';
 import './styles.scss';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { PrimaryButton } from '@entur/button';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   steps: string[];
@@ -52,7 +52,7 @@ export default ({
 }: Props) => {
   const { formatMessage } = useSelector(selectIntl);
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -74,7 +74,7 @@ export default ({
   };
 
   const onCancel = () =>
-    isSaved ? history.push(redirectTo) : setShowConfirm(true);
+    isSaved ? navigate(redirectTo) : setShowConfirm(true);
 
   const invalidSteps = steps.filter((_, i) => !currentStepIsValid(i));
 
@@ -144,9 +144,9 @@ export default ({
           isOpen={true}
           title={formatMessage('networkAuthorityMissing')}
           message={formatMessage('networkAuthorityMissingDetails')}
-          onDismiss={() => history.push('/')}
+          onDismiss={() => navigate('/')}
           buttons={[
-            <PrimaryButton key="0" onClick={() => history.push('/')}>
+            <PrimaryButton key="0" onClick={() => navigate('/')}>
               {formatMessage('homePage')}
             </PrimaryButton>,
           ]}

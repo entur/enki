@@ -1,12 +1,11 @@
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setSavedChanges } from 'actions/editor';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { PrimaryButton, SecondaryButton } from '@entur/button';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-type NavigateConfirmProps = RouteComponentProps & {
+type NavigateConfirmProps = {
   hideDialog: () => void;
   redirectTo: string;
   title: string;
@@ -18,9 +17,11 @@ type NavigateConfirmProps = RouteComponentProps & {
 const NavigateConfirmBox = (props: NavigateConfirmProps) => {
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const RedirectHandler = () => {
     dispatch(setSavedChanges(true));
-    props.history.push(props.redirectTo);
+    navigate(props.redirectTo);
   };
 
   return (
@@ -47,4 +48,4 @@ const NavigateConfirmBox = (props: NavigateConfirmProps) => {
   );
 };
 
-export default withRouter(NavigateConfirmBox);
+export default NavigateConfirmBox;

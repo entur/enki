@@ -1,27 +1,27 @@
 import useUttuError from 'hooks/useUttuError';
 import { ApolloError, useQuery, ApolloQueryResult } from '@apollo/client';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Line, { initLine } from 'model/Line';
 import { isBlank } from 'helpers/forms';
-import { MatchParams } from 'http/http';
 import { Network } from 'model/Network';
 import { useDispatch, useSelector } from 'react-redux';
 import { LINE_EDITOR_QUERY } from 'api/uttu/queries';
 import { GlobalState } from 'reducers';
 import { useConfig } from 'config/ConfigContext';
+import { useMatch, useNavigate } from 'react-router-dom';
 
 export const useUttuErrors = (
   error: ApolloError | undefined,
   deleteError: ApolloError | undefined,
   mutationError: ApolloError | undefined
 ) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+
   useUttuError(
     'loadLineByIdErrorHeader',
     'loadLineByIdErrorMessage',
     error,
-    () => history.push('/lines')
+    () => navigate('/lines')
   );
 
   useUttuError('deleteLineErrorHeader', 'deleteLineErrorMessage', deleteError);
@@ -50,7 +50,7 @@ interface LineData {
 export const useLine: UseLineType = () => {
   const [notFound, setNotFound] = useState(false);
   const [line, setLine] = useState<Line>();
-  const match = useRouteMatch<MatchParams>('/lines/edit/:id');
+  const match = useMatch('/lines/edit/:id');
   const dispatch = useDispatch<any>();
 
   const {

@@ -45,7 +45,7 @@ const LanguagePicker = () => {
   const { formatMessage } = useSelector(selectIntl);
 
   const handleChangeLocale = useCallback(
-    (locale) => {
+    (locale: string) => {
       const { messages } = getMessages(locale);
       dispatch(updateIntl({ locale, messages }));
       localStorage.setItem(LOCALE_KEY, locale);

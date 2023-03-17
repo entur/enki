@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { Redirect, useHistory, useRouteMatch } from 'react-router-dom';
+import { Navigate, useMatch, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Page from 'components/Page';
 import Line from 'model/Line';
@@ -25,14 +25,10 @@ import LineEditorSteps from './LineEditorSteps';
 import './styles.scss';
 import { useConfig } from 'config/ConfigContext';
 
-interface MatchParams {
-  id: string;
-}
-
 export default () => {
   const { formatMessage } = useSelector(selectIntl);
-  const history = useHistory();
-  const match = useRouteMatch<MatchParams>('/lines/edit/:id');
+  const navigate = useNavigate();
+  const match = useMatch('/lines/edit/:id');
   const [nextClicked, setNextClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
@@ -79,7 +75,7 @@ export default () => {
         )
       );
       if (isBlank(match?.params.id)) {
-        history.push('/lines');
+        navigate('/lines');
       }
     } catch (e) {
       // noop just catching to avoid unhandled rejection
@@ -104,13 +100,13 @@ export default () => {
         formatMessage('deleteLineSuccessMessage')
       )
     );
-    history.push('/lines');
+    navigate('/lines');
 
     // eslint-disable-next-line
   }, [match]);
 
   const onBackButtonClicked = () =>
-    editor.isSaved ? history.push('/lines') : setShowConfirm(true);
+    editor.isSaved ? navigate('/lines') : setShowConfirm(true);
 
   const config = useConfig();
 
@@ -128,7 +124,7 @@ export default () => {
       onBackButtonClick={onBackButtonClicked}
     >
       <>
-        {notFound && <Redirect to="/lines" />}
+        {notFound && <Navigate to="/lines" replace />}
         <Loading
           isLoading={loading || !line}
           text={formatMessage('editorLoadingLineText')}

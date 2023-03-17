@@ -20,7 +20,6 @@ export const FlexibleAreasOnlyStopPointEditor = ({
   onChange,
   spoilPristine,
 }: StopPointEditorProps) => {
-  console.log('FlexibleAreasOnlyStopPointEditor');
   const { stopPlace: stopPlaceError, frontText: frontTextError } =
     validateFlexibleAreasOnlyStopPoint(stopPoint);
   const { formatMessage } = useSelector(selectIntl);

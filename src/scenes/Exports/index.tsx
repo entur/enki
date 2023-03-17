@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 import { AddIcon, DownloadIcon } from '@entur/icons';
 import {
   DataCell,
@@ -25,7 +24,8 @@ import './styles.scss';
 import { useAuth } from '@entur/auth-provider';
 import { useConfig } from 'config/ConfigContext';
 
-const Exports = ({ history }: RouteComponentProps) => {
+const Exports = () => {
+  const navigate = useNavigate();
   const exports = useSelector<GlobalState, ExportsState>(
     (state) => state.exports
   );
@@ -43,7 +43,7 @@ const Exports = ({ history }: RouteComponentProps) => {
   const { uttuApiUrl } = useConfig();
 
   const handleOnRowClick = (id: string) => {
-    history.push(`/exports/view/${id}`);
+    navigate(`/exports/view/${id}`);
   };
 
   const renderTableRows = () => {
@@ -135,4 +135,4 @@ const Exports = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(Exports);
+export default Exports;

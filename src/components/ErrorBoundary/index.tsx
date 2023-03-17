@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/browser';
 
 type ErrorProps = {
   sentry: typeof Sentry;
+  children?: React.ReactNode;
 };
 
 class ErrorBoundary extends Component<ErrorProps> {

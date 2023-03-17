@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   DataCell,
   HeaderCell,
@@ -23,7 +22,8 @@ import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
 import { Organisation } from 'model/Organisation';
 
-const Networks = ({ history }: RouteComponentProps) => {
+const Networks = () => {
+  const navigate = useNavigate();
   const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
   const [selectedNetwork, setSelectedNetwork] = useState<Network | undefined>(
     undefined
@@ -40,8 +40,8 @@ const Networks = ({ history }: RouteComponentProps) => {
   }, [dispatch, providers.active]);
 
   const handleOnRowClick = useCallback(
-    (id) => {
-      history.push(`/networks/edit/${id}`);
+    (id: string) => {
+      navigate(`/networks/edit/${id}`);
     },
     [history]
   );
@@ -57,7 +57,7 @@ const Networks = ({ history }: RouteComponentProps) => {
       {networkList.map((n) => (
         <TableRow
           key={n.id}
-          onClick={() => handleOnRowClick(n.id)}
+          onClick={() => handleOnRowClick(n.id!)}
           title={n.description}
         >
           <DataCell>{n.name}</DataCell>
@@ -169,4 +169,4 @@ const Networks = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(Networks);
+export default Networks;

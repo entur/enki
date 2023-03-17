@@ -22,15 +22,15 @@ import {
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { FlexibleStopPlacesState } from 'reducers/flexibleStopPlaces';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
 import './styles.scss';
 
-const StopPlaces = ({ history }: RouteComponentProps) => {
+const StopPlaces = () => {
+  const navigate = useNavigate();
   const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
   const [selectedStopPlace, setSelectedStopPlace] = useState<
     FlexibleStopPlace | undefined
@@ -46,10 +46,10 @@ const StopPlaces = ({ history }: RouteComponentProps) => {
   }, [dispatch]);
 
   const handleOnRowClick = useCallback(
-    (id) => {
-      history.push(`/stop-places/edit/${id}`);
+    (id: string) => {
+      navigate(`/stop-places/edit/${id}`);
     },
-    [history]
+    [navigate]
   );
 
   const getStopAreaTypeMessageKey = (stopPlace: FlexibleStopPlace) => {
@@ -68,7 +68,7 @@ const StopPlaces = ({ history }: RouteComponentProps) => {
       {stopPlaces.map((sp) => (
         <TableRow
           key={sp.id}
-          onClick={() => handleOnRowClick(sp.id)}
+          onClick={() => handleOnRowClick(sp.id!)}
           title={sp.description}
         >
           <DataCell>{sp.name}</DataCell>
@@ -187,4 +187,4 @@ const StopPlaces = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(StopPlaces);
+export default StopPlaces;
