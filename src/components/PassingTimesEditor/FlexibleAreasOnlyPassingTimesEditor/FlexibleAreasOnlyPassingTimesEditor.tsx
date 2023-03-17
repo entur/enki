@@ -4,11 +4,13 @@ import { PassingTimesEditorProps } from '..';
 import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
 import { selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
+import { PassingTimesError } from '../common/PassingTimesError';
 
 export const FlexibleAreasOnlyPassingTimesEditor = ({
   passingTimes,
   stopPoints,
   onChange,
+  spoilPristine,
 }: PassingTimesEditorProps) => {
   const { formatMessage } = useSelector(selectIntl);
   return (
@@ -17,6 +19,10 @@ export const FlexibleAreasOnlyPassingTimesEditor = ({
       <Paragraph>
         {formatMessage('passingTimesInfoFlexibleAreasOnly')}
       </Paragraph>
+      <PassingTimesError
+        passingTimes={passingTimes}
+        spoilPristine={spoilPristine}
+      />
       <div className="passing-times-editor">
         <div className="passing-time">
           <TimeWindowPassingTimeEditor

@@ -22,7 +22,6 @@ import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/c
 import CopyDialog from './CopyDialog';
 import CopyActionChip from 'components/CopyActionChip';
 import Notices from 'components/Notices';
-import { PassingTimeTypeDrawer } from './PassingTimesEditor/PassingTimeTypeDrawer';
 import { DayTypesEditor } from 'components/DayTypesEditor/DayTypesEditor';
 import { filterNetexOperators } from 'model/Organisation';
 import { useConfig } from 'config/ConfigContext';
@@ -66,9 +65,6 @@ const ServiceJourneyEditor = (props: Props) => {
   );
   const { formatMessage } = useSelector(selectIntl);
 
-  const [openPassingTimeTypeDrawer, setOpenPassingTimeTypeDrawer] =
-    useState(false);
-
   const handleOperatorSelectionChange = (
     newOperatorSelection: string | undefined
   ) => {
@@ -96,13 +92,6 @@ const ServiceJourneyEditor = (props: Props) => {
 
   return (
     <div className="service-journey-editor">
-      <PassingTimeTypeDrawer
-        open={openPassingTimeTypeDrawer}
-        title="Passing times"
-        onDismiss={() => {
-          setOpenPassingTimeTypeDrawer(false);
-        }}
-      />
       <div className="service-journey-editor-form">
         <RequiredInputMarker />
         <div className="input-group">

@@ -4,17 +4,23 @@ import { useIntl } from 'i18n';
 import { PassingTimesEditorProps } from '..';
 import { FixedPassingTimeEditor } from '../FixedPassingTimeEditor/FixedPassingTimeEditor';
 import { changeElementAtIndex } from 'helpers/arrays';
+import { PassingTimesError } from '../common/PassingTimesError';
 
 export const TimeWindowPassingTimesEditor = ({
   passingTimes,
   stopPoints,
   onChange,
+  spoilPristine,
 }: PassingTimesEditorProps) => {
   const { formatMessage } = useIntl();
   return (
     <>
       <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
       <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
+      <PassingTimesError
+        passingTimes={passingTimes}
+        spoilPristine={spoilPristine}
+      />
       <div className="passing-times-editor">
         {passingTimes.map((passingTime, index) => (
           <div key={index} className="passing-time">

@@ -5,11 +5,13 @@ import { changeElementAtIndex } from 'helpers/arrays';
 import { MixedFlexiblePassingTimeEditor } from './MixedFlexiblePassingTimeEditor';
 import { selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
+import { PassingTimesError } from '../common/PassingTimesError';
 
 export const MixedFlexiblePassingTimesEditor = ({
   passingTimes,
   stopPoints,
   onChange,
+  spoilPristine,
 }: PassingTimesEditorProps) => {
   const { formatMessage } = useSelector(selectIntl);
   return (
@@ -18,6 +20,10 @@ export const MixedFlexiblePassingTimesEditor = ({
         {formatMessage('serviceJourneyMixedFlexiblePassingTimes')}
       </Heading4>
       <Paragraph>{formatMessage('passingTimesInfoMixedFlexible')}</Paragraph>
+      <PassingTimesError
+        passingTimes={passingTimes}
+        spoilPristine={spoilPristine}
+      />
       <div className="passing-times-editor">
         {passingTimes.map((passingTime, index) => (
           <div key={index} className="passing-time">

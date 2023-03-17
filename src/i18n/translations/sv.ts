@@ -391,6 +391,8 @@ export const messages = {
   serviceJourneyPassingTimes: 'Passeringstider',
   serviceJourneyBusinessHours: 'Öppettid',
   passingTimesInfo: 'Fyll i passeringstider för hållplatserna.',
+  passingTimesInfoFlexibleAreasOnly:
+    'Enter the business hours for the flexible service.',
   serviceJourneyBooking: 'Beställning',
   generalName: 'Namn *',
   nameIsRequired: 'Namn måste fyllas i.',
@@ -484,27 +486,6 @@ export const messages = {
   stopPlacesNoStopPlacesFoundText: 'Inga hållplatser hittades.',
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Antal punkter',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kod',
-  passingTimeTypeDrawerTitle: 'Passeringstider',
-  passingTimeTypeDrawerSubTitle: 'Välj rätt representation av passeringstider',
-  passingTimeTypeDrawerFixedText: `
-    En fast linje med fasta passeringstider som har ankomst- och avgångstider
-	på varje hållplats.
-  `,
-  passingTimeTypeDrawerFlexibleText1: `
-    Flexibla passeringstider användas för att beskriva öppettider på en områdesbaserad
-	linje, eller tilgängligt tidsfönster för på- eller avstigning på hållplatser
-	i linjen.
-  `,
-  passingTimeTypeDrawerFlexibleText2: `
-    Öppettider eller tidsfönster för på- eller avstigning defineras med
-	"tidigaste avgångstid" och "senaste ankomsttid":
-  `,
-  passingTimeTypeDrawerEarliestDepartureText: `
-    Resor kan inte starta från den här hållplatsen eller området före den angivna tidspunkten.
-  `,
-  passingTimeTypeDrawerLatestARrivalText: `
-    Resor kan inte avslutas på den här hållplatsen eller området före den angivna tidspunkten.
-  `,
   passingTimesTypeFixed: 'Fasta',
   passingTimesTypeFlexible: 'Flexibla',
   passingTimesArrivalTime: 'Ankomsttid',

@@ -483,28 +483,6 @@ export const messages: MessagesKey = {
   stopPlacesNoStopPlacesFoundText: 'No stop places found.',
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Number of points',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
-  passingTimeTypeDrawerTitle: 'Passing times',
-  passingTimeTypeDrawerSubTitle:
-    'Choose correct representation for passing times',
-  passingTimeTypeDrawerFixedText: `
-    A route-based service journey with fixed passing times, as defined by 
-    an arrival time and departure time for each stop in the pattern.
-  `,
-  passingTimeTypeDrawerFlexibleText1: `
-    A service journey with flexible passing times is used to define the opening
-    hours for an area-based service, or the time window available for boarding/alighting
-    at each stop along a route.
-  `,
-  passingTimeTypeDrawerFlexibleText2: `
-    Opening hours or time window for boarding/alighting is defined by
-    “earliest departure” and “latest arrival”:
-  `,
-  passingTimeTypeDrawerEarliestDepartureText: `
-    Journeys cannot begin from this stop or area before the given time.
-  `,
-  passingTimeTypeDrawerLatestARrivalText: `
-    Journeys cannot end at this stop or area after the given time.
-  `,
   passingTimesTypeFixed: 'Fixed',
   passingTimesTypeFlexible: 'Flexible',
   passingTimesArrivalTime: 'Arrival time',

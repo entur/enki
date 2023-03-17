@@ -481,28 +481,6 @@ export const messages = {
   stopPlacesNoStopPlacesFoundText: 'Ingen stoppesteder ble funnet.',
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Antall punkter',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kode',
-  passingTimeTypeDrawerTitle: 'Passeringstider',
-  passingTimeTypeDrawerSubTitle:
-    'Velg riktig representasjon av passeringstider',
-  passingTimeTypeDrawerFixedText: `
-    Et rutebasert tilbud med faste passeringstider, med ankomst- og avgangstider
-    for hvert stopp.
-  `,
-  passingTimeTypeDrawerFlexibleText1: `
-    Fleksible passeringstider brukes for å beskrive åpningstider
-    i et områdebasert tilbud, eller tilgjengelig tidsvindu for påstigning/avstigning
-    på hvert stopp langs en rute.
-  `,
-  passingTimeTypeDrawerFlexibleText2: `
-    Åpningstider eller tidsvindu for påstigning/avstigning defineres med
-    "tidligste avgangstid" og "seneste ankomstid":
-  `,
-  passingTimeTypeDrawerEarliestDepartureText: `
-    Reiser kan ikke starte fra dette stoppet eller området før det gitte tidspunktet.
-  `,
-  passingTimeTypeDrawerLatestARrivalText: `
-    Reiser kan ikke avsluttes på dette stoppet eller området før det gitte tidspunktet.
-  `,
   passingTimesTypeFixed: 'Faste',
   passingTimesTypeFlexible: 'Fleksible',
   passingTimesArrivalTime: 'Ankomsttid',
