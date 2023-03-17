@@ -5,6 +5,7 @@ import { PassingTimesEditorProps } from '..';
 import { FixedPassingTimeEditor } from '../FixedPassingTimeEditor/FixedPassingTimeEditor';
 import { changeElementAtIndex } from 'helpers/arrays';
 import { PassingTimesError } from '../common/PassingTimesError';
+import useUniqueKeys from 'hooks/useUniqueKeys';
 
 export const TimeWindowPassingTimesEditor = ({
   passingTimes,
@@ -13,6 +14,7 @@ export const TimeWindowPassingTimesEditor = ({
   spoilPristine,
 }: PassingTimesEditorProps) => {
   const { formatMessage } = useIntl();
+  const uniqueKeys = useUniqueKeys(passingTimes);
   return (
     <>
       <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
@@ -23,7 +25,7 @@ export const TimeWindowPassingTimesEditor = ({
       />
       <div className="passing-times-editor">
         {passingTimes.map((passingTime, index) => (
-          <div key={index} className="passing-time">
+          <div key={uniqueKeys[index]} className="passing-time">
             <div className="time-number">{index + 1}</div>
             <FixedPassingTimeEditor
               passingTime={passingTime}

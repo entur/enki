@@ -7,7 +7,7 @@ import { MixedFlexibleStopPointsEditor } from './MixedFlexible/MixedFlexibleStop
 import './styles.scss';
 
 export type StopPointsEditorProps = {
-  flexibleLineType?: FlexibleLineType | undefined;
+  flexibleLineType?: FlexibleLineType;
   pointsInSequence: StopPoint[];
   spoilPristine: boolean;
   updateStopPoint: (index: number, stopPoint: StopPoint) => void;

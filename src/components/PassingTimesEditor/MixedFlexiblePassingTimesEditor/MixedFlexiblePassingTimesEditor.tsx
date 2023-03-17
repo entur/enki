@@ -6,6 +6,7 @@ import { MixedFlexiblePassingTimeEditor } from './MixedFlexiblePassingTimeEditor
 import { selectIntl } from 'i18n';
 import { useSelector } from 'react-redux';
 import { PassingTimesError } from '../common/PassingTimesError';
+import useUniqueKeys from 'hooks/useUniqueKeys';
 
 export const MixedFlexiblePassingTimesEditor = ({
   passingTimes,
@@ -14,6 +15,7 @@ export const MixedFlexiblePassingTimesEditor = ({
   spoilPristine,
 }: PassingTimesEditorProps) => {
   const { formatMessage } = useSelector(selectIntl);
+  const uniqueKeys = useUniqueKeys(passingTimes);
   return (
     <>
       <Heading4>
@@ -26,7 +28,7 @@ export const MixedFlexiblePassingTimesEditor = ({
       />
       <div className="passing-times-editor">
         {passingTimes.map((passingTime, index) => (
-          <div key={index} className="passing-time">
+          <div key={uniqueKeys[index]} className="passing-time">
             <div className="time-number">{index + 1}</div>
             <MixedFlexiblePassingTimeEditor
               passingTime={passingTime}

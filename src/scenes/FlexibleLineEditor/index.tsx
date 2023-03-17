@@ -126,7 +126,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
                 }
                 isLineValid={validFlexibleLine(line!)}
                 currentStepIsValid={(i) =>
-                  currentFlexibleLineStepIsValid(i, line!)
+                  currentFlexibleLineStepIsValid(i, line)
                 }
                 setNextClicked={setNextClicked}
                 isEdit={isEdit}
