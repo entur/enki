@@ -235,6 +235,21 @@ export const messages = {
     'Kunden hämtas och körs till och från valfritt punkt innanför ett definerat område, i en angiven tidsperiod (öppettid).',
   drawerHailAndRideSections:
     'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
+  flexibleLineType_fixed: 'Fast',
+  flexibleLineType_flexibleAreasOnly: 'Endast flexibla områden',
+  flexibleLineType_mixedFlexible: 'Blandat',
+  flexibleLineTypeDrawer_fixed:
+    'Fast linje med fasta tider, men måste förhandsbeställas för att den ska köras.',
+  flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
+    'Fast linje med fasta tider, med möjlighet för på-/avstigning på hållplatser utanför definerat körmönster på beställning.',
+  flexibleLineTypeDrawer_fixedStopAreaWide:
+    'Flexibel linje definerad av ett eller flera områden, där varje område kan ha olika förbestämda stopp (t.ex. mötesplatser, knutpunkter eller hållplatser).',
+  flexibleLineTypeDrawer_flexibleAreasOnly:
+    'Kunden hämtas och körs till och från valfritt punkt innanför ett definerat område, i en angiven tidsperiod (öppettid).',
+  flexibleLineTypeDrawer_hailAndRideSections:
+    'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
+  flexibleLineTypeDrawer_mixedFlexible:
+    'En blandning av förhandsdefinerade hållplatser och flexibla områden, med tidsrum och fasta tider för ombord- och avstigning.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Lägg till journey pattern',
   journeyPatternsUnsavedChanges: 'Du har ändringar som inte är sparade.',
   journeyPatternsSaveAndContinue: 'Spara och gå vidare',
@@ -252,6 +267,10 @@ export const messages = {
     'Du måste lägga till minst två hållplatser; ett första och ett sista. Välj mellan flexibla eller fasta hållplatser.',
   stopPointsInfoFixed:
     'Du måste lägga till minst två hållplatser; ett första och ett sista. Fyll i en giltig ID.',
+  stopPointsInfoFlexibleAreaOnly:
+    'Den här typen av flexibel linje tillåter endast en flexibel hållplats där all ombord- och avstigning sker.',
+  stopPointsInfoMixedFlexible:
+    'Lägg till en sekvens av minst två fasta eller flexibla stopp in den ordning de passeras.',
   deleteStopPointDialogTitle: 'Ta bort hållplatspunkt',
   deleteStopPointDialogMessage:
     'Är du säker på att du vill ta bort den här hållplatspunkten?',
@@ -372,7 +391,12 @@ export const messages = {
   serviceJourneyAvailability: 'Tillgänglighet',
   serviceJourneyPassingTimes: 'Passeringstider',
   serviceJourneyBusinessHours: 'Öppettid',
+  serviceJourneyMixedFlexiblePassingTimes: 'Passeringstider och öppettider',
   passingTimesInfo: 'Fyll i passeringstider för hållplatserna.',
+  passingTimesInfoFlexibleAreasOnly:
+    'Lägg till öppettider för den flexibla tjänsten.',
+  passingTimesInfoMixedFlexible:
+    'Lägg till passeringstider för fasta stopp och öppettider för flexibla områden',
   serviceJourneyBooking: 'Beställning',
   generalName: 'Namn *',
   nameIsRequired: 'Namn måste fyllas i.',
@@ -466,33 +490,12 @@ export const messages = {
   stopPlacesNoStopPlacesFoundText: 'Inga hållplatser hittades.',
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Antal punkter',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kod',
-  passingTimeTypeDrawerTitle: 'Passeringstider',
-  passingTimeTypeDrawerSubTitle: 'Välj rätt representation av passeringstider',
-  passingTimeTypeDrawerFixedText: `
-    En fast linje med fasta passeringstider som har ankomst- och avgångstider
-	på varje hållplats.
-  `,
-  passingTimeTypeDrawerFlexibleText1: `
-    Flexibla passeringstider användas för att beskriva öppettider på en områdesbaserad
-	linje, eller tilgängligt tidsfönster för på- eller avstigning på hållplatser
-	i linjen.
-  `,
-  passingTimeTypeDrawerFlexibleText2: `
-    Öppettider eller tidsfönster för på- eller avstigning defineras med
-	"tidigaste avgångstid" och "senaste ankomsttid":
-  `,
-  passingTimeTypeDrawerEarliestDepartureText: `
-    Resor kan inte starta från den här hållplatsen eller området före den angivna tidspunkten.
-  `,
-  passingTimeTypeDrawerLatestARrivalText: `
-    Resor kan inte avslutas på den här hållplatsen eller området före den angivna tidspunkten.
-  `,
   passingTimesTypeFixed: 'Fasta',
   passingTimesTypeFlexible: 'Flexibla',
   passingTimesArrivalTime: 'Ankomsttid',
   passingTimesDepartureTime: 'Avgångstid',
-  passingTimesLatestArrivalTime: 'Senaste ankomsttid',
-  passingTimesEarliestDepartureTime: 'Tidigaste avgångstid',
+  passingTimesLatestArrivalTime: 'Slut',
+  passingTimesEarliestDepartureTime: 'Start',
   passingTimesDayOffset: 'Dygnsjustering',
   passingTimesDayOffsetTooltip:
     'Justera dygn om passeringstiden är en eller flera dager senare än avgångstiden på första hållplatsen',

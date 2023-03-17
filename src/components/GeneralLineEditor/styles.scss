@@ -1,5 +1,4 @@
 @import '~@entur/tokens/dist/styles.scss';
-@import '~@entur/modal/dist/styles.css';
 
 .lines-editor-general {
   .header {
@@ -18,17 +17,6 @@
     }
   }
 
-  .line-type-dropdown {
-    width: 100%;
-    position: relative;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: $space-large;
-
-    &-tooltip {
-      text-decoration: underline;
-    }
-  }
   .transport-mode-dropdowns {
     display: flex;
     justify-content: space-between;
@@ -40,21 +28,6 @@
       margin-right: 2px;
       min-width: 20rem;
       margin-top: $space-large;
-    }
-  }
-
-  header.flexible-line-type-drawer {
-    margin-bottom: $space-extra-large;
-  }
-
-  section.flexible-line-type-drawer {
-    margin-bottom: $space-large;
-  }
-
-  .eds-drawer {
-    overflow-y: scroll;
-    &__close-button:hover {
-      cursor: pointer;
     }
   }
 }

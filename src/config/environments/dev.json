@@ -11,5 +11,6 @@
     "audience": "https://ror.api.dev.entur.io",
     "useRefreshTokens": true,
     "cacheLocation": "memory"
-  }
+  },
+  "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"]
 }

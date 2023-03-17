@@ -5,6 +5,7 @@ import '@formatjs/intl-pluralrules/dist/locale-data/nb';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { IntlState } from 'react-intl-redux';
 import { GlobalState } from 'reducers';
+import { useSelector } from 'react-redux';
 
 export const defaultLocale = 'nb';
 export const SUPPORTED_LOCALES = ['nb', 'en', 'sv'];
@@ -73,3 +74,5 @@ export const getIntl = ({ intl: { locale, messages } }: any): AppIntlState => {
 };
 
 export const selectIntl = (state: GlobalState) => getIntl({ intl: state.intl });
+
+export const useIntl: () => AppIntlState = () => useSelector(selectIntl);

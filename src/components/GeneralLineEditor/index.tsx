@@ -1,28 +1,18 @@
-import React, { useState, ChangeEvent, useCallback } from 'react';
+import React, { ChangeEvent, useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { Heading1 } from '@entur/typography';
-import {
-  FLEXIBLE_LINE_TYPE,
-  VEHICLE_MODE,
-  vehicleModeMessages,
-} from 'model/enums';
+import { VEHICLE_MODE, vehicleModeMessages } from 'model/enums';
 import { selectIntl } from 'i18n';
 import './styles.scss';
-import FlexibleLine from 'model/FlexibleLine';
-import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
+import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { Network } from 'model/Network';
-import {
-  getEnumInit,
-  mapEnumToItems,
-  mapToItems,
-  mapVehicleModeAndLabelToItems,
-} from 'helpers/dropdown';
+import { mapToItems, mapVehicleModeAndLabelToItems } from 'helpers/dropdown';
 import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -31,6 +21,7 @@ import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import Notices from 'components/Notices';
 import { Organisation } from 'model/Organisation';
+import { FlexibleLineTypeSelector } from 'components/FlexibleLineTypeSelector/FlexibleLineTypeSelector';
 
 interface Props<T extends Line> {
   line: T;
@@ -50,16 +41,18 @@ export default <T extends Line>({
   const { formatMessage } = useSelector(selectIntl);
   const { publicCode } = line;
 
-  let flexibleLineType: string | undefined;
-  let isFlexibleLine = false;
+  const { flexibleLineType, isFlexibleLine } = useMemo(() => {
+    const flexibleLineType = (line as FlexibleLine).flexibleLineType;
+    const isFlexibleLine = !!flexibleLineType;
 
-  if ((line as FlexibleLine).flexibleLineType) {
-    isFlexibleLine = true;
-    flexibleLineType = (line as FlexibleLine).flexibleLineType;
-  }
+    return {
+      flexibleLineType,
+      isFlexibleLine,
+    };
+  }, [line]);
 
   const onFlexibleLineTypeChange = (
-    newFlexibleLineType: string | undefined
+    newFlexibleLineType: FlexibleLineType | undefined
   ) => {
     if (newFlexibleLineType !== 'flexibleAreasOnly') {
       return onChange<FlexibleLine>({
@@ -93,13 +86,10 @@ export default <T extends Line>({
     [formatMessage]
   );
 
-  const [showDrawer, setDrawer] = useState<boolean>(false);
-
   const namePristine = usePristine(line.name, spoilPristine);
   const publicCodePristine = usePristine(publicCode, spoilPristine);
   const operatorPristine = usePristine(line.operatorRef, spoilPristine);
   const networkPristine = usePristine(line.networkRef, spoilPristine);
-  const lineTypePristine = usePristine(flexibleLineType, spoilPristine);
   const modePristine = usePristine(line.transportMode, spoilPristine);
 
   const getOperatorItems = useCallback(
@@ -212,33 +202,11 @@ export default <T extends Line>({
 
         {isFlexibleLine && (
           <section className="line-type-dropdown">
-            <div
-              className="line-type-dropdown-tooltip"
-              aria-label={formatMessage('drawerAria')}
-              onClick={() => setDrawer(true)}
-            >
-              {formatMessage('typeFormGroupTitleTooltip')}
-            </div>
-            {
-              <Dropdown
-                className="flexible-line-type"
-                initialSelectedItem={getEnumInit(flexibleLineType)}
-                placeholder={formatMessage('defaultOption')}
-                items={mapEnumToItems(FLEXIBLE_LINE_TYPE)}
-                clearable
-                value={flexibleLineType}
-                label={formatMessage('generalTypeFormGroupTitle')}
-                onChange={(element) =>
-                  onFlexibleLineTypeChange &&
-                  onFlexibleLineTypeChange(element?.value)
-                }
-                {...getErrorFeedback(
-                  formatMessage('flexibleLineTypeEmpty'),
-                  !isBlank((line as FlexibleLine).flexibleLineType),
-                  lineTypePristine
-                )}
-              />
-            }
+            <FlexibleLineTypeSelector
+              flexibleLineType={flexibleLineType}
+              onChange={onFlexibleLineTypeChange}
+              spoilPristine={spoilPristine}
+            />
           </section>
         )}
 
@@ -312,12 +280,6 @@ export default <T extends Line>({
           }}
         />
       )}
-
-      <FlexibleLineTypeDrawer
-        open={showDrawer}
-        onDismiss={() => setDrawer(false)}
-        title={formatMessage('generalDrawerTitle')}
-      />
     </div>
   );
 };

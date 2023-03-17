@@ -225,16 +225,21 @@ export const messages = {
   generalDrawer: 'Her er en kort beskrivelse av de ulike linjetypene.',
   drawerAria: 'Les mer om de ulike linjetypene.',
   generalDrawerTitle: 'Fleksible linjetyper.',
-  drawerFixed:
+  flexibleLineType_fixed: 'Fast',
+  flexibleLineType_flexibleAreasOnly: 'Kun fleksible områder',
+  flexibleLineType_mixedFlexible: 'Blandet',
+  flexibleLineTypeDrawer_fixed:
     'Fast rute til faste tider, men må forhåndsbestilles for at ruten skal kjøres.',
-  drawerMainRouteWithFlexibleEnds:
+  flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
     'Fast rute til faste tider, med mulighet for på-/avstigning på stoppesteder utenfor oppsatt kjøremønster ved bestilling.',
-  drawerFixedStopAreaWide:
+  flexibleLineTypeDrawer_fixedStopAreaWide:
     'Fleksibel rute definert av ett eller flere områder, der hvert område kan ha ulike forhåndsbestemte stopp (møteplass, knutepunkt, kommune-senter, holdeplasser).',
-  drawerFlexibleAreasOnly:
+  flexibleLineTypeDrawer_flexibleAreasOnly:
     'Hentes og kjøres til/fra valgfritt sted innenfor et definert område og gitte åpningstider.',
-  drawerHailAndRideSections:
+  flexibleLineTypeDrawer_hailAndRideSections:
     'Ruten er definert og har noen faste holdeplasser. Langs bestemte strekninger på ruten kan på-/avstigning skje hvor som helst ved signal til sjåfør.',
+  flexibleLineTypeDrawer_mixedFlexible:
+    'Ruten kan bestå av både faste stopp og fleksible områder, med åpningstider og faste på-/avstigningstidspunkt.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Legg til journey pattern',
   journeyPatternsUnsavedChanges: 'Du har endringer som ikke er lagret.',
   journeyPatternsSaveAndContinue: 'Lagre og gå videre',
@@ -252,6 +257,10 @@ export const messages = {
     'Du må legge til minst to stopp; ett for start og ett for slutt. Velg mellom fleksible stoppesteder eller platform-IDer fra Nasjonalt stoppestedsregister.',
   stopPointsInfoFixed:
     'Du må legge til minst to stopp; ett for start og ett for slutt. Skriv inn platform-ID fra stoppestedsregisteret.',
+  stopPointsInfoFlexibleAreaOnly:
+    'Denne typen fleksibel linje tillater kun et fleksibelt stoppested der all ombord- og avstigning skjer.',
+  stopPointsInfoMixedFlexible:
+    'Legg til en sekvens av minst to faste eller fleksible stopp in den rekkefølgen de passeres.',
   deleteStopPointDialogTitle: 'Slette stoppepunkt',
   deleteStopPointDialogMessage:
     'Er du sikker på at du ønsker å slette dette stoppepunktet?',
@@ -372,7 +381,12 @@ export const messages = {
   serviceJourneyAvailability: 'Tilgjengelighet',
   serviceJourneyPassingTimes: 'Passeringstider',
   serviceJourneyBusinessHours: 'Åpningstid',
+  serviceJourneyMixedFlexiblePassingTimes: 'Passeringstider og tidsvinduer',
   passingTimesInfo: 'Fyll inn passeringstider for de ulike stoppene.',
+  passingTimesInfoFlexibleAreasOnly:
+    'Fyll inn åpningstiden for det fleksible tilbudet.',
+  passingTimesInfoMixedFlexible:
+    'Fyll inn passeringstider for faste stopp og tidsvinduer for fleksible områder.',
   serviceJourneyBooking: 'Bestilling',
   generalName: 'Navn *',
   nameIsRequired: 'Navn må fylles inn.',
@@ -467,34 +481,12 @@ export const messages = {
   stopPlacesNoStopPlacesFoundText: 'Ingen stoppesteder ble funnet.',
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Antall punkter',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kode',
-  passingTimeTypeDrawerTitle: 'Passeringstider',
-  passingTimeTypeDrawerSubTitle:
-    'Velg riktig representasjon av passeringstider',
-  passingTimeTypeDrawerFixedText: `
-    Et rutebasert tilbud med faste passeringstider, med ankomst- og avgangstider
-    for hvert stopp.
-  `,
-  passingTimeTypeDrawerFlexibleText1: `
-    Fleksible passeringstider brukes for å beskrive åpningstider
-    i et områdebasert tilbud, eller tilgjengelig tidsvindu for påstigning/avstigning
-    på hvert stopp langs en rute.
-  `,
-  passingTimeTypeDrawerFlexibleText2: `
-    Åpningstider eller tidsvindu for påstigning/avstigning defineres med
-    "tidligste avgangstid" og "seneste ankomstid":
-  `,
-  passingTimeTypeDrawerEarliestDepartureText: `
-    Reiser kan ikke starte fra dette stoppet eller området før det gitte tidspunktet.
-  `,
-  passingTimeTypeDrawerLatestARrivalText: `
-    Reiser kan ikke avsluttes på dette stoppet eller området før det gitte tidspunktet.
-  `,
   passingTimesTypeFixed: 'Faste',
   passingTimesTypeFlexible: 'Fleksible',
   passingTimesArrivalTime: 'Ankomsttid',
   passingTimesDepartureTime: 'Avgangstid',
-  passingTimesLatestArrivalTime: 'Seneste ankomsttid',
-  passingTimesEarliestDepartureTime: 'Tidligste avgangstid',
+  passingTimesLatestArrivalTime: 'Slutt',
+  passingTimesEarliestDepartureTime: 'Start',
   passingTimesDayOffset: 'Døgnskille',
   passingTimesDayOffsetTooltip:
     'Sett døgnskille dersom passeringstiden er én eller flere dager senere enn tilbudets avreise',

@@ -7,6 +7,7 @@ type Props = {
   onClick: () => void;
   title: string;
   thin?: boolean;
+  disabled?: boolean;
 };
 
 const DeleteButton = (props: Props) => (
@@ -17,6 +18,7 @@ const DeleteButton = (props: Props) => (
       props.onClick();
       event.stopPropagation();
     }}
+    disabled={props.disabled}
   >
     <DeleteIcon inline /> {props.title}
   </TertiaryButton>

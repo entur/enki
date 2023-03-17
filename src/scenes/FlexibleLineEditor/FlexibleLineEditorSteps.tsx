@@ -4,7 +4,7 @@ import General from 'components/GeneralLineEditor';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import { MatchParams } from 'http/http';
-import FlexibleLine from 'model/FlexibleLine';
+import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import './styles.scss';
 import JourneyPatternEditor from 'components/JourneyPatternEditor';
@@ -81,7 +81,7 @@ const FlexibleLineEditor = (props: Props) => {
                 spoilPristine={props.spoilPristine}
                 deleteServiceJourney={handleDelete}
                 copyServiceJourney={
-                  props.flexibleLine.flexibleLineType === 'fixed'
+                  props.flexibleLine.flexibleLineType === FlexibleLineType.FIXED
                     ? handleCopy
                     : undefined
                 }

@@ -1,5 +1,10 @@
+import { FlexibleLineType } from 'model/FlexibleLine';
 import { Config } from './ConfigContext';
 import { getEnvironment } from './getEnvironment';
+
+const defaultConfig: Config = {
+  supportedFlexibleLineTypes: Object.values(FlexibleLineType),
+};
 
 export const fetchConfig = async (): Promise<Config> => {
   const env = getEnvironment();
@@ -11,5 +16,5 @@ export const fetchConfig = async (): Promise<Config> => {
     overrides.uttuApiUrl = process.env.REACT_APP_UTTU_API_URL;
   }
 
-  return Object.assign({}, config, overrides);
+  return Object.assign({}, defaultConfig, config, overrides);
 };

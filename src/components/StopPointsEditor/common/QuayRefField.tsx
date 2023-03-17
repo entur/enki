@@ -7,12 +7,24 @@ import { GlobalState } from 'reducers';
 import { AppIntlState, selectIntl } from 'i18n';
 import { ErrorHandling } from 'helpers/errorHandling';
 import { useQuaySearch } from 'api/useQuaySearch';
+import StopPoint from 'model/StopPoint';
 
 interface Props {
   initialQuayRef?: string | null;
   errorFeedback: ErrorHandling;
   onChange: (quayRef: string) => void;
 }
+
+export const useOnQuayRefChange = (
+  stopPoint: StopPoint,
+  onChange: (stopPoint: StopPoint) => void
+) => {
+  const onQuayRefChange = useCallback(
+    (quayRef: string) => onChange({ ...stopPoint, quayRef }),
+    [onChange, stopPoint]
+  );
+  return onQuayRefChange;
+};
 
 export const QuayRefField = ({
   initialQuayRef,

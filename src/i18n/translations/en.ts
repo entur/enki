@@ -229,16 +229,21 @@ export const messages: MessagesKey = {
   generalDrawer: 'Underneath is a short description of each line type.',
   drawerAria: 'Read more about the different line types.',
   generalDrawerTitle: 'Flexible line types.',
-  drawerFixed:
+  flexibleLineType_fixed: 'Fixed',
+  flexibleLineType_flexibleAreasOnly: 'Flexible areas only',
+  flexibleLineType_mixedFlexible: 'Mixed flexible',
+  flexibleLineTypeDrawer_fixed:
     'Fixed route at fixed times, has to be booked beforehand for the bus to drive.',
-  drawerMainRouteWithFlexibleEnds:
+  flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
     'Fixed route at fixed times, with the possibility to book boarding or alighting at stop points outside the designated route.',
-  drawerFixedStopAreaWide:
+  flexibleLineTypeDrawer_fixedStopAreaWide:
     'Flexible route defined by one or more areas, where each area can have different pre-defined stops.',
-  drawerFlexibleAreasOnly:
+  flexibleLineTypeDrawer_flexibleAreasOnly:
     'Pickup and dropoff anywhere within a defined area and given opening hours.',
-  drawerHailAndRideSections:
+  flexibleLineTypeDrawer_hailAndRideSections:
     'The route is defined, but along selected streches there is the possibility for boarding/alighting at any time.',
+  flexibleLineTypeDrawer_mixedFlexible:
+    'A mix of pre-defined stops and flexible areas, with time windows and fixed times for boarding and alighting.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Add journey pattern',
   journeyPatternsUnsavedChanges: 'You have unsaved changes.',
   journeyPatternsSaveAndContinue: 'Save and continue',
@@ -250,12 +255,15 @@ export const messages: MessagesKey = {
   stepperServiceJourney: 'Service Journeys',
   stepperBooking: 'Booking info',
   editorStopPoints: 'Add stop points defining the service',
-  editorStopPointFlexibleAreaOnly:
-    'Add flexible stop place defining the service',
+  editorStopPointFlexibleAreaOnly: 'Flexible stop place defining the service',
   stopPointsInfo:
     'You have to add at least two stop points; one for start and one for stop. Choose between flexible stop places and quay IDs from the National stop place registry.',
   stopPointsInfoFixed:
     'You have to add at least two stop points; one for start and one for stop. Enter quay id from the National stop place registry.',
+  stopPointsInfoFlexibleAreaOnly:
+    'This type of flexible line only only permits one flexible stop place within which all boarding and alighting takes place.',
+  stopPointsInfoMixedFlexible:
+    'Add a sequence of at least two fixed stopping positions, or flexible areas in the order which they are passed.',
   deleteStopPointDialogTitle: 'Delete stop point',
   deleteStopPointDialogMessage:
     'Are you sure you want to delete this stop point?',
@@ -376,8 +384,12 @@ export const messages: MessagesKey = {
   serviceJourneyAvailability: 'Availability',
   serviceJourneyPassingTimes: 'Passing times',
   serviceJourneyBusinessHours: 'Business hours',
-  passingTimesInfo:
-    'Enter the passing times for the different stops. For an area based service, you should specify the opening hours, with start time on the first stop and end time on the last.',
+  serviceJourneyMixedFlexiblePassingTimes: 'Passing times and time windows',
+  passingTimesInfo: 'Enter the passing times for the different stops.',
+  passingTimesInfoFlexibleAreasOnly:
+    'Enter the business hours for the flexible service.',
+  passingTimesInfoMixedFlexible:
+    'Enter passing times for fixed stops and time windows for flexible areas.',
   serviceJourneyBooking: 'Booking',
   generalName: 'Name *',
   nameIsRequired: 'Name is required.',
@@ -471,34 +483,12 @@ export const messages: MessagesKey = {
   stopPlacesNoStopPlacesFoundText: 'No stop places found.',
   stopPlacesNumberOfPointsTableHeaderLabelText: 'Number of points',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
-  passingTimeTypeDrawerTitle: 'Passing times',
-  passingTimeTypeDrawerSubTitle:
-    'Choose correct representation for passing times',
-  passingTimeTypeDrawerFixedText: `
-    A route-based service journey with fixed passing times, as defined by 
-    an arrival time and departure time for each stop in the pattern.
-  `,
-  passingTimeTypeDrawerFlexibleText1: `
-    A service journey with flexible passing times is used to define the opening
-    hours for an area-based service, or the time window available for boarding/alighting
-    at each stop along a route.
-  `,
-  passingTimeTypeDrawerFlexibleText2: `
-    Opening hours or time window for boarding/alighting is defined by
-    “earliest departure” and “latest arrival”:
-  `,
-  passingTimeTypeDrawerEarliestDepartureText: `
-    Journeys cannot begin from this stop or area before the given time.
-  `,
-  passingTimeTypeDrawerLatestARrivalText: `
-    Journeys cannot end at this stop or area after the given time.
-  `,
   passingTimesTypeFixed: 'Fixed',
   passingTimesTypeFlexible: 'Flexible',
   passingTimesArrivalTime: 'Arrival time',
   passingTimesDepartureTime: 'Departure time',
-  passingTimesLatestArrivalTime: 'Latest arrival time',
-  passingTimesEarliestDepartureTime: 'Earliest departure time',
+  passingTimesLatestArrivalTime: 'End',
+  passingTimesEarliestDepartureTime: 'Start',
   passingTimesDayOffset: 'Day offset',
   passingTimesDayOffsetTooltip:
     'Set day offset if the passing time is a day or more after the departure of the service',
