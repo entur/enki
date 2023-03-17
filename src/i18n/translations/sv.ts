@@ -269,7 +269,8 @@ export const messages = {
     'Du måste lägga till minst två hållplatser; ett första och ett sista. Fyll i en giltig ID.',
   stopPointsInfoFlexibleAreaOnly:
     'Den här typen av flexibel linje tillåter endast en flexibel hållplats där all ombord- och avstigning sker.',
-  stopPointsInfoMixedFlexible: 'TODO: Add info about mixed flexible',
+  stopPointsInfoMixedFlexible:
+    'Lägg till en sekvens av minst två fasta eller flexibla stopp in den ordning de passeras.',
   deleteStopPointDialogTitle: 'Ta bort hållplatspunkt',
   deleteStopPointDialogMessage:
     'Är du säker på att du vill ta bort den här hållplatspunkten?',
@@ -390,9 +391,12 @@ export const messages = {
   serviceJourneyAvailability: 'Tillgänglighet',
   serviceJourneyPassingTimes: 'Passeringstider',
   serviceJourneyBusinessHours: 'Öppettid',
+  serviceJourneyMixedFlexiblePassingTimes: 'Passeringstider och öppettider',
   passingTimesInfo: 'Fyll i passeringstider för hållplatserna.',
   passingTimesInfoFlexibleAreasOnly:
-    'Enter the business hours for the flexible service.',
+    'Lägg till öppettider för den flexibla tjänsten.',
+  passingTimesInfoMixedFlexible:
+    'Lägg till passeringstider för fasta stopp och öppettider för flexibla områden',
   serviceJourneyBooking: 'Beställning',
   generalName: 'Namn *',
   nameIsRequired: 'Namn måste fyllas i.',
