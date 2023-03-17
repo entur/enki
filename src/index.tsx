@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-intl-redux';
 
 import App from 'scenes/App';
@@ -32,12 +32,13 @@ const AuthenticatedApp = () => {
 };
 
 const renderIndex = async () => {
-  const root = document.getElementById('root');
+  const container = document.getElementById('root');
+  const root = ReactDOM.createRoot(container!);
+
   const config = await fetchConfig();
 
   const { claimsNamespace, auth0: auth0Config } = config;
-
-  ReactDOM.render(
+  root.render(
     <AuthProvider
       auth0Config={{
         ...auth0Config,
@@ -48,8 +49,7 @@ const renderIndex = async () => {
       <ConfigContext.Provider value={config}>
         <AuthenticatedApp />
       </ConfigContext.Provider>
-    </AuthProvider>,
-    root
+    </AuthProvider>
   );
 };
 
