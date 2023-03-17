@@ -302,7 +302,7 @@ export const messages: MessagesKey = {
   dayTypeEditorDate: 'Date',
   dayTypeEditorFromAndToDate: 'Use from- and to-date',
   dayTypeEditorFromDate: 'From *',
-  dayTypeEditorToDate: 'To (exclusive) *',
+  dayTypeEditorToDate: 'Until (not including) *',
   dayTypeEditorToDateValidation: 'At least one day after from-date',
   dayTypesEditButton: 'Edit day types',
   deleteDayTypesErrorTitle: 'Error deleting day types',
