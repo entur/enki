@@ -35,18 +35,17 @@ export const DayTypeEditor = ({
     onCompleted: () => refetchDayTypes(),
   });
 
+  const dayTypeIsValid = useMemo(() => {
+    return validateDayType(mutableDayType);
+  }, [mutableDayType]);
+
   const validationMessage = useMemo(() => {
     return formatMessage('dayTypesValidationError');
   }, [formatMessage]);
   const dayTypesPristine = usePristine(mutableDayType, false);
   const dayTypesFeedback = useMemo(
-    () =>
-      getErrorFeedback(
-        validationMessage,
-        validateDayType(mutableDayType),
-        dayTypesPristine
-      ),
-    [mutableDayType, dayTypesPristine, validationMessage]
+    () => getErrorFeedback(validationMessage, dayTypeIsValid, dayTypesPristine),
+    [dayTypesPristine, validationMessage, dayTypeIsValid]
   );
 
   return (
@@ -101,6 +100,7 @@ export const DayTypeEditor = ({
         />
 
         <TertiaryButton
+          disabled={!dayTypeIsValid}
           onClick={() => {
             mutateDayType({
               variables: { input: dayTypeToPayload(mutableDayType) },

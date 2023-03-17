@@ -309,7 +309,7 @@ export const messages = {
   dayTypeEditorDate: 'Datum',
   dayTypeEditorFromAndToDate: 'Använd från- och till-datum',
   dayTypeEditorFromDate: 'Från *',
-  dayTypeEditorToDate: 'till *',
+  dayTypeEditorToDate: 'fram till (inte med) *',
   dayTypeEditorToDateValidation: 'inte före från-datum',
   dayTypesEditButton: 'Redigera day types',
   deleteDayTypesErrorTitle: 'Fel uppstod under borttagning av day types',
@@ -600,7 +600,7 @@ export const messages = {
   bulkDeleteDialogCancelButtonLabel: 'Avbryt',
   bulkDeleteDialogConfirmButtonLabel: 'Ta bort',
   dayTypesValidationError:
-    'Minst en giltighetsperiod måste ha en tilgänglig veckodag',
+    'Minst en giltighetsperiod har ingen tilgänglig veckodag',
   provider: 'dataleverantör',
   providersHeaderText: 'Dataleverantörer',
   createProviderHeaderText: 'Skapa dataleverantör',

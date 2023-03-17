@@ -10,7 +10,7 @@ import PassingTime from 'model/PassingTime';
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import DayType from 'model/DayType';
-import { addDays, getDay, isBefore as isDateBefore, parseISO } from 'date-fns';
+import { addDays, getDay, isAfter as isDateAfter, parseISO } from 'date-fns';
 import BookingArrangement from 'model/BookingArrangement';
 
 export const validLine = (line: Line): boolean =>
@@ -402,7 +402,7 @@ export const validateDayType = (dayType: DayType) => {
     let from = parseISO(dta.operatingPeriod.fromDate);
     const to = parseISO(dta.operatingPeriod.toDate);
 
-    while (!isDateBefore(to, from)) {
+    while (isDateAfter(to, from)) {
       if (daysOfWeek.includes(getDay(from))) {
         return true;
       }
