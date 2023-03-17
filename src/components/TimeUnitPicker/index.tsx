@@ -97,7 +97,7 @@ export default (props: Props) => {
   return (
     <div className={classNames}>
       <div ref={triggerEl}>
-        <TextField value={textValue} readOnly={true} />
+        <TextField label="TODO: Add label" value={textValue} readOnly={true} />
       </div>
 
       {isOpen && (

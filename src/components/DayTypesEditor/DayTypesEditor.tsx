@@ -38,20 +38,22 @@ export const DayTypesEditor = ({
       <div style={{ display: 'flex', alignItems: 'end' }}>
         <MultiSelect
           label={formatMessage('dayTypesEditorSelectLabel')}
-          items={() =>
-            allDayTypesData?.dayTypes.map((dt) => ({
-              label: dt.name || dt.id!,
-              value: dt.id!,
+          items={
+            allDayTypesData?.dayTypes.map((dt: DayType) => ({
+              label: `${dt.name || dt.id!}`,
+              value: `${dt.id!}`,
             })) || []
           }
-          selectedItems={
+          initialSelectedItems={
             dayTypes?.map((dt) => ({
               label: dt.name || dt.id!,
               value: dt.id!,
             })) || []
           }
-          onSelectedItemsChange={(items) => {
-            const selectedIds = items.selectedItems?.map((item) => item.value);
+          onChange={(items: any) => {
+            const selectedIds = items.selectedItems?.map(
+              (item: any) => item.value
+            );
             onChange(
               allDayTypesData?.dayTypes.filter((dt) =>
                 selectedIds?.includes(dt.id!)

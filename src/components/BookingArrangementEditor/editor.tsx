@@ -24,8 +24,13 @@ import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
 import { GlobalState } from 'reducers';
 import { AppIntlState } from 'i18n';
 import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
-import { TimePicker } from '@entur/datepicker';
+import {
+  nativeDateToTimeOrDateValue,
+  timeOrDateValueToNativeDate,
+  TimePicker,
+} from '@entur/datepicker';
 import { format } from 'date-fns';
+import { TimeValue } from '@react-types/datepicker';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -174,7 +179,7 @@ export default (props: Props) => {
           labelTooltip={formatMessage('bookingNoteTooltip')}
           style={{ width: '100%' }}
           value={bookingNote ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             onChange({ ...bookingArrangement, bookingNote: e.target.value })
           }
         />
@@ -247,13 +252,13 @@ export default (props: Props) => {
               'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'
             )}
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-            selectedTime={latestbookingTimeAsDate}
-            onChange={(date: Date | null) => {
-              if (date !== null) {
-                onLatestBookingTimeChange(format(date, 'HH:mm'));
-              } else {
-                onLatestBookingTimeChange('');
-              }
+            selectedTime={
+              nativeDateToTimeOrDateValue(latestbookingTimeAsDate!) as TimeValue
+            }
+            onChange={(date: TimeValue) => {
+              onLatestBookingTimeChange(
+                format(timeOrDateValueToNativeDate(date), 'HH:mm')
+              );
             }}
           />
 

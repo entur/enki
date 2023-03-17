@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PrimaryButton } from '@entur/button';
 import { Label } from '@entur/typography';
@@ -113,7 +107,7 @@ const ExportsViewer = () => {
               <div className="export-download">
                 <Label>{formatMessage('viewerDownloadLabel')}</Label>
                 <PrimaryButton
-                  onClick={async (event: ChangeEvent) => {
+                  onClick={async (event: React.MouseEvent<HTMLElement>) => {
                     event.stopPropagation();
                     download(
                       uttuApiUrl,
