@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import UserPreference from 'scenes/App/components/NavBar/UserPreference';
 import { Contrast } from '@entur/layout';
-import { RouteComponentProps } from 'react-router';
 import { AppIntlState, selectIntl } from 'i18n';
 import {
   SideNavigation,
@@ -29,7 +28,7 @@ type RedirectType = {
   path: string;
 };
 
-type NavBarItemProps = RouteComponentProps & {
+type NavBarItemProps = {
   text: string;
   path: string;
   className?: string;
@@ -37,31 +36,35 @@ type NavBarItemProps = RouteComponentProps & {
   icon?: React.ReactNode;
 };
 
-const NavBarItem = withRouter(
-  ({ location, text, path, className, setRedirect, icon }: NavBarItemProps) => {
-    const isSaved = useSelector<GlobalState, boolean>(
-      (state) => state.editor.isSaved
-    );
-    const handleOnClick = (e: React.MouseEvent) => {
-      if (isSaved) return;
-      e.preventDefault();
-      setRedirect({ showConfirm: true, path });
-    };
+const NavBarItem = ({
+  text,
+  path,
+  className,
+  setRedirect,
+  icon,
+}: NavBarItemProps) => {
+  const isSaved = useSelector<GlobalState, boolean>(
+    (state) => state.editor.isSaved
+  );
+  const handleOnClick = (e: React.MouseEvent) => {
+    if (isSaved) return;
+    e.preventDefault();
+    setRedirect({ showConfirm: true, path });
+  };
 
-    return (
-      <SideNavigationItem
-        onClick={handleOnClick}
-        active={isActive(location.pathname, path)}
-        as={Link}
-        to={path}
-        className={className}
-        icon={icon}
-      >
-        {text}
-      </SideNavigationItem>
-    );
-  }
-);
+  return (
+    <SideNavigationItem
+      onClick={handleOnClick}
+      active={isActive(location.pathname, path)}
+      as={Link}
+      to={path}
+      className={className}
+      icon={icon}
+    >
+      {text}
+    </SideNavigationItem>
+  );
+};
 
 const NavBar = () => {
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);

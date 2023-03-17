@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useQuery, NetworkStatus } from '@apollo/client';
 
 import { Heading1 } from '@entur/typography';
@@ -56,9 +56,8 @@ export default () => {
     (state) => state.organisations
   );
 
-  const history = useHistory();
-  const handleOnRowClick = (line: Line) =>
-    history.push(`/lines/edit/${line.id}`);
+  const navigate = useNavigate();
+  const handleOnRowClick = (line: Line) => navigate(`/lines/edit/${line.id}`);
 
   const done = !loading && networkStatus !== NetworkStatus.refetch;
 

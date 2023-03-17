@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLoadDependencies } from './hooks';
-import { Redirect, RouteComponentProps } from 'react-router';
-import { MatchParams } from 'http/http';
-import { withRouter, useLocation } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
@@ -25,7 +24,9 @@ import './styles.scss';
 import LineEditorStepper from 'components/LineEditorStepper';
 import { useConfig } from 'config/ConfigContext';
 
-const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
+const EditorFrame = () => {
+  const params = useParams();
+  const navigate = useNavigate();
   const [line, setLine] = useState<FlexibleLine | undefined>();
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [nextClicked, setNextClicked] = useState<boolean>(false);
@@ -41,26 +42,23 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   const { flexibleLines, organisations, networks, editor, providers } =
     useSelector<GlobalState, GlobalState>((s) => s);
 
-  const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies({
-    match: props.match,
-    history: props.history,
-  } as RouteComponentProps<MatchParams>);
+  const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies();
 
   const config = useConfig();
 
   useEffect(() => {
-    if (!isBlank(props.match.params.id))
-      return setLine(getFlexibleLineFromPath(flexibleLines ?? [], props.match));
+    if (!isBlank(params.id))
+      return setLine(getFlexibleLineFromPath(flexibleLines ?? [], params));
 
     return setLine(initFlexibleLine());
 
     // eslint-disable-next-line
-  }, [flexibleLines, props.match.params.id]);
+  }, [flexibleLines, params.id]);
 
   const goToLines = () =>
-    props.history.push(isFlexibleLine ? '/flexible-lines' : '/lines');
+    navigate(isFlexibleLine ? '/flexible-lines' : '/lines');
 
-  const isEdit = !isBlank(props.match.params.id);
+  const isEdit = !isBlank(params.id);
 
   const handleOnSaveClick = () => {
     setNextClicked(true);
@@ -116,7 +114,7 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
         >
           <>
             {!isLoadingDependencies && !line && (
-              <Redirect to="/flexible-lines" />
+              <Navigate to="/flexible-lines" replace />
             )}
             {!isLoadingDependencies && line && (
               <LineEditorStepper
@@ -163,4 +161,4 @@ const EditorFrame = (props: RouteComponentProps<MatchParams>) => {
   );
 };
 
-export default withRouter(EditorFrame);
+export default EditorFrame;

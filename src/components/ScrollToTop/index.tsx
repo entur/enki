@@ -1,13 +1,13 @@
 import { ReactElement, useEffect } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { usePrevious } from 'helpers/hooks';
+import { useLocation } from 'react-router-dom';
 
-type Props = RouteComponentProps & {
+type Props = {
   children: ReactElement;
 };
 
-const ScrollToTop = ({ children, location }: Props) => {
+const ScrollToTop = ({ children }: Props) => {
+  const location = useLocation();
   const prevLocation = usePrevious(location);
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const ScrollToTop = ({ children, location }: Props) => {
   return children;
 };
 
-export default withRouter(ScrollToTop);
+export default ScrollToTop;

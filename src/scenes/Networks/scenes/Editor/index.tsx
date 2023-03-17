@@ -1,11 +1,9 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { TextArea, TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
 import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { Paragraph } from '@entur/typography';
-import { RouteComponentProps } from 'react-router';
 import { isBlank } from 'helpers/forms';
 import {
   deleteNetworkById,
@@ -18,7 +16,6 @@ import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Page from 'components/Page';
 import { AppIntlState, selectIntl } from 'i18n';
-import { MatchParams } from 'http/http';
 import { GlobalState } from 'reducers';
 import { Network } from 'model/Network';
 import { OrganisationState } from 'reducers/organisations';
@@ -31,20 +28,17 @@ import { mapToItems } from 'helpers/dropdown';
 import './styles.scss';
 import { filterAuthorities } from 'model/Organisation';
 import { useConfig } from 'config/ConfigContext';
+import { Params, useNavigate, useParams } from 'react-router-dom';
 
-const getCurrentNetwork = (
-  state: GlobalState,
-  match: { params: MatchParams }
-): Network =>
-  state.networks?.find((network) => network.id === match.params.id) ?? {
+const getCurrentNetwork = (state: GlobalState, params: Params): Network =>
+  state.networks?.find((network) => network.id === params.id) ?? {
     name: '',
     authorityRef: '',
   };
 
-const NetworkEditor = ({
-  match,
-  history,
-}: RouteComponentProps<MatchParams>) => {
+const NetworkEditor = () => {
+  const params = useParams();
+  const navigate = useNavigate();
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const activeProvider = useSelector<GlobalState, Provider | null>(
     (state) => state.providers.active
@@ -56,7 +50,7 @@ const NetworkEditor = ({
     ({ flexibleLines }) => flexibleLines
   );
   const currentNetwork = useSelector<GlobalState, Network>((state) =>
-    getCurrentNetwork(state, match)
+    getCurrentNetwork(state, params)
   );
 
   const [isSaving, setSaving] = useState<boolean>(false);
@@ -80,12 +74,10 @@ const NetworkEditor = ({
   };
 
   const dispatchLoadNetwork = useCallback(() => {
-    if (match.params.id) {
-      dispatch(loadNetworkById(match.params.id)).catch(() =>
-        history.push('/networks')
-      );
+    if (params.id) {
+      dispatch(loadNetworkById(params.id)).catch(() => navigate('/networks'));
     }
-  }, [dispatch, match.params.id, history]);
+  }, [dispatch, params.id, history]);
 
   useEffect(() => {
     dispatchLoadFlexibleLines();
@@ -93,16 +85,16 @@ const NetworkEditor = ({
   }, [dispatchLoadFlexibleLines, dispatchLoadNetwork]);
 
   useEffect(() => {
-    if (match.params.id) {
+    if (params.id) {
       setNetwork(currentNetwork);
     }
-  }, [currentNetwork, match.params.id]);
+  }, [currentNetwork, params.id]);
 
   const handleOnSaveClick = () => {
     if (network.name && network.authorityRef) {
       setSaving(true);
       dispatch(saveNetwork(network))
-        .then(() => history.push('/networks'))
+        .then(() => navigate('/networks'))
         .finally(() => setSaving(false));
     }
     setSaveClicked(true);
@@ -118,9 +110,7 @@ const NetworkEditor = ({
   const handleDelete = () => {
     setDeleteDialogOpen(false);
     setDeleting(true);
-    dispatch(deleteNetworkById(network?.id)).then(() =>
-      history.push('/networks')
-    );
+    dispatch(deleteNetworkById(network?.id)).then(() => navigate('/networks'));
   };
 
   const config = useConfig();
@@ -141,7 +131,7 @@ const NetworkEditor = ({
     <Page
       backButtonTitle={formatMessage('navBarNetworksMenuItemLabel')}
       title={
-        match.params.id
+        params.id
           ? formatMessage('editorEditNetworkHeaderText')
           : formatMessage('editorCreateNetworkHeaderText')
       }
@@ -216,7 +206,7 @@ const NetworkEditor = ({
                 )}
               />
               <div className="buttons">
-                {match.params.id && (
+                {params.id && (
                   <NegativeButton
                     onClick={() => setDeleteDialogOpen(true)}
                     disabled={isDeleteDisabled}
@@ -226,7 +216,7 @@ const NetworkEditor = ({
                 )}
 
                 <SuccessButton onClick={handleOnSaveClick}>
-                  {match.params.id
+                  {params.id
                     ? formatMessage('editorSaveButtonText')
                     : formatMessage(
                         'editorDetailedCreate',
@@ -269,4 +259,4 @@ const NetworkEditor = ({
   );
 };
 
-export default withRouter(NetworkEditor);
+export default NetworkEditor;

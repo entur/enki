@@ -1,6 +1,6 @@
 import { Event, StackFrame } from '@sentry/types';
-import { MatchParams } from 'http/http';
 import FlexibleLine from 'model/FlexibleLine';
+import { Params } from 'react-router-dom';
 
 export const normalizeAllUrls = (data: Event): Event => {
   data.exception?.values?.[0]?.stacktrace?.frames?.forEach(
@@ -15,6 +15,6 @@ export const normalizeAllUrls = (data: Event): Event => {
 
 export const getFlexibleLineFromPath = (
   flexibleLines: FlexibleLine[],
-  match: { params: MatchParams }
+  params: Params
 ): FlexibleLine | undefined =>
-  flexibleLines.find((flexibleLine) => flexibleLine.id === match.params.id);
+  flexibleLines.find((flexibleLine) => flexibleLine.id === params.id);

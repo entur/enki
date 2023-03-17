@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { Dropdown } from '@entur/dropdown';
 import { Contrast } from '@entur/layout';
 import { AppIntlState, selectIntl } from 'i18n';
@@ -8,11 +7,12 @@ import UserMenu from './UserMenu/';
 import { setActiveProvider } from 'actions/providers';
 import { GlobalState } from 'reducers';
 import { ProvidersState } from 'reducers/providers';
-import { RouteComponentProps } from 'react-router';
 import './styles.scss';
 import { sortProviders } from 'model/Provider';
+import { useNavigate } from 'react-router-dom';
 
-const UserPreference = ({ history }: RouteComponentProps) => {
+const UserPreference = () => {
+  const navigate = useNavigate();
   const { providers, active } = useSelector<GlobalState, ProvidersState>(
     (state) => state.providers
   );
@@ -24,7 +24,7 @@ const UserPreference = ({ history }: RouteComponentProps) => {
     if (provider) {
       window.localStorage.setItem('ACTIVE_PROVIDER', provider.code!);
       dispatch(setActiveProvider(provider));
-      history.replace('/');
+      navigate('/', { replace: true });
     }
   };
 
@@ -53,4 +53,4 @@ const UserPreference = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(UserPreference);
+export default UserPreference;

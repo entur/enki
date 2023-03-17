@@ -1,12 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { SuccessButton } from '@entur/button';
 import { Checkbox, TextField } from '@entur/form';
 import { saveExport } from 'actions/exports';
 import OverlayLoader from 'components/OverlayLoader';
 import { AppIntlState, selectIntl } from 'i18n';
-import { RouteComponentProps } from 'react-router';
 import { exportIsValid } from './validateForm';
 import { Export, ExportLineAssociation, newExport } from 'model/Export';
 import { GlobalState } from 'reducers';
@@ -20,8 +18,10 @@ import { Tooltip } from '@entur/tooltip';
 import { QuestionIcon } from '@entur/icons';
 import './styles.scss';
 import LinesForExport from 'components/LinesForExport';
+import { useNavigate } from 'react-router-dom';
 
-const ExportsCreator = ({ history }: RouteComponentProps) => {
+const ExportsCreator = () => {
+  const navigate = useNavigate();
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
   const [saveClicked, setSaveClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState<boolean>(false);
@@ -35,7 +35,7 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
     if (exportIsValid(theExport)) {
       setSaving(true);
       dispatch(saveExport(theExport))
-        .then(() => history.push('/exports'))
+        .then(() => navigate('/exports'))
         .finally(() => setSaving(false));
     }
     setSaveClicked(true);
@@ -114,4 +114,4 @@ const ExportsCreator = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(ExportsCreator);
+export default ExportsCreator;

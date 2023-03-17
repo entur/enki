@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Heading1 } from '@entur/typography';
 import './styles.scss';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TertiaryButton } from '@entur/button';
 import { BackArrowIcon } from '@entur/icons';
 
@@ -20,11 +20,15 @@ const Page = ({
   children,
   className = '',
 }: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <div className={`page ${className}`}>
       <div className="back-button">
-        <TertiaryButton onClick={onBackButtonClick ?? history.goBack}>
+        <TertiaryButton
+          onClick={() =>
+            onBackButtonClick ? onBackButtonClick() : navigate(-1)
+          }
+        >
           <>
             <BackArrowIcon />
             {backButtonTitle && <div>{backButtonTitle}</div>}

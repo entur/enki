@@ -1,9 +1,6 @@
 import React from 'react';
 import JourneyPatterns from 'components/JourneyPatterns';
 import General from 'components/GeneralLineEditor';
-import { withRouter } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
-import { MatchParams } from 'http/http';
 import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import './styles.scss';
@@ -12,7 +9,7 @@ import ServiceJourneys from 'components/ServiceJourneys';
 import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
 import { Organisation } from 'model/Organisation';
 
-type Props = RouteComponentProps<MatchParams> & {
+type Props = {
   activeStep: number;
   flexibleLine: FlexibleLine;
   changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
@@ -95,4 +92,4 @@ const FlexibleLineEditor = (props: Props) => {
   );
 };
 
-export default withRouter(FlexibleLineEditor);
+export default FlexibleLineEditor;

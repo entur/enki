@@ -1,7 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { TextArea, TextField } from '@entur/form';
 import {
   PrimaryButton,
@@ -34,7 +32,6 @@ import './styles.scss';
 import { selectIntl } from 'i18n';
 import { GlobalState } from 'reducers';
 import FlexibleLine from 'model/FlexibleLine';
-import { MatchParams } from 'http/http';
 import { validateFlexibleStopPlace } from './validateForm';
 import { objectValuesAreEmpty } from 'helpers/forms';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
@@ -51,6 +48,7 @@ import RequiredInputMarker from 'components/RequiredInputMarker';
 import { LeafletMouseEvent } from 'leaflet';
 import { Dropdown } from '@entur/dropdown';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
   JSON.stringify(polygonCoordinates);
@@ -62,10 +60,9 @@ const transformTextToCoordinates = (text: string): Coordinate[] =>
 const transformToMapCoordinates = (geojson: Coordinate[]): Coordinate[] =>
   geojson.length === 0 ? geojson : geojson.map(([y, x]) => [x, y]);
 
-const FlexibleStopPlaceEditor = ({
-  match,
-  history,
-}: RouteComponentProps<MatchParams>) => {
+const FlexibleStopPlaceEditor = () => {
+  const params = useParams();
+  const navigate = useNavigate();
   const { formatMessage } = useSelector(selectIntl);
   const dispatch = useDispatch<any>();
   const lines = useSelector<GlobalState, FlexibleLine[]>(
@@ -73,7 +70,7 @@ const FlexibleStopPlaceEditor = ({
   );
   const currentFlexibleStopPlace = useSelector<GlobalState, FlexibleStopPlace>(
     (state) =>
-      state.flexibleStopPlaces?.find((fsp) => fsp.id === match.params.id) ?? {
+      state.flexibleStopPlaces?.find((fsp) => fsp.id === params.id) ?? {
         transportMode: VEHICLE_MODE.BUS,
       }
   );
@@ -113,24 +110,24 @@ const FlexibleStopPlaceEditor = ({
   }, [isLoading]);
 
   useEffect(() => {
-    if (match.params.id) {
+    if (params.id) {
       setIsLoading(true);
       dispatch(loadFlexibleLines())
-        .then(() => dispatch(loadFlexibleStopPlaceById(match.params.id)))
-        .catch(() => history.push('/networks'))
+        .then(() => dispatch(loadFlexibleStopPlaceById(params.id!)))
+        .catch(() => navigate('/networks'))
         .then(() => {
           setIsLoading(false);
         });
     } else {
       dispatch(loadFlexibleLines()).then(() => setIsLoading(false));
     }
-  }, [dispatch, match.params.id, history]);
+  }, [dispatch, params.id, history]);
 
   const handleOnSaveClick = useCallback(() => {
     if (objectValuesAreEmpty(errors)) {
       setSaving(true);
       dispatch(saveFlexibleStopPlace(flexibleStopPlace ?? {}))
-        .then(() => history.push('/stop-places'))
+        .then(() => navigate('/stop-places'))
         .finally(() => setSaving(false));
     }
     setSaveClicked(true);
@@ -141,7 +138,7 @@ const FlexibleStopPlaceEditor = ({
     if (flexibleStopPlace?.id) {
       setDeleting(true);
       dispatch(deleteFlexibleStopPlaceById(flexibleStopPlace.id))
-        .then(() => history.push('/stop-places'))
+        .then(() => navigate('/stop-places'))
         .finally(() => setDeleting(false));
     }
   }, [dispatch, history, flexibleStopPlace]);
@@ -223,7 +220,7 @@ const FlexibleStopPlaceEditor = ({
     <Page
       backButtonTitle={formatMessage('navBarStopPlacesMenuItemLabel')}
       title={
-        match.params.id
+        params.id
           ? formatMessage('editorEditHeader')
           : formatMessage('editorCreateHeader')
       }
@@ -343,7 +340,7 @@ const FlexibleStopPlaceEditor = ({
                 </PrimaryButton>
 
                 <div className="buttons">
-                  {match.params.id && (
+                  {params.id && (
                     <NegativeButton
                       onClick={() => setDeleteDialogOpen(true)}
                       disabled={isDeleteDisabled}
@@ -353,7 +350,7 @@ const FlexibleStopPlaceEditor = ({
                   )}
 
                   <SuccessButton onClick={handleOnSaveClick}>
-                    {match.params.id
+                    {params.id
                       ? formatMessage('editorSaveButtonText')
                       : formatMessage(
                           'editorDetailedCreate',
@@ -408,4 +405,4 @@ const FlexibleStopPlaceEditor = ({
   );
 };
 
-export default withRouter(FlexibleStopPlaceEditor);
+export default FlexibleStopPlaceEditor;
