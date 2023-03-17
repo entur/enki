@@ -262,7 +262,8 @@ export const messages: MessagesKey = {
     'You have to add at least two stop points; one for start and one for stop. Enter quay id from the National stop place registry.',
   stopPointsInfoFlexibleAreaOnly:
     'This type of flexible line only only permits one flexible stop place within which all boarding and alighting takes place.',
-  stopPointsInfoMixedFlexible: 'TODO: Add info about mixed flexible',
+  stopPointsInfoMixedFlexible:
+    'Add a sequence of at least two fixed stopping positions, or flexible areas in the order which they are passed.',
   deleteStopPointDialogTitle: 'Delete stop point',
   deleteStopPointDialogMessage:
     'Are you sure you want to delete this stop point?',
@@ -383,7 +384,12 @@ export const messages: MessagesKey = {
   serviceJourneyAvailability: 'Availability',
   serviceJourneyPassingTimes: 'Passing times',
   serviceJourneyBusinessHours: 'Business hours',
+  serviceJourneyMixedFlexiblePassingTimes: 'Passing times and time windows',
   passingTimesInfo: 'Enter the passing times for the different stops.',
+  passingTimesInfoFlexibleAreasOnly:
+    'Enter the business hours for the flexible service.',
+  passingTimesInfoMixedFlexible:
+    'Enter passing times for fixed stops and time windows for flexible areas.',
   serviceJourneyBooking: 'Booking',
   generalName: 'Name *',
   nameIsRequired: 'Name is required.',

@@ -14,7 +14,6 @@ export const MixedFlexibleStopPointsEditor = ({
   updateStopPoint,
   deleteStopPoint,
   addStopPoint,
-  flexibleLineType,
 }: StopPointsEditorProps) => {
   const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useSelector(selectIntl);
@@ -22,7 +21,7 @@ export const MixedFlexibleStopPointsEditor = ({
   return (
     <section style={{ marginTop: '2em' }}>
       <Heading3>{formatMessage('editorStopPoints')}</Heading3>
-      <Paragraph>TODO: Add description</Paragraph>
+      <Paragraph>{formatMessage('stopPointsInfoMixedFlexible')}</Paragraph>
       <div className="stop-point-editor">
         {pointsInSequence.map((stopPoint, pointIndex) => (
           <MixedFlexibleStopPointEditor

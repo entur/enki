@@ -259,7 +259,8 @@ export const messages = {
     'Du må legge til minst to stopp; ett for start og ett for slutt. Skriv inn platform-ID fra stoppestedsregisteret.',
   stopPointsInfoFlexibleAreaOnly:
     'Denne typen fleksibel linje tillater kun et fleksibelt stoppested der all ombord- og avstigning skjer.',
-  stopPointsInfoMixedFlexible: 'TODO: Add info about mixed flexible',
+  stopPointsInfoMixedFlexible:
+    'Legg til en sekvens av minst to faste eller fleksible stopp in den rekkefølgen de passeres.',
   deleteStopPointDialogTitle: 'Slette stoppepunkt',
   deleteStopPointDialogMessage:
     'Er du sikker på at du ønsker å slette dette stoppepunktet?',
@@ -380,7 +381,12 @@ export const messages = {
   serviceJourneyAvailability: 'Tilgjengelighet',
   serviceJourneyPassingTimes: 'Passeringstider',
   serviceJourneyBusinessHours: 'Åpningstid',
+  serviceJourneyMixedFlexiblePassingTimes: 'Passeringstider og tidsvinduer',
   passingTimesInfo: 'Fyll inn passeringstider for de ulike stoppene.',
+  passingTimesInfoFlexibleAreasOnly:
+    'Fyll inn åpningstiden for det fleksible tilbudet.',
+  passingTimesInfoMixedFlexible:
+    'Fyll inn passeringstider for faste stopp og tidsvinduer for fleksible områder.',
   serviceJourneyBooking: 'Bestilling',
   generalName: 'Navn *',
   nameIsRequired: 'Navn må fylles inn.',
