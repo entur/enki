@@ -91,9 +91,6 @@ export const validFlexibleLineJourneyPattern = (
   journeyPatterns?: JourneyPattern,
   flexibleLineType?: FlexibleLineType
 ): boolean => {
-  console.log({
-    journeyPatterns,
-  });
   if (flexibleLineType === FlexibleLineType.FLEXIBLE_AREAS_ONLY) {
     return (
       !!journeyPatterns &&
@@ -181,11 +178,6 @@ export const validateFlexibleAreasOnlyStopPoint = (
   stopPoint: StopPoint,
   isFirst?: boolean
 ): StopPointsFormError => {
-  console.log({
-    stopPoint,
-    isFirst,
-  });
-
   const { flexibleStopPlaceRef, destinationDisplay } = stopPoint;
 
   const getStopPlaceError = (): keyof MessagesKey | undefined => {
