@@ -11,7 +11,7 @@ import { Organisation } from 'model/Organisation';
 type Props = {
   activeStep: number;
   line: Line;
-  changeLine: <Line>(line: Line) => void;
+  changeLine: (line: Line) => void;
   networks: Network[];
   operators: Organisation[];
   spoilPristine: boolean;

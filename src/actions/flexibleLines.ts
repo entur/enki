@@ -74,7 +74,7 @@ export const loadFlexibleLines =
           intl.formatMessage('loadLinesErrorHeader'),
           intl.formatMessage(
             'loadLinesErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );
@@ -110,7 +110,7 @@ export const loadFlexibleLineById =
           intl.formatMessage('loadLineByIdErrorHeader'),
           intl.formatMessage(
             'loadLineByIdErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );
@@ -158,7 +158,7 @@ export const saveFlexibleLine =
           intl.formatMessage('saveLineErrorHeader'),
           intl.formatMessage(
             'saveLineErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );
@@ -196,7 +196,7 @@ export const deleteLine =
           intl.formatMessage('deleteLineErrorHeader'),
           intl.formatMessage(
             'deleteLineErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );

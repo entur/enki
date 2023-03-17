@@ -26,7 +26,7 @@ export default (list: any[]): string[] => {
     }
 
     setListHolder(list);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [list]);
 
   return ids;

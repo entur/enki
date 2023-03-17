@@ -69,7 +69,7 @@ export const loadFlexibleStopPlaces =
           intl.formatMessage('flexibleStopPlacesLoadStopPlacesErrorHeader'),
           intl.formatMessage(
             'flexibleStopPlacesLoadStopPlacesErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );
@@ -101,7 +101,7 @@ export const loadFlexibleStopPlaceById =
           intl.formatMessage('flexibleStopPlacesLoadStopPlaceErrorHeader'),
           intl.formatMessage(
             'flexibleStopPlacesLoadStopPlaceErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );
@@ -138,7 +138,7 @@ export const saveFlexibleStopPlace =
           intl.formatMessage('flexibleStopPlacesSaveStopPlaceErrorHeader'),
           intl.formatMessage(
             'flexibleStopPlacesSaveStopPlaceErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );
@@ -172,7 +172,7 @@ export const deleteFlexibleStopPlaceById =
           intl.formatMessage('flexibleStopPlacesDeleteStopPlaceErrorHeader'),
           intl.formatMessage(
             'flexibleStopPlacesDeleteStopPlaceErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );

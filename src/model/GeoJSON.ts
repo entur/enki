@@ -1,5 +1,3 @@
-import { last } from 'ramda';
-
 export type Coordinate = [number, number];
 
 type GeoJSON = {
@@ -12,7 +10,7 @@ export const addCoordinate = (
   coordinate: Coordinate
 ) => {
   // The polygon must be closed: first coordinate == last coordinate.
-  const lastCoordinate = last(coordinates) ?? coordinate;
+  const lastCoordinate = coordinates[coordinates.length - 1] ?? coordinate;
   return [...coordinates.slice(0, -1), coordinate, lastCoordinate];
 };
 
@@ -20,7 +18,7 @@ export const removeLastCoordinate = (
   coordinates: Coordinate[]
 ): Coordinate[] => {
   if (coordinates.length > 2) {
-    const lastCoordinate: Coordinate = last(coordinates)!;
+    const lastCoordinate: Coordinate = coordinates[coordinates.length - 1];
     return [...coordinates.slice(0, -2), lastCoordinate];
   } else {
     return [];

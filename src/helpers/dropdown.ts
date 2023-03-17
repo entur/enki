@@ -43,10 +43,12 @@ export const getEnumInit = (
       }
     : null;
 
-export const mapEnumToItems = <E>(e: E): NormalizedDropdownItemType[] => [
+export const mapEnumToItems = <E extends Object>(
+  e: E
+): NormalizedDropdownItemType[] => [
   ...Object.values(e).map((type) => ({
-    value: type,
-    label: type,
+    value: `${type}`,
+    label: `${type}`,
   })),
 ];
 

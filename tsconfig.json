@@ -20,11 +20,12 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "sourceMap": true,
     "inlineSources": true,
     "sourceRoot": "./src",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"

@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 import { GlobalState } from 'reducers';
 import { mutateCodespace, mutateProvider } from 'api/uttu/mutations';
 import { showErrorNotification } from './notification';
-import { getStyledUttuError } from 'helpers/uttu';
+import { getStyledUttuError, UttuError } from 'helpers/uttu';
 import { sentryCaptureException } from 'store';
 import { getIntl } from 'i18n';
 
@@ -92,7 +92,7 @@ export const saveProvider =
         showErrorNotification(
           intl.formatMessage('saveProviderError'),
           getStyledUttuError(
-            e as any,
+            e as UttuError,
             intl.formatMessage('saveProviderError'),
             intl.formatMessage('saveProviderErrorFallback')
           )

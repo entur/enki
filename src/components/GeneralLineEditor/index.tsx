@@ -36,7 +36,7 @@ interface Props<T extends Line> {
   line: T;
   operators: Organisation[];
   networks: Network[];
-  onChange: <T>(line: T) => void;
+  onChange: <T extends Line>(line: T) => void;
   spoilPristine: boolean;
 }
 

@@ -5,7 +5,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
-import { getStyledUttuError } from 'helpers/uttu';
+import { getStyledUttuError, UttuError } from 'helpers/uttu';
 import { Network } from 'model/Network';
 import { Dispatch } from 'redux';
 import { GlobalState } from 'reducers';
@@ -51,7 +51,7 @@ export const loadNetworks =
         showErrorNotification(
           'Laste nettverk',
           getStyledUttuError(
-            e,
+            e as UttuError,
             'En feil oppstod under lastingen av nettverkene',
             'Prøv igjen senere.'
           )
@@ -78,7 +78,7 @@ export const loadNetworkById =
         showErrorNotification(
           'Laste nettverk',
           getStyledUttuError(
-            e,
+            e as UttuError,
             'En feil oppstod under lastingen av nettverket',
             'Prøv igjen senere.'
           )
@@ -111,7 +111,7 @@ export const saveNetwork =
         showErrorNotification(
           'Lagre nettverk',
           getStyledUttuError(
-            e,
+            e as UttuError,
             'En feil oppstod under lagringen av nettverket',
             'Prøv igjen senere.'
           )
@@ -144,7 +144,7 @@ export const deleteNetworkById =
         showErrorNotification(
           'Slette nettverk',
           getStyledUttuError(
-            e,
+            e as UttuError,
             'En feil oppstod under slettingen av nettverket'
           )
         )

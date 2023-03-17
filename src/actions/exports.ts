@@ -58,7 +58,7 @@ export const loadExports =
           intl.formatMessage('exportsLoadExportsErrorHeader'),
           intl.formatMessage(
             'exportsLoadExportsErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );
@@ -88,7 +88,7 @@ export const loadExportById =
           intl.formatMessage('exportsLoadExportByIdErrorHeader'),
           intl.formatMessage(
             'exportsLoadExportByIdErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );
@@ -119,7 +119,7 @@ export const saveExport =
           intl.formatMessage('exportsSaveExportErrorHeader'),
           intl.formatMessage(
             'exportsSaveExportErrorMessage',
-            getInternationalizedUttuError(intl, e)
+            getInternationalizedUttuError(intl, e as Error)
           )
         )
       );

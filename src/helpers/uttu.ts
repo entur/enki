@@ -13,7 +13,7 @@ type Extensions = {
   metaData: { [key: string]: object };
 };
 
-interface UttuError extends Error {
+export interface UttuError extends Error {
   response:
     | undefined
     | {
@@ -33,16 +33,13 @@ export const getStyledUttuError = (
     ? `${generalMessage}: ${getUttuError(e)}`
     : `${generalMessage}. ${fallback}`;
 
-export const getInternationalizedUttuError = (
-  intl: AppIntlState,
-  e: UttuError | ApolloError
-) => {
+export const getInternationalizedUttuError = (intl: AppIntlState, e: Error) => {
   let error;
 
   if (isApolloError(e)) {
     error = e.graphQLErrors[0];
   } else {
-    error = e.response?.errors?.[0];
+    error = (e as UttuError).response?.errors?.[0];
   }
 
   if (error?.extensions?.code) {

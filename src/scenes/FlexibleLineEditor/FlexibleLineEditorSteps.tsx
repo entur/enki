@@ -15,7 +15,7 @@ import { Organisation } from 'model/Organisation';
 type Props = RouteComponentProps<MatchParams> & {
   activeStep: number;
   flexibleLine: FlexibleLine;
-  changeFlexibleLine: <FlexibleLine>(flexibleLine: FlexibleLine) => void;
+  changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
   networks: Network[];
   operators: Organisation[];
   spoilPristine: boolean;

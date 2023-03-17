@@ -142,11 +142,7 @@ describe('LinesForExport', () => {
         }}
       >
         <MemoryRouter>
-          <LinesForExport
-            fromDate={format(new Date(), 'yyyy-MM-dd')}
-            toDate={format(addDays(new Date(), 120), 'yyyy-MM-dd')}
-            onChange={mockedOnChange}
-          />
+          <LinesForExport onChange={mockedOnChange} />
         </MemoryRouter>
       </MockedProvider>
     );
