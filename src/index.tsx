@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-intl-redux';
 
@@ -15,7 +15,17 @@ import { ConfigContext, useConfig } from 'config/ConfigContext';
 const AuthenticatedApp = () => {
   const auth = useAuth();
   const config = useConfig();
-  const { store, sentry } = configureStore(auth, config);
+  const [{ store, sentry }, setStore] = useState<any>({});
+
+  useEffect(() => {
+    const callConfigureStoreAsync = async () => {
+      const { store, sentry } = await configureStore(auth, config);
+      setStore({ store, sentry });
+    };
+    callConfigureStoreAsync();
+  }, [auth, config]);
+
+  if (!store) return null;
 
   return (
     <ErrorBoundary sentry={sentry}>

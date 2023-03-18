@@ -18,10 +18,14 @@ import { GlobalState } from 'reducers';
 import { AppIntlState, selectIntl } from 'i18n';
 import { useConfig } from 'config/ConfigContext';
 
+import MarkerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
+import MarkerShadow from 'leaflet/dist/images/marker-shadow.png';
+
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconRetinaUrl: MarkerIcon2x,
+  iconUrl: MarkerIcon,
+  shadowUrl: MarkerShadow,
 });
 
 const App = () => {

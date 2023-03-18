@@ -15,13 +15,13 @@ let useSentry = false;
 const getMiddlewares = (sentryDsn) => {
   const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
 
-  if (process.env.NODE_ENV === 'production' && sentryDsn) {
+  if (import.meta.env.NODE_ENV === 'production' && sentryDsn) {
     useSentry = true;
     Sentry.init({
       dsn: sentryDsn,
-      release: process.env.REACT_APP_VERSION,
+      release: import.meta.env.REACT_APP_VERSION,
       attachStacktrace: true,
-      environment: process.env.NODE_ENV,
+      environment: import.meta.env.NODE_ENV,
       beforeSend(e) {
         return normalizeAllUrls(e);
       },
@@ -34,12 +34,12 @@ const getMiddlewares = (sentryDsn) => {
 export const sentryCaptureException = (e) =>
   useSentry ? captureException(e) : console.error({ e });
 
-export const configureStore = (auth, config) => {
+export const configureStore = async (auth, config) => {
   const combinedReducers = combineReducers({
     ...reducers,
     intl,
   });
-  const { locale, messages } = geti18n();
+  const { locale, messages } = await geti18n();
 
   const initialState = {
     intl: {

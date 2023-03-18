@@ -5,14 +5,15 @@
   "private": true,
   "scripts": {
     "postinstall": "check-node-version --npm ~6.14.5",
-    "test": "react-scripts test --env=jsdom --modulePaths=src",
-    "start": "react-scripts start",
+    "test": "jest --env=jsdom --modulePaths=src",
+    "start": "vite",
     "start-devenv": "cross-env npm run start",
-    "build": "react-scripts build",
+    "build": "tsc && vite build",
     "snyk-protect": "snyk protect",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "server": "vite preview"
   },
   "dependencies": {
     "@apollo/client": "3.7.10",
@@ -79,7 +80,6 @@
     "react-leaflet": "2.8.0",
     "react-redux": "7.2.9",
     "react-router-dom": "6.9.0",
-    "react-scripts": "5.0.1",
     "redux": "3.7.2",
     "redux-devtools-extension": "2.13.9",
     "redux-sentry-middleware": "0.2.2",
@@ -89,7 +89,14 @@
     "typescript": "4.9.5",
     "uuid": "3.4.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@vitejs/plugin-react": "3.1.0",
+    "jest": "25.5.4",
+    "sass": "1.59.3",
+    "vite": "4.2.0",
+    "vite-plugin-svgr": "2.4.0",
+    "vite-tsconfig-paths": "4.0.7"
+  },
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"

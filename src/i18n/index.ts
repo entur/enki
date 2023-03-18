@@ -8,23 +8,29 @@ import { GlobalState } from 'reducers';
 import { useSelector } from 'react-redux';
 
 export const defaultLocale = 'nb';
-export const SUPPORTED_LOCALES = ['nb', 'en', 'sv'];
+export const SUPPORTED_LOCALES: ('nb' | 'en' | 'sv')[] = ['nb', 'en', 'sv'];
 
 export const LOCALE_KEY = 'OT::locale';
 
-const removeRegionCode = (locale: string) =>
-  locale ? locale.toLowerCase().split(/[_-]+/)[0] : defaultLocale;
+const removeRegionCode = (locale: string): 'nb' | 'en' | 'sv' =>
+  (locale ? locale.toLowerCase().split(/[_-]+/)[0] : defaultLocale) as
+    | 'nb'
+    | 'en'
+    | 'sv';
 
-export const isLocaleSupported = (locale: string) =>
+export const isLocaleSupported = (locale: 'nb' | 'en' | 'sv') =>
   locale ? SUPPORTED_LOCALES.indexOf(locale) > -1 : false;
 
 const getLocale = () => {
   const savedLocale =
-    process.env.NODE_ENV !== 'test' && localStorage.getItem(LOCALE_KEY);
+    import.meta.env.NODE_ENV !== 'test' && localStorage.getItem(LOCALE_KEY);
   const navigatorLang =
-    process.env.NODE_ENV !== 'test' &&
+    import.meta.env.NODE_ENV !== 'test' &&
     ((navigator.languages && navigator.languages[0]) || navigator.language);
-  const locale = savedLocale || navigatorLang || defaultLocale;
+  const locale = (savedLocale || navigatorLang || defaultLocale) as
+    | 'nb'
+    | 'en'
+    | 'sv';
   const localeWithoutRegionCode = removeRegionCode(locale);
 
   if (isLocaleSupported(localeWithoutRegionCode)) {
@@ -33,13 +39,21 @@ const getLocale = () => {
   return defaultLocale;
 };
 
-export const getMessages = (locale: string) =>
-  require('./translations/' + locale + '.ts');
+export const getMessages = async (locale: 'nb' | 'en' | 'sv') => {
+  switch (locale) {
+    case 'nb':
+      return import('./translations/nb');
+    case 'en':
+      return import('./translations/en');
+    case 'sv':
+      return import('./translations/sv');
+  }
+};
 
 /* Basic support for i18n based on default browser language */
-export const geti18n = () => {
+export const geti18n = async () => {
   const locale = getLocale();
-  const { messages } = getMessages(locale);
+  const { messages } = await getMessages(locale as 'nb' | 'en' | 'sv');
   return {
     messages,
     locale,
