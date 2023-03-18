@@ -53,7 +53,7 @@
     "check-node-version": "4.2.1",
     "classnames": "2.3.2",
     "cross-env": "5.2.1",
-    "date-fns": "2.23.0",
+    "date-fns": "2.29.3",
     "duration-fns": "2.1.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.7",
