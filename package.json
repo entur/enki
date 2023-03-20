@@ -69,7 +69,6 @@
     "moment": "2.29.4",
     "node-sass": "4.14.1",
     "prettier": "2.8.4",
-    "prop-types": "15.8.1",
     "ramda": "0.28.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
