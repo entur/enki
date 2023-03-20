@@ -59,7 +59,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
   const dateJsToIso = (date: Date | null | undefined): string => {
     const dateOrNow = date ?? new Date();
-    const y = dateOrNow.getFullYear();
+    const y = dateOrNow?.getFullYear();
     const m = dateOrNow?.getMonth() + 1;
     const d = dateOrNow?.getDate();
     return `${y}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
