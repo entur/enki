@@ -85,6 +85,7 @@ export default ({
   return (
     <>
       <Stepper
+        interactive
         steps={steps}
         activeIndex={activeStepperIndex}
         onStepClick={(index) => onStepClicked(index)}

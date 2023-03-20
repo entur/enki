@@ -10,7 +10,7 @@ import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
 import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
 import {
   currentFlexibleLineStepIsValid,
-  getMaxAllowedStepIndex,
+  getMaxAllowedFlexibleLineStepIndex,
   validFlexibleLine,
 } from 'helpers/validation';
 import { isBlank } from 'helpers/forms';
@@ -120,7 +120,7 @@ const EditorFrame = () => {
               <LineEditorStepper
                 steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
                 isValidStepIndex={(i: number) =>
-                  getMaxAllowedStepIndex(line!) >= i
+                  getMaxAllowedFlexibleLineStepIndex(line!) >= i
                 }
                 isLineValid={validFlexibleLine(line!)}
                 currentStepIsValid={(i) =>

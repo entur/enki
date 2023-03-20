@@ -32,6 +32,23 @@ export const getMaxAllowedStepIndex = (line: Line) => {
   else return 3;
 };
 
+export const getMaxAllowedFlexibleLineStepIndex = (line: FlexibleLine) => {
+  if (!aboutFlexibleLineStepIsValid(line)) return 0;
+  else if (
+    line.journeyPatterns!.some(
+      (jp) => !validFlexibleLineJourneyPattern(jp, line.flexibleLineType)
+    )
+  )
+    return 1;
+  else if (
+    line.journeyPatterns!.some(
+      (jp) => !validServiceJourneys(jp.serviceJourneys)
+    )
+  )
+    return 2;
+  else return 3;
+};
+
 export const currentStepIsValid = (currentStep: number, line: Line) => {
   if (currentStep === 0) return aboutLineStepIsValid(line);
   else if (currentStep === 1)
