@@ -248,12 +248,14 @@ export default (props: Props) => {
           </Radio>
 
           <TimePicker
-            label={formatMessage(
-              'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'
-            )}
+            label=""
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
             selectedTime={
-              nativeDateToTimeOrDateValue(latestbookingTimeAsDate!) as TimeValue
+              latestbookingTimeAsDate
+                ? (nativeDateToTimeOrDateValue(
+                    latestbookingTimeAsDate
+                  ) as TimeValue)
+                : null
             }
             onChange={(date: TimeValue) => {
               onLatestBookingTimeChange(
