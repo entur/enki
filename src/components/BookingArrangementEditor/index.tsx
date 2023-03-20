@@ -130,7 +130,7 @@ const BookingArrangementEditor = ({
             <Button
               onClick={saveChanges}
               variant="primary"
-              disabled={bookingArrangementFeedback?.feedback}
+              disabled={!!bookingArrangementFeedback?.feedback}
             >
               {formatMessage('bookingInfoSaveButtonText')}
             </Button>

@@ -170,7 +170,7 @@ const NetworkEditor = () => {
                 className="form-section"
                 label={formatMessage('editorNetworkDescriptionLabelText')}
                 value={network.description}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                   onFieldChange('description', e.target.value)
                 }
               />

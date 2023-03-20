@@ -3,7 +3,11 @@ import { Modal } from '@entur/modal';
 import { Label } from '@entur/typography';
 import { TextField, Switch, FeedbackText } from '@entur/form';
 import { ButtonGroup, Button } from '@entur/button';
-import { TimePicker } from '@entur/datepicker';
+import {
+  nativeDateToTimeOrDateValue,
+  timeOrDateValueToNativeDate,
+  TimePicker,
+} from '@entur/datepicker';
 import { ClockIcon } from '@entur/icons';
 import ServiceJourney from 'model/ServiceJourney';
 import { clone } from 'ramda';
@@ -21,6 +25,7 @@ import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import { isBefore, isAfter } from 'helpers/validation';
 import { createUuid } from 'helpers/generators';
+import { TimeValue } from '@react-types/datepicker';
 
 type Props = {
   open: boolean;
@@ -248,14 +253,19 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
               label={formatMessage(
                 'copyServiceJourneyDialogDepartureTimeLabel'
               )}
-              onChange={(date: Date | null) => {
-                const time = date?.toTimeString().split(' ')[0];
+              onChange={(date: TimeValue) => {
+                const time = timeOrDateValueToNativeDate(date)
+                  ?.toTimeString()
+                  .split(' ')[0];
                 if (time) {
                   setInitialDepartureTime(time);
                 }
               }}
-              prepend={<ClockIcon inline />}
-              selectedTime={toDate(initialDepartureTime)}
+              selectedTime={
+                nativeDateToTimeOrDateValue(
+                  toDate(initialDepartureTime)
+                ) as TimeValue
+              }
             />
           </div>
           <DayOffsetDropdown
@@ -297,14 +307,17 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                   label={formatMessage(
                     'copyServiceJourneyDialogLatestPossibleDepartureTimelabel'
                   )}
-                  onChange={(date: Date | null) => {
-                    const time = date?.toTimeString().split(' ')[0];
+                  onChange={(date: TimeValue) => {
+                    const time = timeOrDateValueToNativeDate(date)
+                      ?.toTimeString()
+                      .split(' ')[0];
                     if (time) {
                       setUntilTime(time);
                     }
                   }}
-                  prepend={<ClockIcon inline />}
-                  selectedTime={toDate(untilTime)}
+                  selectedTime={
+                    nativeDateToTimeOrDateValue(toDate(untilTime)) as TimeValue
+                  }
                 />
               </div>
               <DayOffsetDropdown

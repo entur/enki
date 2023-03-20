@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { AddIcon, DownloadIcon } from '@entur/icons';
@@ -57,7 +57,7 @@ const Exports = () => {
             <DataCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
                 <SecondarySquareButton
-                  onClick={async (event: ChangeEvent) => {
+                  onClick={async (event: React.MouseEvent<HTMLElement>) => {
                     event.stopPropagation();
                     download(uttuApiUrl, e, await auth.getAccessToken());
                   }}

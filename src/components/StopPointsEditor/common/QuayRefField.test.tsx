@@ -56,7 +56,7 @@ describe('QuayRefField', () => {
       >
         <QuayRefField
           initialQuayRef={'TST:Quay:1'}
-          errorFeedback={{}}
+          errorFeedback={{ variant: undefined, feedback: undefined }}
           onChange={mockedOnChange}
         />
       </MockedProvider>

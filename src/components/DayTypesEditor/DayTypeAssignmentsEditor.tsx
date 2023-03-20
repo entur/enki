@@ -6,13 +6,18 @@ import { AddIcon, DeleteIcon } from '@entur/icons';
 import { IconButton, TertiaryButton } from '@entur/button';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
-import { DatePicker } from '@entur/datepicker';
+import {
+  DatePicker,
+  nativeDateToTimeOrDateValue,
+  timeOrDateValueToNativeDate,
+} from '@entur/datepicker';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import './styles.scss';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import { Switch } from '@entur/form';
 import { DataCell, Table, TableBody, TableRow } from '@entur/table';
+import { DateValue } from '@react-types/datepicker';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
@@ -52,9 +57,9 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
   const uniqueKeys = useUniqueKeys(dayTypeAssignments);
 
-  const dateJsToIso = (date: Date | null): string => {
+  const dateJsToIso = (date: Date | null | undefined): string => {
     const dateOrNow = date ?? new Date();
-    const y = dateOrNow.getFullYear();
+    const y = dateOrNow?.getFullYear();
     const m = dateOrNow?.getMonth() + 1;
     const d = dateOrNow?.getDate();
     return `${y}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
@@ -70,10 +75,19 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                 <DataCell>
                   <DatePicker
                     label={formatMessage('dayTypeEditorFromDate')}
-                    selectedDate={moment(dta.operatingPeriod.fromDate).toDate()}
-                    onChange={(date: Date | null) => {
+                    selectedDate={
+                      nativeDateToTimeOrDateValue(
+                        moment(dta.operatingPeriod.fromDate).toDate()
+                      ) as DateValue
+                    }
+                    onChange={(date: DateValue) => {
                       changeDay(
-                        { ...dta.operatingPeriod, fromDate: dateJsToIso(date) },
+                        {
+                          ...dta.operatingPeriod,
+                          fromDate: dateJsToIso(
+                            timeOrDateValueToNativeDate(date)
+                          ),
+                        },
                         index
                       );
                     }}
@@ -91,10 +105,19 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                       ),
                       false
                     )}
-                    selectedDate={moment(dta.operatingPeriod.toDate).toDate()}
-                    onChange={(date: Date | null) => {
+                    selectedDate={
+                      nativeDateToTimeOrDateValue(
+                        moment(dta.operatingPeriod.toDate).toDate()
+                      ) as DateValue
+                    }
+                    onChange={(date: DateValue) => {
                       changeDay(
-                        { ...dta.operatingPeriod, toDate: dateJsToIso(date) },
+                        {
+                          ...dta.operatingPeriod,
+                          toDate: dateJsToIso(
+                            timeOrDateValueToNativeDate(date)
+                          ),
+                        },
                         index
                       );
                     }}

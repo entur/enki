@@ -1,11 +1,12 @@
-import { InputGroupProps } from '@entur/form';
+import { VariantType } from '@entur/form';
 import { Quay, StopPlace } from 'api';
 
 export type QuaySearch = { stopPlace?: StopPlace; quay?: Quay };
 
-export type QuaySearchResults =
-  | Pick<InputGroupProps, 'variant' | 'feedback'>
-  | undefined;
+export type QuaySearchResults = {
+  feedback?: string;
+  variant?: VariantType;
+};
 
 export function quaySearchResults(
   quaySearch: QuaySearch | undefined,
@@ -13,7 +14,7 @@ export function quaySearchResults(
   loadingLabel: string,
   quayNotFoundLabel: string
 ): QuaySearchResults {
-  if (!quaySearch) return undefined;
+  if (!quaySearch) return { feedback: undefined, variant: undefined };
 
   if (loading) {
     return {

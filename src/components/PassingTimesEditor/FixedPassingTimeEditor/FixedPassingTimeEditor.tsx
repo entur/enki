@@ -1,12 +1,17 @@
 import React from 'react';
 import PassingTime from 'model/PassingTime';
-import { TimePicker } from '@entur/datepicker';
+import {
+  nativeDateToTimeOrDateValue,
+  timeOrDateValueToNativeDate,
+  TimePicker,
+} from '@entur/datepicker';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import { ClockIcon } from '@entur/icons';
 import { useIntl } from 'i18n';
 import { toDate } from '../common/toDate';
 import FixedPassingTimeTitle from './FixedPassingTimeTitle';
 import StopPoint from 'model/StopPoint';
+import { TimeValue } from '@react-types/datepicker';
 
 type Props = {
   passingTime: PassingTime;
@@ -34,16 +39,21 @@ export const FixedPassingTimeEditor = ({
           isLast ? ' *' : ''
         }`}
         className="timepicker"
-        onChange={(e: Date | null) => {
-          const date = e?.toTimeString().split(' ')[0];
+        onChange={(e: TimeValue) => {
+          const date = timeOrDateValueToNativeDate(e)
+            ?.toTimeString()
+            .split(' ')[0];
           onChange({
             ...passingTime,
             arrivalTime: date || null,
             departureTime: isLast ? null : passingTime.departureTime,
           });
         }}
-        prepend={<ClockIcon inline />}
-        selectedTime={toDate(passingTime.arrivalTime!)}
+        selectedTime={
+          nativeDateToTimeOrDateValue(
+            toDate(passingTime.arrivalTime!)!
+          ) as TimeValue
+        }
       />
       <DayOffsetDropdown
         value={passingTime.arrivalDayOffset as number}
@@ -64,16 +74,21 @@ export const FixedPassingTimeEditor = ({
           index === 0 ? ' *' : ''
         }`}
         className="timepicker"
-        onChange={(e: Date | null) => {
-          const date = e?.toTimeString().split(' ')[0];
+        onChange={(e: TimeValue) => {
+          const date = timeOrDateValueToNativeDate(e)
+            ?.toTimeString()
+            .split(' ')[0];
           onChange({
             ...passingTime,
             departureTime: date || null,
             arrivalTime: index === 0 ? null : passingTime.arrivalTime,
           });
         }}
-        prepend={<ClockIcon inline />}
-        selectedTime={toDate(passingTime.departureTime!)}
+        selectedTime={
+          nativeDateToTimeOrDateValue(
+            toDate(passingTime.departureTime!)!
+          ) as TimeValue
+        }
       />
       <DayOffsetDropdown
         value={passingTime.departureDayOffset as number}

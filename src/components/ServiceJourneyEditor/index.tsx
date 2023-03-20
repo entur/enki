@@ -33,7 +33,7 @@ type Props = {
   stopPoints: StopPoint[];
   spoilPristine: boolean;
   onChange: (serviceJourney: ServiceJourney) => void;
-  deleteServiceJourney?: (index: number) => void;
+  deleteServiceJourney?: () => void;
   copyServiceJourney?: (serviceJourney: ServiceJourney[]) => void;
   flexibleLineType?: FlexibleLineType;
 };
