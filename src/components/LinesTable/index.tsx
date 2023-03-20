@@ -93,7 +93,7 @@ const renderTableRows = (props: Props) => {
 
   return lines?.map((line) => (
     <TableRow key={line.id} onClick={() => onRowClick(line)}>
-      <DataCell title={line.description}>{line.name}</DataCell>
+      <DataCell title={line.description || undefined}>{line.name}</DataCell>
       <DataCell>{line.publicCode}</DataCell>
       <DataCell>{line.privateCode}</DataCell>
       <DataCell>

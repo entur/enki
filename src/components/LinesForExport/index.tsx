@@ -32,10 +32,12 @@ type LinesData = {
   flexibleLines: FlexibleLine[];
 };
 
+type Status = 'negative' | 'positive' | 'neutral' | undefined;
+
 type ExportableLine = {
   id: string;
   name: string;
-  status: string;
+  status: Status;
   from: Date;
   to: Date;
   selected: boolean;
@@ -81,7 +83,7 @@ const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
     today
   );
 
-  let status;
+  let status: Status;
 
   if (availableForDaysFromNow > 121) {
     status = 'positive';
@@ -100,7 +102,7 @@ const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
   };
 };
 
-const mapStatusToText = (status: string): string => {
+const mapStatusToText = (status: Status): string => {
   if (status === 'positive') {
     return 'Available next 120 days';
   } else if (status === 'neutral') {

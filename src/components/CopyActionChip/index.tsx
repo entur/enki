@@ -13,7 +13,7 @@ type Props = {
 const CopyButton = (props: Props) => (
   <ActionChip
     className={props.className}
-    onClick={(event: Event) => {
+    onClick={(event: React.MouseEvent) => {
       props.onClick();
       event.stopPropagation();
     }}
