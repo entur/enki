@@ -50,7 +50,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
             <TableRow key={'' + i} hover className="notices-row">
               <EditableCell className="notices-editable-cell">
                 <TextArea
-                  label="TODO: Add label"
+                  label=""
                   onBlur={() => notice.text === '' && removeNotice(i)}
                   className="notices-text-area"
                   value={notice.text}

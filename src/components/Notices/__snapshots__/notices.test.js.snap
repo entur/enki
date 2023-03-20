@@ -21,7 +21,7 @@ exports[`Notices should render multiple notices 1`] = `
         >
           <ForwardRef
             className="notices-text-area"
-            label="TODO: Add label"
+            label=""
             onBlur={[Function]}
             onChange={[Function]}
             value="This a notice"
@@ -53,7 +53,7 @@ exports[`Notices should render multiple notices 1`] = `
         >
           <ForwardRef
             className="notices-text-area"
-            label="TODO: Add label"
+            label=""
             onBlur={[Function]}
             onChange={[Function]}
             value="This is another notice"
@@ -159,7 +159,7 @@ exports[`Notices should render single notices 1`] = `
         >
           <ForwardRef
             className="notices-text-area"
-            label="TODO: Add label"
+            label=""
             onBlur={[Function]}
             onChange={[Function]}
             value="This a notice"
