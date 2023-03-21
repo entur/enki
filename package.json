@@ -9,7 +9,6 @@
     "start": "react-scripts start",
     "start-devenv": "cross-env npm run start",
     "build": "react-scripts build",
-    "snyk-protect": "snyk protect",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
@@ -84,7 +83,6 @@
     "redux-devtools-extension": "2.13.9",
     "redux-sentry-middleware": "0.2.2",
     "redux-thunk": "2.4.2",
-    "snyk": "1.1121.0",
     "source-map-explorer": "2.5.3",
     "typescript": "5.0.2",
     "uuid": "3.4.0"
@@ -120,6 +118,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "snyk": true
+  }
 }
