@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { equals } from 'ramda';
+import isEqual from 'lodash.isequal';
 import uuid from 'uuid';
 
 export default (list: any[]): string[] => {
@@ -16,7 +16,7 @@ export default (list: any[]): string[] => {
       setId([...ids, uuid.v4()]);
     } else if (objectArrayIsDecreasing) {
       const difference = listHolder.filter(
-        (el) => !list.some((el2) => equals(el, el2))
+        (el) => !list.some((el2) => isEqual(el, el2))
       );
       const indexOfDeletedElement = listHolder.indexOf(difference[0]);
       const updatedList = ids.filter(

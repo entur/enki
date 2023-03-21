@@ -10,7 +10,6 @@ import {
 } from '@entur/datepicker';
 import { ClockIcon } from '@entur/icons';
 import ServiceJourney from 'model/ServiceJourney';
-import { clone } from 'ramda';
 import PassingTime from 'model/PassingTime';
 import DurationPicker from 'components/DurationPicker';
 import {
@@ -26,6 +25,7 @@ import { selectIntl } from 'i18n';
 import { isBefore, isAfter } from 'helpers/validation';
 import { createUuid } from 'helpers/generators';
 import { TimeValue } from '@react-types/datepicker';
+import cloneDeep from 'lodash.clonedeep';
 
 type Props = {
   open: boolean;
@@ -127,7 +127,7 @@ export const copyServiceJourney = (
     );
 
     const newServiceJourney = {
-      ...clone(copyableServiceJourney),
+      ...cloneDeep(copyableServiceJourney),
       id: `new_${createUuid()}`,
       name: nameTemplate.replace(
         '<% time %>',

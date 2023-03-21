@@ -41,7 +41,7 @@ import GeoJSON, {
   Coordinate,
   stringIsValidCoordinates,
 } from 'model/GeoJSON';
-import { equals } from 'ramda';
+import isEqual from 'lodash.isequal';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
@@ -99,7 +99,7 @@ const FlexibleStopPlaceEditor = () => {
   const errors = validateFlexibleStopPlace(flexibleStopPlace ?? {});
 
   useEffect(() => {
-    if (!isLoading && !equals(currentFlexibleStopPlace, flexibleStopPlace))
+    if (!isLoading && !isEqual(currentFlexibleStopPlace, flexibleStopPlace))
       setFlexibleStopPlace(currentFlexibleStopPlace);
     setCoordinateHolder(
       coordinatesToText(

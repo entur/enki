@@ -6,7 +6,6 @@ import { Modal } from '@entur/modal';
 import Editor from './editor';
 import { BookingInfoAttachment } from './constants';
 import BookingArrangement from 'model/BookingArrangement';
-import { clone } from 'ramda';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { selectIntl, AppIntlState } from 'i18n';
@@ -15,6 +14,7 @@ import { validateBookingArrangement } from 'helpers/validation';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import usePristine from 'hooks/usePristine';
 import { SmallAlertBox } from '@entur/alert';
+import cloneDeep from 'lodash.clonedeep';
 
 type Props = {
   bookingArrangement?: BookingArrangement | null;
@@ -40,7 +40,7 @@ const BookingArrangementEditor = ({
   const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
 
   useEffect(() => {
-    setBookingArrangementDraft(clone(bookingArrangement || {}));
+    setBookingArrangementDraft(cloneDeep(bookingArrangement || {}));
   }, [setBookingArrangementDraft, bookingArrangement]);
 
   const saveChanges = useCallback(() => {
@@ -50,7 +50,7 @@ const BookingArrangementEditor = ({
 
   // switch to useReducer
   const cancel = useCallback(() => {
-    setBookingArrangementDraft(clone(bookingArrangement || {}));
+    setBookingArrangementDraft(cloneDeep(bookingArrangement || {}));
     setshowModal(false);
   }, [setBookingArrangementDraft, setshowModal, bookingArrangement]);
 
