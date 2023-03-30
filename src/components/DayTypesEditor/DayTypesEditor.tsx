@@ -39,35 +39,31 @@ export const DayTypesEditor = ({
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'end' }}>
-        {!loading && (
-          <MultiSelect
-            clearable
-            style={{ minWidth: '20rem' }}
-            label={formatMessage('dayTypesEditorSelectLabel')}
-            items={
-              allDayTypesData?.dayTypes.map((dt: DayType) => ({
-                label: `${dt.name || dt.id!}`,
-                value: `${dt.id!}`,
-              })) || []
-            }
-            initialSelectedItems={
-              dayTypes?.map((dt) => ({
-                label: dt.name || dt.id!,
-                value: dt.id!,
-              })) || []
-            }
-            onChange={(items: any) => {
-              const selectedIds = items.selectedItems?.map(
-                (item: any) => item.value
-              );
-              onChange(
-                allDayTypesData?.dayTypes.filter((dt) =>
-                  selectedIds?.includes(dt.id!)
-                ) || []
-              );
-            }}
-          />
-        )}
+        <MultiSelect
+          clearable
+          style={{ minWidth: '20rem' }}
+          label={formatMessage('dayTypesEditorSelectLabel')}
+          items={() =>
+            allDayTypesData?.dayTypes.map((dt: DayType) => ({
+              label: `${dt.name || dt.id!}`,
+              value: `${dt.id!}`,
+            })) || []
+          }
+          initialSelectedItems={
+            dayTypes?.map((dt) => ({
+              label: dt.name || dt.id!,
+              value: dt.id!,
+            })) || []
+          }
+          onChange={(items: any) => {
+            const selectedIds = items?.map((item: any) => item.value);
+            onChange(
+              allDayTypesData?.dayTypes.filter((dt) =>
+                selectedIds?.includes(dt.id!)
+              ) || []
+            );
+          }}
+        />
 
         <div style={{ marginLeft: '1rem' }}>
           <SecondaryButton onClick={() => onOpenDayTypeModal(true)}>
