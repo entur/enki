@@ -368,10 +368,22 @@ export const validateTimes = (
           prevPassingTime.departureDayOffset!
         ) ||
         isBefore(
+          departureTime!,
+          departureDayOffset!,
+          prevPassingTime.arrivalTime!,
+          prevPassingTime.arrivalDayOffset!
+        ) ||
+        isBefore(
           arrivalTime!,
           arrivalDayOffset!,
           prevPassingTime.arrivalTime!,
           prevPassingTime.arrivalDayOffset!
+        ) ||
+        isBefore(
+          arrivalTime!,
+          arrivalDayOffset!,
+          prevPassingTime.departureTime!,
+          prevPassingTime.departureDayOffset!
         ) ||
         isBefore(
           latestArrivalTime!,
@@ -384,6 +396,30 @@ export const validateTimes = (
           earliestDepartureDayOffset!,
           prevPassingTime.earliestDepartureTime!,
           prevPassingTime.earliestDepartureDayOffset!
+        ) ||
+        isBefore(
+          earliestDepartureTime!,
+          earliestDepartureDayOffset!,
+          prevPassingTime.departureTime!,
+          prevPassingTime.departureDayOffset!
+        ) ||
+        isBefore(
+          earliestDepartureTime!,
+          earliestDepartureDayOffset!,
+          prevPassingTime.arrivalTime!,
+          prevPassingTime.arrivalDayOffset!
+        ) ||
+        isBefore(
+          arrivalTime!,
+          arrivalDayOffset!,
+          prevPassingTime.earliestDepartureTime!,
+          prevPassingTime.earliestDepartureDayOffset!
+        ) ||
+        isBefore(
+          arrivalTime!,
+          arrivalDayOffset!,
+          prevPassingTime.latestArrivalTime!,
+          prevPassingTime.latestArrivalDayOffset!
         )
       ) {
         return {
