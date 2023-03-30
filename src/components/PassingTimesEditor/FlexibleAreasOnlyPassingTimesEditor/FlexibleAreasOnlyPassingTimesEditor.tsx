@@ -29,7 +29,15 @@ export const FlexibleAreasOnlyPassingTimesEditor = ({
             passingTime={passingTimes[0]}
             stopPoint={stopPoints[0]}
             onChange={(changedPassingTime) => {
-              onChange([changedPassingTime, changedPassingTime]);
+              const { id, ...rest } = changedPassingTime;
+
+              onChange([
+                changedPassingTime,
+                {
+                  ...passingTimes[1],
+                  ...rest,
+                },
+              ]);
             }}
           />
         </div>
