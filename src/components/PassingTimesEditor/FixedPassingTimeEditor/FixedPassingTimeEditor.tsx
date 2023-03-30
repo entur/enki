@@ -8,10 +8,10 @@ import {
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import { ClockIcon } from '@entur/icons';
 import { useIntl } from 'i18n';
-import { toDate } from '../common/toDate';
 import FixedPassingTimeTitle from './FixedPassingTimeTitle';
 import StopPoint from 'model/StopPoint';
 import { TimeValue } from '@react-types/datepicker';
+import { PassingTimePicker } from '../common/PassingTimePicker';
 
 type Props = {
   passingTime: PassingTime;
@@ -33,30 +33,23 @@ export const FixedPassingTimeEditor = ({
   return (
     <>
       <FixedPassingTimeTitle stopPoint={stopPoint} />
-      <TimePicker
+      <PassingTimePicker
+        label={formatMessage('passingTimesArrivalTime')}
         disabled={index === 0}
-        label={`${formatMessage('passingTimesArrivalTime')}${
-          isLast ? ' *' : ''
-        }`}
-        className="timepicker"
-        onChange={(e: TimeValue) => {
-          const date = timeOrDateValueToNativeDate(e)
-            ?.toTimeString()
-            .split(' ')[0];
+        required={isLast}
+        selectedTime={passingTime.arrivalTime}
+        onChange={(arrivalTime: string) => {
           onChange({
             ...passingTime,
-            arrivalTime: date || null,
+            arrivalTime,
             departureTime: isLast ? null : passingTime.departureTime,
           });
         }}
-        selectedTime={
-          nativeDateToTimeOrDateValue(
-            toDate(passingTime.arrivalTime!)!
-          ) as TimeValue
-        }
       />
       <DayOffsetDropdown
-        value={passingTime.arrivalDayOffset as number}
+        value={
+          index === 0 ? undefined : (passingTime.arrivalDayOffset as number)
+        }
         disabled={index === 0}
         onChange={(value) =>
           onChange({
@@ -68,30 +61,21 @@ export const FixedPassingTimeEditor = ({
           })
         }
       />
-      <TimePicker
+      <PassingTimePicker
+        label={formatMessage('passingTimesDepartureTime')}
         disabled={isLast}
-        label={`${formatMessage('passingTimesDepartureTime')}${
-          index === 0 ? ' *' : ''
-        }`}
-        className="timepicker"
-        onChange={(e: TimeValue) => {
-          const date = timeOrDateValueToNativeDate(e)
-            ?.toTimeString()
-            .split(' ')[0];
+        required={index === 0}
+        selectedTime={passingTime.departureTime}
+        onChange={(departureTime: string) => {
           onChange({
             ...passingTime,
-            departureTime: date || null,
+            departureTime,
             arrivalTime: index === 0 ? null : passingTime.arrivalTime,
           });
         }}
-        selectedTime={
-          nativeDateToTimeOrDateValue(
-            toDate(passingTime.departureTime!)!
-          ) as TimeValue
-        }
       />
       <DayOffsetDropdown
-        value={passingTime.departureDayOffset as number}
+        value={isLast ? undefined : (passingTime.departureDayOffset as number)}
         disabled={isLast}
         onChange={(value) =>
           onChange({

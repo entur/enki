@@ -3,7 +3,7 @@ import PassingTime from 'model/PassingTime';
 import StopPoint from 'model/StopPoint';
 import { ComponentClass, FunctionComponent, useMemo } from 'react';
 import { FlexibleAreasOnlyPassingTimesEditor } from './FlexibleAreasOnlyPassingTimesEditor/FlexibleAreasOnlyPassingTimesEditor';
-import { TimeWindowPassingTimesEditor } from './GenericPassingTimesEditor/GenericPassingTimesEditor';
+import { GenericPassingTimesEditor } from './GenericPassingTimesEditor/GenericPassingTimesEditor';
 import { MixedFlexiblePassingTimesEditor } from './MixedFlexiblePassingTimesEditor/MixedFlexiblePassingTimesEditor';
 import './styles.scss';
 
@@ -28,7 +28,7 @@ export const getPassingTimesEditor = (
     case FlexibleLineType.FLEXIBLE_AREAS_ONLY:
       return FlexibleAreasOnlyPassingTimesEditor;
     default:
-      return TimeWindowPassingTimesEditor;
+      return GenericPassingTimesEditor;
   }
 };
 

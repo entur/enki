@@ -8,10 +8,10 @@ import {
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import { ClockIcon } from '@entur/icons';
 import { useIntl } from 'i18n';
-import { toDate } from '../common/toDate';
 import TimeWindowPassingTimeTitle from './TimeWindowPassingTimeTitle';
 import StopPoint from 'model/StopPoint';
 import { TimeValue } from '@react-types/datepicker';
+import { PassingTimePicker } from '../common/PassingTimePicker';
 
 type Props = {
   passingTime: PassingTime;
@@ -29,23 +29,16 @@ export const TimeWindowPassingTimeEditor = ({
   return (
     <>
       <TimeWindowPassingTimeTitle stopPoint={stopPoint} />
-      <TimePicker
-        label={`${formatMessage('passingTimesEarliestDepartureTime')}${' *'}`}
-        className="timepicker"
-        onChange={(e: TimeValue) => {
-          const date = timeOrDateValueToNativeDate(e)
-            ?.toTimeString()
-            .split(' ')[0];
+      <PassingTimePicker
+        label={formatMessage('passingTimesEarliestDepartureTime')}
+        required
+        selectedTime={passingTime.earliestDepartureTime}
+        onChange={(earliestDepartureTime: string) => {
           onChange({
             ...passingTime,
-            earliestDepartureTime: date || null,
+            earliestDepartureTime,
           });
         }}
-        selectedTime={
-          nativeDateToTimeOrDateValue(
-            toDate(passingTime.earliestDepartureTime!)!
-          ) as TimeValue
-        }
       />
       <DayOffsetDropdown
         value={passingTime.earliestDepartureDayOffset as number}
@@ -56,23 +49,16 @@ export const TimeWindowPassingTimeEditor = ({
           });
         }}
       />
-      <TimePicker
-        label={`${formatMessage('passingTimesLatestArrivalTime')}${' *'}`}
-        className="timepicker"
-        onChange={(e: TimeValue) => {
-          const date = timeOrDateValueToNativeDate(e)
-            ?.toTimeString()
-            .split(' ')[0];
+      <PassingTimePicker
+        label={formatMessage('passingTimesLatestArrivalTime')}
+        required
+        selectedTime={passingTime.latestArrivalTime}
+        onChange={(latestArrivalTime: string) => {
           onChange({
             ...passingTime,
-            latestArrivalTime: date || null,
+            latestArrivalTime,
           });
         }}
-        selectedTime={
-          nativeDateToTimeOrDateValue(
-            toDate(passingTime.latestArrivalTime!)!
-          ) as TimeValue
-        }
       />
       <DayOffsetDropdown
         value={passingTime.latestArrivalDayOffset as number}

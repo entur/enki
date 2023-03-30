@@ -7,7 +7,7 @@ import { changeElementAtIndex } from 'helpers/arrays';
 import { PassingTimesError } from '../common/PassingTimesError';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 
-export const TimeWindowPassingTimesEditor = ({
+export const GenericPassingTimesEditor = ({
   passingTimes,
   stopPoints,
   onChange,
