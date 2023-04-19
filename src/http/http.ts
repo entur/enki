@@ -11,9 +11,14 @@ const http = axios.create({ baseURL: API_BASE });
 if (process.env.NODE_ENV !== 'test') {
   http.interceptors.request.use(
     (config) => {
-      config.headers['Correlation-ID'] = uuid.v4();
-      config.headers['Cache-Control'] = 'no-cache';
-      return config;
+      return {
+        ...config,
+        headers: {
+          ...config.headers,
+          'Correlation-ID': uuid.v4(),
+          'Cache-Control': 'no-cache',
+        },
+      };
     },
     (error) => {
       return Promise.reject(error);
