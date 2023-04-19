@@ -25,7 +25,7 @@ import { GlobalState } from 'reducers';
 import { AppIntlState } from 'i18n';
 import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
 import {
-  nativeDateToTimeOrDateValue,
+  nativeDateToTimeValue,
   timeOrDateValueToNativeDate,
   TimePicker,
 } from '@entur/datepicker';
@@ -253,9 +253,7 @@ export default (props: Props) => {
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
             selectedTime={
               latestbookingTimeAsDate
-                ? (nativeDateToTimeOrDateValue(
-                    latestbookingTimeAsDate
-                  ) as TimeValue)
+                ? nativeDateToTimeValue(latestbookingTimeAsDate)
                 : null
             }
             onChange={(date: TimeValue | null) => {

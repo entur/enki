@@ -1,5 +1,5 @@
 import {
-  nativeDateToTimeOrDateValue,
+  nativeDateToTimeValue,
   timeOrDateValueToNativeDate,
   TimePicker,
 } from '@entur/datepicker';
@@ -43,7 +43,7 @@ export const PassingTimePicker = ({
       selectedTime={
         disabled || !selectedTime
           ? null
-          : (nativeDateToTimeOrDateValue(toDate(selectedTime!)!) as TimeValue)
+          : nativeDateToTimeValue(toDate(selectedTime!)!)
       }
     />
   );
