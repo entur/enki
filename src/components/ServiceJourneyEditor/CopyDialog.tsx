@@ -4,7 +4,7 @@ import { Label } from '@entur/typography';
 import { TextField, Switch, FeedbackText } from '@entur/form';
 import { ButtonGroup, Button } from '@entur/button';
 import {
-  nativeDateToTimeOrDateValue,
+  nativeDateToTimeValue,
   timeOrDateValueToNativeDate,
   TimePicker,
 } from '@entur/datepicker';
@@ -264,11 +264,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                   }
                 }
               }}
-              selectedTime={
-                nativeDateToTimeOrDateValue(
-                  toDate(initialDepartureTime)
-                ) as TimeValue
-              }
+              selectedTime={nativeDateToTimeValue(toDate(initialDepartureTime))}
             />
           </div>
           <DayOffsetDropdown
@@ -311,17 +307,15 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                   label={formatMessage(
                     'copyServiceJourneyDialogLatestPossibleDepartureTimelabel'
                   )}
-                  onChange={(date: TimeValue) => {
-                    const time = timeOrDateValueToNativeDate(date)
+                  onChange={(date) => {
+                    const time = timeOrDateValueToNativeDate(date!)
                       ?.toTimeString()
                       .split(' ')[0];
                     if (time) {
                       setUntilTime(time);
                     }
                   }}
-                  selectedTime={
-                    nativeDateToTimeOrDateValue(toDate(untilTime)) as TimeValue
-                  }
+                  selectedTime={nativeDateToTimeValue(toDate(untilTime))}
                 />
               </div>
               <DayOffsetDropdown

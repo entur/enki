@@ -8,7 +8,7 @@ import DayTypeAssignment from 'model/DayTypeAssignment';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import {
   DatePicker,
-  nativeDateToTimeOrDateValue,
+  nativeDateToDateValue,
   timeOrDateValueToNativeDate,
 } from '@entur/datepicker';
 import OperatingPeriod from 'model/OperatingPeriod';
@@ -17,7 +17,6 @@ import './styles.scss';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import { Switch } from '@entur/form';
 import { DataCell, Table, TableBody, TableRow } from '@entur/table';
-import { DateValue } from '@react-types/datepicker';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
@@ -75,17 +74,15 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                 <DataCell>
                   <DatePicker
                     label={formatMessage('dayTypeEditorFromDate')}
-                    selectedDate={
-                      nativeDateToTimeOrDateValue(
-                        moment(dta.operatingPeriod.fromDate).toDate()
-                      ) as DateValue
-                    }
-                    onChange={(date: DateValue) => {
+                    selectedDate={nativeDateToDateValue(
+                      moment(dta.operatingPeriod.fromDate).toDate()
+                    )}
+                    onChange={(date) => {
                       changeDay(
                         {
                           ...dta.operatingPeriod,
                           fromDate: dateJsToIso(
-                            timeOrDateValueToNativeDate(date)
+                            timeOrDateValueToNativeDate(date!)
                           ),
                         },
                         index
@@ -105,17 +102,15 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                       ),
                       false
                     )}
-                    selectedDate={
-                      nativeDateToTimeOrDateValue(
-                        moment(dta.operatingPeriod.toDate).toDate()
-                      ) as DateValue
-                    }
-                    onChange={(date: DateValue) => {
+                    selectedDate={nativeDateToDateValue(
+                      moment(dta.operatingPeriod.toDate).toDate()
+                    )}
+                    onChange={(date) => {
                       changeDay(
                         {
                           ...dta.operatingPeriod,
                           toDate: dateJsToIso(
-                            timeOrDateValueToNativeDate(date)
+                            timeOrDateValueToNativeDate(date!)
                           ),
                         },
                         index
