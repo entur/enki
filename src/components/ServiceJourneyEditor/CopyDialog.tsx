@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { Modal } from '@entur/modal';
 import { Label } from '@entur/typography';
 import { TextField, Switch, FeedbackText } from '@entur/form';
@@ -8,7 +8,6 @@ import {
   timeOrDateValueToNativeDate,
   TimePicker,
 } from '@entur/datepicker';
-import { ClockIcon } from '@entur/icons';
 import ServiceJourney from 'model/ServiceJourney';
 import PassingTime from 'model/PassingTime';
 import DurationPicker from 'components/DurationPicker';
@@ -181,7 +180,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
 
   const [multiple, setMultiple] = useState<boolean>(false);
 
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage, locale } = useSelector(selectIntl);
 
   useEffect(() => {
     if (
@@ -250,6 +249,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         <div className="copy-dialog-inputs">
           <div className="copy-dialog-timepicker">
             <TimePicker
+              locale={locale}
               label={formatMessage(
                 'copyServiceJourneyDialogDepartureTimeLabel'
               )}
@@ -304,6 +304,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
             <div className="copy-dialog-inputs">
               <div className="copy-dialog-timepicker">
                 <TimePicker
+                  locale={locale}
                   label={formatMessage(
                     'copyServiceJourneyDialogLatestPossibleDepartureTimelabel'
                   )}

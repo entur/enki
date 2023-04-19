@@ -3,9 +3,11 @@ import {
   timeOrDateValueToNativeDate,
   TimePicker,
 } from '@entur/datepicker';
-import React from 'react';
 import { toDate } from './toDate';
 import { TimeValue } from '@react-types/datepicker';
+import { AppIntlState, selectIntl } from 'i18n';
+import { useSelector } from 'react-redux';
+import { GlobalState } from 'reducers';
 
 type Props = {
   label: string;
@@ -22,8 +24,10 @@ export const PassingTimePicker = ({
   onChange,
   selectedTime,
 }: Props) => {
+  const { locale } = useSelector<GlobalState, AppIntlState>(selectIntl);
   return (
     <TimePicker
+      locale={locale}
       disabled={disabled}
       label={`${label}${required ? ' *' : ''}`}
       className="timepicker"

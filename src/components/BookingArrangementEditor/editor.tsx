@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIntl } from 'i18n';
 import './styles.scss';
@@ -41,7 +41,7 @@ type Props = {
 
 export default (props: Props) => {
   const intl = useSelector<GlobalState, AppIntlState>(selectIntl);
-  const { formatMessage } = intl;
+  const { formatMessage, locale } = intl;
   const {
     bookingArrangement,
     onChange,
@@ -249,6 +249,7 @@ export default (props: Props) => {
 
           <TimePicker
             label=""
+            locale={locale}
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
             selectedTime={
               latestbookingTimeAsDate
