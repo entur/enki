@@ -87,7 +87,7 @@
     "redux-sentry-middleware": "0.2.2",
     "redux-thunk": "2.4.2",
     "source-map-explorer": "2.5.3",
-    "typescript": "5.0.2",
+    "typescript": "5.0.4",
     "uuid": "3.4.0"
   },
   "devDependencies": {},
