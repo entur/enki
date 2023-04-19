@@ -109,7 +109,7 @@ export default (props: Props) => {
     setBookingLimitType(type);
   };
 
-  const onLatestBookingTimeChange = (time: string) =>
+  const onLatestBookingTimeChange = (time: string | undefined) =>
     onChange({
       ...bookingArrangement,
       latestBookingTime: time,
@@ -258,10 +258,17 @@ export default (props: Props) => {
                   ) as TimeValue)
                 : null
             }
-            onChange={(date: TimeValue) => {
-              onLatestBookingTimeChange(
-                format(timeOrDateValueToNativeDate(date), 'HH:mm')
-              );
+            onChange={(date: TimeValue | null) => {
+              let formattedDate;
+
+              if (date != null) {
+                formattedDate = format(
+                  timeOrDateValueToNativeDate(date),
+                  'HH:mm'
+                );
+              }
+
+              onLatestBookingTimeChange(formattedDate);
             }}
           />
 

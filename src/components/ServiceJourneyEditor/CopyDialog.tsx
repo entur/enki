@@ -253,12 +253,15 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
               label={formatMessage(
                 'copyServiceJourneyDialogDepartureTimeLabel'
               )}
-              onChange={(date: TimeValue) => {
-                const time = timeOrDateValueToNativeDate(date)
-                  ?.toTimeString()
-                  .split(' ')[0];
-                if (time) {
-                  setInitialDepartureTime(time);
+              onChange={(date: TimeValue | null) => {
+                let time;
+                if (date != null) {
+                  time = timeOrDateValueToNativeDate(date)
+                    ?.toTimeString()
+                    .split(' ')[0];
+                  if (time) {
+                    setInitialDepartureTime(time);
+                  }
                 }
               }}
               selectedTime={

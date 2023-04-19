@@ -30,7 +30,7 @@ export const FixedPassingTimeEditor = ({
         disabled={index === 0}
         required={isLast}
         selectedTime={passingTime.arrivalTime}
-        onChange={(arrivalTime: string) => {
+        onChange={(arrivalTime: string | null) => {
           onChange({
             ...passingTime,
             arrivalTime,
@@ -58,7 +58,7 @@ export const FixedPassingTimeEditor = ({
         disabled={isLast}
         required={index === 0}
         selectedTime={passingTime.departureTime}
-        onChange={(departureTime: string) => {
+        onChange={(departureTime: string | null) => {
           onChange({
             ...passingTime,
             departureTime,

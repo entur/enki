@@ -25,7 +25,7 @@ export const TimeWindowPassingTimeEditor = ({
         label={formatMessage('passingTimesEarliestDepartureTime')}
         required
         selectedTime={passingTime.earliestDepartureTime}
-        onChange={(earliestDepartureTime: string) => {
+        onChange={(earliestDepartureTime: string | null) => {
           onChange({
             ...passingTime,
             earliestDepartureTime,
@@ -45,7 +45,7 @@ export const TimeWindowPassingTimeEditor = ({
         label={formatMessage('passingTimesLatestArrivalTime')}
         required
         selectedTime={passingTime.latestArrivalTime}
-        onChange={(latestArrivalTime: string) => {
+        onChange={(latestArrivalTime: string | null) => {
           onChange({
             ...passingTime,
             latestArrivalTime,
