@@ -17,7 +17,6 @@ import './styles.scss';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import { Switch } from '@entur/form';
 import { DataCell, Table, TableBody, TableRow } from '@entur/table';
-import { DateValue } from '@react-types/datepicker';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
