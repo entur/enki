@@ -1,5 +1,5 @@
 import axios from 'axios';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export const API_BASE =
   process.env.NODE_ENV !== 'test'
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'test') {
         ...config,
         headers: {
           ...config.headers,
-          'Correlation-ID': uuid.v4(),
+          'Correlation-ID': uuidv4,
           'Cache-Control': 'no-cache',
         },
       };
