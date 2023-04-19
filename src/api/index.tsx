@@ -1,5 +1,5 @@
 import React from 'react';
-import { GraphQLClient } from 'graphql-request';
+import { GraphQLClient, Variables } from 'graphql-request';
 
 import {
   ApolloProvider,
@@ -10,7 +10,6 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { Variables } from 'graphql-request/dist/src/types';
 import { useSelector } from 'react-redux';
 import { ReactElement } from 'react';
 import { GlobalState } from 'reducers';
