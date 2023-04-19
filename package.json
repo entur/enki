@@ -60,7 +60,6 @@
     "file-saver": "2.0.5",
     "graphql": "16.6.0",
     "graphql-request": "6.0.0",
-    "helmet": "3.23.3",
     "husky": "3.1.0",
     "jest-sonar-reporter": "2.0.0",
     "leaflet": "1.9.3",
