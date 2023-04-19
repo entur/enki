@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import isEqual from 'lodash.isequal';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export default (list: any[]): string[] => {
   const [ids, setId] = useState<string[]>(
-    [...Array(list.length + 1)].map((_) => uuid.v4())
+    [...Array(list.length + 1)].map((_) => uuidv4())
   );
   const [listHolder, setListHolder] = useState(list);
 
@@ -13,7 +13,7 @@ export default (list: any[]): string[] => {
     const objectArrayIsDecreasing = list.length < listHolder.length;
 
     if (objectArrayIsIncreasing) {
-      setId([...ids, uuid.v4()]);
+      setId([...ids, uuidv4()]);
     } else if (objectArrayIsDecreasing) {
       const difference = listHolder.filter(
         (el) => !list.some((el2) => isEqual(el, el2))

@@ -48,7 +48,7 @@
     "@types/react-leaflet": "2.8.3",
     "@types/react-modal": "3.16.0",
     "@types/react-redux": "7.1.25",
-    "@types/uuid": "3.4.10",
+    "@types/uuid": "9.0.1",
     "axios": "0.27.2",
     "check-node-version": "4.2.1",
     "classnames": "2.3.2",
@@ -86,7 +86,7 @@
     "redux-thunk": "2.4.2",
     "source-map-explorer": "2.5.3",
     "typescript": "5.0.4",
-    "uuid": "3.4.0"
+    "uuid": "9.0.0"
   },
   "devDependencies": {},
   "jest": {
