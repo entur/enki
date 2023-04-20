@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
-import ErrorBoundary from 'components/ErrorBoundary';
 import { store } from './app/store';
 import { Apollo } from 'api';
 import AuthProvider, { useAuth } from '@entur/auth-provider';
@@ -10,7 +9,28 @@ import { Provider } from 'react-redux';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
 import { selectAuthLoaded, updateAuth } from 'features/app/authSlice';
+import * as Sentry from '@sentry/react';
 import './styles/index.scss';
+import { getEnvironment } from 'config/getEnvironment';
+import { normalizeAllUrls } from 'helpers/url';
+
+if (process.env.REACT_APP_SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DSN,
+    integrations: [new Sentry.BrowserTracing()],
+
+    // We recommend adjusting this value in production, or using tracesSampler
+    // for finer control
+    tracesSampleRate: 1.0,
+
+    environment: getEnvironment(),
+    release: process.env.REACT_APP_VERSION,
+    attachStacktrace: true,
+    beforeSend(e) {
+      return normalizeAllUrls(e);
+    },
+  });
+}
 
 const AuthenticatedApp = () => {
   const dispatch = useAppDispatch();
@@ -40,19 +60,21 @@ const renderIndex = async () => {
 
   const { claimsNamespace, auth0: auth0Config } = config;
   root.render(
-    <Provider store={store}>
-      <AuthProvider
-        auth0Config={{
-          ...auth0Config,
-          redirectUri: window.location.origin,
-        }}
-        auth0ClaimsNamespace={claimsNamespace}
-      >
-        <ConfigContext.Provider value={config}>
-          <AuthenticatedApp />
-        </ConfigContext.Provider>
-      </AuthProvider>
-    </Provider>
+    <Sentry.ErrorBoundary>
+      <Provider store={store}>
+        <AuthProvider
+          auth0Config={{
+            ...auth0Config,
+            redirectUri: window.location.origin,
+          }}
+          auth0ClaimsNamespace={claimsNamespace}
+        >
+          <ConfigContext.Provider value={config}>
+            <AuthenticatedApp />
+          </ConfigContext.Provider>
+        </AuthProvider>
+      </Provider>
+    </Sentry.ErrorBoundary>
   );
 };
 

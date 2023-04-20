@@ -51,6 +51,7 @@ jobs:
       - run: npm run build
         env:
           REACT_APP_VERSION: preview_${{ github.sha }}
+          SENTRY_DSN: https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

@@ -4,7 +4,6 @@
   "adminRole": "{\"r\":\"adminEditRouteData\",\"o\":\"RB\"}",
   "xmlnsUrlPrefix": "http://www.rutebanken.org/ns/",
   "claimsNamespace": "https://ror.entur.io/role_assignments",
-  "sentryDsn": "https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954",
   "auth0": {
     "domain": "auth2.entur.org",
     "clientId": "VXdzUbFV8ws953UWLrizuaQY9C991w0i",

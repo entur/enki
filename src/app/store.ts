@@ -5,33 +5,16 @@ import { intlReducer as intl } from 'react-intl-redux';
 import reducers from 'reducers';
 import { geti18n, getIntl } from 'i18n';
 import thunk from 'redux-thunk';
+import * as Sentry from '@sentry/react';
 
-// import { applyMiddleware, createStore, combineReducers } from 'redux';
-// import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-// import * as Sentry from '@sentry/browser';
-// import createSentryMiddleware from 'redux-sentry-middleware';
-// import { normalizeAllUrls } from 'utils/sentry';
-//import { captureException } from '@sentry/browser';
-//let useSentry = false;
-// const getMiddlewares = (sentryDsn) => {
-//   if (process.env.NODE_ENV === 'production' && sentryDsn) {
-//     useSentry = true;
-//     Sentry.init({
-//       dsn: sentryDsn,
-//       release: process.env.REACT_APP_VERSION,
-//       attachStacktrace: true,
-//       environment: process.env.NODE_ENV,
-//       beforeSend(e) {
-//         return normalizeAllUrls(e);
-//       },
-//     });
-//     middlewares.push(createSentryMiddleware(Sentry));
-//   }
-//   return middlewares;
-// };
+export const sentryCaptureException = (e: any) =>
+  process.env.NODE_ENV === 'production'
+    ? Sentry.captureException(e)
+    : console.error({ e });
 
-export const sentryCaptureException = (e: any) => console.error({ e });
-//useSentry ? captureException(e) : console.error({ e });
+const sentryReduxEnhancer = Sentry.createReduxEnhancer({
+  // Optionally pass options listed below
+});
 
 const { locale, messages } = geti18n();
 
@@ -79,6 +62,7 @@ export const store = configureStore({
       immmutableCheck: false,
       serializableCheck: false,
     }).concat(...devMiddlewares, ...middlewares),
+  enhancers: [sentryReduxEnhancer],
 });
 
 export type RootState = ReturnType<typeof store.getState>;
