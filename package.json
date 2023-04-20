@@ -74,7 +74,7 @@
     "react-dom": "18.2.0",
     "react-helmet": "6.1.0",
     "react-intl": "3.12.1",
-    "react-intl-redux": "0.7.0",
+    "react-intl-redux": "2.3.0",
     "react-leaflet": "2.8.0",
     "react-redux": "7.2.9",
     "react-router-dom": "6.10.0",
