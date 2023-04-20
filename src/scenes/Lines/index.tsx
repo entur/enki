@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery, NetworkStatus } from '@apollo/client';
 
@@ -24,7 +24,7 @@ interface LinesData {
 }
 
 export default () => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const [lineSelectedForDeletion, setLineSelectedForDeletion] = useState<
     Line | undefined
@@ -63,11 +63,11 @@ export default () => {
 
   return (
     <div className="lines">
-      <Heading1>{formatMessage('linesHeader')}</Heading1>
+      <Heading1>{formatMessage({ id: 'linesHeader' })}</Heading1>
 
       <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
         <AddIcon />
-        {formatMessage('linesCreateLineIconButtonLabel')}
+        {formatMessage({ id: 'linesCreateLineIconButtonLabel' })}
       </SecondaryButton>
 
       <LinesTable

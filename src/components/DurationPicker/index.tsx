@@ -5,7 +5,7 @@ import { nb } from 'date-fns/locale';
 import * as durationLib from 'duration-fns';
 import cx from 'classnames';
 import { useSelector } from 'react-redux';
-import { selectIntl, AppIntlState } from 'i18n';
+import { useIntl } from 'react-intl';
 import TimeUnitPicker, { TimeUnitPickerPosition } from '../TimeUnitPicker';
 import { GlobalState } from 'reducers';
 
@@ -40,7 +40,7 @@ export default (props: Props) => {
     disabled = false,
   } = props;
 
-  const intl = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const intl = useIntl();
 
   const parsedDuration = (() => {
     if (duration) {

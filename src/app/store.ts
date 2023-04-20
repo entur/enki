@@ -3,9 +3,9 @@ import configSlice from 'features/app/configSlice';
 import authSlice from 'features/app/authSlice';
 import { intlReducer as intl } from 'react-intl-redux';
 import reducers from 'reducers';
-import { geti18n, getIntl } from 'i18n';
 import * as Sentry from '@sentry/react';
 import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
+import { getLocale, getMessages } from 'i18n';
 
 export const sentryCaptureException = (e: any) =>
   process.env.NODE_ENV === 'production'
@@ -16,7 +16,8 @@ const sentryReduxEnhancer = Sentry.createReduxEnhancer({
   // Optionally pass options listed below
 });
 
-const { locale, messages } = geti18n();
+const locale = getLocale();
+const messages = getMessages(locale);
 
 const {
   notification,
@@ -56,9 +57,9 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      thunk: {
-        extraArgument: { intl: getIntl },
-      },
+      // thunk: {
+      //   extraArgument: { intl: getIntl },
+      // },
       immmutableCheck: false,
       serializableCheck: false,
     }).concat(...devMiddlewares),

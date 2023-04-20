@@ -2,7 +2,7 @@ import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
 import { PassingTimesEditorProps } from '..';
 import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { PassingTimesError } from '../common/PassingTimesError';
 
@@ -12,12 +12,14 @@ export const FlexibleAreasOnlyPassingTimesEditor = ({
   onChange,
   spoilPristine,
 }: PassingTimesEditorProps) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   return (
     <>
-      <Heading4>{formatMessage('serviceJourneyBusinessHours')}</Heading4>
+      <Heading4>
+        {formatMessage({ id: 'serviceJourneyBusinessHours' })}
+      </Heading4>
       <Paragraph>
-        {formatMessage('passingTimesInfoFlexibleAreasOnly')}
+        {formatMessage({ id: 'passingTimesInfoFlexibleAreasOnly' })}
       </Paragraph>
       <PassingTimesError
         passingTimes={passingTimes}

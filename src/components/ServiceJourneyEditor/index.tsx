@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { SecondaryButton, SuccessButton } from '@entur/button';
@@ -63,7 +63,7 @@ const ServiceJourneyEditor = (props: Props) => {
   const organisations = useSelector<GlobalState, OrganisationState>(
     (state) => state.organisations
   );
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const handleOperatorSelectionChange = (
     newOperatorSelection: string | undefined
@@ -98,9 +98,9 @@ const ServiceJourneyEditor = (props: Props) => {
           <div className="service-journey-inputs">
             <TextField
               className="form-section"
-              label={formatMessage('generalNameLabel')}
+              label={formatMessage({ id: 'generalNameLabel' })}
               {...getErrorFeedback(
-                formatMessage('nameIsRequired'),
+                formatMessage({ id: 'nameIsRequired' }),
                 !isBlank(name),
                 namePristine
               )}
@@ -111,7 +111,7 @@ const ServiceJourneyEditor = (props: Props) => {
             />
 
             <TextField
-              label={formatMessage('generalDescription')}
+              label={formatMessage({ id: 'generalDescription' })}
               className="form-section"
               value={description || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -120,8 +120,8 @@ const ServiceJourneyEditor = (props: Props) => {
             />
 
             <TextField
-              label={formatMessage('generalPublicCode')}
-              labelTooltip={formatMessage('generalPublicCodeTooltip')}
+              label={formatMessage({ id: 'generalPublicCode' })}
+              labelTooltip={formatMessage({ id: 'generalPublicCodeTooltip' })}
               className="form-section"
               value={publicCode || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -130,8 +130,8 @@ const ServiceJourneyEditor = (props: Props) => {
             />
 
             <TextField
-              label={formatMessage('generalPrivateCode')}
-              labelTooltip={formatMessage('generalPrivateCodeTooltip')}
+              label={formatMessage({ id: 'generalPrivateCode' })}
+              labelTooltip={formatMessage({ id: 'generalPrivateCodeTooltip' })}
               className="form-section"
               value={privateCode || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,12 +142,12 @@ const ServiceJourneyEditor = (props: Props) => {
 
           <Dropdown
             className="form-section operator-selector"
-            label={formatMessage('generalOperator')}
+            label={formatMessage({ id: 'generalOperator' })}
             initialSelectedItem={getInit(
               operators.map((op) => ({ ...op, name: op.name.value })),
               operatorSelection
             )}
-            placeholder={formatMessage('defaultOption')}
+            placeholder={formatMessage({ id: 'defaultOption' })}
             items={mapToItems(
               operators.map((op) => ({ ...op, name: op.name.value }))
             )}
@@ -219,13 +219,13 @@ const ServiceJourneyEditor = (props: Props) => {
           <DeleteActionChip
             className="service-journey-editor-action-chip"
             onClick={() => setShowDeleteDialog(true)}
-            title={formatMessage('editorDeleteButtonText')}
+            title={formatMessage({ id: 'editorDeleteButtonText' })}
           />
         )}
         {copyServiceJourney && (
           <CopyActionChip
             className="service-journey-editor-action-chip"
-            title={formatMessage('editorCopyButtonText')}
+            title={formatMessage({ id: 'editorCopyButtonText' })}
             onClick={() => setShowCopyDialog(true)}
           />
         )}
@@ -233,14 +233,14 @@ const ServiceJourneyEditor = (props: Props) => {
       {deleteServiceJourney && (
         <ConfirmDialog
           isOpen={showDeleteDialog}
-          title={formatMessage('serviceJourneyDeleteTitle')}
-          message={formatMessage('serviceJourneydeleteMessage')}
+          title={formatMessage({ id: 'serviceJourneyDeleteTitle' })}
+          message={formatMessage({ id: 'serviceJourneydeleteMessage' })}
           buttons={[
             <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
-              {formatMessage('no')}
+              {formatMessage({ id: 'no' })}
             </SecondaryButton>,
             <SuccessButton key={1} onClick={deleteServiceJourney}>
-              {formatMessage('yes')}
+              {formatMessage({ id: 'yes' })}
             </SuccessButton>,
           ]}
           onDismiss={() => setShowDeleteDialog(false)}

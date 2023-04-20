@@ -5,7 +5,7 @@ import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
-import { AppIntlState, selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
@@ -34,7 +34,7 @@ export const GenericStopPointEditor = ({
   canDelete,
   flexibleLineType,
 }: StopPointEditorProps) => {
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = useIntl();
   const {
     stopPlace: stopPlaceError,
     boarding: boardingError,
@@ -60,7 +60,7 @@ export const GenericStopPointEditor = ({
           <QuayRefField
             initialQuayRef={stopPoint.quayRef}
             errorFeedback={getErrorFeedback(
-              stopPlaceError ? formatMessage(stopPlaceError) : '',
+              stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
               !stopPlaceError,
               quayRefPristine
             )}
@@ -85,22 +85,22 @@ export const GenericStopPointEditor = ({
         <DeleteButton
           disabled={!canDelete}
           onClick={() => setDeleteDialogOpen(true)}
-          title={formatMessage('editorDeleteButtonText')}
+          title={formatMessage({ id: 'editorDeleteButtonText' })}
         />
 
         <ConfirmDialog
           isOpen={isDeleteDialogOpen}
-          title={formatMessage('deleteStopPointDialogTitle')}
-          message={formatMessage('deleteStopPointDialogMessage')}
+          title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
+          message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
           buttons={[
             <SecondaryButton
               key="no"
               onClick={() => setDeleteDialogOpen(false)}
             >
-              {formatMessage('no')}
+              {formatMessage({ id: 'no' })}
             </SecondaryButton>,
             <SuccessButton key="yes" onClick={onDelete}>
-              {formatMessage('yes')}
+              {formatMessage({ id: 'yes' })}
             </SuccessButton>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}

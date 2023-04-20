@@ -7,9 +7,7 @@ import Editor from './editor';
 import { BookingInfoAttachment } from './constants';
 import BookingArrangement from 'model/BookingArrangement';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
-import { selectIntl, AppIntlState } from 'i18n';
-import { GlobalState } from 'reducers';
+import { useIntl } from 'react-intl';
 import { validateBookingArrangement } from 'helpers/validation';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import usePristine from 'hooks/usePristine';
@@ -37,7 +35,7 @@ const BookingArrangementEditor = ({
   const [bookingArrangementDraft, setBookingArrangementDraft] =
     useState<BookingArrangement>({});
 
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     setBookingArrangementDraft(cloneDeep(bookingArrangement || {}));
@@ -55,7 +53,7 @@ const BookingArrangementEditor = ({
   }, [setBookingArrangementDraft, setshowModal, bookingArrangement]);
 
   const validationMessage = useMemo(() => {
-    return formatMessage('bookingValidationError');
+    return formatMessage({ id: 'bookingValidationError' });
   }, [formatMessage]);
   const bookingArrangementPristine = usePristine(
     bookingArrangementDraft,
@@ -76,33 +74,37 @@ const BookingArrangementEditor = ({
       <section
         className={classNames('booking-info', { 'booking-info-trim': trim })}
       >
-        {trim && <Heading4>{formatMessage('bookingInfoHeader')}</Heading4>}
+        {trim && (
+          <Heading4>{formatMessage({ id: 'bookingInfoHeader' })}</Heading4>
+        )}
         {!trim && (
           <>
-            <Heading3>{formatMessage('bookingInfoHeader')}</Heading3>
-            <Paragraph>{formatMessage('bookingInfoHelpText')}</Paragraph>
+            <Heading3>{formatMessage({ id: 'bookingInfoHeader' })}</Heading3>
+            <Paragraph>
+              {formatMessage({ id: 'bookingInfoHelpText' })}
+            </Paragraph>
           </>
         )}
         {bookingArrangement ? (
           <ButtonGroup className="booking-info-buttons">
             <Button variant="secondary" onClick={() => setshowModal(true)}>
-              {formatMessage('bookingInfoShowEditButtonText')}
+              {formatMessage({ id: 'bookingInfoShowEditButtonText' })}
             </Button>
             <Button variant="negative" onClick={() => onRemove()}>
-              {formatMessage('bookingInfoRemoveButtonText')}
+              {formatMessage({ id: 'bookingInfoRemoveButtonText' })}
             </Button>
           </ButtonGroup>
         ) : (
           <ButtonGroup className="booking-info-buttons">
             <Button variant="secondary" onClick={() => setshowModal(true)}>
-              {formatMessage('bookingInfoAddButtonText')}
+              {formatMessage({ id: 'bookingInfoAddButtonText' })}
             </Button>
           </ButtonGroup>
         )}
       </section>
 
       <Modal
-        title={formatMessage('bookingInfoHeader')}
+        title={formatMessage({ id: 'bookingInfoHeader' })}
         size="large"
         open={showModal}
         onDismiss={cancel}
@@ -132,10 +134,10 @@ const BookingArrangementEditor = ({
               variant="primary"
               disabled={!!bookingArrangementFeedback?.feedback}
             >
-              {formatMessage('bookingInfoSaveButtonText')}
+              {formatMessage({ id: 'bookingInfoSaveButtonText' })}
             </Button>
             <Button onClick={cancel} variant="negative">
-              {formatMessage('bookingInfoCancelButtonText')}
+              {formatMessage({ id: 'bookingInfoCancelButtonText' })}
             </Button>
           </ButtonGroup>
         </div>

@@ -3,7 +3,7 @@ import { Stepper } from '@entur/menu';
 import NavigationButtons from './NavigationButtons';
 import ConfirmNavigationDialog from 'components/ConfirmNavigationDialog';
 import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import OverlayLoader from 'components/OverlayLoader';
 import { SmallAlertBox } from '@entur/alert';
 import './styles.scss';
@@ -50,7 +50,7 @@ export default ({
   authoritiesMissing,
   children,
 }: Props) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const [activeStepperIndex, setActiveStepperIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -96,8 +96,8 @@ export default ({
           isLoading={isSaving || isDeleting}
           text={
             isSaving
-              ? formatMessage('editorSaveLineLoadingText')
-              : formatMessage('editorDeleteLineLoadingText')
+              ? formatMessage({ id: 'editorSaveLineLoadingText' })
+              : formatMessage({ id: 'editorDeleteLineLoadingText' })
           }
         >
           <div className="editor-pages">{children(activeStepperIndex)}</div>
@@ -108,7 +108,7 @@ export default ({
                 variant="error"
                 width="fit-content"
               >
-                {formatMessage('fixErrorsInTheFollowingSteps')}
+                {formatMessage({ id: 'fixErrorsInTheFollowingSteps' })}
                 {invalidSteps.join(', ')}
               </SmallAlertBox>
             )}
@@ -133,22 +133,22 @@ export default ({
         <ConfirmNavigationDialog
           hideDialog={() => setShowConfirm(false)}
           redirectTo={redirectTo}
-          title={formatMessage('redirectTitle')}
-          description={formatMessage('redirectMessage')}
-          confirmText={formatMessage('redirectYes')}
-          cancelText={formatMessage('redirectNo')}
+          title={formatMessage({ id: 'redirectTitle' })}
+          description={formatMessage({ id: 'redirectMessage' })}
+          confirmText={formatMessage({ id: 'redirectYes' })}
+          cancelText={formatMessage({ id: 'redirectNo' })}
         />
       )}
       {authoritiesMissing && (
         <ConfirmDialog
           className="authority-missing-modal"
           isOpen={true}
-          title={formatMessage('networkAuthorityMissing')}
-          message={formatMessage('networkAuthorityMissingDetails')}
+          title={formatMessage({ id: 'networkAuthorityMissing' })}
+          message={formatMessage({ id: 'networkAuthorityMissingDetails' })}
           onDismiss={() => navigate('/')}
           buttons={[
             <PrimaryButton key="0" onClick={() => navigate('/')}>
-              {formatMessage('homePage')}
+              {formatMessage({ id: 'homePage' })}
             </PrimaryButton>,
           ]}
         />

@@ -8,9 +8,9 @@ import flexibleStopPlaces, {
   FlexibleStopPlacesState,
 } from './flexibleStopPlaces';
 import editor, { EditorState } from './editor';
-import { AppIntlState } from 'i18n';
 import { AuthState } from 'features/app/authSlice';
 import { ConfigState } from 'features/app/configSlice';
+import { IntlState } from 'react-intl-redux';
 
 export type GlobalState = {
   notification: NotificationState;
@@ -22,7 +22,7 @@ export type GlobalState = {
   flexibleLines: FlexibleLinesState;
   flexibleStopPlaces: FlexibleStopPlacesState;
   editor: EditorState;
-  intl: AppIntlState;
+  intl: IntlState;
   config: ConfigState;
 };
 

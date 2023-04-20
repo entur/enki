@@ -4,7 +4,7 @@ import { TextField } from '@entur/form';
 import { Dropdown } from '@entur/dropdown';
 import { NegativeButton, SuccessButton } from '@entur/button';
 import { useSelector } from 'react-redux';
-import { selectIntl, AppIntlState } from 'i18n';
+import { useIntl } from 'react-intl';
 import { GlobalState } from 'reducers';
 import './styles.scss';
 
@@ -59,7 +59,7 @@ export default (props: Props) => {
   const classNames = cx(className, 'time-unit-picker');
   const containerClassNames = cx('pickers-container', position);
 
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = useIntl();
 
   const [isOpen, setOpen] = useState(false);
 
@@ -105,7 +105,7 @@ export default (props: Props) => {
           <div className="pickers">
             {showYears && (
               <Picker
-                label={formatMessage('timeUnitPickerYearsLabel')}
+                label={formatMessage({ id: 'timeUnitPickerYearsLabel' })}
                 value={years}
                 onChange={(value) => onUnitChange('years', value)}
                 nrOfOptions={10}
@@ -114,7 +114,7 @@ export default (props: Props) => {
 
             {showMonths && (
               <Picker
-                label={formatMessage('timeUnitPickerMonthsLabel')}
+                label={formatMessage({ id: 'timeUnitPickerMonthsLabel' })}
                 value={months}
                 onChange={(value) => onUnitChange('months', value)}
                 nrOfOptions={12}
@@ -123,7 +123,7 @@ export default (props: Props) => {
 
             {showDays && (
               <Picker
-                label={formatMessage('timeUnitPickerDaysLabel')}
+                label={formatMessage({ id: 'timeUnitPickerDaysLabel' })}
                 value={days}
                 onChange={(value) => onUnitChange('days', value)}
                 nrOfOptions={31}
@@ -132,7 +132,7 @@ export default (props: Props) => {
 
             {showHours && (
               <Picker
-                label={formatMessage('timeUnitPickerHoursLabel')}
+                label={formatMessage({ id: 'timeUnitPickerHoursLabel' })}
                 value={hours}
                 onChange={(value) => onUnitChange('hours', value)}
                 nrOfOptions={24}
@@ -141,7 +141,7 @@ export default (props: Props) => {
 
             {showMinutes && (
               <Picker
-                label={formatMessage('timeUnitPickerMinutesLabel')}
+                label={formatMessage({ id: 'timeUnitPickerMinutesLabel' })}
                 value={minutes}
                 onChange={(value) => onUnitChange('minutes', value)}
                 nrOfOptions={60}
@@ -150,7 +150,7 @@ export default (props: Props) => {
 
             {showSeconds && (
               <Picker
-                label={formatMessage('timeUnitPickerSecondsLabel')}
+                label={formatMessage({ id: 'timeUnitPickerSecondsLabel' })}
                 value={seconds}
                 onChange={(value) => onUnitChange('seconds', value)}
                 nrOfOptions={60}
@@ -166,12 +166,12 @@ export default (props: Props) => {
                   setOpen(false);
                 }}
               >
-                {formatMessage('timeUnitPickerResetLabel')}
+                {formatMessage({ id: 'timeUnitPickerResetLabel' })}
               </NegativeButton>
             )}
 
             <SuccessButton onClick={() => setOpen(false)}>
-              {formatMessage('timeUnitPickerDoneLabel')}
+              {formatMessage({ id: 'timeUnitPickerDoneLabel' })}
             </SuccessButton>
           </div>
         </div>

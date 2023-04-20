@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { Navigate, useMatch, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Page from 'components/Page';
@@ -26,7 +26,8 @@ import './styles.scss';
 import { useConfig } from 'config/ConfigContext';
 
 export default () => {
-  const { formatMessage } = useSelector(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const navigate = useNavigate();
   const match = useMatch('/lines/edit/:id');
   const [nextClicked, setNextClicked] = useState<boolean>(false);
@@ -69,8 +70,8 @@ export default () => {
 
       dispatch(
         showSuccessNotification(
-          formatMessage('saveLineSuccessHeader'),
-          formatMessage('saveLineSuccessMessage'),
+          formatMessage({ id: 'saveLineSuccessHeader' }),
+          formatMessage({ id: 'saveLineSuccessMessage' }),
           false
         )
       );
@@ -96,8 +97,8 @@ export default () => {
     });
     dispatch(
       showSuccessNotification(
-        formatMessage('deleteLineSuccessHeader'),
-        formatMessage('deleteLineSuccessMessage')
+        formatMessage({ id: 'deleteLineSuccessHeader' }),
+        formatMessage({ id: 'deleteLineSuccessMessage' })
       )
     );
     navigate('/lines');
@@ -120,20 +121,22 @@ export default () => {
 
   return (
     <Page
-      backButtonTitle={formatMessage('navBarLinesMenuItemLabel')}
+      backButtonTitle={formatMessage({ id: 'navBarLinesMenuItemLabel' })}
       onBackButtonClick={onBackButtonClicked}
     >
       <>
         {notFound && <Navigate to="/lines" replace />}
         <Loading
           isLoading={loading || !line}
-          text={formatMessage('editorLoadingLineText')}
+          text={formatMessage({ id: 'editorLoadingLineText' })}
         >
           <LineEditorStepper
-            steps={FIXED_LINE_STEPS.map((step) => formatMessage(step))}
-            isValidStepIndex={(i: number) => getMaxAllowedStepIndex(line!) >= i}
-            currentStepIsValid={(i) => currentStepIsValid(i, line!)}
-            isLineValid={line ? validLine(line) : false}
+            steps={FIXED_LINE_STEPS.map((step) => formatMessage({ id: step }))}
+            isValidStepIndex={(i: number) =>
+              getMaxAllowedStepIndex(line!, intl) >= i
+            }
+            currentStepIsValid={(i) => currentStepIsValid(i, line!, intl)}
+            isLineValid={line ? validLine(line, intl) : false}
             setNextClicked={setNextClicked}
             isEdit={!isBlank(match?.params.id)}
             spoilPristine={nextClicked}

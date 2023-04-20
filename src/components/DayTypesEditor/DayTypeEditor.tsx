@@ -7,15 +7,14 @@ import { Heading4 } from '@entur/typography';
 import { DELETE_DAY_TYPE, MUTATE_DAY_TYPE } from 'api/uttu/mutations';
 import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
 import WeekdayPicker from 'components/WeekdayPicker';
-import { selectIntl } from 'i18n';
 import DayType, { dayTypeToPayload } from 'model/DayType';
 import { newDayTypeAssignment } from 'model/DayTypeAssignment';
 import React, { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import usePristine from 'hooks/usePristine';
 import { validateDayType } from 'helpers/validation';
 import { SmallAlertBox } from '@entur/alert';
+import { useIntl } from 'react-intl';
 
 export const DayTypeEditor = ({
   dayType,
@@ -26,7 +25,7 @@ export const DayTypeEditor = ({
   canDelete: boolean;
   refetchDayTypes: Function;
 }) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const [mutableDayType, setMutableDayType] = useState(dayType);
   const [mutateDayType] = useMutation(MUTATE_DAY_TYPE, {
     onCompleted: () => refetchDayTypes(),
@@ -40,7 +39,7 @@ export const DayTypeEditor = ({
   }, [mutableDayType]);
 
   const validationMessage = useMemo(() => {
-    return formatMessage('dayTypesValidationError');
+    return formatMessage({ id: 'dayTypesValidationError' });
   }, [formatMessage]);
   const dayTypesPristine = usePristine(mutableDayType, false);
   const dayTypesFeedback = useMemo(
@@ -51,8 +50,10 @@ export const DayTypeEditor = ({
   return (
     <div style={{ padding: '1.5rem' }}>
       <TextField
-        label={formatMessage('dayTypeEditorNameFieldLabel')}
-        labelTooltip={formatMessage('dayTypeEditorNameFieldLabelTooltip')}
+        label={formatMessage({ id: 'dayTypeEditorNameFieldLabel' })}
+        labelTooltip={formatMessage({
+          id: 'dayTypeEditorNameFieldLabelTooltip',
+        })}
         className="form-section"
         value={mutableDayType.name || ''}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -62,7 +63,7 @@ export const DayTypeEditor = ({
           })
         }
       />
-      <Heading4>{formatMessage('dayTypeEditorWeekdays')}</Heading4>
+      <Heading4>{formatMessage({ id: 'dayTypeEditorWeekdays' })}</Heading4>
       <WeekdayPicker
         days={mutableDayType.daysOfWeek ?? []}
         onChange={(daysOfWeek) => {
@@ -74,9 +75,9 @@ export const DayTypeEditor = ({
         spoilPristine={false}
       />
       <Heading4>
-        {formatMessage('dayTypeEditorDateAvailability')}
+        {formatMessage({ id: 'dayTypeEditorDateAvailability' })}
         <Tooltip
-          content={formatMessage('dayTypeEditorDateTooltip')}
+          content={formatMessage({ id: 'dayTypeEditorDateTooltip' })}
           placement="right"
         >
           <span className="question-icon">

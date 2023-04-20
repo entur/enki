@@ -6,7 +6,7 @@ import { isBlank } from 'helpers/forms';
 import OverlayLoader from 'components/OverlayLoader';
 import Loading from 'components/Loading';
 import Page from 'components/Page';
-import { AppIntlState, selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { GlobalState } from 'reducers';
 import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -36,7 +36,8 @@ const getCurrentProvider = (
 const ProviderEditor = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const { xmlnsUrlPrefix } = useConfig();
   const currentProvider = useSelector<GlobalState, Provider>((state) =>
     getCurrentProvider(state, params, xmlnsUrlPrefix)
@@ -63,7 +64,7 @@ const ProviderEditor = () => {
   const handleOnSaveClick = () => {
     if (validProvider) {
       setSaving(true);
-      dispatch(saveProvider(provider))
+      dispatch(saveProvider(provider, intl))
         .then(() => dispatch(getProviders()))
         .then(() => navigate('/providers'))
         .finally(() => setSaving(false));
@@ -73,11 +74,11 @@ const ProviderEditor = () => {
 
   return (
     <Page
-      backButtonTitle={formatMessage('navBarProvidersMenuItemLabel')}
+      backButtonTitle={formatMessage({ id: 'navBarProvidersMenuItemLabel' })}
       title={
         params.id
-          ? formatMessage('editorEditProviderHeaderText')
-          : formatMessage('editorCreateProviderHeaderText')
+          ? formatMessage({ id: 'editorEditProviderHeaderText' })
+          : formatMessage({ id: 'editorCreateProviderHeaderText' })
       }
     >
       <div className="provider-editor">
@@ -85,16 +86,16 @@ const ProviderEditor = () => {
           <OverlayLoader
             className=""
             isLoading={isSaving}
-            text={formatMessage('editorSavingProviderLoadingText')}
+            text={formatMessage({ id: 'editorSavingProviderLoadingText' })}
           >
             <div className="provider-form">
               <RequiredInputMarker />
 
               <TextField
                 className="form-section"
-                label={formatMessage('editorProviderNameLabelText')}
+                label={formatMessage({ id: 'editorProviderNameLabelText' })}
                 {...getErrorFeedback(
-                  formatMessage('editorProviderValidationField'),
+                  formatMessage({ id: 'editorProviderValidationField' }),
                   !isBlank(provider.name),
                   namePristine
                 )}
@@ -106,7 +107,7 @@ const ProviderEditor = () => {
 
               <TextField
                 className="form-section"
-                label={formatMessage('editorProviderCodeLabelText')}
+                label={formatMessage({ id: 'editorProviderCodeLabelText' })}
                 value={provider.code ?? ''}
                 disabled={!!params.id}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -121,7 +122,7 @@ const ProviderEditor = () => {
                   });
                 }}
                 {...getErrorFeedback(
-                  formatMessage('editorProviderValidationField'),
+                  formatMessage({ id: 'editorProviderValidationField' }),
                   !isBlank(provider.code),
                   namePristine
                 )}
@@ -129,16 +130,18 @@ const ProviderEditor = () => {
 
               <TextField
                 className="form-section"
-                label={formatMessage('editorProviderCodespaceXmlnsLabelText')}
+                label={formatMessage({
+                  id: 'editorProviderCodespaceXmlnsLabelText',
+                })}
                 disabled
                 value={provider.codespace?.xmlns ?? ''}
               />
 
               <TextField
                 className="form-section"
-                label={formatMessage(
-                  'editorProviderCodespaceXmlnsUrlLabelText'
-                )}
+                label={formatMessage({
+                  id: 'editorProviderCodespaceXmlnsUrlLabelText',
+                })}
                 disabled
                 value={provider.codespace?.xmlnsUrl ?? ''}
               />
@@ -149,10 +152,10 @@ const ProviderEditor = () => {
                   onClick={handleOnSaveClick}
                 >
                   {params.id
-                    ? formatMessage('editorSaveButtonText')
+                    ? formatMessage({ id: 'editorSaveButtonText' })
                     : formatMessage(
-                        'editorDetailedCreate',
-                        formatMessage('provider')
+                        { id: 'editorDetailedCreate' },
+                        { details: formatMessage({ id: 'provider' }) }
                       )}
                 </SuccessButton>
               </div>
@@ -164,7 +167,7 @@ const ProviderEditor = () => {
             isLoading={!provider}
             isFullScreen
             children={null}
-            text={formatMessage('editorLoadingProviderText')}
+            text={formatMessage({ id: 'editorLoadingProviderText' })}
           />
         )}
       </div>

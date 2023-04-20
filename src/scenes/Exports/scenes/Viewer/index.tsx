@@ -7,7 +7,7 @@ import { loadExportById } from 'actions/exports';
 import Loading from 'components/Loading';
 import { EXPORT_STATUS } from 'model/enums';
 import { getIconForSeverity, getIconForStatus } from '../icons';
-import { AppIntlState, selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { GlobalState } from 'reducers';
 import { download, Export } from 'model/Export';
 import Page from 'components/Page';
@@ -38,7 +38,8 @@ const getCurrentExport = (
 const ExportsViewer = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const currentExport = useSelector<GlobalState, Export | undefined>((state) =>
     getCurrentExport(state, params)
   );
@@ -47,7 +48,9 @@ const ExportsViewer = () => {
 
   const dispatchLoadExport = useCallback(() => {
     if (params.id) {
-      dispatch(loadExportById(params.id)).catch(() => navigate('/exports'));
+      dispatch(loadExportById(params.id, intl)).catch(() =>
+        navigate('/exports')
+      );
     } else {
       navigate('/exports');
     }
@@ -68,11 +71,11 @@ const ExportsViewer = () => {
   return (
     <Page
       className="export-viewer"
-      title={formatMessage('viewerHeader')}
-      backButtonTitle={formatMessage('navBarExportsMenuItemLabel')}
+      title={formatMessage({ id: 'viewerHeader' })}
+      backButtonTitle={formatMessage({ id: 'navBarExportsMenuItemLabel' })}
     >
       <Loading
-        text={formatMessage('viewerLoadingText')}
+        text={formatMessage({ id: 'viewerLoadingText' })}
         isLoading={!theExport}
         className=""
       >
@@ -80,24 +83,24 @@ const ExportsViewer = () => {
           <div className="export-view">
             <div className="export-items">
               <ExportItem
-                label={formatMessage('viewerNameLabel')}
+                label={formatMessage({ id: 'viewerNameLabel' })}
                 value={theExport!.name}
               />
               <ExportItem
-                label={formatMessage('viewerDryRunLabel')}
+                label={formatMessage({ id: 'viewerDryRunLabel' })}
                 value={
                   theExport!.dryRun
-                    ? formatMessage('viewerDryRunYes')
-                    : formatMessage('viewerDryRunNo')
+                    ? formatMessage({ id: 'viewerDryRunYes' })
+                    : formatMessage({ id: 'viewerDryRunNo' })
                 }
               />
               <ExportItem
-                label={formatMessage('viewerStatusLabel')}
+                label={formatMessage({ id: 'viewerStatusLabel' })}
                 value={
                   <div className="export-status">
                     {getIconForStatus(theExport!.exportStatus)}
                     {theExport!.exportStatus &&
-                      formatMessage(theExport!.exportStatus)}
+                      formatMessage({ id: theExport!.exportStatus })}
                   </div>
                 }
               />
@@ -105,7 +108,7 @@ const ExportsViewer = () => {
 
             {theExport!.exportStatus === EXPORT_STATUS.SUCCESS && (
               <div className="export-download">
-                <Label>{formatMessage('viewerDownloadLabel')}</Label>
+                <Label>{formatMessage({ id: 'viewerDownloadLabel' })}</Label>
                 <PrimaryButton
                   onClick={async (event: React.MouseEvent<HTMLElement>) => {
                     event.stopPropagation();
@@ -117,13 +120,13 @@ const ExportsViewer = () => {
                   }}
                 >
                   <DownloadIcon />
-                  {formatMessage('viewerDownloadLinkText')}
+                  {formatMessage({ id: 'viewerDownloadLinkText' })}
                 </PrimaryButton>
               </div>
             )}
             {(theExport?.messages ?? []).length > 0 && (
               <>
-                <Label>{formatMessage('viewerMessagesLabel')}</Label>
+                <Label>{formatMessage({ id: 'viewerMessagesLabel' })}</Label>
                 <div className="value messages">
                   {(theExport?.messages ?? []).map((m, i) => (
                     <div key={i} className="message">
@@ -132,7 +135,7 @@ const ExportsViewer = () => {
                       </div>
                       <div>
                         {m?.message && isOfUttuMessage(m.message)
-                          ? formatMessage(uttuMessages[m.message])
+                          ? formatMessage({ id: uttuMessages[m.message] })
                           : m.message}
                       </div>
                     </div>

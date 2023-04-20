@@ -4,10 +4,11 @@ import { updateIntl } from 'react-intl-redux';
 import { FloatingButton } from '@entur/button';
 import { DownArrowIcon, CheckIcon, UpArrowIcon } from '@entur/icons';
 import { NorwayIcon, UKIcon, SwedenIcon } from '@entur/icons';
-import { getMessages, SUPPORTED_LOCALES, LOCALE_KEY, selectIntl } from 'i18n';
+import { getMessages, SUPPORTED_LOCALES, LOCALE_KEY } from 'i18n';
 import './styles.scss';
 import { GlobalState } from 'reducers';
 import { MessagesKey } from 'i18n/translations/translationKeys';
+import { useIntl } from 'react-intl';
 
 const getFlagIcon = (locale: string) => {
   switch (locale) {
@@ -42,7 +43,7 @@ const LanguagePicker = () => {
     (state) => state.intl.locale
   );
   const dispatch = useDispatch();
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const handleChangeLocale = useCallback(
     (locale: string) => {
@@ -95,7 +96,7 @@ const LanguagePicker = () => {
               size="small"
             >
               {flagIcon(locale)}
-              <span>{formatMessage(getLocaleString(locale))}</span>
+              <span>{formatMessage({ id: getLocaleString(locale) })}</span>
               {checkIcon(locale)}
             </FloatingButton>
           ))}
@@ -103,12 +104,12 @@ const LanguagePicker = () => {
       )}
       <FloatingButton
         onClick={() => setToggle(!toggled)}
-        aria-label={formatMessage('languagePickerAriaLabel')}
+        aria-label={formatMessage({ id: 'languagePickerAriaLabel' })}
         className="language-picker"
         size="small"
       >
         {flagIcon(selectedLocale)}
-        {formatMessage(getLocaleString(selectedLocale))}
+        {formatMessage({ id: getLocaleString(selectedLocale) })}
         {arrowIcon}
       </FloatingButton>
     </div>

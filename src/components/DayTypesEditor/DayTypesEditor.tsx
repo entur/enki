@@ -2,10 +2,9 @@ import { useQuery } from '@apollo/client';
 import { SecondaryButton } from '@entur/button';
 import { MultiSelect } from '@entur/dropdown';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
-import { selectIntl } from 'i18n';
 import DayType from 'model/DayType';
 import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { DayTypesModal } from './DayTypesModal';
 
 type DayTypesData = {
@@ -26,7 +25,7 @@ export const DayTypesEditor = ({
   } = useQuery<DayTypesData>(GET_DAY_TYPES);
 
   const [openDayTypeModal, setOpenDayTypeModal] = useState(false);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const onOpenDayTypeModal = useCallback(
     (open: boolean) => {
@@ -42,7 +41,7 @@ export const DayTypesEditor = ({
         <MultiSelect
           clearable
           style={{ minWidth: '20rem' }}
-          label={formatMessage('dayTypesEditorSelectLabel')}
+          label={formatMessage({ id: 'dayTypesEditorSelectLabel' })}
           items={() =>
             allDayTypesData?.dayTypes.map((dt: DayType) => ({
               label: `${dt.name || dt.id!}`,
@@ -67,7 +66,7 @@ export const DayTypesEditor = ({
 
         <div style={{ marginLeft: '1rem' }}>
           <SecondaryButton onClick={() => onOpenDayTypeModal(true)}>
-            {formatMessage('dayTypesEditButton')}
+            {formatMessage({ id: 'dayTypesEditButton' })}
           </SecondaryButton>
         </div>
       </div>

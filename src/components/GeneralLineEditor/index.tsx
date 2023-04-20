@@ -1,10 +1,9 @@
 import React, { ChangeEvent, useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { Heading1 } from '@entur/typography';
 import { VEHICLE_MODE, vehicleModeMessages } from 'model/enums';
-import { selectIntl } from 'i18n';
 import './styles.scss';
 import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import usePristine from 'hooks/usePristine';
@@ -38,7 +37,7 @@ export default <T extends Line>({
   onChange,
   spoilPristine,
 }: Props<T>) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const { publicCode } = line;
 
   const { flexibleLineType, isFlexibleLine } = useMemo(() => {
@@ -101,11 +100,11 @@ export default <T extends Line>({
 
   return (
     <div className="lines-editor-general">
-      <Heading1> {formatMessage('editorAbout')}</Heading1>
+      <Heading1> {formatMessage({ id: 'editorAbout' })}</Heading1>
       <RequiredInputMarker />
       <section className="inputs">
         <TextField
-          label={formatMessage('generalNameFormGroupTitle')}
+          label={formatMessage({ id: 'generalNameFormGroupTitle' })}
           value={line.name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onChange<Line>({
@@ -114,14 +113,14 @@ export default <T extends Line>({
             })
           }
           {...getErrorFeedback(
-            formatMessage('nameEmpty'),
+            formatMessage({ id: 'nameEmpty' }),
             !isBlank(line.name),
             namePristine
           )}
         />
 
         <TextField
-          label={formatMessage('generalDescriptionFormGroupTitle')}
+          label={formatMessage({ id: 'generalDescriptionFormGroupTitle' })}
           value={line.description ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onChange<Line>({
@@ -132,8 +131,10 @@ export default <T extends Line>({
         />
 
         <TextField
-          label={formatMessage('generalPublicCodeFormGroupTitle')}
-          labelTooltip={formatMessage('generalPublicCodeInputLabelTooltip')}
+          label={formatMessage({ id: 'generalPublicCodeFormGroupTitle' })}
+          labelTooltip={formatMessage({
+            id: 'generalPublicCodeInputLabelTooltip',
+          })}
           type="text"
           value={line.publicCode}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -143,15 +144,17 @@ export default <T extends Line>({
             })
           }
           {...getErrorFeedback(
-            formatMessage('publicCodeEmpty'),
+            formatMessage({ id: 'publicCodeEmpty' }),
             !isBlank(line.publicCode),
             publicCodePristine
           )}
         />
 
         <TextField
-          label={formatMessage('generalPrivateCodeFormGroupTitle')}
-          labelTooltip={formatMessage('generalPrivateCodeInputLabelTooltip')}
+          label={formatMessage({ id: 'generalPrivateCodeFormGroupTitle' })}
+          labelTooltip={formatMessage({
+            id: 'generalPrivateCodeInputLabelTooltip',
+          })}
           type="text"
           value={line.privateCode ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -164,10 +167,10 @@ export default <T extends Line>({
 
         <Dropdown
           value={line.operatorRef || null}
-          placeholder={formatMessage('defaultOption')}
+          placeholder={formatMessage({ id: 'defaultOption' })}
           items={getOperatorItems}
           clearable
-          label={formatMessage('generalOperatorFormGroupTitle')}
+          label={formatMessage({ id: 'generalOperatorFormGroupTitle' })}
           onChange={(element) =>
             onChange<Line>({
               ...(line as Line),
@@ -175,7 +178,7 @@ export default <T extends Line>({
             })
           }
           {...getErrorFeedback(
-            formatMessage('operatorRefEmpty'),
+            formatMessage({ id: 'operatorRefEmpty' }),
             !isBlank(line.operatorRef),
             operatorPristine
           )}
@@ -183,10 +186,10 @@ export default <T extends Line>({
 
         <Dropdown
           value={line.networkRef || null}
-          placeholder={formatMessage('defaultOption')}
+          placeholder={formatMessage({ id: 'defaultOption' })}
           items={getNetworkItems}
           clearable
-          label={formatMessage('generalNetworkFormGroupTitle')}
+          label={formatMessage({ id: 'generalNetworkFormGroupTitle' })}
           onChange={(element) =>
             onChange<Line>({
               ...(line as Line),
@@ -194,7 +197,7 @@ export default <T extends Line>({
             })
           }
           {...getErrorFeedback(
-            formatMessage('networkRefEmpty'),
+            formatMessage({ id: 'networkRefEmpty' }),
             !isBlank(line.networkRef),
             networkPristine
           )}
@@ -213,10 +216,10 @@ export default <T extends Line>({
         <section className="transport-mode-dropdowns">
           <Dropdown
             value={line.transportMode}
-            placeholder={formatMessage('defaultOption')}
+            placeholder={formatMessage({ id: 'defaultOption' })}
             items={getModeItems}
             clearable
-            label={formatMessage('transportModeTitle')}
+            label={formatMessage({ id: 'transportModeTitle' })}
             onChange={(element) =>
               onChange<Line>({
                 ...(line as Line),
@@ -225,7 +228,7 @@ export default <T extends Line>({
               })
             }
             {...getErrorFeedback(
-              formatMessage('transportModeEmpty'),
+              formatMessage({ id: 'transportModeEmpty' }),
               !isBlank(line.transportMode),
               modePristine
             )}

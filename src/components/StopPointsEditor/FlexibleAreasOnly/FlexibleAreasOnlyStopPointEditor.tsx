@@ -3,7 +3,7 @@ import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateFlexibleAreasOnlyStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
@@ -22,7 +22,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
 }: StopPointEditorProps) => {
   const { stopPlace: stopPlaceError, frontText: frontTextError } =
     validateFlexibleAreasOnlyStopPoint(stopPoint);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const flexibleStopPlaces = useSelector(
     (state: GlobalState) => state.flexibleStopPlaces
   );
@@ -43,10 +43,10 @@ export const FlexibleAreasOnlyStopPointEditor = ({
           <Dropdown
             className="stop-point-dropdown"
             value={stopPoint.flexibleStopPlaceRef}
-            placeholder={formatMessage('defaultOption')}
+            placeholder={formatMessage({ id: 'defaultOption' })}
             items={mapToItems(flexibleStopPlaces || [])}
             clearable
-            label={formatMessage('stopPlace')}
+            label={formatMessage({ id: 'stopPlace' })}
             onChange={(e) =>
               onChange({
                 ...stopPoint,
@@ -54,7 +54,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
               })
             }
             {...getErrorFeedback(
-              stopPlaceError ? formatMessage(stopPlaceError) : '',
+              stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
               !stopPlaceError,
               stopPlacePristine
             )}
@@ -65,7 +65,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             onChange={onFrontTextChange}
             spoilPristine={spoilPristine}
             {...getErrorFeedback(
-              frontTextError ? formatMessage(frontTextError) : '',
+              frontTextError ? formatMessage({ id: frontTextError }) : '',
               !frontTextError,
               frontTextPristine
             )}

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { Contrast } from '@entur/layout';
-import { AppIntlState, selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import UserMenu from './UserMenu/';
 import { setActiveProvider } from 'actions/providers';
 import { GlobalState } from 'reducers';
@@ -16,7 +16,7 @@ const UserPreference = () => {
   const { providers, active } = useSelector<GlobalState, ProvidersState>(
     (state) => state.providers
   );
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = useIntl();
   const dispatch = useDispatch();
 
   const handleActiveProviderChange = (providerCode: string | undefined) => {
@@ -46,7 +46,7 @@ const UserPreference = () => {
           <Dropdown
             className="provider-wrapper"
             items={() => items}
-            label={formatMessage('navBarDataProvider')}
+            label={formatMessage({ id: 'navBarDataProvider' })}
             value={active?.code}
             onChange={(e) => handleActiveProviderChange(e?.value)}
           />

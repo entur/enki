@@ -14,7 +14,7 @@ import {
   loadFlexibleStopPlaces,
 } from 'actions/flexibleStopPlaces';
 import Loading from 'components/Loading';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import {
   flexibleStopAreaTypeMessages,
   FLEXIBLE_STOP_AREA_TYPE,
@@ -38,11 +38,12 @@ const StopPlaces = () => {
   const stopPlaces = useSelector<GlobalState, FlexibleStopPlacesState>(
     (state) => state.flexibleStopPlaces
   );
-  const { formatMessage } = useSelector(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(loadFlexibleStopPlaces());
+    dispatch(loadFlexibleStopPlaces(intl));
   }, [dispatch]);
 
   const handleOnRowClick = useCallback(
@@ -72,7 +73,9 @@ const StopPlaces = () => {
           title={sp.description}
         >
           <DataCell>{sp.name}</DataCell>
-          <DataCell>{formatMessage(getStopAreaTypeMessageKey(sp))}</DataCell>
+          <DataCell>
+            {formatMessage({ id: getStopAreaTypeMessageKey(sp) })}
+          </DataCell>
           <DataCell>{sp.privateCode}</DataCell>
           <DataCell>
             {(sp.flexibleArea?.polygon?.coordinates?.length ?? 1) - 1}
@@ -92,7 +95,7 @@ const StopPlaces = () => {
       {stopPlaces.length === 0 && (
         <TableRow className="row-no-stop-places disabled">
           <DataCell colSpan={3}>
-            {formatMessage('stopPlacesNoStopPlacesFoundText')}
+            {formatMessage({ id: 'stopPlacesNoStopPlacesFoundText' })}
           </DataCell>
         </TableRow>
       )}
@@ -101,7 +104,7 @@ const StopPlaces = () => {
 
   return (
     <div className="stop-places">
-      <Heading1>{formatMessage('stopPlacesHeader')}</Heading1>
+      <Heading1>{formatMessage({ id: 'stopPlacesHeader' })}</Heading1>
 
       <SecondaryButton
         as={Link}
@@ -109,10 +112,10 @@ const StopPlaces = () => {
         className="new-stopplace-button"
       >
         <AddIcon />
-        {formatMessage('stopPlacesCreateStopPlaceLinkIconLabelText')}
+        {formatMessage({ id: 'stopPlacesCreateStopPlaceLinkIconLabelText' })}
       </SecondaryButton>
       <Loading
-        text={formatMessage('stopPlacesLoadingStopPlacesText')}
+        text={formatMessage({ id: 'stopPlacesLoadingStopPlacesText' })}
         isLoading={!stopPlaces}
       >
         {() => (
@@ -121,18 +124,22 @@ const StopPlaces = () => {
               <TableHead>
                 <TableRow>
                   <HeaderCell>
-                    {formatMessage('stopPlacesNameTableHeaderLabelText')}
+                    {formatMessage({
+                      id: 'stopPlacesNameTableHeaderLabelText',
+                    })}
                   </HeaderCell>
                   <HeaderCell>
-                    {formatMessage('flexibleStopAreaType')}
+                    {formatMessage({ id: 'flexibleStopAreaType' })}
                   </HeaderCell>
                   <HeaderCell>
-                    {formatMessage('stopPlacesPrivateCodeTableHeaderLabelText')}
+                    {formatMessage({
+                      id: 'stopPlacesPrivateCodeTableHeaderLabelText',
+                    })}
                   </HeaderCell>
                   <HeaderCell>
-                    {formatMessage(
-                      'stopPlacesNumberOfPointsTableHeaderLabelText'
-                    )}
+                    {formatMessage({
+                      id: 'stopPlacesNumberOfPointsTableHeaderLabelText',
+                    })}
                   </HeaderCell>
                   <HeaderCell>{''}</HeaderCell>
                 </TableRow>
@@ -146,12 +153,12 @@ const StopPlaces = () => {
                   setSelectedStopPlace(undefined);
                   setShowDeleteDialogue(false);
                 }}
-                title={formatMessage(
-                  'editorDeleteStopPlaceConfirmationDialogTitle'
-                )}
-                message={formatMessage(
-                  'editorDeleteStopPlaceConfirmationDialogMessage'
-                )}
+                title={formatMessage({
+                  id: 'editorDeleteStopPlaceConfirmationDialogTitle',
+                })}
+                message={formatMessage({
+                  id: 'editorDeleteStopPlaceConfirmationDialogMessage',
+                })}
                 buttons={[
                   <SecondaryButton
                     key="no"
@@ -160,22 +167,25 @@ const StopPlaces = () => {
                       setShowDeleteDialogue(false);
                     }}
                   >
-                    {formatMessage('no')}
+                    {formatMessage({ id: 'no' })}
                   </SecondaryButton>,
                   <SuccessButton
                     key="yes"
                     onClick={() => {
                       dispatch(
-                        deleteFlexibleStopPlaceById(selectedStopPlace.id ?? '')
+                        deleteFlexibleStopPlaceById(
+                          selectedStopPlace.id ?? '',
+                          intl
+                        )
                       )
                         .then(() => {
                           setSelectedStopPlace(undefined);
                           setShowDeleteDialogue(false);
                         })
-                        .then(() => dispatch(loadFlexibleStopPlaces()));
+                        .then(() => dispatch(loadFlexibleStopPlaces(intl)));
                     }}
                   >
-                    {formatMessage('yes')}
+                    {formatMessage({ id: 'yes' })}
                   </SuccessButton>,
                 ]}
               />

@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
 import { Dropdown } from '@entur/dropdown';
-import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { mapVehicleSubmodeAndLabelToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
-import { selectIntl } from 'i18n';
 import {
   VEHICLE_MODE,
   VEHICLE_SUBMODE,
@@ -20,7 +19,7 @@ type Props = {
 };
 
 const VehicleSubModeDropdown = (props: Props) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const submodePristine = usePristine(
     props.transportSubmode,
     props.spoilPristine
@@ -40,15 +39,15 @@ const VehicleSubModeDropdown = (props: Props) => {
     <div key={props.transportMode}>
       <Dropdown
         value={props.transportSubmode}
-        placeholder={formatMessage('defaultOption')}
+        placeholder={formatMessage({ id: 'defaultOption' })}
         items={getSubModeItems}
         clearable
-        label={formatMessage('transportSubModeTitle')}
+        label={formatMessage({ id: 'transportSubModeTitle' })}
         onChange={(element) =>
           props.submodeChange(element?.value as VEHICLE_SUBMODE)
         }
         {...getErrorFeedback(
-          formatMessage('transportSubModeEmpty'),
+          formatMessage({ id: 'transportSubModeEmpty' }),
           !isBlank(props.transportSubmode),
           submodePristine
         )}

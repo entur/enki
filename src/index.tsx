@@ -5,7 +5,8 @@ import { Apollo } from 'api';
 import AuthProvider, { useAuth } from '@entur/auth-provider';
 import { fetchConfig } from 'config/fetchConfig';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
-import { Provider } from 'react-redux';
+import { Provider } from 'react-intl-redux';
+
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
 import { selectAuthLoaded, updateAuth } from 'features/app/authSlice';

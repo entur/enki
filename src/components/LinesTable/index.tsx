@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 
 import {
   DataCell,
@@ -29,18 +29,18 @@ export type Props = {
 export default (props: Props) => {
   const { lines } = props;
 
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
-  const nameTableHeader = formatMessage('linesNameTableHeaderLabel');
-  const publicCodeTableHeader = formatMessage(
-    'linesPublicCodeTableHeaderLabel'
-  );
-  const privateCodeTableHeader = formatMessage(
-    'linesPrivateCodeTableHeaderLabel'
-  );
-  const operatorTableHeader = formatMessage('linesOperatorTableHeader');
-  const noLinesFoundText = formatMessage('linesNoLinesFoundText');
-  const loadingText = formatMessage('linesLoadingText');
+  const nameTableHeader = formatMessage({ id: 'linesNameTableHeaderLabel' });
+  const publicCodeTableHeader = formatMessage({
+    id: 'linesPublicCodeTableHeaderLabel',
+  });
+  const privateCodeTableHeader = formatMessage({
+    id: 'linesPrivateCodeTableHeaderLabel',
+  });
+  const operatorTableHeader = formatMessage({ id: 'linesOperatorTableHeader' });
+  const noLinesFoundText = formatMessage({ id: 'linesNoLinesFoundText' });
+  const loadingText = formatMessage({ id: 'linesLoadingText' });
 
   const renderTableBody = () => {
     if (!lines) {

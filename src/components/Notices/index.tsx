@@ -43,7 +43,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
 
   return (
     <section className="notices">
-      <Heading4>{formatMessage('noticesHeader')}</Heading4>
+      <Heading4>{formatMessage({ id: 'noticesHeader' })}</Heading4>
       <Table fixed>
         <TableBody>
           {notices?.map((notice, i) => (
@@ -60,7 +60,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
               <DataCell align="right">
                 <Tooltip
                   placement="bottom"
-                  content={formatMessage('deleteNoticeTooltip')}
+                  content={formatMessage({ id: 'deleteNoticeTooltip' })}
                 >
                   <IconButton
                     className="notices-icon-button"
@@ -77,7 +77,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
             <DataCell align="right">
               <Tooltip
                 placement="bottom"
-                content={formatMessage('addNoticeTooltip')}
+                content={formatMessage({ id: 'addNoticeTooltip' })}
               >
                 <IconButton
                   className="notices-icon-button"

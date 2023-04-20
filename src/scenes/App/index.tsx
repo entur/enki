@@ -15,7 +15,7 @@ import { getOrganisations } from 'actions/organisations';
 
 import './styles.scss';
 import { GlobalState } from 'reducers';
-import { AppIntlState, selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { useConfig } from 'config/ConfigContext';
 
 L.Icon.Default.mergeOptions({
@@ -41,7 +41,7 @@ const App = () => {
     dispatch(getOrganisations());
   }, [dispatch, providers.active]);
 
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = useIntl();
 
   const { adminRole } = useConfig();
 
@@ -49,7 +49,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <Helmet defaultTitle={formatMessage('appTitle')} />
+      <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
 
       <BrowserRouter basename={basename}>
         <ScrollToTop>

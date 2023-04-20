@@ -1,5 +1,4 @@
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
-import { FormatMessage } from '../i18n';
 import { MessagesKey } from '../i18n/translations/translationKeys';
 import {
   VEHICLE_MODE,
@@ -7,6 +6,8 @@ import {
   vehicleSubmodeMessages,
 } from '../model/enums';
 import { FlexibleLineType } from 'model/FlexibleLine';
+import { IntlShape } from 'react-intl';
+import { FormatMessage } from 'i18n';
 
 type GenericDropdownItem<E> = {
   id?: string;
@@ -57,7 +58,7 @@ export const mapVehicleModeAndLabelToItems = (
 ): NormalizedDropdownItemType[] => [
   ...Object.entries(e).map(([key, label]) => ({
     value: key,
-    label: formatMessage(label),
+    label: formatMessage({ id: label }),
   })),
 ];
 
@@ -67,7 +68,7 @@ export const mapVehicleSubmodeAndLabelToItems = (
 ): NormalizedDropdownItemType[] => [
   ...Object.values(e).map((type: VEHICLE_SUBMODE) => ({
     value: type,
-    label: formatMessage(vehicleSubmodeMessages[type]),
+    label: formatMessage({ id: vehicleSubmodeMessages[type] }),
   })),
 ];
 
@@ -77,6 +78,8 @@ export const mapFlexibleLineTypeAndLabelToItems = (
 ): NormalizedDropdownItemType[] => [
   ...Object.values(e).map((type: FlexibleLineType) => ({
     value: type,
-    label: formatMessage(`flexibleLineType_${type}` as keyof MessagesKey),
+    label: formatMessage({
+      id: `flexibleLineType_${type}` as keyof MessagesKey,
+    }),
   })),
 ];

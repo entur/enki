@@ -11,7 +11,7 @@ import {
 } from '@entur/table';
 import Loading from 'components/Loading';
 import { Heading1, Paragraph } from '@entur/typography';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import './styles.scss';
 import { GlobalState } from 'reducers';
 import { AddIcon } from '@entur/icons';
@@ -20,7 +20,7 @@ import Provider, { sortProviders } from 'model/Provider';
 
 const Providers = () => {
   const navigate = useNavigate();
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const { providers: providersState } = useSelector<GlobalState, GlobalState>(
     (s) => s
   );
@@ -60,32 +60,39 @@ const Providers = () => {
 
   return (
     <div className="providers">
-      <Heading1>{formatMessage('providersHeaderText')}</Heading1>
+      <Heading1>{formatMessage({ id: 'providersHeaderText' })}</Heading1>
       {providers.length === 0 && (
-        <Paragraph>{formatMessage('noProvidersDescriptionText')}</Paragraph>
+        <Paragraph>
+          {formatMessage({ id: 'noProvidersDescriptionText' })}
+        </Paragraph>
       )}
 
       <SecondaryButton className="create" as={Link} to="/providers/create">
         <AddIcon />
-        {formatMessage('createProviderHeaderText')}
+        {formatMessage({ id: 'createProviderHeaderText' })}
       </SecondaryButton>
 
-      <Loading text={formatMessage('providersLoading')} isLoading={!providers}>
+      <Loading
+        text={formatMessage({ id: 'providersLoading' })}
+        isLoading={!providers}
+      >
         <>
           <Table>
             <TableHead>
               <TableRow>
                 <HeaderCell>
-                  {formatMessage('providersNameTableHeaderLabel')}
+                  {formatMessage({ id: 'providersNameTableHeaderLabel' })}
                 </HeaderCell>
                 <HeaderCell>
-                  {formatMessage('providersCodeTableHeaderLabel')}
+                  {formatMessage({ id: 'providersCodeTableHeaderLabel' })}
                 </HeaderCell>
                 <HeaderCell>
-                  {formatMessage('providersCodespaceXmlnsHeaderLabel')}
+                  {formatMessage({ id: 'providersCodespaceXmlnsHeaderLabel' })}
                 </HeaderCell>
                 <HeaderCell>
-                  {formatMessage('providersCodespaceXmlnsUrlHeaderLabel')}
+                  {formatMessage({
+                    id: 'providersCodespaceXmlnsUrlHeaderLabel',
+                  })}
                 </HeaderCell>
               </TableRow>
             </TableHead>

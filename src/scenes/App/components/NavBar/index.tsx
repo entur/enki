@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import UserPreference from 'scenes/App/components/NavBar/UserPreference';
 import { Contrast } from '@entur/layout';
-import { AppIntlState, selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import {
   SideNavigation,
   SideNavigationItem,
@@ -67,7 +67,7 @@ const NavBarItem = ({
 };
 
 const NavBar = () => {
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = useIntl();
   const { providers, active } = useSelector<GlobalState, ProvidersState>(
     (state) => state.providers
   );
@@ -87,9 +87,9 @@ const NavBar = () => {
             <img
               className="logo"
               src={logo}
-              alt={formatMessage('navBarRootLinkLogoAltText')}
+              alt={formatMessage({ id: 'navBarRootLinkLogoAltText' })}
             />
-            <span>{formatMessage('appTitle')}</span>
+            <span>{formatMessage({ id: 'appTitle' })}</span>
           </div>
         </Link>
 
@@ -98,23 +98,27 @@ const NavBar = () => {
         {active && (
           <>
             <NavBarItem
-              text={formatMessage('navBarLinesMenuItemLabel')}
+              text={formatMessage({ id: 'navBarLinesMenuItemLabel' })}
               path="/lines"
               setRedirect={setRedirect}
             />
 
             <SideNavigationGroup
               defaultOpen
-              title={formatMessage('navBarFlexibleOffersSubMenuHeaderLabel')}
+              title={formatMessage({
+                id: 'navBarFlexibleOffersSubMenuHeaderLabel',
+              })}
             >
               <SideNavigation>
                 <NavBarItem
-                  text={formatMessage('navBarFlexibleLinesMenuItemLabel')}
+                  text={formatMessage({
+                    id: 'navBarFlexibleLinesMenuItemLabel',
+                  })}
                   path="/flexible-lines"
                   setRedirect={setRedirect}
                 />
                 <NavBarItem
-                  text={formatMessage('navBarStopPlacesMenuItemLabel')}
+                  text={formatMessage({ id: 'navBarStopPlacesMenuItemLabel' })}
                   path="/stop-places"
                   setRedirect={setRedirect}
                 />
@@ -122,12 +126,12 @@ const NavBar = () => {
             </SideNavigationGroup>
 
             <NavBarItem
-              text={formatMessage('navBarNetworksMenuItemLabel')}
+              text={formatMessage({ id: 'navBarNetworksMenuItemLabel' })}
               path="/networks"
               setRedirect={setRedirect}
             />
             <NavBarItem
-              text={formatMessage('navBarExportsMenuItemLabel')}
+              text={formatMessage({ id: 'navBarExportsMenuItemLabel' })}
               path="/exports"
               setRedirect={setRedirect}
             />
@@ -137,7 +141,7 @@ const NavBar = () => {
         {roleAssignments?.includes(adminRole) && (
           <NavBarItem
             icon={<ClosedLockIcon />}
-            text={formatMessage('navBarProvidersMenuItemLabel')}
+            text={formatMessage({ id: 'navBarProvidersMenuItemLabel' })}
             path="/providers"
             setRedirect={setRedirect}
           />
@@ -153,10 +157,10 @@ const NavBar = () => {
         <NavigateConfirmBox
           hideDialog={() => setRedirect({ ...redirect, showConfirm: false })}
           redirectTo={redirect.path}
-          title={formatMessage('redirectTitle')}
-          description={formatMessage('redirectMessage')}
-          confirmText={formatMessage('redirectYes')}
-          cancelText={formatMessage('redirectNo')}
+          title={formatMessage({ id: 'redirectTitle' })}
+          description={formatMessage({ id: 'redirectMessage' })}
+          confirmText={formatMessage({ id: 'redirectYes' })}
+          cancelText={formatMessage({ id: 'redirectNo' })}
         />
       )}
     </Contrast>

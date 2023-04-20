@@ -6,7 +6,7 @@ import { SecondaryButton, SuccessButton } from '@entur/button';
 import { Heading1 } from '@entur/typography';
 import { deleteLine, loadFlexibleLines } from 'actions/flexibleLines';
 import './styles.scss';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { GlobalState } from 'reducers';
 import { OrganisationState } from 'reducers/organisations';
 import { FlexibleLinesState } from 'reducers/flexibleLines';
@@ -19,7 +19,8 @@ export default () => {
   const [selectedLine, setSelectedLine] = useState<FlexibleLine | undefined>(
     undefined
   );
-  const { formatMessage } = useSelector(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const lines = useSelector<GlobalState, FlexibleLinesState>(
     (state) => state.flexibleLines
   );
@@ -29,7 +30,7 @@ export default () => {
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(loadFlexibleLines());
+    dispatch(loadFlexibleLines(intl));
   }, [dispatch]);
 
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ export default () => {
 
   return (
     <div className="flexible-lines">
-      <Heading1>{formatMessage('linesHeader')}</Heading1>
+      <Heading1>{formatMessage({ id: 'linesHeader' })}</Heading1>
 
       <section className="buttons">
         <SecondaryButton
@@ -52,7 +53,7 @@ export default () => {
           className="new-flexible-line-button"
         >
           <AddIcon />
-          {formatMessage('linesCreateFlexibleLineIconButtonLabel')}
+          {formatMessage({ id: 'linesCreateFlexibleLineIconButtonLabel' })}
         </SecondaryButton>
       </section>
 
@@ -70,8 +71,12 @@ export default () => {
             setSelectedLine(undefined);
             setShowDeleteDialogue(false);
           }}
-          title={formatMessage('editorDeleteLineConfirmationDialogTitle')}
-          message={formatMessage('editorDeleteLineConfirmationDialogMessage')}
+          title={formatMessage({
+            id: 'editorDeleteLineConfirmationDialogTitle',
+          })}
+          message={formatMessage({
+            id: 'editorDeleteLineConfirmationDialogMessage',
+          })}
           buttons={[
             <SecondaryButton
               key="no"
@@ -80,20 +85,20 @@ export default () => {
                 setShowDeleteDialogue(false);
               }}
             >
-              {formatMessage('no')}
+              {formatMessage({ id: 'no' })}
             </SecondaryButton>,
             <SuccessButton
               key="yes"
               onClick={() => {
-                dispatch(deleteLine(selectedLine))
+                dispatch(deleteLine(selectedLine, intl))
                   .then(() => {
                     setSelectedLine(undefined);
                     setShowDeleteDialogue(false);
                   })
-                  .then(() => dispatch(loadFlexibleLines()));
+                  .then(() => dispatch(loadFlexibleLines(intl)));
               }}
             >
-              {formatMessage('yes')}
+              {formatMessage({ id: 'yes' })}
             </SuccessButton>,
           ]}
         />

@@ -4,12 +4,11 @@ import DeleteButton from 'components/DeleteButton/DeleteButton';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useStopPointsEditor } from 'components/StopPointsEditor';
 import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { FlexibleLineType } from 'model/FlexibleLine';
 import JourneyPattern from 'model/JourneyPattern';
 import StopPoint from 'model/StopPoint';
 import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
 import General from './General';
 import './styles.scss';
 
@@ -31,7 +30,7 @@ const JourneyPatternEditor = ({
   const { pointsInSequence, serviceJourneys } = journeyPattern;
 
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const deleteStopPoint = useCallback(
     (stopPointIndex: number) => {
@@ -116,20 +115,20 @@ const JourneyPatternEditor = ({
       {onDelete && (
         <DeleteButton
           onClick={() => setShowDeleteDialog(true)}
-          title={formatMessage('editorDeleteButtonText')}
+          title={formatMessage({ id: 'editorDeleteButtonText' })}
         />
       )}
       {showDeleteDialog && onDelete && (
         <ConfirmDialog
           isOpen={showDeleteDialog}
-          title={formatMessage('journeyPatternDeleteDialogTitle')}
-          message={formatMessage('journeyPatternDeleteDialogMessage')}
+          title={formatMessage({ id: 'journeyPatternDeleteDialogTitle' })}
+          message={formatMessage({ id: 'journeyPatternDeleteDialogMessage' })}
           buttons={[
             <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
-              {formatMessage('no')}
+              {formatMessage({ id: 'no' })}
             </SecondaryButton>,
             <SuccessButton key={1} onClick={onDelete}>
-              {formatMessage('yes')}
+              {formatMessage({ id: 'yes' })}
             </SuccessButton>,
           ]}
           onDismiss={() => setShowDeleteDialog(false)}

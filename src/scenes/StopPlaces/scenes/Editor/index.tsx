@@ -29,7 +29,7 @@ import Loading from 'components/Loading';
 import Page from 'components/Page';
 import PolygonMap from './components/PolygonMap';
 import './styles.scss';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { GlobalState } from 'reducers';
 import FlexibleLine from 'model/FlexibleLine';
 import { validateFlexibleStopPlace } from './validateForm';
@@ -63,7 +63,8 @@ const transformToMapCoordinates = (geojson: Coordinate[]): Coordinate[] =>
 const FlexibleStopPlaceEditor = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const { formatMessage } = useSelector(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const dispatch = useDispatch<any>();
   const lines = useSelector<GlobalState, FlexibleLine[]>(
     (state) => state.flexibleLines ?? []
@@ -112,21 +113,21 @@ const FlexibleStopPlaceEditor = () => {
   useEffect(() => {
     if (params.id) {
       setIsLoading(true);
-      dispatch(loadFlexibleLines())
-        .then(() => dispatch(loadFlexibleStopPlaceById(params.id!)))
+      dispatch(loadFlexibleLines(intl))
+        .then(() => dispatch(loadFlexibleStopPlaceById(params.id!, intl)))
         .catch(() => navigate('/networks'))
         .then(() => {
           setIsLoading(false);
         });
     } else {
-      dispatch(loadFlexibleLines()).then(() => setIsLoading(false));
+      dispatch(loadFlexibleLines(intl)).then(() => setIsLoading(false));
     }
   }, [dispatch, params.id, history]);
 
   const handleOnSaveClick = useCallback(() => {
     if (objectValuesAreEmpty(errors)) {
       setSaving(true);
-      dispatch(saveFlexibleStopPlace(flexibleStopPlace ?? {}))
+      dispatch(saveFlexibleStopPlace(flexibleStopPlace ?? {}, intl))
         .then(() => navigate('/stop-places'))
         .finally(() => setSaving(false));
     }
@@ -137,7 +138,7 @@ const FlexibleStopPlaceEditor = () => {
     setDeleteDialogOpen(false);
     if (flexibleStopPlace?.id) {
       setDeleting(true);
-      dispatch(deleteFlexibleStopPlaceById(flexibleStopPlace.id))
+      dispatch(deleteFlexibleStopPlaceById(flexibleStopPlace.id, intl))
         .then(() => navigate('/stop-places'))
         .finally(() => setDeleting(false));
     }
@@ -211,22 +212,22 @@ const FlexibleStopPlaceEditor = () => {
   ]`;
 
   const areaError = getErrorFeedback(
-    errors.flexibleArea ? formatMessage(errors.flexibleArea) : '',
+    errors.flexibleArea ? formatMessage({ id: errors.flexibleArea }) : '',
     !errors.flexibleArea,
     areaPristine
   );
 
   return (
     <Page
-      backButtonTitle={formatMessage('navBarStopPlacesMenuItemLabel')}
+      backButtonTitle={formatMessage({ id: 'navBarStopPlacesMenuItemLabel' })}
       title={
         params.id
-          ? formatMessage('editorEditHeader')
-          : formatMessage('editorCreateHeader')
+          ? formatMessage({ id: 'editorEditHeader' })
+          : formatMessage({ id: 'editorCreateHeader' })
       }
     >
       <div className="stop-place-editor">
-        <Paragraph>{formatMessage('editorDescription')}</Paragraph>
+        <Paragraph>{formatMessage({ id: 'editorDescription' })}</Paragraph>
 
         {flexibleStopPlace && !isLoading ? (
           <OverlayLoader
@@ -234,8 +235,8 @@ const FlexibleStopPlaceEditor = () => {
             isLoading={isSaving || isDeleting}
             text={
               isSaving
-                ? formatMessage('editorSavingOverlayLoaderText')
-                : formatMessage('editorDeletingOverlayLoaderText')
+                ? formatMessage({ id: 'editorSavingOverlayLoaderText' })
+                : formatMessage({ id: 'editorDeletingOverlayLoaderText' })
             }
           >
             <div className="stop-place-form-container">
@@ -243,9 +244,9 @@ const FlexibleStopPlaceEditor = () => {
                 <RequiredInputMarker />
 
                 <TextField
-                  label={formatMessage('editorNameFormLabelText')}
+                  label={formatMessage({ id: 'editorNameFormLabelText' })}
                   {...getErrorFeedback(
-                    errors.name ? formatMessage(errors.name) : '',
+                    errors.name ? formatMessage({ id: errors.name }) : '',
                     !errors.name,
                     namePristine
                   )}
@@ -259,7 +260,9 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <TextArea
-                  label={formatMessage('editorDescriptionFormLabelText')}
+                  label={formatMessage({
+                    id: 'editorDescriptionFormLabelText',
+                  })}
                   value={flexibleStopPlace.description ?? ''}
                   onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     setFlexibleStopPlace({
@@ -270,7 +273,9 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <TextField
-                  label={formatMessage('editorPrivateCodeFormLabelText')}
+                  label={formatMessage({
+                    id: 'editorPrivateCodeFormLabelText',
+                  })}
                   value={flexibleStopPlace.privateCode ?? ''}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setFlexibleStopPlace({
@@ -281,10 +286,12 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <Dropdown
-                  label={formatMessage('flexibleStopAreaType')}
+                  label={formatMessage({ id: 'flexibleStopAreaType' })}
                   items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map((v) => ({
                     value: v,
-                    label: formatMessage(flexibleStopAreaTypeMessages[v]),
+                    label: formatMessage({
+                      id: flexibleStopAreaTypeMessages[v],
+                    }),
                   }))}
                   value={
                     flexibleStopPlace.keyValues?.find(
@@ -306,14 +313,16 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <TextArea
-                  label={formatMessage('editorCoordinatesFormLabelText')}
+                  label={formatMessage({
+                    id: 'editorCoordinatesFormLabelText',
+                  })}
                   variant={
                     coordinateHolder === '' ||
                     stringIsValidCoordinates(coordinateHolder)
                       ? undefined
                       : 'error'
                   }
-                  feedback={formatMessage('errorCoordinates')}
+                  feedback={formatMessage({ id: 'errorCoordinates' })}
                   rows={12}
                   value={coordinateHolder}
                   onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
@@ -334,7 +343,7 @@ const FlexibleStopPlaceEditor = () => {
                   onClick={handleDrawPolygonClick}
                   disabled={!stringIsValidCoordinates(coordinateHolder)}
                 >
-                  {formatMessage('editorDrawPolygonButtonText')}
+                  {formatMessage({ id: 'editorDrawPolygonButtonText' })}
                   <MapIcon />
                 </PrimaryButton>
 
@@ -344,16 +353,18 @@ const FlexibleStopPlaceEditor = () => {
                       onClick={() => setDeleteDialogOpen(true)}
                       disabled={isDeleteDisabled}
                     >
-                      {formatMessage('editorDeleteButtonText')}
+                      {formatMessage({ id: 'editorDeleteButtonText' })}
                     </NegativeButton>
                   )}
 
                   <SuccessButton onClick={handleOnSaveClick}>
                     {params.id
-                      ? formatMessage('editorSaveButtonText')
+                      ? formatMessage({ id: 'editorSaveButtonText' })
                       : formatMessage(
-                          'editorDetailedCreate',
-                          formatMessage('stopPlaceText')
+                          {
+                            id: 'editorDetailedCreate',
+                          },
+                          { details: formatMessage({ id: 'stopPlaceText' }) }
                         )}
                   </SuccessButton>
                 </div>
@@ -379,22 +390,26 @@ const FlexibleStopPlaceEditor = () => {
             className=""
             text={
               flexibleStopPlace
-                ? formatMessage('editorLoadingStopPlaceText')
-                : formatMessage('editorLoadingDependenciesText')
+                ? formatMessage({ id: 'editorLoadingStopPlaceText' })
+                : formatMessage({ id: 'editorLoadingDependenciesText' })
             }
           />
         )}
 
         <ConfirmDialog
           isOpen={isDeleteDialogOpen}
-          title={formatMessage('editorDeleteStopPlaceDialogTitle')}
-          message={formatMessage('editorDeleteStopPlaceDialogMessage')}
+          title={formatMessage({ id: 'editorDeleteStopPlaceDialogTitle' })}
+          message={formatMessage({ id: 'editorDeleteStopPlaceDialogMessage' })}
           buttons={[
             <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-              {formatMessage('editorDeleteStopPlaceDialogCancelButtonText')}
+              {formatMessage({
+                id: 'editorDeleteStopPlaceDialogCancelButtonText',
+              })}
             </SecondaryButton>,
             <SuccessButton key={1} onClick={handleDelete}>
-              {formatMessage('editorDeleteStopPlaceDialogConfirmButtonText')}
+              {formatMessage({
+                id: 'editorDeleteStopPlaceDialogConfirmButtonText',
+              })}
             </SuccessButton>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}

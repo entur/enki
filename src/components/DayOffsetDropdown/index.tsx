@@ -2,9 +2,9 @@ import React from 'react';
 import { Dropdown } from '@entur/dropdown';
 import { NightIcon } from '@entur/icons';
 import { mapEnumToItems } from 'helpers/dropdown';
-import { selectIntl } from 'i18n';
-import { useSelector } from 'react-redux';
+
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import { useIntl } from 'react-intl';
 
 type Props = {
   value?: number;
@@ -13,15 +13,15 @@ type Props = {
 };
 
 export default ({ value, onChange, disabled = false }: Props) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   return (
     <Dropdown
       disabled={disabled}
       style={{ minWidth: '120px' }}
       prepend={<NightIcon inline />}
       value={value?.toString() ?? '0'}
-      label={formatMessage('passingTimesDayOffset')}
-      labelTooltip={formatMessage('passingTimesDayOffsetTooltip')}
+      label={formatMessage({ id: 'passingTimesDayOffset' })}
+      labelTooltip={formatMessage({ id: 'passingTimesDayOffsetTooltip' })}
       items={mapEnumToItems(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])}
       onChange={(e: NormalizedDropdownItemType | null) =>
         onChange(parseInt(e?.value || '0'))

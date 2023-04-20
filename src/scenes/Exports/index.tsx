@@ -16,7 +16,7 @@ import { SecondaryButton, SecondarySquareButton } from '@entur/button';
 import { loadExports } from 'actions/exports';
 import { EXPORT_STATUS } from 'model/enums';
 import { getIconForStatus } from './scenes/icons';
-import { AppIntlState, selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { GlobalState } from 'reducers';
 import { ExportsState } from 'reducers/exports';
 import { download } from 'model/Export';
@@ -30,13 +30,13 @@ const Exports = () => {
   const exports = useSelector<GlobalState, ExportsState>(
     (state) => state.exports
   );
-  const { formatMessage, locale } = useSelector<GlobalState, AppIntlState>(
-    selectIntl
-  );
+  const intl = useIntl();
+  const { formatMessage, locale } = intl;
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadExports());
+    dispatch(loadExports(intl));
   }, [dispatch]);
 
   const auth = useAuth();
@@ -69,15 +69,15 @@ const Exports = () => {
             </DataCell>
             <DataCell>
               {e.dryRun
-                ? formatMessage('exportsDryRunYes')
-                : formatMessage('exportsDryRunNo')}
+                ? formatMessage({ id: 'exportsDryRunYes' })
+                : formatMessage({ id: 'exportsDryRunNo' })}
             </DataCell>
           </TableRow>
         ))
       ) : (
         <TableRow className="row-no-exports disabled">
           <DataCell colSpan={6}>
-            {formatMessage('exportsNoExportsFoundText')}
+            {formatMessage({ id: 'exportsNoExportsFoundText' })}
           </DataCell>
         </TableRow>
       );
@@ -86,7 +86,7 @@ const Exports = () => {
         <TableRow className="disabled">
           <DataCell colSpan={6}>
             <Loading
-              text={formatMessage('exportsLoadingExportsText')}
+              text={formatMessage({ id: 'exportsLoadingExportsText' })}
               isLoading={!exports}
               children={null}
               className=""
@@ -99,7 +99,7 @@ const Exports = () => {
 
   return (
     <div className="exports">
-      <Heading1>{formatMessage('exportsHeader')}</Heading1>
+      <Heading1>{formatMessage({ id: 'exportsHeader' })}</Heading1>
 
       <SecondaryButton
         as={Link}
@@ -107,26 +107,26 @@ const Exports = () => {
         className="create-export-button"
       >
         <AddIcon />
-        {formatMessage('exportsCreateExportButtonLabel')}
+        {formatMessage({ id: 'exportsCreateExportButtonLabel' })}
       </SecondaryButton>
 
       <Table>
         <TableHead>
           <TableRow>
             <HeaderCell>
-              {formatMessage('exportsTableHeaderLabelName')}
+              {formatMessage({ id: 'exportsTableHeaderLabelName' })}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage('exportsTableHeaderLabelStatus')}
+              {formatMessage({ id: 'exportsTableHeaderLabelStatus' })}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage('exportsTableHeaderLabelCreated')}
+              {formatMessage({ id: 'exportsTableHeaderLabelCreated' })}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage('exportsTableHeaderLabelDownload')}
+              {formatMessage({ id: 'exportsTableHeaderLabelDownload' })}
             </HeaderCell>
             <HeaderCell>
-              {formatMessage('exportsTableHeaderLabelDryrun')}
+              {formatMessage({ id: 'exportsTableHeaderLabelDryrun' })}
             </HeaderCell>
           </TableRow>
         </TableHead>

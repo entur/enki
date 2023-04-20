@@ -11,7 +11,6 @@ import {
   deleteFlexibleStopPlace,
   flexibleStopPlaceMutation,
 } from 'api/uttu/mutations';
-import { getIntl } from 'i18n';
 import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
@@ -23,6 +22,7 @@ import {
   REQUEST_FLEXIBLE_STOP_PLACE,
   REQUEST_FLEXIBLE_STOP_PLACES,
 } from './constants';
+import { IntlShape } from 'react-intl';
 
 const requestFlexibleStopPlacesActionCreator = () => ({
   type: REQUEST_FLEXIBLE_STOP_PLACES,
@@ -47,12 +47,12 @@ const receiveFlexibleStopPlaceActionCreator = (
 });
 
 export const loadFlexibleStopPlaces =
-  () => async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+  (intl: IntlShape) =>
+  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     dispatch(requestFlexibleStopPlacesActionCreator());
 
     const activeProvider = getState().providers.active?.code ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
-    const intl = getIntl(getState());
 
     try {
       const data = await UttuQuery(
@@ -67,10 +67,14 @@ export const loadFlexibleStopPlaces =
     } catch (e) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage('flexibleStopPlacesLoadStopPlacesErrorHeader'),
+          intl.formatMessage({
+            id: 'flexibleStopPlacesLoadStopPlacesErrorHeader',
+          }),
           intl.formatMessage(
-            'flexibleStopPlacesLoadStopPlacesErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'flexibleStopPlacesLoadStopPlacesErrorMessage',
+            },
+            { details: getInternationalizedUttuError(intl, e as Error) }
           )
         )
       );
@@ -79,13 +83,12 @@ export const loadFlexibleStopPlaces =
   };
 
 export const loadFlexibleStopPlaceById =
-  (id: string) =>
+  (id: string, intl: IntlShape) =>
   async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     dispatch(requestFlexibleStopPlaceActionCreator());
 
     const activeProvider = getState().providers.active?.code ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
-    const intl = getIntl(getState());
 
     try {
       const data = await UttuQuery(
@@ -99,10 +102,14 @@ export const loadFlexibleStopPlaceById =
     } catch (e) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage('flexibleStopPlacesLoadStopPlaceErrorHeader'),
+          intl.formatMessage({
+            id: 'flexibleStopPlacesLoadStopPlaceErrorHeader',
+          }),
           intl.formatMessage(
-            'flexibleStopPlacesLoadStopPlaceErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'flexibleStopPlacesLoadStopPlaceErrorMessage',
+            },
+            { details: getInternationalizedUttuError(intl, e as Error) }
           )
         )
       );
@@ -111,11 +118,10 @@ export const loadFlexibleStopPlaceById =
   };
 
 export const saveFlexibleStopPlace =
-  (flexibleStopPlace: FlexibleStopPlace) =>
+  (flexibleStopPlace: FlexibleStopPlace, intl: IntlShape) =>
   async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     const activeProvider = getState().providers.active?.code ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
-    const intl = getIntl(getState());
 
     try {
       await UttuQuery(
@@ -129,17 +135,25 @@ export const saveFlexibleStopPlace =
       );
       dispatch(
         showSuccessNotification(
-          intl.formatMessage('flexibleStopPlacesSaveStopPlaceSuccessHeader'),
-          intl.formatMessage('flexibleStopPlacesSaveStopPlaceSuccessMessage')
+          intl.formatMessage({
+            id: 'flexibleStopPlacesSaveStopPlaceSuccessHeader',
+          }),
+          intl.formatMessage({
+            id: 'flexibleStopPlacesSaveStopPlaceSuccessMessage',
+          })
         )
       );
     } catch (e) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage('flexibleStopPlacesSaveStopPlaceErrorHeader'),
+          intl.formatMessage({
+            id: 'flexibleStopPlacesSaveStopPlaceErrorHeader',
+          }),
           intl.formatMessage(
-            'flexibleStopPlacesSaveStopPlaceErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'flexibleStopPlacesSaveStopPlaceErrorMessage',
+            },
+            { details: getInternationalizedUttuError(intl, e as Error) }
           )
         )
       );
@@ -148,11 +162,10 @@ export const saveFlexibleStopPlace =
   };
 
 export const deleteFlexibleStopPlaceById =
-  (id: string) =>
+  (id: string, intl: IntlShape) =>
   async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     const activeProvider = getState().providers.active?.code ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
-    const intl = getIntl(getState());
     try {
       await UttuQuery(
         uttuApiUrl,
@@ -163,17 +176,25 @@ export const deleteFlexibleStopPlaceById =
       );
       dispatch(
         showSuccessNotification(
-          intl.formatMessage('flexibleStopPlacesDeleteStopPlaceSuccessHeader'),
-          intl.formatMessage('flexibleStopPlacesDeleteStopPlaceSuccessMessage')
+          intl.formatMessage({
+            id: 'flexibleStopPlacesDeleteStopPlaceSuccessHeader',
+          }),
+          intl.formatMessage({
+            id: 'flexibleStopPlacesDeleteStopPlaceSuccessMessage',
+          })
         )
       );
     } catch (e) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage('flexibleStopPlacesDeleteStopPlaceErrorHeader'),
+          intl.formatMessage({
+            id: 'flexibleStopPlacesDeleteStopPlaceErrorHeader',
+          }),
           intl.formatMessage(
-            'flexibleStopPlacesDeleteStopPlaceErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'flexibleStopPlacesDeleteStopPlaceErrorMessage',
+            },
+            { details: getInternationalizedUttuError(intl, e as Error) }
           )
         )
       );

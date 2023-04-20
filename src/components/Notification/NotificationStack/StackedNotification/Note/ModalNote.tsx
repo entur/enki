@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal } from '@entur/modal';
 import { PrimaryButton } from '@entur/button';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 
 type Props = {
   title: string;
@@ -13,7 +13,7 @@ type Props = {
 
 const ModalNote = (props: Props) => {
   const [isActive, setActive] = useState<boolean>(true);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const { title, message, onDismiss } = props;
 
   const handleDismiss = useCallback(() => {
@@ -27,7 +27,7 @@ const ModalNote = (props: Props) => {
         <div className="notification-modal-message">{message}</div>
 
         <PrimaryButton onClick={handleDismiss}>
-          {formatMessage('flexibleLinesSaveLineSuccessButton')}
+          {formatMessage({ id: 'flexibleLinesSaveLineSuccessButton' })}
         </PrimaryButton>
       </div>
     </Modal>

@@ -1,6 +1,6 @@
 import PassingTime from 'model/PassingTime';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
-import { useIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import TimeWindowPassingTimeTitle from './TimeWindowPassingTimeTitle';
 import StopPoint from 'model/StopPoint';
 import { PassingTimePicker } from '../common/PassingTimePicker';
@@ -22,7 +22,7 @@ export const TimeWindowPassingTimeEditor = ({
     <>
       <TimeWindowPassingTimeTitle stopPoint={stopPoint} />
       <PassingTimePicker
-        label={formatMessage('passingTimesEarliestDepartureTime')}
+        label={formatMessage({ id: 'passingTimesEarliestDepartureTime' })}
         required
         selectedTime={passingTime.earliestDepartureTime}
         onChange={(earliestDepartureTime: string | null) => {
@@ -42,7 +42,7 @@ export const TimeWindowPassingTimeEditor = ({
         }}
       />
       <PassingTimePicker
-        label={formatMessage('passingTimesLatestArrivalTime')}
+        label={formatMessage({ id: 'passingTimesLatestArrivalTime' })}
         required
         selectedTime={passingTime.latestArrivalTime}
         onChange={(latestArrivalTime: string | null) => {

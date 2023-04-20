@@ -1,6 +1,6 @@
 import PassingTime from 'model/PassingTime';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
-import { useIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import FixedPassingTimeTitle from './FixedPassingTimeTitle';
 import StopPoint from 'model/StopPoint';
 import { PassingTimePicker } from '../common/PassingTimePicker';
@@ -26,7 +26,7 @@ export const FixedPassingTimeEditor = ({
     <>
       <FixedPassingTimeTitle stopPoint={stopPoint} />
       <PassingTimePicker
-        label={formatMessage('passingTimesArrivalTime')}
+        label={formatMessage({ id: 'passingTimesArrivalTime' })}
         disabled={index === 0}
         required={isLast}
         selectedTime={passingTime.arrivalTime}
@@ -54,7 +54,7 @@ export const FixedPassingTimeEditor = ({
         }
       />
       <PassingTimePicker
-        label={formatMessage('passingTimesDepartureTime')}
+        label={formatMessage({ id: 'passingTimesDepartureTime' })}
         disabled={isLast}
         required={index === 0}
         selectedTime={passingTime.departureTime}

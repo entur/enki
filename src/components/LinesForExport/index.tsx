@@ -21,7 +21,7 @@ import { isAfter } from 'date-fns';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import { ExportLineAssociation } from 'model/Export';
 import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 
 type Props = {
   onChange: (lines: ExportLineAssociation[]) => void;
@@ -119,7 +119,7 @@ export default ({ onChange }: Props) => {
 
   useRefetchOnLocationChange(refetch);
 
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     if (data) {
@@ -191,7 +191,9 @@ export default ({ onChange }: Props) => {
               ...getSortableHeaderProps({ name: 'name' })
             }
           >
-            {formatMessage('exportCreatorLinesForExportTableLineHeader')}
+            {formatMessage({
+              id: 'exportCreatorLinesForExportTableLineHeader',
+            })}
           </HeaderCell>
           <HeaderCell
             {
@@ -199,7 +201,9 @@ export default ({ onChange }: Props) => {
               ...getSortableHeaderProps({ name: 'status' })
             }
           >
-            {formatMessage('exportCreatorLinesForExportTableStatusHeader')}
+            {formatMessage({
+              id: 'exportCreatorLinesForExportTableStatusHeader',
+            })}
           </HeaderCell>
           <HeaderCell
             {
@@ -207,9 +211,9 @@ export default ({ onChange }: Props) => {
               ...getSortableHeaderProps({ name: 'to' })
             }
           >
-            {formatMessage(
-              'exportCreatorLinesForExportTableAvailabilityHeader'
-            )}
+            {formatMessage({
+              id: 'exportCreatorLinesForExportTableAvailabilityHeader',
+            })}
           </HeaderCell>
         </TableRow>
       </TableHead>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ActionChip } from '@entur/chip';
 import { GlobalState } from 'reducers';
-import { AppIntlState, selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { BackArrowIcon } from '@entur/icons';
 import './styles.scss';
 import { AuthState } from 'features/app/authSlice';
@@ -10,13 +10,11 @@ import { AuthState } from 'features/app/authSlice';
 const LogoutChip = () => {
   const {
     auth: { logout },
-    intl: { formatMessage },
-  } = useSelector<GlobalState, { auth: AuthState; intl: AppIntlState }>(
-    (state) => ({
-      auth: state.auth,
-      intl: selectIntl(state),
-    })
-  );
+  } = useSelector<GlobalState, { auth: AuthState }>((state) => ({
+    auth: state.auth,
+  }));
+
+  const { formatMessage } = useIntl();
 
   return (
     <ActionChip
@@ -24,7 +22,7 @@ const LogoutChip = () => {
       className="logout"
     >
       <BackArrowIcon />
-      {formatMessage('userMenuLogoutLinkText')}
+      {formatMessage({ id: 'userMenuLogoutLinkText' })}
     </ActionChip>
   );
 };

@@ -4,11 +4,10 @@ import { mapFlexibleLineTypeAndLabelToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
-import { selectIntl } from 'i18n';
 import { FlexibleLineType } from 'model/FlexibleLine';
 import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
+import { useIntl } from 'react-intl';
 import './styles.scss';
 
 interface Props {
@@ -23,7 +22,7 @@ export const FlexibleLineTypeSelector = ({
   spoilPristine,
 }: Props) => {
   const [showDrawer, setDrawer] = useState<boolean>(false);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const flexibleLineTypePristine = usePristine(flexibleLineType, spoilPristine);
   const { supportedFlexibleLineTypes } = useConfig();
 
@@ -42,22 +41,22 @@ export const FlexibleLineTypeSelector = ({
     <>
       <div
         className="line-type-dropdown-tooltip"
-        aria-label={formatMessage('drawerAria')}
+        aria-label={formatMessage({ id: 'drawerAria' })}
         onClick={() => setDrawer(true)}
       >
-        {formatMessage('typeFormGroupTitleTooltip')}
+        {formatMessage({ id: 'typeFormGroupTitleTooltip' })}
       </div>
       {
         <Dropdown
           className="flexible-line-type"
           value={flexibleLineType}
-          placeholder={formatMessage('defaultOption')}
+          placeholder={formatMessage({ id: 'defaultOption' })}
           items={getDropdownItems}
           clearable
-          label={formatMessage('generalTypeFormGroupTitle')}
+          label={formatMessage({ id: 'generalTypeFormGroupTitle' })}
           onChange={(element) => onChange(element?.value as FlexibleLineType)}
           {...getErrorFeedback(
-            formatMessage('flexibleLineTypeEmpty'),
+            formatMessage({ id: 'flexibleLineTypeEmpty' }),
             !isBlank(flexibleLineType),
             flexibleLineTypePristine
           )}
@@ -67,7 +66,7 @@ export const FlexibleLineTypeSelector = ({
       <FlexibleLineTypeDrawer
         open={showDrawer}
         onDismiss={() => setDrawer(false)}
-        title={formatMessage('generalDrawerTitle')}
+        title={formatMessage({ id: 'generalDrawerTitle' })}
       />
     </>
   );

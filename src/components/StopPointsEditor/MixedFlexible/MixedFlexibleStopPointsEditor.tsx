@@ -1,6 +1,6 @@
 import React from 'react';
 import useUniqueKeys from 'hooks/useUniqueKeys';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { StopPointsEditorProps } from '..';
 import { Heading3, Paragraph } from '@entur/typography';
@@ -16,12 +16,14 @@ export const MixedFlexibleStopPointsEditor = ({
   addStopPoint,
 }: StopPointsEditorProps) => {
   const keys = useUniqueKeys(pointsInSequence);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   return (
     <section style={{ marginTop: '2em' }}>
-      <Heading3>{formatMessage('editorStopPoints')}</Heading3>
-      <Paragraph>{formatMessage('stopPointsInfoMixedFlexible')}</Paragraph>
+      <Heading3>{formatMessage({ id: 'editorStopPoints' })}</Heading3>
+      <Paragraph>
+        {formatMessage({ id: 'stopPointsInfoMixedFlexible' })}
+      </Paragraph>
       <div className="stop-point-editor">
         {pointsInSequence.map((stopPoint, pointIndex) => (
           <MixedFlexibleStopPointEditor
@@ -41,7 +43,7 @@ export const MixedFlexibleStopPointsEditor = ({
       </div>
       <AddButton
         onClick={addStopPoint}
-        buttonTitle={formatMessage('editorAddStopPoint')}
+        buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
       />
     </section>
   );

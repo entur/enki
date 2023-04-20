@@ -1,5 +1,5 @@
 import { Heading3, Paragraph } from '@entur/typography';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { StopPointsEditorProps } from '..';
 import React, { useCallback } from 'react';
@@ -11,7 +11,7 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
   spoilPristine,
   onPointsInSequenceChange,
 }: StopPointsEditorProps) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const onStopPointUpdate = useCallback(
     (updatedStopPoint: StopPoint) => {
@@ -34,8 +34,12 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
 
   return (
     <section style={{ marginTop: '2em' }}>
-      <Heading3>{formatMessage('editorStopPointFlexibleAreaOnly')}</Heading3>
-      <Paragraph>{formatMessage('stopPointsInfoFlexibleAreaOnly')}</Paragraph>
+      <Heading3>
+        {formatMessage({ id: 'editorStopPointFlexibleAreaOnly' })}
+      </Heading3>
+      <Paragraph>
+        {formatMessage({ id: 'stopPointsInfoFlexibleAreaOnly' })}
+      </Paragraph>
       <div className="stop-point-editor">
         <FlexibleAreasOnlyStopPointEditor
           stopPoint={pointsInSequence[0]}

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import { loadNetworks } from 'actions/networks';
 import { loadFlexibleLineById } from 'actions/flexibleLines';
+import { useIntl } from 'react-intl';
 
 export const useLoadDependencies = () => {
   const params = useParams();
@@ -14,10 +15,11 @@ export const useLoadDependencies = () => {
     useState(true);
 
   const dispatch = useDispatch<any>();
+  const intl = useIntl();
 
   const dispatchLoadFlexibleStopPlaces = useCallback(
     () =>
-      dispatch(loadFlexibleStopPlaces()).then(() =>
+      dispatch(loadFlexibleStopPlaces(intl)).then(() =>
         setFlexibleStopPlacesIsLoading(false)
       ),
     [dispatch]
@@ -29,10 +31,11 @@ export const useLoadDependencies = () => {
   );
 
   const dispatchLoadFlexibleLineById = useCallback(() => {
+    const intl = useIntl();
     if (params.id) {
       const lineType = params.id.split(':')[1];
       const isFlexibleLine = lineType === 'FlexibleLine';
-      dispatch(loadFlexibleLineById(params.id, isFlexibleLine))
+      dispatch(loadFlexibleLineById(params.id, isFlexibleLine, intl))
         .catch(() => navigate(isFlexibleLine ? '/flexible-lines' : '/lines'))
         .then(() => setFlexibleLineIsLoading(false));
     } else {

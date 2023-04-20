@@ -2,7 +2,7 @@ import React from 'react';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 
 type Props = {
   visible: boolean;
@@ -13,20 +13,22 @@ type Props = {
 export default (props: Props) => {
   const { visible, onDismiss, onConfirm } = props;
 
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   return (
     <ConfirmDialog
       isOpen={visible}
       onDismiss={onDismiss}
-      title={formatMessage('editorDeleteLineConfirmationDialogTitle')}
-      message={formatMessage('editorDeleteLineConfirmationDialogMessage')}
+      title={formatMessage({ id: 'editorDeleteLineConfirmationDialogTitle' })}
+      message={formatMessage({
+        id: 'editorDeleteLineConfirmationDialogMessage',
+      })}
       buttons={[
         <SecondaryButton key="no" onClick={onDismiss}>
-          {formatMessage('no')}
+          {formatMessage({ id: 'no' })}
         </SecondaryButton>,
         <SuccessButton key="yes" onClick={onConfirm}>
-          {formatMessage('yes')}
+          {formatMessage({ id: 'yes' })}
         </SuccessButton>,
       ]}
     />

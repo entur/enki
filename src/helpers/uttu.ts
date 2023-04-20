@@ -3,9 +3,9 @@ import messages, {
   UttuCode,
   UttuSubCode,
 } from './uttu.messages';
-import { AppIntlState } from 'i18n';
 import { ApolloError, isApolloError } from '@apollo/client';
 import { sentryCaptureException } from 'app/store';
+import { IntlShape } from 'react-intl';
 
 type Extensions = {
   code: UttuCode;
@@ -33,7 +33,7 @@ export const getStyledUttuError = (
     ? `${generalMessage}: ${getUttuError(e)}`
     : `${generalMessage}. ${fallback}`;
 
-export const getInternationalizedUttuError = (intl: AppIntlState, e: Error) => {
+export const getInternationalizedUttuError = (intl: IntlShape, e: Error) => {
   let error;
 
   if (isApolloError(e)) {
@@ -54,10 +54,10 @@ export const getInternationalizedUttuError = (intl: AppIntlState, e: Error) => {
       sentryCaptureException(e);
     }
 
-    return intl.formatMessage(errorMessage);
+    return intl.formatMessage({ id: errorMessage });
   }
 
   sentryCaptureException(e);
 
-  return intl.formatMessage(messages[UttuCode.UNKNOWN]);
+  return intl.formatMessage({ id: messages[UttuCode.UNKNOWN] });
 };

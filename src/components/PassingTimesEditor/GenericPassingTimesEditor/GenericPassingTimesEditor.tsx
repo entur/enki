@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
-import { useIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import { PassingTimesEditorProps } from '..';
 import { FixedPassingTimeEditor } from '../FixedPassingTimeEditor/FixedPassingTimeEditor';
 import { changeElementAtIndex } from 'helpers/arrays';
@@ -17,8 +17,8 @@ export const GenericPassingTimesEditor = ({
   const uniqueKeys = useUniqueKeys(passingTimes);
   return (
     <>
-      <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
-      <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
+      <Heading4>{formatMessage({ id: 'serviceJourneyPassingTimes' })}</Heading4>
+      <Paragraph>{formatMessage({ id: 'passingTimesInfo' })}</Paragraph>
       <PassingTimesError
         passingTimes={passingTimes}
         spoilPristine={spoilPristine}
