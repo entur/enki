@@ -1,5 +1,4 @@
 import notification, { NotificationState } from 'reducers/notification';
-import auth, { AuthState } from './auth';
 import organisations, { OrganisationState } from './organisations';
 import providers, { ProvidersState } from './providers';
 import exports, { ExportsState } from './exports';
@@ -10,7 +9,8 @@ import flexibleStopPlaces, {
 } from './flexibleStopPlaces';
 import editor, { EditorState } from './editor';
 import { AppIntlState } from 'i18n';
-import config, { ConfigState } from './config';
+import { AuthState } from 'features/app/authSlice';
+import { ConfigState } from 'features/app/configSlice';
 
 export type GlobalState = {
   notification: NotificationState;
@@ -28,7 +28,6 @@ export type GlobalState = {
 
 const reducers = {
   notification,
-  auth,
   organisations,
   providers,
   exports,
@@ -36,7 +35,6 @@ const reducers = {
   flexibleLines,
   flexibleStopPlaces,
   editor,
-  config,
 };
 
 export default reducers;

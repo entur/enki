@@ -1,8 +1,5 @@
-import {
-  NotificationDuration,
-  NotificationTypes,
-  SHOW_NOTIFICATION,
-} from 'actions/notification';
+import { SHOW_NOTIFICATION } from 'actions/constants';
+import { NotificationDuration, NotificationTypes } from 'actions/notification';
 import { createUuid } from 'helpers/generators';
 import { AnyAction } from 'redux';
 

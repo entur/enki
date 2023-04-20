@@ -1,10 +1,10 @@
-import {
-  RECEIVE_PROVIDERS,
-  FAILED_RECEIVING_PROVIDERS,
-  SET_ACTIVE_PROVIDER,
-} from 'actions/providers';
 import { AnyAction } from 'redux';
 import Provider from 'model/Provider';
+import {
+  FAILED_RECEIVING_PROVIDERS,
+  RECEIVE_PROVIDERS,
+  SET_ACTIVE_PROVIDER,
+} from 'actions/constants';
 
 export type ProvidersState = {
   providers: Provider[] | null;
@@ -13,7 +13,7 @@ export type ProvidersState = {
   exports: null;
 };
 
-const initialState = {
+export const initialState = {
   providers: null,
   failure: false,
   active: null,

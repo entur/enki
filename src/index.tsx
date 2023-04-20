@@ -1,33 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-intl-redux';
+//import { Provider } from 'react-intl-redux';
 
 import App from 'scenes/App';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { configureStore } from './store';
+import { store } from './app/store';
 
 import './styles/index.scss';
 import { Apollo } from 'api';
 import AuthProvider, { useAuth } from '@entur/auth-provider';
 import { fetchConfig } from 'config/fetchConfig';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
+import { Provider } from 'react-redux';
+import { useAppDispatch } from 'app/hooks';
+import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
+import { selectAuthLoaded, updateAuth } from 'features/app/authSlice';
+import { useSelector } from 'react-redux';
 
 const AuthenticatedApp = () => {
+  const dispatch = useAppDispatch();
+  const authStateLoaded = useSelector(selectAuthLoaded);
+  const configStateLoaded = useSelector(selectConfigLoaded);
   const auth = useAuth();
   const config = useConfig();
-  const { store, sentry } = configureStore(auth, config);
+
+  dispatch(updateConfig(config));
+  dispatch(updateAuth(auth));
 
   return (
-    <ErrorBoundary sentry={sentry}>
-      {/* Store is not typed yet
-          // @ts-ignore */}
-
-      <Provider store={store}>
-        <Apollo>
-          <App />
-        </Apollo>
-      </Provider>
-    </ErrorBoundary>
+    (authStateLoaded && configStateLoaded && (
+      <Apollo>
+        <App />
+      </Apollo>
+    )) ||
+    null
   );
 };
 
@@ -39,17 +45,19 @@ const renderIndex = async () => {
 
   const { claimsNamespace, auth0: auth0Config } = config;
   root.render(
-    <AuthProvider
-      auth0Config={{
-        ...auth0Config,
-        redirectUri: window.location.origin,
-      }}
-      auth0ClaimsNamespace={claimsNamespace}
-    >
-      <ConfigContext.Provider value={config}>
-        <AuthenticatedApp />
-      </ConfigContext.Provider>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider
+        auth0Config={{
+          ...auth0Config,
+          redirectUri: window.location.origin,
+        }}
+        auth0ClaimsNamespace={claimsNamespace}
+      >
+        <ConfigContext.Provider value={config}>
+          <AuthenticatedApp />
+        </ConfigContext.Provider>
+      </AuthProvider>
+    </Provider>
   );
 };
 

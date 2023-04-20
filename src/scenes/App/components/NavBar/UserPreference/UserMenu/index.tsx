@@ -4,7 +4,7 @@ import { UserIcon } from '@entur/icons';
 
 import './styles.scss';
 import { GlobalState } from 'reducers';
-import { AuthState } from 'reducers/auth';
+import { AuthState } from 'features/app/authSlice';
 
 const UserMenu = () => {
   const { user } = useSelector<GlobalState, AuthState>((state) => state.auth);

@@ -1,18 +1,16 @@
 import { UttuQuery } from 'api';
 import { getProvidersQuery } from 'api/uttu/queries';
 import Provider from 'model/Provider';
-import { Dispatch } from 'redux';
-import { GlobalState } from 'reducers';
 import { mutateCodespace, mutateProvider } from 'api/uttu/mutations';
 import { showErrorNotification } from './notification';
 import { getStyledUttuError, UttuError } from 'helpers/uttu';
-import { sentryCaptureException } from 'store';
+import { AppThunk, sentryCaptureException } from 'app/store';
 import { getIntl } from 'i18n';
-
-export const RECEIVE_PROVIDERS = 'RECEIVE_PROVIDERS';
-export const FAILED_RECEIVING_PROVIDERS = 'FAILED_RECEIVING_PROVIDERS';
-
-export const SET_ACTIVE_PROVIDER = 'SET_ACTIVE_PROVIDER';
+import {
+  FAILED_RECEIVING_PROVIDERS,
+  RECEIVE_PROVIDERS,
+  SET_ACTIVE_PROVIDER,
+} from './constants';
 
 const receiveProviders = (
   providers: Provider[],
@@ -39,30 +37,28 @@ export const setActiveProvider = (
   provider,
 });
 
-export const getProviders =
-  () =>
-  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
-    return UttuQuery(
-      getState().config.uttuApiUrl,
-      'providers',
-      getProvidersQuery,
-      {},
-      await getState().auth.getAccessToken()
-    )
-      .then((data) => {
-        const activeCode = window.localStorage.getItem('ACTIVE_PROVIDER');
-        dispatch(receiveProviders(data.providers, activeCode));
-        return Promise.resolve();
-      })
-      .catch((e) => {
-        dispatch(failedReceivingProviders);
-        return Promise.reject();
-      });
-  };
+export const getProviders = (): AppThunk => async (dispatch, getState) => {
+  return UttuQuery(
+    getState().config.uttuApiUrl,
+    'providers',
+    getProvidersQuery,
+    {},
+    await getState().auth.getAccessToken()
+  )
+    .then((data) => {
+      const activeCode = window.localStorage.getItem('ACTIVE_PROVIDER');
+      dispatch(receiveProviders(data.providers, activeCode));
+      return Promise.resolve();
+    })
+    .catch((e) => {
+      dispatch(failedReceivingProviders);
+      return Promise.reject();
+    });
+};
 
 export const saveProvider =
-  (provider: Provider) =>
-  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+  (provider: Provider): AppThunk =>
+  async (dispatch, getState) => {
     const intl = getIntl(getState());
     const { codespace, ...providerWithoutCodespace } = provider;
 

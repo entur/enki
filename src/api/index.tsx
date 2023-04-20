@@ -14,8 +14,8 @@ import { useSelector } from 'react-redux';
 import { ReactElement } from 'react';
 import { GlobalState } from 'reducers';
 import { useAuth } from '@entur/auth-provider';
-import { AuthState } from 'reducers/auth';
 import { useConfig } from 'config/ConfigContext';
+import { AuthState } from 'features/app/authSlice';
 
 export const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 

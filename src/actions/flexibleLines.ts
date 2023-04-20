@@ -20,17 +20,15 @@ import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
 import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
 import { SetActiveProviderAction } from 'actions/providers';
-import { sentryCaptureException } from 'store';
+import { sentryCaptureException } from 'app/store';
+import { RECEIVE_FLEXIBLE_LINE, RECEIVE_FLEXIBLE_LINES } from './constants';
 
-export const RECEIVE_FLEXIBLE_LINES = 'RECEIVE_FLEXIBLE_LINES';
-export const RECEIVE_FLEXIBLE_LINE = 'RECEIVE_FLEXIBLE_LINE';
-
-type ReceiveFlexibleLinesAction = {
+export type ReceiveFlexibleLinesAction = {
   type: typeof RECEIVE_FLEXIBLE_LINES;
   lines: FlexibleLine[];
 };
 
-type ReceiveFlexibleLineAction = {
+export type ReceiveFlexibleLineAction = {
   type: typeof RECEIVE_FLEXIBLE_LINE;
   line: FlexibleLine;
 };

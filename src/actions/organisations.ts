@@ -1,10 +1,8 @@
 import { OrganisationState } from 'reducers/organisations';
-import { GlobalState } from 'reducers';
 import { UttuQuery } from 'api';
 import { getOrganisationsQuery } from 'api/uttu/queries';
-import { sentryCaptureException } from 'store';
-
-export const RECEIVE_ORGANISATIONS = 'RECEIVE_ORGANISATIONS';
+import { AppThunk, sentryCaptureException } from 'app/store';
+import { RECEIVE_ORGANISATIONS } from './constants';
 
 export type ReceiveOrganisations = {
   type: typeof RECEIVE_ORGANISATIONS;
@@ -18,26 +16,21 @@ export const receiveOrganisations = (
   organisations,
 });
 
-export const getOrganisations =
-  () =>
-  async (
-    dispatch: (receiveOrganisations: ReceiveOrganisations) => void,
-    getState: () => GlobalState
-  ) => {
-    try {
-      const activeProvider = getState().providers.active?.code ?? '';
-      if (!activeProvider) {
-        return;
-      }
-      const { organisations } = await UttuQuery(
-        getState().config.uttuApiUrl,
-        activeProvider,
-        getOrganisationsQuery,
-        {},
-        await getState().auth.getAccessToken()
-      );
-      dispatch(receiveOrganisations(organisations));
-    } catch (e) {
-      sentryCaptureException(e);
+export const getOrganisations = (): AppThunk => async (dispatch, getState) => {
+  try {
+    const activeProvider = getState().providers.active?.code ?? '';
+    if (!activeProvider) {
+      return;
     }
-  };
+    const { organisations } = await UttuQuery(
+      getState().config.uttuApiUrl,
+      activeProvider,
+      getOrganisationsQuery,
+      {},
+      await getState().auth.getAccessToken()
+    );
+    dispatch(receiveOrganisations(organisations));
+  } catch (e) {
+    sentryCaptureException(e);
+  }
+};

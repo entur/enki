@@ -5,7 +5,7 @@ import messages, {
 } from './uttu.messages';
 import { AppIntlState } from 'i18n';
 import { ApolloError, isApolloError } from '@apollo/client';
-import { sentryCaptureException } from 'store';
+import { sentryCaptureException } from 'app/store';
 
 type Extensions = {
   code: UttuCode;
