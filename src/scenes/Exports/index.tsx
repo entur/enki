@@ -36,7 +36,7 @@ const Exports = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadExports);
+    dispatch(loadExports());
   }, [dispatch]);
 
   const auth = useAuth();

@@ -29,10 +29,13 @@ const UserPreference = () => {
   };
 
   const items = providers
-    ? providers.sort(sortProviders).map((p) => ({
-        value: p.code ?? '',
-        label: p.name ?? '',
-      }))
+    ? providers
+        .slice()
+        .sort(sortProviders)
+        .map((p) => ({
+          value: p.code ?? '',
+          label: p.name ?? '',
+        }))
     : [];
 
   return (

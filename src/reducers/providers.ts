@@ -43,7 +43,7 @@ const providersReducer = (
     case RECEIVE_PROVIDERS: {
       return {
         ...state,
-        providers: action.payload.providers,
+        providers: [...action.payload.providers],
         active: getActiveProvider(state, action),
       };
     }
@@ -55,7 +55,7 @@ const providersReducer = (
       };
 
     case SET_ACTIVE_PROVIDER:
-      return { ...state, active: action.provider };
+      return { ...state, active: Object.assign({}, action.provider) };
 
     default:
       return state;

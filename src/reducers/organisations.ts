@@ -10,7 +10,7 @@ const organisationsReducer = (
 ) => {
   switch (action.type) {
     case RECEIVE_ORGANISATIONS:
-      return action.organisations;
+      return [...action.organisations];
 
     default:
       return state;

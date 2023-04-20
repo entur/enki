@@ -1,26 +1,21 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-//import { Provider } from 'react-intl-redux';
-
 import App from 'scenes/App';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { store } from './app/store';
-
-import './styles/index.scss';
 import { Apollo } from 'api';
 import AuthProvider, { useAuth } from '@entur/auth-provider';
 import { fetchConfig } from 'config/fetchConfig';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
 import { Provider } from 'react-redux';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
 import { selectAuthLoaded, updateAuth } from 'features/app/authSlice';
-import { useSelector } from 'react-redux';
+import './styles/index.scss';
 
 const AuthenticatedApp = () => {
   const dispatch = useAppDispatch();
-  const authStateLoaded = useSelector(selectAuthLoaded);
-  const configStateLoaded = useSelector(selectConfigLoaded);
+  const authStateLoaded = useAppSelector(selectAuthLoaded);
+  const configStateLoaded = useAppSelector(selectConfigLoaded);
   const auth = useAuth();
   const config = useConfig();
 

@@ -1,26 +1,19 @@
 import { configureStore, ThunkAction, AnyAction } from '@reduxjs/toolkit';
 import configSlice from 'features/app/configSlice';
 import authSlice from 'features/app/authSlice';
+import { intlReducer as intl } from 'react-intl-redux';
+import reducers from 'reducers';
+import { geti18n, getIntl } from 'i18n';
+import thunk from 'redux-thunk';
 
 // import { applyMiddleware, createStore, combineReducers } from 'redux';
 // import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-// import thunk from 'redux-thunk';
-import { intlReducer as intl } from 'react-intl-redux';
 // import * as Sentry from '@sentry/browser';
 // import createSentryMiddleware from 'redux-sentry-middleware';
-
-import reducers from 'reducers';
-import { geti18n, getIntl } from 'i18n';
-// import { normalizeAllUrls } from 'helpers/url';
-import { captureException } from '@sentry/browser';
-
-import { initialState as providersInitialState } from 'reducers/providers';
-
-let useSentry = false;
-
+// import { normalizeAllUrls } from 'utils/sentry';
+//import { captureException } from '@sentry/browser';
+//let useSentry = false;
 // const getMiddlewares = (sentryDsn) => {
-//   const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
-
 //   if (process.env.NODE_ENV === 'production' && sentryDsn) {
 //     useSentry = true;
 //     Sentry.init({
@@ -37,28 +30,10 @@ let useSentry = false;
 //   return middlewares;
 // };
 
-export const sentryCaptureException = (e: any) =>
-  useSentry ? captureException(e) : console.error({ e });
+export const sentryCaptureException = (e: any) => console.error({ e });
+//useSentry ? captureException(e) : console.error({ e });
 
-// export const configureStore = (auth, config) => {
-//   const combinedReducers = combineReducers({
-//     ...reducers,
-//     intl,
-//   });
 const { locale, messages } = geti18n();
-
-//   const middlewares = getMiddlewares(config.sentryDsn);
-//   const enhancer = applyMiddleware(...middlewares);
-
-//   return {
-//     store: createStore(
-//       combinedReducers,
-//       initialState,
-//       composeWithDevTools(enhancer)
-//     ),
-//     sentry: Sentry,
-//   };
-// };
 
 const {
   notification,
@@ -71,8 +46,14 @@ const {
   editor,
 } = reducers;
 
+const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
+
+const devMiddlewares =
+  process.env.NODE_ENV !== 'production'
+    ? [require('redux-immutable-state-invariant').default(), thunk]
+    : [thunk];
+
 export const store = configureStore({
-  // Automatically calls `combineReducers`
   reducer: {
     notification,
     auth: authSlice,
@@ -91,8 +72,13 @@ export const store = configureStore({
       locale,
       messages,
     },
-    providers: providersInitialState,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: true,
+      immmutableCheck: false,
+      serializableCheck: false,
+    }).concat(...devMiddlewares, ...middlewares),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

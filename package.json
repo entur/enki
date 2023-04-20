@@ -86,7 +86,9 @@
     "typescript": "5.0.4",
     "uuid": "9.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "redux-immutable-state-invariant": "2.1.0"
+  },
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
