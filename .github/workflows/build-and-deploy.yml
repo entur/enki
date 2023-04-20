@@ -52,6 +52,7 @@ jobs:
       - run: npm run build
         env:
           REACT_APP_VERSION: ${{ github.sha }}
+          SENTRY_DSN: https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:

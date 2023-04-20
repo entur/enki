@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { AddIcon, DownloadIcon } from '@entur/icons';
 import {
@@ -23,6 +23,7 @@ import { download } from 'model/Export';
 import './styles.scss';
 import { useAuth } from '@entur/auth-provider';
 import { useConfig } from 'config/ConfigContext';
+import { useAppDispatch } from 'app/hooks';
 
 const Exports = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Exports = () => {
   const { formatMessage, locale } = useSelector<GlobalState, AppIntlState>(
     selectIntl
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(loadExports());

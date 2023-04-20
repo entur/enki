@@ -1,4 +1,4 @@
-export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
+import { SHOW_NOTIFICATION } from './constants';
 
 export enum NotificationTypes {
   SUCCESS = 'success',

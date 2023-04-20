@@ -1,17 +1,18 @@
-import {
-  RECEIVE_FLEXIBLE_LINES,
-  RECEIVE_FLEXIBLE_LINE,
-  FlexibleLinesAction,
-} from 'actions/flexibleLines';
+import { ReceiveFlexibleLineAction } from 'actions/flexibleLines';
 import FlexibleLine from '../model/FlexibleLine';
 import JourneyPattern from 'model/JourneyPattern';
-import { SET_ACTIVE_PROVIDER } from 'actions/providers';
+import { AnyAction } from 'redux';
+import {
+  RECEIVE_FLEXIBLE_LINE,
+  RECEIVE_FLEXIBLE_LINES,
+  SET_ACTIVE_PROVIDER,
+} from 'actions/constants';
 
 export type FlexibleLinesState = FlexibleLine[] | null;
 
 const flexibleLines = (
   lines: FlexibleLinesState = null,
-  action: FlexibleLinesAction
+  action: AnyAction
 ): FlexibleLinesState => {
   switch (action.type) {
     case RECEIVE_FLEXIBLE_LINES:
@@ -19,13 +20,15 @@ const flexibleLines = (
 
     case RECEIVE_FLEXIBLE_LINE:
       const newJourneyPatterns: JourneyPattern[] =
-        action.line?.journeyPatterns?.map((jp) => ({
-          ...jp,
-          pointsInSequence: jp.pointsInSequence.map((pis) => ({
-            ...pis,
-            flexibleStopPlaceRef: pis.flexibleStopPlace?.id,
-          })),
-        })) ?? [];
+        (action as ReceiveFlexibleLineAction).line?.journeyPatterns?.map(
+          (jp) => ({
+            ...jp,
+            pointsInSequence: jp.pointsInSequence.map((pis) => ({
+              ...pis,
+              flexibleStopPlaceRef: pis.flexibleStopPlace?.id,
+            })),
+          })
+        ) ?? [];
 
       const newFlexibleLine: FlexibleLine = {
         ...action.line,

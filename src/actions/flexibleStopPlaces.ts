@@ -16,12 +16,13 @@ import { Dispatch } from 'react';
 import { GlobalState } from 'reducers';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { getInternationalizedUttuError } from 'helpers/uttu';
-import { sentryCaptureException } from 'store';
-
-export const REQUEST_FLEXIBLE_STOP_PLACES = 'REQUEST_FLEXIBLE_STOP_PLACES';
-export const RECEIVE_FLEXIBLE_STOP_PLACES = 'RECEIVE_FLEXIBLE_STOP_PLACES';
-export const REQUEST_FLEXIBLE_STOP_PLACE = 'REQUEST_FLEXIBLE_STOP_PLACE';
-export const RECEIVE_FLEXIBLE_STOP_PLACE = 'RECEIVE_FLEXIBLE_STOP_PLACE';
+import { sentryCaptureException } from 'app/store';
+import {
+  RECEIVE_FLEXIBLE_STOP_PLACE,
+  RECEIVE_FLEXIBLE_STOP_PLACES,
+  REQUEST_FLEXIBLE_STOP_PLACE,
+  REQUEST_FLEXIBLE_STOP_PLACES,
+} from './constants';
 
 const requestFlexibleStopPlacesActionCreator = () => ({
   type: REQUEST_FLEXIBLE_STOP_PLACES,
