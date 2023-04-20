@@ -4,8 +4,8 @@ import authSlice from 'features/app/authSlice';
 import { intlReducer as intl } from 'react-intl-redux';
 import reducers from 'reducers';
 import { geti18n, getIntl } from 'i18n';
-import thunk from 'redux-thunk';
 import * as Sentry from '@sentry/react';
+import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
 
 export const sentryCaptureException = (e: any) =>
   process.env.NODE_ENV === 'production'
@@ -29,12 +29,10 @@ const {
   editor,
 } = reducers;
 
-const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
-
 const devMiddlewares =
   process.env.NODE_ENV !== 'production'
-    ? [require('redux-immutable-state-invariant').default(), thunk]
-    : [thunk];
+    ? [immutableStateInvariantMiddleware()]
+    : [];
 
 export const store = configureStore({
   reducer: {
@@ -58,10 +56,12 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      thunk: true,
+      thunk: {
+        extraArgument: { intl: getIntl },
+      },
       immmutableCheck: false,
       serializableCheck: false,
-    }).concat(...devMiddlewares, ...middlewares),
+    }).concat(...devMiddlewares),
   enhancers: [sentryReduxEnhancer],
 });
 
