@@ -30,10 +30,8 @@ const initialState: AuthState = {
 
 export const authSlice = createSlice({
   name: 'auth',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    // Use the PayloadAction type to declare the contents of `action.payload`
     updateAuth: (state, action: PayloadAction<Auth>) => ({
       loaded: true,
       ...action.payload,
@@ -43,8 +41,6 @@ export const authSlice = createSlice({
 
 export const { updateAuth } = authSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-//export const selectCount = (state: RootState) => state.counter.value
 export const selectAuthLoaded = (state: RootState) => state.auth.loaded;
 
 export default authSlice.reducer;
