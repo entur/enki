@@ -1,26 +1,26 @@
-import { UttuQuery } from 'api';
-import {
-  getFlexibleLineByIdQuery,
-  getlineByIdQuery,
-  getFlexibleLinesQuery,
-} from 'api/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
+import { SetActiveProviderAction } from 'actions/providers';
+import { UttuQuery } from 'api';
 import {
   deleteFlexibleLine,
   deleteline,
   flexibleLineMutation,
   lineMutation,
 } from 'api/uttu/mutations';
+import {
+  getFlexibleLineByIdQuery,
+  getFlexibleLinesQuery,
+  getlineByIdQuery,
+} from 'api/uttu/queries';
+import { sentryCaptureException } from 'app/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
-import { getIntl } from 'i18n';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
 import { Dispatch } from 'react';
+import { IntlShape } from 'react-intl';
 import { GlobalState } from 'reducers';
-import { SetActiveProviderAction } from 'actions/providers';
-import { sentryCaptureException } from 'app/store';
 import { RECEIVE_FLEXIBLE_LINE, RECEIVE_FLEXIBLE_LINES } from './constants';
 
 export type ReceiveFlexibleLinesAction = {
@@ -53,7 +53,8 @@ const receiveFlexibleLineActionCreator = (
 });
 
 export const loadFlexibleLines =
-  () => async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+  (intl: IntlShape) =>
+  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     try {
       const activeProvider = getState().providers.active?.code ?? '';
       const uttuApiUrl = getState().config.uttuApiUrl;
@@ -66,13 +67,16 @@ export const loadFlexibleLines =
       );
       dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
     } catch (e) {
-      const intl = getIntl(getState());
       dispatch(
         showErrorNotification(
-          intl.formatMessage('loadLinesErrorHeader'),
+          intl.formatMessage({ id: 'loadLinesErrorHeader' }),
           intl.formatMessage(
-            'loadLinesErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'loadLinesErrorMessage',
+            },
+            {
+              details: getInternationalizedUttuError(intl, e as Error),
+            }
           )
         )
       );
@@ -81,7 +85,7 @@ export const loadFlexibleLines =
   };
 
 export const loadFlexibleLineById =
-  (id: string, isFlexibleLine: boolean) =>
+  (id: string, isFlexibleLine: boolean, intl: IntlShape) =>
   async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     try {
       const queryById = isFlexibleLine
@@ -102,13 +106,14 @@ export const loadFlexibleLineById =
 
       dispatch(receiveFlexibleLineActionCreator(flexibleLine ?? line ?? {}));
     } catch (e) {
-      const intl = getIntl(getState());
       dispatch(
         showErrorNotification(
-          intl.formatMessage('loadLineByIdErrorHeader'),
+          intl.formatMessage({ id: 'loadLineByIdErrorHeader' }),
           intl.formatMessage(
-            'loadLineByIdErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'loadLineByIdErrorMessage',
+            },
+            { details: getInternationalizedUttuError(intl, e as Error) }
           )
         )
       );
@@ -117,11 +122,10 @@ export const loadFlexibleLineById =
   };
 
 export const saveFlexibleLine =
-  (flexibleLine: FlexibleLine) =>
+  (flexibleLine: FlexibleLine, intl: IntlShape) =>
   async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     const activeProvider = getState().providers.active?.code ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
-    const intl = getIntl(getState());
     const isNewLine = flexibleLine.id === undefined;
     const mutation = flexibleLine.flexibleLineType
       ? flexibleLineMutation
@@ -129,14 +133,14 @@ export const saveFlexibleLine =
 
     const { header, message } = isNewLine
       ? {
-          header: intl.formatMessage('modalSaveLineSuccessHeader'),
-          message: `${flexibleLine.name} ${intl.formatMessage(
-            'modalSaveLineSuccessMessage'
-          )}`,
+          header: intl.formatMessage({ id: 'modalSaveLineSuccessHeader' }),
+          message: `${flexibleLine.name} ${intl.formatMessage({
+            id: 'modalSaveLineSuccessMessage',
+          })}`,
         }
       : {
-          header: intl.formatMessage('saveLineSuccessHeader'),
-          message: intl.formatMessage('saveLineSuccessMessage'),
+          header: intl.formatMessage({ id: 'saveLineSuccessHeader' }),
+          message: intl.formatMessage({ id: 'saveLineSuccessMessage' }),
         };
 
     try {
@@ -153,10 +157,12 @@ export const saveFlexibleLine =
     } catch (e) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage('saveLineErrorHeader'),
+          intl.formatMessage({ id: 'saveLineErrorHeader' }),
           intl.formatMessage(
-            'saveLineErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'saveLineErrorMessage',
+            },
+            { details: getInternationalizedUttuError(intl, e as Error) }
           )
         )
       );
@@ -166,12 +172,11 @@ export const saveFlexibleLine =
   };
 
 export const deleteLine =
-  (flexibleLine: FlexibleLine) =>
+  (flexibleLine: FlexibleLine, intl: IntlShape) =>
   async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
     const { id, flexibleLineType } = flexibleLine;
     const activeProvider = getState().providers.active?.code ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
-    const intl = getIntl(getState());
     const deleteQuery = flexibleLineType ? deleteFlexibleLine : deleteline;
 
     try {
@@ -184,17 +189,19 @@ export const deleteLine =
       );
       dispatch(
         showSuccessNotification(
-          intl.formatMessage('deleteLineSuccessHeader'),
-          intl.formatMessage('deleteLineSuccessMessage')
+          intl.formatMessage({ id: 'deleteLineSuccessHeader' }),
+          intl.formatMessage({ id: 'deleteLineSuccessMessage' })
         )
       );
     } catch (e) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage('deleteLineErrorHeader'),
+          intl.formatMessage({ id: 'deleteLineErrorHeader' }),
           intl.formatMessage(
-            'deleteLineErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'deleteLineErrorMessage',
+            },
+            { details: getInternationalizedUttuError(intl, e as Error) }
           )
         )
       );

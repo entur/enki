@@ -1,34 +1,34 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TextArea, TextField } from '@entur/form';
-import { Dropdown } from '@entur/dropdown';
 import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
+import { Dropdown } from '@entur/dropdown';
+import { TextArea, TextField } from '@entur/form';
 import { Paragraph } from '@entur/typography';
-import { isBlank } from 'helpers/forms';
+import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
   deleteNetworkById,
   loadNetworkById,
   saveNetwork,
 } from 'actions/networks';
-import { loadFlexibleLines } from 'actions/flexibleLines';
-import OverlayLoader from 'components/OverlayLoader';
-import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';
+import Loading from 'components/Loading';
+import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
-import { AppIntlState, selectIntl } from 'i18n';
-import { GlobalState } from 'reducers';
-import { Network } from 'model/Network';
-import { OrganisationState } from 'reducers/organisations';
-import { FlexibleLinesState } from 'reducers/flexibleLines';
-import usePristine from 'hooks/usePristine';
-import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import Provider from 'model/Provider';
-import { mapToItems } from 'helpers/dropdown';
-import './styles.scss';
-import { filterAuthorities } from 'model/Organisation';
 import { useConfig } from 'config/ConfigContext';
+import { mapToItems } from 'helpers/dropdown';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import { isBlank } from 'helpers/forms';
+import usePristine from 'hooks/usePristine';
+import { Network } from 'model/Network';
+import { filterAuthorities } from 'model/Organisation';
+import Provider from 'model/Provider';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import { FlexibleLinesState } from 'reducers/flexibleLines';
+import { OrganisationState } from 'reducers/organisations';
+import './styles.scss';
 
 const getCurrentNetwork = (state: GlobalState, params: Params): Network =>
   state.networks?.find((network) => network.id === params.id) ?? {
@@ -39,7 +39,8 @@ const getCurrentNetwork = (state: GlobalState, params: Params): Network =>
 const NetworkEditor = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const activeProvider = useSelector<GlobalState, Provider | null>(
     (state) => state.providers.active
   );
@@ -65,7 +66,7 @@ const NetworkEditor = () => {
   const dispatch = useDispatch<any>();
 
   const dispatchLoadFlexibleLines = useCallback(
-    () => dispatch(loadFlexibleLines()),
+    () => dispatch(loadFlexibleLines(intl)),
     [dispatch]
   );
 
@@ -129,15 +130,17 @@ const NetworkEditor = () => {
 
   return (
     <Page
-      backButtonTitle={formatMessage('navBarNetworksMenuItemLabel')}
+      backButtonTitle={formatMessage({ id: 'navBarNetworksMenuItemLabel' })}
       title={
         params.id
-          ? formatMessage('editorEditNetworkHeaderText')
-          : formatMessage('editorCreateNetworkHeaderText')
+          ? formatMessage({ id: 'editorEditNetworkHeaderText' })
+          : formatMessage({ id: 'editorCreateNetworkHeaderText' })
       }
     >
       <div className="network-editor">
-        <Paragraph>{formatMessage('editorNetworkDescription')}</Paragraph>
+        <Paragraph>
+          {formatMessage({ id: 'editorNetworkDescription' })}
+        </Paragraph>
 
         {network && lines ? (
           <OverlayLoader
@@ -145,8 +148,8 @@ const NetworkEditor = () => {
             isLoading={isSaving || isDeleting}
             text={
               isSaving
-                ? formatMessage('editorSavingNetworkLoadingText')
-                : formatMessage('editorDeletingNetworkLoadingText')
+                ? formatMessage({ id: 'editorSavingNetworkLoadingText' })
+                : formatMessage({ id: 'editorDeletingNetworkLoadingText' })
             }
           >
             <div className="network-form">
@@ -154,9 +157,9 @@ const NetworkEditor = () => {
 
               <TextField
                 className="form-section"
-                label={formatMessage('editorNetworkNameLabelText')}
+                label={formatMessage({ id: 'editorNetworkNameLabelText' })}
                 {...getErrorFeedback(
-                  formatMessage('editorNetworkValidationName'),
+                  formatMessage({ id: 'editorNetworkValidationName' }),
                   !isBlank(network.name),
                   namePristine
                 )}
@@ -168,7 +171,9 @@ const NetworkEditor = () => {
 
               <TextArea
                 className="form-section"
-                label={formatMessage('editorNetworkDescriptionLabelText')}
+                label={formatMessage({
+                  id: 'editorNetworkDescriptionLabelText',
+                })}
                 value={network.description}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                   onFieldChange('description', e.target.value)
@@ -177,7 +182,9 @@ const NetworkEditor = () => {
 
               <TextField
                 className="form-section"
-                label={formatMessage('editorNetworkPrivateCodeLabelText')}
+                label={formatMessage({
+                  id: 'editorNetworkPrivateCodeLabelText',
+                })}
                 value={network.privateCode}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   onFieldChange('privateCode', e.target.value)
@@ -193,14 +200,14 @@ const NetworkEditor = () => {
                     authorities.map((v) => ({ ...v, name: v.name.value }))
                   )
                 }
-                placeholder={formatMessage('defaultOption')}
+                placeholder={formatMessage({ id: 'defaultOption' })}
                 clearable
-                label={formatMessage('editorNetworkAuthorityLabelText')}
+                label={formatMessage({ id: 'editorNetworkAuthorityLabelText' })}
                 onChange={(organisation) =>
                   handleAuthoritySelectionChange(organisation?.value ?? '')
                 }
                 {...getErrorFeedback(
-                  formatMessage('editorNetworkValidationAuthority'),
+                  formatMessage({ id: 'editorNetworkValidationAuthority' }),
                   !isBlank(network.authorityRef),
                   authorityPristine
                 )}
@@ -211,16 +218,16 @@ const NetworkEditor = () => {
                     onClick={() => setDeleteDialogOpen(true)}
                     disabled={isDeleteDisabled}
                   >
-                    {formatMessage('editorDeleteButtonText')}
+                    {formatMessage({ id: 'editorDeleteButtonText' })}
                   </NegativeButton>
                 )}
 
                 <SuccessButton onClick={handleOnSaveClick}>
                   {params.id
-                    ? formatMessage('editorSaveButtonText')
+                    ? formatMessage({ id: 'editorSaveButtonText' })
                     : formatMessage(
-                        'editorDetailedCreate',
-                        formatMessage('network')
+                        { id: 'editorDetailedCreate' },
+                        { details: formatMessage({ id: 'network' }) }
                       )}
                 </SuccessButton>
               </div>
@@ -234,22 +241,28 @@ const NetworkEditor = () => {
             children={null}
             text={
               !network
-                ? formatMessage('editorLoadingNetworkText')
-                : formatMessage('editorLoadingDependenciesText')
+                ? formatMessage({ id: 'editorLoadingNetworkText' })
+                : formatMessage({ id: 'editorLoadingDependenciesText' })
             }
           />
         )}
 
         <ConfirmDialog
           isOpen={isDeleteDialogOpen}
-          title={formatMessage('editorDeleteNetworkConfirmDialogTitle')}
-          message={formatMessage('editorDeleteNetworkConfirmDialogMessage')}
+          title={formatMessage({ id: 'editorDeleteNetworkConfirmDialogTitle' })}
+          message={formatMessage({
+            id: 'editorDeleteNetworkConfirmDialogMessage',
+          })}
           buttons={[
             <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-              {formatMessage('editorDeleteNetworkConfirmDialogCancelText')}
+              {formatMessage({
+                id: 'editorDeleteNetworkConfirmDialogCancelText',
+              })}
             </SecondaryButton>,
             <SuccessButton key={1} onClick={handleDelete}>
-              {formatMessage('editorDeleteNetworkConfirmDialogConfirmText')}
+              {formatMessage({
+                id: 'editorDeleteNetworkConfirmDialogConfirmText',
+              })}
             </SuccessButton>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}

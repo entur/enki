@@ -1,11 +1,10 @@
-import React, { ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
 import { TextField } from '@entur/form';
-import { isBlank } from 'helpers/forms';
-import { selectIntl } from 'i18n';
-import JourneyPattern from 'model/JourneyPattern';
-import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import { isBlank } from 'helpers/forms';
+import usePristine from 'hooks/usePristine';
+import JourneyPattern from 'model/JourneyPattern';
+import { ChangeEvent } from 'react';
+import { useIntl } from 'react-intl';
 import './styles.scss';
 
 type Props = {
@@ -15,16 +14,16 @@ type Props = {
 };
 
 const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const namePristine = usePristine(journeyPattern.name, spoilPristine);
 
   return (
     <div className="journey-pattern-inputs">
       <TextField
-        label={formatMessage('generalNameLabel')}
+        label={formatMessage({ id: 'generalNameLabel' })}
         {...getErrorFeedback(
-          formatMessage('generalValidationName'),
+          formatMessage({ id: 'generalValidationName' }),
           !isBlank(journeyPattern.name),
           namePristine
         )}
@@ -35,7 +34,7 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
       />
 
       <TextField
-        label={formatMessage('generalDescriptionLabel')}
+        label={formatMessage({ id: 'generalDescriptionLabel' })}
         value={journeyPattern.description || ''}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           onFieldChange({
@@ -46,8 +45,8 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
       />
 
       <TextField
-        label={formatMessage('generalPrivateCodeLabel')}
-        labelTooltip={formatMessage('generalPrivateCodeLabelTooltip')}
+        label={formatMessage({ id: 'generalPrivateCodeLabel' })}
+        labelTooltip={formatMessage({ id: 'generalPrivateCodeLabelTooltip' })}
         value={journeyPattern.privateCode || ''}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           onFieldChange({

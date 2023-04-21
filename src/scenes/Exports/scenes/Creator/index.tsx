@@ -1,28 +1,28 @@
-import React, { ChangeEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { SuccessButton } from '@entur/button';
 import { Checkbox, TextField } from '@entur/form';
+import { QuestionIcon } from '@entur/icons';
+import { Tooltip } from '@entur/tooltip';
+import { Heading4, LeadParagraph } from '@entur/typography';
 import { saveExport } from 'actions/exports';
+import LinesForExport from 'components/LinesForExport';
 import OverlayLoader from 'components/OverlayLoader';
-import { AppIntlState, selectIntl } from 'i18n';
-import { exportIsValid } from './validateForm';
-import { Export, ExportLineAssociation, newExport } from 'model/Export';
-import { GlobalState } from 'reducers';
-import usePristine from 'hooks/usePristine';
+import Page from 'components/Page';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
-import RequiredInputMarker from 'components/RequiredInputMarker';
-import Page from 'components/Page';
-import { Heading4, LeadParagraph } from '@entur/typography';
-import { Tooltip } from '@entur/tooltip';
-import { QuestionIcon } from '@entur/icons';
-import './styles.scss';
-import LinesForExport from 'components/LinesForExport';
+import usePristine from 'hooks/usePristine';
+import { Export, ExportLineAssociation, newExport } from 'model/Export';
+import { ChangeEvent, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import './styles.scss';
+import { exportIsValid } from './validateForm';
 
 const ExportsCreator = () => {
   const navigate = useNavigate();
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const [saveClicked, setSaveClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState<boolean>(false);
   const [theExport, setTheExport] = useState<Export>(newExport());
@@ -34,7 +34,7 @@ const ExportsCreator = () => {
   const handleOnSaveClick = () => {
     if (exportIsValid(theExport)) {
       setSaving(true);
-      dispatch(saveExport(theExport))
+      dispatch(saveExport(theExport, intl))
         .then(() => navigate('/exports'))
         .finally(() => setSaving(false));
     }
@@ -51,23 +51,23 @@ const ExportsCreator = () => {
   return (
     <Page
       className="export-editor"
-      backButtonTitle={formatMessage('navBarExportsMenuItemLabel')}
-      title={formatMessage('exportCreatorHeader')}
+      backButtonTitle={formatMessage({ id: 'navBarExportsMenuItemLabel' })}
+      title={formatMessage({ id: 'exportCreatorHeader' })}
     >
       <OverlayLoader
         className=""
         isLoading={isSaving}
-        text={formatMessage('exportCreatorSavingOverlayLoaderText')}
+        text={formatMessage({ id: 'exportCreatorSavingOverlayLoaderText' })}
       >
         <LeadParagraph>
-          {formatMessage('exportCreatorDescription')}
+          {formatMessage({ id: 'exportCreatorDescription' })}
         </LeadParagraph>
         <RequiredInputMarker />
         <TextField
           className="export-name"
-          label={formatMessage('exportCreatorNameFormLabel')}
+          label={formatMessage({ id: 'exportCreatorNameFormLabel' })}
           {...getErrorFeedback(
-            formatMessage('validateFormErrorExportNameIsEmpty'),
+            formatMessage({ id: 'validateFormErrorExportNameIsEmpty' }),
             !isBlank(theExport.name),
             namePristine
           )}
@@ -79,7 +79,7 @@ const ExportsCreator = () => {
 
         <div className="export-lines-table">
           <Heading4>
-            {formatMessage('exportCreatorLinesForExportHeader')}
+            {formatMessage({ id: 'exportCreatorLinesForExportHeader' })}
           </Heading4>
           <LinesForExport
             onChange={(lines) => {
@@ -95,11 +95,13 @@ const ExportsCreator = () => {
               onFieldChange('dryRun', e.target.checked)
             }
           >
-            {formatMessage('exportCreatorDryRunFormLabel')}
+            {formatMessage({ id: 'exportCreatorDryRunFormLabel' })}
           </Checkbox>
           <Tooltip
             placement="right"
-            content={formatMessage('exportCreatorDryRunFormLabelTooltip')}
+            content={formatMessage({
+              id: 'exportCreatorDryRunFormLabelTooltip',
+            })}
           >
             <span className="question-icon">
               <QuestionIcon />
@@ -107,7 +109,7 @@ const ExportsCreator = () => {
           </Tooltip>
         </div>
         <SuccessButton className="export-save" onClick={handleOnSaveClick}>
-          {formatMessage('exportCreatorSaveButtonLabelText')}
+          {formatMessage({ id: 'exportCreatorSaveButtonLabelText' })}
         </SuccessButton>
       </OverlayLoader>
     </Page>

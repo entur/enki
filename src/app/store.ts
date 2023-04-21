@@ -1,10 +1,9 @@
-import { configureStore, ThunkAction, AnyAction } from '@reduxjs/toolkit';
-import configSlice from 'features/app/configSlice';
-import authSlice from 'features/app/authSlice';
-import { intlReducer as intl } from 'react-intl-redux';
-import reducers from 'reducers';
-import { geti18n, getIntl } from 'i18n';
+import { AnyAction, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react';
+import authSlice from 'features/app/authSlice';
+import configSlice from 'features/app/configSlice';
+import intlSlice from 'features/app/intlSlice';
+import reducers from 'reducers';
 import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
 
 export const sentryCaptureException = (e: any) =>
@@ -15,8 +14,6 @@ export const sentryCaptureException = (e: any) =>
 const sentryReduxEnhancer = Sentry.createReduxEnhancer({
   // Optionally pass options listed below
 });
-
-const { locale, messages } = geti18n();
 
 const {
   notification,
@@ -46,19 +43,10 @@ export const store = configureStore({
     flexibleStopPlaces,
     editor,
     config: configSlice,
-    intl,
-  },
-  preloadedState: {
-    intl: {
-      locale,
-      messages,
-    },
+    intl: intlSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      thunk: {
-        extraArgument: { intl: getIntl },
-      },
       immmutableCheck: false,
       serializableCheck: false,
     }).concat(...devMiddlewares),

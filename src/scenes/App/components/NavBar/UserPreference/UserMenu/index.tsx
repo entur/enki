@@ -1,10 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
 import { UserIcon } from '@entur/icons';
+import { useSelector } from 'react-redux';
 
-import './styles.scss';
-import { GlobalState } from 'reducers';
 import { AuthState } from 'features/app/authSlice';
+import { GlobalState } from 'reducers';
+import './styles.scss';
 
 const UserMenu = () => {
   const { user } = useSelector<GlobalState, AuthState>((state) => state.auth);

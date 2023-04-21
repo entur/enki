@@ -1,10 +1,8 @@
 import { Heading3, Paragraph } from '@entur/typography';
 import AddButton from 'components/AddButton/AddButton';
 import useUniqueKeys from 'hooks/useUniqueKeys';
-import { selectIntl } from 'i18n';
 import StopPoint from 'model/StopPoint';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { StopPointsEditorProps } from '..';
 import { GenericStopPointEditor } from './GenericStopPointEditor';
 
@@ -17,12 +15,12 @@ export const GenericStopPointsEditor = ({
   flexibleLineType,
 }: StopPointsEditorProps) => {
   const keys = useUniqueKeys(pointsInSequence);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   return (
     <section style={{ marginTop: '2em' }}>
-      <Heading3>{formatMessage('editorStopPoints')}</Heading3>
-      <Paragraph>{formatMessage('stopPointsInfoFixed')}</Paragraph>
+      <Heading3>{formatMessage({ id: 'editorStopPoints' })}</Heading3>
+      <Paragraph>{formatMessage({ id: 'stopPointsInfoFixed' })}</Paragraph>
       <div className="stop-point-editor">
         {pointsInSequence.map((stopPoint, pointIndex) => (
           <GenericStopPointEditor
@@ -43,7 +41,7 @@ export const GenericStopPointsEditor = ({
       </div>
       <AddButton
         onClick={addStopPoint}
-        buttonTitle={formatMessage('editorAddStopPoint')}
+        buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
       />
     </section>
   );

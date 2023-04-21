@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useLoadDependencies } from './hooks';
-import { Navigate, useNavigate, useParams } from 'react-router';
-import { useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
-import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
-import { GlobalState } from 'reducers';
-import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
-import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
+import { setSavedChanges } from 'actions/editor';
+import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
+import LineEditorStepper from 'components/LineEditorStepper';
+import Loading from 'components/Loading';
+import Page from 'components/Page';
+import { useConfig } from 'config/ConfigContext';
+import { isBlank } from 'helpers/forms';
+import { getFlexibleLineFromPath } from 'helpers/url';
 import {
   currentFlexibleLineStepIsValid,
   getMaxAllowedFlexibleLineStepIndex,
   validFlexibleLine,
 } from 'helpers/validation';
-import { isBlank } from 'helpers/forms';
-import { getFlexibleLineFromPath } from 'helpers/url';
-import Loading from 'components/Loading';
-import { setSavedChanges } from 'actions/editor';
-import Page from 'components/Page';
-import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
+import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
+import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
+import { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useNavigate, useParams } from 'react-router';
+import { useLocation } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
+import { useLoadDependencies } from './hooks';
 import { FLEXIBLE_LINE_STEPS } from './steps';
 import './styles.scss';
-import LineEditorStepper from 'components/LineEditorStepper';
-import { useConfig } from 'config/ConfigContext';
 
 const EditorFrame = () => {
   const params = useParams();
@@ -37,7 +37,8 @@ const EditorFrame = () => {
     line?.flexibleLineType || firstPath === 'flexible-lines'
   );
 
-  const { formatMessage } = useSelector(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const dispatch = useDispatch<any>();
   const { flexibleLines, organisations, networks, editor, providers } =
     useSelector<GlobalState, GlobalState>((s) => s);
@@ -63,7 +64,7 @@ const EditorFrame = () => {
   const handleOnSaveClick = () => {
     setNextClicked(true);
     setSaving(true);
-    dispatch(saveFlexibleLine(line!))
+    dispatch(saveFlexibleLine(line!, intl))
       .then(() => dispatch(setSavedChanges(true)))
       .then(() => !isEdit && goToLines())
       .then(() => isEdit && refetchFlexibleLine())
@@ -77,7 +78,7 @@ const EditorFrame = () => {
   const handleDelete = () => {
     if (line?.id) {
       setDeleting(true);
-      dispatch(deleteLine(line)).then(() => goToLines());
+      dispatch(deleteLine(line, intl)).then(() => goToLines());
     }
   };
 
@@ -101,8 +102,8 @@ const EditorFrame = () => {
     <Page
       backButtonTitle={
         isFlexibleLine
-          ? formatMessage('navBarFlexibleLinesMenuItemLabel')
-          : formatMessage('navBarLinesMenuItemLabel')
+          ? formatMessage({ id: 'navBarFlexibleLinesMenuItemLabel' })
+          : formatMessage({ id: 'navBarLinesMenuItemLabel' })
       }
       onBackButtonClick={onBackButtonClicked}
     >
@@ -110,7 +111,7 @@ const EditorFrame = () => {
         <Loading
           className=""
           isLoading={isLoadingDependencies}
-          text={formatMessage('editorLoadingLineText')}
+          text={formatMessage({ id: 'editorLoadingLineText' })}
         >
           <>
             {!isLoadingDependencies && !line && (
@@ -118,13 +119,15 @@ const EditorFrame = () => {
             )}
             {!isLoadingDependencies && line && (
               <LineEditorStepper
-                steps={FLEXIBLE_LINE_STEPS.map((step) => formatMessage(step))}
+                steps={FLEXIBLE_LINE_STEPS.map((step) =>
+                  formatMessage({ id: step })
+                )}
                 isValidStepIndex={(i: number) =>
-                  getMaxAllowedFlexibleLineStepIndex(line!) >= i
+                  getMaxAllowedFlexibleLineStepIndex(line!, intl) >= i
                 }
-                isLineValid={validFlexibleLine(line!)}
+                isLineValid={validFlexibleLine(line!, intl)}
                 currentStepIsValid={(i) =>
-                  currentFlexibleLineStepIsValid(i, line)
+                  currentFlexibleLineStepIsValid(i, line, intl)
                 }
                 setNextClicked={setNextClicked}
                 isEdit={isEdit}

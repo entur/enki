@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Navigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter, Navigate } from 'react-router-dom';
 
+import { getOrganisations } from 'actions/organisations';
+import { getProviders } from 'actions/providers';
+import Loading from 'components/Loading';
 import Notifications from 'components/Notification';
 import ScrollToTop from 'components/ScrollToTop';
-import Loading from 'components/Loading';
-import NavBar from './components/NavBar';
 import Routes from './Routes';
-import { getProviders } from 'actions/providers';
-import { getOrganisations } from 'actions/organisations';
+import NavBar from './components/NavBar';
 
-import './styles.scss';
-import { GlobalState } from 'reducers';
-import { AppIntlState, selectIntl } from 'i18n';
 import { useConfig } from 'config/ConfigContext';
+import { useIntl } from 'react-intl';
+import { GlobalState } from 'reducers';
+import './styles.scss';
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -41,7 +41,7 @@ const App = () => {
     dispatch(getOrganisations());
   }, [dispatch, providers.active]);
 
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = useIntl();
 
   const { adminRole } = useConfig();
 
@@ -49,7 +49,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <Helmet defaultTitle={formatMessage('appTitle')} />
+      <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
 
       <BrowserRouter basename={basename}>
         <ScrollToTop>
@@ -64,7 +64,7 @@ const App = () => {
                   )}
                 <Loading
                   className="app-loader"
-                  text="Laster inn dataleverandører og organisasjoner..."
+                  text={formatMessage({ id: 'app.loading.message' })}
                   isLoading={
                     !providers.providers ||
                     auth.isLoading ||

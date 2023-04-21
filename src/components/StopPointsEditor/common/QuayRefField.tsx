@@ -1,13 +1,11 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
 import { TextField } from '@entur/form';
-import { quaySearchResults } from './quaySearchResults';
-import debounce from './debounce';
-import { useSelector } from 'react-redux';
-import { GlobalState } from 'reducers';
-import { AppIntlState, selectIntl } from 'i18n';
-import { ErrorHandling } from 'helpers/errorHandling';
 import { useQuaySearch } from 'api/useQuaySearch';
+import { ErrorHandling } from 'helpers/errorHandling';
 import StopPoint from 'model/StopPoint';
+import { ChangeEvent, useCallback, useState } from 'react';
+import { useIntl } from 'react-intl';
+import debounce from './debounce';
+import { quaySearchResults } from './quaySearchResults';
 
 interface Props {
   initialQuayRef?: string | null;
@@ -31,7 +29,7 @@ export const QuayRefField = ({
   errorFeedback,
   onChange,
 }: Props) => {
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = useIntl();
   const [quayRefInputValue, setQuayRefInputValue] = useState(initialQuayRef);
 
   const { stopPlace, quay, refetch, loading } = useQuaySearch(
@@ -42,8 +40,8 @@ export const QuayRefField = ({
   const quaySearchFeedback = quaySearchResults(
     { stopPlace, quay },
     loading,
-    formatMessage('quaySearchResults_loadingLabel'),
-    formatMessage('quaySearchResults_quayNotFoundLabel')
+    formatMessage({ id: 'quaySearchResults_loadingLabel' }),
+    formatMessage({ id: 'quaySearchResults_quayNotFoundLabel' })
   );
 
   const debouncedSearchForQuay = useCallback(
@@ -56,7 +54,7 @@ export const QuayRefField = ({
   return (
     <TextField
       className="stop-point-info-item"
-      label={formatMessage('labelQuayRef')}
+      label={formatMessage({ id: 'labelQuayRef' })}
       {...errorFeedback}
       {...quaySearchFeedback}
       value={quayRefInputValue!}

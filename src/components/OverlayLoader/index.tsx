@@ -1,5 +1,5 @@
-import React, { Fragment, ReactElement } from 'react';
 import cx from 'classnames';
+import { Fragment, ReactElement } from 'react';
 import LoadingIcon from '../icons/Loading';
 import './styles.scss';
 

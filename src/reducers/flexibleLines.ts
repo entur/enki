@@ -1,12 +1,12 @@
-import { ReceiveFlexibleLineAction } from 'actions/flexibleLines';
-import FlexibleLine from '../model/FlexibleLine';
-import JourneyPattern from 'model/JourneyPattern';
-import { AnyAction } from 'redux';
 import {
   RECEIVE_FLEXIBLE_LINE,
   RECEIVE_FLEXIBLE_LINES,
   SET_ACTIVE_PROVIDER,
 } from 'actions/constants';
+import { ReceiveFlexibleLineAction } from 'actions/flexibleLines';
+import JourneyPattern from 'model/JourneyPattern';
+import { AnyAction } from 'redux';
+import FlexibleLine from '../model/FlexibleLine';
 
 export type FlexibleLinesState = FlexibleLine[] | null;
 

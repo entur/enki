@@ -1,18 +1,17 @@
-import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
+import { addDays, format, subDays } from 'date-fns';
 import { MemoryRouter } from 'react-router-dom';
-import { format, addDays, subDays } from 'date-fns';
 
-import {
-  render,
-  act,
-  getByText,
-  RenderResult,
-  getAllByRole,
-  fireEvent,
-} from 'utils/test-utils';
 import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
 import { ExportLineAssociation } from 'model/Export';
+import {
+  RenderResult,
+  act,
+  fireEvent,
+  getAllByRole,
+  getByText,
+  render,
+} from 'utils/test-utils';
 import LinesForExport from '.';
 
 import '@testing-library/jest-dom/extend-expect';

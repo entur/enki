@@ -1,8 +1,7 @@
-import { useDispatch } from 'react-redux';
+import { PrimaryButton, SecondaryButton } from '@entur/button';
 import { setSavedChanges } from 'actions/editor';
 import ConfirmDialog from 'components/ConfirmDialog';
-import { PrimaryButton, SecondaryButton } from '@entur/button';
-import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 type NavigateConfirmProps = {

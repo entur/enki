@@ -5,8 +5,8 @@ import {
   REQUEST_FLEXIBLE_STOP_PLACES,
   SET_ACTIVE_PROVIDER,
 } from 'actions/constants';
-import FlexibleStopPlace from '../model/FlexibleStopPlace';
 import { AnyAction } from 'redux';
+import FlexibleStopPlace from '../model/FlexibleStopPlace';
 
 export type FlexibleStopPlacesState = FlexibleStopPlace[] | null;
 

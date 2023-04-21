@@ -1,8 +1,8 @@
-import React, { createRef, useEffect, useState } from 'react';
-import { Map, Polygon, TileLayer } from 'react-leaflet';
 import { FloatingButton } from '@entur/button';
 import { UndoIcon } from '@entur/icons';
 import { LatLngTuple, LeafletMouseEvent } from 'leaflet';
+import { createRef, useEffect, useState } from 'react';
+import { Map, Polygon, TileLayer } from 'react-leaflet';
 import './styles.scss';
 
 type Props = {

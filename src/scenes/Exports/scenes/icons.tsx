@@ -1,12 +1,10 @@
-import React from 'react';
-
 import {
   ValidationCheckIcon,
   ValidationErrorIcon,
   ValidationExclamationIcon,
 } from '@entur/icons';
-import './styles.scss';
 import { EXPORT_STATUS, SEVERITY } from 'model/enums';
+import './styles.scss';
 
 export const getIconForStatus = (status?: EXPORT_STATUS) => {
   switch (status) {

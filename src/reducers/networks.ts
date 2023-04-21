@@ -1,10 +1,10 @@
-import { AnyAction } from 'redux';
-import { Network } from 'model/Network';
 import {
-  RECEIVE_NETWORKS,
   RECEIVE_NETWORK,
+  RECEIVE_NETWORKS,
   SET_ACTIVE_PROVIDER,
 } from 'actions/constants';
+import { Network } from 'model/Network';
+import { AnyAction } from 'redux';
 
 export type NetworksState = Network[] | null;
 

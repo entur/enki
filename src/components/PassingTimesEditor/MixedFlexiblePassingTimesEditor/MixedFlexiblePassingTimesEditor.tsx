@@ -1,12 +1,10 @@
-import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
-import { PassingTimesEditorProps } from '..';
 import { changeElementAtIndex } from 'helpers/arrays';
-import { MixedFlexiblePassingTimeEditor } from './MixedFlexiblePassingTimeEditor';
-import { selectIntl } from 'i18n';
-import { useSelector } from 'react-redux';
-import { PassingTimesError } from '../common/PassingTimesError';
 import useUniqueKeys from 'hooks/useUniqueKeys';
+import { useIntl } from 'react-intl';
+import { PassingTimesEditorProps } from '..';
+import { PassingTimesError } from '../common/PassingTimesError';
+import { MixedFlexiblePassingTimeEditor } from './MixedFlexiblePassingTimeEditor';
 
 export const MixedFlexiblePassingTimesEditor = ({
   passingTimes,
@@ -14,14 +12,16 @@ export const MixedFlexiblePassingTimesEditor = ({
   onChange,
   spoilPristine,
 }: PassingTimesEditorProps) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const uniqueKeys = useUniqueKeys(passingTimes);
   return (
     <>
       <Heading4>
-        {formatMessage('serviceJourneyMixedFlexiblePassingTimes')}
+        {formatMessage({ id: 'serviceJourneyMixedFlexiblePassingTimes' })}
       </Heading4>
-      <Paragraph>{formatMessage('passingTimesInfoMixedFlexible')}</Paragraph>
+      <Paragraph>
+        {formatMessage({ id: 'passingTimesInfoMixedFlexible' })}
+      </Paragraph>
       <PassingTimesError
         passingTimes={passingTimes}
         spoilPristine={spoilPristine}

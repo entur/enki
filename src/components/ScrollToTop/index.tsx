@@ -1,5 +1,5 @@
-import { ReactElement, useEffect } from 'react';
 import { usePrevious } from 'helpers/hooks';
+import { ReactElement, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 type Props = {

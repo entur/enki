@@ -1,10 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { selectIntl } from 'i18n';
 import { ApolloError } from '@apollo/client';
 import { showErrorNotification } from 'actions/notification';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { useEffect } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
 
 export default (
   headerKey: keyof MessagesKey,
@@ -12,16 +12,20 @@ export default (
   error?: ApolloError,
   callback?: () => void
 ) => {
-  const intl = useSelector(selectIntl);
+  const intl = useIntl();
   const dispatch = useDispatch();
   useEffect(() => {
     if (error) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage(headerKey),
+          intl.formatMessage({ id: headerKey }),
           intl.formatMessage(
-            messageKey,
-            getInternationalizedUttuError(intl, error)
+            {
+              id: messageKey,
+            },
+            {
+              details: getInternationalizedUttuError(intl, error),
+            }
           )
         )
       );

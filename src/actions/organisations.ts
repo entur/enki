@@ -1,7 +1,7 @@
-import { OrganisationState } from 'reducers/organisations';
 import { UttuQuery } from 'api';
 import { getOrganisationsQuery } from 'api/uttu/queries';
 import { AppThunk, sentryCaptureException } from 'app/store';
+import { OrganisationState } from 'reducers/organisations';
 import { RECEIVE_ORGANISATIONS } from './constants';
 
 export type ReceiveOrganisations = {
