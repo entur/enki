@@ -1,4 +1,5 @@
 export const messages = {
+  ['app.loading.message']: 'Laster inn dataleverandører og organisasjoner...',
   exportsLoadExportByIdErrorHeader: 'Laste eksport',
   exportsLoadExportByIdErrorMessage:
     'En feil oppstod under lastingen av eksporten: {details}',
