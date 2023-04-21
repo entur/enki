@@ -1,10 +1,10 @@
-import Contact from './Contact';
 import {
+  BOOKING_ACCESS,
   BOOKING_METHOD,
   PURCHASE_MOMENT,
-  BOOKING_ACCESS,
   PURCHASE_WHEN,
 } from 'model/enums';
+import Contact from './Contact';
 
 type BookingArrangement = {
   name?: string;

@@ -13,11 +13,11 @@ import {
 import { DELETE_DAY_TYPES } from 'api/uttu/mutations';
 import DayType, { createNewDayType } from 'model/DayType';
 import React, { useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 import { DayTypeEditor } from './DayTypeEditor';
 import { DayTypesTableExpRow } from './DayTypesTableExpRow';
 import { usePreparedDayTypes } from './usePreparedDayTypes';
 import { useServiceJourneysPerDayType } from './useServiceJourneysPerDayType';
-import { useIntl } from 'react-intl';
 
 type DayTypeFetchError = {
   title: string;

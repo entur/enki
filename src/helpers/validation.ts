@@ -1,15 +1,15 @@
-import moment from 'moment';
-import Line from 'model/Line';
-import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
-import JourneyPattern from 'model/JourneyPattern';
-import ServiceJourney from 'model/ServiceJourney';
-import StopPoint from 'model/StopPoint';
-import PassingTime from 'model/PassingTime';
+import { addDays, getDay, isAfter as isDateAfter, parseISO } from 'date-fns';
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import { MessagesKey } from 'i18n/translations/translationKeys';
-import DayType from 'model/DayType';
-import { addDays, getDay, isAfter as isDateAfter, parseISO } from 'date-fns';
 import BookingArrangement from 'model/BookingArrangement';
+import DayType from 'model/DayType';
+import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
+import JourneyPattern from 'model/JourneyPattern';
+import Line from 'model/Line';
+import PassingTime from 'model/PassingTime';
+import ServiceJourney from 'model/ServiceJourney';
+import StopPoint from 'model/StopPoint';
+import moment from 'moment';
 import { IntlShape } from 'react-intl';
 
 export const validLine = (line: Line, intl: IntlShape): boolean =>

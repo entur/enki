@@ -10,8 +10,8 @@ import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
+import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
 import {

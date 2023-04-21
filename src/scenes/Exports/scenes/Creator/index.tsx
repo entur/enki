@@ -1,24 +1,23 @@
-import React, { ChangeEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { SuccessButton } from '@entur/button';
 import { Checkbox, TextField } from '@entur/form';
+import { QuestionIcon } from '@entur/icons';
+import { Tooltip } from '@entur/tooltip';
+import { Heading4, LeadParagraph } from '@entur/typography';
 import { saveExport } from 'actions/exports';
+import LinesForExport from 'components/LinesForExport';
 import OverlayLoader from 'components/OverlayLoader';
-import { useIntl } from 'react-intl';
-import { exportIsValid } from './validateForm';
-import { Export, ExportLineAssociation, newExport } from 'model/Export';
-import { GlobalState } from 'reducers';
-import usePristine from 'hooks/usePristine';
+import Page from 'components/Page';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
-import RequiredInputMarker from 'components/RequiredInputMarker';
-import Page from 'components/Page';
-import { Heading4, LeadParagraph } from '@entur/typography';
-import { Tooltip } from '@entur/tooltip';
-import { QuestionIcon } from '@entur/icons';
-import './styles.scss';
-import LinesForExport from 'components/LinesForExport';
+import usePristine from 'hooks/usePristine';
+import { Export, ExportLineAssociation, newExport } from 'model/Export';
+import { ChangeEvent, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import './styles.scss';
+import { exportIsValid } from './validateForm';
 
 const ExportsCreator = () => {
   const navigate = useNavigate();

@@ -1,7 +1,5 @@
-import React from 'react';
-import ConfirmDialog from 'components/ConfirmDialog';
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import { useSelector } from 'react-redux';
+import ConfirmDialog from 'components/ConfirmDialog';
 import { useIntl } from 'react-intl';
 
 type Props = {

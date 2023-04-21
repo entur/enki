@@ -3,9 +3,9 @@ import {
   timeOrDateValueToNativeDate,
   TimePicker,
 } from '@entur/datepicker';
-import { toDate } from './toDate';
 import { TimeValue } from '@react-types/datepicker';
 import { useIntl } from 'react-intl';
+import { toDate } from './toDate';
 
 type Props = {
   label: string;

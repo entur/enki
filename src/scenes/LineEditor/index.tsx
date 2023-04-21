@@ -1,29 +1,28 @@
-import React, { useCallback, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useIntl } from 'react-intl';
-import { Navigate, useMatch, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import Page from 'components/Page';
-import Line from 'model/Line';
-import Loading from 'components/Loading';
-import { isBlank } from 'helpers/forms';
-import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
-import { GlobalState } from 'reducers';
-import { filterNetexOperators, filterAuthorities } from 'model/Organisation';
 import { setSavedChanges } from 'actions/editor';
+import { showSuccessNotification } from 'actions/notification';
+import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
+import LineEditorStepper from 'components/LineEditorStepper';
+import Loading from 'components/Loading';
+import Page from 'components/Page';
+import { useConfig } from 'config/ConfigContext';
+import { isBlank } from 'helpers/forms';
 import {
-  validLine,
   currentStepIsValid,
   getMaxAllowedStepIndex,
+  validLine,
 } from 'helpers/validation';
-import { lineToPayload } from 'model/Line';
-import { showSuccessNotification } from 'actions/notification';
-import { useUttuErrors, useLine } from './hooks';
-import LineEditorStepper from 'components/LineEditorStepper';
-import { FIXED_LINE_STEPS } from './constants';
+import Line, { lineToPayload } from 'model/Line';
+import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
+import { useCallback, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useMatch, useNavigate } from 'react-router-dom';
+import { GlobalState } from 'reducers';
 import LineEditorSteps from './LineEditorSteps';
+import { FIXED_LINE_STEPS } from './constants';
+import { useLine, useUttuErrors } from './hooks';
 import './styles.scss';
-import { useConfig } from 'config/ConfigContext';
 
 export default () => {
   const intl = useIntl();

@@ -1,15 +1,15 @@
-import React, { useCallback } from 'react';
 import { Dropdown } from '@entur/dropdown';
-import { useIntl } from 'react-intl';
 import { mapVehicleSubmodeAndLabelToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
+import usePristine from 'hooks/usePristine';
 import {
   VEHICLE_MODE,
   VEHICLE_SUBMODE,
   VEHICLE_SUBMODE_LINK,
 } from 'model/enums';
-import usePristine from 'hooks/usePristine';
+import { useCallback } from 'react';
+import { useIntl } from 'react-intl';
 
 type Props = {
   transportMode: VEHICLE_MODE;

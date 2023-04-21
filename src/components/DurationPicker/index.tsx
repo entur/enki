@@ -1,13 +1,10 @@
-import React from 'react';
-import moment from 'moment';
+import cx from 'classnames';
 import formatDuration from 'date-fns/formatDuration';
 import { nb } from 'date-fns/locale';
 import * as durationLib from 'duration-fns';
-import cx from 'classnames';
-import { useSelector } from 'react-redux';
+import moment from 'moment';
 import { useIntl } from 'react-intl';
 import TimeUnitPicker, { TimeUnitPickerPosition } from '../TimeUnitPicker';
-import { GlobalState } from 'reducers';
 
 type Props = {
   onChange: (duration?: string) => void;

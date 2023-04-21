@@ -1,7 +1,6 @@
-import React, { useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { Modal } from '@entur/modal';
 import { PrimaryButton } from '@entur/button';
+import { Modal } from '@entur/modal';
+import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 type Props = {

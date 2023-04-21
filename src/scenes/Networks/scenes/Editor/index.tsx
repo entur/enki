@@ -1,34 +1,34 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TextArea, TextField } from '@entur/form';
-import { Dropdown } from '@entur/dropdown';
 import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
+import { Dropdown } from '@entur/dropdown';
+import { TextArea, TextField } from '@entur/form';
 import { Paragraph } from '@entur/typography';
-import { isBlank } from 'helpers/forms';
+import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
   deleteNetworkById,
   loadNetworkById,
   saveNetwork,
 } from 'actions/networks';
-import { loadFlexibleLines } from 'actions/flexibleLines';
-import OverlayLoader from 'components/OverlayLoader';
-import Loading from 'components/Loading';
 import ConfirmDialog from 'components/ConfirmDialog';
+import Loading from 'components/Loading';
+import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
-import { useIntl } from 'react-intl';
-import { GlobalState } from 'reducers';
-import { Network } from 'model/Network';
-import { OrganisationState } from 'reducers/organisations';
-import { FlexibleLinesState } from 'reducers/flexibleLines';
-import usePristine from 'hooks/usePristine';
-import { getErrorFeedback } from 'helpers/errorHandling';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import Provider from 'model/Provider';
-import { mapToItems } from 'helpers/dropdown';
-import './styles.scss';
-import { filterAuthorities } from 'model/Organisation';
 import { useConfig } from 'config/ConfigContext';
+import { mapToItems } from 'helpers/dropdown';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import { isBlank } from 'helpers/forms';
+import usePristine from 'hooks/usePristine';
+import { Network } from 'model/Network';
+import { filterAuthorities } from 'model/Organisation';
+import Provider from 'model/Provider';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import { FlexibleLinesState } from 'reducers/flexibleLines';
+import { OrganisationState } from 'reducers/organisations';
+import './styles.scss';
 
 const getCurrentNetwork = (state: GlobalState, params: Params): Network =>
   state.networks?.find((network) => network.id === params.id) ?? {

@@ -1,11 +1,9 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import cx from 'classnames';
-import { TextField } from '@entur/form';
-import { Dropdown } from '@entur/dropdown';
 import { NegativeButton, SuccessButton } from '@entur/button';
-import { useSelector } from 'react-redux';
+import { Dropdown } from '@entur/dropdown';
+import { TextField } from '@entur/form';
+import cx from 'classnames';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { GlobalState } from 'reducers';
 import './styles.scss';
 
 export enum TimeUnitPickerPosition {

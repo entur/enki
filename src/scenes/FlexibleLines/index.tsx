@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { AddIcon } from '@entur/icons';
 import { SecondaryButton, SuccessButton } from '@entur/button';
+import { AddIcon } from '@entur/icons';
 import { Heading1 } from '@entur/typography';
 import { deleteLine, loadFlexibleLines } from 'actions/flexibleLines';
-import './styles.scss';
-import { useIntl } from 'react-intl';
-import { GlobalState } from 'reducers';
-import { OrganisationState } from 'reducers/organisations';
-import { FlexibleLinesState } from 'reducers/flexibleLines';
 import ConfirmDialog from 'components/ConfirmDialog';
-import FlexibleLine from 'model/FlexibleLine';
 import LinesTable from 'components/LinesTable';
+import FlexibleLine from 'model/FlexibleLine';
+import { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import { FlexibleLinesState } from 'reducers/flexibleLines';
+import { OrganisationState } from 'reducers/organisations';
+import './styles.scss';
 
 export default () => {
   const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);

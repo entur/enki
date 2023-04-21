@@ -1,16 +1,15 @@
-import React, { ReactElement, useState, useRef } from 'react';
+import { PrimaryButton, SecondaryButton } from '@entur/button';
 import { Accordion, AccordionItem } from '@entur/expand';
-import { replaceElement, removeElementByIndex } from 'helpers/arrays';
-import JourneyPattern, { initJourneyPattern } from 'model/JourneyPattern';
-import './styles.scss';
-import { LeadParagraph, Heading1 } from '@entur/typography';
-import { useSelector } from 'react-redux';
-import { useIntl } from 'react-intl';
-import { Modal } from '@entur/modal';
 import { TextField } from '@entur/form';
-import { SecondaryButton, PrimaryButton } from '@entur/button';
+import { Modal } from '@entur/modal';
+import { Heading1, LeadParagraph } from '@entur/typography';
 import AddButton from 'components/AddButton/AddButton';
+import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import useUniqueKeys from 'hooks/useUniqueKeys';
+import JourneyPattern, { initJourneyPattern } from 'model/JourneyPattern';
+import { ReactElement, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
+import './styles.scss';
 
 type Props = {
   journeyPatterns: JourneyPattern[];

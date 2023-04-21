@@ -1,15 +1,14 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown } from '@entur/dropdown';
 import { Contrast } from '@entur/layout';
-import { useIntl } from 'react-intl';
-import UserMenu from './UserMenu/';
 import { setActiveProvider } from 'actions/providers';
+import { sortProviders } from 'model/Provider';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { ProvidersState } from 'reducers/providers';
+import UserMenu from './UserMenu/';
 import './styles.scss';
-import { sortProviders } from 'model/Provider';
-import { useNavigate } from 'react-router-dom';
 
 const UserPreference = () => {
   const navigate = useNavigate();

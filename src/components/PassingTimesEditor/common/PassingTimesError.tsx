@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import { SmallAlertBox } from '@entur/alert';
 import { ErrorHandling, getErrorFeedback } from 'helpers/errorHandling';
 import { validateTimes } from 'helpers/validation';
 import PassingTime from 'model/PassingTime';
-import { SmallAlertBox } from '@entur/alert';
+import { useMemo } from 'react';
 import { useIntl } from 'react-intl';
 
 export const usePassingTimesError = ({

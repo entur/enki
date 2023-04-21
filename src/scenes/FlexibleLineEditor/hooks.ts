@@ -1,10 +1,10 @@
-import { useNavigate, useParams } from 'react-router';
-import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { loadFlexibleLineById } from 'actions/flexibleLines';
 import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import { loadNetworks } from 'actions/networks';
-import { loadFlexibleLineById } from 'actions/flexibleLines';
+import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
 
 export const useLoadDependencies = () => {
   const params = useParams();

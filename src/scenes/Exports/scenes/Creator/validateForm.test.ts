@@ -1,6 +1,5 @@
-import { exportIsValid } from './validateForm';
-import { format, subDays } from 'date-fns';
 import { newExport } from 'model/Export';
+import { exportIsValid } from './validateForm';
 
 it('returns false when name is empty', () => {
   expect(exportIsValid(newExport())).toBe(false);

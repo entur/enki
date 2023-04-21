@@ -1,4 +1,3 @@
-import React from 'react';
 import { Drawer } from '@entur/modal';
 import { Heading4 } from '@entur/typography';
 import { useConfig } from 'config/ConfigContext';

@@ -85,6 +85,7 @@
   },
   "devDependencies": {
     "@types/redux-immutable-state-invariant": "2.1.2",
+    "prettier-plugin-organize-imports": "3.2.2",
     "redux-immutable-state-invariant": "2.1.0"
   },
   "jest": {

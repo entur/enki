@@ -1,10 +1,8 @@
-import React from 'react';
-import { FeedbackText } from '@entur/form';
 import { FilterChip } from '@entur/chip';
-import { DAY_OF_WEEK } from 'model/enums';
-import usePristine from 'hooks/usePristine';
+import { FeedbackText } from '@entur/form';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { useSelector } from 'react-redux';
+import usePristine from 'hooks/usePristine';
+import { DAY_OF_WEEK } from 'model/enums';
 import { useIntl } from 'react-intl';
 import './styles.scss';
 

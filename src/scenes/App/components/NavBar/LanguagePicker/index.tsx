@@ -1,13 +1,19 @@
-import { useCallback, useState, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 import { FloatingButton } from '@entur/button';
-import { DownArrowIcon, CheckIcon, UpArrowIcon } from '@entur/icons';
-import { NorwayIcon, UKIcon, SwedenIcon } from '@entur/icons';
-import { SUPPORTED_LOCALES, LOCALE_KEY } from 'i18n';
-import './styles.scss';
-import { MessagesKey } from 'i18n/translations/translationKeys';
-import { useIntl } from 'react-intl';
+import {
+  CheckIcon,
+  DownArrowIcon,
+  NorwayIcon,
+  SwedenIcon,
+  UKIcon,
+  UpArrowIcon,
+} from '@entur/icons';
 import { updateLocale } from 'features/app/intlSlice';
+import { LOCALE_KEY, SUPPORTED_LOCALES } from 'i18n';
+import { MessagesKey } from 'i18n/translations/translationKeys';
+import { useCallback, useMemo, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
+import './styles.scss';
 
 const getFlagIcon = (locale: string) => {
   switch (locale) {

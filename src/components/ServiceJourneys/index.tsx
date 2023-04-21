@@ -10,12 +10,11 @@ import {
 import { createUuid } from 'helpers/generators';
 import { isBefore } from 'helpers/validation';
 import useUniqueKeys from 'hooks/useUniqueKeys';
-import { useIntl } from 'react-intl';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
-import React, { Fragment, ReactElement, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { Fragment, ReactElement, useState } from 'react';
+import { useIntl } from 'react-intl';
 import BulkDeleteDialog from './BulkDeleteDialog';
 import NewServiceJourneyDialog from './NewServiceJourneyDialog';
 import './styles.scss';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dropdown } from '@entur/dropdown';
 import { NightIcon } from '@entur/icons';
 import { mapEnumToItems } from 'helpers/dropdown';

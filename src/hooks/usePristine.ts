@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import isEqual from 'lodash.isequal';
+import { useEffect, useState } from 'react';
 
 export default (value: any, spoil: boolean): boolean => {
   const [isPristine, setIsPristine] = useState<boolean>(true);

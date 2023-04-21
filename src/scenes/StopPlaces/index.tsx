@@ -14,13 +14,13 @@ import {
   loadFlexibleStopPlaces,
 } from 'actions/flexibleStopPlaces';
 import Loading from 'components/Loading';
-import { useIntl } from 'react-intl';
-import {
-  flexibleStopAreaTypeMessages,
-  FLEXIBLE_STOP_AREA_TYPE,
-} from 'model/enums';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
-import React, { useCallback, useEffect, useState } from 'react';
+import {
+  FLEXIBLE_STOP_AREA_TYPE,
+  flexibleStopAreaTypeMessages,
+} from 'model/enums';
+import { useCallback, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { GlobalState } from 'reducers';

@@ -1,5 +1,3 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
 import { Label } from '@entur/typography';
 import { useIntl } from 'react-intl';
 import './styles.scss';

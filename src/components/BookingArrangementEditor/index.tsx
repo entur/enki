@@ -1,18 +1,18 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import { Contrast } from '@entur/layout';
-import { Heading3, Paragraph, Heading4 } from '@entur/typography';
-import { ButtonGroup, Button } from '@entur/button';
-import { Modal } from '@entur/modal';
-import Editor from './editor';
-import { BookingInfoAttachment } from './constants';
-import BookingArrangement from 'model/BookingArrangement';
-import classNames from 'classnames';
-import { useIntl } from 'react-intl';
-import { validateBookingArrangement } from 'helpers/validation';
-import { getErrorFeedback } from 'helpers/errorHandling';
-import usePristine from 'hooks/usePristine';
 import { SmallAlertBox } from '@entur/alert';
+import { Button, ButtonGroup } from '@entur/button';
+import { Contrast } from '@entur/layout';
+import { Modal } from '@entur/modal';
+import { Heading3, Heading4, Paragraph } from '@entur/typography';
+import classNames from 'classnames';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import { validateBookingArrangement } from 'helpers/validation';
+import usePristine from 'hooks/usePristine';
 import cloneDeep from 'lodash.clonedeep';
+import BookingArrangement from 'model/BookingArrangement';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { BookingInfoAttachment } from './constants';
+import Editor from './editor';
 
 type Props = {
   bookingArrangement?: BookingArrangement | null;

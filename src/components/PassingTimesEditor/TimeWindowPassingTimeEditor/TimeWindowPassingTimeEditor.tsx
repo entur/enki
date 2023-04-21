@@ -1,9 +1,9 @@
-import PassingTime from 'model/PassingTime';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
-import { useIntl } from 'react-intl';
-import TimeWindowPassingTimeTitle from './TimeWindowPassingTimeTitle';
+import PassingTime from 'model/PassingTime';
 import StopPoint from 'model/StopPoint';
+import { useIntl } from 'react-intl';
 import { PassingTimePicker } from '../common/PassingTimePicker';
+import TimeWindowPassingTimeTitle from './TimeWindowPassingTimeTitle';
 
 type Props = {
   passingTime: PassingTime;

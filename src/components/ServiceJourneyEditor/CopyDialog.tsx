@@ -1,29 +1,29 @@
-import { useState, ChangeEvent, useEffect } from 'react';
-import { Modal } from '@entur/modal';
-import { Label } from '@entur/typography';
-import { TextField, Switch, FeedbackText } from '@entur/form';
-import { ButtonGroup, Button } from '@entur/button';
+import { Button, ButtonGroup } from '@entur/button';
 import {
+  TimePicker,
   nativeDateToTimeValue,
   timeOrDateValueToNativeDate,
-  TimePicker,
 } from '@entur/datepicker';
-import ServiceJourney from 'model/ServiceJourney';
-import PassingTime from 'model/PassingTime';
+import { FeedbackText, Switch, TextField } from '@entur/form';
+import { Modal } from '@entur/modal';
+import { Label } from '@entur/typography';
+import { TimeValue } from '@react-types/datepicker';
+import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import DurationPicker from 'components/DurationPicker';
 import {
   addDays,
-  differenceInMinutes,
   addMinutes,
   differenceInCalendarDays,
+  differenceInMinutes,
 } from 'date-fns';
 import * as duration from 'duration-fns';
-import DayOffsetDropdown from 'components/DayOffsetDropdown';
-import { useIntl } from 'react-intl';
-import { isBefore, isAfter } from 'helpers/validation';
 import { createUuid } from 'helpers/generators';
-import { TimeValue } from '@react-types/datepicker';
+import { isAfter, isBefore } from 'helpers/validation';
 import cloneDeep from 'lodash.clonedeep';
+import PassingTime from 'model/PassingTime';
+import ServiceJourney from 'model/ServiceJourney';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 
 type Props = {
   open: boolean;

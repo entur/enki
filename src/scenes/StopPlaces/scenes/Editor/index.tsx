@@ -1,54 +1,54 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TextArea, TextField } from '@entur/form';
+import { SmallAlertBox } from '@entur/alert';
 import {
-  PrimaryButton,
   NegativeButton,
+  PrimaryButton,
   SecondaryButton,
   SuccessButton,
 } from '@entur/button';
+import { TextArea, TextField } from '@entur/form';
 import { MapIcon } from '@entur/icons';
-import { SmallAlertBox } from '@entur/alert';
 import { Paragraph } from '@entur/typography';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import ConfirmDialog from 'components/ConfirmDialog';
-import {
-  flexibleStopAreaTypeMessages,
-  FLEXIBLE_STOP_AREA_TYPE,
-  GEOMETRY_TYPE,
-  VEHICLE_MODE,
-} from 'model/enums';
+import { Dropdown } from '@entur/dropdown';
+import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
   deleteFlexibleStopPlaceById,
   loadFlexibleStopPlaceById,
   saveFlexibleStopPlace,
 } from 'actions/flexibleStopPlaces';
-import { loadFlexibleLines } from 'actions/flexibleLines';
-import OverlayLoader from 'components/OverlayLoader';
+import ConfirmDialog from 'components/ConfirmDialog';
 import Loading from 'components/Loading';
+import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
-import PolygonMap from './components/PolygonMap';
-import './styles.scss';
-import { useIntl } from 'react-intl';
-import { GlobalState } from 'reducers';
-import FlexibleLine from 'model/FlexibleLine';
-import { validateFlexibleStopPlace } from './validateForm';
+import RequiredInputMarker from 'components/RequiredInputMarker';
+import { getErrorFeedback } from 'helpers/errorHandling';
 import { objectValuesAreEmpty } from 'helpers/forms';
+import usePristine from 'hooks/usePristine';
+import { LeafletMouseEvent } from 'leaflet';
+import isEqual from 'lodash.isequal';
+import FlexibleLine from 'model/FlexibleLine';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import GeoJSON, {
-  removeLastCoordinate,
-  addCoordinate,
   Coordinate,
+  addCoordinate,
+  removeLastCoordinate,
   stringIsValidCoordinates,
 } from 'model/GeoJSON';
-import isEqual from 'lodash.isequal';
-import usePristine from 'hooks/usePristine';
-import { getErrorFeedback } from 'helpers/errorHandling';
-import RequiredInputMarker from 'components/RequiredInputMarker';
-import { LeafletMouseEvent } from 'leaflet';
-import { Dropdown } from '@entur/dropdown';
-import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import {
+  FLEXIBLE_STOP_AREA_TYPE,
+  GEOMETRY_TYPE,
+  VEHICLE_MODE,
+  flexibleStopAreaTypeMessages,
+} from 'model/enums';
+import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import PolygonMap from './components/PolygonMap';
+import './styles.scss';
+import { validateFlexibleStopPlace } from './validateForm';
 
 const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
   JSON.stringify(polygonCoordinates);

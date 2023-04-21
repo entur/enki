@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
 import {
   NegativeButton,
   PrimaryButton,
   SecondaryButton,
   SuccessButton,
 } from '@entur/button';
-import { useIntl } from 'react-intl';
 import ConfirmDialog from 'components/ConfirmDialog';
+import { useState } from 'react';
+import { useIntl } from 'react-intl';
 
 type Props = {
   editMode: boolean;

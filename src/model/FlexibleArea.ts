@@ -1,5 +1,5 @@
-import GeoJSON from './GeoJSON';
 import VersionedType from 'model/VersionedType';
+import GeoJSON from './GeoJSON';
 
 type FlexibleArea = VersionedType & {
   name?: string;

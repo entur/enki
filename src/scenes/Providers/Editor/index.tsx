@@ -1,21 +1,21 @@
-import React, { ChangeEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TextField } from '@entur/form';
 import { SuccessButton } from '@entur/button';
-import { isBlank } from 'helpers/forms';
-import OverlayLoader from 'components/OverlayLoader';
-import Loading from 'components/Loading';
-import Page from 'components/Page';
-import { useIntl } from 'react-intl';
-import { GlobalState } from 'reducers';
-import usePristine from 'hooks/usePristine';
-import { getErrorFeedback } from 'helpers/errorHandling';
-import RequiredInputMarker from 'components/RequiredInputMarker';
-import Provider from 'model/Provider';
-import './styles.scss';
+import { TextField } from '@entur/form';
 import { getProviders, saveProvider } from 'actions/providers';
+import Loading from 'components/Loading';
+import OverlayLoader from 'components/OverlayLoader';
+import Page from 'components/Page';
+import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useConfig } from 'config/ConfigContext';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import { isBlank } from 'helpers/forms';
+import usePristine from 'hooks/usePristine';
+import Provider from 'model/Provider';
+import { ChangeEvent, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import './styles.scss';
 
 const getCurrentProvider = (
   state: GlobalState,

@@ -1,11 +1,11 @@
+import VersionedType from 'model/VersionedType';
+import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 import JourneyPattern, {
   initJourneyPatterns,
   journeyPatternToPayload,
 } from './JourneyPattern';
-import Notice from './Notice';
 import { Network } from './Network';
-import VersionedType from 'model/VersionedType';
-import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
+import Notice from './Notice';
 
 interface Line extends VersionedType {
   name?: string;

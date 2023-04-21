@@ -1,15 +1,15 @@
+import { AuthState } from 'features/app/authSlice';
+import { ConfigState } from 'features/app/configSlice';
 import notification, { NotificationState } from 'reducers/notification';
-import organisations, { OrganisationState } from './organisations';
-import providers, { ProvidersState } from './providers';
+import editor, { EditorState } from './editor';
 import exports, { ExportsState } from './exports';
-import networks, { NetworksState } from './networks';
 import flexibleLines, { FlexibleLinesState } from './flexibleLines';
 import flexibleStopPlaces, {
   FlexibleStopPlacesState,
 } from './flexibleStopPlaces';
-import editor, { EditorState } from './editor';
-import { AuthState } from 'features/app/authSlice';
-import { ConfigState } from 'features/app/configSlice';
+import networks, { NetworksState } from './networks';
+import organisations, { OrganisationState } from './organisations';
+import providers, { ProvidersState } from './providers';
 
 export type GlobalState = {
   notification: NotificationState;

@@ -1,17 +1,17 @@
 import { UttuQuery } from 'api';
-import { getProvidersQuery } from 'api/uttu/queries';
-import Provider from 'model/Provider';
 import { mutateCodespace, mutateProvider } from 'api/uttu/mutations';
-import { showErrorNotification } from './notification';
-import { getStyledUttuError, UttuError } from 'helpers/uttu';
+import { getProvidersQuery } from 'api/uttu/queries';
 import { AppThunk, sentryCaptureException } from 'app/store';
+import { UttuError, getStyledUttuError } from 'helpers/uttu';
+import Provider from 'model/Provider';
+import { showErrorNotification } from './notification';
 
+import { IntlShape } from 'react-intl';
 import {
   FAILED_RECEIVING_PROVIDERS,
   RECEIVE_PROVIDERS,
   SET_ACTIVE_PROVIDER,
 } from './constants';
-import { IntlShape } from 'react-intl';
 
 const receiveProviders = (
   providers: Provider[],

@@ -1,13 +1,12 @@
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import { FormatMessage } from 'i18n';
+import { FlexibleLineType } from 'model/FlexibleLine';
 import { MessagesKey } from '../i18n/translations/translationKeys';
 import {
   VEHICLE_MODE,
   VEHICLE_SUBMODE,
   vehicleSubmodeMessages,
 } from '../model/enums';
-import { FlexibleLineType } from 'model/FlexibleLine';
-import { IntlShape } from 'react-intl';
-import { FormatMessage } from 'i18n';
 
 type GenericDropdownItem<E> = {
   id?: string;

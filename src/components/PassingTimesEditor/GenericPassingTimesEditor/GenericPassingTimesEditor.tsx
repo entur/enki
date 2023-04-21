@@ -1,11 +1,10 @@
-import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
+import { changeElementAtIndex } from 'helpers/arrays';
+import useUniqueKeys from 'hooks/useUniqueKeys';
 import { useIntl } from 'react-intl';
 import { PassingTimesEditorProps } from '..';
 import { FixedPassingTimeEditor } from '../FixedPassingTimeEditor/FixedPassingTimeEditor';
-import { changeElementAtIndex } from 'helpers/arrays';
 import { PassingTimesError } from '../common/PassingTimesError';
-import useUniqueKeys from 'hooks/useUniqueKeys';
 
 export const GenericPassingTimesEditor = ({
   passingTimes,

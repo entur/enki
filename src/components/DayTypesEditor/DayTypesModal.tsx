@@ -1,8 +1,7 @@
-import React from 'react';
 import { Modal } from '@entur/modal';
 import DayType from 'model/DayType';
-import { DayTypesModalContent } from './DayTypesModalContent';
 import { useIntl } from 'react-intl';
+import { DayTypesModalContent } from './DayTypesModalContent';
 import './styles.scss';
 
 export const DayTypesModal = ({

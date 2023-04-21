@@ -1,33 +1,33 @@
-import { useState, ChangeEvent } from 'react';
-import './styles.scss';
-import BookingArrangement from 'model/BookingArrangement';
-import { addOrRemove } from 'helpers/arrays';
-import {
-  BOOKING_ACCESS,
-  BOOKING_METHOD,
-  bookingMethodMessages,
-  paymentTimeMessages,
-  PURCHASE_MOMENT,
-  PURCHASE_WHEN,
-  BOOKING_LIMIT_TYPE,
-} from 'model/enums';
-import { LeadParagraph, Label } from '@entur/typography';
-import { RadioGroup, Radio, TextArea, TextField, Fieldset } from '@entur/form';
-import Contact from 'model/Contact';
-import { Dropdown } from '@entur/dropdown';
 import { FilterChip } from '@entur/chip';
-import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
-import DurationPicker from 'components/DurationPicker';
-import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
-import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
 import {
+  TimePicker,
   nativeDateToTimeValue,
   timeOrDateValueToNativeDate,
-  TimePicker,
 } from '@entur/datepicker';
-import { format } from 'date-fns';
+import { Dropdown } from '@entur/dropdown';
+import { Fieldset, Radio, RadioGroup, TextArea, TextField } from '@entur/form';
+import { Label, LeadParagraph } from '@entur/typography';
 import { TimeValue } from '@react-types/datepicker';
+import DurationPicker from 'components/DurationPicker';
+import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
+import { format } from 'date-fns';
+import { addOrRemove } from 'helpers/arrays';
+import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
+import BookingArrangement from 'model/BookingArrangement';
+import Contact from 'model/Contact';
+import {
+  BOOKING_ACCESS,
+  BOOKING_LIMIT_TYPE,
+  BOOKING_METHOD,
+  PURCHASE_MOMENT,
+  PURCHASE_WHEN,
+  bookingMethodMessages,
+  paymentTimeMessages,
+} from 'model/enums';
+import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
+import './styles.scss';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;

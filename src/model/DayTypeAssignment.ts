@@ -1,5 +1,5 @@
-import OperatingPeriod from './OperatingPeriod';
 import moment from 'moment';
+import OperatingPeriod from './OperatingPeriod';
 import VersionedType from './VersionedType';
 
 export type DayTypeAssignment = VersionedType & {

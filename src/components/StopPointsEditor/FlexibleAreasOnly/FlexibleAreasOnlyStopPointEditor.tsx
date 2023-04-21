@@ -1,19 +1,18 @@
 import { Dropdown } from '@entur/dropdown';
+import BookingArrangementEditor from 'components/BookingArrangementEditor';
+import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateFlexibleAreasOnlyStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
 import { useIntl } from 'react-intl';
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
-import { StopPointEditorProps } from '../common/StopPointEditorProps';
 import {
   FrontTextTextField,
   useOnFrontTextChange,
 } from '../common/FrontTextTextField';
-import BookingArrangementEditor from 'components/BookingArrangementEditor';
-import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
+import { StopPointEditorProps } from '../common/StopPointEditorProps';
 
 export const FlexibleAreasOnlyStopPointEditor = ({
   stopPoint,

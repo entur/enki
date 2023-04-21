@@ -1,7 +1,7 @@
-import FlexibleStopPlace from './FlexibleStopPlace';
-import BookingArrangement from './BookingArrangement';
-import Notice from './Notice';
 import VersionedType from 'model/VersionedType';
+import BookingArrangement from './BookingArrangement';
+import FlexibleStopPlace from './FlexibleStopPlace';
+import Notice from './Notice';
 
 type DestinationDisplay = {
   frontText?: string;

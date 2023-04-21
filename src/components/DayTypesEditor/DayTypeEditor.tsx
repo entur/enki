@@ -1,20 +1,20 @@
 import { useMutation } from '@apollo/client';
+import { SmallAlertBox } from '@entur/alert';
 import { ButtonGroup, TertiaryButton } from '@entur/button';
 import { TextField } from '@entur/form';
 import { DeleteIcon, QuestionIcon, SaveIcon } from '@entur/icons';
 import { Tooltip } from '@entur/tooltip';
 import { Heading4 } from '@entur/typography';
 import { DELETE_DAY_TYPE, MUTATE_DAY_TYPE } from 'api/uttu/mutations';
-import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
 import WeekdayPicker from 'components/WeekdayPicker';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import { validateDayType } from 'helpers/validation';
+import usePristine from 'hooks/usePristine';
 import DayType, { dayTypeToPayload } from 'model/DayType';
 import { newDayTypeAssignment } from 'model/DayTypeAssignment';
 import React, { useMemo, useState } from 'react';
-import { getErrorFeedback } from 'helpers/errorHandling';
-import usePristine from 'hooks/usePristine';
-import { validateDayType } from 'helpers/validation';
-import { SmallAlertBox } from '@entur/alert';
 import { useIntl } from 'react-intl';
+import DayTypeAssignmentsEditor from './DayTypeAssignmentsEditor';
 
 export const DayTypeEditor = ({
   dayType,

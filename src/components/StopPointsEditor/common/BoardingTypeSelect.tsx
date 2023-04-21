@@ -1,10 +1,9 @@
 import { Dropdown } from '@entur/dropdown';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
-import { useIntl } from 'react-intl';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import StopPoint from 'model/StopPoint';
-import React, { useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 
 enum BoardingType {
   BOARDING = '0',

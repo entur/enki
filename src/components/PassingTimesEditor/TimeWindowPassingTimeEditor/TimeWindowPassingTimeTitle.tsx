@@ -1,6 +1,6 @@
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import StopPoint from 'model/StopPoint';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 
 type Props = {

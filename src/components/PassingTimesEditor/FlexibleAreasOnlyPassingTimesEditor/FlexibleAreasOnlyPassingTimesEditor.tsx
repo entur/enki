@@ -1,9 +1,7 @@
-import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
+import { useIntl } from 'react-intl';
 import { PassingTimesEditorProps } from '..';
 import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
-import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { PassingTimesError } from '../common/PassingTimesError';
 
 export const FlexibleAreasOnlyPassingTimesEditor = ({

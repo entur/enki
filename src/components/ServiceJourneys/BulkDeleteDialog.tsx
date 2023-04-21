@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Modal } from '@entur/modal';
 import { ButtonGroup, PrimaryButton, SecondaryButton } from '@entur/button';
+import { Checkbox, TextField } from '@entur/form';
+import { SearchIcon } from '@entur/icons';
+import { Modal } from '@entur/modal';
 import {
   DataCell,
   HeaderCell,
@@ -11,10 +12,8 @@ import {
 } from '@entur/table';
 import { StrongText, SubParagraph } from '@entur/typography';
 import ServiceJourney from 'model/ServiceJourney';
-import { Checkbox, TextField } from '@entur/form';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { SearchIcon } from '@entur/icons';
 
 type Props = {
   open: boolean;

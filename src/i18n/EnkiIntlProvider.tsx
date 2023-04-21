@@ -1,8 +1,8 @@
-import { IntlProvider, IntlShape } from 'react-intl';
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { selectLocale } from 'features/app/intlSlice';
 import { getMessages } from 'i18n';
+import { useMemo } from 'react';
+import { IntlProvider } from 'react-intl';
+import { useSelector } from 'react-redux';
 
 export const EnkiIntlProvider = ({
   children,

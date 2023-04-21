@@ -1,8 +1,8 @@
-import DayType from './DayType';
-import PassingTime, { passingTimeToPayload } from './PassingTime';
-import BookingArrangement from './BookingArrangement';
-import Notice from './Notice';
 import VersionedType from 'model/VersionedType';
+import BookingArrangement from './BookingArrangement';
+import DayType from './DayType';
+import Notice from './Notice';
+import PassingTime, { passingTimeToPayload } from './PassingTime';
 
 type ServiceJourney = VersionedType & {
   name?: string;

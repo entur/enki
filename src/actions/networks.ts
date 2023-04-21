@@ -1,13 +1,13 @@
-import { UttuQuery } from 'api';
-import { deleteNetwork, networkMutation } from 'api/uttu/mutations';
-import { getNetworkByIdQuery, getNetworksQuery } from 'api/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
-import { getStyledUttuError, UttuError } from 'helpers/uttu';
-import { Network } from 'model/Network';
+import { UttuQuery } from 'api';
+import { deleteNetwork, networkMutation } from 'api/uttu/mutations';
+import { getNetworkByIdQuery, getNetworksQuery } from 'api/uttu/queries';
 import { AppThunk, sentryCaptureException } from 'app/store';
+import { UttuError, getStyledUttuError } from 'helpers/uttu';
+import { Network } from 'model/Network';
 import { RECEIVE_NETWORK, RECEIVE_NETWORKS } from './constants';
 
 const receiveNetworksActionCreator = (networks: Network[]) => ({

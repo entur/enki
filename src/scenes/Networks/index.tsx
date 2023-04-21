@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import { AddIcon } from '@entur/icons';
 import {
   DataCell,
   HeaderCell,
@@ -9,18 +8,19 @@ import {
   TableHead,
   TableRow,
 } from '@entur/table';
-import Loading from 'components/Loading';
 import { Heading1 } from '@entur/typography';
 import { deleteNetworkById, loadNetworks } from 'actions/networks';
-import { useIntl } from 'react-intl';
-import './styles.scss';
-import { GlobalState } from 'reducers';
+import Loading from 'components/Loading';
 import { Network } from 'model/Network';
-import { AddIcon } from '@entur/icons';
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { Organisation } from 'model/Organisation';
+import { useCallback, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { GlobalState } from 'reducers';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
-import { Organisation } from 'model/Organisation';
+import './styles.scss';
 
 const Networks = () => {
   const navigate = useNavigate();

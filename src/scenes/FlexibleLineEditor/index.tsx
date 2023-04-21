@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useLoadDependencies } from './hooks';
-import { Navigate, useNavigate, useParams } from 'react-router';
-import { useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIntl } from 'react-intl';
-import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
-import { GlobalState } from 'reducers';
-import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
-import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
+import { setSavedChanges } from 'actions/editor';
+import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
+import LineEditorStepper from 'components/LineEditorStepper';
+import Loading from 'components/Loading';
+import Page from 'components/Page';
+import { useConfig } from 'config/ConfigContext';
+import { isBlank } from 'helpers/forms';
+import { getFlexibleLineFromPath } from 'helpers/url';
 import {
   currentFlexibleLineStepIsValid,
   getMaxAllowedFlexibleLineStepIndex,
   validFlexibleLine,
 } from 'helpers/validation';
-import { isBlank } from 'helpers/forms';
-import { getFlexibleLineFromPath } from 'helpers/url';
-import Loading from 'components/Loading';
-import { setSavedChanges } from 'actions/editor';
-import Page from 'components/Page';
-import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
+import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
+import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
+import { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useNavigate, useParams } from 'react-router';
+import { useLocation } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
+import { useLoadDependencies } from './hooks';
 import { FLEXIBLE_LINE_STEPS } from './steps';
 import './styles.scss';
-import LineEditorStepper from 'components/LineEditorStepper';
-import { useConfig } from 'config/ConfigContext';
 
 const EditorFrame = () => {
   const params = useParams();

@@ -1,27 +1,27 @@
-import { UttuQuery } from 'api';
-import {
-  getFlexibleLineByIdQuery,
-  getlineByIdQuery,
-  getFlexibleLinesQuery,
-} from 'api/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
+import { SetActiveProviderAction } from 'actions/providers';
+import { UttuQuery } from 'api';
 import {
   deleteFlexibleLine,
   deleteline,
   flexibleLineMutation,
   lineMutation,
 } from 'api/uttu/mutations';
+import {
+  getFlexibleLineByIdQuery,
+  getFlexibleLinesQuery,
+  getlineByIdQuery,
+} from 'api/uttu/queries';
+import { sentryCaptureException } from 'app/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
 import { Dispatch } from 'react';
-import { GlobalState } from 'reducers';
-import { SetActiveProviderAction } from 'actions/providers';
-import { sentryCaptureException } from 'app/store';
-import { RECEIVE_FLEXIBLE_LINE, RECEIVE_FLEXIBLE_LINES } from './constants';
 import { IntlShape } from 'react-intl';
+import { GlobalState } from 'reducers';
+import { RECEIVE_FLEXIBLE_LINE, RECEIVE_FLEXIBLE_LINES } from './constants';
 
 export type ReceiveFlexibleLinesAction = {
   type: typeof RECEIVE_FLEXIBLE_LINES;

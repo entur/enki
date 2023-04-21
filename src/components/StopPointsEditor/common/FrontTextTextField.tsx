@@ -3,7 +3,7 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import usePristine from 'hooks/usePristine';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import StopPoint from 'model/StopPoint';
-import React, { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 
 type Props = {

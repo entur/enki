@@ -1,14 +1,12 @@
-import React from 'react';
 import { PrimaryButton, SecondaryButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { Modal } from '@entur/modal';
-import { useIntl } from 'react-intl';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
 import { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 
 type Props = {
   open: boolean;

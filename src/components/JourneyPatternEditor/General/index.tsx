@@ -1,10 +1,10 @@
-import React, { ChangeEvent } from 'react';
-import { useIntl } from 'react-intl';
 import { TextField } from '@entur/form';
-import { isBlank } from 'helpers/forms';
-import JourneyPattern from 'model/JourneyPattern';
-import usePristine from 'hooks/usePristine';
 import { getErrorFeedback } from 'helpers/errorHandling';
+import { isBlank } from 'helpers/forms';
+import usePristine from 'hooks/usePristine';
+import JourneyPattern from 'model/JourneyPattern';
+import { ChangeEvent } from 'react';
+import { useIntl } from 'react-intl';
 import './styles.scss';
 
 type Props = {

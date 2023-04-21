@@ -1,13 +1,11 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
 import { TextField } from '@entur/form';
-import { quaySearchResults } from './quaySearchResults';
-import debounce from './debounce';
-import { useSelector } from 'react-redux';
-import { GlobalState } from 'reducers';
-import { useIntl } from 'react-intl';
-import { ErrorHandling } from 'helpers/errorHandling';
 import { useQuaySearch } from 'api/useQuaySearch';
+import { ErrorHandling } from 'helpers/errorHandling';
 import StopPoint from 'model/StopPoint';
+import { ChangeEvent, useCallback, useState } from 'react';
+import { useIntl } from 'react-intl';
+import debounce from './debounce';
+import { quaySearchResults } from './quaySearchResults';
 
 interface Props {
   initialQuayRef?: string | null;

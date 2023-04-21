@@ -1,11 +1,11 @@
+import { isApolloError } from '@apollo/client';
+import { sentryCaptureException } from 'app/store';
+import { IntlShape } from 'react-intl';
 import messages, {
   CombinedUttuCode,
   UttuCode,
   UttuSubCode,
 } from './uttu.messages';
-import { ApolloError, isApolloError } from '@apollo/client';
-import { sentryCaptureException } from 'app/store';
-import { IntlShape } from 'react-intl';
 
 type Extensions = {
   code: UttuCode;

@@ -1,12 +1,12 @@
+import { showErrorNotification } from 'actions/notification';
 import { UttuQuery } from 'api';
 import { exportMutation } from 'api/uttu/mutations';
 import { getExportByIdQuery, getExportsQuery } from 'api/uttu/queries';
-import { showErrorNotification } from 'actions/notification';
-import { Export, toPayload } from 'model/Export';
-import { getInternationalizedUttuError } from 'helpers/uttu';
 import { AppThunk, sentryCaptureException } from 'app/store';
-import { RECEIVE_EXPORT, RECEIVE_EXPORTS, REQUEST_EXPORTS } from './constants';
+import { getInternationalizedUttuError } from 'helpers/uttu';
+import { Export, toPayload } from 'model/Export';
 import { IntlShape } from 'react-intl';
+import { RECEIVE_EXPORT, RECEIVE_EXPORTS, REQUEST_EXPORTS } from './constants';
 
 const requestExportsActionCreator = () => ({
   type: REQUEST_EXPORTS,

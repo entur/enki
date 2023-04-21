@@ -1,15 +1,14 @@
-import React, { useState, ReactElement, useEffect } from 'react';
-import { Stepper } from '@entur/menu';
-import NavigationButtons from './NavigationButtons';
-import ConfirmNavigationDialog from 'components/ConfirmNavigationDialog';
-import { useSelector } from 'react-redux';
-import { useIntl } from 'react-intl';
-import OverlayLoader from 'components/OverlayLoader';
 import { SmallAlertBox } from '@entur/alert';
-import './styles.scss';
-import ConfirmDialog from 'components/ConfirmDialog';
 import { PrimaryButton } from '@entur/button';
+import { Stepper } from '@entur/menu';
+import ConfirmDialog from 'components/ConfirmDialog';
+import ConfirmNavigationDialog from 'components/ConfirmNavigationDialog';
+import OverlayLoader from 'components/OverlayLoader';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
+import NavigationButtons from './NavigationButtons';
+import './styles.scss';
 
 type Props = {
   steps: string[];

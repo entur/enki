@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import UserPreference from 'scenes/App/components/NavBar/UserPreference';
+import { useAuth } from '@entur/auth-provider';
+import { ClosedLockIcon } from '@entur/icons';
 import { Contrast } from '@entur/layout';
-import { useIntl } from 'react-intl';
 import {
   SideNavigation,
-  SideNavigationItem,
   SideNavigationGroup,
+  SideNavigationItem,
 } from '@entur/menu';
-import { GlobalState } from 'reducers';
-import logo from 'static/img/logo.png';
-import './styles.scss';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
+import { useConfig } from 'config/ConfigContext';
+import React, { useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import { ProvidersState } from 'reducers/providers';
+import UserPreference from 'scenes/App/components/NavBar/UserPreference';
+import logo from 'static/img/logo.png';
 import LanguagePicker from './LanguagePicker';
 import LogoutChip from './LogoutChip';
-import { ClosedLockIcon } from '@entur/icons';
-import { useAuth } from '@entur/auth-provider';
-import { useConfig } from 'config/ConfigContext';
-import { ProvidersState } from 'reducers/providers';
+import './styles.scss';
 
 const isActive = (pathname: string, path: string) =>
   pathname.split('/')[1] === path.split('/')[1];

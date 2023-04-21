@@ -1,27 +1,25 @@
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import { Paragraph } from '@entur/typography';
+import BookingArrangementEditor from 'components/BookingArrangementEditor';
+import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import ConfirmDialog from 'components/ConfirmDialog';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
+import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { GlobalState } from 'reducers';
-import { StopPointEditorProps } from '../common/StopPointEditorProps';
-import {
-  FrontTextTextField,
-  useOnFrontTextChange,
-} from '../common/FrontTextTextField';
-import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import {
   BoardingTypeSelect,
   useOnBoardingTypeChange,
   useSelectedBoardingType,
 } from '../common/BoardingTypeSelect';
-import BookingArrangementEditor from 'components/BookingArrangementEditor';
-import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
+import {
+  FrontTextTextField,
+  useOnFrontTextChange,
+} from '../common/FrontTextTextField';
+import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
+import { StopPointEditorProps } from '../common/StopPointEditorProps';
 
 export const GenericStopPointEditor = ({
   order,

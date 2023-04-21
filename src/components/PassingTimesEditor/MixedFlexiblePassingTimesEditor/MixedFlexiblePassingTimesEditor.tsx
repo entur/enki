@@ -1,12 +1,10 @@
-import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
-import { PassingTimesEditorProps } from '..';
 import { changeElementAtIndex } from 'helpers/arrays';
-import { MixedFlexiblePassingTimeEditor } from './MixedFlexiblePassingTimeEditor';
-import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { PassingTimesError } from '../common/PassingTimesError';
 import useUniqueKeys from 'hooks/useUniqueKeys';
+import { useIntl } from 'react-intl';
+import { PassingTimesEditorProps } from '..';
+import { PassingTimesError } from '../common/PassingTimesError';
+import { MixedFlexiblePassingTimeEditor } from './MixedFlexiblePassingTimeEditor';
 
 export const MixedFlexiblePassingTimesEditor = ({
   passingTimes,

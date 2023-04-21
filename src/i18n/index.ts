@@ -1,5 +1,5 @@
-import { IntlShape } from 'react-intl';
 import 'moment/locale/nb';
+import { IntlShape } from 'react-intl';
 
 export const defaultLocale = 'nb';
 export const SUPPORTED_LOCALES = ['nb', 'en', 'sv'];

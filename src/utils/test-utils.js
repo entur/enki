@@ -1,9 +1,9 @@
+import { configureStore } from '@reduxjs/toolkit';
 import { render as rtlRender } from '@testing-library/react';
+import intlSlice from 'features/app/intlSlice';
+import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
 import reducers from '../reducers';
-import intlSlice from 'features/app/intlSlice';
-import { configureStore } from '@reduxjs/toolkit';
-import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 
 function render(
   ui,

@@ -1,21 +1,21 @@
-import React from 'react';
-import moment from 'moment/moment';
-import { AddIcon, DeleteIcon } from '@entur/icons';
 import { IconButton, TertiaryButton } from '@entur/button';
-import DayTypeAssignment from 'model/DayTypeAssignment';
-import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import {
   DatePicker,
   nativeDateToDateValue,
   timeOrDateValueToNativeDate,
 } from '@entur/datepicker';
-import OperatingPeriod from 'model/OperatingPeriod';
-import { getErrorFeedback } from 'helpers/errorHandling';
-import './styles.scss';
-import useUniqueKeys from 'hooks/useUniqueKeys';
 import { Switch } from '@entur/form';
+import { AddIcon, DeleteIcon } from '@entur/icons';
 import { DataCell, Table, TableBody, TableRow } from '@entur/table';
+import { removeElementByIndex, replaceElement } from 'helpers/arrays';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import useUniqueKeys from 'hooks/useUniqueKeys';
+import DayTypeAssignment from 'model/DayTypeAssignment';
+import OperatingPeriod from 'model/OperatingPeriod';
+import moment from 'moment/moment';
+import React from 'react';
 import { useIntl } from 'react-intl';
+import './styles.scss';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];

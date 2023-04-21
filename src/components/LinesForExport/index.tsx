@@ -1,26 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import { Checkbox } from '@entur/form';
 import {
+  DataCell,
+  HeaderCell,
   Table,
+  TableBody,
   TableHead,
   TableRow,
-  HeaderCell,
-  TableBody,
-  DataCell,
   useSortableData,
 } from '@entur/table';
-import { Checkbox } from '@entur/form';
-import { useQuery } from '@apollo/client';
-import FlexibleLine from 'model/FlexibleLine';
-import Line from 'model/Line';
-import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
 import { SmallText, StrongText } from '@entur/typography';
-import JourneyPattern from 'model/JourneyPattern';
+import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
+import { differenceInCalendarDays, isAfter, isBefore } from 'date-fns';
 import parseDate from 'date-fns/parseISO';
-import { isBefore, differenceInCalendarDays } from 'date-fns';
-import { isAfter } from 'date-fns';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import { ExportLineAssociation } from 'model/Export';
-import { useSelector } from 'react-redux';
+import FlexibleLine from 'model/FlexibleLine';
+import JourneyPattern from 'model/JourneyPattern';
+import Line from 'model/Line';
+import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 type Props = {

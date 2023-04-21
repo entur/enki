@@ -3,7 +3,7 @@ import { SecondaryButton } from '@entur/button';
 import { MultiSelect } from '@entur/dropdown';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
 import DayType from 'model/DayType';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { DayTypesModal } from './DayTypesModal';
 

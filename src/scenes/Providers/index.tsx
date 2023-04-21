@@ -1,6 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { SecondaryButton } from '@entur/button';
+import { AddIcon } from '@entur/icons';
 import {
   DataCell,
   HeaderCell,
@@ -9,14 +8,15 @@ import {
   TableHead,
   TableRow,
 } from '@entur/table';
-import Loading from 'components/Loading';
 import { Heading1, Paragraph } from '@entur/typography';
-import { useIntl } from 'react-intl';
-import './styles.scss';
-import { GlobalState } from 'reducers';
-import { AddIcon } from '@entur/icons';
-import { SecondaryButton } from '@entur/button';
+import Loading from 'components/Loading';
 import Provider, { sortProviders } from 'model/Provider';
+import { useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import './styles.scss';
 
 const Providers = () => {
   const navigate = useNavigate();

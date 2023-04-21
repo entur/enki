@@ -1,5 +1,3 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 
 import {
@@ -16,8 +14,8 @@ import Line from 'model/Line';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import Loading from 'components/Loading';
 
-import './styles.scss';
 import { Organisation } from 'model/Organisation';
+import './styles.scss';
 
 export type Props = {
   lines?: Line[];

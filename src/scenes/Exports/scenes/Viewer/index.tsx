@@ -1,21 +1,21 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '@entur/auth-provider';
 import { PrimaryButton } from '@entur/button';
-import { Label } from '@entur/typography';
 import { DownloadIcon } from '@entur/icons';
+import { Label } from '@entur/typography';
 import { loadExportById } from 'actions/exports';
 import Loading from 'components/Loading';
-import { EXPORT_STATUS } from 'model/enums';
-import { getIconForSeverity, getIconForStatus } from '../icons';
-import { useIntl } from 'react-intl';
-import { GlobalState } from 'reducers';
-import { download, Export } from 'model/Export';
 import Page from 'components/Page';
-import uttuMessages, { isOfUttuMessage } from 'helpers/uttu.messages';
-import './styles.scss';
-import { useAuth } from '@entur/auth-provider';
 import { useConfig } from 'config/ConfigContext';
-import { useParams, Params, useNavigate } from 'react-router-dom';
+import uttuMessages, { isOfUttuMessage } from 'helpers/uttu.messages';
+import { Export, download } from 'model/Export';
+import { EXPORT_STATUS } from 'model/enums';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { Params, useNavigate, useParams } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import { getIconForSeverity, getIconForStatus } from '../icons';
+import './styles.scss';
 
 const ExportItem = ({
   label,

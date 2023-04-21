@@ -1,18 +1,18 @@
-import React, { useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { NetworkStatus, useQuery } from '@apollo/client';
+import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useQuery, NetworkStatus } from '@apollo/client';
 
-import { Heading1 } from '@entur/typography';
 import { SecondaryButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
+import { Heading1 } from '@entur/typography';
 
-import { GlobalState } from 'reducers';
-import { OrganisationState } from 'reducers/organisations';
-import Line from 'model/Line';
 import { GET_LINES } from 'api/uttu/queries';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
+import Line from 'model/Line';
+import { GlobalState } from 'reducers';
+import { OrganisationState } from 'reducers/organisations';
 
 import LinesTable from 'components/LinesTable';
 import useUttuError from 'hooks/useUttuError';

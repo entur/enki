@@ -1,10 +1,10 @@
-import { configureStore, ThunkAction, AnyAction } from '@reduxjs/toolkit';
-import configSlice from 'features/app/configSlice';
-import authSlice from 'features/app/authSlice';
-import reducers from 'reducers';
+import { AnyAction, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react';
-import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
+import authSlice from 'features/app/authSlice';
+import configSlice from 'features/app/configSlice';
 import intlSlice from 'features/app/intlSlice';
+import reducers from 'reducers';
+import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
 
 export const sentryCaptureException = (e: any) =>
   process.env.NODE_ENV === 'production'

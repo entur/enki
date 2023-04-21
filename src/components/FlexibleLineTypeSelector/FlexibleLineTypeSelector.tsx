@@ -5,9 +5,9 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import { FlexibleLineType } from 'model/FlexibleLine';
-import React, { useCallback, useState } from 'react';
-import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
+import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
+import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
 import './styles.scss';
 
 interface Props {

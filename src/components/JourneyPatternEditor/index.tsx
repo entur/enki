@@ -4,11 +4,11 @@ import DeleteButton from 'components/DeleteButton/DeleteButton';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useStopPointsEditor } from 'components/StopPointsEditor';
 import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
-import { useIntl } from 'react-intl';
 import { FlexibleLineType } from 'model/FlexibleLine';
 import JourneyPattern from 'model/JourneyPattern';
 import StopPoint from 'model/StopPoint';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useIntl } from 'react-intl';
 import General from './General';
 import './styles.scss';
 

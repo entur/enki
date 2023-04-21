@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@entur/auth-provider';
+import { SecondaryButton, SecondarySquareButton } from '@entur/button';
 import { AddIcon, DownloadIcon } from '@entur/icons';
 import {
   DataCell,
@@ -10,20 +9,21 @@ import {
   TableHead,
   TableRow,
 } from '@entur/table';
-import Loading from 'components/Loading';
 import { Heading1 } from '@entur/typography';
-import { SecondaryButton, SecondarySquareButton } from '@entur/button';
 import { loadExports } from 'actions/exports';
+import { useAppDispatch } from 'app/hooks';
+import Loading from 'components/Loading';
+import { useConfig } from 'config/ConfigContext';
+import { download } from 'model/Export';
 import { EXPORT_STATUS } from 'model/enums';
-import { getIconForStatus } from './scenes/icons';
+import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { ExportsState } from 'reducers/exports';
-import { download } from 'model/Export';
+import { getIconForStatus } from './scenes/icons';
 import './styles.scss';
-import { useAuth } from '@entur/auth-provider';
-import { useConfig } from 'config/ConfigContext';
-import { useAppDispatch } from 'app/hooks';
 
 const Exports = () => {
   const navigate = useNavigate();

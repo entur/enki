@@ -1,9 +1,8 @@
 import { Heading3, Paragraph } from '@entur/typography';
-import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { StopPointsEditorProps } from '..';
-import React, { useCallback } from 'react';
 import StopPoint from 'model/StopPoint';
+import { useCallback } from 'react';
+import { useIntl } from 'react-intl';
+import { StopPointsEditorProps } from '..';
 import { FlexibleAreasOnlyStopPointEditor } from './FlexibleAreasOnlyStopPointEditor';
 
 export const FlexibleAreasOnlyStopPointsEditor = ({

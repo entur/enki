@@ -1,6 +1,6 @@
-import React from 'react';
-import { DeleteIcon } from '@entur/icons';
 import { ActionChip } from '@entur/chip';
+import { DeleteIcon } from '@entur/icons';
+import React from 'react';
 import './DeleteButton.scss';
 
 type Props = {

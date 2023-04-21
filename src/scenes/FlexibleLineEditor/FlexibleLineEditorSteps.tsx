@@ -1,13 +1,12 @@
-import React from 'react';
-import JourneyPatterns from 'components/JourneyPatterns';
 import General from 'components/GeneralLineEditor';
+import JourneyPatternEditor from 'components/JourneyPatternEditor';
+import JourneyPatterns from 'components/JourneyPatterns';
+import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
+import ServiceJourneys from 'components/ServiceJourneys';
 import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import { Network } from 'model/Network';
-import './styles.scss';
-import JourneyPatternEditor from 'components/JourneyPatternEditor';
-import ServiceJourneys from 'components/ServiceJourneys';
-import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
 import { Organisation } from 'model/Organisation';
+import './styles.scss';
 
 type Props = {
   activeStep: number;

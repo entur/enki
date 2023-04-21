@@ -1,28 +1,28 @@
 import {
-  getFlexibleStopPlaceByIdQuery,
-  getFlexibleStopPlacesQuery,
-} from 'api/uttu/queries';
-import { UttuQuery } from 'api';
-import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
+import { UttuQuery } from 'api';
 import {
   deleteFlexibleStopPlace,
   flexibleStopPlaceMutation,
 } from 'api/uttu/mutations';
-import { Dispatch } from 'react';
-import { GlobalState } from 'reducers';
-import FlexibleStopPlace from 'model/FlexibleStopPlace';
-import { getInternationalizedUttuError } from 'helpers/uttu';
+import {
+  getFlexibleStopPlaceByIdQuery,
+  getFlexibleStopPlacesQuery,
+} from 'api/uttu/queries';
 import { sentryCaptureException } from 'app/store';
+import { getInternationalizedUttuError } from 'helpers/uttu';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
+import { Dispatch } from 'react';
+import { IntlShape } from 'react-intl';
+import { GlobalState } from 'reducers';
 import {
   RECEIVE_FLEXIBLE_STOP_PLACE,
   RECEIVE_FLEXIBLE_STOP_PLACES,
   REQUEST_FLEXIBLE_STOP_PLACE,
   REQUEST_FLEXIBLE_STOP_PLACES,
 } from './constants';
-import { IntlShape } from 'react-intl';
 
 const requestFlexibleStopPlacesActionCreator = () => ({
   type: REQUEST_FLEXIBLE_STOP_PLACES,

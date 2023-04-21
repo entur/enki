@@ -1,10 +1,8 @@
 import { Heading3, Paragraph } from '@entur/typography';
 import AddButton from 'components/AddButton/AddButton';
 import useUniqueKeys from 'hooks/useUniqueKeys';
-import { useIntl } from 'react-intl';
 import StopPoint from 'model/StopPoint';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { StopPointsEditorProps } from '..';
 import { GenericStopPointEditor } from './GenericStopPointEditor';
 
