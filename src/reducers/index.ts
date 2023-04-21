@@ -21,7 +21,6 @@ export type GlobalState = {
   flexibleLines: FlexibleLinesState;
   flexibleStopPlaces: FlexibleStopPlacesState;
   editor: EditorState;
-  intl: IntlState;
   config: ConfigState;
 };
 

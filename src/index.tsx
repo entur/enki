@@ -13,8 +13,8 @@ import './styles/index.scss';
 import { getEnvironment } from 'config/getEnvironment';
 import { normalizeAllUrls } from 'helpers/url';
 import { Provider } from 'react-redux';
-import { EnkiIntlProvider } from 'i18n';
 import { store } from 'app/store';
+import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 
 if (process.env.REACT_APP_SENTRY_DSN) {
   Sentry.init({

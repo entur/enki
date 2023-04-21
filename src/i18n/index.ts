@@ -1,7 +1,4 @@
-import { IntlProvider, IntlShape } from 'react-intl';
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { selectLocale } from 'features/app/intlSlice';
+import { IntlShape } from 'react-intl';
 import 'moment/locale/nb';
 
 export const defaultLocale = 'nb';
@@ -34,18 +31,3 @@ export const getMessages = (locale: string) =>
   require('./translations/' + locale + '.ts').messages;
 
 export type FormatMessage = IntlShape['formatMessage'];
-
-export const EnkiIntlProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  const locale = useSelector(selectLocale);
-  const messages = useMemo(() => getMessages(locale), [locale]);
-
-  return (
-    <IntlProvider locale={locale} messages={messages} defaultLocale="nb">
-      {children}
-    </IntlProvider>
-  );
-};
