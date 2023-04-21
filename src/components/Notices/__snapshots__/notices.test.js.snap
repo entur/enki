@@ -5,7 +5,7 @@ exports[`Notices should render multiple notices 1`] = `
   className="notices"
 >
   <Heading4>
-    noticesHeader
+    <Component />
   </Heading4>
   <ForwardRef
     fixed={true}
@@ -31,7 +31,11 @@ exports[`Notices should render multiple notices 1`] = `
           align="right"
         >
           <Tooltip
-            content="deleteNoticeTooltip"
+            content={
+              Object {
+                "id": "deleteNoticeTooltip",
+              }
+            }
             placement="bottom"
           >
             <ForwardRef
@@ -63,7 +67,11 @@ exports[`Notices should render multiple notices 1`] = `
           align="right"
         >
           <Tooltip
-            content="deleteNoticeTooltip"
+            content={
+              Object {
+                "id": "deleteNoticeTooltip",
+              }
+            }
             placement="bottom"
           >
             <ForwardRef
@@ -84,7 +92,11 @@ exports[`Notices should render multiple notices 1`] = `
           align="right"
         >
           <Tooltip
-            content="addNoticeTooltip"
+            content={
+              Object {
+                "id": "addNoticeTooltip",
+              }
+            }
             placement="bottom"
           >
             <ForwardRef
@@ -106,7 +118,7 @@ exports[`Notices should render no notices 1`] = `
   className="notices"
 >
   <Heading4>
-    noticesHeader
+    <Component />
   </Heading4>
   <ForwardRef
     fixed={true}
@@ -121,7 +133,11 @@ exports[`Notices should render no notices 1`] = `
           align="right"
         >
           <Tooltip
-            content="addNoticeTooltip"
+            content={
+              Object {
+                "id": "addNoticeTooltip",
+              }
+            }
             placement="bottom"
           >
             <ForwardRef
@@ -143,7 +159,7 @@ exports[`Notices should render single notices 1`] = `
   className="notices"
 >
   <Heading4>
-    noticesHeader
+    <Component />
   </Heading4>
   <ForwardRef
     fixed={true}
@@ -169,7 +185,11 @@ exports[`Notices should render single notices 1`] = `
           align="right"
         >
           <Tooltip
-            content="deleteNoticeTooltip"
+            content={
+              Object {
+                "id": "deleteNoticeTooltip",
+              }
+            }
             placement="bottom"
           >
             <ForwardRef
@@ -190,7 +210,11 @@ exports[`Notices should render single notices 1`] = `
           align="right"
         >
           <Tooltip
-            content="addNoticeTooltip"
+            content={
+              Object {
+                "id": "addNoticeTooltip",
+              }
+            }
             placement="bottom"
           >
             <ForwardRef
