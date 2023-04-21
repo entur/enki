@@ -1,7 +1,8 @@
-import { IntlShape } from 'react-intl';
+import { IntlProvider, IntlShape } from 'react-intl';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { selectLocale } from 'features/app/intlSlice';
 import 'moment/locale/nb';
-import '@formatjs/intl-pluralrules/polyfill';
-import '@formatjs/intl-pluralrules/dist/locale-data/nb';
 
 export const defaultLocale = 'nb';
 export const SUPPORTED_LOCALES = ['nb', 'en', 'sv'];
@@ -30,6 +31,21 @@ export const getLocale = () => {
 };
 
 export const getMessages = (locale: string) =>
-  require('./translations/' + locale + '.ts');
+  require('./translations/' + locale + '.ts').messages;
 
 export type FormatMessage = IntlShape['formatMessage'];
+
+export const EnkiIntlProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const locale = useSelector(selectLocale);
+  const messages = useMemo(() => getMessages(locale), [locale]);
+
+  return (
+    <IntlProvider locale={locale} messages={messages} defaultLocale="nb">
+      {children}
+    </IntlProvider>
+  );
+};

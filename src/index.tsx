@@ -1,11 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
-import { store } from './app/store';
 import { Apollo } from 'api';
 import AuthProvider, { useAuth } from '@entur/auth-provider';
 import { fetchConfig } from 'config/fetchConfig';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
-import { Provider } from 'react-intl-redux';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
@@ -14,6 +12,9 @@ import * as Sentry from '@sentry/react';
 import './styles/index.scss';
 import { getEnvironment } from 'config/getEnvironment';
 import { normalizeAllUrls } from 'helpers/url';
+import { Provider } from 'react-redux';
+import { EnkiIntlProvider } from 'i18n';
+import { store } from 'app/store';
 
 if (process.env.REACT_APP_SENTRY_DSN) {
   Sentry.init({
@@ -63,17 +64,19 @@ const renderIndex = async () => {
   root.render(
     <Sentry.ErrorBoundary>
       <Provider store={store}>
-        <AuthProvider
-          auth0Config={{
-            ...auth0Config,
-            redirectUri: window.location.origin,
-          }}
-          auth0ClaimsNamespace={claimsNamespace}
-        >
-          <ConfigContext.Provider value={config}>
-            <AuthenticatedApp />
-          </ConfigContext.Provider>
-        </AuthProvider>
+        <EnkiIntlProvider>
+          <AuthProvider
+            auth0Config={{
+              ...auth0Config,
+              redirectUri: window.location.origin,
+            }}
+            auth0ClaimsNamespace={claimsNamespace}
+          >
+            <ConfigContext.Provider value={config}>
+              <AuthenticatedApp />
+            </ConfigContext.Provider>
+          </AuthProvider>
+        </EnkiIntlProvider>
       </Provider>
     </Sentry.ErrorBoundary>
   );

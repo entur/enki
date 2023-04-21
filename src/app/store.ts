@@ -1,11 +1,10 @@
 import { configureStore, ThunkAction, AnyAction } from '@reduxjs/toolkit';
 import configSlice from 'features/app/configSlice';
 import authSlice from 'features/app/authSlice';
-import { intlReducer as intl } from 'react-intl-redux';
 import reducers from 'reducers';
 import * as Sentry from '@sentry/react';
 import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
-import { getLocale, getMessages } from 'i18n';
+import intlSlice from 'features/app/intlSlice';
 
 export const sentryCaptureException = (e: any) =>
   process.env.NODE_ENV === 'production'
@@ -15,9 +14,6 @@ export const sentryCaptureException = (e: any) =>
 const sentryReduxEnhancer = Sentry.createReduxEnhancer({
   // Optionally pass options listed below
 });
-
-const locale = getLocale();
-const messages = getMessages(locale);
 
 const {
   notification,
@@ -47,13 +43,7 @@ export const store = configureStore({
     flexibleStopPlaces,
     editor,
     config: configSlice,
-    intl,
-  },
-  preloadedState: {
-    intl: {
-      locale,
-      messages,
-    },
+    intl: intlSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

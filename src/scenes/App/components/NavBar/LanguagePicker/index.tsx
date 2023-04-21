@@ -9,6 +9,7 @@ import './styles.scss';
 import { GlobalState } from 'reducers';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { useIntl } from 'react-intl';
+import { updateLocale } from 'features/app/intlSlice';
 
 const getFlagIcon = (locale: string) => {
   switch (locale) {
@@ -39,16 +40,12 @@ const getLocaleString = (locale: string): keyof MessagesKey => {
 
 const LanguagePicker = () => {
   const [toggled, setToggle] = useState<boolean>(false);
-  const selectedLocale = useSelector<GlobalState, string>(
-    (state) => state.intl.locale
-  );
   const dispatch = useDispatch();
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale: selectedLocale } = useIntl();
 
   const handleChangeLocale = useCallback(
     (locale: string) => {
-      const { messages } = getMessages(locale);
-      dispatch(updateIntl({ locale, messages }));
+      dispatch(updateLocale(locale));
       localStorage.setItem(LOCALE_KEY, locale);
     },
     [dispatch]
