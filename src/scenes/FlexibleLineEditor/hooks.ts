@@ -31,7 +31,6 @@ export const useLoadDependencies = () => {
   );
 
   const dispatchLoadFlexibleLineById = useCallback(() => {
-    const intl = useIntl();
     if (params.id) {
       const lineType = params.id.split(':')[1];
       const isFlexibleLine = lineType === 'FlexibleLine';
