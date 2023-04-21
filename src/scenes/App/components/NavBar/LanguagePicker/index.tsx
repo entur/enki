@@ -1,12 +1,10 @@
-import React, { useCallback, useState, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateIntl } from 'react-intl-redux';
+import { useCallback, useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { FloatingButton } from '@entur/button';
 import { DownArrowIcon, CheckIcon, UpArrowIcon } from '@entur/icons';
 import { NorwayIcon, UKIcon, SwedenIcon } from '@entur/icons';
-import { getMessages, SUPPORTED_LOCALES, LOCALE_KEY } from 'i18n';
+import { SUPPORTED_LOCALES, LOCALE_KEY } from 'i18n';
 import './styles.scss';
-import { GlobalState } from 'reducers';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { useIntl } from 'react-intl';
 import { updateLocale } from 'features/app/intlSlice';

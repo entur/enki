@@ -10,7 +10,6 @@ import flexibleStopPlaces, {
 import editor, { EditorState } from './editor';
 import { AuthState } from 'features/app/authSlice';
 import { ConfigState } from 'features/app/configSlice';
-import { IntlState } from 'react-intl-redux';
 
 export type GlobalState = {
   notification: NotificationState;
