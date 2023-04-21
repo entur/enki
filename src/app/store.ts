@@ -47,9 +47,6 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      // thunk: {
-      //   extraArgument: { intl: getIntl },
-      // },
       immmutableCheck: false,
       serializableCheck: false,
     }).concat(...devMiddlewares),
