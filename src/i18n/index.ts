@@ -36,17 +36,11 @@ export const getMessages = async (
 ): Promise<Record<Messages, string>> => {
   switch (locale) {
     case 'nb':
-      return import('./translations/nb') as unknown as Promise<
-        Record<Messages, string>
-      >;
+      return (await import('./translations/nb')).messages;
     case 'en':
-      return import('./translations/en') as unknown as Promise<
-        Record<Messages, string>
-      >;
+      return (await import('./translations/en')).messages;
     case 'sv':
-      return import('./translations/sv') as unknown as Promise<
-        Record<Messages, string>
-      >;
+      return (await import('./translations/sv')).messages;
   }
 };
 
