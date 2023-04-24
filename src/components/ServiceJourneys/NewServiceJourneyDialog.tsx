@@ -1,14 +1,12 @@
-import React from 'react';
 import { PrimaryButton, SecondaryButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { Modal } from '@entur/modal';
-import { selectIntl } from 'i18n';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
 import { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 
 type Props = {
   open: boolean;
@@ -36,27 +34,31 @@ export default (props: Props) => {
     addNewServiceJourney,
   } = props;
 
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const textFieldRef = useRef<HTMLInputElement>(null);
 
   return (
     <Modal
       size="small"
       open={open}
-      title={formatMessage('newServiceJourneyModalTitle')}
+      title={formatMessage({ id: 'newServiceJourneyModalTitle' })}
       onDismiss={() => setOpen(false)}
       className="modal"
     >
-      {formatMessage('newServiceJourneyModalSubTitle')}
+      {formatMessage({ id: 'newServiceJourneyModalSubTitle' })}
       <div className="modal-content">
         <TextField
-          label={formatMessage('newServiceJourneyModalNameLabel')}
+          label={formatMessage({ id: 'newServiceJourneyModalNameLabel' })}
           className="modal-input"
-          placeholder={formatMessage('newServiceJourneyModalPlaceholder')}
+          placeholder={formatMessage({
+            id: 'newServiceJourneyModalPlaceholder',
+          })}
           ref={textFieldRef}
         />
         <Dropdown
-          label={formatMessage('newServiceJourneyModalJourneyPatternLabel')}
+          label={formatMessage({
+            id: 'newServiceJourneyModalJourneyPatternLabel',
+          })}
           className="modal-input"
           items={journeyPatterns?.map((jp, i) => ({
             value: keys[i],
@@ -72,7 +74,7 @@ export default (props: Props) => {
             onClick={() => setOpen(false)}
             className="margin-right"
           >
-            {formatMessage('newServiceJourneyModalCancel')}
+            {formatMessage({ id: 'newServiceJourneyModalCancel' })}
           </SecondaryButton>
           <PrimaryButton
             onClick={() => {
@@ -85,7 +87,7 @@ export default (props: Props) => {
               );
             }}
           >
-            {formatMessage('newServiceJourneyModalCreate')}
+            {formatMessage({ id: 'newServiceJourneyModalCreate' })}
           </PrimaryButton>
         </div>
       </div>

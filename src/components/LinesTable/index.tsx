@@ -1,6 +1,4 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 
 import {
   DataCell,
@@ -16,8 +14,8 @@ import Line from 'model/Line';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import Loading from 'components/Loading';
 
-import './styles.scss';
 import { Organisation } from 'model/Organisation';
+import './styles.scss';
 
 export type Props = {
   lines?: Line[];
@@ -29,18 +27,18 @@ export type Props = {
 export default (props: Props) => {
   const { lines } = props;
 
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
-  const nameTableHeader = formatMessage('linesNameTableHeaderLabel');
-  const publicCodeTableHeader = formatMessage(
-    'linesPublicCodeTableHeaderLabel'
-  );
-  const privateCodeTableHeader = formatMessage(
-    'linesPrivateCodeTableHeaderLabel'
-  );
-  const operatorTableHeader = formatMessage('linesOperatorTableHeader');
-  const noLinesFoundText = formatMessage('linesNoLinesFoundText');
-  const loadingText = formatMessage('linesLoadingText');
+  const nameTableHeader = formatMessage({ id: 'linesNameTableHeaderLabel' });
+  const publicCodeTableHeader = formatMessage({
+    id: 'linesPublicCodeTableHeaderLabel',
+  });
+  const privateCodeTableHeader = formatMessage({
+    id: 'linesPrivateCodeTableHeaderLabel',
+  });
+  const operatorTableHeader = formatMessage({ id: 'linesOperatorTableHeader' });
+  const noLinesFoundText = formatMessage({ id: 'linesNoLinesFoundText' });
+  const loadingText = formatMessage({ id: 'linesLoadingText' });
 
   const renderTableBody = () => {
     if (!lines) {
@@ -93,7 +91,7 @@ const renderTableRows = (props: Props) => {
 
   return lines?.map((line) => (
     <TableRow key={line.id} onClick={() => onRowClick(line)}>
-      <DataCell title={line.description}>{line.name}</DataCell>
+      <DataCell title={line.description || undefined}>{line.name}</DataCell>
       <DataCell>{line.publicCode}</DataCell>
       <DataCell>{line.privateCode}</DataCell>
       <DataCell>

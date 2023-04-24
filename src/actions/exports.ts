@@ -1,22 +1,12 @@
+import { showErrorNotification } from 'actions/notification';
 import { UttuQuery } from 'api';
 import { exportMutation } from 'api/uttu/mutations';
 import { getExportByIdQuery, getExportsQuery } from 'api/uttu/queries';
-import { showErrorNotification } from 'actions/notification';
-import { getIntl } from 'i18n';
-import { Export, toPayload } from 'model/Export';
-import { Dispatch } from 'redux';
-import { GlobalState } from 'reducers';
+import { AppThunk, sentryCaptureException } from 'app/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
-import { sentryCaptureException } from 'store';
-
-export const REQUEST_EXPORTS = 'REQUEST_EXPORTS';
-export const RECEIVE_EXPORTS = 'RECEIVE_EXPORTS';
-
-export const REQUEST_EXPORT = 'REQUEST_EXPORT';
-export const RECEIVE_EXPORT = 'RECEIVE_EXPORT';
-
-export const SAVE_EXPORT = 'SAVE_EXPORT';
-export const SAVED_EXPORT = 'SAVED_EXPORT';
+import { Export, toPayload } from 'model/Export';
+import { IntlShape } from 'react-intl';
+import { RECEIVE_EXPORT, RECEIVE_EXPORTS, REQUEST_EXPORTS } from './constants';
 
 const requestExportsActionCreator = () => ({
   type: REQUEST_EXPORTS,
@@ -33,13 +23,12 @@ const receiveExportActionCreator = (receivedExport: Export) => ({
 });
 
 export const loadExports =
-  () =>
-  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+  (intl: IntlShape): AppThunk =>
+  async (dispatch, getState) => {
     dispatch(requestExportsActionCreator());
 
     const activeProvider = getState().providers.active?.code ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
-    const intl = getIntl(getState());
 
     try {
       const data = await UttuQuery(
@@ -55,10 +44,14 @@ export const loadExports =
     } catch (e) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage('exportsLoadExportsErrorHeader'),
+          intl.formatMessage({ id: 'exportsLoadExportsErrorHeader' }),
           intl.formatMessage(
-            'exportsLoadExportsErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'exportsLoadExportsErrorMessage',
+            },
+            {
+              details: getInternationalizedUttuError(intl, e as Error),
+            }
           )
         )
       );
@@ -67,11 +60,10 @@ export const loadExports =
   };
 
 export const loadExportById =
-  (id: string) =>
-  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+  (id: string, intl: IntlShape): AppThunk =>
+  async (dispatch, getState) => {
     const activeProvider = getState().providers.active?.code ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
-    const intl = getIntl(getState());
 
     try {
       const data = await UttuQuery(
@@ -85,10 +77,14 @@ export const loadExportById =
     } catch (e) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage('exportsLoadExportByIdErrorHeader'),
+          intl.formatMessage({ id: 'exportsLoadExportByIdErrorHeader' }),
           intl.formatMessage(
-            'exportsLoadExportByIdErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'exportsLoadExportByIdErrorMessage',
+            },
+            {
+              details: getInternationalizedUttuError(intl, e as Error),
+            }
           )
         )
       );
@@ -97,11 +93,10 @@ export const loadExportById =
   };
 
 export const saveExport =
-  (theExport: Export) =>
-  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+  (theExport: Export, intl: IntlShape): AppThunk =>
+  async (dispatch, getState) => {
     const activeProvider = getState().providers.active?.code ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
-    const intl = getIntl(getState());
 
     try {
       await UttuQuery(
@@ -116,10 +111,14 @@ export const saveExport =
     } catch (e) {
       dispatch(
         showErrorNotification(
-          intl.formatMessage('exportsSaveExportErrorHeader'),
+          intl.formatMessage({ id: 'exportsSaveExportErrorHeader' }),
           intl.formatMessage(
-            'exportsSaveExportErrorMessage',
-            getInternationalizedUttuError(intl, e as Error)
+            {
+              id: 'exportsSaveExportErrorMessage',
+            },
+            {
+              details: getInternationalizedUttuError(intl, e as Error),
+            }
           )
         )
       );

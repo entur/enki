@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import cx from 'classnames';
+import { VariantType } from '@entur/form';
 import {
   CheckIcon,
   CloseIcon,
@@ -7,7 +6,8 @@ import {
   ValidationInfoIcon,
   WarningIcon,
 } from '@entur/icons';
-import { VariantType } from '@entur/form';
+import cx from 'classnames';
+import { useEffect } from 'react';
 import '../../../styles.scss';
 
 type Props = {

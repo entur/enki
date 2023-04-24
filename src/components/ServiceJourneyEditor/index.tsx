@@ -1,39 +1,39 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
-import { Dropdown } from '@entur/dropdown';
-import { TextField } from '@entur/form';
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import StopPoint from 'model/StopPoint';
-import { isBlank } from 'helpers/forms';
-import ConfirmDialog from 'components/ConfirmDialog';
-import DeleteActionChip from 'components/DeleteActionChip';
-import { OrganisationState } from 'reducers/organisations';
+import { Dropdown } from '@entur/dropdown';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
-import { GlobalState } from 'reducers';
-import ServiceJourney from 'model/ServiceJourney';
-import usePristine from 'hooks/usePristine';
-import { getErrorFeedback } from 'helpers/errorHandling';
-import RequiredInputMarker from 'components/RequiredInputMarker';
-import { getInit, mapToItems } from 'helpers/dropdown';
-import './styles.scss';
+import { TextField } from '@entur/form';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
-import CopyDialog from './CopyDialog';
+import ConfirmDialog from 'components/ConfirmDialog';
 import CopyActionChip from 'components/CopyActionChip';
-import Notices from 'components/Notices';
 import { DayTypesEditor } from 'components/DayTypesEditor/DayTypesEditor';
-import { filterNetexOperators } from 'model/Organisation';
-import { useConfig } from 'config/ConfigContext';
+import DeleteActionChip from 'components/DeleteActionChip';
+import Notices from 'components/Notices';
 import { usePassingTimesEditor } from 'components/PassingTimesEditor';
+import RequiredInputMarker from 'components/RequiredInputMarker';
+import { useConfig } from 'config/ConfigContext';
+import { getInit, mapToItems } from 'helpers/dropdown';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import { isBlank } from 'helpers/forms';
+import usePristine from 'hooks/usePristine';
 import { FlexibleLineType } from 'model/FlexibleLine';
+import { filterNetexOperators } from 'model/Organisation';
+import ServiceJourney from 'model/ServiceJourney';
+import StopPoint from 'model/StopPoint';
+import React, { useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { GlobalState } from 'reducers';
+import { OrganisationState } from 'reducers/organisations';
+import CopyDialog from './CopyDialog';
+import './styles.scss';
 
 type Props = {
   serviceJourney: ServiceJourney;
   stopPoints: StopPoint[];
   spoilPristine: boolean;
   onChange: (serviceJourney: ServiceJourney) => void;
-  deleteServiceJourney?: (index: number) => void;
+  deleteServiceJourney?: () => void;
   copyServiceJourney?: (serviceJourney: ServiceJourney[]) => void;
   flexibleLineType?: FlexibleLineType;
 };
@@ -63,7 +63,7 @@ const ServiceJourneyEditor = (props: Props) => {
   const organisations = useSelector<GlobalState, OrganisationState>(
     (state) => state.organisations
   );
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const handleOperatorSelectionChange = (
     newOperatorSelection: string | undefined
@@ -98,9 +98,9 @@ const ServiceJourneyEditor = (props: Props) => {
           <div className="service-journey-inputs">
             <TextField
               className="form-section"
-              label={formatMessage('generalNameLabel')}
+              label={formatMessage({ id: 'generalNameLabel' })}
               {...getErrorFeedback(
-                formatMessage('nameIsRequired'),
+                formatMessage({ id: 'nameIsRequired' }),
                 !isBlank(name),
                 namePristine
               )}
@@ -111,7 +111,7 @@ const ServiceJourneyEditor = (props: Props) => {
             />
 
             <TextField
-              label={formatMessage('generalDescription')}
+              label={formatMessage({ id: 'generalDescription' })}
               className="form-section"
               value={description || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -120,8 +120,8 @@ const ServiceJourneyEditor = (props: Props) => {
             />
 
             <TextField
-              label={formatMessage('generalPublicCode')}
-              labelTooltip={formatMessage('generalPublicCodeTooltip')}
+              label={formatMessage({ id: 'generalPublicCode' })}
+              labelTooltip={formatMessage({ id: 'generalPublicCodeTooltip' })}
               className="form-section"
               value={publicCode || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -130,8 +130,8 @@ const ServiceJourneyEditor = (props: Props) => {
             />
 
             <TextField
-              label={formatMessage('generalPrivateCode')}
-              labelTooltip={formatMessage('generalPrivateCodeTooltip')}
+              label={formatMessage({ id: 'generalPrivateCode' })}
+              labelTooltip={formatMessage({ id: 'generalPrivateCodeTooltip' })}
               className="form-section"
               value={privateCode || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,12 +142,12 @@ const ServiceJourneyEditor = (props: Props) => {
 
           <Dropdown
             className="form-section operator-selector"
-            label={formatMessage('generalOperator')}
+            label={formatMessage({ id: 'generalOperator' })}
             initialSelectedItem={getInit(
               operators.map((op) => ({ ...op, name: op.name.value })),
               operatorSelection
             )}
-            placeholder={formatMessage('defaultOption')}
+            placeholder={formatMessage({ id: 'defaultOption' })}
             items={mapToItems(
               operators.map((op) => ({ ...op, name: op.name.value }))
             )}
@@ -219,13 +219,13 @@ const ServiceJourneyEditor = (props: Props) => {
           <DeleteActionChip
             className="service-journey-editor-action-chip"
             onClick={() => setShowDeleteDialog(true)}
-            title={formatMessage('editorDeleteButtonText')}
+            title={formatMessage({ id: 'editorDeleteButtonText' })}
           />
         )}
         {copyServiceJourney && (
           <CopyActionChip
             className="service-journey-editor-action-chip"
-            title={formatMessage('editorCopyButtonText')}
+            title={formatMessage({ id: 'editorCopyButtonText' })}
             onClick={() => setShowCopyDialog(true)}
           />
         )}
@@ -233,14 +233,14 @@ const ServiceJourneyEditor = (props: Props) => {
       {deleteServiceJourney && (
         <ConfirmDialog
           isOpen={showDeleteDialog}
-          title={formatMessage('serviceJourneyDeleteTitle')}
-          message={formatMessage('serviceJourneydeleteMessage')}
+          title={formatMessage({ id: 'serviceJourneyDeleteTitle' })}
+          message={formatMessage({ id: 'serviceJourneydeleteMessage' })}
           buttons={[
             <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
-              {formatMessage('no')}
+              {formatMessage({ id: 'no' })}
             </SecondaryButton>,
             <SuccessButton key={1} onClick={deleteServiceJourney}>
-              {formatMessage('yes')}
+              {formatMessage({ id: 'yes' })}
             </SuccessButton>,
           ]}
           onDismiss={() => setShowDeleteDialog(false)}

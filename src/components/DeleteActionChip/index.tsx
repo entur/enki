@@ -1,6 +1,6 @@
-import React from 'react';
-import { DeleteIcon } from '@entur/icons';
 import { ActionChip } from '@entur/chip';
+import { DeleteIcon } from '@entur/icons';
+import React from 'react';
 import './DeleteButton.scss';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 const DeleteButton = (props: Props) => (
   <ActionChip
     className={props.className}
-    onClick={(event: Event) => {
+    onClick={(event: React.MouseEvent) => {
       props.onClick();
       event.stopPropagation();
     }}

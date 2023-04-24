@@ -1,8 +1,7 @@
-import React from 'react';
 import PassingTime from 'model/PassingTime';
 import StopPoint from 'model/StopPoint';
-import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
 import { FixedPassingTimeEditor } from '../FixedPassingTimeEditor/FixedPassingTimeEditor';
+import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
 
 type Props = {
   passingTime: PassingTime;

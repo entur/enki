@@ -1,12 +1,9 @@
-import React from 'react';
-import PassingTime from 'model/PassingTime';
-import { TimePicker } from '@entur/datepicker';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
-import { ClockIcon } from '@entur/icons';
-import { useIntl } from 'i18n';
-import { toDate } from '../common/toDate';
-import FixedPassingTimeTitle from './FixedPassingTimeTitle';
+import PassingTime from 'model/PassingTime';
 import StopPoint from 'model/StopPoint';
+import { useIntl } from 'react-intl';
+import { PassingTimePicker } from '../common/PassingTimePicker';
+import FixedPassingTimeTitle from './FixedPassingTimeTitle';
 
 type Props = {
   passingTime: PassingTime;
@@ -28,25 +25,23 @@ export const FixedPassingTimeEditor = ({
   return (
     <>
       <FixedPassingTimeTitle stopPoint={stopPoint} />
-      <TimePicker
+      <PassingTimePicker
+        label={formatMessage({ id: 'passingTimesArrivalTime' })}
         disabled={index === 0}
-        label={`${formatMessage('passingTimesArrivalTime')}${
-          isLast ? ' *' : ''
-        }`}
-        className="timepicker"
-        onChange={(e: Date | null) => {
-          const date = e?.toTimeString().split(' ')[0];
+        required={isLast}
+        selectedTime={passingTime.arrivalTime}
+        onChange={(arrivalTime: string | null) => {
           onChange({
             ...passingTime,
-            arrivalTime: date || null,
+            arrivalTime,
             departureTime: isLast ? null : passingTime.departureTime,
           });
         }}
-        prepend={<ClockIcon inline />}
-        selectedTime={toDate(passingTime.arrivalTime!)}
       />
       <DayOffsetDropdown
-        value={passingTime.arrivalDayOffset as number}
+        value={
+          index === 0 ? undefined : (passingTime.arrivalDayOffset as number)
+        }
         disabled={index === 0}
         onChange={(value) =>
           onChange({
@@ -58,25 +53,21 @@ export const FixedPassingTimeEditor = ({
           })
         }
       />
-      <TimePicker
+      <PassingTimePicker
+        label={formatMessage({ id: 'passingTimesDepartureTime' })}
         disabled={isLast}
-        label={`${formatMessage('passingTimesDepartureTime')}${
-          index === 0 ? ' *' : ''
-        }`}
-        className="timepicker"
-        onChange={(e: Date | null) => {
-          const date = e?.toTimeString().split(' ')[0];
+        required={index === 0}
+        selectedTime={passingTime.departureTime}
+        onChange={(departureTime: string | null) => {
           onChange({
             ...passingTime,
-            departureTime: date || null,
+            departureTime,
             arrivalTime: index === 0 ? null : passingTime.arrivalTime,
           });
         }}
-        prepend={<ClockIcon inline />}
-        selectedTime={toDate(passingTime.departureTime!)}
       />
       <DayOffsetDropdown
-        value={passingTime.departureDayOffset as number}
+        value={isLast ? undefined : (passingTime.departureDayOffset as number)}
         disabled={isLast}
         onChange={(value) =>
           onChange({

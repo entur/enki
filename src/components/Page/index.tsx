@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
-import { Heading1 } from '@entur/typography';
-import './styles.scss';
-import { useNavigate } from 'react-router-dom';
 import { TertiaryButton } from '@entur/button';
 import { BackArrowIcon } from '@entur/icons';
+import { Heading1 } from '@entur/typography';
+import { ReactElement } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './styles.scss';
 
 type Props = {
   title?: string;

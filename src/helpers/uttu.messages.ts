@@ -1,4 +1,3 @@
-import { defineMessages } from 'react-intl';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 
 export enum UttuCode {
@@ -59,4 +58,4 @@ export const isOfUttuMessage = (
 ): key is UttuCode | CombinedUttuCode =>
   key in UttuCode || key in CombinedUttuCode;
 
-export default defineMessages(uttuMessages);
+export default uttuMessages;

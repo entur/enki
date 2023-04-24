@@ -10,8 +10,8 @@ import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
-import { selectIntl } from 'i18n';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { GlobalState } from 'reducers';
 import {
@@ -41,7 +41,7 @@ export const MixedFlexibleStopPointEditor = ({
   onDelete,
   canDelete,
 }: StopPointEditorProps) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const [selectMode, setSelectMode] = useState<StopPlaceMode>(
     stopPoint.quayRef ? StopPlaceMode.NSR : StopPlaceMode.FLEXIBLE
   );
@@ -88,10 +88,10 @@ export const MixedFlexibleStopPointEditor = ({
           >
             <div className="radio-buttons">
               <Radio value={StopPlaceMode.FLEXIBLE}>
-                {formatMessage('selectCustom')}
+                {formatMessage({ id: 'selectCustom' })}
               </Radio>
               <Radio value={StopPlaceMode.NSR}>
-                {formatMessage('selectNsr')}
+                {formatMessage({ id: 'selectNsr' })}
               </Radio>
             </div>
           </RadioGroup>
@@ -101,10 +101,10 @@ export const MixedFlexibleStopPointEditor = ({
             <Dropdown
               className="stop-point-dropdown"
               value={stopPoint.flexibleStopPlaceRef}
-              placeholder={formatMessage('defaultOption')}
+              placeholder={formatMessage({ id: 'defaultOption' })}
               items={mapToItems(flexibleStopPlaces || [])}
               clearable
-              label={formatMessage('stopPlace')}
+              label={formatMessage({ id: 'stopPlace' })}
               onChange={(e) =>
                 onChange({
                   ...stopPoint,
@@ -112,7 +112,7 @@ export const MixedFlexibleStopPointEditor = ({
                 })
               }
               {...getErrorFeedback(
-                stopPlaceError ? formatMessage(stopPlaceError) : '',
+                stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
                 !stopPlaceError,
                 stopPlacePristine
               )}
@@ -123,7 +123,7 @@ export const MixedFlexibleStopPointEditor = ({
             <QuayRefField
               initialQuayRef={stopPoint.quayRef}
               errorFeedback={getErrorFeedback(
-                stopPlaceError ? formatMessage(stopPlaceError) : '',
+                stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
                 !stopPlaceError,
                 quayRefPristine
               )}
@@ -148,22 +148,22 @@ export const MixedFlexibleStopPointEditor = ({
         <DeleteButton
           disabled={!canDelete}
           onClick={() => setDeleteDialogOpen(true)}
-          title={formatMessage('editorDeleteButtonText')}
+          title={formatMessage({ id: 'editorDeleteButtonText' })}
         />
 
         <ConfirmDialog
           isOpen={isDeleteDialogOpen}
-          title={formatMessage('deleteStopPointDialogTitle')}
-          message={formatMessage('deleteStopPointDialogMessage')}
+          title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
+          message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
           buttons={[
             <SecondaryButton
               key="no"
               onClick={() => setDeleteDialogOpen(false)}
             >
-              {formatMessage('no')}
+              {formatMessage({ id: 'no' })}
             </SecondaryButton>,
             <SuccessButton key="yes" onClick={onDelete}>
-              {formatMessage('yes')}
+              {formatMessage({ id: 'yes' })}
             </SuccessButton>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}

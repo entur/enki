@@ -1,45 +1,38 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 
 import Notices from './';
 
-const formatMessage = (id) => id;
+const formatMessage = ({ id }) => id;
 
-describe('Notices', () => {
-  it('should render no notices', () => {
-    const wrapper = shallow(
-      <Notices
-        notices={[]}
-        setNotices={() => {}}
-        formatMessage={formatMessage}
-      />
-    );
+test('should render no notices', () => {
+  const { container } = render(
+    <Notices notices={[]} setNotices={() => {}} formatMessage={formatMessage} />
+  );
+  expect(screen.getByRole('rowgroup').children).toHaveLength(1);
+});
 
-    expect(wrapper).toMatchSnapshot();
-  });
+test('should render single notices', () => {
+  render(
+    <Notices
+      notices={[{ text: 'This a notice' }]}
+      setNotices={() => {}}
+      formatMessage={formatMessage}
+    />
+  );
+  expect(screen.getByRole('rowgroup').children).toHaveLength(2);
+  expect(screen.getAllByDisplayValue('This a notice')).toHaveLength(1);
+});
 
-  it('should render single notices', () => {
-    const wrapper = shallow(
-      <Notices
-        notices={[{ text: 'This a notice' }]}
-        setNotices={() => {}}
-        formatMessage={formatMessage}
-      />
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('should render multiple notices', () => {
-    const wrapper = shallow(
-      <Notices
-        notices={[
-          { text: 'This a notice' },
-          { text: 'This is another notice' },
-        ]}
-        setNotices={() => {}}
-        formatMessage={formatMessage}
-      />
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
+test('should render multiple notices', () => {
+  render(
+    <Notices
+      notices={[{ text: 'This a notice' }, { text: 'This is another notice' }]}
+      setNotices={() => {}}
+      formatMessage={formatMessage}
+    />
+  );
+  expect(screen.getByRole('rowgroup').children).toHaveLength(3);
+  expect(screen.getAllByDisplayValue('This a notice')).toHaveLength(1);
+  expect(screen.getAllByDisplayValue('This is another notice')).toHaveLength(1);
 });

@@ -1,22 +1,20 @@
-import React from 'react';
-import { GraphQLClient } from 'graphql-request';
+import { GraphQLClient, Variables } from 'graphql-request';
 
 import {
-  ApolloProvider,
   ApolloClient,
-  createHttpLink,
-  InMemoryCache,
   ApolloLink,
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { Variables } from 'graphql-request/dist/src/types';
-import { useSelector } from 'react-redux';
-import { ReactElement } from 'react';
-import { GlobalState } from 'reducers';
 import { useAuth } from '@entur/auth-provider';
-import { AuthState } from 'reducers/auth';
 import { useConfig } from 'config/ConfigContext';
+import { AuthState } from 'features/app/authSlice';
+import { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
+import { GlobalState } from 'reducers';
 
 export const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 

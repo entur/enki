@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import Note from './Note';
+import { NotificationDuration, NotificationTypes } from 'actions/notification';
 import { Notification } from 'reducers/notification';
-import { NotificationTypes, NotificationDuration } from 'actions/notification';
+import Note from './Note';
 
 type Props = Notification & {
   title: string;

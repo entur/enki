@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
 import {
   NegativeButton,
   PrimaryButton,
   SecondaryButton,
   SuccessButton,
 } from '@entur/button';
-import { useSelector } from 'react-redux';
-import { AppIntlState, selectIntl } from 'i18n';
-import { GlobalState } from 'reducers';
 import ConfirmDialog from 'components/ConfirmDialog';
+import { useState } from 'react';
+import { useIntl } from 'react-intl';
 
 type Props = {
   editMode: boolean;
@@ -24,7 +22,7 @@ type Props = {
 };
 
 const NavigationButtons = (props: Props) => {
-  const { formatMessage } = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const { formatMessage } = useIntl();
 
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
@@ -33,12 +31,12 @@ const NavigationButtons = (props: Props) => {
       <div className="buttons">
         {!props.editMode && props.firstStep && (
           <SecondaryButton onClick={props.onCancel}>
-            {formatMessage('navigationCancel')}
+            {formatMessage({ id: 'navigationCancel' })}
           </SecondaryButton>
         )}
         {!props.editMode && !props.firstStep && (
           <SecondaryButton onClick={props.onPrevious}>
-            {formatMessage('navigationPrevious')}
+            {formatMessage({ id: 'navigationPrevious' })}
           </SecondaryButton>
         )}
         {props.editMode && !props.lastStep && (
@@ -46,7 +44,7 @@ const NavigationButtons = (props: Props) => {
             onClick={props.onNext}
             disabled={!props.currentStepIsValid}
           >
-            {formatMessage('navigationNext')}
+            {formatMessage({ id: 'navigationNext' })}
           </SecondaryButton>
         )}
         {!props.editMode && !props.lastStep && (
@@ -54,17 +52,17 @@ const NavigationButtons = (props: Props) => {
             onClick={props.onNext}
             disabled={!props.currentStepIsValid}
           >
-            {formatMessage('navigationNext')}
+            {formatMessage({ id: 'navigationNext' })}
           </PrimaryButton>
         )}
         {props.editMode && (
           <PrimaryButton onClick={props.onSave} disabled={!props.isValid}>
-            {formatMessage('editorSaveButtonText')}
+            {formatMessage({ id: 'editorSaveButtonText' })}
           </PrimaryButton>
         )}
         {!props.editMode && props.lastStep && (
           <SuccessButton onClick={props.onSave} disabled={!props.isValid}>
-            {formatMessage('editorSaveAndCreateLine')}
+            {formatMessage({ id: 'editorSaveAndCreateLine' })}
           </SuccessButton>
         )}
         {props.editMode && props.firstStep && (
@@ -72,17 +70,21 @@ const NavigationButtons = (props: Props) => {
             onClick={() => setDeleteDialogOpen(true)}
             className="delete"
           >
-            {formatMessage('editorDeleteButtonText')}
+            {formatMessage({ id: 'editorDeleteButtonText' })}
           </NegativeButton>
         )}
       </div>
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
-        title={formatMessage('editorDeleteLineConfirmationDialogTitle')}
-        message={formatMessage('editorDeleteLineConfirmationDialogMessage')}
+        title={formatMessage({ id: 'editorDeleteLineConfirmationDialogTitle' })}
+        message={formatMessage({
+          id: 'editorDeleteLineConfirmationDialogMessage',
+        })}
         buttons={[
           <SecondaryButton key={0} onClick={() => setDeleteDialogOpen(false)}>
-            {formatMessage('editorDeleteConfirmationDialogCancelButtonText')}
+            {formatMessage({
+              id: 'editorDeleteConfirmationDialogCancelButtonText',
+            })}
           </SecondaryButton>,
           <SuccessButton
             key={1}
@@ -91,7 +93,9 @@ const NavigationButtons = (props: Props) => {
               setDeleteDialogOpen(false);
             }}
           >
-            {formatMessage('editorDeleteConfirmationDialogConfirmButtonText')}
+            {formatMessage({
+              id: 'editorDeleteConfirmationDialogConfirmButtonText',
+            })}
           </SuccessButton>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}

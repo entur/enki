@@ -1,10 +1,10 @@
 import { TextField } from '@entur/form';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import usePristine from 'hooks/usePristine';
-import { useIntl } from 'i18n';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import StopPoint from 'model/StopPoint';
-import React, { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback } from 'react';
+import { useIntl } from 'react-intl';
 
 type Props = {
   value: string | undefined;
@@ -48,13 +48,13 @@ export const FrontTextTextField = ({
   return (
     <TextField
       className="stop-point-info-item"
-      label={formatMessage('labelFrontTextRequired')}
+      label={formatMessage({ id: 'labelFrontTextRequired' })}
       {...getErrorFeedback(
-        frontTextError ? formatMessage(frontTextError) : '',
+        frontTextError ? formatMessage({ id: frontTextError }) : '',
         !frontTextError,
         frontTextPristine
       )}
-      labelTooltip={formatMessage('frontTextTooltip')}
+      labelTooltip={formatMessage({ id: 'frontTextTooltip' })}
       value={value}
       onChange={onChangeCallback}
       disabled={disabled}

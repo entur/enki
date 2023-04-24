@@ -1,7 +1,7 @@
-import React from 'react';
-import { CopyIcon } from '@entur/icons';
-import './styles.scss';
 import { ActionChip } from '@entur/chip';
+import { CopyIcon } from '@entur/icons';
+import React from 'react';
+import './styles.scss';
 
 type Props = {
   onClick: () => void;
@@ -13,7 +13,7 @@ type Props = {
 const CopyButton = (props: Props) => (
   <ActionChip
     className={props.className}
-    onClick={(event: Event) => {
+    onClick={(event: React.MouseEvent) => {
       props.onClick();
       event.stopPropagation();
     }}

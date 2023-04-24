@@ -1,9 +1,9 @@
-import StopPoint, { stopPointToPayload } from './StopPoint';
-import ServiceJourney, { serviceJourneyToPayload } from './ServiceJourney';
-import Notice from './Notice';
-import { DIRECTION_TYPE } from 'model/enums';
-import VersionedType from 'model/VersionedType';
 import { createUuid } from 'helpers/generators';
+import VersionedType from 'model/VersionedType';
+import { DIRECTION_TYPE } from 'model/enums';
+import Notice from './Notice';
+import ServiceJourney, { serviceJourneyToPayload } from './ServiceJourney';
+import StopPoint, { stopPointToPayload } from './StopPoint';
 
 export type JourneyPattern = VersionedType & {
   name?: string;

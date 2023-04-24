@@ -1,44 +1,68 @@
-import moment from 'moment';
-import { getIntl } from 'i18n';
-import { IntlState } from 'react-intl-redux';
-import Line from 'model/Line';
-import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
-import JourneyPattern from 'model/JourneyPattern';
-import ServiceJourney from 'model/ServiceJourney';
-import StopPoint from 'model/StopPoint';
-import PassingTime from 'model/PassingTime';
+import { addDays, getDay, isAfter as isDateAfter, parseISO } from 'date-fns';
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import { MessagesKey } from 'i18n/translations/translationKeys';
-import DayType from 'model/DayType';
-import { addDays, getDay, isAfter as isDateAfter, parseISO } from 'date-fns';
 import BookingArrangement from 'model/BookingArrangement';
+import DayType from 'model/DayType';
+import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
+import JourneyPattern from 'model/JourneyPattern';
+import Line from 'model/Line';
+import PassingTime from 'model/PassingTime';
+import ServiceJourney from 'model/ServiceJourney';
+import StopPoint from 'model/StopPoint';
+import moment from 'moment';
+import { IntlShape } from 'react-intl';
 
-export const validLine = (line: Line): boolean =>
+export const validLine = (line: Line, intl: IntlShape): boolean =>
   aboutLineStepIsValid(line) &&
   line.journeyPatterns!.every(
-    (jp) => validJourneyPattern(jp) && validServiceJourneys(jp.serviceJourneys)
+    (jp) =>
+      validJourneyPattern(jp) && validServiceJourneys(jp.serviceJourneys, intl)
   );
 
-export const getMaxAllowedStepIndex = (line: Line) => {
+export const getMaxAllowedStepIndex = (line: Line, intl: IntlShape) => {
   if (!aboutLineStepIsValid(line)) return 0;
   else if (line.journeyPatterns!.some((jp) => !validJourneyPattern(jp)))
     return 1;
   else if (
     line.journeyPatterns!.some(
-      (jp) => !validServiceJourneys(jp.serviceJourneys)
+      (jp) => !validServiceJourneys(jp.serviceJourneys, intl)
     )
   )
     return 2;
   else return 3;
 };
 
-export const currentStepIsValid = (currentStep: number, line: Line) => {
+export const getMaxAllowedFlexibleLineStepIndex = (
+  line: FlexibleLine,
+  intl: IntlShape
+) => {
+  if (!aboutFlexibleLineStepIsValid(line)) return 0;
+  else if (
+    line.journeyPatterns!.some(
+      (jp) => !validFlexibleLineJourneyPattern(jp, line.flexibleLineType)
+    )
+  )
+    return 1;
+  else if (
+    line.journeyPatterns!.some(
+      (jp) => !validServiceJourneys(jp.serviceJourneys, intl)
+    )
+  )
+    return 2;
+  else return 3;
+};
+
+export const currentStepIsValid = (
+  currentStep: number,
+  line: Line,
+  intl: IntlShape
+) => {
   if (currentStep === 0) return aboutLineStepIsValid(line);
   else if (currentStep === 1)
     return line.journeyPatterns!.every((jp) => validJourneyPattern(jp));
   else if (currentStep === 2)
     return line.journeyPatterns!.every((jp) =>
-      validServiceJourneys(jp.serviceJourneys)
+      validServiceJourneys(jp.serviceJourneys, intl)
     );
   else if (currentStep === 3) return true;
   else return false;
@@ -46,7 +70,8 @@ export const currentStepIsValid = (currentStep: number, line: Line) => {
 
 export const currentFlexibleLineStepIsValid = (
   currentStep: number,
-  line: FlexibleLine
+  line: FlexibleLine,
+  intl: IntlShape
 ) => {
   if (currentStep === 0) return aboutFlexibleLineStepIsValid(line);
   else if (currentStep === 1)
@@ -55,7 +80,7 @@ export const currentFlexibleLineStepIsValid = (
     );
   else if (currentStep === 2)
     return line.journeyPatterns!.every((jp) =>
-      validServiceJourneys(jp.serviceJourneys)
+      validServiceJourneys(jp.serviceJourneys, intl)
     );
   else if (currentStep === 3) return true;
   else return false;
@@ -69,12 +94,15 @@ export const aboutLineStepIsValid = (line: Line): boolean =>
   !isBlank(line.transportMode) &&
   !isBlank(line.transportSubmode);
 
-export const validFlexibleLine = (line: FlexibleLine): boolean =>
+export const validFlexibleLine = (
+  line: FlexibleLine,
+  intl: IntlShape
+): boolean =>
   aboutFlexibleLineStepIsValid(line) &&
   line.journeyPatterns!.every(
     (jp) =>
       validFlexibleLineJourneyPattern(jp, line.flexibleLineType) &&
-      validServiceJourneys(jp.serviceJourneys)
+      validServiceJourneys(jp.serviceJourneys, intl)
   );
 
 export const aboutFlexibleLineStepIsValid = (line: FlexibleLine): boolean =>
@@ -199,13 +227,17 @@ export const validateFlexibleAreasOnlyStopPoint = (
 };
 
 export const validServiceJourneys = (
-  sjs: ServiceJourney[] | undefined
-): boolean => sjs?.every((sj) => validateServiceJourney(sj)) ?? false;
+  sjs: ServiceJourney[] | undefined,
+  intl: IntlShape
+): boolean => sjs?.every((sj) => validateServiceJourney(sj, intl)) ?? false;
 
-export const validateServiceJourney = (sj: ServiceJourney): boolean => {
+export const validateServiceJourney = (
+  sj: ServiceJourney,
+  intl: IntlShape
+): boolean => {
   const isBlankName = isBlank(sj.name);
   const validDayTimes = (sj.dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
-  const { isValid } = validateTimes(sj.passingTimes ?? []);
+  const { isValid } = validateTimes(sj.passingTimes ?? [], intl);
   const validDayTypes = validateDayTypes(sj.dayTypes);
   return !isBlankName && isValid && validDayTimes && validDayTypes;
 };
@@ -256,11 +288,10 @@ const hasAtleastOneFieldSet = (passingTime: PassingTime) => {
 
 export const validateTimes = (
   passingTimes: PassingTime[],
-  intlState?: IntlState
+  intl: IntlShape
 ): { isValid: boolean; errorMessage: string } => {
-  const intl = intlState && getIntl({ intl: intlState });
   const getMessage = (message: keyof MessagesKey) =>
-    intl ? intl.formatMessage(message) : '';
+    intl ? intl.formatMessage({ id: message }) : '';
 
   if (passingTimes.length < 2)
     return {
@@ -351,10 +382,22 @@ export const validateTimes = (
           prevPassingTime.departureDayOffset!
         ) ||
         isBefore(
+          departureTime!,
+          departureDayOffset!,
+          prevPassingTime.arrivalTime!,
+          prevPassingTime.arrivalDayOffset!
+        ) ||
+        isBefore(
           arrivalTime!,
           arrivalDayOffset!,
           prevPassingTime.arrivalTime!,
           prevPassingTime.arrivalDayOffset!
+        ) ||
+        isBefore(
+          arrivalTime!,
+          arrivalDayOffset!,
+          prevPassingTime.departureTime!,
+          prevPassingTime.departureDayOffset!
         ) ||
         isBefore(
           latestArrivalTime!,
@@ -367,6 +410,30 @@ export const validateTimes = (
           earliestDepartureDayOffset!,
           prevPassingTime.earliestDepartureTime!,
           prevPassingTime.earliestDepartureDayOffset!
+        ) ||
+        isBefore(
+          earliestDepartureTime!,
+          earliestDepartureDayOffset!,
+          prevPassingTime.departureTime!,
+          prevPassingTime.departureDayOffset!
+        ) ||
+        isBefore(
+          earliestDepartureTime!,
+          earliestDepartureDayOffset!,
+          prevPassingTime.arrivalTime!,
+          prevPassingTime.arrivalDayOffset!
+        ) ||
+        isBefore(
+          arrivalTime!,
+          arrivalDayOffset!,
+          prevPassingTime.earliestDepartureTime!,
+          prevPassingTime.earliestDepartureDayOffset!
+        ) ||
+        isBefore(
+          arrivalTime!,
+          arrivalDayOffset!,
+          prevPassingTime.latestArrivalTime!,
+          prevPassingTime.latestArrivalDayOffset!
         )
       ) {
         return {

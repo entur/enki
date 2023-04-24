@@ -1,13 +1,19 @@
-import React, { useCallback, useState, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateIntl } from 'react-intl-redux';
 import { FloatingButton } from '@entur/button';
-import { DownArrowIcon, CheckIcon, UpArrowIcon } from '@entur/icons';
-import { NorwayIcon, UKIcon, SwedenIcon } from '@entur/icons';
-import { getMessages, SUPPORTED_LOCALES, LOCALE_KEY, selectIntl } from 'i18n';
-import './styles.scss';
-import { GlobalState } from 'reducers';
+import {
+  CheckIcon,
+  DownArrowIcon,
+  NorwayIcon,
+  SwedenIcon,
+  UKIcon,
+  UpArrowIcon,
+} from '@entur/icons';
+import { updateLocale } from 'features/app/intlSlice';
+import { LOCALE_KEY, SUPPORTED_LOCALES } from 'i18n';
 import { MessagesKey } from 'i18n/translations/translationKeys';
+import { useCallback, useMemo, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
+import './styles.scss';
 
 const getFlagIcon = (locale: string) => {
   switch (locale) {
@@ -38,16 +44,12 @@ const getLocaleString = (locale: string): keyof MessagesKey => {
 
 const LanguagePicker = () => {
   const [toggled, setToggle] = useState<boolean>(false);
-  const selectedLocale = useSelector<GlobalState, string>(
-    (state) => state.intl.locale
-  );
   const dispatch = useDispatch();
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage, locale: selectedLocale } = useIntl();
 
   const handleChangeLocale = useCallback(
     async (locale: 'nb' | 'en' | 'sv') => {
-      const { messages } = await getMessages(locale);
-      dispatch(updateIntl({ locale, messages }));
+      dispatch(updateLocale(locale));
       localStorage.setItem(LOCALE_KEY, locale);
     },
     [dispatch]
@@ -95,7 +97,7 @@ const LanguagePicker = () => {
               size="small"
             >
               {flagIcon(locale)}
-              <span>{formatMessage(getLocaleString(locale))}</span>
+              <span>{formatMessage({ id: getLocaleString(locale) })}</span>
               {checkIcon(locale)}
             </FloatingButton>
           ))}
@@ -103,12 +105,12 @@ const LanguagePicker = () => {
       )}
       <FloatingButton
         onClick={() => setToggle(!toggled)}
-        aria-label={formatMessage('languagePickerAriaLabel')}
+        aria-label={formatMessage({ id: 'languagePickerAriaLabel' })}
         className="language-picker"
         size="small"
       >
         {flagIcon(selectedLocale)}
-        {formatMessage(getLocaleString(selectedLocale))}
+        {formatMessage({ id: getLocaleString(selectedLocale) })}
         {arrowIcon}
       </FloatingButton>
     </div>

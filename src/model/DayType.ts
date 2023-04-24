@@ -1,6 +1,6 @@
+import { VersionedType } from 'model/VersionedType';
 import DayTypeAssignment from './DayTypeAssignment';
 import { DAY_OF_WEEK } from './enums';
-import { VersionedType } from 'model/VersionedType';
 
 type DayType = VersionedType & {
   changed?: string;

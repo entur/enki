@@ -1,0 +1,33 @@
+import { selectLocale } from 'features/app/intlSlice';
+import { getMessages } from 'i18n';
+import { Suspense, useDeferredValue, useEffect, useState } from 'react';
+import { IntlProvider } from 'react-intl';
+import { useSelector } from 'react-redux';
+
+export const EnkiIntlProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [messages, setMessages] = useState<Record<string, string>>({});
+  const locale = useSelector(selectLocale);
+  const deferredMessages = useDeferredValue(messages);
+
+  useEffect(() => {
+    getMessages(locale).then((messages) => {
+      setMessages(messages);
+    });
+  }, [locale]);
+
+  return (
+    <Suspense>
+      <IntlProvider
+        locale={locale}
+        messages={deferredMessages}
+        defaultLocale="nb"
+      >
+        {children}
+      </IntlProvider>
+    </Suspense>
+  );
+};

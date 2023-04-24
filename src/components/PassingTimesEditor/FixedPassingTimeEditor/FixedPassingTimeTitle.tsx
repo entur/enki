@@ -1,6 +1,6 @@
 import { useQuaySearch } from 'api/useQuaySearch';
 import StopPoint from 'model/StopPoint';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 type Props = {
   stopPoint: StopPoint;

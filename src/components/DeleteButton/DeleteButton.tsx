@@ -14,7 +14,7 @@ const DeleteButton = (props: Props) => (
   <TertiaryButton
     id="delete-button"
     className={props.thin ? 'thin' : ''}
-    onClick={(event: Event) => {
+    onClick={(event: React.MouseEvent) => {
       props.onClick();
       event.stopPropagation();
     }}

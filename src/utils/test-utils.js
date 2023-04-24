@@ -1,38 +1,33 @@
-import React from 'react';
+import { configureStore } from '@reduxjs/toolkit';
 import { render as rtlRender } from '@testing-library/react';
-import { applyMiddleware, createStore, combineReducers } from 'redux';
+import intlSlice from 'features/app/intlSlice';
+import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
-import { intlReducer as intl } from 'react-intl-redux';
-import thunk from 'redux-thunk';
-import { getIntl } from 'i18n';
 import reducers from '../reducers';
-import { geti18n } from 'i18n';
-
-const { locale, messages } = geti18n();
-const middlewares = [thunk.withExtraArgument({ intl: getIntl })];
-const enhancer = applyMiddleware(...middlewares);
-
-const combinedReducers = combineReducers({
-  ...reducers,
-  intl,
-});
 
 function render(
   ui,
   {
-    initialState = {
-      intl: {
-        locale,
-        messages,
+    store = configureStore({
+      reducer: {
+        ...reducers,
+        intl: intlSlice,
       },
-      auth: {},
-    },
-    store = createStore(combinedReducers, initialState, enhancer),
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          immmutableCheck: false,
+          serializableCheck: false,
+        }),
+    }),
     ...renderOptions
   } = {}
 ) {
   function Wrapper({ children }) {
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <Provider store={store}>
+        <EnkiIntlProvider>{children}</EnkiIntlProvider>
+      </Provider>
+    );
   }
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }

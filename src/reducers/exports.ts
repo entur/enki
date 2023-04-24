@@ -1,11 +1,11 @@
 import {
-  REQUEST_EXPORTS,
-  RECEIVE_EXPORTS,
   RECEIVE_EXPORT,
-} from 'actions/exports';
-import { AnyAction } from 'redux';
+  RECEIVE_EXPORTS,
+  REQUEST_EXPORTS,
+  SET_ACTIVE_PROVIDER,
+} from 'actions/constants';
 import { Export } from 'model/Export';
-import { SET_ACTIVE_PROVIDER } from 'actions/providers';
+import { AnyAction } from 'redux';
 
 export type ExportsState = Export[] | null;
 

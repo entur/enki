@@ -1,10 +1,10 @@
 import {
-  RECEIVE_PROVIDERS,
   FAILED_RECEIVING_PROVIDERS,
+  RECEIVE_PROVIDERS,
   SET_ACTIVE_PROVIDER,
-} from 'actions/providers';
-import { AnyAction } from 'redux';
+} from 'actions/constants';
 import Provider from 'model/Provider';
+import { AnyAction } from 'redux';
 
 export type ProvidersState = {
   providers: Provider[] | null;
@@ -13,7 +13,7 @@ export type ProvidersState = {
   exports: null;
 };
 
-const initialState = {
+export const initialState = {
   providers: null,
   failure: false,
   active: null,
@@ -43,7 +43,7 @@ const providersReducer = (
     case RECEIVE_PROVIDERS: {
       return {
         ...state,
-        providers: action.payload.providers,
+        providers: [...action.payload.providers],
         active: getActiveProvider(state, action),
       };
     }
@@ -55,7 +55,7 @@ const providersReducer = (
       };
 
     case SET_ACTIVE_PROVIDER:
-      return { ...state, active: action.provider };
+      return { ...state, active: Object.assign({}, action.provider) };
 
     default:
       return state;

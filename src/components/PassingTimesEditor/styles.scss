@@ -3,7 +3,7 @@
 .passing-times-editor {
   .passing-time {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-end;
     padding: 1rem 0;
     border-bottom: 2px solid $colors-greys-grey20;

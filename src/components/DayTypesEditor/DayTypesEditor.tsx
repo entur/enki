@@ -2,10 +2,9 @@ import { useQuery } from '@apollo/client';
 import { SecondaryButton } from '@entur/button';
 import { MultiSelect } from '@entur/dropdown';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
-import { selectIntl } from 'i18n';
 import DayType from 'model/DayType';
-import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { DayTypesModal } from './DayTypesModal';
 
 type DayTypesData = {
@@ -19,11 +18,14 @@ export const DayTypesEditor = ({
   dayTypes: DayType[];
   onChange: (dayTypes: DayType[]) => void;
 }) => {
-  const { data: allDayTypesData, refetch } =
-    useQuery<DayTypesData>(GET_DAY_TYPES);
+  const {
+    data: allDayTypesData,
+    refetch,
+    loading,
+  } = useQuery<DayTypesData>(GET_DAY_TYPES);
 
   const [openDayTypeModal, setOpenDayTypeModal] = useState(false);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const onOpenDayTypeModal = useCallback(
     (open: boolean) => {
@@ -37,21 +39,23 @@ export const DayTypesEditor = ({
     <>
       <div style={{ display: 'flex', alignItems: 'end' }}>
         <MultiSelect
-          label={formatMessage('dayTypesEditorSelectLabel')}
+          clearable
+          style={{ minWidth: '20rem' }}
+          label={formatMessage({ id: 'dayTypesEditorSelectLabel' })}
           items={() =>
-            allDayTypesData?.dayTypes.map((dt) => ({
-              label: dt.name || dt.id!,
-              value: dt.id!,
+            allDayTypesData?.dayTypes.map((dt: DayType) => ({
+              label: `${dt.name || dt.id!}`,
+              value: `${dt.id!}`,
             })) || []
           }
-          selectedItems={
+          initialSelectedItems={
             dayTypes?.map((dt) => ({
               label: dt.name || dt.id!,
               value: dt.id!,
             })) || []
           }
-          onSelectedItemsChange={(items) => {
-            const selectedIds = items.selectedItems?.map((item) => item.value);
+          onChange={(items: any) => {
+            const selectedIds = items?.map((item: any) => item.value);
             onChange(
               allDayTypesData?.dayTypes.filter((dt) =>
                 selectedIds?.includes(dt.id!)
@@ -59,9 +63,10 @@ export const DayTypesEditor = ({
             );
           }}
         />
+
         <div style={{ marginLeft: '1rem' }}>
           <SecondaryButton onClick={() => onOpenDayTypeModal(true)}>
-            {formatMessage('dayTypesEditButton')}
+            {formatMessage({ id: 'dayTypesEditButton' })}
           </SecondaryButton>
         </div>
       </div>

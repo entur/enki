@@ -1,7 +1,6 @@
 import { SecondarySquareButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
 import { Paragraph } from '@entur/typography';
-import React from 'react';
 
 type Props = {
   onClick: () => void;

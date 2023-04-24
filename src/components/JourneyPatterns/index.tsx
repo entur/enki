@@ -1,16 +1,15 @@
-import React, { ReactElement, useState, useRef } from 'react';
+import { PrimaryButton, SecondaryButton } from '@entur/button';
 import { Accordion, AccordionItem } from '@entur/expand';
-import { replaceElement, removeElementByIndex } from 'helpers/arrays';
-import JourneyPattern, { initJourneyPattern } from 'model/JourneyPattern';
-import './styles.scss';
-import { LeadParagraph, Heading1 } from '@entur/typography';
-import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
-import { Modal } from '@entur/modal';
 import { TextField } from '@entur/form';
-import { SecondaryButton, PrimaryButton } from '@entur/button';
+import { Modal } from '@entur/modal';
+import { Heading1, LeadParagraph } from '@entur/typography';
 import AddButton from 'components/AddButton/AddButton';
+import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import useUniqueKeys from 'hooks/useUniqueKeys';
+import JourneyPattern, { initJourneyPattern } from 'model/JourneyPattern';
+import { ReactElement, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
+import './styles.scss';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
@@ -24,7 +23,7 @@ type Props = {
 
 const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const textFieldRef = useRef<HTMLInputElement>(null);
 
   const keys = useUniqueKeys(journeyPatterns);
@@ -64,16 +63,18 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
       <Modal
         size="small"
         open={showModal}
-        title={formatMessage('newJourneyPatternModalTitle')}
+        title={formatMessage({ id: 'newJourneyPatternModalTitle' })}
         onDismiss={() => setShowModal(false)}
         className="modal"
       >
-        {formatMessage('newJourneyPatternModalSubTitle')}
+        {formatMessage({ id: 'newJourneyPatternModalSubTitle' })}
         <div className="modal-content">
           <TextField
-            label={formatMessage('newJourneyPatternModalLabel')}
+            label={formatMessage({ id: 'newJourneyPatternModalLabel' })}
             className="modal-input"
-            placeholder={formatMessage('newJourneyPatternModalPlaceholder')}
+            placeholder={formatMessage({
+              id: 'newJourneyPatternModalPlaceholder',
+            })}
             ref={textFieldRef}
           />
           <div>
@@ -81,22 +82,26 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
               onClick={() => setShowModal(false)}
               className="margin-right"
             >
-              {formatMessage('newJourneyPatternModalCancel')}
+              {formatMessage({ id: 'newJourneyPatternModalCancel' })}
             </SecondaryButton>
             <PrimaryButton
               onClick={() =>
                 addNewJourneyPattern(textFieldRef?.current?.value ?? '')
               }
             >
-              {formatMessage('newJourneyPatternModalCreate')}
+              {formatMessage({ id: 'newJourneyPatternModalCreate' })}
             </PrimaryButton>
           </div>
         </div>
       </Modal>
 
       <div className="journey-patterns-editor">
-        <Heading1>{formatMessage('editorJourneyPatternsTabLabel')}</Heading1>
-        <LeadParagraph>{formatMessage('editorFillInformation')}</LeadParagraph>
+        <Heading1>
+          {formatMessage({ id: 'editorJourneyPatternsTabLabel' })}
+        </Heading1>
+        <LeadParagraph>
+          {formatMessage({ id: 'editorFillInformation' })}
+        </LeadParagraph>
         {journeyPatterns.length === 1 ? (
           children(journeyPatterns[0], updateJourneyPattern(0))
         ) : (
@@ -119,7 +124,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
 
         <AddButton
           onClick={() => setShowModal(true)}
-          buttonTitle={formatMessage('editorAddJourneyPatterns')}
+          buttonTitle={formatMessage({ id: 'editorAddJourneyPatterns' })}
         />
       </div>
     </>

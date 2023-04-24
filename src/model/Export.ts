@@ -1,9 +1,9 @@
-import Message from './Message';
-import http from 'http/http';
 import { saveAs } from 'file-saver';
+import http from 'http/http';
 import { VersionedType } from 'model/VersionedType';
 import { EXPORT_STATUS } from 'model/enums';
 import Line from './Line';
+import Message from './Message';
 
 export type ExportLineAssociation = VersionedType & {
   lineRef?: string;

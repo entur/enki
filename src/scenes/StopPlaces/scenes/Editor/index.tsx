@@ -1,54 +1,54 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TextArea, TextField } from '@entur/form';
+import { SmallAlertBox } from '@entur/alert';
 import {
-  PrimaryButton,
   NegativeButton,
+  PrimaryButton,
   SecondaryButton,
   SuccessButton,
 } from '@entur/button';
+import { TextArea, TextField } from '@entur/form';
 import { MapIcon } from '@entur/icons';
-import { SmallAlertBox } from '@entur/alert';
 import { Paragraph } from '@entur/typography';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import ConfirmDialog from 'components/ConfirmDialog';
-import {
-  flexibleStopAreaTypeMessages,
-  FLEXIBLE_STOP_AREA_TYPE,
-  GEOMETRY_TYPE,
-  VEHICLE_MODE,
-} from 'model/enums';
+import { Dropdown } from '@entur/dropdown';
+import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
   deleteFlexibleStopPlaceById,
   loadFlexibleStopPlaceById,
   saveFlexibleStopPlace,
 } from 'actions/flexibleStopPlaces';
-import { loadFlexibleLines } from 'actions/flexibleLines';
-import OverlayLoader from 'components/OverlayLoader';
+import ConfirmDialog from 'components/ConfirmDialog';
 import Loading from 'components/Loading';
+import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
-import PolygonMap from './components/PolygonMap';
-import './styles.scss';
-import { selectIntl } from 'i18n';
-import { GlobalState } from 'reducers';
-import FlexibleLine from 'model/FlexibleLine';
-import { validateFlexibleStopPlace } from './validateForm';
+import RequiredInputMarker from 'components/RequiredInputMarker';
+import { getErrorFeedback } from 'helpers/errorHandling';
 import { objectValuesAreEmpty } from 'helpers/forms';
+import usePristine from 'hooks/usePristine';
+import { LeafletMouseEvent } from 'leaflet';
+import isEqual from 'lodash.isequal';
+import FlexibleLine from 'model/FlexibleLine';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import GeoJSON, {
-  removeLastCoordinate,
-  addCoordinate,
   Coordinate,
+  addCoordinate,
+  removeLastCoordinate,
   stringIsValidCoordinates,
 } from 'model/GeoJSON';
-import { equals } from 'ramda';
-import usePristine from 'hooks/usePristine';
-import { getErrorFeedback } from 'helpers/errorHandling';
-import RequiredInputMarker from 'components/RequiredInputMarker';
-import { LeafletMouseEvent } from 'leaflet';
-import { Dropdown } from '@entur/dropdown';
-import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import {
+  FLEXIBLE_STOP_AREA_TYPE,
+  GEOMETRY_TYPE,
+  VEHICLE_MODE,
+  flexibleStopAreaTypeMessages,
+} from 'model/enums';
+import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
+import { GlobalState } from 'reducers';
+import PolygonMap from './components/PolygonMap';
+import './styles.scss';
+import { validateFlexibleStopPlace } from './validateForm';
 
 const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
   JSON.stringify(polygonCoordinates);
@@ -63,7 +63,8 @@ const transformToMapCoordinates = (geojson: Coordinate[]): Coordinate[] =>
 const FlexibleStopPlaceEditor = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const { formatMessage } = useSelector(selectIntl);
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const dispatch = useDispatch<any>();
   const lines = useSelector<GlobalState, FlexibleLine[]>(
     (state) => state.flexibleLines ?? []
@@ -99,7 +100,7 @@ const FlexibleStopPlaceEditor = () => {
   const errors = validateFlexibleStopPlace(flexibleStopPlace ?? {});
 
   useEffect(() => {
-    if (!isLoading && !equals(currentFlexibleStopPlace, flexibleStopPlace))
+    if (!isLoading && !isEqual(currentFlexibleStopPlace, flexibleStopPlace))
       setFlexibleStopPlace(currentFlexibleStopPlace);
     setCoordinateHolder(
       coordinatesToText(
@@ -112,21 +113,21 @@ const FlexibleStopPlaceEditor = () => {
   useEffect(() => {
     if (params.id) {
       setIsLoading(true);
-      dispatch(loadFlexibleLines())
-        .then(() => dispatch(loadFlexibleStopPlaceById(params.id!)))
+      dispatch(loadFlexibleLines(intl))
+        .then(() => dispatch(loadFlexibleStopPlaceById(params.id!, intl)))
         .catch(() => navigate('/networks'))
         .then(() => {
           setIsLoading(false);
         });
     } else {
-      dispatch(loadFlexibleLines()).then(() => setIsLoading(false));
+      dispatch(loadFlexibleLines(intl)).then(() => setIsLoading(false));
     }
   }, [dispatch, params.id, history]);
 
   const handleOnSaveClick = useCallback(() => {
     if (objectValuesAreEmpty(errors)) {
       setSaving(true);
-      dispatch(saveFlexibleStopPlace(flexibleStopPlace ?? {}))
+      dispatch(saveFlexibleStopPlace(flexibleStopPlace ?? {}, intl))
         .then(() => navigate('/stop-places'))
         .finally(() => setSaving(false));
     }
@@ -137,7 +138,7 @@ const FlexibleStopPlaceEditor = () => {
     setDeleteDialogOpen(false);
     if (flexibleStopPlace?.id) {
       setDeleting(true);
-      dispatch(deleteFlexibleStopPlaceById(flexibleStopPlace.id))
+      dispatch(deleteFlexibleStopPlaceById(flexibleStopPlace.id, intl))
         .then(() => navigate('/stop-places'))
         .finally(() => setDeleting(false));
     }
@@ -211,22 +212,22 @@ const FlexibleStopPlaceEditor = () => {
   ]`;
 
   const areaError = getErrorFeedback(
-    errors.flexibleArea ? formatMessage(errors.flexibleArea) : '',
+    errors.flexibleArea ? formatMessage({ id: errors.flexibleArea }) : '',
     !errors.flexibleArea,
     areaPristine
   );
 
   return (
     <Page
-      backButtonTitle={formatMessage('navBarStopPlacesMenuItemLabel')}
+      backButtonTitle={formatMessage({ id: 'navBarStopPlacesMenuItemLabel' })}
       title={
         params.id
-          ? formatMessage('editorEditHeader')
-          : formatMessage('editorCreateHeader')
+          ? formatMessage({ id: 'editorEditHeader' })
+          : formatMessage({ id: 'editorCreateHeader' })
       }
     >
       <div className="stop-place-editor">
-        <Paragraph>{formatMessage('editorDescription')}</Paragraph>
+        <Paragraph>{formatMessage({ id: 'editorDescription' })}</Paragraph>
 
         {flexibleStopPlace && !isLoading ? (
           <OverlayLoader
@@ -234,8 +235,8 @@ const FlexibleStopPlaceEditor = () => {
             isLoading={isSaving || isDeleting}
             text={
               isSaving
-                ? formatMessage('editorSavingOverlayLoaderText')
-                : formatMessage('editorDeletingOverlayLoaderText')
+                ? formatMessage({ id: 'editorSavingOverlayLoaderText' })
+                : formatMessage({ id: 'editorDeletingOverlayLoaderText' })
             }
           >
             <div className="stop-place-form-container">
@@ -243,9 +244,9 @@ const FlexibleStopPlaceEditor = () => {
                 <RequiredInputMarker />
 
                 <TextField
-                  label={formatMessage('editorNameFormLabelText')}
+                  label={formatMessage({ id: 'editorNameFormLabelText' })}
                   {...getErrorFeedback(
-                    errors.name ? formatMessage(errors.name) : '',
+                    errors.name ? formatMessage({ id: errors.name }) : '',
                     !errors.name,
                     namePristine
                   )}
@@ -259,10 +260,11 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <TextArea
-                  label={formatMessage('editorDescriptionFormLabelText')}
-                  type="text"
+                  label={formatMessage({
+                    id: 'editorDescriptionFormLabelText',
+                  })}
                   value={flexibleStopPlace.description ?? ''}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     setFlexibleStopPlace({
                       ...flexibleStopPlace,
                       description: e.target.value,
@@ -271,7 +273,9 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <TextField
-                  label={formatMessage('editorPrivateCodeFormLabelText')}
+                  label={formatMessage({
+                    id: 'editorPrivateCodeFormLabelText',
+                  })}
                   value={flexibleStopPlace.privateCode ?? ''}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setFlexibleStopPlace({
@@ -282,10 +286,12 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <Dropdown
-                  label={formatMessage('flexibleStopAreaType')}
+                  label={formatMessage({ id: 'flexibleStopAreaType' })}
                   items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map((v) => ({
                     value: v,
-                    label: formatMessage(flexibleStopAreaTypeMessages[v]),
+                    label: formatMessage({
+                      id: flexibleStopAreaTypeMessages[v],
+                    }),
                   }))}
                   value={
                     flexibleStopPlace.keyValues?.find(
@@ -307,20 +313,22 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <TextArea
-                  label={formatMessage('editorCoordinatesFormLabelText')}
+                  label={formatMessage({
+                    id: 'editorCoordinatesFormLabelText',
+                  })}
                   variant={
                     coordinateHolder === '' ||
                     stringIsValidCoordinates(coordinateHolder)
                       ? undefined
                       : 'error'
                   }
-                  feedback={formatMessage('errorCoordinates')}
-                  rows="12"
+                  feedback={formatMessage({ id: 'errorCoordinates' })}
+                  rows={12}
                   value={coordinateHolder}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     setCoordinateHolder(e.target.value)
                   }
-                  onBlur={(e: ChangeEvent<HTMLInputElement>) =>
+                  onBlur={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     stringIsValidCoordinates(coordinateHolder)
                       ? changeCoordinates(
                           transformTextToCoordinates(e.target.value)
@@ -335,7 +343,7 @@ const FlexibleStopPlaceEditor = () => {
                   onClick={handleDrawPolygonClick}
                   disabled={!stringIsValidCoordinates(coordinateHolder)}
                 >
-                  {formatMessage('editorDrawPolygonButtonText')}
+                  {formatMessage({ id: 'editorDrawPolygonButtonText' })}
                   <MapIcon />
                 </PrimaryButton>
 
@@ -345,16 +353,18 @@ const FlexibleStopPlaceEditor = () => {
                       onClick={() => setDeleteDialogOpen(true)}
                       disabled={isDeleteDisabled}
                     >
-                      {formatMessage('editorDeleteButtonText')}
+                      {formatMessage({ id: 'editorDeleteButtonText' })}
                     </NegativeButton>
                   )}
 
                   <SuccessButton onClick={handleOnSaveClick}>
                     {params.id
-                      ? formatMessage('editorSaveButtonText')
+                      ? formatMessage({ id: 'editorSaveButtonText' })
                       : formatMessage(
-                          'editorDetailedCreate',
-                          formatMessage('stopPlaceText')
+                          {
+                            id: 'editorDetailedCreate',
+                          },
+                          { details: formatMessage({ id: 'stopPlaceText' }) }
                         )}
                   </SuccessButton>
                 </div>
@@ -380,22 +390,26 @@ const FlexibleStopPlaceEditor = () => {
             className=""
             text={
               flexibleStopPlace
-                ? formatMessage('editorLoadingStopPlaceText')
-                : formatMessage('editorLoadingDependenciesText')
+                ? formatMessage({ id: 'editorLoadingStopPlaceText' })
+                : formatMessage({ id: 'editorLoadingDependenciesText' })
             }
           />
         )}
 
         <ConfirmDialog
           isOpen={isDeleteDialogOpen}
-          title={formatMessage('editorDeleteStopPlaceDialogTitle')}
-          message={formatMessage('editorDeleteStopPlaceDialogMessage')}
+          title={formatMessage({ id: 'editorDeleteStopPlaceDialogTitle' })}
+          message={formatMessage({ id: 'editorDeleteStopPlaceDialogMessage' })}
           buttons={[
             <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-              {formatMessage('editorDeleteStopPlaceDialogCancelButtonText')}
+              {formatMessage({
+                id: 'editorDeleteStopPlaceDialogCancelButtonText',
+              })}
             </SecondaryButton>,
             <SuccessButton key={1} onClick={handleDelete}>
-              {formatMessage('editorDeleteStopPlaceDialogConfirmButtonText')}
+              {formatMessage({
+                id: 'editorDeleteStopPlaceDialogConfirmButtonText',
+              })}
             </SuccessButton>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}

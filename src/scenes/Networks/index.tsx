@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import { AddIcon } from '@entur/icons';
 import {
   DataCell,
   HeaderCell,
@@ -9,18 +8,19 @@ import {
   TableHead,
   TableRow,
 } from '@entur/table';
-import Loading from 'components/Loading';
 import { Heading1 } from '@entur/typography';
 import { deleteNetworkById, loadNetworks } from 'actions/networks';
-import { selectIntl } from 'i18n';
-import './styles.scss';
-import { GlobalState } from 'reducers';
+import Loading from 'components/Loading';
 import { Network } from 'model/Network';
-import { AddIcon } from '@entur/icons';
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { Organisation } from 'model/Organisation';
+import { useCallback, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { GlobalState } from 'reducers';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
-import { Organisation } from 'model/Organisation';
+import './styles.scss';
 
 const Networks = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Networks = () => {
   const [selectedNetwork, setSelectedNetwork] = useState<Network | undefined>(
     undefined
   );
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   const { providers, organisations, networks } = useSelector<
     GlobalState,
     GlobalState
@@ -81,7 +81,7 @@ const Networks = () => {
       {networkList.length === 0 && (
         <TableRow className="row-no-networks disabled">
           <DataCell colSpan={3}>
-            {formatMessage('networksNoNetworksFoundText')}
+            {formatMessage({ id: 'networksNoNetworksFoundText' })}
           </DataCell>
         </TableRow>
       )}
@@ -90,15 +90,15 @@ const Networks = () => {
 
   return (
     <div className="networks">
-      <Heading1>{formatMessage('networksHeaderText')}</Heading1>
+      <Heading1>{formatMessage({ id: 'networksHeaderText' })}</Heading1>
 
       <SecondaryButton className="create" as={Link} to="/networks/create">
         <AddIcon />
-        {formatMessage('editorCreateNetworkHeaderText')}
+        {formatMessage({ id: 'editorCreateNetworkHeaderText' })}
       </SecondaryButton>
 
       <Loading
-        text={formatMessage('networksLoadingNetworksText')}
+        text={formatMessage({ id: 'networksLoadingNetworksText' })}
         isLoading={!networks || !organisations}
       >
         <>
@@ -106,13 +106,13 @@ const Networks = () => {
             <TableHead>
               <TableRow>
                 <HeaderCell>
-                  {formatMessage('networksNameTableHeaderLabel')}
+                  {formatMessage({ id: 'networksNameTableHeaderLabel' })}
                 </HeaderCell>
                 <HeaderCell>
-                  {formatMessage('networksPrivateCodeTableHeaderLabel')}
+                  {formatMessage({ id: 'networksPrivateCodeTableHeaderLabel' })}
                 </HeaderCell>
                 <HeaderCell>
-                  {formatMessage('networksAuthorityTableHeaderLabel')}
+                  {formatMessage({ id: 'networksAuthorityTableHeaderLabel' })}
                 </HeaderCell>
                 <HeaderCell>{''}</HeaderCell>
               </TableRow>
@@ -131,12 +131,12 @@ const Networks = () => {
                 setSelectedNetwork(undefined);
                 setShowDeleteDialogue(false);
               }}
-              title={formatMessage(
-                'editorDeleteNetworkConfirmationDialogTitle'
-              )}
-              message={formatMessage(
-                'editorDeleteNetworkConfirmationDialogMessage'
-              )}
+              title={formatMessage({
+                id: 'editorDeleteNetworkConfirmationDialogTitle',
+              })}
+              message={formatMessage({
+                id: 'editorDeleteNetworkConfirmationDialogMessage',
+              })}
               buttons={[
                 <SecondaryButton
                   key="no"
@@ -145,7 +145,7 @@ const Networks = () => {
                     setShowDeleteDialogue(false);
                   }}
                 >
-                  {formatMessage('no')}
+                  {formatMessage({ id: 'no' })}
                 </SecondaryButton>,
                 <SuccessButton
                   key="yes"
@@ -158,7 +158,7 @@ const Networks = () => {
                       .then(() => dispatch(loadNetworks()));
                   }}
                 >
-                  {formatMessage('yes')}
+                  {formatMessage({ id: 'yes' })}
                 </SuccessButton>,
               ]}
             />

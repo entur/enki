@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react';
+import { SmallAlertBox } from '@entur/alert';
 import { ErrorHandling, getErrorFeedback } from 'helpers/errorHandling';
 import { validateTimes } from 'helpers/validation';
-import { selectIntl } from 'i18n';
 import PassingTime from 'model/PassingTime';
-import { useSelector } from 'react-redux';
-import { SmallAlertBox } from '@entur/alert';
+import { useMemo } from 'react';
+import { useIntl } from 'react-intl';
 
 export const usePassingTimesError = ({
   passingTimes,
@@ -13,7 +12,7 @@ export const usePassingTimesError = ({
   passingTimes: PassingTime[];
   spoilPristine: boolean;
 }): ErrorHandling => {
-  const intl = useSelector(selectIntl);
+  const intl = useIntl();
   const { isValid, errorMessage } = useMemo(() => {
     return validateTimes(passingTimes, intl);
   }, [passingTimes, intl]);

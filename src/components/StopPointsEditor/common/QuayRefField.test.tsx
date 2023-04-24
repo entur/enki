@@ -1,9 +1,8 @@
-import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, act, getByText, RenderResult } from 'utils/test-utils';
-import { STOP_PLACE_BY_QUAY_REF_QUERY } from 'api/uttu/queries';
-import { QuayRefField } from './QuayRefField';
 import '@testing-library/jest-dom/extend-expect';
+import { STOP_PLACE_BY_QUAY_REF_QUERY } from 'api/uttu/queries';
+import { RenderResult, act, getByText, render } from 'utils/test-utils';
+import { QuayRefField } from './QuayRefField';
 
 const mocks = [
   {
@@ -56,7 +55,7 @@ describe('QuayRefField', () => {
       >
         <QuayRefField
           initialQuayRef={'TST:Quay:1'}
-          errorFeedback={{}}
+          errorFeedback={{ variant: undefined, feedback: undefined }}
           onChange={mockedOnChange}
         />
       </MockedProvider>

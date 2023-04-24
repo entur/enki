@@ -1,31 +1,33 @@
-import React, { useState, ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
-import './styles.scss';
-import BookingArrangement from 'model/BookingArrangement';
-import { addOrRemove } from 'helpers/arrays';
-import {
-  BOOKING_ACCESS,
-  BOOKING_METHOD,
-  bookingMethodMessages,
-  paymentTimeMessages,
-  PURCHASE_MOMENT,
-  PURCHASE_WHEN,
-  BOOKING_LIMIT_TYPE,
-} from 'model/enums';
-import { LeadParagraph, Label } from '@entur/typography';
-import { RadioGroup, Radio, TextArea, TextField, Fieldset } from '@entur/form';
-import Contact from 'model/Contact';
-import { Dropdown } from '@entur/dropdown';
 import { FilterChip } from '@entur/chip';
-import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
+import {
+  TimePicker,
+  nativeDateToTimeValue,
+  timeOrDateValueToNativeDate,
+} from '@entur/datepicker';
+import { Dropdown } from '@entur/dropdown';
+import { Fieldset, Radio, RadioGroup, TextArea, TextField } from '@entur/form';
+import { Label, LeadParagraph } from '@entur/typography';
+import { TimeValue } from '@react-types/datepicker';
 import DurationPicker from 'components/DurationPicker';
 import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
-import { GlobalState } from 'reducers';
-import { AppIntlState } from 'i18n';
-import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
-import { TimePicker } from '@entur/datepicker';
 import { format } from 'date-fns';
+import { addOrRemove } from 'helpers/arrays';
+import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
+import BookingArrangement from 'model/BookingArrangement';
+import Contact from 'model/Contact';
+import {
+  BOOKING_ACCESS,
+  BOOKING_LIMIT_TYPE,
+  BOOKING_METHOD,
+  PURCHASE_MOMENT,
+  PURCHASE_WHEN,
+  bookingMethodMessages,
+  paymentTimeMessages,
+} from 'model/enums';
+import { ChangeEvent, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
+import './styles.scss';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -35,8 +37,8 @@ type Props = {
 };
 
 export default (props: Props) => {
-  const intl = useSelector<GlobalState, AppIntlState>(selectIntl);
-  const { formatMessage } = intl;
+  const intl = useIntl();
+  const { formatMessage, locale } = intl;
   const {
     bookingArrangement,
     onChange,
@@ -104,7 +106,7 @@ export default (props: Props) => {
     setBookingLimitType(type);
   };
 
-  const onLatestBookingTimeChange = (time: string) =>
+  const onLatestBookingTimeChange = (time: string | undefined) =>
     onChange({
       ...bookingArrangement,
       latestBookingTime: time,
@@ -118,9 +120,9 @@ export default (props: Props) => {
 
   return (
     <div className="booking-editor">
-      <LeadParagraph>{formatMessage('bookingInfoText')}</LeadParagraph>
+      <LeadParagraph>{formatMessage({ id: 'bookingInfoText' })}</LeadParagraph>
       <Label>
-        <i>{formatMessage('bookingLabel')} </i>
+        <i>{formatMessage({ id: 'bookingLabel' })} </i>
       </Label>
 
       {bookingInfoAttachmentType && bookingInfoAttachmentName && (
@@ -135,7 +137,7 @@ export default (props: Props) => {
 
       <section className="booking-contact-info">
         <TextField
-          label={formatMessage('contactFieldsContactPersonTitle')}
+          label={formatMessage({ id: 'contactFieldsContactPersonTitle' })}
           defaultValue={bookingContact?.contactPerson ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onContactChange({
@@ -146,7 +148,7 @@ export default (props: Props) => {
         />
 
         <TextField
-          label={formatMessage('contactFieldsEmailTitle')}
+          label={formatMessage({ id: 'contactFieldsEmailTitle' })}
           defaultValue={bookingContact?.email ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onContactChange({ ...bookingContact, email: e.target.value })
@@ -154,7 +156,7 @@ export default (props: Props) => {
         />
 
         <TextField
-          label={formatMessage('contactFieldsPhoneTitle')}
+          label={formatMessage({ id: 'contactFieldsPhoneTitle' })}
           defaultValue={bookingContact?.phone ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onContactChange({ ...bookingContact, phone: e.target.value })
@@ -162,7 +164,7 @@ export default (props: Props) => {
         />
 
         <TextField
-          label={formatMessage('contactFieldsUrlTitle')}
+          label={formatMessage({ id: 'contactFieldsUrlTitle' })}
           value={bookingContact?.url ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onContactChange({ ...bookingContact, url: e.target.value })
@@ -170,19 +172,19 @@ export default (props: Props) => {
         />
 
         <TextArea
-          label={formatMessage('bookingNoteFieldTitle')}
-          labelTooltip={formatMessage('bookingNoteTooltip')}
+          label={formatMessage({ id: 'bookingNoteFieldTitle' })}
+          labelTooltip={formatMessage({ id: 'bookingNoteTooltip' })}
           style={{ width: '100%' }}
           value={bookingNote ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             onChange({ ...bookingArrangement, bookingNote: e.target.value })
           }
         />
 
         <Dropdown
-          label={formatMessage('bookingAccessSelectionTitle')}
+          label={formatMessage({ id: 'bookingAccessSelectionTitle' })}
           initialSelectedItem={getEnumInit(bookingAccess)}
-          placeholder={formatMessage('defaultOption')}
+          placeholder={formatMessage({ id: 'defaultOption' })}
           items={mapEnumToItems(BOOKING_ACCESS)}
           clearable
           onChange={(e) =>
@@ -194,7 +196,7 @@ export default (props: Props) => {
         />
 
         <TextField
-          label={formatMessage('contactFieldsFurtherDetailsTitle')}
+          label={formatMessage({ id: 'contactFieldsFurtherDetailsTitle' })}
           value={bookingContact?.furtherDetails || ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onContactChange({
@@ -208,9 +210,9 @@ export default (props: Props) => {
       <section className="booking-time-info">
         <Dropdown
           disabled={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
-          label={formatMessage('bookingTimeSelectionTitle')}
+          label={formatMessage({ id: 'bookingTimeSelectionTitle' })}
           selectedItem={getEnumInit(bookWhen)}
-          placeholder={formatMessage('defaultOption')}
+          placeholder={formatMessage({ id: 'defaultOption' })}
           items={mapEnumToItems(PURCHASE_WHEN)}
           clearable
           onChange={(e) => {
@@ -226,41 +228,49 @@ export default (props: Props) => {
 
         <RadioGroup
           name="booking-limit-type"
-          label={formatMessage('bookingLimitFieldsHeaderLabel')}
+          label={formatMessage({ id: 'bookingLimitFieldsHeaderLabel' })}
           onChange={(e) =>
             onBookingLimitTypeChange(e?.target?.value as BOOKING_LIMIT_TYPE)
           }
           value={bookingLimitType}
         >
           <Radio value={BOOKING_LIMIT_TYPE.NONE}>
-            {formatMessage('bookingLimitTypeNoneRadioButtonLabel')}
+            {formatMessage({ id: 'bookingLimitTypeNoneRadioButtonLabel' })}
           </Radio>
 
           <Radio value={BOOKING_LIMIT_TYPE.TIME}>
-            {formatMessage(
-              'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'
-            )}
+            {formatMessage({
+              id: 'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel',
+            })}
           </Radio>
 
           <TimePicker
-            label={formatMessage(
-              'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel'
-            )}
+            label=""
+            locale={locale}
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-            selectedTime={latestbookingTimeAsDate}
-            onChange={(date: Date | null) => {
-              if (date !== null) {
-                onLatestBookingTimeChange(format(date, 'HH:mm'));
-              } else {
-                onLatestBookingTimeChange('');
+            selectedTime={
+              latestbookingTimeAsDate
+                ? nativeDateToTimeValue(latestbookingTimeAsDate)
+                : null
+            }
+            onChange={(date: TimeValue | null) => {
+              let formattedDate;
+
+              if (date != null) {
+                formattedDate = format(
+                  timeOrDateValueToNativeDate(date),
+                  'HH:mm'
+                );
               }
+
+              onLatestBookingTimeChange(formattedDate);
             }}
           />
 
           <Radio value={BOOKING_LIMIT_TYPE.PERIOD}>
-            {formatMessage(
-              'bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel'
-            )}
+            {formatMessage({
+              id: 'bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel',
+            })}
           </Radio>
 
           <DurationPicker
@@ -274,7 +284,7 @@ export default (props: Props) => {
           />
         </RadioGroup>
 
-        <Fieldset label={formatMessage('bookingMethodSelectionTitle')}>
+        <Fieldset label={formatMessage({ id: 'bookingMethodSelectionTitle' })}>
           <div className="filter-chip-list">
             {Object.values(BOOKING_METHOD).map((v) => (
               <FilterChip
@@ -283,13 +293,13 @@ export default (props: Props) => {
                 checked={bookingMethods?.includes(v)}
                 onClick={() => onBookingMethodChange(v)}
               >
-                {formatMessage(bookingMethodMessages[v])}
+                {formatMessage({ id: bookingMethodMessages[v] })}
               </FilterChip>
             ))}
           </div>
         </Fieldset>
 
-        <Fieldset label={formatMessage('paymentSelectionTitle')}>
+        <Fieldset label={formatMessage({ id: 'paymentSelectionTitle' })}>
           <div className="filter-chip-list">
             {Object.values(PURCHASE_MOMENT).map((v) => (
               <FilterChip
@@ -298,7 +308,7 @@ export default (props: Props) => {
                 checked={buyWhen?.includes(v)}
                 onClick={() => onPurchaseMomentChange(v)}
               >
-                {formatMessage(paymentTimeMessages[v])}
+                {formatMessage({ id: paymentTimeMessages[v] })}
               </FilterChip>
             ))}
           </div>

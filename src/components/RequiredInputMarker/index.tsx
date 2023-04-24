@@ -1,14 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
 import { Label } from '@entur/typography';
-import { selectIntl } from 'i18n';
+import { useIntl } from 'react-intl';
 import './styles.scss';
 
 const RequiredInputMarker = () => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   return (
     <Label className="required-input">
-      <i> {formatMessage('requiredInputMarker')} </i>
+      <i> {formatMessage({ id: 'requiredInputMarker' })} </i>
     </Label>
   );
 };

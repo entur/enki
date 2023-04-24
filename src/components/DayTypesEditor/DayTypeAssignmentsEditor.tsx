@@ -1,18 +1,21 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
-import moment from 'moment/moment';
-import { AddIcon, DeleteIcon } from '@entur/icons';
 import { IconButton, TertiaryButton } from '@entur/button';
-import DayTypeAssignment from 'model/DayTypeAssignment';
-import { removeElementByIndex, replaceElement } from 'helpers/arrays';
-import { DatePicker } from '@entur/datepicker';
-import OperatingPeriod from 'model/OperatingPeriod';
-import { getErrorFeedback } from 'helpers/errorHandling';
-import './styles.scss';
-import useUniqueKeys from 'hooks/useUniqueKeys';
+import {
+  DatePicker,
+  nativeDateToDateValue,
+  timeOrDateValueToNativeDate,
+} from '@entur/datepicker';
 import { Switch } from '@entur/form';
+import { AddIcon, DeleteIcon } from '@entur/icons';
 import { DataCell, Table, TableBody, TableRow } from '@entur/table';
+import { removeElementByIndex, replaceElement } from 'helpers/arrays';
+import { getErrorFeedback } from 'helpers/errorHandling';
+import useUniqueKeys from 'hooks/useUniqueKeys';
+import DayTypeAssignment from 'model/DayTypeAssignment';
+import OperatingPeriod from 'model/OperatingPeriod';
+import moment from 'moment/moment';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import './styles.scss';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
@@ -20,7 +23,7 @@ type Props = {
 };
 
 const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const addNewDayTypeAssignment = () => {
     const today: string = moment().format('YYYY-MM-DD');
@@ -52,9 +55,9 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
   const uniqueKeys = useUniqueKeys(dayTypeAssignments);
 
-  const dateJsToIso = (date: Date | null): string => {
+  const dateJsToIso = (date: Date | null | undefined): string => {
     const dateOrNow = date ?? new Date();
-    const y = dateOrNow.getFullYear();
+    const y = dateOrNow?.getFullYear();
     const m = dateOrNow?.getMonth() + 1;
     const d = dateOrNow?.getDate();
     return `${y}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
@@ -69,11 +72,18 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
               <TableRow key={uniqueKeys[index]} className="day-type-assignment">
                 <DataCell>
                   <DatePicker
-                    label={formatMessage('dayTypeEditorFromDate')}
-                    selectedDate={moment(dta.operatingPeriod.fromDate).toDate()}
-                    onChange={(date: Date | null) => {
+                    label={formatMessage({ id: 'dayTypeEditorFromDate' })}
+                    selectedDate={nativeDateToDateValue(
+                      moment(dta.operatingPeriod.fromDate).toDate()
+                    )}
+                    onChange={(date) => {
                       changeDay(
-                        { ...dta.operatingPeriod, fromDate: dateJsToIso(date) },
+                        {
+                          ...dta.operatingPeriod,
+                          fromDate: dateJsToIso(
+                            timeOrDateValueToNativeDate(date!)
+                          ),
+                        },
                         index
                       );
                     }}
@@ -82,19 +92,26 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
                 <DataCell>
                   <DatePicker
-                    label={formatMessage('dayTypeEditorToDate')}
+                    label={formatMessage({ id: 'dayTypeEditorToDate' })}
                     {...getErrorFeedback(
-                      formatMessage('dayTypeEditorToDateValidation'),
+                      formatMessage({ id: 'dayTypeEditorToDateValidation' }),
                       isAtLeastOneDayAfter(
                         dta.operatingPeriod.toDate ?? '',
                         dta.operatingPeriod.fromDate ?? ''
                       ),
                       false
                     )}
-                    selectedDate={moment(dta.operatingPeriod.toDate).toDate()}
-                    onChange={(date: Date | null) => {
+                    selectedDate={nativeDateToDateValue(
+                      moment(dta.operatingPeriod.toDate).toDate()
+                    )}
+                    onChange={(date) => {
                       changeDay(
-                        { ...dta.operatingPeriod, toDate: dateJsToIso(date) },
+                        {
+                          ...dta.operatingPeriod,
+                          toDate: dateJsToIso(
+                            timeOrDateValueToNativeDate(date!)
+                          ),
+                        },
                         index
                       );
                     }}
@@ -108,7 +125,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                       changeIsAvailable(e.target.checked, index);
                     }}
                   >
-                    {formatMessage('dayTypeAssignmentAvailableLabel')}
+                    {formatMessage({ id: 'dayTypeAssignmentAvailableLabel' })}
                   </Switch>
                 </DataCell>
 
@@ -132,7 +149,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
       </div>
       <TertiaryButton onClick={() => addNewDayTypeAssignment()}>
         <AddIcon />
-        {formatMessage('dayTypeEditorAddDayTypeAssignment')}
+        {formatMessage({ id: 'dayTypeEditorAddDayTypeAssignment' })}
       </TertiaryButton>
     </>
   );

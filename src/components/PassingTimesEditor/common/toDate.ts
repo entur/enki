@@ -1,5 +1,5 @@
 export const toDate = (date: string | undefined): Date | undefined => {
-  if (!date) return;
+  if (!date) return new Date();
   const [hours, minutes, seconds] = date.split(':');
   const dateObj = new Date();
   dateObj.setHours(parseInt(hours));

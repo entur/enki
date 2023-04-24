@@ -1,11 +1,10 @@
-import React from 'react';
-import JourneyPattern from 'components/JourneyPatterns';
-import JourneyPatternEditor from 'components/JourneyPatternEditor';
 import General from 'components/GeneralLineEditor';
-import { Network } from 'model/Network';
-import Line from 'model/Line';
-import ServiceJourneys from 'components/ServiceJourneys';
+import JourneyPatternEditor from 'components/JourneyPatternEditor';
+import JourneyPattern from 'components/JourneyPatterns';
 import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
+import ServiceJourneys from 'components/ServiceJourneys';
+import Line from 'model/Line';
+import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
 
 type Props = {

@@ -10,12 +10,11 @@ import {
 import { createUuid } from 'helpers/generators';
 import { isBefore } from 'helpers/validation';
 import useUniqueKeys from 'hooks/useUniqueKeys';
-import { selectIntl } from 'i18n';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
-import React, { Fragment, ReactElement, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { Fragment, ReactElement, useState } from 'react';
+import { useIntl } from 'react-intl';
 import BulkDeleteDialog from './BulkDeleteDialog';
 import NewServiceJourneyDialog from './NewServiceJourneyDialog';
 import './styles.scss';
@@ -60,7 +59,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
   const [showNewServiceJourneyDialog, setShowNewServiceJourneyDialog] =
     useState<boolean>(false);
   const [showBulkDeleteDialog, setShowBulkDeleteDialog] = useState<number>(-1);
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const [selectedJourneyPatternIndex, setSelectedJourneyPatternIndex] =
     useState<number>(0);
@@ -250,8 +249,10 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
       )}
 
       <div className="service-journeys-editor">
-        <Heading1>{formatMessage('editorServiceJourneys')}</Heading1>
-        <LeadParagraph>{formatMessage('serviceJourneysInfo')}</LeadParagraph>
+        <Heading1>{formatMessage({ id: 'editorServiceJourneys' })}</Heading1>
+        <LeadParagraph>
+          {formatMessage({ id: 'serviceJourneysInfo' })}
+        </LeadParagraph>
         {journeyPatterns.length === 1 &&
         journeyPatterns.flatMap((jp) => jp.serviceJourneys).length === 1
           ? children(
@@ -270,7 +271,9 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
                       <TertiaryButton
                         onClick={() => setShowBulkDeleteDialog(jpIndex)}
                       >
-                        {formatMessage('openBulkDeleteDialogButtonLabel')}
+                        {formatMessage({
+                          id: 'openBulkDeleteDialogButtonLabel',
+                        })}
                       </TertiaryButton>
                     </ServiceJourneyBulkDeleteHeader>
                   )}
@@ -280,7 +283,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
             ))}
         <AddButton
           onClick={() => setShowNewServiceJourneyDialog(true)}
-          buttonTitle={formatMessage('editorAddServiceJourneys')}
+          buttonTitle={formatMessage({ id: 'editorAddServiceJourneys' })}
         />
       </div>
     </>

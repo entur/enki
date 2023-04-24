@@ -1,5 +1,5 @@
 import axios from 'axios';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export const API_BASE =
   import.meta.env.NODE_ENV !== 'test'
@@ -11,9 +11,14 @@ const http = axios.create({ baseURL: API_BASE });
 if (import.meta.env.NODE_ENV !== 'test') {
   http.interceptors.request.use(
     (config) => {
-      config.headers['Correlation-ID'] = uuid.v4();
-      config.headers['Cache-Control'] = 'no-cache';
-      return config;
+      return {
+        ...config,
+        headers: {
+          ...config.headers,
+          'Correlation-ID': uuidv4,
+          'Cache-Control': 'no-cache',
+        },
+      };
     },
     (error) => {
       return Promise.reject(error);

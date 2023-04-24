@@ -1,5 +1,5 @@
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export const createUuid = () => {
-  return uuid.v4().substr(0, 8);
+  return uuidv4().substring(0, 8);
 };

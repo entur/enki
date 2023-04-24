@@ -1,12 +1,9 @@
-import React from 'react';
-import PassingTime from 'model/PassingTime';
-import { TimePicker } from '@entur/datepicker';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
-import { ClockIcon } from '@entur/icons';
-import { useIntl } from 'i18n';
-import { toDate } from '../common/toDate';
-import TimeWindowPassingTimeTitle from './TimeWindowPassingTimeTitle';
+import PassingTime from 'model/PassingTime';
 import StopPoint from 'model/StopPoint';
+import { useIntl } from 'react-intl';
+import { PassingTimePicker } from '../common/PassingTimePicker';
+import TimeWindowPassingTimeTitle from './TimeWindowPassingTimeTitle';
 
 type Props = {
   passingTime: PassingTime;
@@ -24,18 +21,16 @@ export const TimeWindowPassingTimeEditor = ({
   return (
     <>
       <TimeWindowPassingTimeTitle stopPoint={stopPoint} />
-      <TimePicker
-        label={`${formatMessage('passingTimesEarliestDepartureTime')}${' *'}`}
-        className="timepicker"
-        onChange={(e: Date | null) => {
-          const date = e?.toTimeString().split(' ')[0];
+      <PassingTimePicker
+        label={formatMessage({ id: 'passingTimesEarliestDepartureTime' })}
+        required
+        selectedTime={passingTime.earliestDepartureTime}
+        onChange={(earliestDepartureTime: string | null) => {
           onChange({
             ...passingTime,
-            earliestDepartureTime: date || null,
+            earliestDepartureTime,
           });
         }}
-        prepend={<ClockIcon inline />}
-        selectedTime={toDate(passingTime.earliestDepartureTime!)}
       />
       <DayOffsetDropdown
         value={passingTime.earliestDepartureDayOffset as number}
@@ -46,18 +41,16 @@ export const TimeWindowPassingTimeEditor = ({
           });
         }}
       />
-      <TimePicker
-        label={`${formatMessage('passingTimesLatestArrivalTime')}${' *'}`}
-        className="timepicker"
-        onChange={(e: Date | null) => {
-          const date = e?.toTimeString().split(' ')[0];
+      <PassingTimePicker
+        label={formatMessage({ id: 'passingTimesLatestArrivalTime' })}
+        required
+        selectedTime={passingTime.latestArrivalTime}
+        onChange={(latestArrivalTime: string | null) => {
           onChange({
             ...passingTime,
-            latestArrivalTime: date || null,
+            latestArrivalTime,
           });
         }}
-        prepend={<ClockIcon inline />}
-        selectedTime={toDate(passingTime.latestArrivalTime!)}
       />
       <DayOffsetDropdown
         value={passingTime.latestArrivalDayOffset as number}

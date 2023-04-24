@@ -1,9 +1,7 @@
-import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
+import { useIntl } from 'react-intl';
 import { PassingTimesEditorProps } from '..';
 import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
-import { selectIntl } from 'i18n';
-import { useSelector } from 'react-redux';
 import { PassingTimesError } from '../common/PassingTimesError';
 
 export const FlexibleAreasOnlyPassingTimesEditor = ({
@@ -12,12 +10,14 @@ export const FlexibleAreasOnlyPassingTimesEditor = ({
   onChange,
   spoilPristine,
 }: PassingTimesEditorProps) => {
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
   return (
     <>
-      <Heading4>{formatMessage('serviceJourneyBusinessHours')}</Heading4>
+      <Heading4>
+        {formatMessage({ id: 'serviceJourneyBusinessHours' })}
+      </Heading4>
       <Paragraph>
-        {formatMessage('passingTimesInfoFlexibleAreasOnly')}
+        {formatMessage({ id: 'passingTimesInfoFlexibleAreasOnly' })}
       </Paragraph>
       <PassingTimesError
         passingTimes={passingTimes}
@@ -29,7 +29,15 @@ export const FlexibleAreasOnlyPassingTimesEditor = ({
             passingTime={passingTimes[0]}
             stopPoint={stopPoints[0]}
             onChange={(changedPassingTime) => {
-              onChange([changedPassingTime, changedPassingTime]);
+              const { id, ...rest } = changedPassingTime;
+
+              onChange([
+                changedPassingTime,
+                {
+                  ...passingTimes[1],
+                  ...rest,
+                },
+              ]);
             }}
           />
         </div>

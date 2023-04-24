@@ -1,36 +1,28 @@
-import { IntlProvider } from 'react-intl';
 import 'moment/locale/nb';
-import '@formatjs/intl-pluralrules/polyfill';
-import '@formatjs/intl-pluralrules/dist/locale-data/nb';
-import { MessagesKey } from 'i18n/translations/translationKeys';
-import { IntlState } from 'react-intl-redux';
-import { GlobalState } from 'reducers';
-import { useSelector } from 'react-redux';
+import { IntlShape } from 'react-intl';
+import { Messages } from './translations/translationKeys';
 
 export const defaultLocale = 'nb';
-export const SUPPORTED_LOCALES: ('nb' | 'en' | 'sv')[] = ['nb', 'en', 'sv'];
+
+export type locale = 'nb' | 'en' | 'sv';
+
+export const SUPPORTED_LOCALES: locale[] = ['nb', 'en', 'sv'];
 
 export const LOCALE_KEY = 'OT::locale';
 
-const removeRegionCode = (locale: string): 'nb' | 'en' | 'sv' =>
-  (locale ? locale.toLowerCase().split(/[_-]+/)[0] : defaultLocale) as
-    | 'nb'
-    | 'en'
-    | 'sv';
+const removeRegionCode = (locale: locale) =>
+  (locale ? locale.toLowerCase().split(/[_-]+/)[0] : defaultLocale) as locale;
 
-export const isLocaleSupported = (locale: 'nb' | 'en' | 'sv') =>
+export const isLocaleSupported = (locale: locale) =>
   locale ? SUPPORTED_LOCALES.indexOf(locale) > -1 : false;
 
-const getLocale = () => {
+export const getLocale = () => {
   const savedLocale =
     import.meta.env.NODE_ENV !== 'test' && localStorage.getItem(LOCALE_KEY);
   const navigatorLang =
     import.meta.env.NODE_ENV !== 'test' &&
     ((navigator.languages && navigator.languages[0]) || navigator.language);
-  const locale = (savedLocale || navigatorLang || defaultLocale) as
-    | 'nb'
-    | 'en'
-    | 'sv';
+  const locale = (savedLocale || navigatorLang || defaultLocale) as locale;
   const localeWithoutRegionCode = removeRegionCode(locale);
 
   if (isLocaleSupported(localeWithoutRegionCode)) {
@@ -39,54 +31,23 @@ const getLocale = () => {
   return defaultLocale;
 };
 
-export const getMessages = async (locale: 'nb' | 'en' | 'sv') => {
+export const getMessages = async (
+  locale: locale
+): Promise<Record<Messages, string>> => {
   switch (locale) {
     case 'nb':
-      return import('./translations/nb');
+      return import('./translations/nb') as unknown as Promise<
+        Record<Messages, string>
+      >;
     case 'en':
-      return import('./translations/en');
+      return import('./translations/en') as unknown as Promise<
+        Record<Messages, string>
+      >;
     case 'sv':
-      return import('./translations/sv');
+      return import('./translations/sv') as unknown as Promise<
+        Record<Messages, string>
+      >;
   }
 };
 
-/* Basic support for i18n based on default browser language */
-export const geti18n = async () => {
-  const locale = getLocale();
-  const { messages } = await getMessages(locale as 'nb' | 'en' | 'sv');
-  return {
-    messages,
-    locale,
-  };
-};
-
-export type FormatMessage = (
-  messageId: keyof MessagesKey,
-  details?: string
-) => string;
-
-export type AppIntlState = IntlState & {
-  formatMessage: FormatMessage;
-};
-
-let cachedIntl: any = null;
-let prevLocale = '';
-
-export const getIntl = ({ intl: { locale, messages } }: any): AppIntlState => {
-  if (!cachedIntl || locale !== prevLocale) {
-    const intlProvider = new IntlProvider({ locale, messages }).state.intl;
-    cachedIntl = {
-      ...intlProvider,
-      formatMessage: (messageId: keyof MessagesKey, details?: string) =>
-        details
-          ? intlProvider!.formatMessage({ id: messageId }, { details: details })
-          : intlProvider!.formatMessage({ id: messageId }),
-    };
-    prevLocale = locale;
-  }
-  return cachedIntl;
-};
-
-export const selectIntl = (state: GlobalState) => getIntl({ intl: state.intl });
-
-export const useIntl: () => AppIntlState = () => useSelector(selectIntl);
+export type FormatMessage = IntlShape['formatMessage'];

@@ -1,29 +1,27 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
 import { ActionChip } from '@entur/chip';
-import { AuthState } from 'reducers/auth';
-import { GlobalState } from 'reducers';
-import { AppIntlState, selectIntl } from 'i18n';
 import { BackArrowIcon } from '@entur/icons';
+import { AuthState } from 'features/app/authSlice';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { GlobalState } from 'reducers';
 import './styles.scss';
 
 const LogoutChip = () => {
   const {
     auth: { logout },
-    intl: { formatMessage },
-  } = useSelector<GlobalState, { auth: AuthState; intl: AppIntlState }>(
-    (state) => ({
-      auth: state.auth,
-      intl: selectIntl(state),
-    })
-  );
+  } = useSelector<GlobalState, { auth: AuthState }>((state) => ({
+    auth: state.auth,
+  }));
+
+  const { formatMessage } = useIntl();
+
   return (
     <ActionChip
       onClick={() => logout({ returnTo: window.location.origin })}
       className="logout"
     >
       <BackArrowIcon />
-      {formatMessage('userMenuLogoutLinkText')}
+      {formatMessage({ id: 'userMenuLogoutLinkText' })}
     </ActionChip>
   );
 };

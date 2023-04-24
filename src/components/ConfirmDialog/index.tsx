@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
-import { Paragraph } from '@entur/typography';
 import { Modal } from '@entur/modal';
+import { Paragraph } from '@entur/typography';
+import React, { ReactElement } from 'react';
 
 import './styles.scss';
 

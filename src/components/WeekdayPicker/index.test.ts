@@ -1,5 +1,5 @@
-import { toggleDay } from './index';
 import { DAY_OF_WEEK } from '../../model/enums';
+import { toggleDay } from './index';
 
 describe('WeekdayPicker utils', () => {
   describe('toggleDay', () => {

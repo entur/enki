@@ -1,6 +1,5 @@
-import React from 'react';
-import { Tooltip } from '@entur/tooltip';
 import { IconButton } from '@entur/button';
+import { TextArea } from '@entur/form';
 import { AddIcon, DeleteIcon } from '@entur/icons';
 import {
   DataCell,
@@ -9,11 +8,11 @@ import {
   TableBody,
   TableRow,
 } from '@entur/table';
-import { TextArea } from '@entur/form';
+import { Tooltip } from '@entur/tooltip';
 import { Heading4 } from '@entur/typography';
+import { FormatMessage } from 'i18n';
 import Notice from 'model/Notice';
 import './styles.scss';
-import { FormatMessage } from 'i18n';
 type Props = {
   notices?: Notice[];
   setNotices: (notices: Notice[]) => void;
@@ -43,13 +42,14 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
 
   return (
     <section className="notices">
-      <Heading4>{formatMessage('noticesHeader')}</Heading4>
+      <Heading4>{formatMessage({ id: 'noticesHeader' })}</Heading4>
       <Table fixed>
         <TableBody>
           {notices?.map((notice, i) => (
             <TableRow key={'' + i} hover className="notices-row">
               <EditableCell className="notices-editable-cell">
                 <TextArea
+                  label=""
                   onBlur={() => notice.text === '' && removeNotice(i)}
                   className="notices-text-area"
                   value={notice.text}
@@ -59,7 +59,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
               <DataCell align="right">
                 <Tooltip
                   placement="bottom"
-                  content={formatMessage('deleteNoticeTooltip')}
+                  content={formatMessage({ id: 'deleteNoticeTooltip' })}
                 >
                   <IconButton
                     className="notices-icon-button"
@@ -72,11 +72,11 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
             </TableRow>
           ))}
           <TableRow hover onClick={() => addNotice()}>
-            <DataCell></DataCell>
+            <DataCell>{}</DataCell>
             <DataCell align="right">
               <Tooltip
                 placement="bottom"
-                content={formatMessage('addNoticeTooltip')}
+                content={formatMessage({ id: 'addNoticeTooltip' })}
               >
                 <IconButton
                   className="notices-icon-button"

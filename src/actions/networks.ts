@@ -1,27 +1,14 @@
-import { UttuQuery } from 'api';
-import { deleteNetwork, networkMutation } from 'api/uttu/mutations';
-import { getNetworkByIdQuery, getNetworksQuery } from 'api/uttu/queries';
 import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
-import { getStyledUttuError, UttuError } from 'helpers/uttu';
+import { UttuQuery } from 'api';
+import { deleteNetwork, networkMutation } from 'api/uttu/mutations';
+import { getNetworkByIdQuery, getNetworksQuery } from 'api/uttu/queries';
+import { AppThunk, sentryCaptureException } from 'app/store';
+import { UttuError, getStyledUttuError } from 'helpers/uttu';
 import { Network } from 'model/Network';
-import { Dispatch } from 'redux';
-import { GlobalState } from 'reducers';
-import { sentryCaptureException } from 'store';
-
-export const REQUEST_NETWORKS = 'REQUEST_NETWORKS';
-export const RECEIVE_NETWORKS = 'RECEIVE_NETWORKS';
-
-export const REQUEST_NETWORK = 'REQUEST_NETWORK';
-export const RECEIVE_NETWORK = 'RECEIVE_NETWORK';
-
-export const SAVE_NETWORK = 'SAVE_NETWORK';
-export const SAVED_NETWORK = 'SAVED_NETWORK';
-
-export const DELETE_NETWORK = 'DELETE_NETWORK';
-export const DELETED_NETWORK = 'DELETED_NETWORK';
+import { RECEIVE_NETWORK, RECEIVE_NETWORKS } from './constants';
 
 const receiveNetworksActionCreator = (networks: Network[]) => ({
   type: RECEIVE_NETWORKS,
@@ -33,37 +20,35 @@ const receiveNetworkActionCreator = (network: Network) => ({
   network,
 });
 
-export const loadNetworks =
-  () =>
-  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
-    try {
-      const data = await UttuQuery(
-        getState().config.uttuApiUrl,
-        getState().providers.active?.code ?? '',
-        getNetworksQuery,
-        {},
-        await getState().auth.getAccessToken()
-      );
-      dispatch(receiveNetworksActionCreator(data.networks));
-      return data.networks;
-    } catch (e) {
-      dispatch(
-        showErrorNotification(
-          'Laste nettverk',
-          getStyledUttuError(
-            e as UttuError,
-            'En feil oppstod under lastingen av nettverkene',
-            'Prøv igjen senere.'
-          )
+export const loadNetworks = (): AppThunk => async (dispatch, getState) => {
+  try {
+    const data = await UttuQuery(
+      getState().config.uttuApiUrl,
+      getState().providers.active?.code ?? '',
+      getNetworksQuery,
+      {},
+      await getState().auth.getAccessToken()
+    );
+    dispatch(receiveNetworksActionCreator(data.networks));
+    return data.networks;
+  } catch (e) {
+    dispatch(
+      showErrorNotification(
+        'Laste nettverk',
+        getStyledUttuError(
+          e as UttuError,
+          'En feil oppstod under lastingen av nettverkene',
+          'Prøv igjen senere.'
         )
-      );
-      sentryCaptureException(e);
-    }
-  };
+      )
+    );
+    sentryCaptureException(e);
+  }
+};
 
 export const loadNetworkById =
-  (id: string) =>
-  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+  (id: string): AppThunk =>
+  async (dispatch, getState) => {
     try {
       const data = await UttuQuery(
         getState().config.uttuApiUrl,
@@ -89,8 +74,8 @@ export const loadNetworkById =
   };
 
 export const saveNetwork =
-  (network: Network, showConfirm = true) =>
-  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+  (network: Network, showConfirm = true): AppThunk =>
+  async (dispatch, getState) => {
     try {
       await UttuQuery(
         getState().config.uttuApiUrl,
@@ -122,8 +107,8 @@ export const saveNetwork =
   };
 
 export const deleteNetworkById =
-  (id: string | undefined) =>
-  async (dispatch: Dispatch<GlobalState>, getState: () => GlobalState) => {
+  (id: string | undefined): AppThunk =>
+  async (dispatch, getState) => {
     if (!id) return;
 
     try {

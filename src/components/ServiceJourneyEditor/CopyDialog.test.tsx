@@ -1,5 +1,5 @@
-import { copyServiceJourney } from './CopyDialog';
 import * as duration from 'duration-fns';
+import { copyServiceJourney } from './CopyDialog';
 
 describe('copyServiceJourney', () => {
   it('should copy correctly', () => {

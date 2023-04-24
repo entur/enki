@@ -1,13 +1,10 @@
-import React from 'react';
-import moment from 'moment';
+import cx from 'classnames';
 import formatDuration from 'date-fns/formatDuration';
 import { nb } from 'date-fns/locale';
 import * as durationLib from 'duration-fns';
-import cx from 'classnames';
-import { useSelector } from 'react-redux';
-import { selectIntl, AppIntlState } from 'i18n';
+import moment from 'moment';
+import { useIntl } from 'react-intl';
 import TimeUnitPicker, { TimeUnitPickerPosition } from '../TimeUnitPicker';
-import { GlobalState } from 'reducers';
 
 type Props = {
   onChange: (duration?: string) => void;
@@ -40,7 +37,7 @@ export default (props: Props) => {
     disabled = false,
   } = props;
 
-  const intl = useSelector<GlobalState, AppIntlState>(selectIntl);
+  const intl = useIntl();
 
   const parsedDuration = (() => {
     if (duration) {

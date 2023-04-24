@@ -1,5 +1,5 @@
 import { EditorState } from 'reducers/editor';
-export const SET_SAVED_CHANGES = 'SET_SAVED_CHANGES';
+import { SET_SAVED_CHANGES } from './constants';
 
 type SetSavedChanges = {
   type: typeof SET_SAVED_CHANGES;

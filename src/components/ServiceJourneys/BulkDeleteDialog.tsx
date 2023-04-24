@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Modal } from '@entur/modal';
 import { ButtonGroup, PrimaryButton, SecondaryButton } from '@entur/button';
+import { Checkbox, TextField } from '@entur/form';
+import { SearchIcon } from '@entur/icons';
+import { Modal } from '@entur/modal';
 import {
   DataCell,
   HeaderCell,
@@ -11,10 +12,8 @@ import {
 } from '@entur/table';
 import { StrongText, SubParagraph } from '@entur/typography';
 import ServiceJourney from 'model/ServiceJourney';
-import { Checkbox, TextField } from '@entur/form';
-import { useSelector } from 'react-redux';
-import { selectIntl } from 'i18n';
-import { SearchIcon } from '@entur/icons';
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 
 type Props = {
   open: boolean;
@@ -32,7 +31,7 @@ export default (props: Props) => {
   const { open, dismiss, serviceJourneys, journeyPatternIndex, onConfirm } =
     props;
 
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [data, setData] = useState<ServiceJourney[]>(serviceJourneys);
@@ -65,11 +64,11 @@ export default (props: Props) => {
     <Modal
       open={open}
       size="extraLarge"
-      title={formatMessage('bulkDeleteDialogTitle')}
+      title={formatMessage({ id: 'bulkDeleteDialogTitle' })}
       onDismiss={dismiss}
     >
       <TextField
-        label={formatMessage('bulkDeleteDialogFilterSearchLabel')}
+        label={formatMessage({ id: 'bulkDeleteDialogFilterSearchLabel' })}
         style={{ width: '15rem' }}
         prepend={<SearchIcon inline />}
         value={filterSearch}
@@ -93,15 +92,17 @@ export default (props: Props) => {
               }
             />
           </HeaderCell>
-          <HeaderCell>{formatMessage('bulkDeleteDialogNameHeader')}</HeaderCell>
           <HeaderCell>
-            {formatMessage('bulkDeleteDialogDepartureHeader')}
+            {formatMessage({ id: 'bulkDeleteDialogNameHeader' })}
           </HeaderCell>
           <HeaderCell>
-            {formatMessage('bulkDeleteDialogDepartureDayOffsetHeader')}
+            {formatMessage({ id: 'bulkDeleteDialogDepartureHeader' })}
           </HeaderCell>
           <HeaderCell>
-            {formatMessage('bulkDeleteDialogValidityHeader')}
+            {formatMessage({ id: 'bulkDeleteDialogDepartureDayOffsetHeader' })}
+          </HeaderCell>
+          <HeaderCell>
+            {formatMessage({ id: 'bulkDeleteDialogValidityHeader' })}
           </HeaderCell>
         </TableHead>
         <TableBody>
@@ -139,7 +140,7 @@ export default (props: Props) => {
 
       <ButtonGroup style={{ marginTop: '1rem' }}>
         <SecondaryButton onClick={() => dismiss()}>
-          {formatMessage('bulkDeleteDialogCancelButtonLabel')}
+          {formatMessage({ id: 'bulkDeleteDialogCancelButtonLabel' })}
         </SecondaryButton>
         <PrimaryButton
           disabled={selectedIds.length === 0}
@@ -147,7 +148,7 @@ export default (props: Props) => {
             onConfirm(selectedIds, serviceJourneys, journeyPatternIndex)
           }
         >
-          {formatMessage('bulkDeleteDialogConfirmButtonLabel')}
+          {formatMessage({ id: 'bulkDeleteDialogConfirmButtonLabel' })}
         </PrimaryButton>
       </ButtonGroup>
     </Modal>

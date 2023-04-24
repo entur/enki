@@ -1,6 +1,6 @@
-import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { isBlank } from 'helpers/forms';
 import { MessagesKey } from 'i18n/translations/translationKeys';
+import FlexibleStopPlace from 'model/FlexibleStopPlace';
 
 export type FlexibleStopPlaceErrors = {
   name?: keyof MessagesKey;

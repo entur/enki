@@ -1,13 +1,12 @@
-import React from 'react';
 import { Heading4, Paragraph } from '@entur/typography';
-import { useIntl } from 'i18n';
+import { changeElementAtIndex } from 'helpers/arrays';
+import useUniqueKeys from 'hooks/useUniqueKeys';
+import { useIntl } from 'react-intl';
 import { PassingTimesEditorProps } from '..';
 import { FixedPassingTimeEditor } from '../FixedPassingTimeEditor/FixedPassingTimeEditor';
-import { changeElementAtIndex } from 'helpers/arrays';
 import { PassingTimesError } from '../common/PassingTimesError';
-import useUniqueKeys from 'hooks/useUniqueKeys';
 
-export const TimeWindowPassingTimesEditor = ({
+export const GenericPassingTimesEditor = ({
   passingTimes,
   stopPoints,
   onChange,
@@ -17,8 +16,8 @@ export const TimeWindowPassingTimesEditor = ({
   const uniqueKeys = useUniqueKeys(passingTimes);
   return (
     <>
-      <Heading4>{formatMessage('serviceJourneyPassingTimes')}</Heading4>
-      <Paragraph>{formatMessage('passingTimesInfo')}</Paragraph>
+      <Heading4>{formatMessage({ id: 'serviceJourneyPassingTimes' })}</Heading4>
+      <Paragraph>{formatMessage({ id: 'passingTimesInfo' })}</Paragraph>
       <PassingTimesError
         passingTimes={passingTimes}
         spoilPristine={spoilPristine}

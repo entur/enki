@@ -1,8 +1,7 @@
-import React from 'react';
-import { Notification } from 'reducers/notification';
 import { NotificationDuration } from 'actions/notification';
-import ModalNote from './StackedNotification/Note/ModalNote';
+import { Notification } from 'reducers/notification';
 import StackedNotification from './StackedNotification';
+import ModalNote from './StackedNotification/Note/ModalNote';
 
 const getTopOffset = (index: number) => ({
   top: `${2 + index * 8}rem`,

@@ -1,19 +1,18 @@
-import React from 'react';
-import { Route, Routes as ReactRoutes, Navigate } from 'react-router-dom';
+import { Navigate, Routes as ReactRoutes, Route } from 'react-router-dom';
 
-import NetworksOverview from '../Networks';
-import NetworkEditor from '../Networks/scenes/Editor';
-import LinesOverview from 'scenes/Lines';
 import LineEditor from 'scenes/LineEditor';
-import FlexibleLinesOverview from '../FlexibleLines';
-import FlexibleLineEditor from '../FlexibleLineEditor';
-import StopPlacesOverview from '../StopPlaces';
-import StopPlacesEditor from '../StopPlaces/scenes/Editor';
+import LinesOverview from 'scenes/Lines';
+import Providers from 'scenes/Providers';
+import ProviderEditor from 'scenes/Providers/Editor';
 import ExportsOverview from '../Exports';
 import ExportsEditor from '../Exports/scenes/Creator';
 import ExportsViewer from '../Exports/scenes/Viewer';
-import Providers from 'scenes/Providers';
-import ProviderEditor from 'scenes/Providers/Editor';
+import FlexibleLineEditor from '../FlexibleLineEditor';
+import FlexibleLinesOverview from '../FlexibleLines';
+import NetworksOverview from '../Networks';
+import NetworkEditor from '../Networks/scenes/Editor';
+import StopPlacesOverview from '../StopPlaces';
+import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 
 const Routes = () => (
   <div className="routes">

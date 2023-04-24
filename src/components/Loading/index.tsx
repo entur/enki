@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
 import cx from 'classnames';
+import { ReactElement } from 'react';
 
 import LoadingIcon from '../icons/Loading';
 

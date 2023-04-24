@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { usePrevious } from 'helpers/hooks';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Notification as NotificationType } from 'reducers/notification';
-import { usePrevious } from 'helpers/hooks';
 
-import NotificationStack from './NotificationStack';
 import { GlobalState } from 'reducers';
+import NotificationStack from './NotificationStack';
 
 type Props = {
   notification: NotificationType | null;

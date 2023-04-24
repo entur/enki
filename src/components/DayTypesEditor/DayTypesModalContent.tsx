@@ -11,10 +11,9 @@ import {
   TableRow,
 } from '@entur/table';
 import { DELETE_DAY_TYPES } from 'api/uttu/mutations';
-import { selectIntl } from 'i18n';
 import DayType, { createNewDayType } from 'model/DayType';
 import React, { useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { DayTypeEditor } from './DayTypeEditor';
 import { DayTypesTableExpRow } from './DayTypesTableExpRow';
 import { usePreparedDayTypes } from './usePreparedDayTypes';
@@ -53,13 +52,13 @@ export const DayTypesModalContent = ({
   const serviceJourneysPerDayType =
     useServiceJourneysPerDayType(preparedDayTypes);
 
-  const { formatMessage } = useSelector(selectIntl);
+  const { formatMessage } = useIntl();
 
   const [deleteDayTypes] = useMutation(DELETE_DAY_TYPES, {
     onCompleted: () => refetchDayTypes(),
     onError: (e) =>
       setError({
-        title: formatMessage('deleteDayTypesErrorTitle'),
+        title: formatMessage({ id: 'deleteDayTypesErrorTitle' }),
         message: e.message,
       }),
   });
@@ -94,14 +93,14 @@ export const DayTypesModalContent = ({
       <div className="day-types-modal_new-day-type-button">
         <ButtonGroup>
           <SecondaryButton onClick={() => addNewDayType()}>
-            {formatMessage('dayTypesModalAddNewButtonLabel')}
+            {formatMessage({ id: 'dayTypesModalAddNewButtonLabel' })}
           </SecondaryButton>
           <SecondaryButton
             loading={loading}
             disabled={selectedIds.length === 0}
             onClick={() => onDeleteDayTypes(selectedIds)}
           >
-            {formatMessage('deleteSelectedDayTypesButtonLabel')}
+            {formatMessage({ id: 'deleteSelectedDayTypesButtonLabel' })}
           </SecondaryButton>
         </ButtonGroup>
       </div>
@@ -133,10 +132,14 @@ export const DayTypesModalContent = ({
               />
             </HeaderCell>
             <HeaderCell padding="radio">{''}</HeaderCell>
-            <HeaderCell>{formatMessage('dayTypesModalIdHeader')}</HeaderCell>
-            <HeaderCell>{formatMessage('dayTypesModalNameHeader')}</HeaderCell>
             <HeaderCell>
-              {formatMessage('dayTypesModalUsedByHeader')}
+              {formatMessage({ id: 'dayTypesModalIdHeader' })}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage({ id: 'dayTypesModalNameHeader' })}
+            </HeaderCell>
+            <HeaderCell>
+              {formatMessage({ id: 'dayTypesModalUsedByHeader' })}
             </HeaderCell>
             <HeaderCell padding="radio">{''}</HeaderCell>
           </TableRow>
