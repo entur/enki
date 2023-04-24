@@ -115,5 +115,14 @@
   "engines": {
     "npm": "^9.5.1",
     "node": "^18.16.0"
+  },
+  "overrides": {
+    "react-scripts": {
+      "typescript": "^5"
+    },
+    "react-leaflet": {
+      "react": "^18",
+      "react-dom": "^18"
+    }
   }
 }
