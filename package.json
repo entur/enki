@@ -10,7 +10,8 @@
     "build": "react-scripts build",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@apollo/client": "3.7.12",
@@ -90,15 +91,8 @@
   "prettier": {
     "singleQuote": true
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write"
-    ]
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write"
   },
   "browserslist": {
     "production": [
