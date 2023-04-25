@@ -121,7 +121,8 @@
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)?$": "ts-jest",
-      "^.+\\.(js|jsx)$": "babel-jest"
+      "^.+\\.(js|jsx)$": "babel-jest",
+      "^node_modules/axios/.+\\.(js|jsx)$": "babel-jest"
     }
   }
 }
