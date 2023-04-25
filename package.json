@@ -113,10 +113,6 @@
   "overrides": {
     "react-scripts": {
       "typescript": "^5"
-    },
-    "react-leaflet": {
-      "react": "^18",
-      "react-dom": "^18"
     }
   }
 }
