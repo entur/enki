@@ -84,7 +84,7 @@
     "react-scripts": "5.0.1",
     "redux-devtools-extension": "2.13.9",
     "redux-immutable-state-invariant": "2.1.0",
-    "sass": "1.62.0",
+    "sass": "1.62.1",
     "source-map-explorer": "2.5.3",
     "typescript": "5.0.4"
   },
