@@ -57,3 +57,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ENT_ENKI_DEV }}'
           projectId: ent-enki-dev
+          expires: 3d
