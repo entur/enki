@@ -36,7 +36,7 @@
     "@sentry/react": "7.50.0",
     "axios": "1.4.0",
     "classnames": "2.3.2",
-    "date-fns": "2.29.3",
+    "date-fns": "2.30.0",
     "duration-fns": "3.0.2",
     "file-saver": "2.0.5",
     "graphql": "16.6.0",
