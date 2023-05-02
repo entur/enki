@@ -40,13 +40,6 @@ type Props = {
 
 const ServiceJourneyEditor = (props: Props) => {
   const {
-    serviceJourney: {
-      name,
-      description,
-      privateCode,
-      publicCode,
-      passingTimes,
-    },
     spoilPristine,
     onChange,
     stopPoints,
@@ -55,6 +48,9 @@ const ServiceJourneyEditor = (props: Props) => {
     copyServiceJourney,
     flexibleLineType,
   } = props;
+  const { name, description, privateCode, publicCode, passingTimes } =
+    serviceJourney;
+
   const [operatorSelection, setOperatorSelection] = useState(
     serviceJourney.operatorRef
   );
@@ -247,7 +243,7 @@ const ServiceJourneyEditor = (props: Props) => {
         />
       )}
 
-      {copyServiceJourney && (
+      {copyServiceJourney && showCopyDialog && (
         <CopyDialog
           open={showCopyDialog}
           serviceJourney={serviceJourney}
