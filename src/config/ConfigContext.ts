@@ -9,13 +9,6 @@ export interface Config {
   xmlnsUrlPrefix?: string;
   preferredNameNamespace?: string;
   claimsNamespace?: string;
-  auth0?: {
-    domain: string;
-    clientId: string;
-    audience: string;
-    useRefreshTokens: boolean;
-    cacheLocation: string;
-  };
   oidcConfig?: OidcClientSettings;
   supportedFlexibleLineTypes?: FlexibleLineType[];
 }
