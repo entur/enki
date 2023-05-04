@@ -1,8 +1,8 @@
-import { useAuth } from '@entur/auth-provider';
 import { PrimaryButton } from '@entur/button';
 import { DownloadIcon } from '@entur/icons';
 import { Label } from '@entur/typography';
 import { loadExportById } from 'actions/exports';
+import { useAuth } from 'app/auth';
 import Loading from 'components/Loading';
 import Page from 'components/Page';
 import { useConfig } from 'config/ConfigContext';

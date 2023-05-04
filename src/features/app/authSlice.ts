@@ -1,20 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Auth, User } from 'app/auth';
 import type { RootState } from 'app/store';
 
-interface Auth {
-  isLoading: boolean;
-  isAuthenticated: boolean;
-  user: User | null;
-  roleAssignments: string[] | null;
-  getAccessToken: () => Promise<string>;
-  logout: (options: any) => void;
-}
-
-interface User {
-  name: string;
-}
-
-export interface AuthState extends Auth {
+export interface AuthState extends Auth<User> {
   loaded: boolean;
 }
 
@@ -26,13 +14,14 @@ const initialState: AuthState = {
   roleAssignments: null,
   getAccessToken: () => Promise.resolve(''),
   logout: () => {},
+  login: () => Promise.resolve(),
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    updateAuth: (state, action: PayloadAction<Auth>) => ({
+    updateAuth: (state, action: PayloadAction<Auth<User>>) => ({
       loaded: true,
       ...action.payload,
     }),

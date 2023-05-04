@@ -1,4 +1,3 @@
-import { useAuth } from '@entur/auth-provider';
 import { SecondaryButton, SecondarySquareButton } from '@entur/button';
 import { AddIcon, DownloadIcon } from '@entur/icons';
 import {
@@ -11,6 +10,7 @@ import {
 } from '@entur/table';
 import { Heading1 } from '@entur/typography';
 import { loadExports } from 'actions/exports';
+import { useAuth } from 'app/auth';
 import { useAppDispatch } from 'app/hooks';
 import Loading from 'components/Loading';
 import { useConfig } from 'config/ConfigContext';

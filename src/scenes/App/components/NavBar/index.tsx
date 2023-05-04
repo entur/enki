@@ -1,4 +1,3 @@
-import { useAuth } from '@entur/auth-provider';
 import { ClosedLockIcon } from '@entur/icons';
 import { Contrast } from '@entur/layout';
 import {
@@ -6,6 +5,7 @@ import {
   SideNavigationGroup,
   SideNavigationItem,
 } from '@entur/menu';
+import { useAuth } from 'app/auth';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 import { useConfig } from 'config/ConfigContext';
 import React, { useState } from 'react';
@@ -138,7 +138,7 @@ const NavBar = () => {
           </>
         )}
 
-        {roleAssignments?.includes(adminRole) && (
+        {roleAssignments?.includes(adminRole!) && (
           <NavBarItem
             icon={<ClosedLockIcon />}
             text={formatMessage({ id: 'navBarProvidersMenuItemLabel' })}

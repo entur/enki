@@ -1,4 +1,3 @@
-import AuthProvider, { useAuth } from '@entur/auth-provider';
 import { Apollo } from 'api';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
 import { fetchConfig } from 'config/fetchConfig';
@@ -6,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
 
 import * as Sentry from '@sentry/react';
+import { EnturAuthProvider, useAuth } from 'app/auth';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { store } from 'app/store';
 import { getEnvironment } from 'config/getEnvironment';
@@ -44,6 +44,8 @@ const AuthenticatedApp = () => {
   dispatch(updateConfig(config));
   dispatch(updateAuth(auth));
 
+  console.log({ auth });
+
   return (
     (authStateLoaded && configStateLoaded && (
       <Apollo>
@@ -60,22 +62,25 @@ const renderIndex = async () => {
 
   const config = await fetchConfig();
 
-  const { claimsNamespace, auth0: auth0Config } = config;
+  const { auth0: auth0Config } = config;
   root.render(
     <Sentry.ErrorBoundary>
       <Provider store={store}>
         <EnkiIntlProvider>
-          <AuthProvider
-            auth0Config={{
-              ...auth0Config,
-              redirectUri: window.location.origin,
-            }}
-            auth0ClaimsNamespace={claimsNamespace}
-          >
-            <ConfigContext.Provider value={config}>
+          <ConfigContext.Provider value={config}>
+            <EnturAuthProvider
+              oidcConfig={{
+                authority: `https://${auth0Config!.domain}`,
+                client_id: auth0Config!.clientId,
+                redirect_uri: window.location.origin,
+                extraQueryParams: {
+                  audience: auth0Config!.audience,
+                },
+              }}
+            >
               <AuthenticatedApp />
-            </ConfigContext.Provider>
-          </AuthProvider>
+            </EnturAuthProvider>
+          </ConfigContext.Provider>
         </EnkiIntlProvider>
       </Provider>
     </Sentry.ErrorBoundary>
