@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
 
 import * as Sentry from '@sentry/react';
-import { EnturAuthProvider, useAuth } from 'app/auth';
+import { AuthProvider, useAuth } from 'app/auth';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { store } from 'app/store';
 import { getEnvironment } from 'config/getEnvironment';
@@ -62,24 +62,15 @@ const renderIndex = async () => {
 
   const config = await fetchConfig();
 
-  const { auth0: auth0Config } = config;
+  const { oidcConfig } = config;
   root.render(
     <Sentry.ErrorBoundary>
       <Provider store={store}>
         <EnkiIntlProvider>
           <ConfigContext.Provider value={config}>
-            <EnturAuthProvider
-              oidcConfig={{
-                authority: `https://${auth0Config!.domain}`,
-                client_id: auth0Config!.clientId,
-                redirect_uri: window.location.origin,
-                extraQueryParams: {
-                  audience: auth0Config!.audience,
-                },
-              }}
-            >
+            <AuthProvider oidcConfig={oidcConfig}>
               <AuthenticatedApp />
-            </EnturAuthProvider>
+            </AuthProvider>
           </ConfigContext.Provider>
         </EnkiIntlProvider>
       </Provider>

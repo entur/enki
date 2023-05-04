@@ -1,4 +1,5 @@
 import { FlexibleLineType } from 'model/FlexibleLine';
+import { OidcClientSettings } from 'oidc-client-ts';
 import { createContext, useContext } from 'react';
 
 export interface Config {
@@ -6,6 +7,7 @@ export interface Config {
   enableLegacyOrganisationsFilter?: boolean;
   adminRole?: string;
   xmlnsUrlPrefix?: string;
+  preferredNameNamespace?: string;
   claimsNamespace?: string;
   auth0?: {
     domain: string;
@@ -14,6 +16,7 @@ export interface Config {
     useRefreshTokens: boolean;
     cacheLocation: string;
   };
+  oidcConfig?: OidcClientSettings;
   supportedFlexibleLineTypes?: FlexibleLineType[];
 }
 
