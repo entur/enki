@@ -14,10 +14,6 @@ export interface Auth {
   login: (redirectUri?: string) => Promise<void>;
 }
 
-const catchAndThrow = (err: any) => {
-  throw err;
-};
-
 export const useAuth = (): Auth => {
   const {
     isLoading,
@@ -37,7 +33,9 @@ export const useAuth = (): Auth => {
       !activeNavigator &&
       !isLoading
     ) {
-      signinRedirect().catch(catchAndThrow);
+      signinRedirect().catch((err: any) => {
+        throw err;
+      });
     }
   }, [isAuthenticated, activeNavigator, isLoading, signinRedirect]);
 
