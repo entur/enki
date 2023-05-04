@@ -2,25 +2,23 @@ import { useConfig } from 'config/ConfigContext';
 import { useEffect } from 'react';
 import { hasAuthParams, useAuth as useOidcAuth } from 'react-oidc-context';
 
-export interface Auth<T extends User> {
+export interface Auth {
   isLoading: boolean;
   isAuthenticated: boolean;
-  user?: T | null;
+  user?: {
+    name?: string;
+  };
   roleAssignments?: string[] | null;
   getAccessToken: () => Promise<string>;
   logout: ({ returnTo }: { returnTo?: string }) => Promise<void>;
   login: (redirectUri?: string) => Promise<void>;
 }
 
-export interface User {
-  name?: string;
-}
-
 const catchAndThrow = (err: any) => {
   throw err;
 };
 
-export const useAuth = (): Auth<User> => {
+export const useAuth = (): Auth => {
   const {
     isLoading,
     isAuthenticated,

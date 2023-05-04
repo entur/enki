@@ -8,7 +8,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Auth, User, useAuth } from 'app/auth';
+import { Auth, useAuth } from 'app/auth';
 import { useConfig } from 'config/ConfigContext';
 import { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
@@ -61,7 +61,7 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
   });
 });
 
-const apolloClient = (apiBase: string, provider: string, auth: Auth<User>) => {
+const apolloClient = (apiBase: string, provider: string, auth: Auth) => {
   const httpLink = createHttpLink({
     uri: apiBase + '/' + provider + '/graphql',
   });

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Auth, User } from 'app/auth';
+import { Auth } from 'app/auth';
 import type { RootState } from 'app/store';
 
-export interface AuthState extends Auth<User> {
+export interface AuthState extends Auth {
   loaded: boolean;
 }
 
@@ -10,7 +10,7 @@ const initialState: AuthState = {
   loaded: false,
   isLoading: false,
   isAuthenticated: false,
-  user: null,
+  user: undefined,
   roleAssignments: null,
   getAccessToken: () => Promise.resolve(''),
   logout: () => Promise.resolve(),
@@ -21,7 +21,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    updateAuth: (state, action: PayloadAction<Auth<User>>) => ({
+    updateAuth: (state, action: PayloadAction<Auth>) => ({
       loaded: true,
       ...action.payload,
     }),
