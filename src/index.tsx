@@ -45,8 +45,6 @@ const AuthenticatedApp = () => {
   dispatch(updateConfig(config));
   dispatch(updateAuth(auth));
 
-  console.log({ auth });
-
   return (
     (authStateLoaded && configStateLoaded && (
       <Apollo>
