@@ -14,7 +14,7 @@ const initialState: AuthState = {
   roleAssignments: null,
   getAccessToken: () => Promise.resolve(''),
   logout: () => {},
-  login: () => Promise.resolve(),
+  login: () => {},
 };
 
 export const authSlice = createSlice({

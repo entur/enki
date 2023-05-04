@@ -22,6 +22,10 @@ export interface User {
   name?: string;
 }
 
+const catchAndThrow = (err: any) => {
+  throw err;
+};
+
 export const useAuth = (): Auth<User> => {
   const {
     isLoading,
@@ -41,7 +45,7 @@ export const useAuth = (): Auth<User> => {
       !activeNavigator &&
       !isLoading
     ) {
-      signinRedirect();
+      signinRedirect().catch(catchAndThrow);
     }
   }, [isAuthenticated, activeNavigator, isLoading, signinRedirect]);
 
@@ -62,9 +66,11 @@ export const useAuth = (): Auth<User> => {
       });
     },
     logout: ({ returnTo }) =>
-      signoutRedirect({ post_logout_redirect_uri: returnTo }),
+      signoutRedirect({ post_logout_redirect_uri: returnTo }).catch(
+        catchAndThrow
+      ),
     login: (redirectUri?: string) =>
-      signinRedirect({ redirect_uri: redirectUri }),
+      signinRedirect({ redirect_uri: redirectUri }).catch(catchAndThrow),
     roleAssignments: user?.profile[claimsNamespace!] as string[],
   };
 };
