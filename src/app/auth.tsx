@@ -1,5 +1,5 @@
 import { useConfig } from 'config/ConfigContext';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   AuthProvider as OidcAuthProvider,
   hasAuthParams,
@@ -50,27 +50,39 @@ export const useAuth = (): Auth => {
     }
   }, [isAuthenticated, activeNavigator, isLoading, signinRedirect]);
 
+  const getAccessToken = useCallback(() => {
+    return new Promise<string>((resolve, reject) => {
+      const accessToken = user?.access_token;
+      if (accessToken) {
+        resolve(accessToken);
+      } else {
+        reject();
+      }
+    });
+  }, [user]);
+
+  const logout = useCallback(
+    ({ returnTo }: { returnTo?: string }) => {
+      return signoutRedirect({ post_logout_redirect_uri: returnTo });
+    },
+    [signoutRedirect]
+  );
+
+  const login = useCallback(
+    (redirectUri?: string) => signinRedirect({ redirect_uri: redirectUri }),
+    [signinRedirect]
+  );
+
   return {
     isLoading,
     isAuthenticated,
     user: {
       name: user?.profile[preferredNameNamespace!] as string,
     },
-    getAccessToken: () => {
-      return new Promise<string>((resolve, reject) => {
-        const accessToken = user?.access_token;
-        if (accessToken) {
-          resolve(accessToken);
-        } else {
-          reject();
-        }
-      });
-    },
-    logout: ({ returnTo }) =>
-      signoutRedirect({ post_logout_redirect_uri: returnTo }),
-    login: (redirectUri?: string) =>
-      signinRedirect({ redirect_uri: redirectUri }),
     roleAssignments: user?.profile[claimsNamespace!] as string[],
+    getAccessToken,
+    logout,
+    login,
   };
 };
 
