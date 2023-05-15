@@ -4,12 +4,12 @@
   "adminRole": "{\"r\":\"adminEditRouteData\",\"o\":\"RB\"}",
   "xmlnsUrlPrefix": "http://www.rutebanken.org/ns/",
   "claimsNamespace": "https://ror.entur.io/role_assignments",
-  "auth0": {
-    "domain": "ror-entur-staging.eu.auth0.com",
-    "clientId": "xTqJ1vELDAFV3cixZmO5ibqdKXXuFpFW",
-    "audience": "https://ror.api.staging.entur.io",
-    "useRefreshTokens": true,
-    "cacheLocation": "memory"
+  "oidcConfig": {
+    "authority": "https://ror-entur-staging.eu.auth0.com",
+    "client_id": "xTqJ1vELDAFV3cixZmO5ibqdKXXuFpFW",
+    "extraQueryParams": {
+      "audience": "https://ror.api.staging.entur.io"
+    }
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"]
 }
