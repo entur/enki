@@ -23,7 +23,21 @@ REACT_APP_UTTU_API_URL=http://localhost:11701/services/flexible-lines
 
 ## Authentication
 
-Uses Auth0 to authenticate users.
+Uses OIDC for authentication. This solution is agnostic to which authentication provider you use.
+
+Example configuration (works with Auth0):
+
+```json
+"oidcConfig": {
+  "authority": "https://<auth0 tenant>.eu.auth0.com",
+  "client_id": "<client id>",
+  "extraQueryParams": {
+    "audience": "<example audience>"
+  }
+},
+  ```
+
+For full configuration reference, see [oidc-client-ts documentation](https://authts.github.io/oidc-client-ts/interfaces/UserManagerSettings.html).
 
 ## Testing
 
