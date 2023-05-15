@@ -29,7 +29,7 @@ Example configuration (works with Auth0):
 
 ```json
 "oidcConfig": {
-  "authority": "https://<auth0 tenant>.eu.auth0.com",
+  "authority": "https://<authentication domain>",
   "client_id": "<client id>",
   "extraQueryParams": {
     "audience": "<example audience>"
