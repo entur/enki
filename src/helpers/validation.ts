@@ -240,6 +240,7 @@ export const validateServiceJourney = (
   const { isValid } = validateTimes(sj.passingTimes ?? [], intl);
   const validDayTypes = validateDayTypes(sj.dayTypes);
   console.log('validateServiceJourney', {
+    sj,
     validName: !isBlankName,
     validDayTimes,
     validPassingTimes: isValid,
