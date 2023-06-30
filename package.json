@@ -87,7 +87,7 @@
     "redux-immutable-state-invariant": "2.1.0",
     "sass": "1.63.6",
     "source-map-explorer": "2.5.3",
-    "typescript": "5.1.5"
+    "typescript": "5.1.6"
   },
   "prettier": {
     "singleQuote": true
