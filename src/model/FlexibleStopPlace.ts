@@ -17,11 +17,13 @@ type FlexibleStopPlace = VersionedType & {
 export const mapFlexibleAreasToArea = (
   flexibleStopPlace: FlexibleStopPlace
 ) => {
-  if (flexibleStopPlace.flexibleAreas) {
-    const { flexibleAreas, ...rest } = flexibleStopPlace;
+  if (
+    flexibleStopPlace.flexibleAreas &&
+    flexibleStopPlace.flexibleAreas.length
+  ) {
     return {
-      ...rest,
-      flexibleArea: flexibleAreas[0],
+      ...flexibleStopPlace,
+      flexibleArea: flexibleStopPlace.flexibleAreas[0],
     };
   }
   return flexibleStopPlace;
