@@ -9,8 +9,22 @@ type FlexibleStopPlace = VersionedType & {
   privateCode?: string;
   transportMode?: string;
   flexibleArea?: FlexibleArea;
+  flexibleAreas?: FlexibleArea[];
   hailAndRideArea?: HailAndRideArea;
   keyValues?: KeyValues[];
+};
+
+export const mapFlexibleAreasToArea = (
+  flexibleStopPlace: FlexibleStopPlace
+) => {
+  if (flexibleStopPlace.flexibleAreas) {
+    const { flexibleAreas, ...rest } = flexibleStopPlace;
+    return {
+      ...rest,
+      flexibleArea: flexibleAreas[0],
+    };
+  }
+  return flexibleStopPlace;
 };
 
 export default FlexibleStopPlace;
