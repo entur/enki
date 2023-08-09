@@ -480,7 +480,7 @@ export const messages = {
   stopPlacesLoadingStopPlacesText: 'Laster inn stoppesteder...',
   stopPlacesNameTableHeaderLabelText: 'Navn',
   stopPlacesNoStopPlacesFoundText: 'Ingen stoppesteder ble funnet.',
-  stopPlacesNumberOfPointsTableHeaderLabelText: 'Antall punkter',
+  stopPlacesNumberOfAreasTableHeaderLabelText: 'Antall områder',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kode',
   passingTimesTypeFixed: 'Faste',
   passingTimesTypeFlexible: 'Fleksible',

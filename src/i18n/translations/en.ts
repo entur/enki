@@ -482,7 +482,7 @@ export const messages: MessagesKey = {
   stopPlacesLoadingStopPlacesText: 'Loading stop places...',
   stopPlacesNameTableHeaderLabelText: 'Name',
   stopPlacesNoStopPlacesFoundText: 'No stop places found.',
-  stopPlacesNumberOfPointsTableHeaderLabelText: 'Number of points',
+  stopPlacesNumberOfAreasTableHeaderLabelText: 'Number of areas',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
   passingTimesTypeFixed: 'Fixed',
   passingTimesTypeFlexible: 'Flexible',

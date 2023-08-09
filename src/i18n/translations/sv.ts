@@ -489,7 +489,7 @@ export const messages = {
   stopPlacesLoadingStopPlacesText: 'Läser in hållplatser...',
   stopPlacesNameTableHeaderLabelText: 'Namn',
   stopPlacesNoStopPlacesFoundText: 'Inga hållplatser hittades.',
-  stopPlacesNumberOfPointsTableHeaderLabelText: 'Antal punkter',
+  stopPlacesNumberOfAreasTableHeaderLabelText: 'Antal områden',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kod',
   passingTimesTypeFixed: 'Fasta',
   passingTimesTypeFlexible: 'Flexibla',
