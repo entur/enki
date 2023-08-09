@@ -18,6 +18,7 @@ import { ExportLineAssociation } from 'model/Export';
 import FlexibleLine from 'model/FlexibleLine';
 import JourneyPattern from 'model/JourneyPattern';
 import Line from 'model/Line';
+import OperatingPeriod from 'model/OperatingPeriod';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
@@ -53,22 +54,40 @@ const union = (left: Availability, right: Availability): Availability => {
   };
 };
 
+const mergeAvailability = (
+  availability: Availability | undefined,
+  operatingPeriod: OperatingPeriod
+) => {
+  const availabilityFromOperatingPeriod = {
+    from: parseDate(operatingPeriod.fromDate),
+    to: parseDate(operatingPeriod.toDate),
+  };
+
+  return availability
+    ? union(availability, availabilityFromOperatingPeriod)
+    : availabilityFromOperatingPeriod;
+};
+
 const getAvailability = (journeyPatterns?: JourneyPattern[]): Availability => {
-  let availability = { from: new Date(), to: new Date() };
+  let availability: Availability | undefined = undefined;
 
   journeyPatterns?.forEach((jp) =>
     jp.serviceJourneys.forEach((sj) =>
       sj.dayTypes?.forEach((dt) =>
         dt.dayTypeAssignments.forEach(
           (dta) =>
-            (availability = union(availability, {
-              from: parseDate(dta.operatingPeriod.fromDate),
-              to: parseDate(dta.operatingPeriod.toDate),
-            }))
+            (availability = mergeAvailability(
+              availability,
+              dta.operatingPeriod
+            ))
         )
       )
     )
   );
+
+  if (!availability) {
+    throw new Error('Unable to calculate availability for line');
+  }
 
   return availability;
 };
