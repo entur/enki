@@ -49,18 +49,27 @@ import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import PolygonMap from './components/PolygonMap';
+import { coordinatesToText } from './coordinatesToText';
 import './styles.scss';
+import { transformTextToCoordinates } from './transformTextToCoordinates';
+import { transformToMapCoordinates } from './transformToMapCoordinates';
 import { validateFlexibleStopPlace } from './validateForm';
 
-const coordinatesToText = (polygonCoordinates: Coordinate[]): string =>
-  JSON.stringify(polygonCoordinates);
-
-const transformTextToCoordinates = (text: string): Coordinate[] =>
-  JSON.parse(text);
-
-// Map expects coordinates in lat-lon order, whereas geojson has lon-lat
-const transformToMapCoordinates = (geojson: Coordinate[]): Coordinate[] =>
-  geojson.length === 0 ? geojson : geojson.map(([y, x]) => [x, y]);
+const coordinatesPlaceholder = `[
+  [
+    12.345,
+    67.890
+  ], [
+    12.345,
+    67.890
+  ], [
+    12.345,
+    67.890
+  ], [
+    12.345,
+    67.890
+  ]
+]`;
 
 const FlexibleStopPlaceEditor = () => {
   const params = useParams();
@@ -216,22 +225,6 @@ const FlexibleStopPlaceEditor = () => {
           l.journeyPatterns?.[0].pointsInSequence[0].flexibleStopPlaceRef ===
           flexibleStopPlace?.id
       );
-
-  const coordinatesPlaceholder = `[
-    [
-      12.345,
-      67.890
-    ], [
-      12.345,
-      67.890
-    ], [
-      12.345,
-      67.890
-    ], [
-      12.345,
-      67.890
-    ]
-  ]`;
 
   const areaError = getErrorFeedback(
     errors.flexibleArea ? formatMessage({ id: errors.flexibleArea }) : '',
