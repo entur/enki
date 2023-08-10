@@ -84,7 +84,7 @@ const FlexibleStopPlaceEditor = () => {
 
   const polygonCoordinates =
     flexibleStopPlace?.flexibleAreas?.map(
-      (area) => area.polygon?.coordinates || []
+      (area) => area.polygon?.coordinates ?? []
     ) ?? [];
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -335,6 +335,7 @@ const FlexibleStopPlaceEditor = () => {
 
                 {flexibleStopPlace.flexibleAreas?.map((area, index) => (
                   <ExpandablePanel
+                    key={index}
                     title={'Flexible area ' + (index + 1)}
                     open={currentAreaIndex === index}
                     onToggle={
@@ -440,13 +441,13 @@ const FlexibleStopPlaceEditor = () => {
 
                       <SecondaryButton
                         disabled={
-                          (flexibleStopPlace.flexibleAreas?.length || 0) < 2
+                          (flexibleStopPlace.flexibleAreas?.length ?? 0) < 2
                         }
                         onClick={() => {
                           setFlexibleStopPlace((current) => ({
                             ...current,
                             flexibleAreas: (
-                              current?.flexibleAreas || []
+                              current?.flexibleAreas ?? []
                             ).filter((_, i) => i !== index),
                           }));
                           setCurrentAreaIndex(
@@ -464,11 +465,11 @@ const FlexibleStopPlaceEditor = () => {
                   onClick={() => {
                     setFlexibleStopPlace((current) => ({
                       ...current,
-                      flexibleAreas: [...(current?.flexibleAreas || []), {}],
+                      flexibleAreas: [...(current?.flexibleAreas ?? []), {}],
                     }));
                     setCoordinateHolder(coordinateHolder.slice().concat(['']));
                     setCurrentAreaIndex(
-                      flexibleStopPlace.flexibleAreas?.length || -1
+                      flexibleStopPlace.flexibleAreas?.length ?? -1
                     );
                   }}
                 >
