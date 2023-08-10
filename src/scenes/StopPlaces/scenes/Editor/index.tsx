@@ -505,6 +505,15 @@ const FlexibleStopPlaceEditor = () => {
                     flexibleStopPlace.flexibleAreas?.[currentAreaIndex].polygon
                       ?.coordinates ?? []
                   )}
+                  otherPolygons={
+                    flexibleStopPlace.flexibleAreas
+                      ?.filter((_, index) => index !== currentAreaIndex)
+                      .map((area) =>
+                        transformToMapCoordinates(
+                          area.polygon?.coordinates ?? []
+                        )
+                      ) ?? []
+                  }
                   undo={handleUndoClick}
                 />
               </div>
