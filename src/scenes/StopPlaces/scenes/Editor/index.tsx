@@ -37,7 +37,6 @@ import GeoJSON, {
   Coordinate,
   addCoordinate,
   removeLastCoordinate,
-  stringIsValidCoordinates,
 } from 'model/GeoJSON';
 import {
   FLEXIBLE_STOP_AREA_TYPE,
@@ -48,28 +47,11 @@ import {
 import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
+import { CoordinatesInputField } from './components/CoordinatesInputField';
 import PolygonMap from './components/PolygonMap';
 import './styles.scss';
-import { coordinatesToText } from './utils/coordinatesToText';
-import { transformTextToCoordinates } from './utils/transformTextToCoordinates';
 import { transformToMapCoordinates } from './utils/transformToMapCoordinates';
 import { validateFlexibleStopPlace } from './utils/validateForm';
-
-const coordinatesPlaceholder = `[
-  [
-    12.345,
-    67.890
-  ], [
-    12.345,
-    67.890
-  ], [
-    12.345,
-    67.890
-  ], [
-    12.345,
-    67.890
-  ]
-]`;
 
 const FlexibleStopPlaceEditor = () => {
   const params = useParams();
@@ -102,9 +84,6 @@ const FlexibleStopPlaceEditor = () => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const [isDeleting, setDeleting] = useState<boolean>(false);
   const [saveClicked, setSaveClicked] = useState<boolean>(false);
-  const [coordinateHolder, setCoordinateHolder] = useState<string[]>(
-    polygonCoordinates.map((local) => coordinatesToText(local))
-  );
 
   const [currentAreaIndex, setCurrentAreaIndex] = useState<number>(0);
 
@@ -118,12 +97,6 @@ const FlexibleStopPlaceEditor = () => {
   useEffect(() => {
     if (!isLoading && !isEqual(currentFlexibleStopPlace, flexibleStopPlace))
       setFlexibleStopPlace(currentFlexibleStopPlace);
-
-    setCoordinateHolder(
-      currentFlexibleStopPlace?.flexibleAreas?.map((area) =>
-        coordinatesToText(area.polygon?.coordinates ?? [])
-      ) ?? []
-    );
     // eslint-disable-next-line
   }, [isLoading]);
 
@@ -174,10 +147,6 @@ const FlexibleStopPlaceEditor = () => {
       type: GEOMETRY_TYPE.POLYGON,
       coordinates: newCoordinates,
     });
-
-    const newCoordinateHolder = coordinateHolder.slice();
-    newCoordinateHolder[currentAreaIndex] = coordinatesToText(newCoordinates);
-    setCoordinateHolder(newCoordinateHolder);
   };
 
   const handleDrawPolygonClick = () => {
@@ -211,9 +180,6 @@ const FlexibleStopPlaceEditor = () => {
       polygonCoordinates[currentAreaIndex]
     );
     changeCoordinates(newCoordinates);
-    const newCoordinateHolder = coordinateHolder.slice();
-    newCoordinateHolder[currentAreaIndex] = coordinatesToText(newCoordinates);
-    setCoordinateHolder(newCoordinateHolder);
   };
 
   const isDeleteDisabled: boolean =
@@ -384,50 +350,19 @@ const FlexibleStopPlaceEditor = () => {
                         }
                       />
 
-                      <TextArea
-                        label={formatMessage({
-                          id: 'editorCoordinatesFormLabelText',
-                        })}
-                        variant={
-                          coordinateHolder[currentAreaIndex] === '' ||
-                          stringIsValidCoordinates(
-                            coordinateHolder[currentAreaIndex]
-                          )
-                            ? undefined
-                            : 'error'
-                        }
-                        feedback={formatMessage({ id: 'errorCoordinates' })}
-                        rows={12}
-                        value={coordinatesToText(
-                          transformToMapCoordinates(
-                            area.polygon?.coordinates ?? []
-                          )
-                        )}
-                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                          const newCoordinateHolder = coordinateHolder.slice();
-                          newCoordinateHolder[currentAreaIndex] =
-                            e.target.value;
-                          setCoordinateHolder(newCoordinateHolder);
-                        }}
-                        onBlur={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                          stringIsValidCoordinates(
-                            coordinateHolder[currentAreaIndex]
-                          )
-                            ? changeCoordinates(
-                                transformTextToCoordinates(e.target.value)
-                              )
-                            : undefined
-                        }
-                        placeholder={coordinatesPlaceholder}
+                      <CoordinatesInputField
+                        coordinates={area.polygon?.coordinates || []}
+                        changeCoordinates={changeCoordinates}
                       />
+
                       <PrimaryButton
                         className="draw-polygon-button"
                         onClick={handleDrawPolygonClick}
-                        disabled={
-                          !stringIsValidCoordinates(
-                            coordinateHolder[currentAreaIndex]
-                          )
-                        }
+                        // disabled={
+                        //   !stringIsValidCoordinates(
+                        //     coordinateHolder[index]
+                        //   )
+                        // }
                       >
                         {formatMessage({ id: 'editorDrawPolygonButtonText' })}
                         <MapIcon />
@@ -461,7 +396,6 @@ const FlexibleStopPlaceEditor = () => {
                       ...current,
                       flexibleAreas: [...(current?.flexibleAreas ?? []), {}],
                     }));
-                    setCoordinateHolder(coordinateHolder.slice().concat(['']));
                     setCurrentAreaIndex(
                       flexibleStopPlace.flexibleAreas?.length ?? -1
                     );
