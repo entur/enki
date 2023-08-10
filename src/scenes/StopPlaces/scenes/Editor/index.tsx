@@ -338,7 +338,10 @@ const FlexibleStopPlaceEditor = () => {
                     open={currentAreaIndex === index}
                     onToggle={
                       currentAreaIndex === index
-                        ? () => setCurrentAreaIndex(-1)
+                        ? () =>
+                            setCurrentAreaIndex(
+                              currentAreaIndex > 0 ? currentAreaIndex - 1 : 0
+                            )
                         : () => setCurrentAreaIndex(index)
                     }
                   >
