@@ -108,12 +108,11 @@ const FlexibleStopPlaceEditor = () => {
     if (!isLoading && !isEqual(currentFlexibleStopPlace, flexibleStopPlace))
       setFlexibleStopPlace(currentFlexibleStopPlace);
 
-    const newCoordinateHolder = coordinateHolder.slice();
-    newCoordinateHolder[currentAreaIndex] = coordinatesToText(
-      flexibleStopPlace?.flexibleAreas?.[currentAreaIndex]?.polygon
-        ?.coordinates ?? []
+    setCoordinateHolder(
+      currentFlexibleStopPlace?.flexibleAreas?.map((area) =>
+        coordinatesToText(area.polygon?.coordinates ?? [])
+      ) ?? []
     );
-    setCoordinateHolder(newCoordinateHolder);
     // eslint-disable-next-line
   }, [isLoading]);
 
