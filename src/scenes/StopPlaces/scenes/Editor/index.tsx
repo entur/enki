@@ -27,6 +27,7 @@ import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { objectValuesAreEmpty } from 'helpers/forms';
+import { createUuid } from 'helpers/generators';
 import usePristine from 'hooks/usePristine';
 import { LeafletMouseEvent } from 'leaflet';
 import isEqual from 'lodash.isequal';
@@ -335,7 +336,7 @@ const FlexibleStopPlaceEditor = () => {
 
                 {flexibleStopPlace.flexibleAreas?.map((area, index) => (
                   <ExpandablePanel
-                    key={index}
+                    key={createUuid()}
                     title={'Flexible area ' + (index + 1)}
                     open={currentAreaIndex === index}
                     onToggle={
