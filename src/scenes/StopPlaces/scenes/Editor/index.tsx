@@ -345,7 +345,7 @@ const FlexibleStopPlaceEditor = () => {
                   >
                     <div className="stop-place-form">
                       <Dropdown
-                        label={formatMessage({ id: 'flexibleStopAreaType' })}
+                        label={'Override stop place type'}
                         items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map(
                           (v) => ({
                             value: v,
@@ -359,18 +359,31 @@ const FlexibleStopPlaceEditor = () => {
                             (v) => v.key === 'FlexibleStopAreaType'
                           )?.values[0] ?? null
                         }
-                        // onChange={(selectedItem: NormalizedDropdownItemType | null) =>
-                        //   selectedItem &&
-                        //   setFlexibleStopPlace({
-                        //     ...flexibleStopPlace,
-                        //     keyValues: [
-                        //       {
-                        //         key: 'FlexibleStopAreaType',
-                        //         values: [selectedItem.value],
-                        //       },
-                        //     ],
-                        //   })
-                        // }
+                        onChange={(
+                          selectedItem: NormalizedDropdownItemType | null
+                        ) =>
+                          selectedItem &&
+                          setFlexibleStopPlace({
+                            ...flexibleStopPlace,
+                            flexibleAreas: flexibleStopPlace.flexibleAreas?.map(
+                              (localArea, localIndex) => {
+                                if (localIndex === index) {
+                                  return {
+                                    ...localArea,
+                                    keyValues: [
+                                      {
+                                        key: 'FlexibleStopAreaType',
+                                        values: [selectedItem.value],
+                                      },
+                                    ],
+                                  };
+                                } else {
+                                  return localArea;
+                                }
+                              }
+                            ),
+                          })
+                        }
                       />
 
                       <TextArea
@@ -392,16 +405,21 @@ const FlexibleStopPlaceEditor = () => {
                             area.polygon?.coordinates ?? []
                           )
                         )}
-                        // onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                        //   setCoordinateHolder(e.target.value)
-                        // }
-                        // onBlur={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                        //   stringIsValidCoordinates(coordinateHolder)
-                        //     ? changeCoordinates(
-                        //         transformTextToCoordinates(e.target.value)
-                        //       )
-                        //     : undefined
-                        // }
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                          const newCoordinateHolder = coordinateHolder.slice();
+                          newCoordinateHolder[currentAreaIndex] =
+                            e.target.value;
+                          setCoordinateHolder(newCoordinateHolder);
+                        }}
+                        onBlur={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                          stringIsValidCoordinates(
+                            coordinateHolder[currentAreaIndex]
+                          )
+                            ? changeCoordinates(
+                                transformTextToCoordinates(e.target.value)
+                              )
+                            : undefined
+                        }
                         placeholder={coordinatesPlaceholder}
                       />
                       <PrimaryButton
