@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Dropdown } from '@entur/dropdown';
 import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import { ExpandablePanel } from '@entur/expand';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
   deleteFlexibleStopPlaceById,
@@ -81,32 +82,38 @@ const FlexibleStopPlaceEditor = () => {
   >(undefined);
 
   const polygonCoordinates =
-    flexibleStopPlace?.flexibleArea?.polygon?.coordinates ?? [];
+    flexibleStopPlace?.flexibleAreas?.map(
+      (area) => area.polygon?.coordinates || []
+    ) ?? [];
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSaving, setSaving] = useState<boolean>(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const [isDeleting, setDeleting] = useState<boolean>(false);
   const [saveClicked, setSaveClicked] = useState<boolean>(false);
-  const [coordinateHolder, setCoordinateHolder] = useState<string>(
-    coordinatesToText(polygonCoordinates)
+  const [coordinateHolder, setCoordinateHolder] = useState<string[]>(
+    polygonCoordinates.map((local) => coordinatesToText(local))
   );
 
-  const { name, flexibleArea } = flexibleStopPlace ?? {};
+  const [currentAreaIndex, setCurrentAreaIndex] = useState<number>(0);
+
+  const { name, flexibleAreas } = flexibleStopPlace ?? {};
 
   const namePristine = usePristine(name, saveClicked);
-  const areaPristine = usePristine(flexibleArea, saveClicked);
+  const areasPristine = usePristine(flexibleAreas, saveClicked);
 
   const errors = validateFlexibleStopPlace(flexibleStopPlace ?? {});
 
   useEffect(() => {
     if (!isLoading && !isEqual(currentFlexibleStopPlace, flexibleStopPlace))
       setFlexibleStopPlace(currentFlexibleStopPlace);
-    setCoordinateHolder(
-      coordinatesToText(
-        currentFlexibleStopPlace.flexibleArea?.polygon?.coordinates ?? []
-      )
+
+    const newCoordinateHolder = coordinateHolder.slice();
+    newCoordinateHolder[currentAreaIndex] = coordinatesToText(
+      flexibleStopPlace?.flexibleAreas?.[currentAreaIndex]?.polygon
+        ?.coordinates ?? []
     );
+    setCoordinateHolder(newCoordinateHolder);
     // eslint-disable-next-line
   }, [isLoading]);
 
@@ -148,29 +155,39 @@ const FlexibleStopPlaceEditor = () => {
     // Convert coordinate from map to geojson long-lat order
     const newCoordinate: Coordinate = [e.latlng.lng, e.latlng.lat];
 
-    const newCoordinates = addCoordinate(polygonCoordinates, newCoordinate);
+    const newCoordinates = addCoordinate(
+      polygonCoordinates[currentAreaIndex],
+      newCoordinate
+    );
+
     changePolygon({
       type: GEOMETRY_TYPE.POLYGON,
       coordinates: newCoordinates,
     });
-    setCoordinateHolder(coordinatesToText(newCoordinates));
+
+    const newCoordinateHolder = coordinateHolder.slice();
+    newCoordinateHolder[currentAreaIndex] = coordinatesToText(newCoordinates);
+    setCoordinateHolder(newCoordinateHolder);
   };
 
   const handleDrawPolygonClick = () => {
     changePolygon({
       type: GEOMETRY_TYPE.POLYGON,
-      coordinates: polygonCoordinates,
+      coordinates: polygonCoordinates[currentAreaIndex],
     });
   };
 
-  const changePolygon = (polygon: GeoJSON) =>
+  const changePolygon = (polygon: GeoJSON) => {
+    const newFlexibleAreas = flexibleStopPlace?.flexibleAreas?.slice() ?? [];
+    newFlexibleAreas[currentAreaIndex] = {
+      ...newFlexibleAreas[currentAreaIndex],
+      polygon,
+    };
     setFlexibleStopPlace({
       ...flexibleStopPlace,
-      flexibleArea: {
-        ...flexibleStopPlace?.flexibleArea,
-        polygon: polygon,
-      },
+      flexibleAreas: newFlexibleAreas,
     });
+  };
 
   const changeCoordinates = (coordinates: Coordinate[]) =>
     changePolygon({
@@ -180,9 +197,13 @@ const FlexibleStopPlaceEditor = () => {
     });
 
   const handleUndoClick = () => {
-    const newCoordinates = removeLastCoordinate(polygonCoordinates);
+    const newCoordinates = removeLastCoordinate(
+      polygonCoordinates[currentAreaIndex]
+    );
     changeCoordinates(newCoordinates);
-    setCoordinateHolder(coordinatesToText(newCoordinates));
+    const newCoordinateHolder = coordinateHolder.slice();
+    newCoordinateHolder[currentAreaIndex] = coordinatesToText(newCoordinates);
+    setCoordinateHolder(newCoordinateHolder);
   };
 
   const isDeleteDisabled: boolean =
@@ -214,7 +235,7 @@ const FlexibleStopPlaceEditor = () => {
   const areaError = getErrorFeedback(
     errors.flexibleArea ? formatMessage({ id: errors.flexibleArea }) : '',
     !errors.flexibleArea,
-    areaPristine
+    areasPristine
   );
 
   return (
@@ -312,40 +333,126 @@ const FlexibleStopPlaceEditor = () => {
                   }
                 />
 
-                <TextArea
-                  label={formatMessage({
-                    id: 'editorCoordinatesFormLabelText',
-                  })}
-                  variant={
-                    coordinateHolder === '' ||
-                    stringIsValidCoordinates(coordinateHolder)
-                      ? undefined
-                      : 'error'
-                  }
-                  feedback={formatMessage({ id: 'errorCoordinates' })}
-                  rows={12}
-                  value={coordinateHolder}
-                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                    setCoordinateHolder(e.target.value)
-                  }
-                  onBlur={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                    stringIsValidCoordinates(coordinateHolder)
-                      ? changeCoordinates(
-                          transformTextToCoordinates(e.target.value)
-                        )
-                      : undefined
-                  }
-                  placeholder={coordinatesPlaceholder}
-                />
+                {flexibleStopPlace.flexibleAreas?.map((area, index) => (
+                  <ExpandablePanel
+                    title={'Flexible area ' + (index + 1)}
+                    open={currentAreaIndex === index}
+                    onToggle={
+                      currentAreaIndex === index
+                        ? () => setCurrentAreaIndex(-1)
+                        : () => setCurrentAreaIndex(index)
+                    }
+                  >
+                    <div className="stop-place-form">
+                      <Dropdown
+                        label={formatMessage({ id: 'flexibleStopAreaType' })}
+                        items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map(
+                          (v) => ({
+                            value: v,
+                            label: formatMessage({
+                              id: flexibleStopAreaTypeMessages[v],
+                            }),
+                          })
+                        )}
+                        value={
+                          area.keyValues?.find(
+                            (v) => v.key === 'FlexibleStopAreaType'
+                          )?.values[0] ?? null
+                        }
+                        // onChange={(selectedItem: NormalizedDropdownItemType | null) =>
+                        //   selectedItem &&
+                        //   setFlexibleStopPlace({
+                        //     ...flexibleStopPlace,
+                        //     keyValues: [
+                        //       {
+                        //         key: 'FlexibleStopAreaType',
+                        //         values: [selectedItem.value],
+                        //       },
+                        //     ],
+                        //   })
+                        // }
+                      />
 
-                <PrimaryButton
-                  className="draw-polygon-button"
-                  onClick={handleDrawPolygonClick}
-                  disabled={!stringIsValidCoordinates(coordinateHolder)}
+                      <TextArea
+                        label={formatMessage({
+                          id: 'editorCoordinatesFormLabelText',
+                        })}
+                        variant={
+                          coordinateHolder[currentAreaIndex] === '' ||
+                          stringIsValidCoordinates(
+                            coordinateHolder[currentAreaIndex]
+                          )
+                            ? undefined
+                            : 'error'
+                        }
+                        feedback={formatMessage({ id: 'errorCoordinates' })}
+                        rows={12}
+                        value={coordinatesToText(
+                          transformToMapCoordinates(
+                            area.polygon?.coordinates ?? []
+                          )
+                        )}
+                        // onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                        //   setCoordinateHolder(e.target.value)
+                        // }
+                        // onBlur={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                        //   stringIsValidCoordinates(coordinateHolder)
+                        //     ? changeCoordinates(
+                        //         transformTextToCoordinates(e.target.value)
+                        //       )
+                        //     : undefined
+                        // }
+                        placeholder={coordinatesPlaceholder}
+                      />
+                      <PrimaryButton
+                        className="draw-polygon-button"
+                        onClick={handleDrawPolygonClick}
+                        disabled={
+                          !stringIsValidCoordinates(
+                            coordinateHolder[currentAreaIndex]
+                          )
+                        }
+                      >
+                        {formatMessage({ id: 'editorDrawPolygonButtonText' })}
+                        <MapIcon />
+                      </PrimaryButton>
+
+                      <SecondaryButton
+                        disabled={
+                          (flexibleStopPlace.flexibleAreas?.length || 0) < 2
+                        }
+                        onClick={() => {
+                          setFlexibleStopPlace((current) => ({
+                            ...current,
+                            flexibleAreas: (
+                              current?.flexibleAreas || []
+                            ).filter((_, i) => i !== index),
+                          }));
+                          setCurrentAreaIndex(
+                            currentAreaIndex > 0 ? currentAreaIndex - 1 : 0
+                          );
+                        }}
+                      >
+                        Remove area
+                      </SecondaryButton>
+                    </div>
+                  </ExpandablePanel>
+                ))}
+
+                <SecondaryButton
+                  onClick={() => {
+                    setFlexibleStopPlace((current) => ({
+                      ...current,
+                      flexibleAreas: [...(current?.flexibleAreas || []), {}],
+                    }));
+                    setCoordinateHolder(coordinateHolder.slice().concat(['']));
+                    setCurrentAreaIndex(
+                      flexibleStopPlace.flexibleAreas?.length || -1
+                    );
+                  }}
                 >
-                  {formatMessage({ id: 'editorDrawPolygonButtonText' })}
-                  <MapIcon />
-                </PrimaryButton>
+                  Add area
+                </SecondaryButton>
 
                 <div className="buttons">
                   {params.id && (
@@ -378,7 +485,10 @@ const FlexibleStopPlaceEditor = () => {
                 )}
                 <PolygonMap
                   addCoordinate={handleMapOnClick}
-                  polygon={transformToMapCoordinates(polygonCoordinates)}
+                  polygon={transformToMapCoordinates(
+                    flexibleStopPlace.flexibleAreas?.[currentAreaIndex].polygon
+                      ?.coordinates ?? []
+                  )}
                   undo={handleUndoClick}
                 />
               </div>
