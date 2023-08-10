@@ -49,11 +49,11 @@ import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import PolygonMap from './components/PolygonMap';
-import { coordinatesToText } from './coordinatesToText';
 import './styles.scss';
-import { transformTextToCoordinates } from './transformTextToCoordinates';
-import { transformToMapCoordinates } from './transformToMapCoordinates';
-import { validateFlexibleStopPlace } from './validateForm';
+import { coordinatesToText } from './utils/coordinatesToText';
+import { transformTextToCoordinates } from './utils/transformTextToCoordinates';
+import { transformToMapCoordinates } from './utils/transformToMapCoordinates';
+import { validateFlexibleStopPlace } from './utils/validateForm';
 
 const coordinatesPlaceholder = `[
   [
