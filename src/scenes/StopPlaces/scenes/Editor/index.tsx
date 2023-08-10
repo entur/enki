@@ -11,8 +11,6 @@ import { Paragraph } from '@entur/typography';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Dropdown } from '@entur/dropdown';
-import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { ExpandablePanel } from '@entur/expand';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
@@ -38,17 +36,14 @@ import GeoJSON, {
   addCoordinate,
   removeLastCoordinate,
 } from 'model/GeoJSON';
-import {
-  FLEXIBLE_STOP_AREA_TYPE,
-  GEOMETRY_TYPE,
-  VEHICLE_MODE,
-  flexibleStopAreaTypeMessages,
-} from 'model/enums';
+import { KeyValues } from 'model/KeyValues';
+import { GEOMETRY_TYPE, VEHICLE_MODE } from 'model/enums';
 import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { CoordinatesInputField } from './components/CoordinatesInputField';
 import PolygonMap from './components/PolygonMap';
+import { StopPlaceTypeDropdown } from './components/StopPlaceTypeDropdown';
 import './styles.scss';
 import { transformToMapCoordinates } from './utils/transformToMapCoordinates';
 import { validateFlexibleStopPlace } from './utils/validateForm';
@@ -266,31 +261,16 @@ const FlexibleStopPlaceEditor = () => {
                   }
                 />
 
-                <Dropdown
+                <StopPlaceTypeDropdown
                   label={formatMessage({ id: 'flexibleStopAreaType' })}
-                  items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map((v) => ({
-                    value: v,
-                    label: formatMessage({
-                      id: flexibleStopAreaTypeMessages[v],
-                    }),
-                  }))}
-                  value={
-                    flexibleStopPlace.keyValues?.find(
-                      (v) => v.key === 'FlexibleStopAreaType'
-                    )?.values[0] ?? null
-                  }
-                  onChange={(selectedItem: NormalizedDropdownItemType | null) =>
-                    selectedItem &&
+                  keyValues={flexibleStopPlace.keyValues ?? []}
+                  keyValuesUpdate={(keyValues: KeyValues[]) => {
+                    console.log(keyValues);
                     setFlexibleStopPlace({
                       ...flexibleStopPlace,
-                      keyValues: [
-                        {
-                          key: 'FlexibleStopAreaType',
-                          values: [selectedItem.value],
-                        },
-                      ],
-                    })
-                  }
+                      keyValues,
+                    });
+                  }}
                 />
 
                 {flexibleStopPlace.flexibleAreas?.map((area, index) => (
@@ -308,25 +288,10 @@ const FlexibleStopPlaceEditor = () => {
                     }
                   >
                     <div className="stop-place-form">
-                      <Dropdown
-                        label={'Override stop place type'}
-                        items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map(
-                          (v) => ({
-                            value: v,
-                            label: formatMessage({
-                              id: flexibleStopAreaTypeMessages[v],
-                            }),
-                          })
-                        )}
-                        value={
-                          area.keyValues?.find(
-                            (v) => v.key === 'FlexibleStopAreaType'
-                          )?.values[0] ?? null
-                        }
-                        onChange={(
-                          selectedItem: NormalizedDropdownItemType | null
-                        ) =>
-                          selectedItem &&
+                      <StopPlaceTypeDropdown
+                        label="Override stop place type"
+                        keyValues={area.keyValues}
+                        keyValuesUpdate={(keyValues) => {
                           setFlexibleStopPlace({
                             ...flexibleStopPlace,
                             flexibleAreas: flexibleStopPlace.flexibleAreas?.map(
@@ -334,20 +299,15 @@ const FlexibleStopPlaceEditor = () => {
                                 if (localIndex === index) {
                                   return {
                                     ...localArea,
-                                    keyValues: [
-                                      {
-                                        key: 'FlexibleStopAreaType',
-                                        values: [selectedItem.value],
-                                      },
-                                    ],
+                                    keyValues,
                                   };
                                 } else {
                                   return localArea;
                                 }
                               }
                             ),
-                          })
-                        }
+                          });
+                        }}
                       />
 
                       <CoordinatesInputField
