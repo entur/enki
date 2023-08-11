@@ -8,21 +8,16 @@ import {
 import { TextArea, TextField } from '@entur/form';
 import { MapIcon } from '@entur/icons';
 import { Paragraph } from '@entur/typography';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ExpandablePanel } from '@entur/expand';
-import {
-  deleteFlexibleStopPlaceById,
-  saveFlexibleStopPlace,
-} from 'actions/flexibleStopPlaces';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { objectValuesAreEmpty } from 'helpers/forms';
 import { createUuid } from 'helpers/generators';
 import usePristine from 'hooks/usePristine';
 import { LeafletMouseEvent } from 'leaflet';
@@ -39,6 +34,8 @@ import { CoordinatesInputField } from './components/CoordinatesInputField';
 import PolygonMap from './components/PolygonMap';
 import { StopPlaceTypeDropdown } from './components/StopPlaceTypeDropdown';
 import { useFlexibleStopPlace } from './hooks/useFlexibleStopPlace';
+import { useHandleDelete } from './hooks/useHandleDelete';
+import { useHandleOnSaveClick } from './hooks/useHandleOnSaveClick';
 import './styles.scss';
 import { transformToMapCoordinates } from './utils/transformToMapCoordinates';
 import { validateFlexibleStopPlace } from './utils/validateForm';
@@ -72,25 +69,20 @@ const FlexibleStopPlaceEditor = () => {
 
   const errors = validateFlexibleStopPlace(flexibleStopPlace ?? {});
 
-  const handleOnSaveClick = useCallback(() => {
-    if (objectValuesAreEmpty(errors)) {
-      setSaving(true);
-      dispatch(saveFlexibleStopPlace(flexibleStopPlace ?? {}, intl))
-        .then(() => navigate('/stop-places'))
-        .finally(() => setSaving(false));
-    }
-    setSaveClicked(true);
-  }, [dispatch, history, flexibleStopPlace, errors]);
+  const handleOnSaveClick = useHandleOnSaveClick(
+    flexibleStopPlace,
+    () => setSaveClicked(true),
+    () => setSaving(true),
+    () => setSaving(false),
+    errors
+  );
 
-  const handleDelete = useCallback(() => {
-    setDeleteDialogOpen(false);
-    if (flexibleStopPlace?.id) {
-      setDeleting(true);
-      dispatch(deleteFlexibleStopPlaceById(flexibleStopPlace.id, intl))
-        .then(() => navigate('/stop-places'))
-        .finally(() => setDeleting(false));
-    }
-  }, [dispatch, history, flexibleStopPlace]);
+  const handleDelete = useHandleDelete(
+    flexibleStopPlace,
+    () => setDeleteDialogOpen(false),
+    () => setDeleting(true),
+    () => setDeleting(false)
+  );
 
   const handleMapOnClick = (e: LeafletMouseEvent) => {
     // Convert coordinate from map to geojson long-lat order
