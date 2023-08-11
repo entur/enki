@@ -8,14 +8,12 @@ import {
 import { TextArea, TextField } from '@entur/form';
 import { MapIcon } from '@entur/icons';
 import { Paragraph } from '@entur/typography';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEvent, useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { ExpandablePanel } from '@entur/expand';
-import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
   deleteFlexibleStopPlaceById,
-  loadFlexibleStopPlaceById,
   saveFlexibleStopPlace,
 } from 'actions/flexibleStopPlaces';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -28,22 +26,19 @@ import { objectValuesAreEmpty } from 'helpers/forms';
 import { createUuid } from 'helpers/generators';
 import usePristine from 'hooks/usePristine';
 import { LeafletMouseEvent } from 'leaflet';
-import isEqual from 'lodash.isequal';
-import FlexibleLine from 'model/FlexibleLine';
-import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import GeoJSON, {
   Coordinate,
   addCoordinate,
   removeLastCoordinate,
 } from 'model/GeoJSON';
 import { KeyValues } from 'model/KeyValues';
-import { GEOMETRY_TYPE, VEHICLE_MODE } from 'model/enums';
+import { GEOMETRY_TYPE } from 'model/enums';
 import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
-import { GlobalState } from 'reducers';
 import { CoordinatesInputField } from './components/CoordinatesInputField';
 import PolygonMap from './components/PolygonMap';
 import { StopPlaceTypeDropdown } from './components/StopPlaceTypeDropdown';
+import { useFlexibleStopPlace } from './hooks/useFlexibleStopPlace';
 import './styles.scss';
 import { transformToMapCoordinates } from './utils/transformToMapCoordinates';
 import { validateFlexibleStopPlace } from './utils/validateForm';
@@ -54,27 +49,15 @@ const FlexibleStopPlaceEditor = () => {
   const intl = useIntl();
   const { formatMessage } = intl;
   const dispatch = useDispatch<any>();
-  const lines = useSelector<GlobalState, FlexibleLine[]>(
-    (state) => state.flexibleLines ?? []
-  );
-  const currentFlexibleStopPlace = useSelector<GlobalState, FlexibleStopPlace>(
-    (state) =>
-      state.flexibleStopPlaces?.find((fsp) => fsp.id === params.id) ?? {
-        transportMode: VEHICLE_MODE.BUS,
-        flexibleAreas: [{}],
-      }
-  );
 
-  const [flexibleStopPlace, setFlexibleStopPlace] = useState<
-    FlexibleStopPlace | undefined
-  >(undefined);
+  const { flexibleStopPlace, setFlexibleStopPlace, lines, isLoading } =
+    useFlexibleStopPlace();
 
   const polygonCoordinates =
     flexibleStopPlace?.flexibleAreas?.map(
       (area) => area.polygon?.coordinates ?? []
     ) ?? [];
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSaving, setSaving] = useState<boolean>(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const [isDeleting, setDeleting] = useState<boolean>(false);
@@ -88,26 +71,6 @@ const FlexibleStopPlaceEditor = () => {
   const areasPristine = usePristine(flexibleAreas, saveClicked);
 
   const errors = validateFlexibleStopPlace(flexibleStopPlace ?? {});
-
-  useEffect(() => {
-    if (!isLoading && !isEqual(currentFlexibleStopPlace, flexibleStopPlace))
-      setFlexibleStopPlace(currentFlexibleStopPlace);
-    // eslint-disable-next-line
-  }, [isLoading]);
-
-  useEffect(() => {
-    if (params.id) {
-      setIsLoading(true);
-      dispatch(loadFlexibleLines(intl))
-        .then(() => dispatch(loadFlexibleStopPlaceById(params.id!, intl)))
-        .catch(() => navigate('/networks'))
-        .then(() => {
-          setIsLoading(false);
-        });
-    } else {
-      dispatch(loadFlexibleLines(intl)).then(() => setIsLoading(false));
-    }
-  }, [dispatch, params.id, history]);
 
   const handleOnSaveClick = useCallback(() => {
     if (objectValuesAreEmpty(errors)) {
