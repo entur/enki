@@ -5,13 +5,10 @@ import {
   SecondaryButton,
   SuccessButton,
 } from '@entur/button';
+import { ExpandablePanel } from '@entur/expand';
 import { TextArea, TextField } from '@entur/form';
 import { MapIcon } from '@entur/icons';
 import { Paragraph } from '@entur/typography';
-import { ChangeEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { ExpandablePanel } from '@entur/expand';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
@@ -28,8 +25,9 @@ import GeoJSON, {
 } from 'model/GeoJSON';
 import { KeyValues } from 'model/KeyValues';
 import { GEOMETRY_TYPE } from 'model/enums';
+import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CoordinatesInputField } from './components/CoordinatesInputField';
 import PolygonMap from './components/PolygonMap';
 import { StopPlaceTypeDropdown } from './components/StopPlaceTypeDropdown';
@@ -42,10 +40,8 @@ import { validateFlexibleStopPlace } from './utils/validateForm';
 
 const FlexibleStopPlaceEditor = () => {
   const params = useParams();
-  const navigate = useNavigate();
   const intl = useIntl();
   const { formatMessage } = intl;
-  const dispatch = useDispatch<any>();
 
   const { flexibleStopPlace, setFlexibleStopPlace, lines, isLoading } =
     useFlexibleStopPlace();
