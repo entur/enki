@@ -46,15 +46,15 @@ describe('useHandleDelete', () => {
       .mockReturnValueOnce(() => Promise.resolve());
 
     const onCall = jest.fn();
-    const onSaveStart = jest.fn();
-    const onSaveEnd = jest.fn();
+    const onDeleteStart = jest.fn();
+    const onDeleteEnd = jest.fn();
 
     const testSubject: FlexibleStopPlace = {
       id: 'test',
     };
 
     const { result } = renderHook(
-      () => useHandleDelete(testSubject, onCall, onSaveStart, onSaveEnd),
+      () => useHandleDelete(testSubject, onCall, onDeleteStart, onDeleteEnd),
       {
         wrapper: ({ children }) => (
           <Provider store={store}>
@@ -69,11 +69,11 @@ describe('useHandleDelete', () => {
     result.current();
 
     expect(onCall).toBeCalledTimes(1);
-    expect(onSaveStart).toBeCalledTimes(1);
+    expect(onDeleteStart).toBeCalledTimes(1);
 
     // Is there a better way?
     await act(() => sleep(0));
 
-    expect(onSaveEnd).toBeCalledTimes(1);
+    expect(onDeleteEnd).toBeCalledTimes(1);
   });
 });
