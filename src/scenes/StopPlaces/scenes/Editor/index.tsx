@@ -266,7 +266,7 @@ const FlexibleStopPlaceEditor = () => {
                       />
 
                       <CoordinatesInputField
-                        coordinates={area.polygon?.coordinates || []}
+                        coordinates={area.polygon?.coordinates ?? []}
                         changeCoordinates={changeCoordinates}
                       />
 
