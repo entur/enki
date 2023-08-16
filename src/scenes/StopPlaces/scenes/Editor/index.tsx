@@ -216,7 +216,6 @@ const FlexibleStopPlaceEditor = () => {
                   label={formatMessage({ id: 'flexibleStopAreaType' })}
                   keyValues={flexibleStopPlace.keyValues ?? []}
                   keyValuesUpdate={(keyValues: KeyValues[]) => {
-                    console.log(keyValues);
                     setFlexibleStopPlace({
                       ...flexibleStopPlace,
                       keyValues,
@@ -325,7 +324,10 @@ const FlexibleStopPlaceEditor = () => {
                     </NegativeButton>
                   )}
 
-                  <SuccessButton onClick={handleOnSaveClick}>
+                  <SuccessButton
+                    disabled={!!errors.flexibleArea || !!errors.name}
+                    onClick={handleOnSaveClick}
+                  >
                     {params.id
                       ? formatMessage({ id: 'editorSaveButtonText' })
                       : formatMessage(

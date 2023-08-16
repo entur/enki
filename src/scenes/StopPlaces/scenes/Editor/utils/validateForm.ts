@@ -12,7 +12,7 @@ export const validateFlexibleStopPlace = ({
   flexibleAreas,
 }: FlexibleStopPlace): FlexibleStopPlaceErrors => ({
   name: isBlank(name) ? 'validateFormErrorNameEmpty' : undefined,
-  flexibleArea: flexibleAreas?.every(
+  flexibleArea: flexibleAreas?.some(
     (flexibleArea) => (flexibleArea.polygon?.coordinates?.length ?? 0) < 4
   )
     ? 'validateFormErrorFlexibleAreaNotEnoughPolygons'
