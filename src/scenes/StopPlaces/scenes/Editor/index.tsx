@@ -275,7 +275,9 @@ const FlexibleStopPlaceEditor = () => {
                 {flexibleStopPlace.flexibleAreas?.map((area, index) => (
                   <ExpandablePanel
                     key={createUuid()}
-                    title={'Flexible area ' + (index + 1)}
+                    title={`${formatMessage({
+                      id: 'stopPlaceAreaLabelPrefix',
+                    })} ${index + 1}`}
                     open={currentAreaIndex === index}
                     onToggle={
                       currentAreaIndex === index
@@ -288,7 +290,7 @@ const FlexibleStopPlaceEditor = () => {
                   >
                     <div className="stop-place-form">
                       <StopPlaceTypeDropdown
-                        label="Override stop place type"
+                        label={formatMessage({ id: 'flexibleStopAreaType' })}
                         keyValues={area.keyValues}
                         keyValuesUpdate={(keyValues) => {
                           setFlexibleStopPlace({
@@ -317,11 +319,6 @@ const FlexibleStopPlaceEditor = () => {
                       <PrimaryButton
                         className="draw-polygon-button"
                         onClick={handleDrawPolygonClick}
-                        // disabled={
-                        //   !stringIsValidCoordinates(
-                        //     coordinateHolder[index]
-                        //   )
-                        // }
                       >
                         {formatMessage({ id: 'editorDrawPolygonButtonText' })}
                         <MapIcon />

@@ -484,6 +484,7 @@ export const messages = {
   stopPlacesNoStopPlacesFoundText: 'Ingen stoppesteder ble funnet.',
   stopPlacesNumberOfAreasTableHeaderLabelText: 'Antall områder',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kode',
+  stopPlaceAreaLabelPrefix: 'Område',
   passingTimesTypeFixed: 'Faste',
   passingTimesTypeFlexible: 'Fleksible',
   passingTimesArrivalTime: 'Ankomsttid',

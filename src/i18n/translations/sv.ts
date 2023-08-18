@@ -493,6 +493,7 @@ export const messages = {
   stopPlacesNoStopPlacesFoundText: 'Inga hållplatser hittades.',
   stopPlacesNumberOfAreasTableHeaderLabelText: 'Antal områden',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kod',
+  stopPlaceAreaLabelPrefix: 'Område',
   passingTimesTypeFixed: 'Fasta',
   passingTimesTypeFlexible: 'Flexibla',
   passingTimesArrivalTime: 'Ankomsttid',

@@ -486,6 +486,7 @@ export const messages: MessagesKey = {
   stopPlacesNoStopPlacesFoundText: 'No stop places found.',
   stopPlacesNumberOfAreasTableHeaderLabelText: 'Number of areas',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
+  stopPlaceAreaLabelPrefix: 'Area',
   passingTimesTypeFixed: 'Fixed',
   passingTimesTypeFlexible: 'Flexible',
   passingTimesArrivalTime: 'Arrival time',
