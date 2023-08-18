@@ -357,7 +357,7 @@ const FlexibleStopPlaceEditor = () => {
                     );
                   }}
                 >
-                  Add area
+                  {formatMessage({ id: 'stopPlaceAddAreaButtonLabel' })}
                 </SecondaryButton>
 
                 <div className="buttons">
