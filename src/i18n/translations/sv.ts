@@ -483,6 +483,8 @@ export const messages = {
   validateFormErrorFlexibleAreaNotEnoughPolygons:
     'Du måste lägga till flera punkter i kartan',
   validateFormErrorNameEmpty: 'Du måste ge hållplatsen ett namn',
+  validateFormErrorFlexibleStopPlaceType:
+    'Du måste ge hållplatsen eller varje område en typ',
   stopPlaceText: 'flexibel hållplats',
   stopPlace: 'Flexibel hållplats *',
   stopPlacesHeader: 'Flexibla hållplatser',

@@ -474,6 +474,8 @@ export const messages = {
   validateFormErrorFlexibleAreaNotEnoughPolygons:
     'Du må legge til flere punkter i kartet',
   validateFormErrorNameEmpty: 'Du må gi stoppestedet et navn',
+  validateFormErrorFlexibleStopPlaceType:
+    'Du må gi stoppestedet eller hvert område en type',
   stopPlaceText: 'fleksibelt stoppested',
   stopPlace: 'Fleksibelt stoppested *',
   stopPlacesHeader: 'Fleksible stoppesteder',

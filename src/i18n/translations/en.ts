@@ -478,6 +478,8 @@ export const messages: MessagesKey = {
   validateFormErrorFlexibleAreaNotEnoughPolygons:
     'You must add more map points',
   validateFormErrorNameEmpty: 'You must enter a name',
+  validateFormErrorFlexibleStopPlaceType:
+    'Stop place or every area must have a type',
   stopPlacesHeader: 'Flexible stop places',
   stopPlacesLoadingStopPlacesText: 'Loading stop places...',
   stopPlacesNameTableHeaderLabelText: 'Name',

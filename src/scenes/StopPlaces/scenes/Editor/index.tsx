@@ -7,6 +7,7 @@ import {
 } from '@entur/button';
 import { ExpandablePanel } from '@entur/expand';
 import { TextArea, TextField } from '@entur/form';
+import { GridContainer, GridItem } from '@entur/grid';
 import { MapIcon } from '@entur/icons';
 import { Paragraph } from '@entur/typography';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -58,10 +59,17 @@ const FlexibleStopPlaceEditor = () => {
 
   const [currentAreaIndex, setCurrentAreaIndex] = useState<number>(0);
 
-  const { name, flexibleAreas } = flexibleStopPlace ?? {};
+  const { name, flexibleAreas } = flexibleStopPlace ?? {
+    flexibleAreas: [{}],
+    keyValues: [],
+  };
 
   const namePristine = usePristine(name, saveClicked);
   const areasPristine = usePristine(flexibleAreas, saveClicked);
+  const stopPlaceTypePristine = usePristine(
+    flexibleStopPlace?.keyValues,
+    saveClicked
+  );
 
   const errors = validateFlexibleStopPlace(flexibleStopPlace ?? {});
 
@@ -138,6 +146,20 @@ const FlexibleStopPlaceEditor = () => {
           flexibleStopPlace?.id
       );
 
+  const nameError = getErrorFeedback(
+    errors.name ? formatMessage({ id: errors.name }) : '',
+    !errors.name,
+    namePristine
+  );
+
+  const stopPlaceTypeError = getErrorFeedback(
+    errors.flexibleStopPlaceType
+      ? formatMessage({ id: errors.flexibleStopPlaceType })
+      : '',
+    !errors.flexibleStopPlaceType,
+    stopPlaceTypePristine
+  );
+
   const areaError = getErrorFeedback(
     errors.flexibleArea ? formatMessage({ id: errors.flexibleArea }) : '',
     !errors.flexibleArea,
@@ -156,6 +178,33 @@ const FlexibleStopPlaceEditor = () => {
       <div className="stop-place-editor">
         <Paragraph>{formatMessage({ id: 'editorDescription' })}</Paragraph>
 
+        <Paragraph>
+          <GridContainer spacing="medium" rowSpacing="large">
+            {nameError.feedback && (
+              <GridItem small={12}>
+                <SmallAlertBox variant="error">
+                  {nameError.feedback}
+                </SmallAlertBox>
+              </GridItem>
+            )}
+
+            {stopPlaceTypeError.feedback && (
+              <GridItem small={12}>
+                <SmallAlertBox variant="error">
+                  {stopPlaceTypeError.feedback}
+                </SmallAlertBox>
+              </GridItem>
+            )}
+
+            {areaError.feedback && (
+              <GridItem small={12}>
+                <SmallAlertBox variant="error">
+                  {areaError.feedback}
+                </SmallAlertBox>
+              </GridItem>
+            )}
+          </GridContainer>
+        </Paragraph>
         {flexibleStopPlace && !isLoading ? (
           <OverlayLoader
             className=""
@@ -324,10 +373,7 @@ const FlexibleStopPlaceEditor = () => {
                     </NegativeButton>
                   )}
 
-                  <SuccessButton
-                    disabled={!!errors.flexibleArea || !!errors.name}
-                    onClick={handleOnSaveClick}
-                  >
+                  <SuccessButton onClick={handleOnSaveClick}>
                     {params.id
                       ? formatMessage({ id: 'editorSaveButtonText' })
                       : formatMessage(
@@ -341,11 +387,6 @@ const FlexibleStopPlaceEditor = () => {
               </div>
 
               <div className="stop-place-flexible-area">
-                {areaError.feedback && (
-                  <SmallAlertBox variant="error">
-                    {areaError.feedback}
-                  </SmallAlertBox>
-                )}
                 <PolygonMap
                   addCoordinate={handleMapOnClick}
                   polygon={transformToMapCoordinates(
