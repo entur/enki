@@ -585,6 +585,7 @@ export const messages: MessagesKey = {
   addNoticeTooltip: 'Add notice',
   flexibleStopAreaType: 'Stop place type',
   flexibleStopAreaTypeNotSet: 'Not set',
+  flexibleStopAreaTypeMixed: 'Mixed',
   flexibleStopAreaTypeUnrestrictedRoadNetwork: 'Anywhere within polygon',
   flexibleStopAreaTypeUnrestrictedPublicTransportAreas:
     'Only on stop places within polygon',

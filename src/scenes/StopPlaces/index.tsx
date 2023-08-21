@@ -27,6 +27,7 @@ import { GlobalState } from 'reducers';
 import { FlexibleStopPlacesState } from 'reducers/flexibleStopPlaces';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
+import { findFlexibleStopAreaType } from './findFlexibleStopAreaType';
 import './styles.scss';
 
 const StopPlaces = () => {
@@ -54,11 +55,27 @@ const StopPlaces = () => {
   );
 
   const getStopAreaTypeMessageKey = (stopPlace: FlexibleStopPlace) => {
-    const type = stopPlace.keyValues?.find(
-      (v) => v.key === 'FlexibleStopAreaType'
-    )?.values[0];
-    if (type !== undefined) {
-      return flexibleStopAreaTypeMessages[type as FLEXIBLE_STOP_AREA_TYPE];
+    const types = new Set();
+
+    const stopPlaceType = findFlexibleStopAreaType(stopPlace.keyValues);
+
+    if (stopPlaceType) {
+      types.add(stopPlaceType);
+    }
+
+    stopPlace.flexibleAreas?.map((flexibleArea) => {
+      const flexibleAreaType = findFlexibleStopAreaType(flexibleArea.keyValues);
+      if (flexibleAreaType) {
+        types.add(flexibleAreaType);
+      }
+    });
+
+    if (types.size > 1) {
+      return 'flexibleStopAreaTypeMixed';
+    } else if (types.size === 1) {
+      return flexibleStopAreaTypeMessages[
+        types.values().next().value as FLEXIBLE_STOP_AREA_TYPE
+      ];
     } else {
       return 'flexibleStopAreaTypeNotSet';
     }

@@ -592,6 +592,7 @@ export const messages = {
   addNoticeTooltip: 'Lägg till notice',
   flexibleStopAreaType: 'Hållplatstyp',
   flexibleStopAreaTypeNotSet: 'inte valt',
+  flexibleStopAreaTypeMixed: 'Blandat',
   flexibleStopAreaTypeUnrestrictedRoadNetwork: 'Var som helst i polygonen',
   flexibleStopAreaTypeUnrestrictedPublicTransportAreas:
     'Endast på hållplatser i polygonen',

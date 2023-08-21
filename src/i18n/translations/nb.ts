@@ -583,6 +583,7 @@ export const messages = {
   addNoticeTooltip: 'Legg til notice',
   flexibleStopAreaType: 'Stoppestedstype',
   flexibleStopAreaTypeNotSet: 'Ikke valgt',
+  flexibleStopAreaTypeMixed: 'Blandet',
   flexibleStopAreaTypeUnrestrictedRoadNetwork: 'Hvor som helst i polygonet',
   flexibleStopAreaTypeUnrestrictedPublicTransportAreas:
     'Kun på stoppesteder i polygonet',
