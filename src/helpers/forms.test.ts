@@ -21,11 +21,25 @@ describe('forms', () => {
       expect(
         objectValuesAreEmpty({ name: undefined, age: undefined })
       ).toBeTruthy();
+      expect(
+        objectValuesAreEmpty([
+          {
+            name: undefined,
+            flexibleArea: undefined,
+          },
+        ])
+      ).toBeTruthy();
     });
 
     it('should return false if object is not empty', () => {
       expect(objectValuesAreEmpty({ a: 1, b: 2, c: { d: 3 } })).toBeFalsy();
       expect(objectValuesAreEmpty([1, 2, 3])).toBeFalsy();
+      expect(
+        objectValuesAreEmpty({
+          a: ['a1', 'a2'],
+          b: ['b1', 'b2'],
+        })
+      ).toBeFalsy();
     });
   });
 });

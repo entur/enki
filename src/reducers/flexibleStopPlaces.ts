@@ -6,7 +6,9 @@ import {
   SET_ACTIVE_PROVIDER,
 } from 'actions/constants';
 import { AnyAction } from 'redux';
-import FlexibleStopPlace from '../model/FlexibleStopPlace';
+import FlexibleStopPlace, {
+  mapFlexibleAreasToArea,
+} from '../model/FlexibleStopPlace';
 
 export type FlexibleStopPlacesState = FlexibleStopPlace[] | null;
 
@@ -22,14 +24,18 @@ const flexibleStopPlaces = (
       return stopPlaces;
 
     case RECEIVE_FLEXIBLE_STOP_PLACES:
-      return action.stopPlaces;
+      return action.stopPlaces.map((sp: FlexibleStopPlace) =>
+        mapFlexibleAreasToArea(sp)
+      );
 
     case RECEIVE_FLEXIBLE_STOP_PLACE:
-      return stopPlaces
-        ? stopPlaces.map((sp) =>
-            sp.id === action.stopPlace.id ? action.stopPlace : sp
-          )
-        : [action.stopPlace];
+      return (
+        stopPlaces
+          ? stopPlaces.map((sp) =>
+              sp.id === action.stopPlace.id ? action.stopPlace : sp
+            )
+          : [action.stopPlace]
+      ).map((sp) => mapFlexibleAreasToArea(sp));
 
     case SET_ACTIVE_PROVIDER:
       return null;

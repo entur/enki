@@ -478,12 +478,16 @@ export const messages: MessagesKey = {
   validateFormErrorFlexibleAreaNotEnoughPolygons:
     'You must add more map points',
   validateFormErrorNameEmpty: 'You must enter a name',
+  validateFormErrorFlexibleStopPlaceType:
+    'Stop place or every area must have a type',
   stopPlacesHeader: 'Flexible stop places',
   stopPlacesLoadingStopPlacesText: 'Loading stop places...',
   stopPlacesNameTableHeaderLabelText: 'Name',
   stopPlacesNoStopPlacesFoundText: 'No stop places found.',
-  stopPlacesNumberOfPointsTableHeaderLabelText: 'Number of points',
+  stopPlacesNumberOfAreasTableHeaderLabelText: 'Number of areas',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
+  stopPlaceAreaLabelPrefix: 'Area',
+  stopPlaceAddAreaButtonLabel: 'Add area',
   passingTimesTypeFixed: 'Fixed',
   passingTimesTypeFlexible: 'Flexible',
   passingTimesArrivalTime: 'Arrival time',

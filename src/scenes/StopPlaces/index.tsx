@@ -77,9 +77,7 @@ const StopPlaces = () => {
             {formatMessage({ id: getStopAreaTypeMessageKey(sp) })}
           </DataCell>
           <DataCell>{sp.privateCode}</DataCell>
-          <DataCell>
-            {(sp.flexibleArea?.polygon?.coordinates?.length ?? 1) - 1}
-          </DataCell>
+          <DataCell>{sp.flexibleAreas?.length ?? 0}</DataCell>
           <DataCell className="delete-row-cell">
             <DeleteButton
               onClick={() => {
@@ -138,7 +136,7 @@ const StopPlaces = () => {
                   </HeaderCell>
                   <HeaderCell>
                     {formatMessage({
-                      id: 'stopPlacesNumberOfPointsTableHeaderLabelText',
+                      id: 'stopPlacesNumberOfAreasTableHeaderLabelText',
                     })}
                   </HeaderCell>
                   <HeaderCell>{''}</HeaderCell>

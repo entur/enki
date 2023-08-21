@@ -23,6 +23,7 @@
     "@entur/dropdown": "4.0.14",
     "@entur/expand": "3.4.7",
     "@entur/form": "7.0.15",
+    "@entur/grid": "0.3.34",
     "@entur/icons": "6.4.2",
     "@entur/layout": "2.1.39",
     "@entur/menu": "4.1.48",

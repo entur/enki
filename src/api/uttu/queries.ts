@@ -249,7 +249,11 @@ export const getFlexibleStopPlacesQuery = `
         key
         values
       }
-      flexibleArea {
+      flexibleAreas {
+        keyValues {
+          key
+          values
+        }
         polygon {
           coordinates
         }
@@ -275,7 +279,11 @@ export const getFlexibleStopPlaceByIdQuery = `
         key
         values
       }
-      flexibleArea {
+      flexibleAreas {
+        keyValues {
+          key
+          values
+        }
         polygon {
           type,
           coordinates

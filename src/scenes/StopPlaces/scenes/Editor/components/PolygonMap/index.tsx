@@ -14,6 +14,7 @@ import './styles.scss';
 type Props = {
   addCoordinate: (e: LeafletMouseEvent) => void;
   polygon: LatLngTuple[];
+  otherPolygons: LatLngTuple[][];
   undo: () => void;
 };
 
@@ -44,6 +45,9 @@ const MapContents = (props: Props) => {
           add: addPolygonEventHandler,
         }}
       />
+      {props.otherPolygons.map((polygon, index) => (
+        <Polygon key={index} positions={polygon} color={'#888'} />
+      ))}
     </>
   );
 };
