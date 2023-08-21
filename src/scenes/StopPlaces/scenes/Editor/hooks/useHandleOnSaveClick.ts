@@ -19,7 +19,7 @@ export const useHandleOnSaveClick = (
 
   const handleOnSaveClick = useCallback(() => {
     onCall();
-    if (!objectValuesAreEmpty(errors)) {
+    if (objectValuesAreEmpty([errors])) {
       onSaveStart();
       dispatch(saveFlexibleStopPlace(flexibleStopPlace ?? {}, intl))
         .then(() => navigate('/stop-places'))

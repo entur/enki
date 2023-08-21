@@ -18,8 +18,8 @@ describe('useHandleOnSaveClick', () => {
     const onSaveEnd = jest.fn();
     const testSubject: FlexibleStopPlace = {};
     const errors = {
-      name: ['validateFormErrorNameEmpty'],
-      flexibleArea: ['validateFormErrorFlexibleAreaNotEnoughPolygons'],
+      name: 'validateFormErrorNameEmpty',
+      flexibleArea: 'validateFormErrorFlexibleAreaNotEnoughPolygons',
     };
 
     const { result } = renderHook(
@@ -60,8 +60,8 @@ describe('useHandleOnSaveClick', () => {
     const onSaveEnd = jest.fn();
     const testSubject: FlexibleStopPlace = {};
     const errors = {
-      name: [],
-      flexibleArea: [],
+      name: undefined,
+      flexibleArea: undefined,
     };
 
     const { result } = renderHook(

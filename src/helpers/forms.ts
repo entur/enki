@@ -6,8 +6,9 @@ export const isBlank = (val: string | undefined | null): boolean =>
 export const isNumeric = (val: string): boolean => /^\d+$/.test(val);
 
 export const objectValuesAreEmpty = (obj: object): boolean =>
-  !Object.values(obj).some(objectValueIsEmpty);
+  Object.values(obj).every(objectValueIsEmpty);
 
 const objectValueIsEmpty = (x: any): boolean =>
-  (x && (Array.isArray(x) || typeof x === 'object') && !isEmpty(x)) ||
-  isNumeric(x);
+  (x && Array.isArray(x) && isEmpty(x)) ||
+  (x && typeof x === 'object' && objectValuesAreEmpty(x)) ||
+  !x;
