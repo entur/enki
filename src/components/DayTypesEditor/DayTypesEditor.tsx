@@ -39,6 +39,7 @@ export const DayTypesEditor = ({
     <>
       <div style={{ display: 'flex', alignItems: 'end' }}>
         <MultiSelect
+          loading={loading}
           clearable
           style={{ minWidth: '20rem' }}
           label={formatMessage({ id: 'dayTypesEditorSelectLabel' })}
@@ -65,7 +66,10 @@ export const DayTypesEditor = ({
         />
 
         <div style={{ marginLeft: '1rem' }}>
-          <SecondaryButton onClick={() => onOpenDayTypeModal(true)}>
+          <SecondaryButton
+            onClick={() => onOpenDayTypeModal(true)}
+            disabled={loading}
+          >
             {formatMessage({ id: 'dayTypesEditButton' })}
           </SecondaryButton>
         </div>
