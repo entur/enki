@@ -22,6 +22,7 @@ export const StopPlaceTypeDropdown = ({
 
   return (
     <Dropdown
+      clearable
       label={label}
       items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map((v) => ({
         value: v,
@@ -33,15 +34,18 @@ export const StopPlaceTypeDropdown = ({
         keyValues?.find((v) => v.key === 'FlexibleStopAreaType')?.values[0] ??
         null
       }
-      onChange={(selectedItem: NormalizedDropdownItemType | null) =>
-        selectedItem &&
-        keyValuesUpdate([
-          {
-            key: 'FlexibleStopAreaType',
-            values: [selectedItem.value],
-          },
-        ])
-      }
+      onChange={(selectedItem: NormalizedDropdownItemType | null) => {
+        if (selectedItem) {
+          keyValuesUpdate([
+            {
+              key: 'FlexibleStopAreaType',
+              values: [selectedItem.value],
+            },
+          ]);
+        } else {
+          keyValuesUpdate([]);
+        }
+      }}
     />
   );
 };
