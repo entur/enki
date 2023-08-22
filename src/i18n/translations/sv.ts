@@ -495,6 +495,7 @@ export const messages = {
   stopPlacesPrivateCodeTableHeaderLabelText: 'Privat kod',
   stopPlaceAreaLabelPrefix: 'Område',
   stopPlaceAddAreaButtonLabel: 'Lägg till område',
+  stopPlaceRemoveAreaButtonLabel: 'Ta bort område',
   passingTimesTypeFixed: 'Fasta',
   passingTimesTypeFlexible: 'Flexibla',
   passingTimesArrivalTime: 'Ankomsttid',

@@ -488,6 +488,7 @@ export const messages: MessagesKey = {
   stopPlacesPrivateCodeTableHeaderLabelText: 'Private code',
   stopPlaceAreaLabelPrefix: 'Area',
   stopPlaceAddAreaButtonLabel: 'Add area',
+  stopPlaceRemoveAreaButtonLabel: 'Remove area',
   passingTimesTypeFixed: 'Fixed',
   passingTimesTypeFlexible: 'Flexible',
   passingTimesArrivalTime: 'Arrival time',

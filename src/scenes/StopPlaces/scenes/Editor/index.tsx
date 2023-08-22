@@ -340,7 +340,9 @@ const FlexibleStopPlaceEditor = () => {
                           );
                         }}
                       >
-                        Remove area
+                        {formatMessage({
+                          id: 'stopPlaceRemoveAreaButtonLabel',
+                        })}
                       </SecondaryButton>
                     </div>
                   </ExpandablePanel>
