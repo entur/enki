@@ -19,7 +19,7 @@
     "@entur/alert": "0.14.9",
     "@entur/button": "3.1.0",
     "@entur/chip": "0.6.42",
-    "@entur/datepicker": "8.0.11",
+    "@entur/datepicker": "^8.1.0-beta.1",
     "@entur/dropdown": "4.0.14",
     "@entur/expand": "3.4.7",
     "@entur/form": "7.0.15",
