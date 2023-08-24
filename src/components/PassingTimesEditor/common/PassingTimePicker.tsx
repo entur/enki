@@ -1,10 +1,9 @@
 import {
+  SimpleTimePicker,
   nativeDateToTimeValue,
   timeOrDateValueToNativeDate,
-  TimePicker,
 } from '@entur/datepicker';
 import { TimeValue } from '@react-types/datepicker';
-import { useIntl } from 'react-intl';
 import { toDate } from './toDate';
 
 type Props = {
@@ -22,10 +21,8 @@ export const PassingTimePicker = ({
   onChange,
   selectedTime,
 }: Props) => {
-  const { locale } = useIntl();
   return (
-    <TimePicker
-      locale={locale}
+    <SimpleTimePicker
       hourCycle={24}
       disabled={disabled}
       label={`${label}${required ? ' *' : ''}`}

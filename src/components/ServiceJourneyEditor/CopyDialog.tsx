@@ -1,6 +1,6 @@
 import { Button, ButtonGroup } from '@entur/button';
 import {
-  TimePicker,
+  SimpleTimePicker,
   nativeDateToTimeValue,
   timeOrDateValueToNativeDate,
 } from '@entur/datepicker';
@@ -179,7 +179,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
 
   const [multiple, setMultiple] = useState<boolean>(false);
 
-  const { formatMessage, locale } = useIntl();
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     if (
@@ -249,8 +249,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
       <div className="copy-dialog-section">
         <div className="copy-dialog-inputs">
           <div className="copy-dialog-timepicker">
-            <TimePicker
-              locale={locale}
+            <SimpleTimePicker
               hourCycle={24}
               label={formatMessage({
                 id: 'copyServiceJourneyDialogDepartureTimeLabel',
@@ -304,8 +303,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           <div className="copy-dialog-section">
             <div className="copy-dialog-inputs">
               <div className="copy-dialog-timepicker">
-                <TimePicker
-                  locale={locale}
+                <SimpleTimePicker
                   hourCycle={24}
                   label={formatMessage({
                     id: 'copyServiceJourneyDialogLatestPossibleDepartureTimelabel',

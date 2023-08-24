@@ -1,6 +1,6 @@
 import { FilterChip } from '@entur/chip';
 import {
-  TimePicker,
+  SimpleTimePicker,
   nativeDateToTimeValue,
   timeOrDateValueToNativeDate,
 } from '@entur/datepicker';
@@ -38,7 +38,7 @@ type Props = {
 
 export default (props: Props) => {
   const intl = useIntl();
-  const { formatMessage, locale } = intl;
+  const { formatMessage } = intl;
   const {
     bookingArrangement,
     onChange,
@@ -244,9 +244,8 @@ export default (props: Props) => {
             })}
           </Radio>
 
-          <TimePicker
+          <SimpleTimePicker
             label=""
-            locale={locale}
             hourCycle={24}
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
             selectedTime={
