@@ -26,6 +26,7 @@ export const PassingTimePicker = ({
   return (
     <TimePicker
       locale={locale}
+      hourCycle={24}
       disabled={disabled}
       label={`${label}${required ? ' *' : ''}`}
       className="timepicker"

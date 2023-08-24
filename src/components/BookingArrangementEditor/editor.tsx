@@ -247,6 +247,7 @@ export default (props: Props) => {
           <TimePicker
             label=""
             locale={locale}
+            hourCycle={24}
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
             selectedTime={
               latestbookingTimeAsDate

@@ -251,6 +251,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           <div className="copy-dialog-timepicker">
             <TimePicker
               locale={locale}
+              hourCycle={24}
               label={formatMessage({
                 id: 'copyServiceJourneyDialogDepartureTimeLabel',
               })}
@@ -305,6 +306,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
               <div className="copy-dialog-timepicker">
                 <TimePicker
                   locale={locale}
+                  hourCycle={24}
                   label={formatMessage({
                     id: 'copyServiceJourneyDialogLatestPossibleDepartureTimelabel',
                   })}
