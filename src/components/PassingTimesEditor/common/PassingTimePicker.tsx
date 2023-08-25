@@ -23,6 +23,7 @@ export const PassingTimePicker = ({
 }: Props) => {
   return (
     <SimpleTimePicker
+      showClockIcon
       hourCycle={24}
       disabled={disabled}
       label={`${label}${required ? ' *' : ''}`}

@@ -246,6 +246,7 @@ export default (props: Props) => {
 
           <SimpleTimePicker
             label=""
+            showClockIcon
             hourCycle={24}
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
             selectedTime={
