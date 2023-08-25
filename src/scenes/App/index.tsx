@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Navigate } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import { getOrganisations } from 'actions/organisations';
 import { getProviders } from 'actions/providers';
@@ -13,7 +13,6 @@ import ScrollToTop from 'components/ScrollToTop';
 import Routes from './Routes';
 import NavBar from './components/NavBar';
 
-import { useConfig } from 'config/ConfigContext';
 import { useIntl } from 'react-intl';
 import { GlobalState } from 'reducers';
 import './styles.scss';
@@ -43,8 +42,6 @@ const App = () => {
 
   const { formatMessage } = useIntl();
 
-  const { adminRole } = useConfig();
-
   const basename = '';
 
   return (
@@ -57,11 +54,6 @@ const App = () => {
             <div className="navbar-and-routes">
               <NavBar />
               <div className="header-and-routes">
-                {providers.providers &&
-                  providers.providers.length === 0 &&
-                  auth.roleAssignments?.includes(adminRole!) && (
-                    <Navigate to="/providers" replace />
-                  )}
                 <Loading
                   className="app-loader"
                   text={formatMessage({ id: 'app.loading.message' })}
