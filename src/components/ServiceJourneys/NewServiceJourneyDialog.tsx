@@ -39,7 +39,7 @@ export default (props: Props) => {
 
   return (
     <Modal
-      size="small"
+      size="large"
       open={open}
       title={formatMessage({ id: 'newServiceJourneyModalTitle' })}
       onDismiss={() => setOpen(false)}
