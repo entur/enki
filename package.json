@@ -109,12 +109,12 @@
     ]
   },
   "engines": {
-    "npm": "^9.5.1",
-    "node": "^18.16.0"
+    "npm": "9.8.1",
+    "node": "18.18.0"
   },
   "overrides": {
     "react-scripts": {
-      "typescript": "^5"
+      "typescript": "5.2.2"
     }
   },
   "jest": {
