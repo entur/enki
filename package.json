@@ -74,7 +74,7 @@
     "@types/react-helmet": "6.1.7",
     "@types/react-intl-redux": "0.1.17",
     "@types/react-leaflet": "2.8.3",
-    "@types/react-modal": "3.16.0",
+    "@types/react-modal": "3.16.1",
     "@types/redux-immutable-state-invariant": "2.1.2",
     "@types/uuid": "9.0.4",
     "check-node-version": "4.2.1",
