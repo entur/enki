@@ -23,6 +23,7 @@ export enum VEHICLE_MODE {
   RAIL = 'rail',
   TRAM = 'tram',
   WATER = 'water',
+  TAXI = 'taxi',
 }
 
 enum AIR_SUBMODE {
@@ -88,6 +89,12 @@ enum WATER_SUBMODE {
   SIGHTSEEING_SERVICE = 'sightseeingService',
 }
 
+enum TAXI_SUBMODE {
+  CHARTER_TAXI = 'charterTaxi',
+  COMMUNAL_TAXI = 'communalTaxi',
+  WATER_TAXI = 'waterTaxi',
+}
+
 export type VEHICLE_SUBMODE =
   | AIR_SUBMODE
   | BUS_SUBMODE
@@ -97,7 +104,8 @@ export type VEHICLE_SUBMODE =
   | METRO_SUBMODE
   | RAIL_SUBMODE
   | TRAM_SUBMODE
-  | WATER_SUBMODE;
+  | WATER_SUBMODE
+  | TAXI_SUBMODE;
 
 export const VEHICLE_SUBMODE_LINK: Record<VEHICLE_MODE, VEHICLE_SUBMODE[]> = {
   [VEHICLE_MODE.AIR]: Object.values(AIR_SUBMODE),
@@ -109,6 +117,7 @@ export const VEHICLE_SUBMODE_LINK: Record<VEHICLE_MODE, VEHICLE_SUBMODE[]> = {
   [VEHICLE_MODE.RAIL]: Object.values(RAIL_SUBMODE),
   [VEHICLE_MODE.TRAM]: Object.values(TRAM_SUBMODE),
   [VEHICLE_MODE.WATER]: Object.values(WATER_SUBMODE),
+  [VEHICLE_MODE.TAXI]: Object.values(TAXI_SUBMODE),
 };
 
 export const vehicleModeMessages: Record<VEHICLE_MODE, keyof MessagesKey> = {
@@ -121,6 +130,7 @@ export const vehicleModeMessages: Record<VEHICLE_MODE, keyof MessagesKey> = {
   [VEHICLE_MODE.RAIL]: 'rail',
   [VEHICLE_MODE.TRAM]: 'tram',
   [VEHICLE_MODE.WATER]: 'water',
+  [VEHICLE_MODE.TAXI]: 'taxi',
 };
 
 export const vehicleSubmodeMessages: Record<
@@ -163,6 +173,9 @@ export const vehicleSubmodeMessages: Record<
   [WATER_SUBMODE.LOCAL_PASSENGER_FERRY]: 'localPassengerFerry',
   [WATER_SUBMODE.NATIONAL_CAR_FERRY]: 'nationalCarFerry',
   [WATER_SUBMODE.SIGHTSEEING_SERVICE]: 'sightseeingService',
+  [TAXI_SUBMODE.CHARTER_TAXI]: 'charterTaxi',
+  [TAXI_SUBMODE.COMMUNAL_TAXI]: 'communalTaxi',
+  [TAXI_SUBMODE.WATER_TAXI]: 'waterTaxi',
 };
 
 export enum DAY_OF_WEEK {
