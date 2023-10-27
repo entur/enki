@@ -140,6 +140,7 @@ export const messages: MessagesKey = {
   uttuErrorNO_EMPTY_NOTICES: 'Empty notices are not allowed.',
   uttuErrorFLEXIBLE_LINE_REQUIRES_BOOKING:
     'Flexible lines require booking information on line, journey pattern or stop point',
+  uttuErrorINVALID_POLYGON: 'Flexible area has polygon with invalid geometry',
   uttuErrorUNKNOWN: 'Unknown error',
   linesCreateFlexibleLineIconButtonLabel: 'Create flexible line',
   linesCreateLineIconButtonLabel: 'Create line',

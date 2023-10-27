@@ -138,6 +138,8 @@ export const messages = {
   uttuErrorFLEXIBLE_LINE_REQUIRES_BOOKING:
     'Fleksible linjer må ha bestillingsinformasjon på linje, journey pattern eller service journey',
   uttuErrorNO_EMPTY_NOTICES: 'Tomme notices er ikke tillatt',
+  uttuErrorINVALID_POLYGON:
+    'Fleksibelt område har et polygon med ugyldig geometri',
   uttuErrorUNKNOWN: 'Ukjent feil',
   linesCreateFlexibleLineIconButtonLabel: 'Opprett fleksibel linje',
   linesCreateLineIconButtonLabel: 'Opprett rutegående linje',
