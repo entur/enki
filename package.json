@@ -68,7 +68,7 @@
     "@types/lodash.clonedeep": "4.5.8",
     "@types/lodash.isempty": "4.4.8",
     "@types/lodash.isequal": "4.5.7",
-    "@types/node": "18.18.6",
+    "@types/node": "18.18.8",
     "@types/react": "18.2.31",
     "@types/react-dom": "18.2.14",
     "@types/react-helmet": "6.1.8",
