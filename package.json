@@ -71,7 +71,7 @@
     "@types/node": "18.18.9",
     "@types/react": "18.2.36",
     "@types/react-dom": "18.2.14",
-    "@types/react-helmet": "6.1.8",
+    "@types/react-helmet": "6.1.9",
     "@types/react-intl-redux": "0.1.18",
     "@types/react-leaflet": "2.8.3",
     "@types/react-modal": "3.16.2",
