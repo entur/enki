@@ -34,7 +34,7 @@
     "@entur/typography": "1.8.16",
     "@reduxjs/toolkit": "1.9.7",
     "@sentry/react": "7.77.0",
-    "axios": "1.6.0",
+    "axios": "1.6.1",
     "classnames": "2.3.2",
     "date-fns": "2.30.0",
     "duration-fns": "3.0.2",
