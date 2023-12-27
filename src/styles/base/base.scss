@@ -93,17 +93,3 @@ table {
     cursor: default;
   }
 }
-
-.eds-stepper {
-  padding-inline-start: 0;
-
-  .eds-stepper__step {
-    width: 100%;
-  }
-
-  li {
-    flex-grow: 1;
-    line-height: inherit;
-    padding-right: 0.25rem;
-  }
-}
