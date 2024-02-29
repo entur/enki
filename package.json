@@ -68,7 +68,7 @@
     "@types/lodash.clonedeep": "4.5.9",
     "@types/lodash.isempty": "4.4.9",
     "@types/lodash.isequal": "4.5.8",
-    "@types/node": "18.19.21",
+    "@types/node": "20.11.24",
     "@types/react": "18.2.61",
     "@types/react-dom": "18.2.19",
     "@types/react-helmet": "6.1.11",
@@ -110,7 +110,7 @@
   },
   "engines": {
     "npm": "9.9.2",
-    "node": "18.19.1"
+    "node": "20.11.1"
   },
   "overrides": {
     "react-scripts": {
