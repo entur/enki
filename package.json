@@ -78,7 +78,7 @@
     "@types/redux-immutable-state-invariant": "2.1.4",
     "@types/uuid": "9.0.8",
     "check-node-version": "4.2.1",
-    "husky": "8.0.3",
+    "husky": "9.0.11",
     "jest-sonar-reporter": "2.0.0",
     "lint-staged": "13.3.0",
     "prettier": "2.8.8",
