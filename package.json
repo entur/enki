@@ -14,7 +14,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@apollo/client": "3.9.5",
+    "@apollo/client": "3.9.6",
     "@entur/a11y": "0.2.75",
     "@entur/alert": "0.15.19",
     "@entur/button": "3.2.10",
