@@ -54,7 +54,7 @@ jobs:
           REACT_APP_VERSION: ${{ github.sha }}
           SENTRY_DSN: https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: |
@@ -67,7 +67,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy favicon
         run: cp build/npl-d.ico build/favicon.ico
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -83,7 +83,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy favicon
         run: cp build/npl-s.ico build/favicon.ico
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -99,7 +99,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy favicon
         run: cp build/npl-p.ico build/favicon.ico
       - uses: FirebaseExtended/action-hosting-deploy@v0
