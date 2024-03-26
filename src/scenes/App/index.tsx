@@ -2,7 +2,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import { getOrganisations } from 'actions/organisations';
@@ -14,7 +14,8 @@ import Routes from './Routes';
 import NavBar from './components/NavBar';
 
 import { useIntl } from 'react-intl';
-import { GlobalState } from 'reducers';
+import { useAuth } from '../../app/auth';
+import { useAppSelector } from '../../app/hooks';
 import './styles.scss';
 
 L.Icon.Default.mergeOptions({
@@ -26,9 +27,9 @@ L.Icon.Default.mergeOptions({
 const App = () => {
   const dispatch = useDispatch<any>();
 
-  const { providers, auth } = useSelector<GlobalState, GlobalState>(
-    (state) => state
-  );
+  const providers = useAppSelector((state) => state.providers);
+
+  const auth = useAuth();
 
   useEffect(() => {
     if (auth.isAuthenticated) {
