@@ -20,17 +20,15 @@ import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import { Network } from 'model/Network';
 import { filterAuthorities } from 'model/Organisation';
-import Provider from 'model/Provider';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { FlexibleLinesState } from 'reducers/flexibleLines';
-import { OrganisationState } from 'reducers/organisations';
+import { useAppSelector } from '../../../../app/hooks';
 import './styles.scss';
 
-const getCurrentNetwork = (state: GlobalState, params: Params): Network =>
+const getCurrentNetworkSelector = (params: Params) => (state: GlobalState) =>
   state.networks?.find((network) => network.id === params.id) ?? {
     name: '',
     authorityRef: '',
@@ -41,18 +39,10 @@ const NetworkEditor = () => {
   const navigate = useNavigate();
   const intl = useIntl();
   const { formatMessage } = intl;
-  const activeProvider = useSelector<GlobalState, Provider | null>(
-    (state) => state.providers.active
-  );
-  const organisations = useSelector<GlobalState, OrganisationState>(
-    ({ organisations }) => organisations
-  );
-  const lines = useSelector<GlobalState, FlexibleLinesState>(
-    ({ flexibleLines }) => flexibleLines
-  );
-  const currentNetwork = useSelector<GlobalState, Network>((state) =>
-    getCurrentNetwork(state, params)
-  );
+  const activeProvider = useAppSelector((state) => state.providers.active);
+  const organisations = useAppSelector(({ organisations }) => organisations);
+  const lines = useAppSelector(({ flexibleLines }) => flexibleLines);
+  const currentNetwork = useAppSelector(getCurrentNetworkSelector(params));
 
   const [isSaving, setSaving] = useState<boolean>(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);

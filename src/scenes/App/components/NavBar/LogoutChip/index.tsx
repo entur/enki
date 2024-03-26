@@ -6,7 +6,6 @@ import './styles.scss';
 
 const LogoutChip = () => {
   const auth = useAuth();
-
   const { formatMessage } = useIntl();
 
   return (

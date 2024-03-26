@@ -21,10 +21,9 @@ import {
 } from 'model/enums';
 import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { GlobalState } from 'reducers';
-import { FlexibleStopPlacesState } from 'reducers/flexibleStopPlaces';
+import { useAppSelector } from '../../app/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
 import { findFlexibleStopAreaType } from './findFlexibleStopAreaType';
@@ -36,9 +35,7 @@ const StopPlaces = () => {
   const [selectedStopPlace, setSelectedStopPlace] = useState<
     FlexibleStopPlace | undefined
   >(undefined);
-  const stopPlaces = useSelector<GlobalState, FlexibleStopPlacesState>(
-    (state) => state.flexibleStopPlaces
-  );
+  const stopPlaces = useAppSelector((state) => state.flexibleStopPlaces);
   const intl = useIntl();
   const { formatMessage } = intl;
   const dispatch = useDispatch<any>();
