@@ -8,7 +8,6 @@ import * as Sentry from '@sentry/react';
 import { AuthProvider, useAuth } from 'app/auth';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { store } from 'app/store';
-import { getEnvironment } from 'config/getEnvironment';
 import { selectAuthLoaded, updateAuth } from 'features/app/authSlice';
 import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
 import { normalizeAllUrls } from 'helpers/url';
@@ -25,7 +24,6 @@ if (process.env.REACT_APP_SENTRY_DSN) {
     // for finer control
     tracesSampleRate: 1.0,
 
-    environment: getEnvironment(),
     release: process.env.REACT_APP_VERSION,
     attachStacktrace: true,
     beforeSend(e) {

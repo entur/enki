@@ -70,6 +70,8 @@ jobs:
         uses: actions/download-artifact@v4
       - name: Copy favicon
         run: cp build/npl-d.ico build/favicon.ico
+      - name: Copy bootstrap config
+        run: cp .github/environments/dev.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -86,6 +88,8 @@ jobs:
         uses: actions/download-artifact@v4
       - name: Copy favicon
         run: cp build/npl-s.ico build/favicon.ico
+      - name: Copy bootstrap config
+        run: cp .github/environments/test.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -102,6 +106,8 @@ jobs:
         uses: actions/download-artifact@v4
       - name: Copy favicon
         run: cp build/npl-p.ico build/favicon.ico
+      - name: Copy bootstrap config
+        run: cp .github/environments/prod.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
