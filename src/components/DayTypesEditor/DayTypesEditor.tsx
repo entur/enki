@@ -39,7 +39,7 @@ export const DayTypesEditor = ({
     <>
       <div style={{ display: 'flex', alignItems: 'end' }}>
         <MultiSelect
-          disabled={loading}
+          loading={loading}
           clearable
           style={{ minWidth: '20rem' }}
           label={formatMessage({ id: 'dayTypesEditorSelectLabel' })}
@@ -49,7 +49,7 @@ export const DayTypesEditor = ({
               value: `${dt.id!}`,
             })) || []
           }
-          selectedItems={
+          initialSelectedItems={
             dayTypes?.map((dt) => ({
               label: dt.name || dt.id!,
               value: dt.id!,

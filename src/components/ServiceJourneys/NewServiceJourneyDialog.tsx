@@ -64,10 +64,7 @@ export default (props: Props) => {
             value: keys[i],
             label: jp.name || '',
           }))}
-          selectedItem={{
-            value: keys[selectedJourneyPatternIndex],
-            label: journeyPatterns[selectedJourneyPatternIndex].name || '',
-          }}
+          value={keys[selectedJourneyPatternIndex]}
           onChange={(selected) =>
             setSelectedJourneyPatternIndex(keys.indexOf(selected?.value!))
           }

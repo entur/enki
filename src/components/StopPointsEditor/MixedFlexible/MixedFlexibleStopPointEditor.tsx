@@ -100,13 +100,7 @@ export const MixedFlexibleStopPointEditor = ({
           {selectMode === StopPlaceMode.FLEXIBLE && (
             <Dropdown
               className="stop-point-dropdown"
-              selectedItem={{
-                value: stopPoint.flexibleStopPlaceRef,
-                label:
-                  flexibleStopPlaces?.find(
-                    (item) => item.id === stopPoint.flexibleStopPlaceRef
-                  )?.name || '',
-              }}
+              value={stopPoint.flexibleStopPlaceRef}
               placeholder={formatMessage({ id: 'defaultOption' })}
               items={mapToItems(flexibleStopPlaces || [])}
               clearable

@@ -36,7 +36,7 @@ export const PassingTimePicker = ({
             ?.toTimeString()
             .split(' ')[0];
         }
-        onChange(date || null);
+        onChange(date);
       }}
       selectedTime={
         disabled || !selectedTime

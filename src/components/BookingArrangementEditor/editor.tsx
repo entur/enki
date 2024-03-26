@@ -183,7 +183,7 @@ export default (props: Props) => {
 
         <Dropdown
           label={formatMessage({ id: 'bookingAccessSelectionTitle' })}
-          selectedItem={getEnumInit(bookingAccess)}
+          initialSelectedItem={getEnumInit(bookingAccess)}
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={mapEnumToItems(BOOKING_ACCESS)}
           clearable
@@ -255,10 +255,12 @@ export default (props: Props) => {
             }
             onChange={(date: TimeValue | null) => {
               let formattedDate;
-              const nativeDate = timeOrDateValueToNativeDate(date);
 
-              if (nativeDate != null) {
-                formattedDate = format(nativeDate, 'HH:mm');
+              if (date != null) {
+                formattedDate = format(
+                  timeOrDateValueToNativeDate(date),
+                  'HH:mm'
+                );
               }
 
               onLatestBookingTimeChange(formattedDate);

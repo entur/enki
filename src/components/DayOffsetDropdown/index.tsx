@@ -1,6 +1,8 @@
-import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
+import { Dropdown } from '@entur/dropdown';
 import { NightIcon } from '@entur/icons';
 import { mapEnumToItems } from 'helpers/dropdown';
+
+import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { useIntl } from 'react-intl';
 
 type Props = {
@@ -16,9 +18,8 @@ export default ({ value, onChange, disabled = false }: Props) => {
       disabled={disabled}
       style={{ minWidth: '120px' }}
       prepend={<NightIcon inline />}
-      selectedItem={mapEnumToItems([value?.toString() ?? '0'])[0]}
+      value={value?.toString() ?? '0'}
       label={formatMessage({ id: 'passingTimesDayOffset' })}
-      // @ts-ignore
       labelTooltip={formatMessage({ id: 'passingTimesDayOffsetTooltip' })}
       items={mapEnumToItems(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])}
       onChange={(e: NormalizedDropdownItemType | null) =>

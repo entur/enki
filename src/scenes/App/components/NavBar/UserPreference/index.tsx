@@ -46,10 +46,7 @@ const UserPreference = () => {
             className="provider-wrapper"
             items={() => items}
             label={formatMessage({ id: 'navBarDataProvider' })}
-            selectedItem={{
-              value: active?.code,
-              label: active?.name || '',
-            }}
+            value={active?.code}
             onChange={(e) => handleActiveProviderChange(e?.value)}
           />
         </Contrast>
