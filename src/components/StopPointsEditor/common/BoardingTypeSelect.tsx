@@ -1,4 +1,5 @@
-import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
+import { Dropdown } from '@entur/dropdown';
+import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import StopPoint from 'model/StopPoint';
 import { useCallback, useMemo } from 'react';
@@ -76,12 +77,7 @@ export const BoardingTypeSelect = ({
     <Dropdown
       className="stop-point-info-item"
       label={formatMessage({ id: 'labelBoarding' })}
-      selectedItem={{
-        value: boardingType as string,
-        label:
-          boardingDropDownItems.find((item) => item.value === boardingType)
-            ?.label || '',
-      }}
+      value={boardingType}
       placeholder={formatMessage({ id: 'defaultOption' })}
       onChange={(element: NormalizedDropdownItemType | null) =>
         onChange(element?.value as BoardingType)

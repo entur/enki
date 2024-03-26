@@ -39,15 +39,9 @@ export const FlexibleAreasOnlyStopPointEditor = ({
     <div className="stop-point">
       <div className="stop-point-element">
         <div className="stop-point-info">
-          <Dropdown<string>
+          <Dropdown
             className="stop-point-dropdown"
-            selectedItem={
-              mapToItems(
-                flexibleStopPlaces?.filter(
-                  (item) => item.id === stopPoint.flexibleStopPlaceRef
-                ) || []
-              ).pop() || null
-            }
+            value={stopPoint.flexibleStopPlaceRef}
             placeholder={formatMessage({ id: 'defaultOption' })}
             items={mapToItems(flexibleStopPlaces || [])}
             clearable

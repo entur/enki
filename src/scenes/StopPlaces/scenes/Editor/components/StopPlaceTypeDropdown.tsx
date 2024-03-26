@@ -1,4 +1,5 @@
-import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
+import { Dropdown } from '@entur/dropdown';
+import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
 import { KeyValues } from 'model/KeyValues';
 import {
   FLEXIBLE_STOP_AREA_TYPE,
@@ -29,20 +30,10 @@ export const StopPlaceTypeDropdown = ({
           id: flexibleStopAreaTypeMessages[v],
         }),
       }))}
-      selectedItem={{
-        value:
-          keyValues?.find((v) => v.key === 'FlexibleStopAreaType')?.values[0] ||
-          '',
-        label: keyValues?.find((v) => v.key === 'FlexibleStopAreaType')
-          ?.values[0]
-          ? formatMessage({
-              id: flexibleStopAreaTypeMessages[
-                keyValues?.find((v) => v.key === 'FlexibleStopAreaType')
-                  ?.values[0]! as FLEXIBLE_STOP_AREA_TYPE
-              ],
-            })
-          : '',
-      }}
+      value={
+        keyValues?.find((v) => v.key === 'FlexibleStopAreaType')?.values[0] ??
+        null
+      }
       onChange={(selectedItem: NormalizedDropdownItemType | null) => {
         if (selectedItem) {
           keyValuesUpdate([
