@@ -110,7 +110,7 @@
   },
   "engines": {
     "npm": "9.9.2",
-    "node": "18.19.1"
+    "node": "18.20.0"
   },
   "overrides": {
     "react-scripts": {
