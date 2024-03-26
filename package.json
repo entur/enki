@@ -19,7 +19,7 @@
     "@entur/alert": "0.15.23",
     "@entur/button": "3.2.13",
     "@entur/chip": "0.6.69",
-    "@entur/datepicker": "8.1.7",
+    "@entur/datepicker": "9.3.2",
     "@entur/dropdown": "4.0.14",
     "@entur/expand": "3.5.2",
     "@entur/form": "7.0.41",
@@ -59,6 +59,7 @@
     "uuid": "9.0.1"
   },
   "devDependencies": {
+    "@redux-devtools/extension": "3.3.0",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "14.2.2",
     "@testing-library/user-event": "14.5.2",
@@ -84,7 +85,6 @@
     "prettier": "2.8.8",
     "prettier-plugin-organize-imports": "3.2.4",
     "react-scripts": "5.0.1",
-    "@redux-devtools/extension": "3.3.0",
     "redux-immutable-state-invariant": "2.1.0",
     "sass": "1.72.0",
     "source-map-explorer": "2.5.3",

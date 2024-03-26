@@ -255,12 +255,10 @@ export default (props: Props) => {
             }
             onChange={(date: TimeValue | null) => {
               let formattedDate;
+              const nativeDate = timeOrDateValueToNativeDate(date);
 
-              if (date != null) {
-                formattedDate = format(
-                  timeOrDateValueToNativeDate(date),
-                  'HH:mm'
-                );
+              if (nativeDate != null) {
+                formattedDate = format(nativeDate, 'HH:mm');
               }
 
               onLatestBookingTimeChange(formattedDate);
