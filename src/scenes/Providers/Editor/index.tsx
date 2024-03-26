@@ -12,26 +12,24 @@ import usePristine from 'hooks/usePristine';
 import Provider from 'model/Provider';
 import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
+import { useAppSelector } from '../../../app/hooks';
 import './styles.scss';
 
-const getCurrentProvider = (
-  state: GlobalState,
-  params: Params,
-  xmlnsUrlPrefix?: string
-): Provider =>
-  state.providers?.providers?.find(
-    (provider) => provider.code === params.id
-  ) ?? {
-    name: '',
-    code: '',
-    codespace: {
-      xmlns: ' ',
-      xmlnsUrl: xmlnsUrlPrefix || '',
-    },
-  };
+const getCurrentProviderSelector =
+  (params: Params, xmlnsUrlPrefix?: string) => (state: GlobalState) =>
+    state.providers?.providers?.find(
+      (provider) => provider.code === params.id
+    ) ?? {
+      name: '',
+      code: '',
+      codespace: {
+        xmlns: ' ',
+        xmlnsUrl: xmlnsUrlPrefix || '',
+      },
+    };
 
 const ProviderEditor = () => {
   const params = useParams();
@@ -39,8 +37,8 @@ const ProviderEditor = () => {
   const intl = useIntl();
   const { formatMessage } = intl;
   const { xmlnsUrlPrefix } = useConfig();
-  const currentProvider = useSelector<GlobalState, Provider>((state) =>
-    getCurrentProvider(state, params, xmlnsUrlPrefix)
+  const currentProvider = useAppSelector(
+    getCurrentProviderSelector(params, xmlnsUrlPrefix)
   );
 
   const [isSaving, setSaving] = useState<boolean>(false);

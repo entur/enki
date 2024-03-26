@@ -15,9 +15,9 @@ import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
 import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { GlobalState } from 'reducers';
+import { useAppSelector } from '../../app/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
 import './styles.scss';
@@ -29,10 +29,7 @@ const Networks = () => {
     undefined
   );
   const { formatMessage } = useIntl();
-  const { providers, organisations, networks } = useSelector<
-    GlobalState,
-    GlobalState
-  >((s) => s);
+  const { providers, organisations, networks } = useAppSelector((s) => s);
   const dispatch = useDispatch<any>();
 
   useEffect(() => {

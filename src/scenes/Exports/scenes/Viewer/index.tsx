@@ -7,13 +7,14 @@ import Loading from 'components/Loading';
 import Page from 'components/Page';
 import { useConfig } from 'config/ConfigContext';
 import uttuMessages, { isOfUttuMessage } from 'helpers/uttu.messages';
-import { Export, download } from 'model/Export';
+import { download } from 'model/Export';
 import { EXPORT_STATUS } from 'model/enums';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
+import { useAppSelector } from '../../../../app/hooks';
 import { getIconForSeverity, getIconForStatus } from '../icons';
 import './styles.scss';
 
@@ -30,19 +31,15 @@ const ExportItem = ({
   </div>
 );
 
-const getCurrentExport = (
-  state: GlobalState,
-  params: Params
-): Export | undefined => state.exports?.find((e) => e.id === params.id);
+const getCurrentExportSelector = (params: Params) => (state: GlobalState) =>
+  state.exports?.find((e) => e.id === params.id);
 
 const ExportsViewer = () => {
   const params = useParams();
   const navigate = useNavigate();
   const intl = useIntl();
   const { formatMessage } = intl;
-  const currentExport = useSelector<GlobalState, Export | undefined>((state) =>
-    getCurrentExport(state, params)
-  );
+  const currentExport = useAppSelector(getCurrentExportSelector(params));
   const [theExport, setTheExport] = useState(currentExport);
   const dispatch = useDispatch<any>();
 
