@@ -21,6 +21,15 @@ To run together with a local instance of [Uttu](https://github.com/entur/uttu) o
 REACT_APP_UTTU_API_URL=http://localhost:11701/services/flexible-lines
 ```
 
+## Configuration
+
+Configuration is bootstrapped from `/bootstrap.json`, when the app loads. You should add your environment-specific
+config to the deployment, along with the built static files (i.e. in the `build/` folder).
+
+For local development, add a `bootstrap.json` file to the `public/` folder.
+
+See `src/config/ConfigContext.ts` for the shape of the configuration.
+
 ## Authentication
 
 Uses OIDC for authentication. This solution is agnostic to which authentication provider you use.
