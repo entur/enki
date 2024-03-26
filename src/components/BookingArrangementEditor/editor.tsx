@@ -183,7 +183,7 @@ export default (props: Props) => {
 
         <Dropdown
           label={formatMessage({ id: 'bookingAccessSelectionTitle' })}
-          initialSelectedItem={getEnumInit(bookingAccess)}
+          selectedItem={getEnumInit(bookingAccess)}
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={mapEnumToItems(BOOKING_ACCESS)}
           clearable
