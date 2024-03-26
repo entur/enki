@@ -38,7 +38,11 @@ const VehicleSubModeDropdown = (props: Props) => {
   return (
     <div key={props.transportMode}>
       <Dropdown
-        value={props.transportSubmode}
+        selectedItem={
+          getSubModeItems().find(
+            (item) => item.value === props.transportSubmode
+          ) || null
+        }
         placeholder={formatMessage({ id: 'defaultOption' })}
         items={getSubModeItems}
         clearable
