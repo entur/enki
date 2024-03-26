@@ -13,17 +13,14 @@ import Loading from 'components/Loading';
 import Provider, { sortProviders } from 'model/Provider';
 import { useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { GlobalState } from 'reducers';
+import { useAppSelector } from '../../app/hooks';
 import './styles.scss';
 
 const Providers = () => {
   const navigate = useNavigate();
   const { formatMessage } = useIntl();
-  const { providers: providersState } = useSelector<GlobalState, GlobalState>(
-    (s) => s
-  );
+  const providersState = useAppSelector((s) => s.providers);
 
   const handleOnRowClick = useCallback(
     (id: string) => {

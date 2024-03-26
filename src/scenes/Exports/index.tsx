@@ -11,25 +11,21 @@ import {
 import { Heading1 } from '@entur/typography';
 import { loadExports } from 'actions/exports';
 import { useAuth } from 'app/auth';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import Loading from 'components/Loading';
 import { useConfig } from 'config/ConfigContext';
 import { download } from 'model/Export';
 import { EXPORT_STATUS } from 'model/enums';
 import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { GlobalState } from 'reducers';
 import { ExportsState } from 'reducers/exports';
 import { getIconForStatus } from './scenes/icons';
 import './styles.scss';
 
 const Exports = () => {
   const navigate = useNavigate();
-  const exports = useSelector<GlobalState, ExportsState>(
-    (state) => state.exports
-  );
+  const exports: ExportsState = useAppSelector((state) => state.exports);
   const intl = useIntl();
   const { formatMessage, locale } = intl;
 

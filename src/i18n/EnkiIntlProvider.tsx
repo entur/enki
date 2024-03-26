@@ -2,14 +2,14 @@ import { selectLocale } from 'features/app/intlSlice';
 import { getMessages } from 'i18n';
 import { useMemo } from 'react';
 import { IntlProvider } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../app/hooks';
 
 export const EnkiIntlProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const locale = useSelector(selectLocale);
+  const locale = useAppSelector(selectLocale);
   const messages = useMemo(() => getMessages(locale), [locale]);
 
   return (

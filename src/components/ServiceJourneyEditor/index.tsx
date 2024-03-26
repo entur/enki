@@ -22,9 +22,7 @@ import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { GlobalState } from 'reducers';
-import { OrganisationState } from 'reducers/organisations';
+import { useAppSelector } from '../../app/hooks';
 import CopyDialog from './CopyDialog';
 import './styles.scss';
 
@@ -56,9 +54,7 @@ const ServiceJourneyEditor = (props: Props) => {
   );
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const [showCopyDialog, setShowCopyDialog] = useState<boolean>(false);
-  const organisations = useSelector<GlobalState, OrganisationState>(
-    (state) => state.organisations
-  );
+  const organisations = useAppSelector((state) => state.organisations);
   const { formatMessage } = useIntl();
 
   const handleOperatorSelectionChange = (
