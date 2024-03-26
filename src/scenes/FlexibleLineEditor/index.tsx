@@ -15,10 +15,10 @@ import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
 import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
-import { GlobalState } from 'reducers';
+import { useAppSelector } from '../../app/hooks';
 import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
 import { useLoadDependencies } from './hooks';
 import { FLEXIBLE_LINE_STEPS } from './steps';
@@ -40,8 +40,12 @@ const EditorFrame = () => {
   const intl = useIntl();
   const { formatMessage } = intl;
   const dispatch = useDispatch<any>();
-  const { flexibleLines, organisations, networks, editor, providers } =
-    useSelector<GlobalState, GlobalState>((s) => s);
+
+  const flexibleLines = useAppSelector((state) => state.flexibleLines);
+  const organisations = useAppSelector((state) => state.organisations);
+  const networks = useAppSelector((state) => state.networks);
+  const editor = useAppSelector((state) => state.editor);
+  const providers = useAppSelector((state) => state.providers);
 
   const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies();
 

@@ -1,12 +1,11 @@
 import { useConfig } from 'config/ConfigContext';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { GlobalState } from 'reducers';
+import { useAuth } from '../../app/auth';
+import { useAppSelector } from '../../app/hooks';
 
 export const useNoProviders = () => {
-  const { providers, auth } = useSelector<GlobalState, GlobalState>(
-    (state) => state
-  );
+  const providers = useAppSelector((state) => state.providers);
+  const auth = useAuth();
   const { adminRole } = useConfig();
   const location = useLocation();
 

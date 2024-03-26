@@ -1,12 +1,9 @@
 import { UserIcon } from '@entur/icons';
-import { useSelector } from 'react-redux';
-
-import { AuthState } from 'features/app/authSlice';
-import { GlobalState } from 'reducers';
+import { useAuth } from '../../../../../../app/auth';
 import './styles.scss';
 
 const UserMenu = () => {
-  const { user } = useSelector<GlobalState, AuthState>((state) => state.auth);
+  const { user } = useAuth();
 
   return (
     <div className="user-menu">
