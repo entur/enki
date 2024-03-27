@@ -2,8 +2,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Navigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 import { getOrganisations } from 'actions/organisations';
 import { getProviders } from 'actions/providers';
@@ -13,9 +13,9 @@ import ScrollToTop from 'components/ScrollToTop';
 import Routes from './Routes';
 import NavBar from './components/NavBar';
 
-import { useConfig } from 'config/ConfigContext';
 import { useIntl } from 'react-intl';
-import { GlobalState } from 'reducers';
+import { useAuth } from '../../app/auth';
+import { useAppSelector } from '../../app/hooks';
 import './styles.scss';
 
 import MarkerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -31,9 +31,9 @@ L.Icon.Default.mergeOptions({
 const App = () => {
   const dispatch = useDispatch<any>();
 
-  const { providers, auth } = useSelector<GlobalState, GlobalState>(
-    (state) => state
-  );
+  const providers = useAppSelector((state) => state.providers);
+
+  const auth = useAuth();
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -47,8 +47,6 @@ const App = () => {
 
   const { formatMessage } = useIntl();
 
-  const { adminRole } = useConfig();
-
   const basename = '';
 
   return (
@@ -61,11 +59,6 @@ const App = () => {
             <div className="navbar-and-routes">
               <NavBar />
               <div className="header-and-routes">
-                {providers.providers &&
-                  providers.providers.length === 0 &&
-                  auth.roleAssignments?.includes(adminRole!) && (
-                    <Navigate to="/providers" replace />
-                  )}
                 <Loading
                   className="app-loader"
                   text={formatMessage({ id: 'appLoadingMessage' })}

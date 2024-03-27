@@ -1,4 +1,4 @@
-import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import { NormalizedDropdownItemType } from '@entur/dropdown';
 import { FormatMessage } from 'i18n';
 import { FlexibleLineType } from 'model/FlexibleLine';
 import { MessagesKey } from '../i18n/translations/translationKeys';

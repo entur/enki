@@ -1,4 +1,3 @@
-import AuthProvider, { useAuth } from '@entur/auth-provider';
 import { Apollo } from 'api';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
 import { fetchConfig } from 'config/fetchConfig';
@@ -6,9 +5,9 @@ import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
 
 import * as Sentry from '@sentry/react';
+import { AuthProvider, useAuth } from 'app/auth';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { store } from 'app/store';
-import { getEnvironment } from 'config/getEnvironment';
 import { selectAuthLoaded, updateAuth } from 'features/app/authSlice';
 import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
 import { normalizeAllUrls } from 'helpers/url';
@@ -25,7 +24,6 @@ if (import.meta.env.REACT_APP_SENTRY_DSN) {
     // for finer control
     tracesSampleRate: 1.0,
 
-    environment: getEnvironment(),
     release: import.meta.env.REACT_APP_VERSION,
     attachStacktrace: true,
     beforeSend(e) {
@@ -57,25 +55,17 @@ const AuthenticatedApp = () => {
 const renderIndex = async () => {
   const container = document.getElementById('root');
   const root = ReactDOM.createRoot(container!);
-
   const config = await fetchConfig();
 
-  const { claimsNamespace, auth0: auth0Config } = config;
   root.render(
     <Sentry.ErrorBoundary>
       <Provider store={store}>
         <EnkiIntlProvider>
-          <AuthProvider
-            auth0Config={{
-              ...auth0Config,
-              redirectUri: window.location.origin,
-            }}
-            auth0ClaimsNamespace={claimsNamespace}
-          >
-            <ConfigContext.Provider value={config}>
+          <ConfigContext.Provider value={config}>
+            <AuthProvider>
               <AuthenticatedApp />
-            </ConfigContext.Provider>
-          </AuthProvider>
+            </AuthProvider>
+          </ConfigContext.Provider>
         </EnkiIntlProvider>
       </Provider>
     </Sentry.ErrorBoundary>

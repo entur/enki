@@ -1,18 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Auth } from 'app/auth';
 import type { RootState } from 'app/store';
-
-interface Auth {
-  isLoading: boolean;
-  isAuthenticated: boolean;
-  user: User | null;
-  roleAssignments: string[] | null;
-  getAccessToken: () => Promise<string>;
-  logout: (options: any) => void;
-}
-
-interface User {
-  name: string;
-}
 
 export interface AuthState extends Auth {
   loaded: boolean;
@@ -22,10 +10,11 @@ const initialState: AuthState = {
   loaded: false,
   isLoading: false,
   isAuthenticated: false,
-  user: null,
+  user: undefined,
   roleAssignments: null,
   getAccessToken: () => Promise.resolve(''),
-  logout: () => {},
+  logout: () => Promise.resolve(),
+  login: () => Promise.resolve(),
 };
 
 export const authSlice = createSlice({

@@ -1,5 +1,5 @@
 # Enki
-![Build and deploy](https://github.com/entur/enki/actions/workflows/build-and-deploy.yml/badge.svg)
+![Build and deploy](https://github.com/entur/enki/actions/workflows/build-and-deploy.yml/badge.svg?event=push)
  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=entur_enki&metric=alert_status)](https://sonarcloud.io/dashboard?id=entur_enki)
 
 Frontend app for Nplan - a simple timetable editor. Backend is [Uttu](https://github.com/entur/uttu).
@@ -21,9 +21,32 @@ To run together with a local instance of [Uttu](https://github.com/entur/uttu) o
 REACT_APP_UTTU_API_URL=http://localhost:11701/services/flexible-lines
 ```
 
+## Configuration
+
+Configuration is bootstrapped from `/bootstrap.json`, when the app loads. You should add your environment-specific
+config to the deployment, along with the built static files (i.e. in the `build/` folder).
+
+For local development, add a `bootstrap.json` file to the `public/` folder.
+
+See `src/config/ConfigContext.ts` for the shape of the configuration.
+
 ## Authentication
 
-Uses Auth0 to authenticate users.
+Uses OIDC for authentication. This solution is agnostic to which authentication provider you use.
+
+Example configuration (works with Auth0):
+
+```json
+"oidcConfig": {
+  "authority": "https://<authentication domain>",
+  "client_id": "<client id>",
+  "extraQueryParams": {
+    "audience": "<example audience>"
+  }
+},
+  ```
+
+For full configuration reference, see [oidc-client-ts documentation](https://authts.github.io/oidc-client-ts/interfaces/UserManagerSettings.html).
 
 ## Testing
 

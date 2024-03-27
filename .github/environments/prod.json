@@ -1,15 +1,15 @@
 {
-  "uttuApiUrl": "https://api.staging.entur.io/timetable-admin/v1/flexible-lines",
+  "uttuApiUrl": "https://api.entur.io/timetable-admin/v1/flexible-lines",
   "enableLegacyOrganisationsFilter": true,
   "adminRole": "{\"r\":\"adminEditRouteData\",\"o\":\"RB\"}",
   "xmlnsUrlPrefix": "http://www.rutebanken.org/ns/",
   "claimsNamespace": "https://ror.entur.io/role_assignments",
-  "auth0": {
-    "domain": "ror-entur-staging.eu.auth0.com",
-    "clientId": "xTqJ1vELDAFV3cixZmO5ibqdKXXuFpFW",
-    "audience": "https://ror.api.staging.entur.io",
-    "useRefreshTokens": true,
-    "cacheLocation": "memory"
+  "oidcConfig": {
+    "authority": "https://auth2.entur.org",
+    "client_id": "VXdzUbFV8ws953UWLrizuaQY9C991w0i",
+    "extraQueryParams": {
+      "audience": "https://ror.api.entur.io"
+    }
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"]
 }

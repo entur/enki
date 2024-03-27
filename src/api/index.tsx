@@ -8,13 +8,10 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-
-import { useAuth } from '@entur/auth-provider';
+import { Auth, useAuth } from 'app/auth';
 import { useConfig } from 'config/ConfigContext';
-import { AuthState } from 'features/app/authSlice';
 import { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
-import { GlobalState } from 'reducers';
+import { useAppSelector } from '../app/hooks';
 
 export const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 
@@ -63,7 +60,7 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
   });
 });
 
-const apolloClient = (apiBase: string, provider: string, auth: AuthState) => {
+const apolloClient = (apiBase: string, provider: string, auth: Auth) => {
   const httpLink = createHttpLink({
     uri: apiBase + '/' + provider + '/graphql',
   });
@@ -89,9 +86,8 @@ type ApolloProps = {
 };
 
 export const Apollo = ({ children }: ApolloProps) => {
-  const provider = useSelector<GlobalState, string | undefined>(
-    (state) => state.providers.active?.code
-  );
+  const provider = useAppSelector((state) => state.providers.active?.code);
+
   const auth = useAuth();
 
   const { uttuApiUrl } = useConfig();

@@ -1,7 +1,7 @@
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import StopPoint from 'model/StopPoint';
 import { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../../app/hooks';
 
 type Props = {
   stopPoint: StopPoint;
@@ -12,10 +12,8 @@ type StateProps = {
 };
 
 const TimeWindowPassingTimeTitle = ({ stopPoint }: Props): ReactElement => {
-  const { flexibleStopPlaces } = useSelector(
-    ({ flexibleStopPlaces }: StateProps) => ({
-      flexibleStopPlaces,
-    })
+  const flexibleStopPlaces = useAppSelector(
+    (state) => state.flexibleStopPlaces
   );
 
   return (

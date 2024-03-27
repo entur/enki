@@ -2,7 +2,7 @@ import { selectLocale } from 'features/app/intlSlice';
 import { getMessages } from 'i18n';
 import { Suspense, useDeferredValue, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../app/hooks';
 
 export const EnkiIntlProvider = ({
   children,
@@ -10,7 +10,7 @@ export const EnkiIntlProvider = ({
   children: React.ReactNode;
 }) => {
   const [messages, setMessages] = useState<Record<string, string> | null>(null);
-  const locale = useSelector(selectLocale);
+  const locale = useAppSelector(selectLocale);
   const deferredMessages = useDeferredValue(messages);
 
   useEffect(() => {

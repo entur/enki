@@ -1,4 +1,3 @@
-import { useAuth } from '@entur/auth-provider';
 import { ClosedLockIcon } from '@entur/icons';
 import { Contrast } from '@entur/layout';
 import {
@@ -6,16 +5,15 @@ import {
   SideNavigationGroup,
   SideNavigationItem,
 } from '@entur/menu';
+import { useAuth } from 'app/auth';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 import { useConfig } from 'config/ConfigContext';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { GlobalState } from 'reducers';
-import { ProvidersState } from 'reducers/providers';
 import UserPreference from 'scenes/App/components/NavBar/UserPreference';
 import logo from 'static/img/logo.png';
+import { useAppSelector } from '../../../../app/hooks';
 import LanguagePicker from './LanguagePicker';
 import LogoutChip from './LogoutChip';
 import './styles.scss';
@@ -43,9 +41,7 @@ const NavBarItem = ({
   setRedirect,
   icon,
 }: NavBarItemProps) => {
-  const isSaved = useSelector<GlobalState, boolean>(
-    (state) => state.editor.isSaved
-  );
+  const isSaved = useAppSelector((state) => state.editor.isSaved);
   const handleOnClick = (e: React.MouseEvent) => {
     if (isSaved) return;
     e.preventDefault();
@@ -68,9 +64,7 @@ const NavBarItem = ({
 
 const NavBar = () => {
   const { formatMessage } = useIntl();
-  const { providers, active } = useSelector<GlobalState, ProvidersState>(
-    (state) => state.providers
-  );
+  const { providers, active } = useAppSelector((state) => state.providers);
   const [redirect, setRedirect] = useState<RedirectType>({
     showConfirm: false,
     path: '',
@@ -138,7 +132,7 @@ const NavBar = () => {
           </>
         )}
 
-        {roleAssignments?.includes(adminRole) && (
+        {roleAssignments?.includes(adminRole!) && (
           <NavBarItem
             icon={<ClosedLockIcon />}
             text={formatMessage({ id: 'navBarProvidersMenuItemLabel' })}

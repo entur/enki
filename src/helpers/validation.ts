@@ -1,4 +1,10 @@
-import { addDays, getDay, isAfter as isDateAfter, parseISO } from 'date-fns';
+import {
+  addDays,
+  getDay,
+  isAfter as isDateAfter,
+  isEqual as isDateEqual,
+  parseISO,
+} from 'date-fns';
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import BookingArrangement from 'model/BookingArrangement';
@@ -239,6 +245,13 @@ export const validateServiceJourney = (
   const validDayTimes = (sj.dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
   const { isValid } = validateTimes(sj.passingTimes ?? [], intl);
   const validDayTypes = validateDayTypes(sj.dayTypes);
+  console.log('validateServiceJourney', {
+    sj,
+    validName: !isBlankName,
+    validDayTimes,
+    validPassingTimes: isValid,
+    validDayTypes,
+  });
   return !isBlankName && isValid && validDayTimes && validDayTypes;
 };
 
@@ -469,7 +482,7 @@ export const validateDayType = (dayType: DayType) => {
     let from = parseISO(dta.operatingPeriod.fromDate);
     const to = parseISO(dta.operatingPeriod.toDate);
 
-    while (isDateAfter(to, from)) {
+    while (isDateEqual(to, from) || isDateAfter(to, from)) {
       if (daysOfWeek.includes(getDay(from))) {
         return true;
       }

@@ -49,7 +49,11 @@ export const FlexibleLineTypeSelector = ({
       {
         <Dropdown
           className="flexible-line-type"
-          value={flexibleLineType}
+          selectedItem={
+            getDropdownItems().find(
+              (item) => item.value === flexibleLineType
+            ) || null
+          }
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={getDropdownItems}
           clearable
