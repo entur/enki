@@ -184,7 +184,10 @@ const NetworkEditor = () => {
               {}
               <Dropdown
                 className="form-section"
-                value={network.authorityRef}
+                selectedItem={{
+                  value: network.authorityRef,
+                  label: network.name,
+                }}
                 items={() =>
                   mapToItems(
                     authorities.map((v) => ({ ...v, name: v.name.value }))

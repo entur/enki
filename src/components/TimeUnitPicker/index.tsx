@@ -196,7 +196,10 @@ const Picker = ({ label, value, onChange, nrOfOptions }: PickerProps) => {
       <Dropdown
         items={options}
         label={label}
-        value={value.toString()}
+        selectedItem={{
+          value: `${value}`,
+          label: `${value < 10 ? '0' + value : value}`,
+        }}
         onChange={(e) => onChange(parseInt(e?.value || ''))}
         placeholder={value.toString()}
       />

@@ -1,6 +1,5 @@
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -135,7 +134,7 @@ const ServiceJourneyEditor = (props: Props) => {
           <Dropdown
             className="form-section operator-selector"
             label={formatMessage({ id: 'generalOperator' })}
-            initialSelectedItem={getInit(
+            selectedItem={getInit(
               operators.map((op) => ({ ...op, name: op.name.value })),
               operatorSelection
             )}

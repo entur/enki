@@ -165,8 +165,12 @@ export default <T extends Line>({
           }
         />
 
-        <Dropdown
-          value={line.operatorRef || null}
+        <Dropdown<string>
+          selectedItem={
+            getOperatorItems().find(
+              (item) => item.value === line.operatorRef
+            ) || null
+          }
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={getOperatorItems}
           clearable
@@ -184,8 +188,11 @@ export default <T extends Line>({
           )}
         />
 
-        <Dropdown
-          value={line.networkRef || null}
+        <Dropdown<string>
+          selectedItem={
+            getNetworkItems().find((item) => item.value === line.networkRef) ||
+            null
+          }
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={getNetworkItems}
           clearable
@@ -215,7 +222,11 @@ export default <T extends Line>({
 
         <section className="transport-mode-dropdowns">
           <Dropdown
-            value={line.transportMode}
+            selectedItem={
+              getModeItems().find(
+                (item) => item.value === line.transportMode
+              ) || null
+            }
             placeholder={formatMessage({ id: 'defaultOption' })}
             items={getModeItems}
             clearable
