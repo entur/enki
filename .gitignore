@@ -33,3 +33,6 @@ src/i18n/build
 
 # firebase
 .firebase/
+
+# Ignore bootstrap config file
+public/bootstrap.json
