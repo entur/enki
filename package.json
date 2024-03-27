@@ -32,7 +32,7 @@
     "@entur/tokens": "3.13.2",
     "@entur/tooltip": "2.6.51",
     "@entur/typography": "1.8.27",
-    "@reduxjs/toolkit": "1.9.7",
+    "@reduxjs/toolkit": "2.2.2",
     "@sentry/react": "7.108.0",
     "axios": "1.6.8",
     "classnames": "2.5.1",
