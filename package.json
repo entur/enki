@@ -83,7 +83,7 @@
     "@types/react-modal": "3.16.3",
     "@types/redux-immutable-state-invariant": "2.1.4",
     "@types/uuid": "9.0.8",
-    "@vitejs/plugin-react": "3.1.0",
+    "@vitejs/plugin-react": "4.2.1",
     "babel-jest": "29.5.0",
     "babel-plugin-transform-import-meta": "2.2.0",
     "check-node-version": "4.2.1",
@@ -99,7 +99,7 @@
     "source-map-explorer": "2.5.3",
     "typescript": "5.4.3",
     "vite": "5.2.6",
-    "vite-plugin-svgr": "2.4.0",
+    "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "4.0.7"
   },
   "prettier": {
