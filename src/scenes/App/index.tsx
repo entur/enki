@@ -18,10 +18,14 @@ import { useAuth } from '../../app/auth';
 import { useAppSelector } from '../../app/hooks';
 import './styles.scss';
 
+import MarkerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
+import MarkerShadow from 'leaflet/dist/images/marker-shadow.png';
+
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconRetinaUrl: MarkerIcon2x,
+  iconUrl: MarkerIcon,
+  shadowUrl: MarkerShadow,
 });
 
 const App = () => {
@@ -57,7 +61,7 @@ const App = () => {
               <div className="header-and-routes">
                 <Loading
                   className="app-loader"
-                  text={formatMessage({ id: 'app.loading.message' })}
+                  text={formatMessage({ id: 'appLoadingMessage' })}
                   isLoading={
                     !providers.providers ||
                     auth.isLoading ||

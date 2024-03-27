@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from 'app/store';
-import { getLocale } from 'i18n';
+import { getLocale, locale } from 'i18n';
 
 export interface LocaleState {
-  locale: string;
+  locale: locale;
 }
 
 const initialState: LocaleState = {
@@ -14,7 +14,7 @@ export const intlSlice = createSlice({
   name: 'intl',
   initialState,
   reducers: {
-    updateLocale: (state, action: PayloadAction<string>) => ({
+    updateLocale: (state, action: PayloadAction<locale>) => ({
       ...state,
       locale: action.payload,
     }),

@@ -48,7 +48,7 @@ const LanguagePicker = () => {
   const { formatMessage, locale: selectedLocale } = useIntl();
 
   const handleChangeLocale = useCallback(
-    (locale: string) => {
+    async (locale: 'nb' | 'en' | 'sv') => {
       dispatch(updateLocale(locale));
       localStorage.setItem(LOCALE_KEY, locale);
     },
@@ -88,7 +88,7 @@ const LanguagePicker = () => {
     <div className="language-picker-wrapper">
       {toggled && (
         <div className="language-picker__dropdown">
-          {SUPPORTED_LOCALES.map((locale: string) => (
+          {SUPPORTED_LOCALES.map((locale: 'nb' | 'en' | 'sv') => (
             <FloatingButton
               key={locale}
               className="language-picker__item"
