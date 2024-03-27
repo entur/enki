@@ -12,8 +12,7 @@ import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { GlobalState } from 'reducers';
+import { useAppSelector } from '../../../app/hooks';
 import {
   BoardingTypeSelect,
   useOnBoardingTypeChange,
@@ -46,8 +45,8 @@ export const MixedFlexibleStopPointEditor = ({
     stopPoint.quayRef ? StopPlaceMode.NSR : StopPlaceMode.FLEXIBLE
   );
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const flexibleStopPlaces = useSelector(
-    (state: GlobalState) => state.flexibleStopPlaces
+  const flexibleStopPlaces = useAppSelector(
+    (state) => state.flexibleStopPlaces
   );
 
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
