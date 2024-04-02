@@ -12,5 +12,16 @@ export default defineConfig({
   publicDir: 'public',
   build: {
     outDir: 'build',
-  }
+  },
+  resolve: {
+    alias: [
+      // @ts-ignore
+      {
+        find: /^~.+/,
+        replacement: (val) => {
+          return val.replace(/^~/, "");
+        },
+      },
+    ],
+  },
 });

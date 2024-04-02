@@ -1,5 +1,5 @@
-@import './base/base.scss';
 @import '@entur/tokens/dist/styles.scss';
+@import '@entur/typography/dist/styles.css';
 @import '@entur/dropdown/dist/styles.css';
 @import '@entur/a11y/dist/styles.css';
 @import '@entur/icons/dist/styles.css';
@@ -14,6 +14,7 @@
 @import '@entur/loader/dist/styles.css';
 @import '@entur/modal/dist/styles.css';
 @import '@entur/grid/dist/styles.css';
+@import './base/base.scss';
 
 .form-section {
   margin-bottom: 30px;
