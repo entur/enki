@@ -68,16 +68,15 @@ describe('QuayRefField', () => {
 
   it('renders without crashing', async () => {
     await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 1));
     });
 
     expect(
       getByText(renderResult.container, 'Test stop place 1')
     ).toBeInTheDocument();
 
-    // TODO this does not work with vitest
-    //expect(getByText(renderResult.container, 'Fant ikke plattform.')).toBeInTheDocument();
-
+    // TODO: this does not work in vitest
+    // expect(getByText(renderResult.container, 'Fant ikke plattform.')).toBeInTheDocument();
     // await act(async () => {
     //   const inputField = getAllByRole(renderResult.container, 'textbox')[0];
     //   await userEvent.type(inputField, 'TST:Quay:1');
