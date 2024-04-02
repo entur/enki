@@ -84,6 +84,7 @@
     "@types/uuid": "9.0.8",
     "@vitejs/plugin-react": "4.2.1",
     "@vitest/coverage-v8": "1.4.0",
+    "@vitest/ui": "1.4.0",
     "babel-plugin-transform-import-meta": "2.2.0",
     "check-node-version": "4.2.1",
     "husky": "8.0.3",
