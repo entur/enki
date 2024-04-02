@@ -18,7 +18,7 @@ export default defineConfig({
       // @ts-ignore
       {
         find: /^~.+/,
-        replacement: (val) => {
+        replacement: (val: any) => {
           return val.replace(/^~/, "");
         },
       },

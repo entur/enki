@@ -5,6 +5,9 @@ import Notices from './';
 
 const formatMessage = ({ id }) => id;
 
+/**
+ * @jest-environment jsdom
+ */
 test('should render no notices', () => {
   const { container } = render(
     <Notices notices={[]} setNotices={() => {}} formatMessage={formatMessage} />
