@@ -8,11 +8,5 @@ export default defineConfig({
     plugins: [react(), viteTsconfigPaths(), svgrPlugin()],
     test: {
         globals: true,
-        reporters: [
-            ['vitest-sonar-reporter', { outputFile: 'test-report.xml' }],
-        ],
-        coverage: {
-            reporters: 'lcov',
-        },
     },
 });
