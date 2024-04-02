@@ -9,7 +9,7 @@ const formatMessage = ({ id }) => id;
  * @jest-environment jsdom
  */
 test('should render no notices', () => {
-  const { container } = render(
+  render(
     <Notices notices={[]} setNotices={() => {}} formatMessage={formatMessage} />
   );
   expect(screen.getByRole('rowgroup').children).toHaveLength(1);

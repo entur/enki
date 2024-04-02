@@ -15,7 +15,7 @@ if (import.meta.env.NODE_ENV !== 'test') {
       config.headers['Cache-Control'] = 'no-cache';
       return config;
     },
-    (error) => {
+    (error: Error) => {
       return Promise.reject(error);
     }
   );
