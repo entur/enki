@@ -69,7 +69,7 @@ jobs:
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4
       - name: Copy favicon
-        run: cp build/npl-d.ico build/favicon.ico
+        run: cp .github/environments/npl-d.ico build/favicon.ico
       - name: Copy bootstrap config
         run: cp .github/environments/dev.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -87,7 +87,7 @@ jobs:
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4
       - name: Copy favicon
-        run: cp build/npl-s.ico build/favicon.ico
+        run: cp .github/environments/npl-s.ico build/favicon.ico
       - name: Copy bootstrap config
         run: cp .github/environments/test.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -105,7 +105,7 @@ jobs:
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4
       - name: Copy favicon
-        run: cp build/npl-p.ico build/favicon.ico
+        run: cp .github/environments/npl-p.ico build/favicon.ico
       - name: Copy bootstrap config
         run: cp .github/environments/prod.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
