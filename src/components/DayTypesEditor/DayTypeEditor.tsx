@@ -44,7 +44,7 @@ export const DayTypeEditor = ({
   const dayTypesPristine = usePristine(mutableDayType, false);
   const dayTypesFeedback = useMemo(
     () => getErrorFeedback(validationMessage, dayTypeIsValid, dayTypesPristine),
-    [dayTypesPristine, validationMessage, dayTypeIsValid]
+    [dayTypesPristine, validationMessage, dayTypeIsValid],
   );
 
   return (

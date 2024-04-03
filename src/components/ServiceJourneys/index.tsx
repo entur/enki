@@ -27,7 +27,7 @@ type Props = {
     stopPoints: StopPoint[],
     handleUpdate: (serviceJourney: ServiceJourney) => void,
     handleDelete?: () => void,
-    handleCopy?: (newServiceJourneys: ServiceJourney[]) => void
+    handleCopy?: (newServiceJourneys: ServiceJourney[]) => void,
   ) => ReactElement;
 };
 
@@ -48,10 +48,10 @@ export const sortByDepartureTime = (sortable: Sortable[]): Sortable[] => {
         b.sj.passingTimes[0].departureTime ||
           b.sj.passingTimes[0].earliestDepartureTime!,
         b.sj.passingTimes[0].departureDayOffset ||
-          b.sj.passingTimes[0].earliestDepartureDayOffset!
+          b.sj.passingTimes[0].earliestDepartureDayOffset!,
       )
         ? -1
-        : 1
+        : 1,
     );
 };
 
@@ -69,7 +69,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
   const updateServiceJourney = (
     index: number,
     serviceJourneys: ServiceJourney[],
-    journeyPatternIndex: number
+    journeyPatternIndex: number,
   ) => {
     return (serviceJourney: ServiceJourney) => {
       onChange(
@@ -80,11 +80,11 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
             serviceJourneys: replaceElement(
               serviceJourneys,
               index,
-              serviceJourney
+              serviceJourney,
             ),
           },
-          journeyPatternIndex
-        )
+          journeyPatternIndex,
+        ),
       );
     };
   };
@@ -92,7 +92,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
   const deleteServiceJourney = (
     index: number,
     serviceJourneys: ServiceJourney[],
-    journeyPatternIndex: number
+    journeyPatternIndex: number,
   ) => {
     return () => {
       if (serviceJourneys.length > 1) {
@@ -103,8 +103,8 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               ...journeyPatterns[journeyPatternIndex],
               serviceJourneys: removeElementByIndex(serviceJourneys, index),
             },
-            journeyPatternIndex
-          )
+            journeyPatternIndex,
+          ),
         );
       }
     };
@@ -113,7 +113,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
   const bulkDeleteServiceJourneys = (
     ids: string[],
     serviceJourneys: ServiceJourney[],
-    journeyPatternIndex: number
+    journeyPatternIndex: number,
   ) => {
     if (serviceJourneys.length > 1) {
       setShowBulkDeleteDialog(-1);
@@ -123,11 +123,11 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
           {
             ...journeyPatterns[journeyPatternIndex],
             serviceJourneys: serviceJourneys.filter(
-              (sj) => !ids.includes(sj.id!)
+              (sj) => !ids.includes(sj.id!),
             ),
           },
-          journeyPatternIndex
-        )
+          journeyPatternIndex,
+        ),
       );
     }
   };
@@ -136,7 +136,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
     name: string,
     serviceJourneys: ServiceJourney[],
     stopPoints: StopPoint[],
-    journeyPatternIndex: number
+    journeyPatternIndex: number,
   ) => {
     const newServiceJourneys = [
       ...serviceJourneys,
@@ -153,19 +153,19 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
           ...journeyPatterns[journeyPatternIndex],
           serviceJourneys: newServiceJourneys,
         },
-        journeyPatternIndex
-      )
+        journeyPatternIndex,
+      ),
     );
     setShowNewServiceJourneyDialog(false);
     setTimeout(
       () => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }),
-      100
+      100,
     );
   };
 
   const copyServiceJourney = (
     serviceJourneys: ServiceJourney[],
-    journeyPatternIndex: number
+    journeyPatternIndex: number,
   ) => {
     return (newServiceJourneys: ServiceJourney[]) => {
       onChange(
@@ -175,8 +175,8 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
             ...journeyPatterns[journeyPatternIndex],
             serviceJourneys: serviceJourneys.concat(newServiceJourneys),
           },
-          journeyPatternIndex
-        )
+          journeyPatternIndex,
+        ),
       );
     };
   };
@@ -199,28 +199,28 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
             updateServiceJourney(
               sjIndex,
               journeyPatterns[jpIndex].serviceJourneys,
-              jpIndex
+              jpIndex,
             ),
             jp.serviceJourneys.length > 1
               ? deleteServiceJourney(
                   sjIndex,
                   journeyPatterns[jpIndex].serviceJourneys,
-                  jpIndex
+                  jpIndex,
                 )
               : undefined,
             sj.id
               ? copyServiceJourney(
                   journeyPatterns[jpIndex].serviceJourneys,
-                  jpIndex
+                  jpIndex,
                 )
-              : undefined
+              : undefined,
           )}
         </AccordionItem>
       ),
     }));
 
     return sortByDepartureTime(mappedServiceJourneys).map((mapped) =>
-      mapped.render()
+      mapped.render(),
     );
   };
 
@@ -260,7 +260,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               journeyPatterns[0].pointsInSequence,
               updateServiceJourney(0, journeyPatterns[0].serviceJourneys, 0),
               undefined,
-              copyServiceJourney(journeyPatterns[0].serviceJourneys, 0)
+              copyServiceJourney(journeyPatterns[0].serviceJourneys, 0),
             )
           : journeyPatterns.map((jp, jpIndex) => (
               <Fragment key={keys[jpIndex]}>

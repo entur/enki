@@ -67,7 +67,7 @@ export default (props: Props) => {
     onChange(
       resetOnZero && newDuration.asSeconds() === 0
         ? undefined
-        : newDuration.toISOString()
+        : newDuration.toISOString(),
     );
   };
 

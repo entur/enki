@@ -28,7 +28,7 @@ const Loading = ({
     'loader',
     className,
     { visible: isLoading },
-    { fullscreen: isFullScreen }
+    { fullscreen: isFullScreen },
   );
 
   return (

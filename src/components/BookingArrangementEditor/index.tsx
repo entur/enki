@@ -57,16 +57,16 @@ const BookingArrangementEditor = ({
   }, [formatMessage]);
   const bookingArrangementPristine = usePristine(
     bookingArrangementDraft,
-    false
+    false,
   );
   const bookingArrangementFeedback = useMemo(
     () =>
       getErrorFeedback(
         validationMessage,
         validateBookingArrangement(bookingArrangementDraft),
-        bookingArrangementPristine
+        bookingArrangementPristine,
       ),
-    [bookingArrangementDraft, bookingArrangementPristine, validationMessage]
+    [bookingArrangementDraft, bookingArrangementPristine, validationMessage],
   );
 
   return (

@@ -63,7 +63,7 @@ export default (props: Props) => {
     latestbookingTimeAsDate = new Date();
     latestbookingTimeAsDate.setHours(parseInt(latestBookingTime.split(':')[0]));
     latestbookingTimeAsDate.setMinutes(
-      parseInt(latestBookingTime.split(':')[1])
+      parseInt(latestBookingTime.split(':')[1]),
     );
   }
 
@@ -89,8 +89,8 @@ export default (props: Props) => {
     minimumBookingPeriod
       ? BOOKING_LIMIT_TYPE.PERIOD
       : latestBookingTime
-      ? BOOKING_LIMIT_TYPE.TIME
-      : BOOKING_LIMIT_TYPE.NONE
+        ? BOOKING_LIMIT_TYPE.TIME
+        : BOOKING_LIMIT_TYPE.NONE,
   );
 
   const onBookingLimitTypeChange = (type: BOOKING_LIMIT_TYPE) => {
@@ -217,7 +217,7 @@ export default (props: Props) => {
           clearable
           onChange={(e) => {
             onBookingLimitTypeChange(
-              e?.value ? BOOKING_LIMIT_TYPE.TIME : BOOKING_LIMIT_TYPE.NONE
+              e?.value ? BOOKING_LIMIT_TYPE.TIME : BOOKING_LIMIT_TYPE.NONE,
             );
             onChange({
               ...bookingArrangement,

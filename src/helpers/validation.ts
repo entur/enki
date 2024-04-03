@@ -22,7 +22,7 @@ export const validLine = (line: Line, intl: IntlShape): boolean =>
   aboutLineStepIsValid(line) &&
   line.journeyPatterns!.every(
     (jp) =>
-      validJourneyPattern(jp) && validServiceJourneys(jp.serviceJourneys, intl)
+      validJourneyPattern(jp) && validServiceJourneys(jp.serviceJourneys, intl),
   );
 
 export const getMaxAllowedStepIndex = (line: Line, intl: IntlShape) => {
@@ -31,7 +31,7 @@ export const getMaxAllowedStepIndex = (line: Line, intl: IntlShape) => {
     return 1;
   else if (
     line.journeyPatterns!.some(
-      (jp) => !validServiceJourneys(jp.serviceJourneys, intl)
+      (jp) => !validServiceJourneys(jp.serviceJourneys, intl),
     )
   )
     return 2;
@@ -40,18 +40,18 @@ export const getMaxAllowedStepIndex = (line: Line, intl: IntlShape) => {
 
 export const getMaxAllowedFlexibleLineStepIndex = (
   line: FlexibleLine,
-  intl: IntlShape
+  intl: IntlShape,
 ) => {
   if (!aboutFlexibleLineStepIsValid(line)) return 0;
   else if (
     line.journeyPatterns!.some(
-      (jp) => !validFlexibleLineJourneyPattern(jp, line.flexibleLineType)
+      (jp) => !validFlexibleLineJourneyPattern(jp, line.flexibleLineType),
     )
   )
     return 1;
   else if (
     line.journeyPatterns!.some(
-      (jp) => !validServiceJourneys(jp.serviceJourneys, intl)
+      (jp) => !validServiceJourneys(jp.serviceJourneys, intl),
     )
   )
     return 2;
@@ -61,14 +61,14 @@ export const getMaxAllowedFlexibleLineStepIndex = (
 export const currentStepIsValid = (
   currentStep: number,
   line: Line,
-  intl: IntlShape
+  intl: IntlShape,
 ) => {
   if (currentStep === 0) return aboutLineStepIsValid(line);
   else if (currentStep === 1)
     return line.journeyPatterns!.every((jp) => validJourneyPattern(jp));
   else if (currentStep === 2)
     return line.journeyPatterns!.every((jp) =>
-      validServiceJourneys(jp.serviceJourneys, intl)
+      validServiceJourneys(jp.serviceJourneys, intl),
     );
   else if (currentStep === 3) return true;
   else return false;
@@ -77,16 +77,16 @@ export const currentStepIsValid = (
 export const currentFlexibleLineStepIsValid = (
   currentStep: number,
   line: FlexibleLine,
-  intl: IntlShape
+  intl: IntlShape,
 ) => {
   if (currentStep === 0) return aboutFlexibleLineStepIsValid(line);
   else if (currentStep === 1)
     return line.journeyPatterns!.every((jp) =>
-      validFlexibleLineJourneyPattern(jp, line.flexibleLineType)
+      validFlexibleLineJourneyPattern(jp, line.flexibleLineType),
     );
   else if (currentStep === 2)
     return line.journeyPatterns!.every((jp) =>
-      validServiceJourneys(jp.serviceJourneys, intl)
+      validServiceJourneys(jp.serviceJourneys, intl),
     );
   else if (currentStep === 3) return true;
   else return false;
@@ -102,20 +102,20 @@ export const aboutLineStepIsValid = (line: Line): boolean =>
 
 export const validFlexibleLine = (
   line: FlexibleLine,
-  intl: IntlShape
+  intl: IntlShape,
 ): boolean =>
   aboutFlexibleLineStepIsValid(line) &&
   line.journeyPatterns!.every(
     (jp) =>
       validFlexibleLineJourneyPattern(jp, line.flexibleLineType) &&
-      validServiceJourneys(jp.serviceJourneys, intl)
+      validServiceJourneys(jp.serviceJourneys, intl),
   );
 
 export const aboutFlexibleLineStepIsValid = (line: FlexibleLine): boolean =>
   aboutLineStepIsValid(line) && !isBlank(line.flexibleLineType);
 
 export const validJourneyPattern = (
-  journeyPatterns?: JourneyPattern
+  journeyPatterns?: JourneyPattern,
 ): boolean =>
   !!journeyPatterns &&
   !isBlank(journeyPatterns.name) &&
@@ -123,14 +123,14 @@ export const validJourneyPattern = (
 
 export const validFlexibleLineJourneyPattern = (
   journeyPatterns?: JourneyPattern,
-  flexibleLineType?: FlexibleLineType
+  flexibleLineType?: FlexibleLineType,
 ): boolean => {
   if (flexibleLineType === FlexibleLineType.FLEXIBLE_AREAS_ONLY) {
     return (
       !!journeyPatterns &&
       !isBlank(journeyPatterns.name) &&
       validateFlexibleAreasOnlyStopPoints(
-        journeyPatterns.pointsInSequence ?? []
+        journeyPatterns.pointsInSequence ?? [],
       )
     );
   } else {
@@ -140,28 +140,28 @@ export const validFlexibleLineJourneyPattern = (
 
 export const validateStopPoints = (stopPoints: StopPoint[]): boolean =>
   getStopPointsErrors(stopPoints).every((stopPointErrors) =>
-    objectValuesAreEmpty(stopPointErrors)
+    objectValuesAreEmpty(stopPointErrors),
   );
 
 export const validateFlexibleAreasOnlyStopPoints = (
-  stopPoints: StopPoint[]
+  stopPoints: StopPoint[],
 ): boolean =>
   getFlexibleAreasOnlyStopPointsErrors(stopPoints).every((stopPointErrors) =>
-    objectValuesAreEmpty(stopPointErrors)
+    objectValuesAreEmpty(stopPointErrors),
   );
 
 export const getStopPointsErrors = (
-  stopPoints: StopPoint[]
+  stopPoints: StopPoint[],
 ): StopPointsFormError[] =>
   stopPoints.map((stopPoint, index) =>
-    validateStopPoint(stopPoint, index === 0, index === stopPoints.length - 1)
+    validateStopPoint(stopPoint, index === 0, index === stopPoints.length - 1),
   );
 
 export const getFlexibleAreasOnlyStopPointsErrors = (
-  stopPoints: StopPoint[]
+  stopPoints: StopPoint[],
 ): StopPointsFormError[] =>
   stopPoints.map((stopPoint, index) =>
-    validateFlexibleAreasOnlyStopPoint(stopPoint, index === 0)
+    validateFlexibleAreasOnlyStopPoint(stopPoint, index === 0),
   );
 
 export type StopPointsFormError = {
@@ -173,7 +173,7 @@ export type StopPointsFormError = {
 export const validateStopPoint = (
   stopPoint: StopPoint,
   isFirst: boolean,
-  isLast: boolean
+  isLast: boolean,
 ): StopPointsFormError => {
   const {
     quayRef,
@@ -210,7 +210,7 @@ export const validateStopPoint = (
 
 export const validateFlexibleAreasOnlyStopPoint = (
   stopPoint: StopPoint,
-  isFirst?: boolean
+  isFirst?: boolean,
 ): StopPointsFormError => {
   const { flexibleStopPlaceRef, destinationDisplay } = stopPoint;
 
@@ -234,12 +234,12 @@ export const validateFlexibleAreasOnlyStopPoint = (
 
 export const validServiceJourneys = (
   sjs: ServiceJourney[] | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): boolean => sjs?.every((sj) => validateServiceJourney(sj, intl)) ?? false;
 
 export const validateServiceJourney = (
   sj: ServiceJourney,
-  intl: IntlShape
+  intl: IntlShape,
 ): boolean => {
   const isBlankName = isBlank(sj.name);
   const validDayTimes = (sj.dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
@@ -259,13 +259,13 @@ export const isBefore = (
   passingTime: string | undefined,
   dayOffset: number | undefined,
   nextPassingTime: string | undefined,
-  nextDayOffset: number | undefined
+  nextDayOffset: number | undefined,
 ) => {
   if (!passingTime || !nextPassingTime) return false;
   const date = moment(passingTime, 'HH:mm:ss').add(dayOffset ?? 0, 'days');
   const nextDate = moment(nextPassingTime, 'HH:mm:ss').add(
     nextDayOffset ?? 0,
-    'days'
+    'days',
   );
 
   return date < nextDate;
@@ -275,13 +275,13 @@ export const isAfter = (
   passingTime: string | undefined,
   dayOffset: number | undefined,
   nextPassingTime: string | undefined,
-  nextDayOffset: number | undefined
+  nextDayOffset: number | undefined,
 ) => {
   if (!passingTime || !nextPassingTime) return false;
   const date = moment(passingTime, 'HH:mm:ss').add(dayOffset ?? 0, 'days');
   const nextDate = moment(nextPassingTime, 'HH:mm:ss').add(
     nextDayOffset ?? 0,
-    'days'
+    'days',
   );
 
   return date > nextDate;
@@ -295,13 +295,13 @@ const hasAtleastOneFieldSet = (passingTime: PassingTime) => {
     latestArrivalTime,
   } = passingTime;
   return Boolean(
-    departureTime || earliestDepartureTime || arrivalTime || latestArrivalTime
+    departureTime || earliestDepartureTime || arrivalTime || latestArrivalTime,
   );
 };
 
 export const validateTimes = (
   passingTimes: PassingTime[],
-  intl: IntlShape
+  intl: IntlShape,
 ): { isValid: boolean; errorMessage: string } => {
   const getMessage = (message: keyof MessagesKey) =>
     intl ? intl.formatMessage({ id: message }) : '';
@@ -336,13 +336,13 @@ export const validateTimes = (
           departureTime!,
           departureDayOffset!,
           arrivalTime!,
-          arrivalDayOffset!
+          arrivalDayOffset!,
         ) ||
         isBefore(
           latestArrivalTime!,
           latestArrivalDayOffset!,
           earliestDepartureTime!,
-          earliestDepartureDayOffset!
+          earliestDepartureDayOffset!,
         )
       )
         return {
@@ -354,7 +354,7 @@ export const validateTimes = (
           departureTime!,
           departureDayOffset!,
           earliestDepartureTime!,
-          earliestDepartureDayOffset!
+          earliestDepartureDayOffset!,
         )
       )
         return {
@@ -366,7 +366,7 @@ export const validateTimes = (
           latestArrivalTime!,
           latestArrivalDayOffset!,
           arrivalTime!,
-          arrivalDayOffset!
+          arrivalDayOffset!,
         )
       )
         return {
@@ -392,61 +392,61 @@ export const validateTimes = (
           departureTime!,
           departureDayOffset!,
           prevPassingTime.departureTime!,
-          prevPassingTime.departureDayOffset!
+          prevPassingTime.departureDayOffset!,
         ) ||
         isBefore(
           departureTime!,
           departureDayOffset!,
           prevPassingTime.arrivalTime!,
-          prevPassingTime.arrivalDayOffset!
+          prevPassingTime.arrivalDayOffset!,
         ) ||
         isBefore(
           arrivalTime!,
           arrivalDayOffset!,
           prevPassingTime.arrivalTime!,
-          prevPassingTime.arrivalDayOffset!
+          prevPassingTime.arrivalDayOffset!,
         ) ||
         isBefore(
           arrivalTime!,
           arrivalDayOffset!,
           prevPassingTime.departureTime!,
-          prevPassingTime.departureDayOffset!
+          prevPassingTime.departureDayOffset!,
         ) ||
         isBefore(
           latestArrivalTime!,
           latestArrivalDayOffset!,
           prevPassingTime.latestArrivalTime!,
-          prevPassingTime.latestArrivalDayOffset!
+          prevPassingTime.latestArrivalDayOffset!,
         ) ||
         isBefore(
           earliestDepartureTime!,
           earliestDepartureDayOffset!,
           prevPassingTime.earliestDepartureTime!,
-          prevPassingTime.earliestDepartureDayOffset!
+          prevPassingTime.earliestDepartureDayOffset!,
         ) ||
         isBefore(
           earliestDepartureTime!,
           earliestDepartureDayOffset!,
           prevPassingTime.departureTime!,
-          prevPassingTime.departureDayOffset!
+          prevPassingTime.departureDayOffset!,
         ) ||
         isBefore(
           earliestDepartureTime!,
           earliestDepartureDayOffset!,
           prevPassingTime.arrivalTime!,
-          prevPassingTime.arrivalDayOffset!
+          prevPassingTime.arrivalDayOffset!,
         ) ||
         isBefore(
           arrivalTime!,
           arrivalDayOffset!,
           prevPassingTime.earliestDepartureTime!,
-          prevPassingTime.earliestDepartureDayOffset!
+          prevPassingTime.earliestDepartureDayOffset!,
         ) ||
         isBefore(
           arrivalTime!,
           arrivalDayOffset!,
           prevPassingTime.latestArrivalTime!,
-          prevPassingTime.latestArrivalDayOffset!
+          prevPassingTime.latestArrivalDayOffset!,
         )
       ) {
         return {
@@ -498,7 +498,7 @@ export const validateDayTypes = (dayTypes?: DayType[]) => {
 };
 
 export const validateBookingArrangement = (
-  bookingArrangement?: BookingArrangement
+  bookingArrangement?: BookingArrangement,
 ) => {
   if (
     bookingArrangement?.minimumBookingPeriod &&

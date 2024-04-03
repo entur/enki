@@ -19,7 +19,7 @@ export const showNotification = (
   message: string,
   type: NotificationTypes,
   duration: NotificationDuration,
-  showModal?: boolean
+  showModal?: boolean,
 ) => ({
   type: SHOW_NOTIFICATION,
   payload: {
@@ -34,14 +34,14 @@ export const showNotification = (
 export const showSuccessNotification = (
   title: string,
   message: string,
-  showModal?: boolean
+  showModal?: boolean,
 ) =>
   showNotification(
     title,
     message,
     NotificationTypes.SUCCESS,
     NotificationDuration.LONG,
-    showModal
+    showModal,
   );
 
 export const showErrorNotification = (title: string, message: string) =>
@@ -49,5 +49,5 @@ export const showErrorNotification = (title: string, message: string) =>
     title,
     message,
     NotificationTypes.ERROR,
-    NotificationDuration.VERY_LONG
+    NotificationDuration.VERY_LONG,
   );

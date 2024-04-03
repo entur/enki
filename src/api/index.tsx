@@ -37,7 +37,7 @@ export const UttuQuery = (
   provider: string,
   query: string,
   variables?: Variables,
-  accessToken?: string
+  accessToken?: string,
 ) => {
   const endpoint = (apiBase || '') + '/' + provider + '/graphql';
   const client = new GraphQLClient(endpoint, {
@@ -52,7 +52,7 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
       key === '__typename' ? undefined : value;
     operation.variables = JSON.parse(
       JSON.stringify(operation.variables),
-      omitTypename
+      omitTypename,
     );
   }
   return forward(operation).map((data) => {

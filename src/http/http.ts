@@ -17,7 +17,7 @@ if (import.meta.env.NODE_ENV !== 'test') {
     },
     (error: Error) => {
       return Promise.reject(error);
-    }
+    },
   );
 }
 

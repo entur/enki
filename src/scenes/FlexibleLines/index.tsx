@@ -15,7 +15,7 @@ import './styles.scss';
 export default () => {
   const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
   const [selectedLine, setSelectedLine] = useState<FlexibleLine | undefined>(
-    undefined
+    undefined,
   );
   const intl = useIntl();
   const { formatMessage } = intl;

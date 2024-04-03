@@ -19,7 +19,7 @@ describe('forms', () => {
       expect(objectValuesAreEmpty([])).toBeTruthy();
       expect(objectValuesAreEmpty({ name: [] })).toBeTruthy();
       expect(
-        objectValuesAreEmpty({ name: undefined, age: undefined })
+        objectValuesAreEmpty({ name: undefined, age: undefined }),
       ).toBeTruthy();
       expect(
         objectValuesAreEmpty([
@@ -27,7 +27,7 @@ describe('forms', () => {
             name: undefined,
             flexibleArea: undefined,
           },
-        ])
+        ]),
       ).toBeTruthy();
     });
 
@@ -38,7 +38,7 @@ describe('forms', () => {
         objectValuesAreEmpty({
           a: ['a1', 'a2'],
           b: ['b1', 'b2'],
-        })
+        }),
       ).toBeFalsy();
     });
   });

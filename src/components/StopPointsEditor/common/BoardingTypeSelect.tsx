@@ -23,7 +23,7 @@ export const useSelectedBoardingType = (stopPoint: StopPoint) => {
 
 export const useOnBoardingTypeChange = (
   stopPoint: StopPoint,
-  onChange: (stopPoint: StopPoint) => void
+  onChange: (stopPoint: StopPoint) => void,
 ) => {
   const onBoardingTypeChange = useCallback(
     (boardingType: BoardingType) => {
@@ -37,7 +37,7 @@ export const useOnBoardingTypeChange = (
           boardingType === BoardingType.BOARDING_AND_ALIGHTING,
       });
     },
-    [onChange, stopPoint]
+    [onChange, stopPoint],
   );
   return onBoardingTypeChange;
 };
@@ -53,7 +53,7 @@ const useBoardingDropDownItems = () => {
         label: formatMessage({ id: 'labelForBoardingAndAlighting' }),
       },
     ],
-    [formatMessage]
+    [formatMessage],
   );
 
   return boardingItems;

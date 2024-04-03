@@ -32,7 +32,7 @@ export const getLocale = () => {
 };
 
 export const getMessages = async (
-  locale: locale
+  locale: locale,
 ): Promise<Record<Messages, string>> => {
   switch (locale) {
     case 'nb':

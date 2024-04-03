@@ -31,7 +31,7 @@ describe('useHandleOnSaveClick', () => {
           onCall,
           onSaveStart,
           onSaveEnd,
-          errors
+          errors,
         ),
       {
         wrapper: ({ children }) => (
@@ -41,7 +41,7 @@ describe('useHandleOnSaveClick', () => {
             </MemoryRouter>
           </Provider>
         ),
-      }
+      },
     );
 
     result.current();
@@ -74,7 +74,7 @@ describe('useHandleOnSaveClick', () => {
           onCall,
           onSaveStart,
           onSaveEnd,
-          errors
+          errors,
         ),
       {
         wrapper: ({ children }) => (
@@ -84,7 +84,7 @@ describe('useHandleOnSaveClick', () => {
             </MemoryRouter>
           </Provider>
         ),
-      }
+      },
     );
 
     result.current();

@@ -27,7 +27,7 @@ export const loadNetworks = (): AppThunk => async (dispatch, getState) => {
       getState().providers.active?.code ?? '',
       getNetworksQuery,
       {},
-      await getState().auth.getAccessToken()
+      await getState().auth.getAccessToken(),
     );
     dispatch(receiveNetworksActionCreator(data.networks));
     return data.networks;
@@ -38,9 +38,9 @@ export const loadNetworks = (): AppThunk => async (dispatch, getState) => {
         getStyledUttuError(
           e as UttuError,
           'En feil oppstod under lastingen av nettverkene',
-          'Prøv igjen senere.'
-        )
-      )
+          'Prøv igjen senere.',
+        ),
+      ),
     );
     sentryCaptureException(e);
   }
@@ -55,7 +55,7 @@ export const loadNetworkById =
         getState().providers.active?.code ?? '',
         getNetworkByIdQuery,
         { id },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(receiveNetworkActionCreator(data.network));
     } catch (e) {
@@ -65,9 +65,9 @@ export const loadNetworkById =
           getStyledUttuError(
             e as UttuError,
             'En feil oppstod under lastingen av nettverket',
-            'Prøv igjen senere.'
-          )
-        )
+            'Prøv igjen senere.',
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
@@ -84,11 +84,11 @@ export const saveNetwork =
         {
           input: network,
         },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       if (showConfirm) {
         dispatch(
-          showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.')
+          showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.'),
         );
       }
     } catch (e) {
@@ -98,9 +98,9 @@ export const saveNetwork =
           getStyledUttuError(
             e as UttuError,
             'En feil oppstod under lagringen av nettverket',
-            'Prøv igjen senere.'
-          )
-        )
+            'Prøv igjen senere.',
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
@@ -119,10 +119,10 @@ export const deleteNetworkById =
         {
           id,
         },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(
-        showSuccessNotification('Slette nettverk', 'Nettverket ble slettet.')
+        showSuccessNotification('Slette nettverk', 'Nettverket ble slettet.'),
       );
     } catch (e) {
       dispatch(
@@ -130,9 +130,9 @@ export const deleteNetworkById =
           'Slette nettverk',
           getStyledUttuError(
             e as UttuError,
-            'En feil oppstod under slettingen av nettverket'
-          )
-        )
+            'En feil oppstod under slettingen av nettverket',
+          ),
+        ),
       );
       sentryCaptureException(e);
     }

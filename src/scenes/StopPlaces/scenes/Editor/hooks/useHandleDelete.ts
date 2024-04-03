@@ -9,7 +9,7 @@ export const useHandleDelete = (
   flexibleStopPlace: FlexibleStopPlace | undefined,
   onCall: () => void,
   onDeleteStart: () => void,
-  onDeleteEnd: () => void
+  onDeleteEnd: () => void,
 ) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

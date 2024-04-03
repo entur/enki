@@ -10,7 +10,7 @@ import { useMatch, useNavigate } from 'react-router-dom';
 export const useUttuErrors = (
   error: ApolloError | undefined,
   deleteError: ApolloError | undefined,
-  mutationError: ApolloError | undefined
+  mutationError: ApolloError | undefined,
 ) => {
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ export const useUttuErrors = (
     'loadLineByIdErrorHeader',
     'loadLineByIdErrorMessage',
     error,
-    () => navigate('/lines')
+    () => navigate('/lines'),
   );
 
   useUttuError('deleteLineErrorHeader', 'deleteLineErrorMessage', deleteError);
@@ -29,7 +29,7 @@ type UseLineReturnType = {
   line: Line | undefined;
   setLine: React.Dispatch<React.SetStateAction<Line | undefined>>;
   refetchLine: (
-    variables?: Partial<Record<string, any>> | undefined
+    variables?: Partial<Record<string, any>> | undefined,
   ) => Promise<ApolloQueryResult<LineData>>;
   loading: boolean;
   error: ApolloError | undefined;
@@ -55,7 +55,7 @@ export const useLine: UseLineType = () => {
         id: match?.params.id || '',
         includeLine: !isBlank(match?.params.id),
       },
-    }
+    },
   );
 
   useEffect(() => {

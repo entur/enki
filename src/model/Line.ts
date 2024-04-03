@@ -30,10 +30,10 @@ export const lineToPayload = (line: Line) => {
   return {
     ...rest,
     journeyPatterns: line.journeyPatterns?.map((journeyPattern) =>
-      journeyPatternToPayload(journeyPattern)
+      journeyPatternToPayload(journeyPattern),
     ),
     notices: line.notices?.filter(
-      (notice) => notice && notice.text && notice.text !== ''
+      (notice) => notice && notice.text && notice.text !== '',
     ),
   };
 };

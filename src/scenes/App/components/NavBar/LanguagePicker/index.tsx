@@ -52,7 +52,7 @@ const LanguagePicker = () => {
       dispatch(updateLocale(locale));
       localStorage.setItem(LOCALE_KEY, locale);
     },
-    [dispatch]
+    [dispatch],
   );
 
   const arrowIcon = useMemo(
@@ -61,7 +61,7 @@ const LanguagePicker = () => {
         {toggled ? <UpArrowIcon /> : <DownArrowIcon />}
       </div>
     ),
-    [toggled]
+    [toggled],
   );
 
   const checkIcon = useCallback(
@@ -73,7 +73,7 @@ const LanguagePicker = () => {
           </div>
         );
     },
-    [selectedLocale]
+    [selectedLocale],
   );
 
   const flagIcon = useCallback((locale: string) => {

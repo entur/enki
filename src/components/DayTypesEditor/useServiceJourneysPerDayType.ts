@@ -26,8 +26,8 @@ export const useServiceJourneysPerDayType = (dayTypes: DayType[]) => {
             prev[curr.id!] = curr.numberOfServiceJourneys!;
             return prev;
           },
-          { ...current }
-        )
+          { ...current },
+        ),
       );
     };
 

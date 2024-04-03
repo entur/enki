@@ -33,7 +33,7 @@ export const CoordinatesInputField = ({
   const { formatMessage } = useIntl();
 
   const [inputValue, setInputValue] = useState<string>(
-    coordinatesToText(coordinates)
+    coordinatesToText(coordinates),
   );
 
   const isValid = inputValue === '' || stringIsValidCoordinates(inputValue);

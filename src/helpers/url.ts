@@ -8,13 +8,13 @@ export const normalizeAllUrls = (data: Event): Event => {
       if (frame?.filename?.startsWith('/')) {
         frame.filename = 'app:///' + frame.filename;
       }
-    }
+    },
   );
   return data;
 };
 
 export const getFlexibleLineFromPath = (
   flexibleLines: FlexibleLine[],
-  params: Params
+  params: Params,
 ): FlexibleLine | undefined =>
   flexibleLines.find((flexibleLine) => flexibleLine.id === params.id);

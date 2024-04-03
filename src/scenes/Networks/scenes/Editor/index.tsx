@@ -57,7 +57,7 @@ const NetworkEditor = () => {
 
   const dispatchLoadFlexibleLines = useCallback(
     () => dispatch(loadFlexibleLines(intl)),
-    [dispatch]
+    [dispatch],
   );
 
   const onFieldChange = (field: keyof Network, value: string) => {
@@ -109,7 +109,7 @@ const NetworkEditor = () => {
   const authorities = filterAuthorities(
     organisations ?? [],
     activeProvider,
-    config.enableLegacyOrganisationsFilter
+    config.enableLegacyOrganisationsFilter,
   );
 
   const isDeleteDisabled =
@@ -151,7 +151,7 @@ const NetworkEditor = () => {
                 {...getErrorFeedback(
                   formatMessage({ id: 'editorNetworkValidationName' }),
                   !isBlank(network.name),
-                  namePristine
+                  namePristine,
                 )}
                 value={network.name}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -190,7 +190,7 @@ const NetworkEditor = () => {
                 }}
                 items={() =>
                   mapToItems(
-                    authorities.map((v) => ({ ...v, name: v.name.value }))
+                    authorities.map((v) => ({ ...v, name: v.name.value })),
                   )
                 }
                 placeholder={formatMessage({ id: 'defaultOption' })}
@@ -202,7 +202,7 @@ const NetworkEditor = () => {
                 {...getErrorFeedback(
                   formatMessage({ id: 'editorNetworkValidationAuthority' }),
                   !isBlank(network.authorityRef),
-                  authorityPristine
+                  authorityPristine,
                 )}
               />
               <div className="buttons">
@@ -220,7 +220,7 @@ const NetworkEditor = () => {
                     ? formatMessage({ id: 'editorSaveButtonText' })
                     : formatMessage(
                         { id: 'editorDetailedCreate' },
-                        { details: formatMessage({ id: 'network' }) }
+                        { details: formatMessage({ id: 'network' }) },
                       )}
                 </SuccessButton>
               </div>

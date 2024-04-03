@@ -82,7 +82,7 @@ export default (props: Props) => {
         }
       }
     },
-    [triggerEl, pickerEl, isOpen, disabled]
+    [triggerEl, pickerEl, isOpen, disabled],
   );
 
   useEffect(() => {

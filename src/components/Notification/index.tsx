@@ -29,7 +29,7 @@ const Notification = ({ notification }: Props) => {
 
   const handleOnDismiss = ({ key }: NotificationType) => {
     setNotifications(
-      notifications.filter((notification) => notification.key !== key)
+      notifications.filter((notification) => notification.key !== key),
     );
   };
 

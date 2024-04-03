@@ -12,7 +12,7 @@ export type FlexibleLinesState = FlexibleLine[] | null;
 
 const flexibleLines = (
   lines: FlexibleLinesState = null,
-  action: AnyAction
+  action: AnyAction,
 ): FlexibleLinesState => {
   switch (action.type) {
     case RECEIVE_FLEXIBLE_LINES:
@@ -27,7 +27,7 @@ const flexibleLines = (
               ...pis,
               flexibleStopPlaceRef: pis.flexibleStopPlace?.id,
             })),
-          })
+          }),
         ) ?? [];
 
       const newFlexibleLine: FlexibleLine = {

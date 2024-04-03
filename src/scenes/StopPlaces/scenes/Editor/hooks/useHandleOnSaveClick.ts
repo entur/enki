@@ -11,7 +11,7 @@ export const useHandleOnSaveClick = (
   onCall: () => void,
   onSaveStart: () => void,
   onSaveEnd: () => void,
-  errors: any
+  errors: any,
 ) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

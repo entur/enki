@@ -33,7 +33,7 @@ export const FlexibleLineTypeSelector = ({
 
     return mapFlexibleLineTypeAndLabelToItems(
       mappedFlexibleLineTypes,
-      formatMessage
+      formatMessage,
     );
   }, [supportedFlexibleLineTypes, formatMessage]);
 
@@ -51,7 +51,7 @@ export const FlexibleLineTypeSelector = ({
           className="flexible-line-type"
           selectedItem={
             getDropdownItems().find(
-              (item) => item.value === flexibleLineType
+              (item) => item.value === flexibleLineType,
             ) || null
           }
           placeholder={formatMessage({ id: 'defaultOption' })}
@@ -62,7 +62,7 @@ export const FlexibleLineTypeSelector = ({
           {...getErrorFeedback(
             formatMessage({ id: 'flexibleLineTypeEmpty' }),
             !isBlank(flexibleLineType),
-            flexibleLineTypePristine
+            flexibleLineTypePristine,
           )}
         />
       }

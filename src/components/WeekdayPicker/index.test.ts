@@ -7,8 +7,8 @@ describe('WeekdayPicker utils', () => {
       expect(
         toggleDay(
           [DAY_OF_WEEK.MONDAY, DAY_OF_WEEK.FRIDAY],
-          DAY_OF_WEEK.WEDNESDAY
-        )
+          DAY_OF_WEEK.WEDNESDAY,
+        ),
       ).toEqual([
         DAY_OF_WEEK.MONDAY,
         DAY_OF_WEEK.FRIDAY,
@@ -18,7 +18,7 @@ describe('WeekdayPicker utils', () => {
 
     it('should remove day if it is in the array', () => {
       expect(
-        toggleDay([DAY_OF_WEEK.MONDAY, DAY_OF_WEEK.FRIDAY], DAY_OF_WEEK.FRIDAY)
+        toggleDay([DAY_OF_WEEK.MONDAY, DAY_OF_WEEK.FRIDAY], DAY_OF_WEEK.FRIDAY),
       ).toEqual([DAY_OF_WEEK.MONDAY]);
     });
   });

@@ -22,17 +22,17 @@ const VehicleSubModeDropdown = (props: Props) => {
   const { formatMessage } = useIntl();
   const submodePristine = usePristine(
     props.transportSubmode,
-    props.spoilPristine
+    props.spoilPristine,
   );
   const getSubModeItems = useCallback(
     () =>
       props.transportMode
         ? mapVehicleSubmodeAndLabelToItems(
             VEHICLE_SUBMODE_LINK[props.transportMode],
-            formatMessage
+            formatMessage,
           )
         : [],
-    [props.transportMode, formatMessage]
+    [props.transportMode, formatMessage],
   );
 
   return (
@@ -40,7 +40,7 @@ const VehicleSubModeDropdown = (props: Props) => {
       <Dropdown
         selectedItem={
           getSubModeItems().find(
-            (item) => item.value === props.transportSubmode
+            (item) => item.value === props.transportSubmode,
           ) || null
         }
         placeholder={formatMessage({ id: 'defaultOption' })}
@@ -53,7 +53,7 @@ const VehicleSubModeDropdown = (props: Props) => {
         {...getErrorFeedback(
           formatMessage({ id: 'transportSubModeEmpty' }),
           !isBlank(props.transportSubmode),
-          submodePristine
+          submodePristine,
         )}
       />
     </div>

@@ -32,7 +32,7 @@ export const DayTypesEditor = ({
       refetch();
       setOpenDayTypeModal(open);
     },
-    [refetch]
+    [refetch],
   );
 
   return (
@@ -59,8 +59,8 @@ export const DayTypesEditor = ({
             const selectedIds = items?.map((item: any) => item.value);
             onChange(
               allDayTypesData?.dayTypes.filter((dt) =>
-                selectedIds?.includes(dt.id!)
-              ) || []
+                selectedIds?.includes(dt.id!),
+              ) || [],
             );
           }}
         />

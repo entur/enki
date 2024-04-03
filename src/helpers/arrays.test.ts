@@ -9,13 +9,13 @@ describe('arrays', () => {
   describe('replaceElement', () => {
     it('should replace an element in the given position', () => {
       expect(
-        replaceElement(['old value', 'second value'], 0, 'new value')
+        replaceElement(['old value', 'second value'], 0, 'new value'),
       ).toEqual(['new value', 'second value']);
     });
 
     it('should add element if the index is out of range', () => {
       expect(
-        replaceElement(['old value', 'second value'], 10, 'third value')
+        replaceElement(['old value', 'second value'], 10, 'third value'),
       ).toEqual(['old value', 'second value', 'third value']);
     });
   });
@@ -23,7 +23,7 @@ describe('arrays', () => {
   describe('removeElementByIndex', () => {
     it('should remove element in given position', () => {
       expect(
-        removeElementByIndex(['first value', 'remove me', 'other value'], 1)
+        removeElementByIndex(['first value', 'remove me', 'other value'], 1),
       ).toEqual(['first value', 'other value']);
     });
 
@@ -38,7 +38,7 @@ describe('arrays', () => {
   describe('addToListIfNotExistsOtherwiseRemove', () => {
     it('should remove element if it exists in list', () => {
       expect(
-        addOrRemove('remove me', ['first value', 'remove me', 'other value'])
+        addOrRemove('remove me', ['first value', 'remove me', 'other value']),
       ).toEqual(['first value', 'other value']);
     });
 
@@ -54,13 +54,13 @@ describe('arrays', () => {
   describe('changeElementAtIndex', () => {
     it('should replace an element in the given position', () => {
       expect(
-        changeElementAtIndex(['old value', 'second value'], 'new value', 0)
+        changeElementAtIndex(['old value', 'second value'], 'new value', 0),
       ).toEqual(['new value', 'second value']);
     });
 
     it('should do nothing if the index is out of range', () => {
       expect(
-        changeElementAtIndex(['old value', 'second value'], 'new value', 10)
+        changeElementAtIndex(['old value', 'second value'], 'new value', 10),
       ).toEqual(['old value', 'second value']);
     });
   });

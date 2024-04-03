@@ -78,7 +78,7 @@ describe('useAuth', () => {
   test('logout', async () => {
     const { result } = testHook();
     await expect(
-      result.current.logout({ returnTo: '/' })
+      result.current.logout({ returnTo: '/' }),
     ).resolves.not.toThrowError();
   });
 });

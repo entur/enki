@@ -15,11 +15,11 @@ interface Props {
 
 export const useOnQuayRefChange = (
   stopPoint: StopPoint,
-  onChange: (stopPoint: StopPoint) => void
+  onChange: (stopPoint: StopPoint) => void,
 ) => {
   const onQuayRefChange = useCallback(
     (quayRef: string) => onChange({ ...stopPoint, quayRef }),
-    [onChange, stopPoint]
+    [onChange, stopPoint],
   );
   return onQuayRefChange;
 };
@@ -34,21 +34,21 @@ export const QuayRefField = ({
 
   const { stopPlace, quay, refetch, loading } = useQuaySearch(
     initialQuayRef,
-    quayRefInputValue
+    quayRefInputValue,
   );
 
   const quaySearchFeedback = quaySearchResults(
     { stopPlace, quay },
     loading,
     formatMessage({ id: 'quaySearchResults_loadingLabel' }),
-    formatMessage({ id: 'quaySearchResults_quayNotFoundLabel' })
+    formatMessage({ id: 'quaySearchResults_quayNotFoundLabel' }),
   );
 
   const debouncedSearchForQuay = useCallback(
     debounce(async (quayRef: string) => {
       await refetch({ id: quayRef });
     }, 1000),
-    []
+    [],
   );
 
   return (

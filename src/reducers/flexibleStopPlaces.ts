@@ -14,7 +14,7 @@ export type FlexibleStopPlacesState = FlexibleStopPlace[] | null;
 
 const flexibleStopPlaces = (
   stopPlaces: FlexibleStopPlacesState = null,
-  action: AnyAction
+  action: AnyAction,
 ): FlexibleStopPlacesState => {
   switch (action.type) {
     case REQUEST_FLEXIBLE_STOP_PLACES:
@@ -25,14 +25,14 @@ const flexibleStopPlaces = (
 
     case RECEIVE_FLEXIBLE_STOP_PLACES:
       return action.stopPlaces.map((sp: FlexibleStopPlace) =>
-        mapFlexibleAreasToArea(sp)
+        mapFlexibleAreasToArea(sp),
       );
 
     case RECEIVE_FLEXIBLE_STOP_PLACE:
       return (
         stopPlaces
           ? stopPlaces.map((sp) =>
-              sp.id === action.stopPlace.id ? action.stopPlace : sp
+              sp.id === action.stopPlace.id ? action.stopPlace : sp,
             )
           : [action.stopPlace]
       ).map((sp) => mapFlexibleAreasToArea(sp));

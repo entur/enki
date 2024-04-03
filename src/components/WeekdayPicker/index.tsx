@@ -14,7 +14,7 @@ type Props = {
 
 export const toggleDay = (
   days: DAY_OF_WEEK[],
-  dayToToggle: DAY_OF_WEEK
+  dayToToggle: DAY_OF_WEEK,
 ): DAY_OF_WEEK[] =>
   days.includes(dayToToggle)
     ? days.filter((day) => day !== dayToToggle)
@@ -26,7 +26,7 @@ const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
   const { feedback, variant } = getErrorFeedback(
     formatMessage({ id: 'weekdaysError' }),
     days.length !== 0,
-    weekdayPristine
+    weekdayPristine,
   );
 
   return (

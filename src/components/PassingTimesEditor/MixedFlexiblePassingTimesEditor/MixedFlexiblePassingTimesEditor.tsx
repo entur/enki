@@ -37,7 +37,7 @@ export const MixedFlexiblePassingTimesEditor = ({
               isLast={index === stopPoints.length - 1}
               onChange={(changedPassingTime) => {
                 onChange(
-                  changeElementAtIndex(passingTimes, changedPassingTime, index)
+                  changeElementAtIndex(passingTimes, changedPassingTime, index),
                 );
               }}
             />

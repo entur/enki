@@ -22,16 +22,16 @@ export const FlexibleAreasOnlyStopPointEditor = ({
     validateFlexibleAreasOnlyStopPoint(stopPoint);
   const { formatMessage } = useIntl();
   const flexibleStopPlaces = useAppSelector(
-    (state) => state.flexibleStopPlaces
+    (state) => state.flexibleStopPlaces,
   );
   const onFrontTextChange = useOnFrontTextChange(stopPoint, onChange);
   const stopPlacePristine = usePristine(
     stopPoint.flexibleStopPlaceRef,
-    spoilPristine
+    spoilPristine,
   );
   const frontTextPristine = usePristine(
     stopPoint.destinationDisplay?.frontText,
-    spoilPristine
+    spoilPristine,
   );
 
   return (
@@ -43,8 +43,8 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             selectedItem={
               mapToItems(
                 flexibleStopPlaces?.filter(
-                  (item) => item.id === stopPoint.flexibleStopPlaceRef
-                ) || []
+                  (item) => item.id === stopPoint.flexibleStopPlaceRef,
+                ) || [],
               ).pop() || null
             }
             placeholder={formatMessage({ id: 'defaultOption' })}
@@ -60,7 +60,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             {...getErrorFeedback(
               stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
               !stopPlaceError,
-              stopPlacePristine
+              stopPlacePristine,
             )}
           />
 
@@ -71,7 +71,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             {...getErrorFeedback(
               frontTextError ? formatMessage({ id: frontTextError }) : '',
               !frontTextError,
-              frontTextPristine
+              frontTextPristine,
             )}
           />
         </div>

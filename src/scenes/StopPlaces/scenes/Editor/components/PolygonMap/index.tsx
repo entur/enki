@@ -33,7 +33,7 @@ const MapContents = (props: Props) => {
         map.setView(e.target.getBounds().getCenter());
       }
     },
-    [map]
+    [map],
   );
   useMapEvent('click', props.addCoordinate);
 

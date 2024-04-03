@@ -28,7 +28,7 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
         },
       ]);
     },
-    [onPointsInSequenceChange]
+    [onPointsInSequenceChange],
   );
 
   return (

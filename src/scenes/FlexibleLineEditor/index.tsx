@@ -34,7 +34,7 @@ const EditorFrame = () => {
   const [isDeleting, setDeleting] = useState(false);
   const [firstPath] = useLocation().pathname.split('/').slice(1);
   const isFlexibleLine = Boolean(
-    line?.flexibleLineType || firstPath === 'flexible-lines'
+    line?.flexibleLineType || firstPath === 'flexible-lines',
   );
 
   const intl = useIntl();
@@ -99,7 +99,7 @@ const EditorFrame = () => {
     filterAuthorities(
       organisations,
       providers.active,
-      config.enableLegacyOrganisationsFilter
+      config.enableLegacyOrganisationsFilter,
     ).length === 0;
 
   return (
@@ -124,7 +124,7 @@ const EditorFrame = () => {
             {!isLoadingDependencies && line && (
               <LineEditorStepper
                 steps={FLEXIBLE_LINE_STEPS.map((step) =>
-                  formatMessage({ id: step })
+                  formatMessage({ id: step }),
                 )}
                 isValidStepIndex={(i: number) =>
                   getMaxAllowedFlexibleLineStepIndex(line!, intl) >= i
@@ -153,7 +153,7 @@ const EditorFrame = () => {
                     changeFlexibleLine={onFlexibleLineChange}
                     operators={filterNetexOperators(
                       organisations ?? [],
-                      config.enableLegacyOrganisationsFilter
+                      config.enableLegacyOrganisationsFilter,
                     )}
                     networks={networks || []}
                     spoilPristine={nextClicked}

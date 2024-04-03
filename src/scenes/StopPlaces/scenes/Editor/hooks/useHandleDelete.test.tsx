@@ -31,7 +31,7 @@ describe('useHandleDelete', () => {
             </MemoryRouter>
           </Provider>
         ),
-      }
+      },
     );
 
     result.current();
@@ -66,7 +66,7 @@ describe('useHandleDelete', () => {
             </MemoryRouter>
           </Provider>
         ),
-      }
+      },
     );
 
     result.current();

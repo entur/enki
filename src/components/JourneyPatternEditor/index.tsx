@@ -46,11 +46,11 @@ const JourneyPatternEditor = ({
         serviceJourneys: newServiceJourneys,
         pointsInSequence: removeElementByIndex(
           journeyPattern.pointsInSequence,
-          stopPointIndex
+          stopPointIndex,
         ),
       });
     },
-    [journeyPattern, onSave, serviceJourneys]
+    [journeyPattern, onSave, serviceJourneys],
   );
 
   const addStopPoint = useCallback(() => {
@@ -73,10 +73,10 @@ const JourneyPatternEditor = ({
         pointsInSequence: changeElementAtIndex(
           journeyPattern.pointsInSequence,
           stopPlace,
-          pointIndex
+          pointIndex,
         ),
       }),
-    [journeyPattern, onSave]
+    [journeyPattern, onSave],
   );
 
   const onPointsInSequenceChange = useCallback(
@@ -85,7 +85,7 @@ const JourneyPatternEditor = ({
         ...journeyPattern,
         pointsInSequence,
       }),
-    [journeyPattern, onSave]
+    [journeyPattern, onSave],
   );
 
   const StopPointsEditor = useStopPointsEditor(flexibleLineType);
