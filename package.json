@@ -70,7 +70,7 @@
     "@types/lodash.isequal": "4.5.8",
     "@types/node": "18.19.29",
     "@types/react": "18.2.74",
-    "@types/react-dom": "18.2.23",
+    "@types/react-dom": "18.2.24",
     "@types/react-helmet": "6.1.11",
     "@types/react-intl-redux": "0.1.19",
     "@types/react-leaflet": "3.0.0",
