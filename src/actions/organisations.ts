@@ -10,7 +10,7 @@ export type ReceiveOrganisations = {
 };
 
 export const receiveOrganisations = (
-  organisations: OrganisationState
+  organisations: OrganisationState,
 ): ReceiveOrganisations => ({
   type: RECEIVE_ORGANISATIONS,
   organisations,
@@ -27,7 +27,7 @@ export const getOrganisations = (): AppThunk => async (dispatch, getState) => {
       activeProvider,
       getOrganisationsQuery,
       {},
-      await getState().auth.getAccessToken()
+      await getState().auth.getAccessToken(),
     );
     dispatch(receiveOrganisations(organisations));
   } catch (e) {

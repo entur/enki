@@ -19,7 +19,7 @@ type PassingTime = VersionedType & {
 export const passingTimeToPayload = (
   pt: PassingTime,
   i: number,
-  length: number
+  length: number,
 ) => {
   const {
     arrivalTime,

@@ -38,7 +38,7 @@ export const loadExports =
         {
           historicDays: 365,
         },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(receiveExportsActionCreator(data.exports));
     } catch (e) {
@@ -51,9 +51,9 @@ export const loadExports =
             },
             {
               details: getInternationalizedUttuError(intl, e as Error),
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
@@ -71,7 +71,7 @@ export const loadExportById =
         activeProvider,
         getExportByIdQuery,
         { id },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(receiveExportActionCreator(data.export));
     } catch (e) {
@@ -84,9 +84,9 @@ export const loadExportById =
             },
             {
               details: getInternationalizedUttuError(intl, e as Error),
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
@@ -106,7 +106,7 @@ export const saveExport =
         {
           input: toPayload(theExport),
         },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
     } catch (e) {
       dispatch(
@@ -118,9 +118,9 @@ export const saveExport =
             },
             {
               details: getInternationalizedUttuError(intl, e as Error),
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }

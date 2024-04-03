@@ -10,7 +10,11 @@ const formatMessage = ({ id }) => id;
  */
 test('should render no notices', () => {
   render(
-    <Notices notices={[]} setNotices={() => {}} formatMessage={formatMessage} />
+    <Notices
+      notices={[]}
+      setNotices={() => {}}
+      formatMessage={formatMessage}
+    />,
   );
   expect(screen.getByRole('rowgroup').children).toHaveLength(1);
 });
@@ -21,7 +25,7 @@ test('should render single notices', () => {
       notices={[{ text: 'This a notice' }]}
       setNotices={() => {}}
       formatMessage={formatMessage}
-    />
+    />,
   );
   expect(screen.getByRole('rowgroup').children).toHaveLength(2);
   expect(screen.getAllByDisplayValue('This a notice')).toHaveLength(1);
@@ -33,7 +37,7 @@ test('should render multiple notices', () => {
       notices={[{ text: 'This a notice' }, { text: 'This is another notice' }]}
       setNotices={() => {}}
       formatMessage={formatMessage}
-    />
+    />,
   );
   expect(screen.getByRole('rowgroup').children).toHaveLength(3);
   expect(screen.getAllByDisplayValue('This a notice')).toHaveLength(1);

@@ -7,7 +7,7 @@ type GeoJSON = {
 
 export const addCoordinate = (
   coordinates: Coordinate[],
-  coordinate: Coordinate
+  coordinate: Coordinate,
 ) => {
   // The polygon must be closed: first coordinate == last coordinate.
   const lastCoordinate = coordinates[coordinates.length - 1] ?? coordinate;
@@ -15,7 +15,7 @@ export const addCoordinate = (
 };
 
 export const removeLastCoordinate = (
-  coordinates: Coordinate[]
+  coordinates: Coordinate[],
 ): Coordinate[] => {
   if (coordinates.length > 2) {
     const lastCoordinate: Coordinate = coordinates[coordinates.length - 1];

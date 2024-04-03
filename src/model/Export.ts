@@ -31,7 +31,7 @@ export const toPayload = (selectedExport: Export): Export => {
 export const download = async (
   apiBase: string | undefined,
   selectedExport: Export,
-  token: string
+  token: string,
 ) => {
   try {
     // feature detection
@@ -45,7 +45,7 @@ export const download = async (
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const id = selectedExport.id ?? 'EXPORT_ID';

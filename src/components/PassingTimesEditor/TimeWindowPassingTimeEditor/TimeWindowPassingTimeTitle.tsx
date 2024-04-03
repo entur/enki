@@ -13,7 +13,7 @@ type StateProps = {
 
 const TimeWindowPassingTimeTitle = ({ stopPoint }: Props): ReactElement => {
   const flexibleStopPlaces = useAppSelector(
-    (state) => state.flexibleStopPlaces
+    (state) => state.flexibleStopPlaces,
   );
 
   return (
@@ -21,7 +21,7 @@ const TimeWindowPassingTimeTitle = ({ stopPoint }: Props): ReactElement => {
       {flexibleStopPlaces?.find(
         (stop) =>
           stop.id ===
-          (stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id)
+          (stopPoint.flexibleStopPlaceRef ?? stopPoint.flexibleStopPlace?.id),
       )?.name ?? ''}
     </div>
   );

@@ -17,7 +17,7 @@ type Props = {
   children: (
     journeyPattern: JourneyPattern,
     handleUpdate: (journeyPattern: JourneyPattern) => void,
-    handleDelete?: () => void
+    handleDelete?: () => void,
   ) => ReactElement;
 };
 
@@ -54,7 +54,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
     setShowModal(false);
     setTimeout(
       () => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }),
-      100
+      100,
     );
   };
 
@@ -115,7 +115,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
                 {children(
                   jp,
                   updateJourneyPattern(index),
-                  deleteJourneyPattern(index)
+                  deleteJourneyPattern(index),
                 )}
               </AccordionItem>
             ))}

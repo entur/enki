@@ -49,7 +49,7 @@ const FlexibleStopPlaceEditor = () => {
 
   const polygonCoordinates =
     flexibleStopPlace?.flexibleAreas?.map(
-      (area) => area.polygon?.coordinates ?? []
+      (area) => area.polygon?.coordinates ?? [],
     ) ?? [];
 
   const [isSaving, setSaving] = useState<boolean>(false);
@@ -68,7 +68,7 @@ const FlexibleStopPlaceEditor = () => {
   const areasPristine = usePristine(flexibleAreas, saveClicked);
   const stopPlaceTypePristine = usePristine(
     flexibleStopPlace?.keyValues,
-    saveClicked
+    saveClicked,
   );
 
   const errors = validateFlexibleStopPlace(flexibleStopPlace ?? {});
@@ -78,14 +78,14 @@ const FlexibleStopPlaceEditor = () => {
     () => setSaveClicked(true),
     () => setSaving(true),
     () => setSaving(false),
-    errors
+    errors,
   );
 
   const handleDelete = useHandleDelete(
     flexibleStopPlace,
     () => setDeleteDialogOpen(false),
     () => setDeleting(true),
-    () => setDeleting(false)
+    () => setDeleting(false),
   );
 
   const handleMapOnClick = (e: LeafletMouseEvent) => {
@@ -94,7 +94,7 @@ const FlexibleStopPlaceEditor = () => {
 
     const newCoordinates = addCoordinate(
       polygonCoordinates[currentAreaIndex],
-      newCoordinate
+      newCoordinate,
     );
 
     changePolygon({
@@ -131,7 +131,7 @@ const FlexibleStopPlaceEditor = () => {
 
   const handleUndoClick = () => {
     const newCoordinates = removeLastCoordinate(
-      polygonCoordinates[currentAreaIndex]
+      polygonCoordinates[currentAreaIndex],
     );
     changeCoordinates(newCoordinates);
   };
@@ -143,13 +143,13 @@ const FlexibleStopPlaceEditor = () => {
       .find(
         (l) =>
           l.journeyPatterns?.[0].pointsInSequence[0].flexibleStopPlaceRef ===
-          flexibleStopPlace?.id
+          flexibleStopPlace?.id,
       );
 
   const nameError = getErrorFeedback(
     errors.name ? formatMessage({ id: errors.name }) : '',
     !errors.name,
-    namePristine
+    namePristine,
   );
 
   const stopPlaceTypeError = getErrorFeedback(
@@ -157,13 +157,13 @@ const FlexibleStopPlaceEditor = () => {
       ? formatMessage({ id: errors.flexibleStopPlaceType })
       : '',
     !errors.flexibleStopPlaceType,
-    stopPlaceTypePristine
+    stopPlaceTypePristine,
   );
 
   const areaError = getErrorFeedback(
     errors.flexibleArea ? formatMessage({ id: errors.flexibleArea }) : '',
     !errors.flexibleArea,
-    areasPristine
+    areasPristine,
   );
 
   return (
@@ -224,7 +224,7 @@ const FlexibleStopPlaceEditor = () => {
                   {...getErrorFeedback(
                     errors.name ? formatMessage({ id: errors.name }) : '',
                     !errors.name,
-                    namePristine
+                    namePristine,
                   )}
                   value={name}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -283,7 +283,7 @@ const FlexibleStopPlaceEditor = () => {
                       currentAreaIndex === index
                         ? () =>
                             setCurrentAreaIndex(
-                              currentAreaIndex > 0 ? currentAreaIndex - 1 : 0
+                              currentAreaIndex > 0 ? currentAreaIndex - 1 : 0,
                             )
                         : () => setCurrentAreaIndex(index)
                     }
@@ -305,7 +305,7 @@ const FlexibleStopPlaceEditor = () => {
                                 } else {
                                   return localArea;
                                 }
-                              }
+                              },
                             ),
                           });
                         }}
@@ -336,7 +336,7 @@ const FlexibleStopPlaceEditor = () => {
                             ).filter((_, i) => i !== index),
                           }));
                           setCurrentAreaIndex(
-                            currentAreaIndex > 0 ? currentAreaIndex - 1 : 0
+                            currentAreaIndex > 0 ? currentAreaIndex - 1 : 0,
                           );
                         }}
                       >
@@ -355,7 +355,7 @@ const FlexibleStopPlaceEditor = () => {
                       flexibleAreas: [...(current?.flexibleAreas ?? []), {}],
                     }));
                     setCurrentAreaIndex(
-                      flexibleStopPlace.flexibleAreas?.length ?? -1
+                      flexibleStopPlace.flexibleAreas?.length ?? -1,
                     );
                   }}
                 >
@@ -379,7 +379,7 @@ const FlexibleStopPlaceEditor = () => {
                           {
                             id: 'editorDetailedCreate',
                           },
-                          { details: formatMessage({ id: 'stopPlaceText' }) }
+                          { details: formatMessage({ id: 'stopPlaceText' }) },
                         )}
                   </SuccessButton>
                 </div>
@@ -390,15 +390,15 @@ const FlexibleStopPlaceEditor = () => {
                   addCoordinate={handleMapOnClick}
                   polygon={transformToMapCoordinates(
                     flexibleStopPlace.flexibleAreas?.[currentAreaIndex].polygon
-                      ?.coordinates ?? []
+                      ?.coordinates ?? [],
                   )}
                   otherPolygons={
                     flexibleStopPlace.flexibleAreas
                       ?.filter((_, index) => index !== currentAreaIndex)
                       .map((area) =>
                         transformToMapCoordinates(
-                          area.polygon?.coordinates ?? []
-                        )
+                          area.polygon?.coordinates ?? [],
+                        ),
                       ) ?? []
                   }
                   undo={handleUndoClick}

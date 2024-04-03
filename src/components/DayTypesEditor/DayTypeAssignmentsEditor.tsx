@@ -74,17 +74,17 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                   <DatePicker
                     label={formatMessage({ id: 'dayTypeEditorFromDate' })}
                     selectedDate={nativeDateToDateValue(
-                      moment(dta.operatingPeriod.fromDate).toDate()
+                      moment(dta.operatingPeriod.fromDate).toDate(),
                     )}
                     onChange={(date) => {
                       changeDay(
                         {
                           ...dta.operatingPeriod,
                           fromDate: dateJsToIso(
-                            timeOrDateValueToNativeDate(date!)
+                            timeOrDateValueToNativeDate(date!),
                           ),
                         },
-                        index
+                        index,
                       );
                     }}
                   />
@@ -97,22 +97,22 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                       formatMessage({ id: 'dayTypeEditorToDateValidation' }),
                       isNotBefore(
                         dta.operatingPeriod.toDate ?? '',
-                        dta.operatingPeriod.fromDate ?? ''
+                        dta.operatingPeriod.fromDate ?? '',
                       ),
-                      false
+                      false,
                     )}
                     selectedDate={nativeDateToDateValue(
-                      moment(dta.operatingPeriod.toDate).toDate()
+                      moment(dta.operatingPeriod.toDate).toDate(),
                     )}
                     onChange={(date) => {
                       changeDay(
                         {
                           ...dta.operatingPeriod,
                           toDate: dateJsToIso(
-                            timeOrDateValueToNativeDate(date!)
+                            timeOrDateValueToNativeDate(date!),
                           ),
                         },
-                        index
+                        index,
                       );
                     }}
                   />
@@ -134,7 +134,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                     <IconButton
                       onClick={() =>
                         onChange(
-                          removeElementByIndex(dayTypeAssignments, index)
+                          removeElementByIndex(dayTypeAssignments, index),
                         )
                       }
                     >

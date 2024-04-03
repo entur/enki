@@ -21,7 +21,7 @@ import './styles.scss';
 const getCurrentProviderSelector =
   (params: Params, xmlnsUrlPrefix?: string) => (state: GlobalState) =>
     state.providers?.providers?.find(
-      (provider) => provider.code === params.id
+      (provider) => provider.code === params.id,
     ) ?? {
       name: '',
       code: '',
@@ -38,7 +38,7 @@ const ProviderEditor = () => {
   const { formatMessage } = intl;
   const { xmlnsUrlPrefix } = useConfig();
   const currentProvider = useAppSelector(
-    getCurrentProviderSelector(params, xmlnsUrlPrefix)
+    getCurrentProviderSelector(params, xmlnsUrlPrefix),
   );
 
   const [isSaving, setSaving] = useState<boolean>(false);
@@ -95,7 +95,7 @@ const ProviderEditor = () => {
                 {...getErrorFeedback(
                   formatMessage({ id: 'editorProviderValidationField' }),
                   !isBlank(provider.name),
-                  namePristine
+                  namePristine,
                 )}
                 value={provider.name ?? ''}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -122,7 +122,7 @@ const ProviderEditor = () => {
                 {...getErrorFeedback(
                   formatMessage({ id: 'editorProviderValidationField' }),
                   !isBlank(provider.code),
-                  namePristine
+                  namePristine,
                 )}
               />
 
@@ -153,7 +153,7 @@ const ProviderEditor = () => {
                     ? formatMessage({ id: 'editorSaveButtonText' })
                     : formatMessage(
                         { id: 'editorDetailedCreate' },
-                        { details: formatMessage({ id: 'provider' }) }
+                        { details: formatMessage({ id: 'provider' }) },
                       )}
                 </SuccessButton>
               </div>

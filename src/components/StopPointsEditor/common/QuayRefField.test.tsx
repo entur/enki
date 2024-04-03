@@ -66,11 +66,11 @@ describe('QuayRefField', () => {
           errorFeedback={{ variant: undefined, feedback: undefined }}
           onChange={mockedOnChange}
         />
-      </MockedProvider>
+      </MockedProvider>,
     );
 
     expect(
-      getByText(renderResult.container, 'Quay not found')
+      getByText(renderResult.container, 'Quay not found'),
     ).toBeInTheDocument();
 
     await act(async () => {

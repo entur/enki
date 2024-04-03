@@ -56,7 +56,7 @@ const uttuMessages: {
 };
 
 export const isOfUttuMessage = (
-  key: string
+  key: string,
 ): key is UttuCode | CombinedUttuCode =>
   key in UttuCode || key in CombinedUttuCode;
 

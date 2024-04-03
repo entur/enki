@@ -34,7 +34,7 @@ export type Organisation = {
 export const filterAuthorities = (
   organisations: Organisation[],
   activeProvider: Provider | null,
-  enableFilter?: boolean
+  enableFilter?: boolean,
 ) =>
   enableFilter
     ? organisations?.filter((org) =>
@@ -42,7 +42,7 @@ export const filterAuthorities = (
           ?.find((kv) => kv.key === 'LegacyId')
           ?.value?.split(',')
           .find((v) => v.indexOf('Authority') > -1)
-          ?.startsWith(activeProvider?.codespace?.xmlns || 'INVALID')
+          ?.startsWith(activeProvider?.codespace?.xmlns || 'INVALID'),
       )
     : organisations;
 
@@ -51,13 +51,13 @@ export const filterAuthorities = (
  */
 export const filterNetexOperators = (
   organisations: Organisation[],
-  enableFilter?: boolean
+  enableFilter?: boolean,
 ): Organisation[] =>
   enableFilter
     ? organisations.filter((org) =>
         org.keyList?.keyValue
           ?.find((kv) => kv.key === 'LegacyId')
           ?.value?.split(',')
-          .find((v) => v.indexOf('Operator') > -1)
+          .find((v) => v.indexOf('Operator') > -1),
       )
     : organisations;

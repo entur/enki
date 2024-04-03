@@ -42,18 +42,18 @@ export const MixedFlexibleStopPointEditor = ({
 }: StopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const [selectMode, setSelectMode] = useState<StopPlaceMode>(
-    stopPoint.quayRef ? StopPlaceMode.NSR : StopPlaceMode.FLEXIBLE
+    stopPoint.quayRef ? StopPlaceMode.NSR : StopPlaceMode.FLEXIBLE,
   );
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const flexibleStopPlaces = useAppSelector(
-    (state) => state.flexibleStopPlaces
+    (state) => state.flexibleStopPlaces,
   );
 
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
 
   const stopPlacePristine = usePristine(
     stopPoint.flexibleStopPlaceRef,
-    spoilPristine
+    spoilPristine,
   );
 
   const onQuayRefChange = useOnQuayRefChange(stopPoint, onChange);
@@ -103,7 +103,7 @@ export const MixedFlexibleStopPointEditor = ({
                 value: stopPoint.flexibleStopPlaceRef,
                 label:
                   flexibleStopPlaces?.find(
-                    (item) => item.id === stopPoint.flexibleStopPlaceRef
+                    (item) => item.id === stopPoint.flexibleStopPlaceRef,
                   )?.name || '',
               }}
               placeholder={formatMessage({ id: 'defaultOption' })}
@@ -119,7 +119,7 @@ export const MixedFlexibleStopPointEditor = ({
               {...getErrorFeedback(
                 stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
                 !stopPlaceError,
-                stopPlacePristine
+                stopPlacePristine,
               )}
             />
           )}
@@ -130,7 +130,7 @@ export const MixedFlexibleStopPointEditor = ({
               errorFeedback={getErrorFeedback(
                 stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
                 !stopPlaceError,
-                quayRefPristine
+                quayRefPristine,
               )}
               onChange={onQuayRefChange}
             />

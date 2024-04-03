@@ -10,7 +10,7 @@ export default (
   headerKey: keyof MessagesKey,
   messageKey: keyof MessagesKey,
   error?: ApolloError,
-  callback?: () => void
+  callback?: () => void,
 ) => {
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -25,9 +25,9 @@ export default (
             },
             {
               details: getInternationalizedUttuError(intl, error),
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
       if (callback) {
         callback();

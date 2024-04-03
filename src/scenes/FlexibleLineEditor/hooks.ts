@@ -20,14 +20,14 @@ export const useLoadDependencies = () => {
   const dispatchLoadFlexibleStopPlaces = useCallback(
     () =>
       dispatch(loadFlexibleStopPlaces(intl)).then(() =>
-        setFlexibleStopPlacesIsLoading(false)
+        setFlexibleStopPlacesIsLoading(false),
       ),
-    [dispatch]
+    [dispatch],
   );
 
   const dispatchLoadNetworks = useCallback(
     () => dispatch(loadNetworks()).then(() => setNetworksIsLoading(false)),
-    [dispatch]
+    [dispatch],
   );
 
   const dispatchLoadFlexibleLineById = useCallback(() => {

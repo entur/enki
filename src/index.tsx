@@ -68,7 +68,7 @@ const renderIndex = async () => {
           </ConfigContext.Provider>
         </EnkiIntlProvider>
       </Provider>
-    </Sentry.ErrorBoundary>
+    </Sentry.ErrorBoundary>,
   );
 };
 

@@ -8,7 +8,7 @@ export type ErrorHandling = {
 export const getErrorFeedback = (
   feedback: string,
   isValid: boolean,
-  isPristine: boolean
+  isPristine: boolean,
 ): ErrorHandling => {
   return isPristine || isValid
     ? { variant: undefined, feedback: undefined }

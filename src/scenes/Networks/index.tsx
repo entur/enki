@@ -26,7 +26,7 @@ const Networks = () => {
   const navigate = useNavigate();
   const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
   const [selectedNetwork, setSelectedNetwork] = useState<Network | undefined>(
-    undefined
+    undefined,
   );
   const { formatMessage } = useIntl();
   const { providers, organisations, networks } = useAppSelector((s) => s);
@@ -40,7 +40,7 @@ const Networks = () => {
     (id: string) => {
       navigate(`/networks/edit/${id}`);
     },
-    [history]
+    [history],
   );
 
   const RenderTableRows = ({

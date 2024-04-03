@@ -29,7 +29,7 @@ const requestFlexibleStopPlacesActionCreator = () => ({
 });
 
 const receiveFlexibleStopPlacesActionCreator = (
-  stopPlaces: FlexibleStopPlace[]
+  stopPlaces: FlexibleStopPlace[],
 ) => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACES,
   stopPlaces,
@@ -40,7 +40,7 @@ const requestFlexibleStopPlaceActionCreator = () => ({
 });
 
 const receiveFlexibleStopPlaceActionCreator = (
-  stopPlace: FlexibleStopPlace
+  stopPlace: FlexibleStopPlace,
 ) => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACE,
   stopPlace,
@@ -60,7 +60,7 @@ export const loadFlexibleStopPlaces =
         activeProvider,
         getFlexibleStopPlacesQuery,
         {},
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       const flexibleStopPlaces = data.flexibleStopPlaces;
       dispatch(receiveFlexibleStopPlacesActionCreator(flexibleStopPlaces));
@@ -74,9 +74,9 @@ export const loadFlexibleStopPlaces =
             {
               id: 'flexibleStopPlacesLoadStopPlacesErrorMessage',
             },
-            { details: getInternationalizedUttuError(intl, e as Error) }
-          )
-        )
+            { details: getInternationalizedUttuError(intl, e as Error) },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
@@ -96,7 +96,7 @@ export const loadFlexibleStopPlaceById =
         activeProvider,
         getFlexibleStopPlaceByIdQuery,
         { id },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(receiveFlexibleStopPlaceActionCreator(data.flexibleStopPlace));
     } catch (e) {
@@ -109,9 +109,9 @@ export const loadFlexibleStopPlaceById =
             {
               id: 'flexibleStopPlacesLoadStopPlaceErrorMessage',
             },
-            { details: getInternationalizedUttuError(intl, e as Error) }
-          )
-        )
+            { details: getInternationalizedUttuError(intl, e as Error) },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
@@ -131,7 +131,7 @@ export const saveFlexibleStopPlace =
         {
           input: flexibleStopPlace,
         },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(
         showSuccessNotification(
@@ -140,8 +140,8 @@ export const saveFlexibleStopPlace =
           }),
           intl.formatMessage({
             id: 'flexibleStopPlacesSaveStopPlaceSuccessMessage',
-          })
-        )
+          }),
+        ),
       );
     } catch (e) {
       dispatch(
@@ -153,9 +153,9 @@ export const saveFlexibleStopPlace =
             {
               id: 'flexibleStopPlacesSaveStopPlaceErrorMessage',
             },
-            { details: getInternationalizedUttuError(intl, e as Error) }
-          )
-        )
+            { details: getInternationalizedUttuError(intl, e as Error) },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
@@ -172,7 +172,7 @@ export const deleteFlexibleStopPlaceById =
         activeProvider,
         deleteFlexibleStopPlace,
         { id },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(
         showSuccessNotification(
@@ -181,8 +181,8 @@ export const deleteFlexibleStopPlaceById =
           }),
           intl.formatMessage({
             id: 'flexibleStopPlacesDeleteStopPlaceSuccessMessage',
-          })
-        )
+          }),
+        ),
       );
     } catch (e) {
       dispatch(
@@ -194,9 +194,9 @@ export const deleteFlexibleStopPlaceById =
             {
               id: 'flexibleStopPlacesDeleteStopPlaceErrorMessage',
             },
-            { details: getInternationalizedUttuError(intl, e as Error) }
-          )
-        )
+            { details: getInternationalizedUttuError(intl, e as Error) },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }

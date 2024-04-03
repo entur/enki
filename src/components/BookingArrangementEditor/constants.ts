@@ -10,7 +10,7 @@ export type BookingInfoAttachment = {
 };
 
 export const bookingInfoAttachmentLabel = (
-  bookingInfoAttachmentType: BookingInfoAttachmentType
+  bookingInfoAttachmentType: BookingInfoAttachmentType,
 ) => {
   switch (bookingInfoAttachmentType) {
     case BookingInfoAttachmentType.LINE:

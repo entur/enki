@@ -19,7 +19,7 @@ type Props = {
     name: string,
     serviceJourneys: ServiceJourney[],
     stopPoints: StopPoint[],
-    journeyPatternIndex: number
+    journeyPatternIndex: number,
   ) => void;
 };
 
@@ -86,7 +86,7 @@ export default (props: Props) => {
                 textFieldRef?.current?.value ?? '',
                 jp.serviceJourneys,
                 jp.pointsInSequence,
-                selectedJourneyPatternIndex
+                selectedJourneyPatternIndex,
               );
             }}
           >

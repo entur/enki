@@ -7,7 +7,7 @@ export const replaceElement = <E>(array: E[], index: number, value: E): E[] => [
 export const changeElementAtIndex = <T>(
   array: T[],
   element: T,
-  index: number
+  index: number,
 ): T[] => array.map((el, i) => (i === index ? element : el));
 
 export const removeElementByIndex = <E>(array: E[], index: number): E[] => [

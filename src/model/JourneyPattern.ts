@@ -27,13 +27,13 @@ export const initJourneyPattern = (): JourneyPattern => ({
 export const journeyPatternToPayload = (journeyPattern: JourneyPattern) => ({
   ...journeyPattern,
   serviceJourneys: journeyPattern.serviceJourneys.map((sj) =>
-    serviceJourneyToPayload(sj)
+    serviceJourneyToPayload(sj),
   ),
   pointsInSequence: journeyPattern.pointsInSequence.map((pis) =>
-    stopPointToPayload(pis)
+    stopPointToPayload(pis),
   ),
   notices: journeyPattern.notices?.filter(
-    (notice) => notice && notice.text && notice.text !== ''
+    (notice) => notice && notice.text && notice.text !== '',
   ),
 });
 

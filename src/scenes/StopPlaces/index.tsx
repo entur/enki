@@ -48,7 +48,7 @@ const StopPlaces = () => {
     (id: string) => {
       navigate(`/stop-places/edit/${id}`);
     },
-    [navigate]
+    [navigate],
   );
 
   const getStopAreaTypeMessageKey = (stopPlace: FlexibleStopPlace) => {
@@ -187,8 +187,8 @@ const StopPlaces = () => {
                       dispatch(
                         deleteFlexibleStopPlaceById(
                           selectedStopPlace.id ?? '',
-                          intl
-                        )
+                          intl,
+                        ),
                       )
                         .then(() => {
                           setSelectedStopPlace(undefined);

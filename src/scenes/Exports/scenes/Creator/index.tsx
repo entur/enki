@@ -43,7 +43,7 @@ const ExportsCreator = () => {
 
   const onFieldChange = (
     field: keyof Export,
-    value: string | boolean | ExportLineAssociation[]
+    value: string | boolean | ExportLineAssociation[],
   ) => {
     setTheExport({ ...theExport, [field]: value });
   };
@@ -69,7 +69,7 @@ const ExportsCreator = () => {
           {...getErrorFeedback(
             formatMessage({ id: 'validateFormErrorExportNameIsEmpty' }),
             !isBlank(theExport.name),
-            namePristine
+            namePristine,
           )}
           defaultValue={theExport.name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>

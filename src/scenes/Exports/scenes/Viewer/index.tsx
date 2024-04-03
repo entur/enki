@@ -46,7 +46,7 @@ const ExportsViewer = () => {
   const dispatchLoadExport = useCallback(() => {
     if (params.id) {
       dispatch(loadExportById(params.id, intl)).catch(() =>
-        navigate('/exports')
+        navigate('/exports'),
       );
     } else {
       navigate('/exports');
@@ -112,7 +112,7 @@ const ExportsViewer = () => {
                     download(
                       uttuApiUrl,
                       theExport!,
-                      await auth.getAccessToken()
+                      await auth.getAccessToken(),
                     );
                   }}
                 >

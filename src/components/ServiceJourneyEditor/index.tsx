@@ -49,7 +49,7 @@ const ServiceJourneyEditor = (props: Props) => {
     serviceJourney;
 
   const [operatorSelection, setOperatorSelection] = useState(
-    serviceJourney.operatorRef
+    serviceJourney.operatorRef,
   );
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const [showCopyDialog, setShowCopyDialog] = useState<boolean>(false);
@@ -57,7 +57,7 @@ const ServiceJourneyEditor = (props: Props) => {
   const { formatMessage } = useIntl();
 
   const handleOperatorSelectionChange = (
-    newOperatorSelection: string | undefined
+    newOperatorSelection: string | undefined,
   ) => {
     onFieldChange('operatorRef', newOperatorSelection || null);
     setOperatorSelection(newOperatorSelection);
@@ -67,12 +67,12 @@ const ServiceJourneyEditor = (props: Props) => {
 
   const operators = filterNetexOperators(
     organisations ?? [],
-    config.enableLegacyOrganisationsFilter
+    config.enableLegacyOrganisationsFilter,
   );
 
   const onFieldChange = <T extends keyof ServiceJourney>(
     field: T,
-    value: ServiceJourney[T]
+    value: ServiceJourney[T],
   ) => {
     onChange({ ...serviceJourney, [field]: value });
   };
@@ -93,7 +93,7 @@ const ServiceJourneyEditor = (props: Props) => {
               {...getErrorFeedback(
                 formatMessage({ id: 'nameIsRequired' }),
                 !isBlank(name),
-                namePristine
+                namePristine,
               )}
               value={name}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -136,11 +136,11 @@ const ServiceJourneyEditor = (props: Props) => {
             label={formatMessage({ id: 'generalOperator' })}
             selectedItem={getInit(
               operators.map((op) => ({ ...op, name: op.name.value })),
-              operatorSelection
+              operatorSelection,
             )}
             placeholder={formatMessage({ id: 'defaultOption' })}
             items={mapToItems(
-              operators.map((op) => ({ ...op, name: op.name.value }))
+              operators.map((op) => ({ ...op, name: op.name.value })),
             )}
             clearable
             onChange={(e: NormalizedDropdownItemType | null) =>

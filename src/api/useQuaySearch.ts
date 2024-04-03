@@ -8,7 +8,7 @@ interface StopPlaceByQuayRef {
 
 export const useQuaySearch = (
   initialQuayRef?: string | null,
-  quayRefInput?: string | null
+  quayRefInput?: string | null,
 ) => {
   const { loading, data, refetch } = useQuery<StopPlaceByQuayRef>(
     STOP_PLACE_BY_QUAY_REF_QUERY,
@@ -17,7 +17,7 @@ export const useQuaySearch = (
         id: initialQuayRef,
       },
       skip: !initialQuayRef,
-    }
+    },
   );
 
   let foundQuay = undefined,
@@ -26,7 +26,7 @@ export const useQuaySearch = (
   if (data?.stopPlaceByQuayRef) {
     foundStopPlace = data.stopPlaceByQuayRef;
     foundQuay = data.stopPlaceByQuayRef.quays?.find(
-      (q: Quay) => q.id === (quayRefInput ? quayRefInput : initialQuayRef)
+      (q: Quay) => q.id === (quayRefInput ? quayRefInput : initialQuayRef),
     );
   }
 

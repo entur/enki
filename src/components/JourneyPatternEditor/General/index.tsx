@@ -25,7 +25,7 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
         {...getErrorFeedback(
           formatMessage({ id: 'generalValidationName' }),
           !isBlank(journeyPattern.name),
-          namePristine
+          namePristine,
         )}
         value={journeyPattern.name}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>

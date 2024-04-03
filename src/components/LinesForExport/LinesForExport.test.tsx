@@ -119,7 +119,7 @@ const clickCheckbox = (container: HTMLElement, index: number) => {
     new MouseEvent('click', {
       bubbles: true,
       cancelable: true,
-    })
+    }),
   );
 };
 
@@ -145,7 +145,7 @@ describe('LinesForExport', () => {
         <MemoryRouter>
           <LinesForExport onChange={mockedOnChange} />
         </MemoryRouter>
-      </MockedProvider>
+      </MockedProvider>,
     );
   });
 

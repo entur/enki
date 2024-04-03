@@ -56,7 +56,7 @@ const union = (left: Availability, right: Availability): Availability => {
 
 const mergeAvailability = (
   availability: Availability | undefined,
-  operatingPeriod: OperatingPeriod
+  operatingPeriod: OperatingPeriod,
 ) => {
   const availabilityFromOperatingPeriod = {
     from: parseDate(operatingPeriod.fromDate),
@@ -78,11 +78,11 @@ const getAvailability = (journeyPatterns?: JourneyPattern[]): Availability => {
           (dta) =>
             (availability = mergeAvailability(
               availability,
-              dta.operatingPeriod
-            ))
-        )
-      )
-    )
+              dta.operatingPeriod,
+            )),
+        ),
+      ),
+    ),
   );
 
   if (!availability) {
@@ -97,7 +97,7 @@ const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
   const jpAvailability = getAvailability(journeyPatterns);
   const availableForDaysFromNow = differenceInCalendarDays(
     jpAvailability.to,
-    today
+    today,
   );
 
   let status: Status;
@@ -153,7 +153,7 @@ export default ({ onChange }: Props) => {
         .filter((line) => line.selected)
         .map(({ id }) => ({
           lineRef: id,
-        }))
+        })),
     );
     // eslint-disable-next-line
   }, [lines]);
@@ -162,11 +162,11 @@ export default ({ onChange }: Props) => {
     useSortableData<ExportableLine>(lines);
 
   const isEverythingSelected = Object.values(lines).every(
-    (value) => value.selected
+    (value) => value.selected,
   );
 
   const isNothingSelected = Object.values(lines).every(
-    (value) => !value.selected
+    (value) => !value.selected,
   );
 
   const isSomeSelected = !isEverythingSelected && !isNothingSelected;
@@ -176,8 +176,8 @@ export default ({ onChange }: Props) => {
       prev.map((prevItem) =>
         isEverythingSelected
           ? { ...prevItem, selected: false }
-          : { ...prevItem, selected: true }
-      )
+          : { ...prevItem, selected: true },
+      ),
     );
   };
 
@@ -186,8 +186,8 @@ export default ({ onChange }: Props) => {
       prev.map((prevItem) =>
         prevItem.id === id
           ? { ...prevItem, selected: !prevItem.selected }
-          : prevItem
-      )
+          : prevItem,
+      ),
     );
   };
 

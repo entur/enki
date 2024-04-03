@@ -51,7 +51,7 @@ const offsetPassingTime = (
   oldDayOffset: number,
   offset: number,
   timeKey: string,
-  dayOffsetKey: string
+  dayOffsetKey: string,
 ) => {
   if (!oldTime) return undefined;
   const newTime = addMinutes(toDate(oldTime), offset);
@@ -65,7 +65,7 @@ const offsetPassingTime = (
 
 const offsetPassingTimes = (
   passingTimes: PassingTime[],
-  offsetInMinutes: number
+  offsetInMinutes: number,
 ) => {
   return passingTimes.map(
     ({
@@ -82,17 +82,17 @@ const offsetPassingTimes = (
           arrivalDayOffset!,
           offsetInMinutes,
           'arrivalTime',
-          'arrivalDayOffset'
+          'arrivalDayOffset',
         ),
         ...offsetPassingTime(
           departureTime!,
           departureDayOffset!,
           offsetInMinutes,
           'departureTime',
-          'departureDayOffset'
+          'departureDayOffset',
         ),
       };
-    }
+    },
   );
 };
 
@@ -104,7 +104,7 @@ export const copyServiceJourney = (
   dayOffset: number,
   untilTime: string,
   untilDayOffset: number,
-  repeatDuration: Duration
+  repeatDuration: Duration,
 ): ServiceJourney[] => {
   const departure = addDays(toDate(departureTime), dayOffset);
 
@@ -113,7 +113,7 @@ export const copyServiceJourney = (
   } else {
     const lastActualDeparture = addDays(
       toDate(serviceJourney.passingTimes[0].departureTime!),
-      serviceJourney.passingTimes[0].departureDayOffset!
+      serviceJourney.passingTimes[0].departureDayOffset!,
     );
 
     const { id, passingTimes, dayTypesRefs, ...copyableServiceJourney } =
@@ -121,7 +121,7 @@ export const copyServiceJourney = (
 
     const newPassingTimes = offsetPassingTimes(
       passingTimes.map(({ id, ...pt }) => pt),
-      differenceInMinutes(departure, lastActualDeparture)
+      differenceInMinutes(departure, lastActualDeparture),
     );
 
     const newServiceJourney = {
@@ -129,7 +129,7 @@ export const copyServiceJourney = (
       id: `new_${createUuid()}`,
       name: nameTemplate.replace(
         '<% time %>',
-        `${departureTime.slice(0, -3)} +${dayOffset}`
+        `${departureTime.slice(0, -3)} +${dayOffset}`,
       ),
       dayTypesRefs,
       passingTimes: newPassingTimes,
@@ -137,12 +137,12 @@ export const copyServiceJourney = (
     newServiceJourneys.push(newServiceJourney);
     const nextDeparture = addMinutes(
       departure,
-      duration.toMinutes(repeatDuration)
+      duration.toMinutes(repeatDuration),
     );
     const nextDepartureTime = nextDeparture?.toTimeString().split(' ')[0];
     const nextDayOffset = differenceInCalendarDays(
       nextDeparture,
-      toDate(departureTime)
+      toDate(departureTime),
     );
     return copyServiceJourney(
       newServiceJourney,
@@ -152,7 +152,7 @@ export const copyServiceJourney = (
       nextDayOffset,
       untilTime,
       untilDayOffset,
-      repeatDuration
+      repeatDuration,
     );
   }
 };
@@ -164,7 +164,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
     serviceJourney.passingTimes[0].departureDayOffset || 0;
 
   const [nameTemplate, setNameTemplate] = useState<string>(
-    `${serviceJourney.name || 'New'} (<% time %>)`
+    `${serviceJourney.name || 'New'} (<% time %>)`,
   );
   const [initialDepartureTime, setInitialDepartureTime] =
     useState<string>(defaultDepartureTime);
@@ -187,7 +187,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         untilTime,
         untilDayOffset,
         initialDepartureTime,
-        initialDayOffset
+        initialDayOffset,
       )
     ) {
       setValidationError({
@@ -222,8 +222,8 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         initialDayOffset,
         untilTime,
         untilDayOffset,
-        duration.parse(repeatDuration)
-      )
+        duration.parse(repeatDuration),
+      ),
     );
   };
 

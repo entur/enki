@@ -12,7 +12,7 @@ export function quaySearchResults(
   quaySearch: QuaySearch | undefined,
   loading: boolean,
   loadingLabel: string,
-  quayNotFoundLabel: string
+  quayNotFoundLabel: string,
 ): QuaySearchResults {
   if (!quaySearch) return { feedback: undefined, variant: undefined };
 

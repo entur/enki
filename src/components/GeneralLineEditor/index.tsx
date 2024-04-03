@@ -51,7 +51,7 @@ export default <T extends Line>({
   }, [line]);
 
   const onFlexibleLineTypeChange = (
-    newFlexibleLineType: FlexibleLineType | undefined
+    newFlexibleLineType: FlexibleLineType | undefined,
   ) => {
     if (newFlexibleLineType !== 'flexibleAreasOnly') {
       return onChange<FlexibleLine>({
@@ -71,10 +71,10 @@ export default <T extends Line>({
             (serviceJourney: ServiceJourney) => ({
               ...serviceJourney,
               passingTimes: [{}, {}],
-            })
+            }),
           ),
           pointsInSequence: [{}, {}],
-        })
+        }),
       ),
       flexibleLineType: newFlexibleLineType,
     });
@@ -82,7 +82,7 @@ export default <T extends Line>({
 
   const getModeItems = useCallback(
     () => mapVehicleModeAndLabelToItems(vehicleModeMessages, formatMessage),
-    [formatMessage]
+    [formatMessage],
   );
 
   const namePristine = usePristine(line.name, spoilPristine);
@@ -93,7 +93,7 @@ export default <T extends Line>({
 
   const getOperatorItems = useCallback(
     () => mapToItems(operators.map((op) => ({ ...op, name: op.name.value }))),
-    [operators]
+    [operators],
   );
 
   const getNetworkItems = useCallback(() => mapToItems(networks), [networks]);
@@ -115,7 +115,7 @@ export default <T extends Line>({
           {...getErrorFeedback(
             formatMessage({ id: 'nameEmpty' }),
             !isBlank(line.name),
-            namePristine
+            namePristine,
           )}
         />
 
@@ -146,7 +146,7 @@ export default <T extends Line>({
           {...getErrorFeedback(
             formatMessage({ id: 'publicCodeEmpty' }),
             !isBlank(line.publicCode),
-            publicCodePristine
+            publicCodePristine,
           )}
         />
 
@@ -168,7 +168,7 @@ export default <T extends Line>({
         <Dropdown<string>
           selectedItem={
             getOperatorItems().find(
-              (item) => item.value === line.operatorRef
+              (item) => item.value === line.operatorRef,
             ) || null
           }
           placeholder={formatMessage({ id: 'defaultOption' })}
@@ -184,7 +184,7 @@ export default <T extends Line>({
           {...getErrorFeedback(
             formatMessage({ id: 'operatorRefEmpty' }),
             !isBlank(line.operatorRef),
-            operatorPristine
+            operatorPristine,
           )}
         />
 
@@ -206,7 +206,7 @@ export default <T extends Line>({
           {...getErrorFeedback(
             formatMessage({ id: 'networkRefEmpty' }),
             !isBlank(line.networkRef),
-            networkPristine
+            networkPristine,
           )}
         />
 
@@ -224,7 +224,7 @@ export default <T extends Line>({
           <Dropdown
             selectedItem={
               getModeItems().find(
-                (item) => item.value === line.transportMode
+                (item) => item.value === line.transportMode,
               ) || null
             }
             placeholder={formatMessage({ id: 'defaultOption' })}
@@ -241,7 +241,7 @@ export default <T extends Line>({
             {...getErrorFeedback(
               formatMessage({ id: 'transportModeEmpty' }),
               !isBlank(line.transportMode),
-              modePristine
+              modePristine,
             )}
           />
 

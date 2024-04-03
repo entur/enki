@@ -65,12 +65,12 @@ export const useAuth = (): Auth => {
     ({ returnTo }: { returnTo?: string }) => {
       return signoutRedirect({ post_logout_redirect_uri: returnTo });
     },
-    [signoutRedirect]
+    [signoutRedirect],
   );
 
   const login = useCallback(
     (redirectUri?: string) => signinRedirect({ redirect_uri: redirectUri }),
-    [signinRedirect]
+    [signinRedirect],
   );
 
   return {
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         window.history.replaceState(
           {},
           document.title,
-          window.location.pathname
+          window.location.pathname,
         );
       }}
       redirect_uri={window.location.origin}

@@ -38,7 +38,7 @@ describe('copyServiceJourney', () => {
       0,
       '13:00:00',
       0,
-      duration.parse('PT10M')
+      duration.parse('PT10M'),
     );
 
     expect(copies.length).toBe(7);

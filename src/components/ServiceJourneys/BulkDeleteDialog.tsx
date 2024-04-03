@@ -23,7 +23,7 @@ type Props = {
   onConfirm: (
     ids: string[],
     serviceJourneys: ServiceJourney[],
-    journeyPatternIndex: number
+    journeyPatternIndex: number,
   ) => void;
 };
 
@@ -41,14 +41,14 @@ export default (props: Props) => {
   useEffect(() => {
     const textSearchRegex = new RegExp(
       filterSearch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-      'i'
+      'i',
     );
     const filtered = serviceJourneys.filter(
-      (item) => textSearchRegex.test(item.name!) || filterSearch === ''
+      (item) => textSearchRegex.test(item.name!) || filterSearch === '',
     );
     setData(filtered);
     setSelectedIds((s) =>
-      s.filter((id) => filtered.some((item) => item.id === id))
+      s.filter((id) => filtered.some((item) => item.id === id)),
     );
   }, [filterSearch, serviceJourneys]);
 

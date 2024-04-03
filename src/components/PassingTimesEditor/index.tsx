@@ -20,7 +20,7 @@ export type PassingTimesEditor =
   | ComponentClass<PassingTimesEditorProps>;
 
 export const getPassingTimesEditor = (
-  flexibleLineType: FlexibleLineType | undefined
+  flexibleLineType: FlexibleLineType | undefined,
 ): PassingTimesEditor => {
   switch (flexibleLineType) {
     case FlexibleLineType.MIXED_FLEXIBLE:
@@ -33,6 +33,6 @@ export const getPassingTimesEditor = (
 };
 
 export const usePassingTimesEditor = (
-  flexibleLineType: FlexibleLineType | undefined
+  flexibleLineType: FlexibleLineType | undefined,
 ): PassingTimesEditor =>
   useMemo(() => getPassingTimesEditor(flexibleLineType), [flexibleLineType]);

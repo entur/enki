@@ -24,7 +24,7 @@ const defaultNotification: Notification = {
 
 const notificationReducer = (
   state: NotificationState = null,
-  action: AnyAction
+  action: AnyAction,
 ) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:

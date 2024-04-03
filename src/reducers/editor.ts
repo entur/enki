@@ -12,7 +12,7 @@ export type EditorState = {
 
 function editor(
   state: EditorState = initialState,
-  action: AnyAction
+  action: AnyAction,
 ): EditorState {
   switch (action.type) {
     case SET_SAVED_CHANGES:

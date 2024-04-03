@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 export const usePreparedDayTypes = (
   dayTypes: DayType[],
   currentPage: number,
-  results: number
+  results: number,
 ) => {
   const sortedDayTypes = useMemo(() => {
     return [...dayTypes]?.sort((a, b) => {
@@ -24,7 +24,7 @@ export const usePreparedDayTypes = (
     return sortedDayTypes?.filter(
       (_, index) =>
         index + 1 >= (currentPage - 1) * results + 1 &&
-        index + 1 <= currentPage * results
+        index + 1 <= currentPage * results,
     );
   }, [sortedDayTypes, currentPage, results]);
 

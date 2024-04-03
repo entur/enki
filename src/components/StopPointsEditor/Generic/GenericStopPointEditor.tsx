@@ -60,7 +60,7 @@ export const GenericStopPointEditor = ({
             errorFeedback={getErrorFeedback(
               stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
               !stopPlaceError,
-              quayRefPristine
+              quayRefPristine,
             )}
             onChange={onQuayRefChange}
           />

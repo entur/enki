@@ -39,14 +39,14 @@ export type FlexibleLinesAction =
   | ReceiveFlexibleLinesAction;
 
 const receiveFlexibleLinesActionCreator = (
-  lines: FlexibleLine[]
+  lines: FlexibleLine[],
 ): ReceiveFlexibleLinesAction => ({
   type: RECEIVE_FLEXIBLE_LINES,
   lines,
 });
 
 const receiveFlexibleLineActionCreator = (
-  line: FlexibleLine
+  line: FlexibleLine,
 ): ReceiveFlexibleLineAction => ({
   type: RECEIVE_FLEXIBLE_LINE,
   line,
@@ -63,7 +63,7 @@ export const loadFlexibleLines =
         activeProvider,
         getFlexibleLinesQuery,
         {},
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
     } catch (e) {
@@ -76,9 +76,9 @@ export const loadFlexibleLines =
             },
             {
               details: getInternationalizedUttuError(intl, e as Error),
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
@@ -101,7 +101,7 @@ export const loadFlexibleLineById =
         {
           id,
         },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
 
       dispatch(receiveFlexibleLineActionCreator(flexibleLine ?? line ?? {}));
@@ -113,9 +113,9 @@ export const loadFlexibleLineById =
             {
               id: 'loadLineByIdErrorMessage',
             },
-            { details: getInternationalizedUttuError(intl, e as Error) }
-          )
-        )
+            { details: getInternationalizedUttuError(intl, e as Error) },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
@@ -151,7 +151,7 @@ export const saveFlexibleLine =
         {
           input: flexibleLineToPayload(flexibleLine),
         },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(showSuccessNotification(header, message, isNewLine));
     } catch (e) {
@@ -162,9 +162,9 @@ export const saveFlexibleLine =
             {
               id: 'saveLineErrorMessage',
             },
-            { details: getInternationalizedUttuError(intl, e as Error) }
-          )
-        )
+            { details: getInternationalizedUttuError(intl, e as Error) },
+          ),
+        ),
       );
       sentryCaptureException(e);
       throw e;
@@ -185,13 +185,13 @@ export const deleteLine =
         activeProvider,
         deleteQuery,
         { id },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
       dispatch(
         showSuccessNotification(
           intl.formatMessage({ id: 'deleteLineSuccessHeader' }),
-          intl.formatMessage({ id: 'deleteLineSuccessMessage' })
-        )
+          intl.formatMessage({ id: 'deleteLineSuccessMessage' }),
+        ),
       );
     } catch (e) {
       dispatch(
@@ -201,9 +201,9 @@ export const deleteLine =
             {
               id: 'deleteLineErrorMessage',
             },
-            { details: getInternationalizedUttuError(intl, e as Error) }
-          )
-        )
+            { details: getInternationalizedUttuError(intl, e as Error) },
+          ),
+        ),
       );
       sentryCaptureException(e);
     }

@@ -22,11 +22,11 @@ export const initialState = {
 
 const getActiveProvider = (
   state: ProvidersState = initialState,
-  action: AnyAction
+  action: AnyAction,
 ): Provider | null => {
   if (!state.active && action.payload.activeCode) {
     return action.payload.providers.find(
-      (p: Provider) => p.code === action.payload.activeCode
+      (p: Provider) => p.code === action.payload.activeCode,
     );
   } else if (!state.active && action.payload.providers.length > 0) {
     return action.payload.providers[0];
@@ -37,7 +37,7 @@ const getActiveProvider = (
 
 const providersReducer = (
   state: ProvidersState = initialState,
-  action: AnyAction
+  action: AnyAction,
 ): ProvidersState => {
   switch (action.type) {
     case RECEIVE_PROVIDERS: {

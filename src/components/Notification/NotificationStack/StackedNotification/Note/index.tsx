@@ -35,7 +35,7 @@ const Note = ({
     const transitionIntervall = 500;
     const dismissTimeout = setTimeout(
       onDismiss,
-      (dismissAfter ?? 0) + transitionIntervall
+      (dismissAfter ?? 0) + transitionIntervall,
     );
     return () => clearTimeout(dismissTimeout);
     // eslint-disable-next-line
@@ -82,7 +82,7 @@ const Note = ({
     'notification',
     { 'notification-active': isActive },
     { active: isActive },
-    'notification-' + type
+    'notification-' + type,
   );
 
   const titleClassNames = cx('notification-bar-label', type);

@@ -41,7 +41,7 @@ export const DayTypesModalContent = ({
   const numberOfResults = useMemo(() => dayTypes.length, [dayTypes.length]);
   const pageCount = useMemo(
     () => Math.ceil(numberOfResults / results),
-    [numberOfResults, results]
+    [numberOfResults, results],
   );
 
   const addNewDayType = useCallback(() => {
@@ -75,7 +75,7 @@ export const DayTypesModalContent = ({
       setSelectedIds([]);
       setLoading(false);
     },
-    [deleteDayTypes]
+    [deleteDayTypes],
   );
 
   return (

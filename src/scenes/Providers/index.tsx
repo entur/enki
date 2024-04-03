@@ -26,12 +26,12 @@ const Providers = () => {
     (id: string) => {
       navigate(`/providers/edit/${id}`);
     },
-    [history]
+    [history],
   );
 
   const providers = useMemo(
     () => providersState?.providers?.slice().sort(sortProviders) || [],
-    [providersState]
+    [providersState],
   );
 
   const RenderTableRows = ({

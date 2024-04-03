@@ -21,7 +21,7 @@ export type StopPointsEditor =
   | ComponentClass<StopPointsEditorProps>;
 
 export const getStopPointsEditor = (
-  flexibleLineType: FlexibleLineType | undefined
+  flexibleLineType: FlexibleLineType | undefined,
 ): StopPointsEditor => {
   switch (flexibleLineType) {
     case FlexibleLineType.MIXED_FLEXIBLE:
@@ -34,6 +34,6 @@ export const getStopPointsEditor = (
 };
 
 export const useStopPointsEditor = (
-  flexibleLineType: FlexibleLineType | undefined
+  flexibleLineType: FlexibleLineType | undefined,
 ): StopPointsEditor =>
   useMemo(() => getStopPointsEditor(flexibleLineType), [flexibleLineType]);

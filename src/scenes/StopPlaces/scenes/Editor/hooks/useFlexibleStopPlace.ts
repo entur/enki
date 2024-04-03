@@ -20,7 +20,7 @@ export const useFlexibleStopPlace = () => {
       state.flexibleStopPlaces?.find((fsp) => fsp.id === params.id) ?? {
         transportMode: VEHICLE_MODE.BUS,
         flexibleAreas: [{}],
-      }
+      },
   );
 
   const [flexibleStopPlace, setFlexibleStopPlace] = useState<

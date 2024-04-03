@@ -16,7 +16,7 @@ type Props = {
 
 export const useOnFrontTextChange = (
   stopPoint: StopPoint,
-  onChange: (stopPoint: StopPoint) => void
+  onChange: (stopPoint: StopPoint) => void,
 ) => {
   return useCallback(
     (value: string) =>
@@ -24,7 +24,7 @@ export const useOnFrontTextChange = (
         ...stopPoint,
         destinationDisplay: value ? { frontText: value } : null,
       }),
-    [onChange, stopPoint]
+    [onChange, stopPoint],
   );
 };
 
@@ -42,7 +42,7 @@ export const FrontTextTextField = ({
     (e: ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.value);
     },
-    [onChange]
+    [onChange],
   );
 
   return (
@@ -52,7 +52,7 @@ export const FrontTextTextField = ({
       {...getErrorFeedback(
         frontTextError ? formatMessage({ id: frontTextError }) : '',
         !frontTextError,
-        frontTextPristine
+        frontTextPristine,
       )}
       labelTooltip={formatMessage({ id: 'frontTextTooltip' })}
       value={value}

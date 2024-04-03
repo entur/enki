@@ -17,7 +17,7 @@ export const validateFlexibleStopPlace = ({
 }: FlexibleStopPlace): FlexibleStopPlaceErrors => ({
   name: isBlank(name) ? 'validateFormErrorNameEmpty' : undefined,
   flexibleArea: flexibleAreas?.some(
-    (flexibleArea) => (flexibleArea.polygon?.coordinates?.length ?? 0) < 4
+    (flexibleArea) => (flexibleArea.polygon?.coordinates?.length ?? 0) < 4,
   )
     ? 'validateFormErrorFlexibleAreaNotEnoughPolygons'
     : undefined,
@@ -25,7 +25,7 @@ export const validateFlexibleStopPlace = ({
     !validateFlexibleStopPlaceType({ keyValues }) &&
     flexibleAreas?.some(
       (flexibleArea) =>
-        !validateFlexibleStopPlaceType({ keyValues: flexibleArea.keyValues })
+        !validateFlexibleStopPlaceType({ keyValues: flexibleArea.keyValues }),
     )
       ? 'validateFormErrorFlexibleStopPlaceType'
       : undefined,
@@ -37,13 +37,13 @@ export const validateFlexibleStopPlaceType = ({
   keyValues: KeyValues[] | undefined;
 }): boolean => {
   const flexibleStopPlaceType = keyValues?.find(
-    (keyValue) => keyValue.key === 'FlexibleStopAreaType'
+    (keyValue) => keyValue.key === 'FlexibleStopAreaType',
   );
 
   return (
     flexibleStopPlaceType?.values.length === 1 &&
     Object.values(FLEXIBLE_STOP_AREA_TYPE).includes(
-      flexibleStopPlaceType?.values[0] as FLEXIBLE_STOP_AREA_TYPE
+      flexibleStopPlaceType?.values[0] as FLEXIBLE_STOP_AREA_TYPE,
     )
   );
 };

@@ -15,7 +15,7 @@ type GenericDropdownItem<E> = {
 
 export const getInit = <E>(
   items: GenericDropdownItem<E>[],
-  init: string | undefined | null
+  init: string | undefined | null,
 ): NormalizedDropdownItemType | null => {
   const op = items.find((o) => o.id === init);
   return op
@@ -27,7 +27,7 @@ export const getInit = <E>(
 };
 
 export const mapToItems = <E>(
-  items: GenericDropdownItem<E>[]
+  items: GenericDropdownItem<E>[],
 ): NormalizedDropdownItemType[] =>
   items.map(({ id, name }) => ({
     value: id ?? '',
@@ -43,7 +43,7 @@ export const getEnumInit = <E>(init?: E): NormalizedDropdownItemType | null =>
     : null;
 
 export const mapEnumToItems = <E extends Object>(
-  e: E
+  e: E,
 ): NormalizedDropdownItemType[] => [
   ...Object.values(e).map((type) => ({
     value: `${type}`,
@@ -53,7 +53,7 @@ export const mapEnumToItems = <E extends Object>(
 
 export const mapVehicleModeAndLabelToItems = (
   e: Record<VEHICLE_MODE, keyof MessagesKey>,
-  formatMessage: FormatMessage
+  formatMessage: FormatMessage,
 ): NormalizedDropdownItemType[] => [
   ...Object.entries(e).map(([key, label]) => ({
     value: key,
@@ -63,7 +63,7 @@ export const mapVehicleModeAndLabelToItems = (
 
 export const mapVehicleSubmodeAndLabelToItems = (
   e: VEHICLE_SUBMODE[],
-  formatMessage: FormatMessage
+  formatMessage: FormatMessage,
 ): NormalizedDropdownItemType[] => [
   ...Object.values(e).map((type: VEHICLE_SUBMODE) => ({
     value: type,
@@ -73,7 +73,7 @@ export const mapVehicleSubmodeAndLabelToItems = (
 
 export const mapFlexibleLineTypeAndLabelToItems = (
   e: FlexibleLineType[],
-  formatMessage: FormatMessage
+  formatMessage: FormatMessage,
 ): NormalizedDropdownItemType[] => [
   ...Object.values(e).map((type: FlexibleLineType) => ({
     value: type,

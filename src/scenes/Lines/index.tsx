@@ -32,7 +32,7 @@ export default () => {
     GET_LINES,
     {
       notifyOnNetworkStatusChange: true,
-    }
+    },
   );
 
   const [confirmDeleteLine] = useConfirmDeleteLine(
@@ -40,7 +40,7 @@ export default () => {
     () => {
       setLineSelectedForDeletion(undefined);
       refetch();
-    }
+    },
   );
 
   const dismissDeleteLine = useCallback(() => {

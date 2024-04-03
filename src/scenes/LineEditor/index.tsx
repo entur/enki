@@ -70,8 +70,8 @@ export default () => {
         showSuccessNotification(
           formatMessage({ id: 'saveLineSuccessHeader' }),
           formatMessage({ id: 'saveLineSuccessMessage' }),
-          false
-        )
+          false,
+        ),
       );
       if (isBlank(match?.params.id)) {
         navigate('/lines');
@@ -96,8 +96,8 @@ export default () => {
     dispatch(
       showSuccessNotification(
         formatMessage({ id: 'deleteLineSuccessHeader' }),
-        formatMessage({ id: 'deleteLineSuccessMessage' })
-      )
+        formatMessage({ id: 'deleteLineSuccessMessage' }),
+      ),
     );
     navigate('/lines');
 
@@ -114,7 +114,7 @@ export default () => {
     filterAuthorities(
       organisations,
       providers.active,
-      config.enableLegacyOrganisationsFilter
+      config.enableLegacyOrganisationsFilter,
     ).length === 0;
 
   return (
@@ -155,7 +155,7 @@ export default () => {
                 changeLine={onChange}
                 operators={filterNetexOperators(
                   organisations ?? [],
-                  config.enableLegacyOrganisationsFilter
+                  config.enableLegacyOrganisationsFilter,
                 )}
                 networks={networks || []}
                 spoilPristine={nextClicked}

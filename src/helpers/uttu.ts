@@ -27,7 +27,7 @@ export const getUttuError = (e: UttuError) =>
 export const getStyledUttuError = (
   e: UttuError,
   generalMessage: string,
-  fallback = ''
+  fallback = '',
 ) =>
   getUttuError(e)
     ? `${generalMessage}: ${getUttuError(e)}`

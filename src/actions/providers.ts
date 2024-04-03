@@ -15,7 +15,7 @@ import {
 
 const receiveProviders = (
   providers: Provider[],
-  activeCode?: string | null
+  activeCode?: string | null,
 ) => ({
   type: RECEIVE_PROVIDERS,
   payload: {
@@ -32,7 +32,7 @@ export type SetActiveProviderAction = {
 };
 
 export const setActiveProvider = (
-  provider: Provider
+  provider: Provider,
 ): SetActiveProviderAction => ({
   type: SET_ACTIVE_PROVIDER,
   provider,
@@ -44,7 +44,7 @@ export const getProviders = (): AppThunk => async (dispatch, getState) => {
     'providers',
     getProvidersQuery,
     {},
-    await getState().auth.getAccessToken()
+    await getState().auth.getAccessToken(),
   )
     .then((data) => {
       const activeCode = window.localStorage.getItem('ACTIVE_PROVIDER');
@@ -68,7 +68,7 @@ export const saveProvider =
         'providers',
         mutateCodespace,
         { input: provider.codespace },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
 
       await UttuQuery(
@@ -81,7 +81,7 @@ export const saveProvider =
             codespaceXmlns: provider.codespace?.xmlns,
           },
         },
-        await getState().auth.getAccessToken()
+        await getState().auth.getAccessToken(),
       );
     } catch (e) {
       dispatch(
@@ -90,9 +90,9 @@ export const saveProvider =
           getStyledUttuError(
             e as UttuError,
             intl.formatMessage({ id: 'saveProviderError' }),
-            intl.formatMessage({ id: 'saveProviderErrorFallback' })
-          )
-        )
+            intl.formatMessage({ id: 'saveProviderErrorFallback' }),
+          ),
+        ),
       );
       sentryCaptureException(e);
     }
