@@ -11,7 +11,7 @@
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "server": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@apollo/client": "3.9.10",
@@ -82,7 +82,7 @@
     "@vitest/ui": "1.4.0",
     "check-node-version": "4.2.1",
     "happy-dom": "14.3.10",
-    "husky": "8.0.3",
+    "husky": "9.0.11",
     "identity-obj-proxy": "3.0.0",
     "lint-staged": "13.3.0",
     "prettier": "3.2.5",
