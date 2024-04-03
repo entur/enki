@@ -1,5 +1,4 @@
 import { act, renderHook } from '@testing-library/react';
-import * as actions from 'actions/flexibleStopPlaces';
 import { store } from 'app/store';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlProvider } from 'react-intl';
@@ -11,11 +10,14 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * @jest-environment jsdom
+ */
 describe('useHandleOnSaveClick', () => {
   it('with errors it should not attempt to save', () => {
-    const onCall = jest.fn();
-    const onSaveStart = jest.fn();
-    const onSaveEnd = jest.fn();
+    const onCall = vi.fn();
+    const onSaveStart = vi.fn();
+    const onSaveEnd = vi.fn();
     const testSubject: FlexibleStopPlace = {};
     const errors = {
       name: 'validateFormErrorNameEmpty',
@@ -50,14 +52,15 @@ describe('useHandleOnSaveClick', () => {
   });
 
   it('without errors works', async () => {
-    // @ts-ignore
-    actions.saveFlexibleStopPlace = jest
-      .fn()
-      .mockReturnValueOnce(() => Promise.resolve());
+    vi.mock('actions/flexibleStopPlaces', () => ({
+      saveFlexibleStopPlace: vi
+        .fn()
+        .mockReturnValueOnce(() => Promise.resolve()),
+    }));
 
-    const onCall = jest.fn();
-    const onSaveStart = jest.fn();
-    const onSaveEnd = jest.fn();
+    const onCall = vi.fn();
+    const onSaveStart = vi.fn();
+    const onSaveEnd = vi.fn();
     const testSubject: FlexibleStopPlace = {};
     const errors = {
       name: undefined,

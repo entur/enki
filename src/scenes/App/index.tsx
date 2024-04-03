@@ -2,7 +2,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import { getOrganisations } from 'actions/organisations';
@@ -14,21 +14,26 @@ import Routes from './Routes';
 import NavBar from './components/NavBar';
 
 import { useIntl } from 'react-intl';
-import { GlobalState } from 'reducers';
+import { useAuth } from '../../app/auth';
+import { useAppSelector } from '../../app/hooks';
 import './styles.scss';
 
+import MarkerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
+import MarkerShadow from 'leaflet/dist/images/marker-shadow.png';
+
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconRetinaUrl: MarkerIcon2x,
+  iconUrl: MarkerIcon,
+  shadowUrl: MarkerShadow,
 });
 
 const App = () => {
   const dispatch = useDispatch<any>();
 
-  const { providers, auth } = useSelector<GlobalState, GlobalState>(
-    (state) => state
-  );
+  const providers = useAppSelector((state) => state.providers);
+
+  const auth = useAuth();
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -56,7 +61,7 @@ const App = () => {
               <div className="header-and-routes">
                 <Loading
                   className="app-loader"
-                  text={formatMessage({ id: 'app.loading.message' })}
+                  text={formatMessage({ id: 'appLoadingMessage' })}
                   isLoading={
                     !providers.providers ||
                     auth.isLoading ||

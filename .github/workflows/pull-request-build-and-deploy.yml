@@ -8,13 +8,13 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.16
       - name: Cache node modules
         id: cache-npm
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-node-modules
         with:
@@ -32,9 +32,9 @@ jobs:
         run: npm list
       - run: npm ci
       - run: npm run check
-      - run: npm run test -- --coverage --testResultsProcessor=jest-sonar-reporter
+      - run: npm run test -- run --coverage --coverage.reporter=lcov --reporter=vitest-sonar-reporter --outputFile.vitest-sonar-reporter=test-report.xml --reporter=default
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v1.2.0
+        uses: sonarsource/sonarqube-scan-action@v2.0.1
         env:
           SONAR_TOKEN: ${{ secrets.ENTUR_SONAR_PASSWORD }}
           SONAR_HOST_URL: https://sonarcloud.io
@@ -52,6 +52,8 @@ jobs:
         env:
           REACT_APP_VERSION: preview_${{ github.sha }}
           SENTRY_DSN: https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954
+      - name: Copy bootstrap config
+        run: cp .github/environments/dev.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

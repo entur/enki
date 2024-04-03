@@ -1,26 +1,21 @@
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import { loadFlexibleStopPlaceById } from 'actions/flexibleStopPlaces';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import isEqual from 'lodash.isequal';
-import FlexibleLine from 'model/FlexibleLine';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { VEHICLE_MODE } from 'model/enums';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { GlobalState } from 'reducers';
 
 export const useFlexibleStopPlace = () => {
   const params = useParams();
   const intl = useIntl();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const lines = useSelector<GlobalState, FlexibleLine[]>(
-    (state) => state.flexibleLines ?? []
-  );
+  const lines = useAppSelector((state) => state.flexibleLines ?? []);
 
-  const currentFlexibleStopPlace = useSelector<GlobalState, FlexibleStopPlace>(
+  const currentFlexibleStopPlace = useAppSelector(
     (state) =>
       state.flexibleStopPlaces?.find((fsp) => fsp.id === params.id) ?? {
         transportMode: VEHICLE_MODE.BUS,

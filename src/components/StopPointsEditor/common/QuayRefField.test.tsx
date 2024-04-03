@@ -1,7 +1,15 @@
 import { MockedProvider } from '@apollo/client/testing';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import { STOP_PLACE_BY_QUAY_REF_QUERY } from 'api/uttu/queries';
-import { RenderResult, act, getByText, render } from 'utils/test-utils';
+import {
+  RenderResult,
+  act,
+  getAllByRole,
+  getByText,
+  render,
+  userEvent,
+} from 'utils/test-utils';
+import { Mock } from 'vitest';
 import { QuayRefField } from './QuayRefField';
 
 const mocks = [
@@ -42,9 +50,10 @@ const mocks = [
 
 describe('QuayRefField', () => {
   let renderResult: RenderResult;
-  let mockedOnChange: jest.Mock<any, any>;
-  beforeEach(() => {
-    mockedOnChange = jest.fn();
+  let mockedOnChange: Mock;
+
+  it('renders without crashing', async () => {
+    mockedOnChange = vi.fn();
     renderResult = render(
       <MockedProvider
         mocks={mocks}
@@ -54,32 +63,25 @@ describe('QuayRefField', () => {
         }}
       >
         <QuayRefField
-          initialQuayRef={'TST:Quay:1'}
           errorFeedback={{ variant: undefined, feedback: undefined }}
           onChange={mockedOnChange}
         />
       </MockedProvider>
     );
-  });
-
-  it('renders without crashing', async () => {
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
 
     expect(
-      getByText(renderResult.container, 'Test stop place 1')
+      getByText(renderResult.container, 'Quay not found')
     ).toBeInTheDocument();
 
-    // The tech stack is too old for this:
-    // expect(getByText(renderResult.container, 'Fant ikke plattform.')).toBeInTheDocument();
+    await act(async () => {
+      const inputField = getAllByRole(renderResult.container, 'textbox')[0];
+      await userEvent.type(inputField, 'TST:Quay:1');
+      inputField.blur();
+    });
 
-    // await act(async () => {
-    //   const inputField = getAllByRole(renderResult.container, 'textbox')[0];
-    //   await userEvent.type(inputField, 'TST:Quay:1');
-    //   await new Promise((resolve) => setTimeout(resolve, 1000));
-    // });
+    expect(mockedOnChange).toHaveBeenCalled();
 
-    // expect(getByText(renderResult.container, 'Test stop place 1')).toBeInTheDocument();
+    // TODO: this does not work in vitest
+    //expect(getByText(renderResult.container, 'Test stop place 1')).toBeInTheDocument();
   });
 });

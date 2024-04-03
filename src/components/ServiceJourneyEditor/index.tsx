@@ -1,6 +1,5 @@
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { NormalizedDropdownItemType } from '@entur/dropdown/dist/useNormalizedItems';
+import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -22,9 +21,7 @@ import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { GlobalState } from 'reducers';
-import { OrganisationState } from 'reducers/organisations';
+import { useAppSelector } from '../../app/hooks';
 import CopyDialog from './CopyDialog';
 import './styles.scss';
 
@@ -56,9 +53,7 @@ const ServiceJourneyEditor = (props: Props) => {
   );
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const [showCopyDialog, setShowCopyDialog] = useState<boolean>(false);
-  const organisations = useSelector<GlobalState, OrganisationState>(
-    (state) => state.organisations
-  );
+  const organisations = useAppSelector((state) => state.organisations);
   const { formatMessage } = useIntl();
 
   const handleOperatorSelectionChange = (
@@ -139,7 +134,7 @@ const ServiceJourneyEditor = (props: Props) => {
           <Dropdown
             className="form-section operator-selector"
             label={formatMessage({ id: 'generalOperator' })}
-            initialSelectedItem={getInit(
+            selectedItem={getInit(
               operators.map((op) => ({ ...op, name: op.name.value })),
               operatorSelection
             )}

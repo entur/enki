@@ -3,18 +3,15 @@ import { Contrast } from '@entur/layout';
 import { setActiveProvider } from 'actions/providers';
 import { sortProviders } from 'model/Provider';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { GlobalState } from 'reducers';
-import { ProvidersState } from 'reducers/providers';
+import { useAppSelector } from '../../../../../app/hooks';
 import UserMenu from './UserMenu/';
 import './styles.scss';
 
 const UserPreference = () => {
   const navigate = useNavigate();
-  const { providers, active } = useSelector<GlobalState, ProvidersState>(
-    (state) => state.providers
-  );
+  const { providers, active } = useAppSelector((state) => state.providers);
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
 
@@ -46,7 +43,10 @@ const UserPreference = () => {
             className="provider-wrapper"
             items={() => items}
             label={formatMessage({ id: 'navBarDataProvider' })}
-            value={active?.code}
+            selectedItem={{
+              value: active?.code,
+              label: active?.name || '',
+            }}
             onChange={(e) => handleActiveProviderChange(e?.value)}
           />
         </Contrast>

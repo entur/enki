@@ -8,7 +8,6 @@ import * as Sentry from '@sentry/react';
 import { AuthProvider, useAuth } from 'app/auth';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { store } from 'app/store';
-import { getEnvironment } from 'config/getEnvironment';
 import { selectAuthLoaded, updateAuth } from 'features/app/authSlice';
 import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
 import { normalizeAllUrls } from 'helpers/url';
@@ -16,17 +15,16 @@ import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
 import './styles/index.scss';
 
-if (process.env.REACT_APP_SENTRY_DSN) {
+if (import.meta.env.REACT_APP_SENTRY_DSN) {
   Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
+    dsn: import.meta.env.REACT_APP_SENTRY_DSN,
     integrations: [new Sentry.BrowserTracing()],
 
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
     tracesSampleRate: 1.0,
 
-    environment: getEnvironment(),
-    release: process.env.REACT_APP_VERSION,
+    release: import.meta.env.REACT_APP_VERSION,
     attachStacktrace: true,
     beforeSend(e) {
       return normalizeAllUrls(e);

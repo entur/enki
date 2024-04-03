@@ -1,5 +1,4 @@
 import { act, renderHook } from '@testing-library/react';
-import * as actions from 'actions/flexibleStopPlaces';
 import { store } from 'app/store';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlProvider } from 'react-intl';
@@ -11,11 +10,14 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * @jest-environment jsdom
+ */
 describe('useHandleDelete', () => {
   it('with stop place without id does not attempt to save', () => {
-    const onCall = jest.fn();
-    const onSaveStart = jest.fn();
-    const onSaveEnd = jest.fn();
+    const onCall = vi.fn();
+    const onSaveStart = vi.fn();
+    const onSaveEnd = vi.fn();
 
     const testSubject: FlexibleStopPlace = {};
 
@@ -40,14 +42,15 @@ describe('useHandleDelete', () => {
   });
 
   it('with stop place with id works', async () => {
-    // @ts-ignore
-    actions.deleteFlexibleStopPlaceById = jest
-      .fn()
-      .mockReturnValueOnce(() => Promise.resolve());
+    vi.mock('actions/flexibleStopPlaces', () => ({
+      deleteFlexibleStopPlaceById: vi
+        .fn()
+        .mockReturnValueOnce(() => Promise.resolve()),
+    }));
 
-    const onCall = jest.fn();
-    const onDeleteStart = jest.fn();
-    const onDeleteEnd = jest.fn();
+    const onCall = vi.fn();
+    const onDeleteStart = vi.fn();
+    const onDeleteEnd = vi.fn();
 
     const testSubject: FlexibleStopPlace = {
       id: 'test',

@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react';
 import { ConfigContext } from 'config/ConfigContext';
 
-const { useAuth } = require('./auth');
+import { useAuth } from './auth';
 
-jest.mock('react-oidc-context', () => {
+vi.mock('react-oidc-context', async () => {
   return {
-    ...jest.requireActual('react-oidc-context'),
+    ...(await vi.importActual('react-oidc-context')),
     useAuth: () => ({
       isLoading: false,
       isAuthenticated: true,
@@ -38,6 +38,9 @@ const testHook = () => {
   return renderHook(() => useAuth(), { wrapper });
 };
 
+/**
+ * @jest-environment jsdom
+ */
 describe('useAuth', () => {
   test('isLoading', () => {
     const { result } = testHook();
@@ -51,6 +54,7 @@ describe('useAuth', () => {
 
   test('user.name', () => {
     const { result } = testHook();
+    // @ts-ignore
     expect(result.current.user.name).toBe('Test Name');
   });
 

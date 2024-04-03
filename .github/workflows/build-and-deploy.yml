@@ -9,13 +9,13 @@ name: Build and deploy
 jobs:
   build:
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.16
       - name: Cache node modules
         id: cache-npm
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-node-modules
         with:
@@ -33,9 +33,9 @@ jobs:
         run: npm list
       - run: npm ci
       - run: npm run check
-      - run: npm run test -- --coverage --testResultsProcessor=jest-sonar-reporter
+      - run: npm run test -- run --coverage --coverage.reporter=lcov --reporter=vitest-sonar-reporter --outputFile.vitest-sonar-reporter=test-report.xml --reporter=default
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v1.2.0
+        uses: sonarsource/sonarqube-scan-action@v2.0.1
         env:
           SONAR_TOKEN: ${{ secrets.ENTUR_SONAR_PASSWORD }}
           SONAR_HOST_URL: https://sonarcloud.io
@@ -54,7 +54,7 @@ jobs:
           REACT_APP_VERSION: ${{ github.sha }}
           SENTRY_DSN: https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: |
@@ -65,11 +65,13 @@ jobs:
     needs: [build]
     environment: 'dev'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy favicon
         run: cp build/npl-d.ico build/favicon.ico
+      - name: Copy bootstrap config
+        run: cp .github/environments/dev.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -81,11 +83,13 @@ jobs:
     needs: [deploy_dev]
     environment: 'staging'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy favicon
         run: cp build/npl-s.ico build/favicon.ico
+      - name: Copy bootstrap config
+        run: cp .github/environments/test.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -97,11 +101,13 @@ jobs:
     needs: [deploy_dev, deploy_staging]
     environment: 'prod'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy favicon
         run: cp build/npl-p.ico build/favicon.ico
+      - name: Copy bootstrap config
+        run: cp .github/environments/prod.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

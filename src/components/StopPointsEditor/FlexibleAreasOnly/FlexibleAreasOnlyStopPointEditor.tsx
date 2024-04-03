@@ -6,8 +6,7 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateFlexibleAreasOnlyStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { GlobalState } from 'reducers';
+import { useAppSelector } from '../../../app/hooks';
 import {
   FrontTextTextField,
   useOnFrontTextChange,
@@ -22,8 +21,8 @@ export const FlexibleAreasOnlyStopPointEditor = ({
   const { stopPlace: stopPlaceError, frontText: frontTextError } =
     validateFlexibleAreasOnlyStopPoint(stopPoint);
   const { formatMessage } = useIntl();
-  const flexibleStopPlaces = useSelector(
-    (state: GlobalState) => state.flexibleStopPlaces
+  const flexibleStopPlaces = useAppSelector(
+    (state) => state.flexibleStopPlaces
   );
   const onFrontTextChange = useOnFrontTextChange(stopPoint, onChange);
   const stopPlacePristine = usePristine(
@@ -39,9 +38,15 @@ export const FlexibleAreasOnlyStopPointEditor = ({
     <div className="stop-point">
       <div className="stop-point-element">
         <div className="stop-point-info">
-          <Dropdown
+          <Dropdown<string>
             className="stop-point-dropdown"
-            value={stopPoint.flexibleStopPlaceRef}
+            selectedItem={
+              mapToItems(
+                flexibleStopPlaces?.filter(
+                  (item) => item.id === stopPoint.flexibleStopPlaceRef
+                ) || []
+              ).pop() || null
+            }
             placeholder={formatMessage({ id: 'defaultOption' })}
             items={mapToItems(flexibleStopPlaces || [])}
             clearable

@@ -46,7 +46,7 @@ export const QuayRefField = ({
 
   const debouncedSearchForQuay = useCallback(
     debounce(async (quayRef: string) => {
-      refetch({ id: quayRef });
+      await refetch({ id: quayRef });
     }, 1000),
     []
   );
@@ -57,7 +57,7 @@ export const QuayRefField = ({
       label={formatMessage({ id: 'labelQuayRef' })}
       {...errorFeedback}
       {...quaySearchFeedback}
-      value={quayRefInputValue!}
+      value={quayRefInputValue ?? ''}
       placeholder="NSR:Quay:69"
       onChange={(e: ChangeEvent<HTMLInputElement>) => {
         setQuayRefInputValue(e.target.value);
