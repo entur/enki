@@ -33,7 +33,7 @@ jobs:
         run: npm list
       - run: npm ci
       - run: npm run check
-      - run: npm run test -- --coverage --testResultsProcessor=jest-sonar-reporter
+      - run: npm run test -- run --coverage --coverage.reporter=lcov --reporter=vitest-sonar-reporter --outputFile.vitest-sonar-reporter=test-report.xml --reporter=default
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v2.0.1
         env:

@@ -15,16 +15,16 @@ import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
 import './styles/index.scss';
 
-if (process.env.REACT_APP_SENTRY_DSN) {
+if (import.meta.env.REACT_APP_SENTRY_DSN) {
   Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
+    dsn: import.meta.env.REACT_APP_SENTRY_DSN,
     integrations: [new Sentry.BrowserTracing()],
 
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
     tracesSampleRate: 1.0,
 
-    release: process.env.REACT_APP_VERSION,
+    release: import.meta.env.REACT_APP_VERSION,
     attachStacktrace: true,
     beforeSend(e) {
       return normalizeAllUrls(e);

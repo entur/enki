@@ -4,13 +4,13 @@
   "author": "Entur",
   "private": true,
   "scripts": {
-    "postinstall": "check-node-version --npm ~9.5.1",
-    "test": "react-scripts test --env=jsdom --modulePaths=src",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "test": "vitest",
+    "start": "vite",
+    "build": "tsc && vite build",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "server": "vite preview",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -59,11 +59,11 @@
     "uuid": "9.0.1"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "5.17.0",
+    "@redux-devtools/extension": "3.3.0",
+    "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "14.2.2",
     "@testing-library/user-event": "14.5.2",
     "@types/file-saver": "2.0.7",
-    "@types/jest": "27.5.2",
     "@types/leaflet": "1.9.8",
     "@types/lodash.clonedeep": "4.5.9",
     "@types/lodash.isempty": "4.4.9",
@@ -77,18 +77,25 @@
     "@types/react-modal": "3.16.3",
     "@types/redux-immutable-state-invariant": "2.1.4",
     "@types/uuid": "9.0.8",
+    "@vitejs/plugin-react": "4.2.1",
+    "@vitest/coverage-v8": "1.4.0",
+    "@vitest/ui": "1.4.0",
     "check-node-version": "4.2.1",
+    "happy-dom": "14.3.10",
     "husky": "8.0.3",
-    "jest-sonar-reporter": "2.0.0",
+    "identity-obj-proxy": "3.0.0",
     "lint-staged": "13.3.0",
     "prettier": "2.8.8",
     "prettier-plugin-organize-imports": "3.2.4",
-    "react-scripts": "5.0.1",
-    "@redux-devtools/extension": "3.3.0",
     "redux-immutable-state-invariant": "2.1.0",
     "sass": "1.72.0",
     "source-map-explorer": "2.5.3",
-    "typescript": "5.4.3"
+    "typescript": "5.4.3",
+    "vite": "5.2.6",
+    "vite-plugin-svgr": "4.2.0",
+    "vite-tsconfig-paths": "4.0.7",
+    "vitest": "1.4.0",
+    "vitest-sonar-reporter": "2.0.0"
   },
   "prettier": {
     "singleQuote": true
@@ -106,20 +113,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "engines": {
-    "npm": "9.9.2",
-    "node": "18.20.0"
-  },
-  "overrides": {
-    "react-scripts": {
-      "typescript": "5.4.3"
-    }
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "node_modules/(?!@axios)/"
     ]
   }
 }

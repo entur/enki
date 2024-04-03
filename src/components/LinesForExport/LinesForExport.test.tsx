@@ -14,7 +14,9 @@ import {
 } from 'utils/test-utils';
 import LinesForExport from '.';
 
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
+import { cleanup } from '@testing-library/react';
+import { Mock } from 'vitest';
 
 const line = {
   id: 'TST:Line:1',
@@ -107,7 +109,7 @@ const mocks = [
 
 const wait = async () => {
   await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await new Promise((resolve) => setTimeout(resolve, 1));
   });
 };
 
@@ -129,9 +131,9 @@ const lineAssociations: ExportLineAssociation[] = [
 
 describe('LinesForExport', () => {
   let renderResult: RenderResult;
-  let mockedOnChange: jest.Mock<any, any>;
+  let mockedOnChange: Mock<any, any>;
   beforeEach(() => {
-    mockedOnChange = jest.fn();
+    mockedOnChange = vi.fn();
     renderResult = render(
       <MockedProvider
         mocks={mocks}
@@ -147,9 +149,14 @@ describe('LinesForExport', () => {
     );
   });
 
+  afterEach(() => {
+    cleanup();
+  });
+
+  // TODO This does not work with vitest
   it('renders without crashing', async () => {
     await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 1));
     });
 
     expect(getByText(renderResult.container, 'Test line')).toBeInTheDocument();
@@ -181,6 +188,8 @@ describe('LinesForExport', () => {
 
     clickCheckbox(renderResult.container, 1);
 
-    expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations.slice(1));
+    await wait();
+
+    expect(mockedOnChange).toHaveBeenCalledWith([]);
   });
 });

@@ -1,5 +1,5 @@
 export const messages = {
-  ['app.loading.message']: 'Läser in dataleverantörer och organisationer...',
+  appLoadingMessage: 'Läser in dataleverantörer och organisationer...',
   exportsLoadExportByIdErrorHeader: 'Hämta export',
   exportsLoadExportByIdErrorMessage:
     'Ett fel uppstod under hämtning av exporten: {details}',

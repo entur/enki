@@ -7,7 +7,7 @@ import reducers from 'reducers';
 import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
 
 export const sentryCaptureException = (e: any) =>
-  process.env.NODE_ENV === 'production'
+  import.meta.env.NODE_ENV === 'production'
     ? Sentry.captureException(e)
     : console.error({ e });
 
@@ -27,7 +27,7 @@ const {
 } = reducers;
 
 const devMiddlewares =
-  process.env.NODE_ENV !== 'production'
+  import.meta.env.NODE_ENV !== 'production'
     ? [immutableStateInvariantMiddleware()]
     : [];
 

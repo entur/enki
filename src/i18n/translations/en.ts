@@ -1,7 +1,7 @@
 import { MessagesKey } from 'i18n/translations/translationKeys';
 
 export const messages: MessagesKey = {
-  ['app.loading.message']: 'Loading providers and organisations...',
+  appLoadingMessage: 'Loading providers and organisations...',
   exportsLoadExportByIdErrorHeader: 'Load export',
   exportsLoadExportByIdErrorMessage:
     'An error occurred while loading export: {details}',
