@@ -4,7 +4,6 @@
   "author": "Entur",
   "private": true,
   "scripts": {
-    "postinstall": "check-node-version --npm ~9.5.1",
     "test": "vitest",
     "start": "vite",
     "build": "tsc && vite build",
@@ -81,7 +80,6 @@
     "@vitejs/plugin-react": "4.2.1",
     "@vitest/coverage-v8": "1.4.0",
     "@vitest/ui": "1.4.0",
-    "babel-plugin-transform-import-meta": "2.2.0",
     "check-node-version": "4.2.1",
     "happy-dom": "14.3.10",
     "husky": "8.0.3",
@@ -116,14 +114,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "engines": {
-    "npm": "9.9.2",
-    "node": "18.20.0"
-  },
-  "overrides": {
-    "react-scripts": {
-      "typescript": "5.4.3"
-    }
   }
 }
