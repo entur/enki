@@ -52,6 +52,8 @@ jobs:
         env:
           REACT_APP_VERSION: preview_${{ github.sha }}
           SENTRY_DSN: https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954
+      - name: Copy favicon
+        run: cp .github/environments/npl-d.ico build/favicon.ico
       - name: Copy bootstrap config
         run: cp .github/environments/dev.json build/bootstrap.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
