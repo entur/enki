@@ -1,38 +1,43 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { render as rtlRender } from '@testing-library/react';
-import intlSlice from 'features/app/intlSlice';
-import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { cleanup, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { afterEach } from 'vitest';
+import { intlSlice } from '../features/app/intlSlice';
+import { messages } from '../i18n/translations/en';
 import reducers from '../reducers';
+import { TestIntlProvider } from './TestIntlProvider';
 
-function render(
-  ui,
-  {
-    store = configureStore({
-      reducer: {
-        ...reducers,
-        intl: intlSlice,
-      },
-      middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-          immmutableCheck: false,
-          serializableCheck: false,
-        }),
+afterEach(() => {
+  cleanup();
+});
+
+const store = configureStore({
+  reducer: combineReducers({
+    ...reducers,
+    intl: intlSlice,
+  }),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immmutableCheck: false,
+      serializableCheck: false,
     }),
-    ...renderOptions
-  } = {}
-) {
-  function Wrapper({ children }) {
-    return (
+});
+
+function customRender(ui, options = {}) {
+  return render(ui, {
+    // wrap provider(s) here if needed
+    wrapper: ({ children }) => (
       <Provider store={store}>
-        <EnkiIntlProvider>{children}</EnkiIntlProvider>
+        <TestIntlProvider locale="en" messages={messages}>
+          {children}
+        </TestIntlProvider>
       </Provider>
-    );
-  }
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+    ),
+    ...options,
+  });
 }
 
-// re-export everything
 export * from '@testing-library/react';
-// override render method
-export { render };
+export { default as userEvent } from '@testing-library/user-event';
+// override render export
+export { customRender as render };

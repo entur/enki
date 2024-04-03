@@ -4,10 +4,19 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
 import { ExportLineAssociation } from 'model/Export';
-import { act, fireEvent, getAllByRole, render } from 'utils/test-utils';
+import {
+  RenderResult,
+  act,
+  fireEvent,
+  getAllByRole,
+  getByText,
+  render,
+} from 'utils/test-utils';
 import LinesForExport from '.';
 
 import '@testing-library/jest-dom';
+import { cleanup } from '@testing-library/react';
+import { Mock } from 'vitest';
 
 const line = {
   id: 'TST:Line:1',
@@ -120,12 +129,12 @@ const lineAssociations: ExportLineAssociation[] = [
   { lineRef: 'TST:FlexibleLine:1' },
 ];
 
-/**
- * @jest-environment jsdom
- */
 describe('LinesForExport', () => {
-  it('renders without crashing', async () => {
-    render(
+  let renderResult: RenderResult;
+  let mockedOnChange: Mock<any, any>;
+  beforeEach(() => {
+    mockedOnChange = vi.fn();
+    renderResult = render(
       <MockedProvider
         mocks={mocks}
         defaultOptions={{
@@ -134,46 +143,53 @@ describe('LinesForExport', () => {
         }}
       >
         <MemoryRouter>
-          <LinesForExport onChange={vi.fn()} />
+          <LinesForExport onChange={mockedOnChange} />
         </MemoryRouter>
       </MockedProvider>
     );
   });
 
+  afterEach(() => {
+    cleanup();
+  });
+
   // TODO This does not work with vitest
-  // it('renders without crashing', async () => {
-  //   await act(async () => {
-  //     await new Promise((resolve) => setTimeout(resolve, 1));
-  //   });
-  //
-  //   expect(getByText(renderResult.container, 'Test line')).toBeInTheDocument();
-  //   expect(getByText(renderResult.container, 'TST:Line:1')).toBeInTheDocument();
-  // });
-  // it('calls onChange with correct lines when selecting/deselecting all', async () => {
-  //   expect(mockedOnChange).toHaveBeenCalledWith([]);
-  //
-  //   await wait();
-  //
-  //   expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations);
-  //
-  //   clickCheckbox(renderResult.container, 0);
-  //
-  //   expect(mockedOnChange).toHaveBeenCalledWith([]);
-  //
-  //   clickCheckbox(renderResult.container, 0);
-  //
-  //   expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations);
-  // });
-  //
-  // it('calls onChange with correct lines when selecting deselecting single checkbox', async () => {
-  //   expect(mockedOnChange).toHaveBeenCalledWith([]);
-  //
-  //   await wait();
-  //
-  //   expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations);
-  //
-  //   clickCheckbox(renderResult.container, 1);
-  //
-  //   expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations.slice(1));
-  // });
+  it('renders without crashing', async () => {
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1));
+    });
+
+    expect(getByText(renderResult.container, 'Test line')).toBeInTheDocument();
+    expect(getByText(renderResult.container, 'TST:Line:1')).toBeInTheDocument();
+  });
+
+  it('calls onChange with correct lines when selecting/deselecting all', async () => {
+    expect(mockedOnChange).toHaveBeenCalledWith([]);
+
+    await wait();
+
+    expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations);
+
+    clickCheckbox(renderResult.container, 0);
+
+    expect(mockedOnChange).toHaveBeenCalledWith([]);
+
+    clickCheckbox(renderResult.container, 0);
+
+    expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations);
+  });
+
+  it('calls onChange with correct lines when selecting deselecting single checkbox', async () => {
+    expect(mockedOnChange).toHaveBeenCalledWith([]);
+
+    await wait();
+
+    expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations);
+
+    clickCheckbox(renderResult.container, 1);
+
+    await wait();
+
+    expect(mockedOnChange).toHaveBeenCalledWith([]);
+  });
 });

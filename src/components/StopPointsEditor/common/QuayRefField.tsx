@@ -57,7 +57,7 @@ export const QuayRefField = ({
       label={formatMessage({ id: 'labelQuayRef' })}
       {...errorFeedback}
       {...quaySearchFeedback}
-      value={quayRefInputValue!}
+      value={quayRefInputValue || ''}
       placeholder="NSR:Quay:69"
       onChange={(e: ChangeEvent<HTMLInputElement>) => {
         setQuayRefInputValue(e.target.value);

@@ -1,7 +1,14 @@
 import { MockedProvider } from '@apollo/client/testing';
 import '@testing-library/jest-dom';
 import { STOP_PLACE_BY_QUAY_REF_QUERY } from 'api/uttu/queries';
-import { RenderResult, render } from 'utils/test-utils';
+import {
+  RenderResult,
+  act,
+  getAllByRole,
+  getByText,
+  render,
+  userEvent,
+} from 'utils/test-utils';
 import { Mock } from 'vitest';
 import { QuayRefField } from './QuayRefField';
 
@@ -41,15 +48,13 @@ const mocks = [
   },
 ];
 
-/**
- * @jest-environment jsdom
- */
 describe('QuayRefField', () => {
   let renderResult: RenderResult;
   let mockedOnChange: Mock;
 
   it('renders without crashing', async () => {
-    render(
+    mockedOnChange = vi.fn();
+    renderResult = render(
       <MockedProvider
         mocks={mocks}
         defaultOptions={{
@@ -59,19 +64,24 @@ describe('QuayRefField', () => {
       >
         <QuayRefField
           errorFeedback={{ variant: undefined, feedback: undefined }}
-          onChange={vi.fn()}
+          onChange={mockedOnChange}
         />
       </MockedProvider>
     );
 
-    // TODO: this does not work in vitest
-    //expect(getByText(renderResult.container, 'Fant ikke plattform.')).toBeInTheDocument();
-    // await act(async () => {
-    //   const inputField = getAllByRole(renderResult.container, 'textbox')[0];
-    //   await userEvent.type(inputField, 'TST:Quay:1');
-    //   await new Promise((resolve) => setTimeout(resolve, 1000));
-    // });
+    expect(
+      getByText(renderResult.container, 'Quay not found')
+    ).toBeInTheDocument();
 
-    // expect(getByText(renderResult.container, 'Test stop place 1')).toBeInTheDocument();
+    await act(async () => {
+      const inputField = getAllByRole(renderResult.container, 'textbox')[0];
+      await userEvent.type(inputField, 'TST:Quay:1');
+      inputField.blur();
+    });
+
+    expect(mockedOnChange).toHaveBeenCalled();
+
+    // TODO: this does not work in vitest
+    //expect(getByText(renderResult.container, 'Test stop place 1')).toBeInTheDocument();
   });
 });
