@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "author": "Entur",
   "private": false,
-  "repository": "https://github.com/entur/enki",
+  "repository": "https://github.com/entur/enki.git",
   "scripts": {
     "test": "vitest",
     "start": "vite",
