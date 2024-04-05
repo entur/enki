@@ -1,8 +1,9 @@
 {
-  "name": "enki",
+  "name": "@entur/enki",
   "version": "0.0.2",
   "author": "Entur",
-  "private": true,
+  "private": false,
+  "repository": "https://github.com/entur/enki",
   "scripts": {
     "test": "vitest",
     "start": "vite",
