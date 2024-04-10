@@ -1,8 +1,11 @@
 name: Deploy
-'on':
-  push:
-    branches:
-      - master
+
+on:
+  workflow_run:
+    workflows: [Build and publish]
+    types:
+      - completed
+
 jobs:
   deploy_dev:
     runs-on: ubuntu-latest
@@ -12,6 +15,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          name: build
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy favicon
         run: cp .github/environments/npl-d.ico build/favicon.ico
       - name: Copy bootstrap config
@@ -30,6 +37,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          name: build
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy favicon
         run: cp .github/environments/npl-s.ico build/favicon.ico
       - name: Copy bootstrap config
@@ -48,6 +59,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          name: build
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy favicon
         run: cp .github/environments/npl-p.ico build/favicon.ico
       - name: Copy bootstrap config
