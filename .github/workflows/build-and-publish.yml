@@ -54,11 +54,12 @@ jobs:
             -Dsonar.test.inclusions=src/**/*.spec.ts,src/**/*.spec.tsx,src/**/*.test.ts,src/**/*.test.tsx
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.testExecutionReportPaths=test-report.xml
+      - name: Bump version
+        run: |
+          echo "VERSION=$(echo npm version minor)" >> $GITHUB_ENV
       - run: npm run build
         env:
-          REACT_APP_VERSION: ${{ github.sha }} # TODO replace with tag / version
-      - name: Bump version
-        run: npm version minor
+          REACT_APP_VERSION: ${{ env.VERSION }}
       - name: Publish package
         run: npm publish
       - name: Push version update to GitHub
