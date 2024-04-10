@@ -14,7 +14,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@apollo/client": "3.9.10",
+    "@apollo/client": "3.9.11",
     "@entur/a11y": "0.2.78",
     "@entur/alert": "0.15.24",
     "@entur/button": "3.2.14",
