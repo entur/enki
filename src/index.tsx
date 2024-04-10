@@ -14,23 +14,26 @@ import { normalizeAllUrls } from 'helpers/url';
 import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
 import './styles/index.scss';
+import { browserTracingIntegration } from '@sentry/react';
 
-if (import.meta.env.REACT_APP_SENTRY_DSN) {
-  Sentry.init({
-    dsn: import.meta.env.REACT_APP_SENTRY_DSN,
-    integrations: [new Sentry.BrowserTracing()],
+const initSentry = (dsn?: string) => {
+  if (dsn) {
+    Sentry.init({
+      dsn: dsn,
+      integrations: [browserTracingIntegration()],
 
-    // We recommend adjusting this value in production, or using tracesSampler
-    // for finer control
-    tracesSampleRate: 1.0,
+      // We recommend adjusting this value in production, or using tracesSampler
+      // for finer control
+      tracesSampleRate: 1.0,
 
-    release: import.meta.env.REACT_APP_VERSION,
-    attachStacktrace: true,
-    beforeSend(e) {
-      return normalizeAllUrls(e);
-    },
-  });
-}
+      release: import.meta.env.REACT_APP_VERSION,
+      attachStacktrace: true,
+      beforeSend(e) {
+        return normalizeAllUrls(e);
+      },
+    });
+  }
+};
 
 const AuthenticatedApp = () => {
   const dispatch = useAppDispatch();
@@ -56,6 +59,8 @@ const renderIndex = async () => {
   const container = document.getElementById('root');
   const root = ReactDOM.createRoot(container!);
   const config = await fetchConfig();
+
+  initSentry(config.sentryDSN);
 
   root.render(
     <Sentry.ErrorBoundary>

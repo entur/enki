@@ -56,12 +56,11 @@ jobs:
             -Dsonar.testExecutionReportPaths=test-report.xml
       - run: npm run build
         env:
-          REACT_APP_VERSION: ${{ github.sha }}
-          SENTRY_DSN: https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954
+          REACT_APP_VERSION: ${{ github.sha }} # TODO replace with tag / version
       - name: Bump version
         run: npm version minor
       - name: Publish package
         run: npm publish
       - name: Push version update to GitHub
-        run: git push origin master
+        run: git push && git push --tags
           

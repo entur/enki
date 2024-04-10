@@ -56,6 +56,12 @@ export interface Config {
    * This is technical debt, and will be moved to the backend
    */
   claimsNamespace?: string;
+
+  /**
+   * Optional DSN for sentry configuration. If not present, Sentry will not be configured
+   * {@see https://docs.sentry.io/product/sentry-basics/concepts/dsn-explainer/}
+   */
+  sentryDSN?: string;
 }
 
 export const ConfigContext = createContext<Config>({});
