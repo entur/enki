@@ -12,7 +12,7 @@ import { useIntl } from 'react-intl';
 import General from './General';
 import './styles.scss';
 import { TestProps } from '../../ext/test/types';
-import { SandboxFeature } from '../../config/SandboxFeature';
+import SandboxFeature from '../../config/SandboxFeature';
 import { LatLngExpression, LatLngTuple } from 'leaflet';
 
 type Props = {
@@ -97,6 +97,11 @@ const JourneyPatternEditor = ({
     LatLngExpression | undefined
   >();
 
+  const sandboxFeatureOnClick = useCallback(
+    (position?: LatLngExpression) => setQuayPosition(position),
+    [setQuayPosition],
+  );
+
   return (
     <div className="journey-pattern-editor">
       <div>
@@ -104,7 +109,7 @@ const JourneyPatternEditor = ({
           <SandboxFeature<TestProps>
             feature="test"
             quayRef={journeyPattern.pointsInSequence[0].quayRef}
-            onClick={(position) => setQuayPosition(position)}
+            onClick={sandboxFeatureOnClick}
           />
           <pre>
             Quay position:{' '}

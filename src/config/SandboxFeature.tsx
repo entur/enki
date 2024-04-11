@@ -26,13 +26,13 @@ export type SandboxComponent<T extends SandboxFeatureProps> = FC<
  * 5. The folder must have a types.d.ts file which contains the type declaration
  *    for the component's props, which extends SandboxFeatureProps
  */
-export const SandboxFeature = <T extends SandboxFeatureProps>({
+const SandboxFeature = <T extends SandboxFeatureProps>({
   feature,
   ...props
 }: T) => {
   const { sandboxFeatures } = useConfig();
-  const Component: SandboxComponent<T> = memo(
-    lazy(() => import(`../ext/${feature}/index.ts`)),
+  const Component: SandboxComponent<T> = lazy(
+    () => import(`../ext/${feature}/index.ts`),
   );
 
   return (
@@ -41,3 +41,5 @@ export const SandboxFeature = <T extends SandboxFeatureProps>({
     </Suspense>
   );
 };
+
+export default memo(SandboxFeature) as typeof SandboxFeature;
