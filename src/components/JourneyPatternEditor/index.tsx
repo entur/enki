@@ -7,10 +7,13 @@ import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
 import { FlexibleLineType } from 'model/FlexibleLine';
 import JourneyPattern from 'model/JourneyPattern';
 import StopPoint from 'model/StopPoint';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import General from './General';
 import './styles.scss';
+import { TestProps } from '../../ext/test/types';
+import { SandboxFeature } from '../../config/SandboxFeature';
+import { LatLngExpression, LatLngTuple } from 'leaflet';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -90,9 +93,24 @@ const JourneyPatternEditor = ({
 
   const StopPointsEditor = useStopPointsEditor(flexibleLineType);
 
+  const [quayPosition, setQuayPosition] = useState<
+    LatLngExpression | undefined
+  >();
+
   return (
     <div className="journey-pattern-editor">
       <div>
+        <section>
+          <SandboxFeature<TestProps>
+            feature="test"
+            quayRef={journeyPattern.pointsInSequence[0].quayRef}
+            onClick={(position) => setQuayPosition(position)}
+          />
+          <pre>
+            Quay position:{' '}
+            {quayPosition ? JSON.stringify(quayPosition) : 'Unknown'}
+          </pre>
+        </section>
         <section>
           <RequiredInputMarker />
           <General

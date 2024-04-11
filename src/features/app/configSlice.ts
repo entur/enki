@@ -8,6 +8,7 @@ export interface ConfigState extends Config {
 
 const initialState: ConfigState = {
   loaded: false,
+  sandboxFeatures: {},
 };
 
 export const configSlice = createSlice({

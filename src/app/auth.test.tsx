@@ -28,6 +28,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
     value={{
       preferredNameNamespace: 'preferred_name',
       claimsNamespace: 'claims',
+      sandboxFeatures: {},
     }}
   >
     {children}

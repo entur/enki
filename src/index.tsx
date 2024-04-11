@@ -57,6 +57,8 @@ const renderIndex = async () => {
   const root = ReactDOM.createRoot(container!);
   const config = await fetchConfig();
 
+  console.log({ config });
+
   root.render(
     <Sentry.ErrorBoundary>
       <Provider store={store}>

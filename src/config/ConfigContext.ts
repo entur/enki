@@ -1,6 +1,7 @@
 import { FlexibleLineType } from 'model/FlexibleLine';
 import { OidcClientSettings } from 'oidc-client-ts';
 import { createContext, useContext } from 'react';
+import { SandboxFeatures } from './SandboxFeature';
 
 export interface Config {
   uttuApiUrl?: string;
@@ -11,6 +12,7 @@ export interface Config {
   claimsNamespace?: string;
   oidcConfig?: OidcClientSettings;
   supportedFlexibleLineTypes?: FlexibleLineType[];
+  sandboxFeatures?: SandboxFeatures;
 }
 
 export const ConfigContext = createContext<Config>({});
