@@ -35,8 +35,9 @@ export const SandboxFeature = <T extends SandboxFeatureProps>({
     lazy(() => import(`../ext/${feature}/index.ts`)),
   );
 
-  console.log('render');
   return (
-    <Suspense>{sandboxFeatures![feature] && <Component {...props} />}</Suspense>
+    <Suspense>
+      {sandboxFeatures && sandboxFeatures[feature] && <Component {...props} />}
+    </Suspense>
   );
 };
