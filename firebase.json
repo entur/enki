@@ -39,16 +39,17 @@
         ]
       },
       {
-        "source": "**",
+        "source": "/**",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=60"
+            "value": "no-cache, no-store, must-revalidate"
           }
         ]
       },
       {
-        "source": "**/*.@(eot|otf|ttf|ttc|woff|woff2|css|js|map|json)",
+        "source":
+        "**/*.@(jpg|jpeg|gif|png|svg|webp|js|map|css|eot|otf|ttf|ttc|woff|woff2|ico|font.css)",
         "headers": [
           {
             "key": "Cache-Control",
