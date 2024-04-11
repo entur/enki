@@ -12,5 +12,8 @@
       "audience": "https://ror.api.dev.entur.io"
     }
   },
-  "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"]
+  "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
+  "sandboxFeatures": {
+    "test": true
+  }
 }
