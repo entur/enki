@@ -14,7 +14,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@apollo/client": "3.9.10",
+    "@apollo/client": "3.9.11",
     "@entur/a11y": "0.2.78",
     "@entur/alert": "0.15.24",
     "@entur/button": "3.2.14",
@@ -61,7 +61,7 @@
   "devDependencies": {
     "@redux-devtools/extension": "3.3.0",
     "@testing-library/jest-dom": "6.4.2",
-    "@testing-library/react": "14.3.0",
+    "@testing-library/react": "15.0.0",
     "@testing-library/user-event": "14.5.2",
     "@types/file-saver": "2.0.7",
     "@types/leaflet": "1.9.9",
@@ -90,7 +90,7 @@
     "redux-immutable-state-invariant": "2.1.0",
     "sass": "1.74.1",
     "source-map-explorer": "2.5.3",
-    "typescript": "5.4.4",
+    "typescript": "5.4.5",
     "vite": "5.2.8",
     "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "4.3.2",
