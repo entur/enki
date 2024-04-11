@@ -1,12 +1,12 @@
-import {
-  SandboxComponent,
-  SandboxFeatureProps,
-} from '../../config/SandboxFeature';
+import { SandboxComponent } from '../../config/SandboxFeature';
 import { TestProps } from './types';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { memo, useCallback, useEffect, useReducer, useState } from 'react';
-import L, { LatLngExpression, LatLngTuple } from 'leaflet';
+import { useEffect, useState } from 'react';
+import L, { LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import { SecondaryButton } from '@entur/button';
 
 const DEFAULT_ZOOM_LEVEL = 14;
 
@@ -14,10 +14,6 @@ const DEFAULT_CENTER = {
   lat: 59.91,
   lng: 10.76,
 };
-
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import { SecondaryButton } from '@entur/button';
 
 let DefaultIcon = L.icon({
   iconUrl: icon,
@@ -38,26 +34,7 @@ function ChangeView({
   return null;
 }
 
-interface PositionUpdateAction {
-  payload?: LatLngExpression;
-}
-
-interface PositionState {
-  position?: LatLngExpression;
-}
-
-function positionReducer(
-  state: PositionState,
-  action: PositionUpdateAction,
-): PositionState {
-  console.log({ action });
-  return {
-    position: action.payload,
-  };
-}
-
 export const Test: SandboxComponent<TestProps> = ({ quayRef, onClick }) => {
-  //const [{position}, dispatch] = useReducer(positionReducer, { position: undefined });
   const [position, setPosition] = useState<LatLngExpression | undefined>();
 
   useEffect(() => {
@@ -66,14 +43,12 @@ export const Test: SandboxComponent<TestProps> = ({ quayRef, onClick }) => {
         'https://api.entur.io/stop-places/v1/read/quays/' + quayRef,
       );
       const quay = await response.json();
-      //dispatch({payload: {lat: quay.centroid.location.latitude, lng: quay.centroid.location.longitude}});
       setPosition({
         lat: quay.centroid.location.latitude,
         lng: quay.centroid.location.longitude,
       });
     };
     if (quayRef) {
-      console.log();
       getQuayPosition();
     }
   }, [quayRef]);
