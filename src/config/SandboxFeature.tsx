@@ -31,8 +31,8 @@ const SandboxFeature = <T extends SandboxFeatureProps>({
   ...props
 }: T) => {
   const { sandboxFeatures } = useConfig();
-  const Component: SandboxComponent<T> = lazy(
-    () => import(`../ext/${feature}/index.ts`),
+  const Component: SandboxComponent<T> = memo(
+    lazy(() => import(`../ext/${feature}/index.ts`)),
   );
 
   return (
