@@ -1,8 +1,9 @@
-import { FC, lazy, Suspense, memo } from 'react';
+import { FC, lazy, Suspense, memo, useMemo } from 'react';
 import { useConfig } from './ConfigContext';
 
 export interface SandboxFeatures {
   test?: boolean;
+  [key: `daytypes-editor/${string}`]: boolean;
 }
 
 export interface SandboxFeatureProps {
@@ -31,15 +32,33 @@ const SandboxFeature = <T extends SandboxFeatureProps>({
   ...props
 }: T) => {
   const { sandboxFeatures } = useConfig();
-  const Component: SandboxComponent<T> = memo(
-    lazy(() => import(`../ext/${feature}/index.ts`)),
+
+  const splitFeature = feature.split('/');
+
+  let Component: SandboxComponent<T>;
+
+  if (splitFeature.length > 2) {
+    throw new Error('Max feature depth is 2');
+  } else if (splitFeature.length === 2) {
+    Component = memo(
+      lazy(
+        () => import(`../ext/${splitFeature[0]}/${splitFeature[1]}/index.ts`),
+      ),
+    );
+  } else {
+    Component = memo(lazy(() => import(`../ext/${splitFeature[0]}/index.ts`)));
+  }
+
+  const featureEnabled = useMemo(
+    () =>
+      sandboxFeatures &&
+      Object.entries(sandboxFeatures).some(([key, value]) => {
+        return key.split('/')[0] === splitFeature[0] && value;
+      }),
+    [sandboxFeatures, splitFeature],
   );
 
-  return (
-    <Suspense>
-      {sandboxFeatures && sandboxFeatures[feature] && <Component {...props} />}
-    </Suspense>
-  );
+  return <Suspense>{featureEnabled && <Component {...props} />}</Suspense>;
 };
 
 export default memo(SandboxFeature) as typeof SandboxFeature;

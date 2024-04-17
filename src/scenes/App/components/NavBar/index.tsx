@@ -17,11 +17,13 @@ import { useAppSelector } from '../../../../app/hooks';
 import LanguagePicker from './LanguagePicker';
 import LogoutChip from './LogoutChip';
 import './styles.scss';
+import SandboxFeature from '../../../../config/SandboxFeature';
+import { DayTypesEditorNavBarItemProps } from '../../../../ext/daytypes-editor/nav-bar-item/types';
 
 const isActive = (pathname: string, path: string) =>
   pathname.split('/')[1] === path.split('/')[1];
 
-type RedirectType = {
+export type RedirectType = {
   showConfirm: boolean;
   path: string;
 };
@@ -34,7 +36,7 @@ type NavBarItemProps = {
   icon?: React.ReactNode;
 };
 
-const NavBarItem = ({
+export const NavBarItem = ({
   text,
   path,
   className,
@@ -127,6 +129,11 @@ const NavBar = () => {
             <NavBarItem
               text={formatMessage({ id: 'navBarExportsMenuItemLabel' })}
               path="/exports"
+              setRedirect={setRedirect}
+            />
+
+            <SandboxFeature<DayTypesEditorNavBarItemProps>
+              feature="daytypes-editor/nav-bar-item"
               setRedirect={setRedirect}
             />
           </>

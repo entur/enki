@@ -14,6 +14,8 @@ import NetworkEditor from '../Networks/scenes/Editor';
 import StopPlacesOverview from '../StopPlaces';
 import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import { useNoProviders } from './useNoProviders';
+import SandboxFeature from '../../config/SandboxFeature';
+import { DaytypesEditorProps } from '../../ext/daytypes-editor/daytypes-editor/types';
 
 const Routes = () => {
   const noProviders = useNoProviders();
@@ -47,6 +49,13 @@ const Routes = () => {
         <Route path="/providers" element={<Providers />} />
         <Route path="/providers/create" element={<ProviderEditor />} />
         <Route path="/providers/edit/:id" element={<ProviderEditor />} />
+
+        <Route
+          path="/daytypes"
+          element={
+            <SandboxFeature<DaytypesEditorProps> feature="daytypes-editor/daytypes-editor" />
+          }
+        />
       </ReactRoutes>
     </div>
   );
