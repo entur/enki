@@ -1,5 +1,5 @@
 # Enki
-![Build and deploy](https://github.com/entur/enki/actions/workflows/build-and-publish.yml/badge.svg?event=push)
+![Build](https://github.com/entur/enki/actions/workflows/build.yml/badge.svg?event=push)
  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=entur_enki&metric=alert_status)](https://sonarcloud.io/dashboard?id=entur_enki)
 
 Frontend app for Nplan - a simple timetable editor. Backend is [Uttu](https://github.com/entur/uttu).
