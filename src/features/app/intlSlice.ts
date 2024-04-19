@@ -3,7 +3,7 @@ import type { RootState } from 'app/store';
 import { getLocale, locale } from 'i18n';
 
 export interface LocaleState {
-  locale: locale;
+  locale?: locale;
 }
 
 const initialState: LocaleState = {
