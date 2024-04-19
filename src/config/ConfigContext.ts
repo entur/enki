@@ -1,6 +1,7 @@
 import { FlexibleLineType } from 'model/FlexibleLine';
 import { OidcClientSettings } from 'oidc-client-ts';
 import { createContext, useContext } from 'react';
+import { locale } from '../i18n';
 
 export interface Config {
   /**
@@ -62,6 +63,11 @@ export interface Config {
    * {@see https://docs.sentry.io/product/sentry-basics/concepts/dsn-explainer/}
    */
   sentryDSN?: string;
+
+  /**
+   * Default locale to use for translations and formatting
+   */
+  defaultLocale?: locale;
 }
 
 export const ConfigContext = createContext<Config>({});

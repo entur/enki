@@ -64,15 +64,15 @@ const renderIndex = async () => {
 
   root.render(
     <Sentry.ErrorBoundary>
-      <Provider store={store}>
-        <EnkiIntlProvider>
-          <ConfigContext.Provider value={config}>
+      <ConfigContext.Provider value={config}>
+        <Provider store={store}>
+          <EnkiIntlProvider>
             <AuthProvider>
               <AuthenticatedApp />
             </AuthProvider>
-          </ConfigContext.Provider>
-        </EnkiIntlProvider>
-      </Provider>
+          </EnkiIntlProvider>
+        </Provider>
+      </ConfigContext.Provider>
     </Sentry.ErrorBoundary>,
   );
 };
