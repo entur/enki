@@ -55,7 +55,8 @@ jobs:
             -Dsonar.testExecutionReportPaths=test-report.xml
       - name: Bump version
         run: |
-          echo "VERSION=$(echo npm version minor)" >> $GITHUB_ENV
+          npm version minor
+          echo "VERSION=$(npm pkg get version | tr -d \")" >> $GITHUB_ENV
       - run: npm run build
         env:
           REACT_APP_VERSION: ${{ env.VERSION }}
