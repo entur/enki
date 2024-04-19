@@ -17,6 +17,7 @@ jobs:
         with:
           run-id: ${{ github.event.workflow_run.id }}
           name: build
+          path: build
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy favicon
         run: cp .github/environments/npl-d.ico build/favicon.ico
@@ -39,6 +40,7 @@ jobs:
         with:
           run-id: ${{ github.event.workflow_run.id }}
           name: build
+          path: build
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy favicon
         run: cp .github/environments/npl-s.ico build/favicon.ico
@@ -61,6 +63,7 @@ jobs:
         with:
           run-id: ${{ github.event.workflow_run.id }}
           name: build
+          path: build
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy favicon
         run: cp .github/environments/npl-p.ico build/favicon.ico
