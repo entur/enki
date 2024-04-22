@@ -8,7 +8,7 @@ import {
   UpArrowIcon,
 } from '@entur/icons';
 import { updateLocale } from 'features/app/intlSlice';
-import { SUPPORTED_LOCALES, locale } from 'i18n';
+import { SUPPORTED_LOCALES, Locale } from 'i18n';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -48,7 +48,7 @@ const LanguagePicker = () => {
   const { formatMessage, locale: selectedLocale } = useIntl();
 
   const handleChangeLocale = useCallback(
-    async (locale: locale) => {
+    async (locale: Locale) => {
       dispatch(updateLocale(locale));
     },
     [dispatch],
@@ -64,7 +64,7 @@ const LanguagePicker = () => {
   );
 
   const checkIcon = useCallback(
-    (locale: string) => {
+    (locale: Locale) => {
       if (locale === selectedLocale)
         return (
           <div className="language-picker__icon-container language-picker__icon-container__check">

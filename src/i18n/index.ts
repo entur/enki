@@ -2,21 +2,15 @@ import 'moment/locale/nb';
 import { IntlShape } from 'react-intl';
 import { Messages } from './translations/translationKeys';
 
-export const defaultLocale = 'nb';
+const DEFAULT_LOCALE: Locale = 'nb';
 
-export type locale = 'nb' | 'en' | 'sv';
+export type Locale = 'nb' | 'en' | 'sv';
 
-export const SUPPORTED_LOCALES: locale[] = ['nb', 'en', 'sv'];
+export const SUPPORTED_LOCALES: Locale[] = ['nb', 'en', 'sv'];
 
 export const LOCALE_KEY = 'OT::locale';
 
-const removeRegionCode = (locale?: locale) =>
-  (locale ? locale.toLowerCase().split(/[_-]+/)[0] : defaultLocale) as locale;
-
-export const isLocaleSupported = (locale: locale) =>
-  locale ? SUPPORTED_LOCALES.indexOf(locale) > -1 : false;
-
-export const getLocale = (configuredDefaultLocale?: locale) => {
+export const getLocale = (configuredDefaultLocale?: Locale) => {
   let locale = getUserDefinedLocale();
 
   if (!locale && configuredDefaultLocale) {
@@ -28,40 +22,14 @@ export const getLocale = (configuredDefaultLocale?: locale) => {
   }
 
   if (!locale) {
-    locale = defaultLocale;
-  }
-
-  return locale;
-};
-
-const getUserDefinedLocale = () => {
-  return import.meta.env.NODE_ENV !== 'test'
-    ? (localStorage.getItem(LOCALE_KEY) as locale)
-    : undefined;
-};
-
-export const getNavigatorLocale = () => {
-  const navigatorLang =
-    import.meta.env.NODE_ENV !== 'test'
-      ? (((navigator.languages && navigator.languages[0]) ||
-          navigator.language) as locale)
-      : undefined;
-
-  return supportedLocale(navigatorLang);
-};
-
-const supportedLocale = (locale?: locale) => {
-  const localeWithoutRegionCode = removeRegionCode(locale);
-
-  if (isLocaleSupported(localeWithoutRegionCode)) {
-    return localeWithoutRegionCode;
+    locale = DEFAULT_LOCALE;
   }
 
   return locale;
 };
 
 export const getMessages = async (
-  locale: locale,
+  locale: Locale,
 ): Promise<Record<Messages, string>> => {
   switch (locale) {
     case 'nb':
@@ -74,3 +42,35 @@ export const getMessages = async (
 };
 
 export type FormatMessage = IntlShape['formatMessage'];
+
+const getUserDefinedLocale = () => {
+  return import.meta.env.NODE_ENV !== 'test'
+    ? (localStorage.getItem(LOCALE_KEY) as Locale)
+    : undefined;
+};
+
+const getNavigatorLocale = () => {
+  const navigatorLang =
+    import.meta.env.NODE_ENV !== 'test'
+      ? (((navigator.languages && navigator.languages[0]) ||
+          navigator.language) as Locale)
+      : undefined;
+
+  return supportedLocale(navigatorLang);
+};
+
+const supportedLocale = (locale?: Locale) => {
+  const localeWithoutRegionCode = removeRegionCode(locale);
+
+  if (isLocaleSupported(localeWithoutRegionCode)) {
+    return localeWithoutRegionCode;
+  }
+
+  return locale;
+};
+
+const removeRegionCode = (locale?: Locale) =>
+  (locale ? locale.toLowerCase().split(/[_-]+/)[0] : DEFAULT_LOCALE) as Locale;
+
+const isLocaleSupported = (locale: Locale) =>
+  locale ? SUPPORTED_LOCALES.indexOf(locale) > -1 : false;
