@@ -8,7 +8,7 @@ import {
   UpArrowIcon,
 } from '@entur/icons';
 import { updateLocale } from 'features/app/intlSlice';
-import { LOCALE_KEY, SUPPORTED_LOCALES } from 'i18n';
+import { SUPPORTED_LOCALES, locale } from 'i18n';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -48,9 +48,8 @@ const LanguagePicker = () => {
   const { formatMessage, locale: selectedLocale } = useIntl();
 
   const handleChangeLocale = useCallback(
-    async (locale: 'nb' | 'en' | 'sv') => {
+    async (locale: locale) => {
       dispatch(updateLocale(locale));
-      localStorage.setItem(LOCALE_KEY, locale);
     },
     [dispatch],
   );
