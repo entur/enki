@@ -7,7 +7,7 @@ import {
   UKIcon,
   UpArrowIcon,
 } from '@entur/icons';
-import { updateLocale } from 'features/app/intlSlice';
+import { updateLocale } from 'i18n/intlSlice';
 import { SUPPORTED_LOCALES, Locale } from 'i18n';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { useCallback, useMemo, useState } from 'react';

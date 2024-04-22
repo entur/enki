@@ -2,7 +2,7 @@ import { AnyAction, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react';
 import authSlice from 'features/app/authSlice';
 import configSlice from 'features/app/configSlice';
-import intlSlice from 'features/app/intlSlice';
+import intlSlice from 'i18n/intlSlice';
 import reducers from 'reducers';
 import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
 

@@ -1,4 +1,4 @@
-import { selectLocale, updateConfiguredLocale } from 'features/app/intlSlice';
+import { selectLocale, updateConfiguredLocale } from 'i18n/intlSlice';
 import { getMessages } from 'i18n';
 import { Suspense, useDeferredValue, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
