@@ -1,13 +1,10 @@
-import { selectLocale } from 'features/app/intlSlice';
-import {
-  getMessages,
-  getNavigatorLocale,
-  defaultLocale as fallbackLocale,
-} from 'i18n';
+import { selectLocale, updateConfiguredLocale } from 'features/app/intlSlice';
+import { getMessages } from 'i18n';
 import { Suspense, useDeferredValue, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
 import { useAppSelector } from '../app/hooks';
 import { useConfig } from '../config/ConfigContext';
+import { useAppDispatch } from '../app/hooks';
 
 export const EnkiIntlProvider = ({
   children,
@@ -18,21 +15,25 @@ export const EnkiIntlProvider = ({
   const { defaultLocale } = useConfig();
   const selectedLocale = useAppSelector(selectLocale);
   const deferredMessages = useDeferredValue(messages);
-
-  const locale =
-    selectedLocale || defaultLocale || getNavigatorLocale() || fallbackLocale;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getMessages(locale).then((messages) => {
+    if (defaultLocale) {
+      dispatch(updateConfiguredLocale(defaultLocale));
+    }
+  }, [defaultLocale]);
+
+  useEffect(() => {
+    getMessages(selectedLocale).then((messages) => {
       setMessages(() => messages);
     });
-  }, [locale]);
+  }, [selectedLocale]);
 
   return (
     <Suspense>
       {deferredMessages !== null && (
         <IntlProvider
-          locale={locale}
+          locale={selectedLocale}
           messages={deferredMessages}
           defaultLocale="nb"
         >

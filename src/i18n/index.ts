@@ -16,7 +16,25 @@ const removeRegionCode = (locale?: locale) =>
 export const isLocaleSupported = (locale: locale) =>
   locale ? SUPPORTED_LOCALES.indexOf(locale) > -1 : false;
 
-export const getLocale = () => {
+export const getLocale = (configuredDefaultLocale?: locale) => {
+  let locale = getUserDefinedLocale();
+
+  if (!locale && configuredDefaultLocale) {
+    locale = configuredDefaultLocale;
+  }
+
+  if (!locale) {
+    locale = getNavigatorLocale();
+  }
+
+  if (!locale) {
+    locale = defaultLocale;
+  }
+
+  return locale;
+};
+
+const getUserDefinedLocale = () => {
   return import.meta.env.NODE_ENV !== 'test'
     ? (localStorage.getItem(LOCALE_KEY) as locale)
     : undefined;

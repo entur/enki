@@ -3,7 +3,7 @@ import type { RootState } from 'app/store';
 import { getLocale, locale } from 'i18n';
 
 export interface LocaleState {
-  locale?: locale;
+  locale: locale;
 }
 
 const initialState: LocaleState = {
@@ -18,10 +18,14 @@ export const intlSlice = createSlice({
       ...state,
       locale: action.payload,
     }),
+    updateConfiguredLocale: (state, action: PayloadAction<locale>) => ({
+      ...state,
+      locale: getLocale(action.payload),
+    }),
   },
 });
 
-export const { updateLocale } = intlSlice.actions;
+export const { updateLocale, updateConfiguredLocale } = intlSlice.actions;
 
 export const selectLocale = (state: RootState) => state.intl.locale;
 
