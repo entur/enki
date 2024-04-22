@@ -1,5 +1,5 @@
 import { saveAs } from 'file-saver';
-import http from 'http/http';
+import http from 'api/http';
 import { VersionedType } from 'model/VersionedType';
 import { EXPORT_STATUS } from 'model/enums';
 import Line from './Line';

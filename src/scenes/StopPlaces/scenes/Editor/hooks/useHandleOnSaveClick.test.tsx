@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { store } from 'app/store';
+import { store } from 'store/store';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';

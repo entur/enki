@@ -14,7 +14,7 @@ import Provider, { sortProviders } from 'model/Provider';
 import { useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../store/hooks';
 import './styles.scss';
 
 const Providers = () => {

@@ -1,5 +1,5 @@
 import { deleteFlexibleStopPlaceById } from 'actions/flexibleStopPlaces';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch } from 'store/hooks';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { useCallback } from 'react';
 import { useIntl } from 'react-intl';

@@ -2,9 +2,9 @@ import { selectLocale, updateConfiguredLocale } from 'i18n/intlSlice';
 import { getMessages } from 'i18n';
 import { Suspense, useDeferredValue, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector } from '../store/hooks';
 import { useConfig } from '../config/ConfigContext';
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch } from '../store/hooks';
 
 export const EnkiIntlProvider = ({
   children,

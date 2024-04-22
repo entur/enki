@@ -2,7 +2,7 @@ import { PrimaryButton } from '@entur/button';
 import { DownloadIcon } from '@entur/icons';
 import { Label } from '@entur/typography';
 import { loadExportById } from 'actions/exports';
-import { useAuth } from 'app/auth';
+import { useAuth } from 'auth/auth';
 import Loading from 'components/Loading';
 import Page from 'components/Page';
 import { useConfig } from 'config/ConfigContext';
@@ -14,7 +14,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { useAppSelector } from '../../../../app/hooks';
+import { useAppSelector } from '../../../../store/hooks';
 import { getIconForSeverity, getIconForStatus } from '../icons';
 import './styles.scss';
 

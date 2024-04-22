@@ -15,7 +15,7 @@ import {
   getFlexibleLinesQuery,
   getlineByIdQuery,
 } from 'api/uttu/queries';
-import { sentryCaptureException } from 'app/store';
+import { sentryCaptureException } from 'store/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
 import { Dispatch } from 'react';

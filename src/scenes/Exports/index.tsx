@@ -10,8 +10,8 @@ import {
 } from '@entur/table';
 import { Heading1 } from '@entur/typography';
 import { loadExports } from 'actions/exports';
-import { useAuth } from 'app/auth';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAuth } from 'auth/auth';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import Loading from 'components/Loading';
 import { useConfig } from 'config/ConfigContext';
 import { download } from 'model/Export';

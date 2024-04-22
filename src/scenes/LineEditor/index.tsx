@@ -18,7 +18,7 @@ import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Navigate, useMatch, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../store/hooks';
 import LineEditorSteps from './LineEditorSteps';
 import { FIXED_LINE_STEPS } from './constants';
 import { useLine, useUttuErrors } from './hooks';

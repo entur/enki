@@ -1,7 +1,7 @@
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import StopPoint from 'model/StopPoint';
 import { ReactElement } from 'react';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../store/hooks';
 
 type Props = {
   stopPoint: StopPoint;

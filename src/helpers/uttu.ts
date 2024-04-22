@@ -1,5 +1,5 @@
 import { isApolloError } from '@apollo/client';
-import { sentryCaptureException } from 'app/store';
+import { sentryCaptureException } from 'store/store';
 import { IntlShape } from 'react-intl';
 import messages, {
   CombinedUttuCode,
