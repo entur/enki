@@ -68,6 +68,11 @@ export interface Config {
    * Default locale to use for translations and formatting
    */
   defaultLocale?: Locale;
+
+  /**
+   * Optionally restrict the choice of locales to the user
+   */
+  supportedLocales?: Locale[];
 }
 
 export const ConfigContext = createContext<Config>({});

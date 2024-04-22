@@ -10,10 +10,11 @@ import {
 import { updateLocale } from 'i18n/intlSlice';
 import { SUPPORTED_LOCALES, Locale } from 'i18n';
 import { MessagesKey } from 'i18n/translations/translationKeys';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import './styles.scss';
+import { useConfig } from '../../../../../config/ConfigContext';
 
 const getFlagIcon = (locale: string) => {
   switch (locale) {
@@ -46,6 +47,7 @@ const LanguagePicker = () => {
   const [toggled, setToggle] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { formatMessage, locale: selectedLocale } = useIntl();
+  const { supportedLocales } = useConfig();
 
   const handleChangeLocale = useCallback(
     async (locale: Locale) => {
@@ -87,7 +89,7 @@ const LanguagePicker = () => {
     <div className="language-picker-wrapper">
       {toggled && (
         <div className="language-picker__dropdown">
-          {SUPPORTED_LOCALES.map((locale: 'nb' | 'en' | 'sv') => (
+          {(supportedLocales || SUPPORTED_LOCALES).map((locale: Locale) => (
             <FloatingButton
               key={locale}
               className="language-picker__item"
