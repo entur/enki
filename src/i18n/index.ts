@@ -52,8 +52,7 @@ const getUserDefinedLocale = () => {
 const getNavigatorLocale = () => {
   const navigatorLang =
     import.meta.env.NODE_ENV !== 'test'
-      ? (((navigator.languages && navigator.languages[0]) ||
-          navigator.language) as Locale)
+      ? ((navigator?.languages[0] || navigator.language) as Locale)
       : undefined;
 
   return supportedLocale(navigatorLang);

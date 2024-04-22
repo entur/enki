@@ -10,7 +10,7 @@ import {
 import { updateLocale } from 'i18n/intlSlice';
 import { SUPPORTED_LOCALES, Locale } from 'i18n';
 import { MessagesKey } from 'i18n/translations/translationKeys';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import './styles.scss';

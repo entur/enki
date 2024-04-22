@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from 'store/store';
-import { getLocale, Locale, LOCALE_KEY } from 'i18n/index';
+import { getLocale, Locale, LOCALE_KEY } from './index';
 
 export interface LocaleState {
   locale: Locale;
