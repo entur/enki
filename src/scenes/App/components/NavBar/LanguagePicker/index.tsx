@@ -8,13 +8,13 @@ import {
   UpArrowIcon,
 } from '@entur/icons';
 import { updateLocale } from 'i18n/intlSlice';
-import { SUPPORTED_LOCALES, Locale } from 'i18n';
 import { MessagesKey } from 'i18n/translations/translationKeys';
 import { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import './styles.scss';
 import { useConfig } from '../../../../../config/ConfigContext';
+import { Locale, SUPPORTED_LOCALES } from '../../../../../i18n/locale';
 
 const getFlagIcon = (locale: string) => {
   switch (locale) {

@@ -1,7 +1,8 @@
 import { FlexibleLineType } from 'model/FlexibleLine';
 import { OidcClientSettings } from 'oidc-client-ts';
 import { createContext, useContext } from 'react';
-import { Locale } from '../i18n';
+
+import { Locale } from '../i18n/locale';
 
 export interface Config {
   /**

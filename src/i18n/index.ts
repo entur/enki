@@ -1,12 +1,7 @@
 import 'moment/locale/nb';
 import { IntlShape } from 'react-intl';
 import { Messages } from './translations/translationKeys';
-
-const DEFAULT_LOCALE: Locale = 'nb';
-
-export type Locale = 'nb' | 'en' | 'sv';
-
-export const SUPPORTED_LOCALES: Locale[] = ['nb', 'en', 'sv'];
+import { DEFAULT_LOCALE, Locale, SUPPORTED_LOCALES } from './locale';
 
 export const LOCALE_KEY = 'OT::locale';
 
@@ -31,14 +26,7 @@ export const getLocale = (configuredDefaultLocale?: Locale) => {
 export const getMessages = async (
   locale: Locale,
 ): Promise<Record<Messages, string>> => {
-  switch (locale) {
-    case 'nb':
-      return (await import('./translations/nb')).messages;
-    case 'en':
-      return (await import('./translations/en')).messages;
-    case 'sv':
-      return (await import('./translations/sv')).messages;
-  }
+  return (await import(`./translations/${locale}.ts`)).messages;
 };
 
 export type FormatMessage = IntlShape['formatMessage'];
