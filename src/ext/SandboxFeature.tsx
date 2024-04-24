@@ -1,10 +1,6 @@
-import { FC, lazy, Suspense, memo, useMemo } from 'react';
-import { useConfig } from './ConfigContext';
-
-export interface SandboxFeatures {
-  test?: boolean;
-  [key: `daytypes-editor/${string}`]: boolean;
-}
+import { FC, lazy, memo, Suspense, useMemo } from 'react';
+import { useConfig } from '../config/ConfigContext';
+import { SandboxFeatures } from '../config/config';
 
 export interface SandboxFeatureProps {
   feature: keyof SandboxFeatures;
