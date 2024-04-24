@@ -21,16 +21,12 @@ export const getLocale = (configuredDefaultLocale?: Locale) => {
 };
 
 const getUserDefinedLocale = () => {
-  return import.meta.env.NODE_ENV !== 'test'
-    ? (localStorage.getItem(LOCALE_KEY) as Locale)
-    : undefined;
+  return localStorage.getItem(LOCALE_KEY) as Locale;
 };
 
 const getNavigatorLocale = () => {
-  const navigatorLang =
-    import.meta.env.NODE_ENV !== 'test'
-      ? ((navigator?.languages[0] || navigator.language) as Locale)
-      : undefined;
+  const navigatorLang = (navigator?.languages[0] ||
+    navigator.language) as Locale;
 
   return supportedLocale(navigatorLang);
 };
