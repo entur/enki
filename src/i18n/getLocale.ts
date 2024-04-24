@@ -42,7 +42,7 @@ const supportedLocale = (locale?: Locale) => {
 };
 
 const removeRegionCode = (locale?: Locale) =>
-  (locale ? locale.toLowerCase().split(/[_-]+/)[0] : DEFAULT_LOCALE) as Locale;
+  locale ? (locale.toLowerCase().split(/[_-]+/)[0] as Locale) : undefined;
 
-const isLocaleSupported = (locale: Locale) =>
+const isLocaleSupported = (locale?: Locale) =>
   locale ? Locale.indexOf(locale) > -1 : false;
