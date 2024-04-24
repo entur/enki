@@ -8,10 +8,10 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Auth, useAuth } from 'app/auth';
+import { Auth, useAuth } from 'auth/auth';
 import { useConfig } from 'config/ConfigContext';
 import { ReactElement } from 'react';
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector } from '../store/hooks';
 
 export const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 

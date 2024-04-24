@@ -2,7 +2,7 @@ import { showErrorNotification } from 'actions/notification';
 import { UttuQuery } from 'api';
 import { exportMutation } from 'api/uttu/mutations';
 import { getExportByIdQuery, getExportsQuery } from 'api/uttu/queries';
-import { AppThunk, sentryCaptureException } from 'app/store';
+import { AppThunk, sentryCaptureException } from 'store/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { Export, toPayload } from 'model/Export';
 import { IntlShape } from 'react-intl';

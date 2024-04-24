@@ -10,9 +10,9 @@ import {
 } from '@entur/table';
 import { Tooltip } from '@entur/tooltip';
 import { Heading4 } from '@entur/typography';
-import { FormatMessage } from 'i18n';
 import Notice from 'model/Notice';
 import './styles.scss';
+import { FormatMessage } from 'i18n';
 type Props = {
   notices?: Notice[];
   setNotices: (notices: Notice[]) => void;

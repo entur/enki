@@ -5,7 +5,7 @@ import {
   SideNavigationGroup,
   SideNavigationItem,
 } from '@entur/menu';
-import { useAuth } from 'app/auth';
+import { useAuth } from 'auth/auth';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 import { useConfig } from 'config/ConfigContext';
 import React, { useState } from 'react';
@@ -13,7 +13,7 @@ import { useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import UserPreference from 'scenes/App/components/NavBar/UserPreference';
 import logo from 'static/img/logo.png';
-import { useAppSelector } from '../../../../app/hooks';
+import { useAppSelector } from '../../../../store/hooks';
 import LanguagePicker from './LanguagePicker';
 import LogoutChip from './LogoutChip';
 import './styles.scss';

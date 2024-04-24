@@ -1,7 +1,7 @@
 import { ActionChip } from '@entur/chip';
 import { BackArrowIcon } from '@entur/icons';
 import { useIntl } from 'react-intl';
-import { useAuth } from '../../../../../app/auth';
+import { useAuth } from '../../../../../auth/auth';
 import './styles.scss';
 
 const LogoutChip = () => {

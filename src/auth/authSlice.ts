@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Auth } from 'app/auth';
-import type { RootState } from 'app/store';
+import { Auth } from 'auth/auth';
+import type { RootState } from 'store/store';
 
 export interface AuthState extends Auth {
   loaded: boolean;

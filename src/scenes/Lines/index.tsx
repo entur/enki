@@ -13,7 +13,7 @@ import Line from 'model/Line';
 
 import LinesTable from 'components/LinesTable';
 import useUttuError from 'hooks/useUttuError';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../store/hooks';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
 import { useConfirmDeleteLine } from './hooks';
 

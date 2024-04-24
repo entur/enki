@@ -23,7 +23,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../store/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
 import { findFlexibleStopAreaType } from './findFlexibleStopAreaType';

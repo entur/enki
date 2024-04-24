@@ -5,32 +5,35 @@ import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
 
 import * as Sentry from '@sentry/react';
-import { AuthProvider, useAuth } from 'app/auth';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { store } from 'app/store';
-import { selectAuthLoaded, updateAuth } from 'features/app/authSlice';
-import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
+import { AuthProvider, useAuth } from 'auth/auth';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { store } from 'store/store';
+import { selectAuthLoaded, updateAuth } from 'auth/authSlice';
+import { selectConfigLoaded, updateConfig } from 'config/configSlice';
 import { normalizeAllUrls } from 'helpers/url';
 import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
 import './styles/index.scss';
+import { browserTracingIntegration } from '@sentry/react';
 
-if (import.meta.env.REACT_APP_SENTRY_DSN) {
-  Sentry.init({
-    dsn: import.meta.env.REACT_APP_SENTRY_DSN,
-    integrations: [new Sentry.BrowserTracing()],
+const initSentry = (dsn?: string) => {
+  if (dsn) {
+    Sentry.init({
+      dsn: dsn,
+      integrations: [browserTracingIntegration()],
 
-    // We recommend adjusting this value in production, or using tracesSampler
-    // for finer control
-    tracesSampleRate: 1.0,
+      // We recommend adjusting this value in production, or using tracesSampler
+      // for finer control
+      tracesSampleRate: 1.0,
 
-    release: import.meta.env.REACT_APP_VERSION,
-    attachStacktrace: true,
-    beforeSend(e) {
-      return normalizeAllUrls(e);
-    },
-  });
-}
+      release: import.meta.env.REACT_APP_VERSION,
+      attachStacktrace: true,
+      beforeSend(e) {
+        return normalizeAllUrls(e);
+      },
+    });
+  }
+};
 
 const AuthenticatedApp = () => {
   const dispatch = useAppDispatch();
@@ -57,19 +60,19 @@ const renderIndex = async () => {
   const root = ReactDOM.createRoot(container!);
   const config = await fetchConfig();
 
-  console.log({ config });
+  initSentry(config.sentryDSN);
 
   root.render(
     <Sentry.ErrorBoundary>
-      <Provider store={store}>
-        <EnkiIntlProvider>
-          <ConfigContext.Provider value={config}>
+      <ConfigContext.Provider value={config}>
+        <Provider store={store}>
+          <EnkiIntlProvider>
             <AuthProvider>
               <AuthenticatedApp />
             </AuthProvider>
-          </ConfigContext.Provider>
-        </EnkiIntlProvider>
-      </Provider>
+          </EnkiIntlProvider>
+        </Provider>
+      </ConfigContext.Provider>
     </Sentry.ErrorBoundary>,
   );
 };

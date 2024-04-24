@@ -1,5 +1,5 @@
-import { AuthState } from 'features/app/authSlice';
-import { ConfigState } from 'features/app/configSlice';
+import { AuthState } from 'auth/authSlice';
+import { ConfigState } from 'config/configSlice';
 import notification, { NotificationState } from 'reducers/notification';
 import editor, { EditorState } from './editor';
 import exports, { ExportsState } from './exports';

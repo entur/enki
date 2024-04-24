@@ -13,6 +13,7 @@
     }
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
+  "sentryDSN": "https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954",
   "sandboxFeatures": {
     "test": true
   }

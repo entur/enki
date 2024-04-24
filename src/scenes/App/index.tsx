@@ -14,8 +14,8 @@ import Routes from './Routes';
 import NavBar from './components/NavBar';
 
 import { useIntl } from 'react-intl';
-import { useAuth } from '../../app/auth';
-import { useAppSelector } from '../../app/hooks';
+import { useAuth } from '../../auth/auth';
+import { useAppSelector } from '../../store/hooks';
 import './styles.scss';
 
 import MarkerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';

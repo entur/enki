@@ -1,56 +1,25 @@
 import { FloatingButton } from '@entur/button';
-import {
-  CheckIcon,
-  DownArrowIcon,
-  NorwayIcon,
-  SwedenIcon,
-  UKIcon,
-  UpArrowIcon,
-} from '@entur/icons';
-import { updateLocale } from 'features/app/intlSlice';
-import { LOCALE_KEY, SUPPORTED_LOCALES } from 'i18n';
-import { MessagesKey } from 'i18n/translations/translationKeys';
+import { CheckIcon, DownArrowIcon, UpArrowIcon } from '@entur/icons';
+import { updateLocale } from 'i18n/intlSlice';
 import { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import './styles.scss';
-
-const getFlagIcon = (locale: string) => {
-  switch (locale) {
-    case 'nb':
-      return <NorwayIcon inline />;
-    case 'sv':
-      return <SwedenIcon inline />;
-    case 'en':
-      return <UKIcon inline />;
-    default: {
-      return <NorwayIcon inline />;
-    }
-  }
-};
-
-const getLocaleString = (locale: string): keyof MessagesKey => {
-  switch (locale) {
-    case 'en':
-      return 'userMenuMenuItemTextEnglish';
-    case 'sv':
-      return 'userMenuMenuItemTextSwedish';
-    case 'nb':
-      return 'userMenuMenuItemTextNorwegian';
-    default:
-      return 'userMenuMenuItemTextNorwegian';
-  }
-};
+import { useConfig } from 'config/ConfigContext';
+import {
+  getLanguagePickerFlagIcon,
+  getLanguagePickerLocaleMessageKey,
+  Locale,
+} from 'i18n';
 
 const LanguagePicker = () => {
   const [toggled, setToggle] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { formatMessage, locale: selectedLocale } = useIntl();
+  const { supportedLocales } = useConfig();
 
   const handleChangeLocale = useCallback(
-    async (locale: 'nb' | 'en' | 'sv') => {
+    async (locale: Locale) => {
       dispatch(updateLocale(locale));
-      localStorage.setItem(LOCALE_KEY, locale);
     },
     [dispatch],
   );
@@ -65,7 +34,7 @@ const LanguagePicker = () => {
   );
 
   const checkIcon = useCallback(
-    (locale: string) => {
+    (locale: Locale) => {
       if (locale === selectedLocale)
         return (
           <div className="language-picker__icon-container language-picker__icon-container__check">
@@ -76,10 +45,10 @@ const LanguagePicker = () => {
     [selectedLocale],
   );
 
-  const flagIcon = useCallback((locale: string) => {
+  const flagIcon = useCallback((locale: Locale) => {
     return (
       <div className="language-picker__icon-container language-picker__icon-container__flag">
-        {getFlagIcon(locale)}
+        {getLanguagePickerFlagIcon(locale)}
       </div>
     );
   }, []);
@@ -88,7 +57,7 @@ const LanguagePicker = () => {
     <div className="language-picker-wrapper">
       {toggled && (
         <div className="language-picker__dropdown">
-          {SUPPORTED_LOCALES.map((locale: 'nb' | 'en' | 'sv') => (
+          {(supportedLocales || Locale).map((locale: Locale) => (
             <FloatingButton
               key={locale}
               className="language-picker__item"
@@ -97,7 +66,11 @@ const LanguagePicker = () => {
               size="small"
             >
               {flagIcon(locale)}
-              <span>{formatMessage({ id: getLocaleString(locale) })}</span>
+              <span>
+                {formatMessage({
+                  id: getLanguagePickerLocaleMessageKey(locale),
+                })}
+              </span>
               {checkIcon(locale)}
             </FloatingButton>
           ))}
@@ -109,8 +82,10 @@ const LanguagePicker = () => {
         className="language-picker"
         size="small"
       >
-        {flagIcon(selectedLocale)}
-        {formatMessage({ id: getLocaleString(selectedLocale) })}
+        {flagIcon(selectedLocale as Locale)}
+        {formatMessage({
+          id: getLanguagePickerLocaleMessageKey(selectedLocale as Locale),
+        })}
         {arrowIcon}
       </FloatingButton>
     </div>
