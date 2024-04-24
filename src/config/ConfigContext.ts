@@ -1,6 +1,7 @@
 import { FlexibleLineType } from 'model/FlexibleLine';
 import { OidcClientSettings } from 'oidc-client-ts';
 import { createContext, useContext } from 'react';
+import { SandboxFeatures } from './SandboxFeature';
 
 import { Locale } from '../i18n/locale';
 
@@ -74,6 +75,8 @@ export interface Config {
    * Optionally restrict the choice of locales to the user
    */
   supportedLocales?: Locale[];
+
+  sandboxFeatures?: SandboxFeatures;
 }
 
 export const ConfigContext = createContext<Config>({});
