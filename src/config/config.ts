@@ -2,11 +2,7 @@ import { OidcClientSettings } from 'oidc-client-ts';
 import { FlexibleLineType } from '../model/FlexibleLine';
 import { Locale } from '../i18n';
 
-export interface SandboxFeatures {
-  test?: boolean;
-
-  [key: `daytypes-editor/${string}`]: boolean;
-}
+export interface SandboxFeatures {}
 
 export interface Config {
   /**
