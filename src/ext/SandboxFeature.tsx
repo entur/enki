@@ -2,13 +2,14 @@ import { FC, lazy, memo, Suspense, useMemo } from 'react';
 import { useConfig } from '../config/ConfigContext';
 import { SandboxFeatures } from '../config/config';
 
-export interface SandboxFeatureProps {
-  feature: keyof SandboxFeatures;
+export interface SandboxFeatureProps<Features> {
+  feature: keyof Features;
 }
 
-export type SandboxComponent<T extends SandboxFeatureProps> = FC<
-  Omit<T, 'feature'>
->;
+export type SandboxComponent<
+  Features,
+  Props extends SandboxFeatureProps<Features>,
+> = FC<Omit<Props, 'feature'>>;
 
 /**
  * A component that can load a sandbox Component lazily, which enables code splitting, each
@@ -23,26 +24,24 @@ export type SandboxComponent<T extends SandboxFeatureProps> = FC<
  * 5. The folder must have a types.d.ts file which contains the type declaration
  *    for the component's props, which extends SandboxFeatureProps
  */
-const SandboxFeature = <T extends SandboxFeatureProps>({
+const SandboxFeature = <Features, Props extends SandboxFeatureProps<Features>>({
   feature,
   ...props
-}: T) => {
+}: Props) => {
   const { sandboxFeatures } = useConfig();
 
-  const splitFeature = feature.split('/');
+  const splitFeature = (feature as string).split('/');
 
-  let Component: SandboxComponent<T>;
+  let Component: SandboxComponent<Features, Props>;
 
   if (splitFeature.length > 2) {
     throw new Error('Max feature depth is 2');
   } else if (splitFeature.length === 2) {
     Component = memo(
-      lazy(
-        () => import(`../ext/${splitFeature[0]}/${splitFeature[1]}/index.ts`),
-      ),
+      lazy(() => import(`./${splitFeature[0]}/${splitFeature[1]}/index.ts`)),
     );
   } else {
-    Component = memo(lazy(() => import(`../ext/${splitFeature[0]}/index.ts`)));
+    Component = memo(lazy(() => import(`./${splitFeature[0]}/index.ts`)));
   }
 
   const featureEnabled = useMemo(
@@ -57,4 +56,9 @@ const SandboxFeature = <T extends SandboxFeatureProps>({
   return <Suspense>{featureEnabled && <Component {...props} />}</Suspense>;
 };
 
-export default memo(SandboxFeature) as typeof SandboxFeature;
+export default memo(SandboxFeature) as typeof SandboxFeature<
+  SandboxFeatures,
+  any
+>;
+
+export const TestSandboxFeature = memo(SandboxFeature) as typeof SandboxFeature;
