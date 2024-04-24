@@ -2,9 +2,12 @@ import { EnkiIntlProvider } from './EnkiIntlProvider';
 import { useIntl } from 'react-intl';
 import { ConfigContext } from '../config/ConfigContext';
 import { Provider } from 'react-redux';
-import { cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach } from 'vitest';
 import { store } from '../utils/test-utils';
+import { useAppDispatch } from '../store/hooks';
+import { updateLocale } from './intlSlice';
 
 afterEach(() => {
   cleanup();
@@ -12,10 +15,19 @@ afterEach(() => {
 
 const TestComponent = () => {
   const { formatMessage } = useIntl();
+  const dispatch = useAppDispatch();
   return (
-    <h1 data-testid="EnkiIntlProviderTest">
-      {formatMessage({ id: 'appLoadingMessage' })}
-    </h1>
+    <>
+      <h1 data-testid="TestComponentHeader">
+        {formatMessage({ id: 'appLoadingMessage' })}
+      </h1>
+      <button
+        data-testid="TestComponentChangeLocaleButton"
+        onClick={() => dispatch(updateLocale('nb'))}
+      >
+        Change locale
+      </button>
+    </>
   );
 };
 
@@ -31,9 +43,20 @@ describe('EnkiIntlProvider', () => {
       </ConfigContext.Provider>,
     );
 
-    await screen.findByTestId('EnkiIntlProviderTest');
-    expect(screen.getByTestId('EnkiIntlProviderTest')).toHaveTextContent(
+    await screen.findByTestId('TestComponentHeader');
+
+    expect(screen.getByTestId('TestComponentHeader')).toHaveTextContent(
       'Loading providers and organisations...',
     );
+
+    act(() => {
+      userEvent.click(screen.getByTestId('TestComponentChangeLocaleButton'));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('TestComponentHeader')).toHaveTextContent(
+        'Laster inn dataleverandører og organisasjoner...',
+      );
+    });
   });
 });
