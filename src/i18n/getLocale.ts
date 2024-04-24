@@ -21,7 +21,7 @@ export const getLocale = (configuredDefaultLocale?: Locale) => {
 };
 
 const getUserDefinedLocale = () => {
-  return localStorage.getItem(LOCALE_KEY) as Locale;
+  return localStorage.getItem(LOCALE_KEY) as Locale | undefined;
 };
 
 const getNavigatorLocale = () => {
