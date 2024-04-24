@@ -14,9 +14,18 @@ describe('getLocale', () => {
   it('should return navigator locale if present', () => {
     vi.stubGlobal('navigator', {
       languages: [],
-      language: 'en',
+      language: 'en-GB',
     });
     expect(getLocale()).toEqual('en');
+    vi.unstubAllGlobals();
+  });
+
+  it('should return fallback default if navigator locale is not supported', () => {
+    vi.stubGlobal('navigator', {
+      languages: [],
+      language: 'ru-RU',
+    });
+    expect(getLocale()).toEqual('nb');
     vi.unstubAllGlobals();
   });
 

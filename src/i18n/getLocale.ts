@@ -25,23 +25,22 @@ const getUserDefinedLocale = () => {
 };
 
 const getNavigatorLocale = () => {
-  const navigatorLang = (navigator?.languages[0] ||
-    navigator.language) as Locale;
+  const navigatorLang = navigator?.languages[0] || navigator.language;
 
   return supportedLocale(navigatorLang);
 };
 
-const supportedLocale = (locale?: Locale) => {
+const supportedLocale = (locale?: string) => {
   const localeWithoutRegionCode = removeRegionCode(locale);
 
   if (isLocaleSupported(localeWithoutRegionCode)) {
     return localeWithoutRegionCode;
   }
 
-  return locale;
+  return undefined;
 };
 
-const removeRegionCode = (locale?: Locale) =>
+const removeRegionCode = (locale?: string) =>
   locale ? (locale.toLowerCase().split(/[_-]+/)[0] as Locale) : undefined;
 
 const isLocaleSupported = (locale?: Locale) =>
