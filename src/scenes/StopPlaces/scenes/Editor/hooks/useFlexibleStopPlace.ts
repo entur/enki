@@ -1,6 +1,6 @@
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import { loadFlexibleStopPlaceById } from 'actions/flexibleStopPlaces';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import isEqual from 'lodash.isequal';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { VEHICLE_MODE } from 'model/enums';

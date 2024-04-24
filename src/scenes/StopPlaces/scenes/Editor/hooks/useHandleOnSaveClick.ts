@@ -1,5 +1,5 @@
 import { saveFlexibleStopPlace } from 'actions/flexibleStopPlaces';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch } from 'store/hooks';
 import { objectValuesAreEmpty } from 'helpers/forms';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { useCallback } from 'react';

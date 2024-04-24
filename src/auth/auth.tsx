@@ -56,7 +56,7 @@ export const useAuth = (): Auth => {
       if (accessToken) {
         resolve(accessToken);
       } else {
-        reject();
+        reject(new Error('No access token'));
       }
     });
   }, [user]);

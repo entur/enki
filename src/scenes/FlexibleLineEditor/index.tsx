@@ -18,7 +18,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../store/hooks';
 import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
 import { useLoadDependencies } from './hooks';
 import { FLEXIBLE_LINE_STEPS } from './steps';

@@ -1,7 +1,7 @@
 import { UttuQuery } from 'api';
 import { mutateCodespace, mutateProvider } from 'api/uttu/mutations';
 import { getProvidersQuery } from 'api/uttu/queries';
-import { AppThunk, sentryCaptureException } from 'app/store';
+import { AppThunk, sentryCaptureException } from 'store/store';
 import { UttuError, getStyledUttuError } from 'helpers/uttu';
 import Provider from 'model/Provider';
 import { showErrorNotification } from './notification';

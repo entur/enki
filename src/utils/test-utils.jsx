@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { cleanup, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { afterEach } from 'vitest';
-import { intlSlice } from '../features/app/intlSlice';
+import intlSlice from '../i18n/intlSlice';
 import { messages } from '../i18n/translations/en';
 import reducers from '../reducers';
 import { TestIntlProvider } from './TestIntlProvider';
@@ -11,7 +11,7 @@ afterEach(() => {
   cleanup();
 });
 
-const store = configureStore({
+export const store = configureStore({
   reducer: combineReducers({
     ...reducers,
     intl: intlSlice,

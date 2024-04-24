@@ -5,11 +5,11 @@ import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
 
 import * as Sentry from '@sentry/react';
-import { AuthProvider, useAuth } from 'app/auth';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { store } from 'app/store';
-import { selectAuthLoaded, updateAuth } from 'features/app/authSlice';
-import { selectConfigLoaded, updateConfig } from 'features/app/configSlice';
+import { AuthProvider, useAuth } from 'auth/auth';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { store } from 'store/store';
+import { selectAuthLoaded, updateAuth } from 'auth/authSlice';
+import { selectConfigLoaded, updateConfig } from 'config/configSlice';
 import { normalizeAllUrls } from 'helpers/url';
 import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
@@ -64,15 +64,15 @@ const renderIndex = async () => {
 
   root.render(
     <Sentry.ErrorBoundary>
-      <Provider store={store}>
-        <EnkiIntlProvider>
-          <ConfigContext.Provider value={config}>
+      <ConfigContext.Provider value={config}>
+        <Provider store={store}>
+          <EnkiIntlProvider>
             <AuthProvider>
               <AuthenticatedApp />
             </AuthProvider>
-          </ConfigContext.Provider>
-        </EnkiIntlProvider>
-      </Provider>
+          </EnkiIntlProvider>
+        </Provider>
+      </ConfigContext.Provider>
     </Sentry.ErrorBoundary>,
   );
 };

@@ -13,7 +13,7 @@ export const fetchConfig = async (): Promise<Config> => {
   }
 
   const response = await fetch('/bootstrap.json');
-  const config = await response.json();
+  const config: Config = await response.json();
 
   return Object.assign({}, defaultConfig, config, overrides);
 };

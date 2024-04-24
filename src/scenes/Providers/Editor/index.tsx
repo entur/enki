@@ -15,7 +15,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import './styles.scss';
 
 const getCurrentProviderSelector =

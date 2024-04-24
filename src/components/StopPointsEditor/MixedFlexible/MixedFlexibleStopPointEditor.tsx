@@ -12,7 +12,7 @@ import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import {
   BoardingTypeSelect,
   useOnBoardingTypeChange,

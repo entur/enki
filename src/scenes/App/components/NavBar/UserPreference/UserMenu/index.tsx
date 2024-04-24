@@ -1,5 +1,5 @@
 import { UserIcon } from '@entur/icons';
-import { useAuth } from '../../../../../../app/auth';
+import { useAuth } from '../../../../../../auth/auth';
 import './styles.scss';
 
 const UserMenu = () => {

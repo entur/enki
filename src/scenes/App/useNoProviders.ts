@@ -1,7 +1,7 @@
 import { useConfig } from 'config/ConfigContext';
 import { useLocation } from 'react-router-dom';
-import { useAuth } from '../../app/auth';
-import { useAppSelector } from '../../app/hooks';
+import { useAuth } from '../../auth/auth';
+import { useAppSelector } from '../../store/hooks';
 
 export const useNoProviders = () => {
   const providers = useAppSelector((state) => state.providers);

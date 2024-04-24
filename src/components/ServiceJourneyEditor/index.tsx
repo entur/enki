@@ -21,7 +21,7 @@ import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../store/hooks';
 import CopyDialog from './CopyDialog';
 import './styles.scss';
 

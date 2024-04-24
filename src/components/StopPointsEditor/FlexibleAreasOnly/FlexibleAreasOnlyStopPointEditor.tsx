@@ -6,7 +6,7 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateFlexibleAreasOnlyStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
 import { useIntl } from 'react-intl';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import {
   FrontTextTextField,
   useOnFrontTextChange,

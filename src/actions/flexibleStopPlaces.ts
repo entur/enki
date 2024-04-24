@@ -11,7 +11,7 @@ import {
   getFlexibleStopPlaceByIdQuery,
   getFlexibleStopPlacesQuery,
 } from 'api/uttu/queries';
-import { sentryCaptureException } from 'app/store';
+import { sentryCaptureException } from 'store/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { Dispatch } from 'react';
