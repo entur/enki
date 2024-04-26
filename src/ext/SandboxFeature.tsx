@@ -2,27 +2,30 @@ import { FC, lazy, memo, Suspense, useMemo } from 'react';
 import { useConfig } from '../config/ConfigContext';
 import { SandboxFeatures } from '../config/config';
 
+/**
+ * The base props interface for the SandboxFeature component. It is a generic interface that
+ * takes a single type parameter `Features`, and has  a single property `feature` which can
+ * have the value of any key of `Features`.
+ */
 export interface SandboxFeatureProps<Features> {
   feature: keyof Features;
 }
 
+/**
+ * A type that describes a sandbox component which can be wrapped with the SandboxFeature component.
+ * It is a generic type which takes two type parameters: `Features` and `Props`. The `Props` type
+ * should implement the SandboxFeatureProps interface. The resulting type is a Functional Component
+ * with `Props` without "feature".
+ */
 export type SandboxComponent<
   Features,
   Props extends SandboxFeatureProps<Features>,
 > = FC<Omit<Props, 'feature'>>;
 
 /**
- * A component that can load a sandbox Component lazily, which enables code splitting, each
- * feature get its own chunk.
- *
- * Requirements:
- * 1. Your sandbox component must conform to the SandboxComponent type
- * 2. Your must export a props interface that extends SandboxFeatureProps
- * 3. The feature prop must be identical to the name of the folder
- *    that contains the component
- * 4. The folder must have an index.ts file whose default export is your component
- * 5. The folder must have a types.d.ts file which contains the type declaration
- *    for the component's props, which extends SandboxFeatureProps
+ * A component that can load a sandbox Component. It is a generic component with the same type
+ * parameters as the SandboxComponent. It optionally and lazily renders the SandboxComponent
+ * identified by through the `feature` prop, which identifies the path of the component to load.
  */
 const SandboxFeature = <Features, Props extends SandboxFeatureProps<Features>>({
   feature,
