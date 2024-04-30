@@ -1,10 +1,11 @@
 import { AnyAction, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react';
-import authSlice from 'auth/authSlice';
-import configSlice from 'config/configSlice';
-import intlSlice from 'i18n/intlSlice';
+import auth from 'auth/authSlice';
+import config from 'config/configSlice';
+import intl from 'i18n/intlSlice';
 import reducers from 'reducers';
 import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
+import userContext from '../auth/userContextSlice';
 
 export const sentryCaptureException = (e: any) =>
   import.meta.env.NODE_ENV === 'production'
@@ -33,8 +34,11 @@ const devMiddlewares =
 
 export const store = configureStore({
   reducer: {
+    auth,
+    userContext,
+    config,
+    intl,
     notification,
-    auth: authSlice,
     organisations,
     providers,
     exports,
@@ -42,8 +46,6 @@ export const store = configureStore({
     flexibleLines,
     flexibleStopPlaces,
     editor,
-    config: configSlice,
-    intl: intlSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -2,12 +2,16 @@ import { gql } from '@apollo/client';
 
 export const getProvidersQuery = `
   query GetProviders {
-    providers {
-      name,
-      code,
-      codespace {
-        xmlns,
-        xmlnsUrl
+    userContext {
+      preferredName
+      isAdmin
+      providers {
+        name,
+        code,
+        codespace {
+          xmlns,
+          xmlnsUrl
+        }
       }
     }
   }

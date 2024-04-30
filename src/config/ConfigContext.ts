@@ -38,28 +38,6 @@ export interface Config {
   supportedFlexibleLineTypes?: FlexibleLineType[];
 
   /**
-   * The exact shape of the admin role used to match against role claims in token, toggles
-   * visibility of providers admin menu option.
-   *
-   * This is technical debt, and will be moved to the backend
-   */
-  adminRole?: string;
-
-  /**
-   * Namespace for preferred name in tokens
-   *
-   * This is technical debt, and will be moved to the backend
-   */
-  preferredNameNamespace?: string;
-
-  /**
-   * Namespace for claims in tokens
-   *
-   * This is technical debt, and will be moved to the backend
-   */
-  claimsNamespace?: string;
-
-  /**
    * Optional DSN for sentry configuration. If not present, Sentry will not be configured
    * {@see https://docs.sentry.io/product/sentry-basics/concepts/dsn-explainer/}
    */

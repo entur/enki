@@ -34,6 +34,12 @@ const Providers = () => {
     [providersState],
   );
 
+  const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
+
+  if (!isAdmin) {
+    navigate('/');
+  }
+
   const RenderTableRows = ({
     providerList,
   }: {

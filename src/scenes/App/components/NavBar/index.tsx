@@ -70,8 +70,7 @@ const NavBar = () => {
     path: '',
   });
 
-  const { roleAssignments } = useAuth();
-  const { adminRole } = useConfig();
+  const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
 
   return (
     <Contrast as="nav" className="navbar-wrapper">
@@ -132,7 +131,7 @@ const NavBar = () => {
           </>
         )}
 
-        {roleAssignments?.includes(adminRole!) && (
+        {isAdmin && (
           <NavBarItem
             icon={<ClosedLockIcon />}
             text={formatMessage({ id: 'navBarProvidersMenuItemLabel' })}

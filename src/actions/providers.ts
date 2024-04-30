@@ -12,6 +12,7 @@ import {
   RECEIVE_PROVIDERS,
   SET_ACTIVE_PROVIDER,
 } from './constants';
+import { updateUserContext } from '../auth/userContextSlice';
 
 const receiveProviders = (
   providers: Provider[],
@@ -48,7 +49,8 @@ export const getProviders = (): AppThunk => async (dispatch, getState) => {
   )
     .then((data) => {
       const activeCode = window.localStorage.getItem('ACTIVE_PROVIDER');
-      dispatch(receiveProviders(data.providers, activeCode));
+      dispatch(receiveProviders(data.userContext.providers, activeCode));
+      dispatch(updateUserContext(data.userContext));
       return Promise.resolve();
     })
     .catch((e) => {

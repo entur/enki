@@ -10,8 +10,6 @@ const initialState: AuthState = {
   loaded: false,
   isLoading: false,
   isAuthenticated: false,
-  user: undefined,
-  roleAssignments: null,
   getAccessToken: () => Promise.resolve(''),
   logout: () => Promise.resolve(),
   login: () => Promise.resolve(),

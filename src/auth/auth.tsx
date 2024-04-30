@@ -12,10 +12,6 @@ import {
 export interface Auth {
   isLoading: boolean;
   isAuthenticated: boolean;
-  user?: {
-    name?: string;
-  };
-  roleAssignments?: string[] | null;
   getAccessToken: () => Promise<string>;
   logout: ({ returnTo }: { returnTo?: string }) => Promise<void>;
   login: (redirectUri?: string) => Promise<void>;
@@ -34,8 +30,6 @@ export const useAuth = (): Auth => {
     signoutRedirect,
     signinRedirect,
   } = useOidcAuth();
-
-  const { claimsNamespace, preferredNameNamespace } = useConfig();
 
   useEffect(() => {
     if (
@@ -76,10 +70,6 @@ export const useAuth = (): Auth => {
   return {
     isLoading,
     isAuthenticated,
-    user: {
-      name: user?.profile[preferredNameNamespace!] as string,
-    },
-    roleAssignments: user?.profile[claimsNamespace!] as string[],
     getAccessToken,
     logout,
     login,
