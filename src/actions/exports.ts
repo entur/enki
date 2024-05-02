@@ -27,7 +27,7 @@ export const loadExports =
   async (dispatch, getState) => {
     dispatch(requestExportsActionCreator());
 
-    const activeProvider = getState().providers.active?.code ?? '';
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
 
     try {
@@ -62,7 +62,7 @@ export const loadExports =
 export const loadExportById =
   (id: string, intl: IntlShape): AppThunk =>
   async (dispatch, getState) => {
-    const activeProvider = getState().providers.active?.code ?? '';
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
 
     try {
@@ -95,7 +95,7 @@ export const loadExportById =
 export const saveExport =
   (theExport: Export, intl: IntlShape): AppThunk =>
   async (dispatch, getState) => {
-    const activeProvider = getState().providers.active?.code ?? '';
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
 
     try {

@@ -1,6 +1,5 @@
 import { Dropdown } from '@entur/dropdown';
 import { Contrast } from '@entur/layout';
-import { setActiveProvider } from 'actions/providers';
 import { sortProviders } from 'model/Provider';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
@@ -8,10 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../../store/hooks';
 import UserMenu from './UserMenu/';
 import './styles.scss';
+import { setActiveProvider } from '../../../../../auth/userContextSlice';
 
 const UserPreference = () => {
   const navigate = useNavigate();
-  const { providers, active } = useAppSelector((state) => state.providers);
+  const { providers, activeProviderCode } = useAppSelector(
+    (state) => state.userContext,
+  );
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
 
@@ -19,10 +21,12 @@ const UserPreference = () => {
     const provider = providers?.find((p) => p.code === providerCode);
     if (provider) {
       window.localStorage.setItem('ACTIVE_PROVIDER', provider.code!);
-      dispatch(setActiveProvider(provider));
+      dispatch(setActiveProvider(provider.code));
       navigate('/', { replace: true });
     }
   };
+
+  const active = providers?.find(({ code }) => code === activeProviderCode);
 
   const items = providers
     ? providers

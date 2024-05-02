@@ -355,6 +355,7 @@ export const messages: MessagesKey = {
   navigationCancel: 'Cancel',
   navigationPrevious: 'Previous',
   linesHeader: 'Lines',
+  flexibleLinesHeader: 'Flexible lines',
   labelForAlighting: 'For alighting',
   labelForBoarding: 'For boarding',
   labelForBoardingAndAlighting: 'Boarding and alighting',

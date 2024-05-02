@@ -37,7 +37,10 @@ export default () => {
   const dispatch = useDispatch<any>();
   const organisations = useAppSelector((state) => state.organisations);
   const editor = useAppSelector((state) => state.editor);
-  const providers = useAppSelector((state) => state.providers);
+
+  const activeProviderCode = useAppSelector(
+    (state) => state.userContext.activeProviderCode,
+  );
 
   const { line, setLine, refetchLine, loading, error, networks, notFound } =
     useLine();
@@ -113,7 +116,7 @@ export default () => {
     organisations &&
     filterAuthorities(
       organisations,
-      providers.active,
+      activeProviderCode,
       config.enableLegacyOrganisationsFilter,
     ).length === 0;
 

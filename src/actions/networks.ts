@@ -24,7 +24,7 @@ export const loadNetworks = (): AppThunk => async (dispatch, getState) => {
   try {
     const data = await UttuQuery(
       getState().config.uttuApiUrl,
-      getState().providers.active?.code ?? '',
+      getState().userContext.activeProviderCode ?? '',
       getNetworksQuery,
       {},
       await getState().auth.getAccessToken(),
@@ -52,7 +52,7 @@ export const loadNetworkById =
     try {
       const data = await UttuQuery(
         getState().config.uttuApiUrl,
-        getState().providers.active?.code ?? '',
+        getState().userContext.activeProviderCode ?? '',
         getNetworkByIdQuery,
         { id },
         await getState().auth.getAccessToken(),
@@ -79,7 +79,7 @@ export const saveNetwork =
     try {
       await UttuQuery(
         getState().config.uttuApiUrl,
-        getState().providers.active?.code ?? '',
+        getState().userContext.activeProviderCode ?? '',
         networkMutation,
         {
           input: network,
@@ -114,7 +114,7 @@ export const deleteNetworkById =
     try {
       await UttuQuery(
         getState().config.uttuApiUrl,
-        getState().providers.active?.code ?? '',
+        getState().userContext.activeProviderCode ?? '',
         deleteNetwork,
         {
           id,

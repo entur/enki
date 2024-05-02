@@ -38,7 +38,7 @@ export default () => {
 
   return (
     <div className="flexible-lines">
-      <Heading1>{formatMessage({ id: 'linesHeader' })}</Heading1>
+      <Heading1>{formatMessage({ id: 'flexibleLinesHeader' })}</Heading1>
 
       <section className="buttons">
         <SecondaryButton

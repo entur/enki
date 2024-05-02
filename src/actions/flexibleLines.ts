@@ -2,7 +2,6 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from 'actions/notification';
-import { SetActiveProviderAction } from 'actions/providers';
 import { UttuQuery } from 'api';
 import {
   deleteFlexibleLine,
@@ -15,12 +14,11 @@ import {
   getFlexibleLinesQuery,
   getlineByIdQuery,
 } from 'api/uttu/queries';
-import { sentryCaptureException } from 'store/store';
+import { RootState, sentryCaptureException } from 'store/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
 import { Dispatch } from 'react';
 import { IntlShape } from 'react-intl';
-import { GlobalState } from 'reducers';
 import { RECEIVE_FLEXIBLE_LINE, RECEIVE_FLEXIBLE_LINES } from './constants';
 
 export type ReceiveFlexibleLinesAction = {
@@ -34,7 +32,6 @@ export type ReceiveFlexibleLineAction = {
 };
 
 export type FlexibleLinesAction =
-  | SetActiveProviderAction
   | ReceiveFlexibleLineAction
   | ReceiveFlexibleLinesAction;
 
@@ -54,9 +51,9 @@ const receiveFlexibleLineActionCreator = (
 
 export const loadFlexibleLines =
   (intl: IntlShape) =>
-  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
     try {
-      const activeProvider = getState().providers.active?.code ?? '';
+      const activeProvider = getState().userContext.activeProviderCode ?? '';
       const uttuApiUrl = getState().config.uttuApiUrl;
       const { flexibleLines } = await UttuQuery(
         uttuApiUrl,
@@ -86,7 +83,7 @@ export const loadFlexibleLines =
 
 export const loadFlexibleLineById =
   (id: string, isFlexibleLine: boolean, intl: IntlShape) =>
-  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
     try {
       const queryById = isFlexibleLine
         ? getFlexibleLineByIdQuery
@@ -96,7 +93,7 @@ export const loadFlexibleLineById =
 
       const { line, flexibleLine } = await UttuQuery(
         uttuApiUrl,
-        getState().providers.active?.code ?? '',
+        getState().userContext.activeProviderCode ?? '',
         queryById,
         {
           id,
@@ -123,8 +120,8 @@ export const loadFlexibleLineById =
 
 export const saveFlexibleLine =
   (flexibleLine: FlexibleLine, intl: IntlShape) =>
-  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
-    const activeProvider = getState().providers.active?.code ?? '';
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
     const isNewLine = flexibleLine.id === undefined;
     const mutation = flexibleLine.flexibleLineType
@@ -173,9 +170,9 @@ export const saveFlexibleLine =
 
 export const deleteLine =
   (flexibleLine: FlexibleLine, intl: IntlShape) =>
-  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
     const { id, flexibleLineType } = flexibleLine;
-    const activeProvider = getState().providers.active?.code ?? '';
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
     const deleteQuery = flexibleLineType ? deleteFlexibleLine : deleteline;
 

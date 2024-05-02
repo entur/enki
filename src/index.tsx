@@ -46,7 +46,7 @@ const AuthenticatedApp = () => {
   dispatch(updateAuth(auth));
 
   return (
-    (authStateLoaded && configStateLoaded && (
+    (authStateLoaded && configStateLoaded && auth.isAuthenticated && (
       <Apollo>
         <App />
       </Apollo>

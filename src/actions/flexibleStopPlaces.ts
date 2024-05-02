@@ -11,7 +11,7 @@ import {
   getFlexibleStopPlaceByIdQuery,
   getFlexibleStopPlacesQuery,
 } from 'api/uttu/queries';
-import { sentryCaptureException } from 'store/store';
+import { RootState, sentryCaptureException } from 'store/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { Dispatch } from 'react';
@@ -48,10 +48,10 @@ const receiveFlexibleStopPlaceActionCreator = (
 
 export const loadFlexibleStopPlaces =
   (intl: IntlShape) =>
-  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
     dispatch(requestFlexibleStopPlacesActionCreator());
 
-    const activeProvider = getState().providers.active?.code ?? '';
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
 
     try {
@@ -84,10 +84,10 @@ export const loadFlexibleStopPlaces =
 
 export const loadFlexibleStopPlaceById =
   (id: string, intl: IntlShape) =>
-  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
     dispatch(requestFlexibleStopPlaceActionCreator());
 
-    const activeProvider = getState().providers.active?.code ?? '';
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
 
     try {
@@ -119,8 +119,8 @@ export const loadFlexibleStopPlaceById =
 
 export const saveFlexibleStopPlace =
   (flexibleStopPlace: FlexibleStopPlace, intl: IntlShape) =>
-  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
-    const activeProvider = getState().providers.active?.code ?? '';
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
 
     try {
@@ -163,8 +163,8 @@ export const saveFlexibleStopPlace =
 
 export const deleteFlexibleStopPlaceById =
   (id: string, intl: IntlShape) =>
-  async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
-    const activeProvider = getState().providers.active?.code ?? '';
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
     try {
       await UttuQuery(

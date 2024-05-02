@@ -7,12 +7,7 @@ import Provider from 'model/Provider';
 import { showErrorNotification } from './notification';
 
 import { IntlShape } from 'react-intl';
-import {
-  FAILED_RECEIVING_PROVIDERS,
-  RECEIVE_PROVIDERS,
-  SET_ACTIVE_PROVIDER,
-} from './constants';
-import { updateUserContext } from '../auth/userContextSlice';
+import { FAILED_RECEIVING_PROVIDERS, RECEIVE_PROVIDERS } from './constants';
 
 const receiveProviders = (
   providers: Provider[],
@@ -27,18 +22,6 @@ const receiveProviders = (
 
 const failedReceivingProviders = { type: FAILED_RECEIVING_PROVIDERS };
 
-export type SetActiveProviderAction = {
-  type: typeof SET_ACTIVE_PROVIDER;
-  provider: Provider;
-};
-
-export const setActiveProvider = (
-  provider: Provider,
-): SetActiveProviderAction => ({
-  type: SET_ACTIVE_PROVIDER,
-  provider,
-});
-
 export const getProviders = (): AppThunk => async (dispatch, getState) => {
   return UttuQuery(
     getState().config.uttuApiUrl,
@@ -48,9 +31,7 @@ export const getProviders = (): AppThunk => async (dispatch, getState) => {
     await getState().auth.getAccessToken(),
   )
     .then((data) => {
-      const activeCode = window.localStorage.getItem('ACTIVE_PROVIDER');
-      dispatch(receiveProviders(data.userContext.providers, activeCode));
-      dispatch(updateUserContext(data.userContext));
+      dispatch(receiveProviders(data.providers));
       return Promise.resolve();
     })
     .catch((e) => {
