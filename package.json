@@ -34,7 +34,7 @@
     "@entur/tooltip": "2.7.5",
     "@entur/typography": "1.8.34",
     "@reduxjs/toolkit": "1.9.7",
-    "@sentry/react": "7.112.2",
+    "@sentry/react": "7.113.0",
     "axios": "1.6.8",
     "classnames": "2.5.1",
     "date-fns": "2.30.0",
