@@ -8,6 +8,7 @@ export interface UserContext {
   isAdmin: boolean;
   providers: Provider[];
   activeProviderCode?: string | null;
+  loaded: boolean;
 }
 
 const initialState: UserContext = {
@@ -15,6 +16,7 @@ const initialState: UserContext = {
   preferredName: '',
   providers: [],
   activeProviderCode: window.localStorage.getItem('ACTIVE_PROVIDER'),
+  loaded: false,
 };
 
 export const userContextSlice = createSlice({
@@ -33,6 +35,7 @@ export const userContextSlice = createSlice({
       state.isAdmin = action.payload.isAdmin;
       state.preferredName = action.payload.preferredName;
       state.providers = action.payload.providers;
+      state.loaded = true;
     });
   },
 });

@@ -13,7 +13,7 @@ import Loading from 'components/Loading';
 import Provider, { sortProviders } from 'model/Provider';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import './styles.scss';
 import { getProviders } from '../../actions/providers';
@@ -43,7 +43,7 @@ const Providers = () => {
   const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
 
   if (!isAdmin) {
-    navigate('/');
+    return <Navigate to="/" replace />;
   }
 
   const RenderTableRows = ({

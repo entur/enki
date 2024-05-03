@@ -52,6 +52,10 @@ const App = () => {
 
   const basename = '';
 
+  if (!userContext.loaded) {
+    return null;
+  }
+
   return (
     <div className="app">
       <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
