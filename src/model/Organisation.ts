@@ -40,7 +40,7 @@ export const filterAuthorities = (
           ?.find((kv) => kv.key === 'LegacyId')
           ?.value?.split(',')
           .find((v) => v.indexOf('Authority') > -1)
-          ?.startsWith(activeProvider?.toUpperCase() || 'INVALID'),
+          ?.startsWith(activeProvider?.toUpperCase() ?? 'INVALID'),
       )
     : organisations;
 
