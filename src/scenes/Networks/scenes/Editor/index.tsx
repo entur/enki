@@ -196,7 +196,7 @@ const NetworkEditor = () => {
                     ?.id,
                   label:
                     authorities.find((v) => v.id === network.authorityRef)?.name
-                      .value || '',
+                      .value ?? '',
                 }}
                 items={() =>
                   mapToItems(

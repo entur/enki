@@ -1,6 +1,6 @@
 import { SuccessButton } from '@entur/button';
 import { TextField } from '@entur/form';
-import { getProviders, saveProvider } from 'actions/providers';
+import { saveProvider } from 'actions/providers';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
@@ -21,7 +21,7 @@ import { fetchUserContext } from '../../../auth/userContextSlice';
 import { useAuth } from '../../../auth/auth';
 
 const getCurrentProviderSelector = (params: Params) => (state: RootState) =>
-  state.userContext?.providers?.find((provider) => provider.code === params.id);
+  state.providers.providers?.find((provider) => provider.code === params.id);
 
 const ProviderEditor = () => {
   const params = useParams();

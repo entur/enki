@@ -16,7 +16,6 @@ import { getInternationalizedUttuError } from 'helpers/uttu';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { Dispatch } from 'react';
 import { IntlShape } from 'react-intl';
-import { GlobalState } from 'reducers';
 import {
   RECEIVE_FLEXIBLE_STOP_PLACE,
   RECEIVE_FLEXIBLE_STOP_PLACES,

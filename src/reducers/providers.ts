@@ -1,7 +1,6 @@
 import {
   FAILED_RECEIVING_PROVIDERS,
   RECEIVE_PROVIDERS,
-  SET_ACTIVE_PROVIDER,
 } from 'actions/constants';
 import Provider from 'model/Provider';
 import { AnyAction } from 'redux';

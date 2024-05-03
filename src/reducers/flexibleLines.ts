@@ -1,7 +1,6 @@
 import {
   RECEIVE_FLEXIBLE_LINE,
   RECEIVE_FLEXIBLE_LINES,
-  SET_ACTIVE_PROVIDER,
 } from 'actions/constants';
 import { ReceiveFlexibleLineAction } from 'actions/flexibleLines';
 import JourneyPattern from 'model/JourneyPattern';
@@ -41,9 +40,6 @@ const flexibleLines = (
           newFlexibleLine,
         ]
       );
-
-    case SET_ACTIVE_PROVIDER:
-      return null;
 
     default:
       return lines;

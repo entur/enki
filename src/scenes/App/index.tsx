@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import { getOrganisations } from 'actions/organisations';
-import { getProviders } from 'actions/providers';
 import Loading from 'components/Loading';
 import Notifications from 'components/Notification';
 import ScrollToTop from 'components/ScrollToTop';

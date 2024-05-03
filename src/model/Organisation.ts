@@ -1,5 +1,3 @@
-import Provider from './Provider';
-
 type MultilingualString = {
   lang: string;
   value: string;
