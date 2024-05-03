@@ -20,7 +20,7 @@ import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 import { ExportsState } from 'reducers/exports';
-import { getIconForStatus } from './scenes/icons';
+import { getIconForStatus } from './icons/icons';
 import './styles.scss';
 
 const Exports = () => {

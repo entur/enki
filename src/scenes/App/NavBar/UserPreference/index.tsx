@@ -4,10 +4,10 @@ import { sortProviders } from 'model/Provider';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../../../../store/hooks';
-import UserMenu from './UserMenu/';
+import { useAppSelector } from '../../../../store/hooks';
+import UserMenu from './UserMenu';
 import './styles.scss';
-import { setActiveProvider } from '../../../../../auth/userContextSlice';
+import { setActiveProvider } from '../../../../auth/userContextSlice';
 
 const UserPreference = () => {
   const navigate = useNavigate();

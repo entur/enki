@@ -10,7 +10,7 @@ import Loading from 'components/Loading';
 import Notifications from 'components/Notification';
 import ScrollToTop from 'components/ScrollToTop';
 import Routes from './Routes';
-import NavBar from './components/NavBar';
+import NavBar from './NavBar';
 
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../auth/auth';

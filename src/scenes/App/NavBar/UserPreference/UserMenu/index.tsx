@@ -1,6 +1,6 @@
 import { UserIcon } from '@entur/icons';
 import './styles.scss';
-import { useAppSelector } from '../../../../../../store/hooks';
+import { useAppSelector } from '../../../../../store/hooks';
 
 const UserMenu = () => {
   const preferredName = useAppSelector(
