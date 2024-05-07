@@ -2,6 +2,13 @@ import { OidcClientSettings } from 'oidc-client-ts';
 import { FlexibleLineType } from '../model/FlexibleLine';
 import { Locale } from '../i18n';
 
+/**
+ * All sandbox features should be added to this interface like this:
+ *  - featureName: boolean;
+ *
+ *  For multi-level features, only the top-level featureName should be
+ *  toggled.
+ */
 export interface SandboxFeatures {}
 
 export interface Config {

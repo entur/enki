@@ -48,3 +48,67 @@ If "foobar" is `false` in your feature flags configuration, this will not render
 If "foobar" is `true` it will render:
 
     <h1>bar</1>
+
+A `renderFallback` function prop is also available to give the option to render something else
+if the feature is not enabled:
+
+    <SandboxFeature<FoobarProps>
+        feature="foobar"
+        foo="bar"
+        renderFallback={() => <h1>foo</h1>}
+    />
+
+will render
+
+    <h1>foo</h1>
+
+if feature `foobar` is not enabled.
+
+## How features are controlled by configuration
+
+First of all, you must add each feature to the `SandboxFeatures` interface in `../config/config.ts`:
+
+    interface SandboxFeatures {
+        foobar: boolean;
+    }
+
+The `sandboxFeatures` property of the bootstrap configuration controls each individual feature. By default,
+all features are turned off, and must be explicitly set to be enabled:
+
+    {
+        "sandboxFeatures": {
+            "foobar": true
+        }
+    }
+
+## Nested features
+
+`SandboxFeature` supports nesting features 2 levels deep. Meaning, you can group several features into one
+mega-feature, and configure them as one. They will also be chunked together as one file.
+
+Example, given the following folder structure:
+
+    // ext/foobar/foo/
+    // ext/foobar/bar/
+
+And the following feature definition:
+
+    foobar: boolean;
+
+and configuration setting:
+
+    foobar: true
+
+You can reference each sub-level feature as follows:
+
+    <SandboxFeature<FoobarProps>
+        feature="foobar/foo"
+        foo="bar"
+    />
+
+and
+
+    <SandboxFeature<FoobarProps>
+        feature="foobar/bar"
+        bar="foo"
+    />

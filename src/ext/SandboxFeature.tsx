@@ -1,4 +1,4 @@
-import { FC, lazy, memo, Suspense, useMemo } from 'react';
+import { FC, lazy, memo, ReactNode, Suspense, useMemo } from 'react';
 import { useConfig } from '../config/ConfigContext';
 import { SandboxFeatures } from '../config/config';
 
@@ -9,6 +9,7 @@ import { SandboxFeatures } from '../config/config';
  */
 export interface SandboxFeatureProps<Features> {
   feature: keyof Features;
+  renderFallback?: () => ReactNode;
 }
 
 /**
@@ -20,7 +21,7 @@ export interface SandboxFeatureProps<Features> {
 export type SandboxComponent<
   Features,
   Props extends SandboxFeatureProps<Features>,
-> = FC<Omit<Props, 'feature'>>;
+> = FC<Omit<Props, 'feature' | 'renderFallback'>>;
 
 /**
  * A component that can load a sandbox Component. It is a generic component with the same type
@@ -29,6 +30,7 @@ export type SandboxComponent<
  */
 const SandboxFeature = <Features, Props extends SandboxFeatureProps<Features>>({
   feature,
+  renderFallback,
   ...props
 }: Props) => {
   const { sandboxFeatures } = useConfig();
@@ -56,7 +58,15 @@ const SandboxFeature = <Features, Props extends SandboxFeatureProps<Features>>({
     [sandboxFeatures, splitFeature],
   );
 
-  return <Suspense>{featureEnabled && <Component {...props} />}</Suspense>;
+  return (
+    <Suspense>
+      {featureEnabled ? (
+        <Component {...props} />
+      ) : renderFallback ? (
+        renderFallback()
+      ) : null}
+    </Suspense>
+  );
 };
 
 export default memo(SandboxFeature) as typeof SandboxFeature<
