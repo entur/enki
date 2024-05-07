@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from 'store/store';
-import { Config } from 'config/ConfigContext';
+
+import { Config } from './config';
 
 export interface ConfigState extends Config {
   loaded: boolean;
