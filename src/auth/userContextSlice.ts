@@ -23,10 +23,10 @@ export const userContextSlice = createSlice({
   name: 'userContext',
   initialState,
   reducers: {
-    setActiveProvider: (state, action) => {
+    setActiveProviderCode: (state, action) => {
       return {
         ...state,
-        activeProvider: action.payload,
+        activeProviderCode: action.payload,
       };
     },
   },
@@ -42,7 +42,7 @@ export const userContextSlice = createSlice({
 
 export default userContextSlice.reducer;
 
-export const { setActiveProvider } = userContextSlice.actions;
+export const { setActiveProviderCode } = userContextSlice.actions;
 
 export interface FetchUserContextArgs {
   uttuApiUrl?: string;

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../store/hooks';
 import UserMenu from './UserMenu';
 import './styles.scss';
-import { setActiveProvider } from '../../../../auth/userContextSlice';
+import { setActiveProviderCode } from '../../../../auth/userContextSlice';
 
 const UserPreference = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const UserPreference = () => {
     const provider = providers?.find((p) => p.code === providerCode);
     if (provider) {
       window.localStorage.setItem('ACTIVE_PROVIDER', provider.code!);
-      dispatch(setActiveProvider(provider.code));
+      dispatch(setActiveProviderCode(provider.code));
       navigate('/', { replace: true });
     }
   };
