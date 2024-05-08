@@ -1,4 +1,10 @@
-import { AnyAction, ThunkAction, configureStore } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  ThunkAction,
+  configureStore,
+  combineReducers,
+  ReducersMapObject,
+} from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react';
 import auth from 'auth/authSlice';
 import config from 'config/configSlice';
@@ -27,26 +33,27 @@ const {
   editor,
 } = reducers;
 
+const staticReducers = {
+  notification,
+  auth,
+  organisations,
+  providers,
+  exports,
+  networks,
+  flexibleLines,
+  flexibleStopPlaces,
+  editor,
+  config,
+  intl,
+};
+
 const devMiddlewares =
   import.meta.env.NODE_ENV !== 'production'
     ? [immutableStateInvariantMiddleware()]
     : [];
 
 export const store = configureStore({
-  reducer: {
-    auth,
-    userContext,
-    config,
-    intl,
-    notification,
-    organisations,
-    providers,
-    exports,
-    networks,
-    flexibleLines,
-    flexibleStopPlaces,
-    editor,
-  },
+  reducer: createReducer(),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       immmutableCheck: false,
@@ -54,6 +61,20 @@ export const store = configureStore({
     }).concat(...devMiddlewares),
   enhancers: [sentryReduxEnhancer],
 });
+
+const asyncReducers: Record<string, any> = {};
+
+export const injectReducer = (key: string, asyncReducer: any) => {
+  asyncReducers[key] = asyncReducer;
+  store.replaceReducer(createReducer(asyncReducers));
+};
+
+function createReducer(asyncReducers?: ReducersMapObject) {
+  return combineReducers({
+    ...staticReducers,
+    ...asyncReducers,
+  });
+}
 
 export type RootState = ReturnType<typeof store.getState>;
 

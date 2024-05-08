@@ -1,5 +1,6 @@
 import { FlexibleLineType } from 'model/FlexibleLine';
-import { Config } from './ConfigContext';
+
+import { Config } from './config';
 
 const defaultConfig: Config = {
   supportedFlexibleLineTypes: Object.values(FlexibleLineType),
