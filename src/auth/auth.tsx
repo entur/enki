@@ -1,10 +1,12 @@
 import { useConfig } from 'config/ConfigContext';
 import { useCallback, useEffect } from 'react';
 import {
+  AuthContextProps,
   AuthProvider as OidcAuthProvider,
   hasAuthParams,
   useAuth as useOidcAuth,
 } from 'react-oidc-context';
+import { User } from 'oidc-client-ts';
 
 /**
  * Auth state facade
@@ -17,19 +19,61 @@ export interface Auth {
   login: (redirectUri?: string) => Promise<void>;
 }
 
+const fakeAuthContextProps = {
+  isLoading: false,
+  isAuthenticated: true,
+  user: {
+    access_token: 'fake',
+    profile: {
+      aud: '',
+      exp: 0,
+      iat: 0,
+      sub: '',
+      iss: '',
+    },
+    session_state: '',
+    token_type: '',
+    state: '',
+    expires_in: 0,
+    expired: false,
+    scopes: [],
+    toStorageString: () => '',
+  },
+  activeNavigator: undefined,
+  signinRedirect: () => Promise.resolve(),
+  signoutRedirect: () => Promise.resolve(),
+};
+
 /**
  * Wraps the useAuth hook from react-oidc-context and returns a facade for
  * the auth state.
  */
 export const useAuth = (): Auth => {
-  const {
+  let isLoading,
+    isAuthenticated,
+    activeNavigator,
+    user: User | null | undefined,
+    signoutRedirect,
+    signinRedirect;
+  let auth;
+
+  const oidcAuth = useOidcAuth();
+  const { disableAuthentication } = useConfig();
+
+  if (disableAuthentication) {
+    auth = fakeAuthContextProps;
+  } else {
+    auth = oidcAuth;
+  }
+
+  ({
     isLoading,
     isAuthenticated,
     activeNavigator,
     user,
     signoutRedirect,
     signinRedirect,
-  } = useOidcAuth();
+  } = auth);
 
   useEffect(() => {
     if (
@@ -81,7 +125,12 @@ export const useAuth = (): Auth => {
  * and redirect uri props.
  */
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { oidcConfig } = useConfig();
+  const { oidcConfig, disableAuthentication } = useConfig();
+
+  if (disableAuthentication) {
+    return <>{children}</>;
+  }
+
   return (
     <OidcAuthProvider
       {...oidcConfig!}

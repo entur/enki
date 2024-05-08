@@ -21,6 +21,11 @@ export interface Config {
   oidcConfig?: OidcClientSettings;
 
   /**
+   * Opt-out of authentication features for local development
+   */
+  disableAuthentication?: boolean;
+
+  /**
    * Prefix used in XML namespace for providers in exported datasets
    */
   xmlnsUrlPrefix?: string;
