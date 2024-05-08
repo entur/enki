@@ -65,5 +65,8 @@ export interface Config {
    */
   supportedLocales?: Locale[];
 
+  /**
+   * Sandbox feature configuration
+   */
   sandboxFeatures?: SandboxFeatures;
 }
