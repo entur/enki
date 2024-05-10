@@ -45,6 +45,7 @@ const staticReducers = {
   editor,
   config,
   intl,
+  userContext,
 };
 
 const devMiddlewares =
