@@ -1,9 +1,7 @@
 {
   "uttuApiUrl": "https://api.entur.io/timetable-admin/v1/flexible-lines",
   "enableLegacyOrganisationsFilter": true,
-  "adminRole": "{\"r\":\"adminEditRouteData\",\"o\":\"RB\"}",
   "xmlnsUrlPrefix": "http://www.rutebanken.org/ns/",
-  "claimsNamespace": "https://ror.entur.io/role_assignments",
   "oidcConfig": {
     "authority": "https://auth2.entur.org",
     "client_id": "VXdzUbFV8ws953UWLrizuaQY9C991w0i",
