@@ -9,8 +9,8 @@ const defaultConfig: Config = {
 export const fetchConfig = async (): Promise<Config> => {
   const overrides: Config = {};
 
-  if (import.meta.env.REACT_APP_UTTU_API_URL) {
-    overrides.uttuApiUrl = import.meta.env.REACT_APP_UTTU_API_URL;
+  if (import.meta.env.VITE_REACT_APP_UTTU_API_URL) {
+    overrides.uttuApiUrl = import.meta.env.VITE_REACT_APP_UTTU_API_URL;
   }
 
   const response = await fetch('/bootstrap.json');

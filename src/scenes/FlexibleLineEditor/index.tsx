@@ -45,7 +45,9 @@ const EditorFrame = () => {
   const organisations = useAppSelector((state) => state.organisations);
   const networks = useAppSelector((state) => state.networks);
   const editor = useAppSelector((state) => state.editor);
-  const providers = useAppSelector((state) => state.providers);
+  const activeProviderCode = useAppSelector(
+    (state) => state.userContext.activeProviderCode,
+  );
 
   const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies();
 
@@ -98,7 +100,7 @@ const EditorFrame = () => {
     organisations &&
     filterAuthorities(
       organisations,
-      providers.active,
+      activeProviderCode,
       config.enableLegacyOrganisationsFilter,
     ).length === 0;
 

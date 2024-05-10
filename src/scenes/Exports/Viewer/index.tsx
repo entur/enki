@@ -14,8 +14,8 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { useAppSelector } from '../../../../store/hooks';
-import { getIconForSeverity, getIconForStatus } from '../icons';
+import { useAppSelector } from '../../../store/hooks';
+import { getIconForSeverity, getIconForStatus } from '../icons/icons';
 import './styles.scss';
 
 const ExportItem = ({

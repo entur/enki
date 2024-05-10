@@ -1,5 +1,18 @@
 import { gql } from '@apollo/client';
 
+export const getUserContextQuery = `
+  query GetUserContext {
+    userContext {
+      preferredName,
+      isAdmin,
+      providers {
+        name,
+        code
+       }
+    }
+  }
+`;
+
 export const getProvidersQuery = `
   query GetProviders {
     providers {

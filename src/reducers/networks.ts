@@ -1,8 +1,4 @@
-import {
-  RECEIVE_NETWORK,
-  RECEIVE_NETWORKS,
-  SET_ACTIVE_PROVIDER,
-} from 'actions/constants';
+import { RECEIVE_NETWORK, RECEIVE_NETWORKS } from 'actions/constants';
 import { Network } from 'model/Network';
 import { AnyAction } from 'redux';
 
@@ -17,9 +13,6 @@ const networksReducer = (networks: NetworksState = null, action: AnyAction) => {
       return networks
         ? networks.map((n) => (n.id === action.network.id ? action.network : n))
         : [action.network];
-
-    case SET_ACTIVE_PROVIDER:
-      return null;
 
     default:
       return networks;

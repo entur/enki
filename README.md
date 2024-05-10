@@ -37,16 +37,24 @@ Uses OIDC for authentication. This solution is agnostic to which authentication 
 Example configuration (works with Auth0):
 
 ```json
-"oidcConfig": {
-  "authority": "https://<authentication domain>",
-  "client_id": "<client id>",
-  "extraQueryParams": {
-    "audience": "<example audience>"
+{
+  "oidcConfig": {
+    "authority": "https://<authentication domain>",
+    "client_id": "<client id>",
+    "extraQueryParams": {
+      "audience": "<example audience>"
+    }
   }
-},
+}
   ```
 
 For full configuration reference, see [oidc-client-ts documentation](https://authts.github.io/oidc-client-ts/interfaces/UserManagerSettings.html).
+
+### Bypass authentication locally
+
+It's possible to bypass authentication locally with the configuration parameter `disableAuthentication`
+set to `true`. This can be used in combination with the `local-no-authentication` profile in the backend.
+
 
 ## Testing
 

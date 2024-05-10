@@ -18,7 +18,7 @@ export const receiveOrganisations = (
 
 export const getOrganisations = (): AppThunk => async (dispatch, getState) => {
   try {
-    const activeProvider = getState().providers.active?.code ?? '';
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
     if (!activeProvider) {
       return;
     }

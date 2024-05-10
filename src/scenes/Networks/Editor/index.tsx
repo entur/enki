@@ -6,6 +6,7 @@ import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
   deleteNetworkById,
   loadNetworkById,
+  loadNetworks,
   saveNetwork,
 } from 'actions/networks';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -25,24 +26,30 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { useAppSelector } from '../../../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import './styles.scss';
 
 const getCurrentNetworkSelector = (params: Params) => (state: GlobalState) =>
-  state.networks?.find((network) => network.id === params.id) ?? {
-    name: '',
-    authorityRef: '',
-  };
+  state.networks?.find((network) => network.id === params.id);
 
 const NetworkEditor = () => {
   const params = useParams();
   const navigate = useNavigate();
   const intl = useIntl();
   const { formatMessage } = intl;
-  const activeProvider = useAppSelector((state) => state.providers.active);
+  const activeProvider = useAppSelector(
+    (state) => state.userContext.activeProviderCode,
+  );
   const organisations = useAppSelector(({ organisations }) => organisations);
   const lines = useAppSelector(({ flexibleLines }) => flexibleLines);
-  const currentNetwork = useAppSelector(getCurrentNetworkSelector(params));
+  let currentNetwork = useAppSelector(getCurrentNetworkSelector(params));
+
+  if (!currentNetwork) {
+    currentNetwork = {
+      name: '',
+      authorityRef: '',
+    };
+  }
 
   const [isSaving, setSaving] = useState<boolean>(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
@@ -85,6 +92,7 @@ const NetworkEditor = () => {
     if (network.name && network.authorityRef) {
       setSaving(true);
       dispatch(saveNetwork(network))
+        .then(() => dispatch(loadNetworks()))
         .then(() => navigate('/networks'))
         .finally(() => setSaving(false));
     }
@@ -181,12 +189,14 @@ const NetworkEditor = () => {
                 }
               />
 
-              {}
               <Dropdown
                 className="form-section"
                 selectedItem={{
-                  value: network.authorityRef,
-                  label: network.name,
+                  value: authorities.find((v) => v.id === network.authorityRef)
+                    ?.id,
+                  label:
+                    authorities.find((v) => v.id === network.authorityRef)?.name
+                      .value ?? '',
                 }}
                 items={() =>
                   mapToItems(

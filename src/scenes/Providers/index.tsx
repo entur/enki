@@ -11,16 +11,22 @@ import {
 import { Heading1, Paragraph } from '@entur/typography';
 import Loading from 'components/Loading';
 import Provider, { sortProviders } from 'model/Provider';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import './styles.scss';
+import { getProviders } from '../../actions/providers';
 
 const Providers = () => {
   const navigate = useNavigate();
   const { formatMessage } = useIntl();
   const providersState = useAppSelector((s) => s.providers);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getProviders());
+  }, []);
 
   const handleOnRowClick = useCallback(
     (id: string) => {
@@ -33,6 +39,12 @@ const Providers = () => {
     () => providersState?.providers?.slice().sort(sortProviders) || [],
     [providersState],
   );
+
+  const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
+
+  if (!isAdmin) {
+    return <Navigate to="/" replace />;
+  }
 
   const RenderTableRows = ({
     providerList,

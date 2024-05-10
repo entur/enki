@@ -361,6 +361,7 @@ export const messages = {
   navigationCancel: 'Avbryt',
   navigationPrevious: 'Tidigare',
   linesHeader: 'Linjer',
+  flexibleLinesHeader: 'Flexibla linjer',
   labelForAlighting: 'För avstigning',
   labelForBoarding: 'För påstigning',
   labelForBoardingAndAlighting: 'På- och avstigning',

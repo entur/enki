@@ -1,16 +1,18 @@
 import { UserIcon } from '@entur/icons';
-import { useAuth } from '../../../../../../auth/auth';
 import './styles.scss';
+import { useAppSelector } from '../../../../../store/hooks';
 
 const UserMenu = () => {
-  const { user } = useAuth();
+  const preferredName = useAppSelector(
+    (state) => state.userContext.preferredName,
+  );
 
   return (
     <div className="user-menu">
       <div className="user-icon">
         <UserIcon />
       </div>
-      <div className="name">{`${user?.name}`}</div>
+      <div className="name">{`${preferredName || 'Unknown'}`}</div>
     </div>
   );
 };

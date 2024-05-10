@@ -5,15 +5,13 @@ import {
   SideNavigationGroup,
   SideNavigationItem,
 } from '@entur/menu';
-import { useAuth } from 'auth/auth';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
-import { useConfig } from 'config/ConfigContext';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Link } from 'react-router-dom';
-import UserPreference from 'scenes/App/components/NavBar/UserPreference';
+import { Link, useLocation } from 'react-router-dom';
+import UserPreference from 'scenes/App/NavBar/UserPreference';
 import logo from 'static/img/logo.png';
-import { useAppSelector } from '../../../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import LanguagePicker from './LanguagePicker';
 import LogoutChip from './LogoutChip';
 import './styles.scss';
@@ -48,6 +46,8 @@ const NavBarItem = ({
     setRedirect({ showConfirm: true, path });
   };
 
+  const location = useLocation();
+
   return (
     <SideNavigationItem
       onClick={handleOnClick}
@@ -64,14 +64,16 @@ const NavBarItem = ({
 
 const NavBar = () => {
   const { formatMessage } = useIntl();
-  const { providers, active } = useAppSelector((state) => state.providers);
+  const providers = useAppSelector((state) => state.userContext.providers);
+  const active = useAppSelector(
+    (state) => state.userContext.activeProviderCode,
+  );
   const [redirect, setRedirect] = useState<RedirectType>({
     showConfirm: false,
     path: '',
   });
 
-  const { roleAssignments } = useAuth();
-  const { adminRole } = useConfig();
+  const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
 
   return (
     <Contrast as="nav" className="navbar-wrapper">
@@ -132,7 +134,7 @@ const NavBar = () => {
           </>
         )}
 
-        {roleAssignments?.includes(adminRole!) && (
+        {isAdmin && (
           <NavBarItem
             icon={<ClosedLockIcon />}
             text={formatMessage({ id: 'navBarProvidersMenuItemLabel' })}

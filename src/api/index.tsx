@@ -86,7 +86,9 @@ type ApolloProps = {
 };
 
 export const Apollo = ({ children }: ApolloProps) => {
-  const provider = useAppSelector((state) => state.providers.active?.code);
+  const provider = useAppSelector(
+    (state) => state.userContext.activeProviderCode,
+  );
 
   const auth = useAuth();
 

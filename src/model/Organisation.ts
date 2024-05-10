@@ -1,5 +1,3 @@
-import Provider from './Provider';
-
 type MultilingualString = {
   lang: string;
   value: string;
@@ -33,7 +31,7 @@ export type Organisation = {
  */
 export const filterAuthorities = (
   organisations: Organisation[],
-  activeProvider: Provider | null,
+  activeProvider?: string | null,
   enableFilter?: boolean,
 ) =>
   enableFilter
@@ -42,7 +40,7 @@ export const filterAuthorities = (
           ?.find((kv) => kv.key === 'LegacyId')
           ?.value?.split(',')
           .find((v) => v.indexOf('Authority') > -1)
-          ?.startsWith(activeProvider?.codespace?.xmlns || 'INVALID'),
+          ?.startsWith(activeProvider?.toUpperCase() ?? 'INVALID'),
       )
     : organisations;
 

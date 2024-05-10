@@ -29,12 +29,16 @@ const Networks = () => {
     undefined,
   );
   const { formatMessage } = useIntl();
-  const { providers, organisations, networks } = useAppSelector((s) => s);
+  const activeProviderCode = useAppSelector(
+    (state) => state.userContext.activeProviderCode,
+  );
+  const organisations = useAppSelector((state) => state.organisations);
+  const networks = useAppSelector((state) => state.networks);
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(loadNetworks());
-  }, [dispatch, providers.active]);
+  }, [dispatch, activeProviderCode]);
 
   const handleOnRowClick = useCallback(
     (id: string) => {

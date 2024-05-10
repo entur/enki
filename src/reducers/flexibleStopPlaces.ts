@@ -3,7 +3,6 @@ import {
   RECEIVE_FLEXIBLE_STOP_PLACES,
   REQUEST_FLEXIBLE_STOP_PLACE,
   REQUEST_FLEXIBLE_STOP_PLACES,
-  SET_ACTIVE_PROVIDER,
 } from 'actions/constants';
 import { AnyAction } from 'redux';
 import FlexibleStopPlace, {
@@ -36,9 +35,6 @@ const flexibleStopPlaces = (
             )
           : [action.stopPlace]
       ).map((sp) => mapFlexibleAreasToArea(sp));
-
-    case SET_ACTIVE_PROVIDER:
-      return null;
 
     default:
       return stopPlaces;

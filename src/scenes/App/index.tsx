@@ -6,12 +6,11 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import { getOrganisations } from 'actions/organisations';
-import { getProviders } from 'actions/providers';
 import Loading from 'components/Loading';
 import Notifications from 'components/Notification';
 import ScrollToTop from 'components/ScrollToTop';
 import Routes from './Routes';
-import NavBar from './components/NavBar';
+import NavBar from './NavBar';
 
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../auth/auth';
@@ -21,6 +20,8 @@ import './styles.scss';
 import MarkerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
 import MarkerShadow from 'leaflet/dist/images/marker-shadow.png';
+import { fetchUserContext } from '../../auth/userContextSlice';
+import { useConfig } from '../../config/ConfigContext';
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: MarkerIcon2x,
@@ -30,24 +31,30 @@ L.Icon.Default.mergeOptions({
 
 const App = () => {
   const dispatch = useDispatch<any>();
-
-  const providers = useAppSelector((state) => state.providers);
-
   const auth = useAuth();
+  const { uttuApiUrl } = useConfig();
+
+  const userContext = useAppSelector((state) => state.userContext);
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      dispatch(getProviders());
+      dispatch(
+        fetchUserContext({ uttuApiUrl, getAccessToken: auth.getAccessToken }),
+      );
     }
   }, [dispatch, auth.isAuthenticated]);
 
   useEffect(() => {
     dispatch(getOrganisations());
-  }, [dispatch, providers.active]);
+  }, [dispatch, userContext.activeProviderCode]);
 
   const { formatMessage } = useIntl();
 
   const basename = '';
+
+  if (!userContext.loaded) {
+    return null;
+  }
 
   return (
     <div className="app">
@@ -63,7 +70,7 @@ const App = () => {
                   className="app-loader"
                   text={formatMessage({ id: 'appLoadingMessage' })}
                   isLoading={
-                    !providers.providers ||
+                    !userContext.providers ||
                     auth.isLoading ||
                     !auth.isAuthenticated
                   }

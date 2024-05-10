@@ -1,6 +1,6 @@
 import { SuccessButton } from '@entur/button';
 import { TextField } from '@entur/form';
-import { getProviders, saveProvider } from 'actions/providers';
+import { saveProvider } from 'actions/providers';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
@@ -14,15 +14,26 @@ import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
-import { GlobalState } from 'reducers';
 import { useAppSelector } from '../../../store/hooks';
 import './styles.scss';
+import { RootState } from '../../../store/store';
+import { fetchUserContext } from '../../../auth/userContextSlice';
+import { useAuth } from '../../../auth/auth';
 
-const getCurrentProviderSelector =
-  (params: Params, xmlnsUrlPrefix?: string) => (state: GlobalState) =>
-    state.providers?.providers?.find(
-      (provider) => provider.code === params.id,
-    ) ?? {
+const getCurrentProviderSelector = (params: Params) => (state: RootState) =>
+  state.providers.providers?.find((provider) => provider.code === params.id);
+
+const ProviderEditor = () => {
+  const params = useParams();
+  const navigate = useNavigate();
+  const intl = useIntl();
+  const { formatMessage } = intl;
+  const { xmlnsUrlPrefix, uttuApiUrl } = useConfig();
+  const { getAccessToken } = useAuth();
+  let currentProvider = useAppSelector(getCurrentProviderSelector(params));
+
+  if (!currentProvider) {
+    currentProvider = {
       name: '',
       code: '',
       codespace: {
@@ -30,16 +41,7 @@ const getCurrentProviderSelector =
         xmlnsUrl: xmlnsUrlPrefix || '',
       },
     };
-
-const ProviderEditor = () => {
-  const params = useParams();
-  const navigate = useNavigate();
-  const intl = useIntl();
-  const { formatMessage } = intl;
-  const { xmlnsUrlPrefix } = useConfig();
-  const currentProvider = useAppSelector(
-    getCurrentProviderSelector(params, xmlnsUrlPrefix),
-  );
+  }
 
   const [isSaving, setSaving] = useState<boolean>(false);
   const [provider, setProvider] = useState<Provider>(currentProvider);
@@ -63,7 +65,14 @@ const ProviderEditor = () => {
     if (validProvider) {
       setSaving(true);
       dispatch(saveProvider(provider, intl))
-        .then(() => dispatch(getProviders()))
+        .then(() =>
+          dispatch(
+            fetchUserContext({
+              uttuApiUrl,
+              getAccessToken,
+            }),
+          ),
+        )
         .then(() => navigate('/providers'))
         .finally(() => setSaving(false));
     }
