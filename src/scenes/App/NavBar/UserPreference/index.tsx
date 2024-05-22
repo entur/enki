@@ -1,5 +1,5 @@
 import UserMenu from './UserMenu';
-import { SelectProvider } from '../../SelectProvider';
+import { SelectProvider } from '../../SelectProvider/SelectProvider';
 import { Contrast } from '@entur/layout';
 import './styles.scss';
 import { useNoSelectedProvider } from '../../useNoSelectedProvider';

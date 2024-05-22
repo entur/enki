@@ -20,7 +20,7 @@ import StopPlacesOverview from '../StopPlaces';
 import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import { useNoProviders } from './useNoProviders';
 import { useNoSelectedProvider } from './useNoSelectedProvider';
-import { NoSelectedProvider } from './NoSelectedProvider';
+import { NoSelectedProvider } from './NoSelectedProvider/NoSelectedProvider';
 
 const Routes = () => {
   const noProviders = useNoProviders();
