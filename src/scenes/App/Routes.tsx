@@ -1,4 +1,9 @@
-import { Navigate, Routes as ReactRoutes, Route } from 'react-router-dom';
+import {
+  Navigate,
+  Routes as ReactRoutes,
+  Route,
+  useLocation,
+} from 'react-router-dom';
 
 import LineEditor from 'scenes/LineEditor';
 import LinesOverview from 'scenes/Lines';
@@ -14,12 +19,20 @@ import NetworkEditor from '../Networks/Editor';
 import StopPlacesOverview from '../StopPlaces';
 import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import { useNoProviders } from './useNoProviders';
+import { useNoSelectedProvider } from './useNoSelectedProvider';
+import { NoSelectedProvider } from './NoSelectedProvider';
 
 const Routes = () => {
   const noProviders = useNoProviders();
+  const noSelectedProvider = useNoSelectedProvider();
+  const location = useLocation();
 
-  if (noProviders) {
+  if (noProviders && location.pathname !== '/providers') {
     return <Navigate to="/providers" replace />;
+  }
+
+  if (noSelectedProvider && location.pathname !== '/select-provider') {
+    return <Navigate to="/select-provider" replace />;
   }
 
   return (
@@ -47,6 +60,7 @@ const Routes = () => {
         <Route path="/providers" element={<Providers />} />
         <Route path="/providers/create" element={<ProviderEditor />} />
         <Route path="/providers/edit/:id" element={<ProviderEditor />} />
+        <Route path="/select-provider" element={<NoSelectedProvider />} />
       </ReactRoutes>
     </div>
   );
