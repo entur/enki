@@ -45,7 +45,7 @@ export const SelectProvider = () => {
           label={formatMessage({ id: 'navBarDataProvider' })}
           selectedItem={{
             value: active?.code,
-            label: active?.name || '',
+            label: active?.name ?? '',
           }}
           onChange={(e) => handleActiveProviderChange(e?.value)}
         />

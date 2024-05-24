@@ -4,7 +4,7 @@ import { graphql, http, HttpResponse } from 'msw';
 export const handlers = [
   http.get('/bootstrap.json', () => {
     return HttpResponse.json({
-      uttuApiUrl: 'http://other/bar',
+      uttuApiUrl: 'https://other/bar',
     });
   }),
   graphql.query('GetUserContext', ({ query }) => {

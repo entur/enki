@@ -40,9 +40,11 @@ export const UttuQuery = (
   accessToken?: string,
 ) => {
   const endpoint = (apiBase || '') + '/' + provider + '/graphql';
+
   const client = new GraphQLClient(endpoint, {
     headers: { ...staticHeaders, authorization: `Bearer ${accessToken}` },
   });
+
   return client.request(query, variables) as Promise<any>;
 };
 
