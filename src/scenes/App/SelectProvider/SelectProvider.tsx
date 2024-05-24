@@ -15,7 +15,6 @@ export const SelectProvider = () => {
   const dispatch = useDispatch();
 
   const handleActiveProviderChange = (providerCode: string | undefined) => {
-    console.log('handleActiveProviderChange');
     const provider = providers?.find((p) => p.code === providerCode);
     if (provider) {
       window.localStorage.setItem('ACTIVE_PROVIDER', provider.code!);

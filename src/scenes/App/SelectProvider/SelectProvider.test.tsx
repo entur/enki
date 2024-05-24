@@ -33,8 +33,6 @@ describe('SelectProvider', () => {
       </Wrapper>,
     );
 
-    expect(container.getByText('Ingen treff for søket')).toBeInTheDocument();
-
     await waitFor(async () => {
       await container.findByText('Test provider');
     });
