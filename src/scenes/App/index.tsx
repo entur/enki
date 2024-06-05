@@ -32,7 +32,7 @@ L.Icon.Default.mergeOptions({
 const App = () => {
   const dispatch = useDispatch<any>();
   const auth = useAuth();
-  const { uttuApiUrl } = useConfig();
+  const { uttuApiUrl, partnerCompany } = useConfig();
 
   const userContext = useAppSelector((state) => state.userContext);
 
@@ -58,7 +58,23 @@ const App = () => {
 
   return (
     <div className="app">
-      <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
+      <Helmet
+        defaultTitle={formatMessage({ id: 'appTitle' })}
+        link={[
+          {
+            rel: 'shortcut icon',
+            href: partnerCompany
+              ? `src/ext/${partnerCompany}/assets/favicon.ico`
+              : '/favicon.ico',
+          },
+          {
+            rel: 'manifest',
+            href: partnerCompany
+              ? `src/ext/${partnerCompany}/assets/manifest.json`
+              : '/manifest.json',
+          },
+        ]}
+      />
 
       <BrowserRouter basename={basename}>
         <ScrollToTop>
