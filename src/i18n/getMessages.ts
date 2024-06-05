@@ -8,4 +8,12 @@ export const getMessages = async (
   return (await import(`./translations/${locale}.ts`)).messages;
 };
 
+export const getExtMessages = async (
+  partnerCompany: string,
+  locale: Locale,
+): Promise<Record<Messages, string>> => {
+  return (await import(`../ext/${partnerCompany}/translations/${locale}.ts`))
+    .messages;
+};
+
 export type FormatMessage = IntlShape['formatMessage'];

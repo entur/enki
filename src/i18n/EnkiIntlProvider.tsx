@@ -4,6 +4,7 @@ import { selectLocale, updateConfiguredLocale } from 'i18n/intlSlice';
 import { getMessages } from 'i18n';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { useConfig } from '../config/ConfigContext';
+import { getExtMessages } from './getMessages';
 
 export const EnkiIntlProvider = ({
   children,
@@ -11,7 +12,7 @@ export const EnkiIntlProvider = ({
   children: React.ReactNode;
 }) => {
   const [messages, setMessages] = useState<Record<string, string> | null>(null);
-  const { defaultLocale } = useConfig();
+  const { defaultLocale, partnerCompany } = useConfig();
   const selectedLocale = useAppSelector(selectLocale);
   const deferredMessages = useDeferredValue(messages);
   const dispatch = useAppDispatch();
@@ -25,16 +26,27 @@ export const EnkiIntlProvider = ({
   useEffect(() => {
     getMessages(selectedLocale).then((messages) => {
       setMessages(() => messages);
+      if (partnerCompany) {
+        getExtMessages(partnerCompany, selectedLocale)
+          .then((extMessages) => {
+            const combinedMessages = {
+              ...messages,
+              ...extMessages,
+            };
+            setMessages(() => combinedMessages);
+          })
+          .catch();
+      }
     });
-  }, [selectedLocale]);
+  }, [selectedLocale, partnerCompany]);
 
   return (
     <Suspense>
       {deferredMessages !== null && (
         <IntlProvider
           locale={selectedLocale}
-          messages={deferredMessages}
-          defaultLocale="nb"
+          messages={messages}
+          defaultLocale={defaultLocale || 'nb'}
         >
           {children}
         </IntlProvider>
