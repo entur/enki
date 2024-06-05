@@ -15,6 +15,7 @@ import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
 import './styles/index.scss';
 import { browserTracingIntegration } from '@sentry/react';
+import SandboxFeature from './ext/SandboxFeature';
 
 const initSentry = (dsn?: string) => {
   if (dsn) {
@@ -48,6 +49,7 @@ const AuthenticatedApp = () => {
   return (
     (authStateLoaded && configStateLoaded && auth.isAuthenticated && (
       <Apollo>
+        <SandboxFeature<{}> feature={`${config.partnerCompany}/CustomStyle`} />
         <App />
       </Apollo>
     )) ||

@@ -9,7 +9,9 @@ import { Locale } from '../i18n';
  *  For multi-level features, only the top-level featureName should be
  *  toggled.
  */
-export interface SandboxFeatures {}
+export interface SandboxFeatures {
+  Fintraffic: boolean;
+}
 
 export interface Config {
   /**
@@ -69,4 +71,14 @@ export interface Config {
    * Sandbox feature configuration
    */
   sandboxFeatures?: SandboxFeatures;
+
+  /**
+   * Name of a company that adopted Nplan.
+   * This is used e.g. for:
+   *    CustomStyle, when determining the relevant custom style class;
+   *    CustomLogo;
+   *    favicon;
+   *    overriding translations (case appTitle)
+   */
+  partnerCompany?: string;
 }

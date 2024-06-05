@@ -43,10 +43,10 @@ const SandboxFeature = <Features, Props extends SandboxFeatureProps<Features>>({
     throw new Error('Max feature depth is 2');
   } else if (splitFeature.length === 2) {
     Component = memo(
-      lazy(() => import(`./${splitFeature[0]}/${splitFeature[1]}/index.ts`)),
+      lazy(() => import(`./${splitFeature[0]}/${splitFeature[1]}/index.tsx`)),
     );
   } else {
-    Component = memo(lazy(() => import(`./${splitFeature[0]}/index.ts`)));
+    Component = memo(lazy(() => import(`./${splitFeature[0]}/index.tsx`)));
   }
 
   const featureEnabled = useMemo(
