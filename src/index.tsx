@@ -15,6 +15,7 @@ import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
 import './styles/index.scss';
 import { browserTracingIntegration } from '@sentry/react';
+import { LandingPage } from './scenes/App/LandingPage';
 
 const initSentry = (dsn?: string) => {
   if (dsn) {
@@ -50,8 +51,7 @@ const AuthenticatedApp = () => {
       <Apollo>
         <App />
       </Apollo>
-    )) ||
-    null
+    )) || <LandingPage />
   );
 };
 
