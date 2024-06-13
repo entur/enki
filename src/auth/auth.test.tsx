@@ -1,25 +1,38 @@
 import { renderHook } from '@testing-library/react';
 
 import { useAuth } from './auth';
+import { ConfigContext } from '../config/ConfigContext';
+
+let isAuthenticated = true;
+
+const config = {
+  disableAutomaticLoginRedirect: false,
+};
+
+let signinRedirectMock = vi.fn().mockResolvedValue(undefined);
 
 vi.mock('react-oidc-context', async () => {
   return {
     ...(await vi.importActual('react-oidc-context')),
     useAuth: () => ({
       isLoading: false,
-      isAuthenticated: true,
+      isAuthenticated: isAuthenticated,
       activeNavigator: 'signinRedirect',
       user: {
         access_token: 'test-token',
       },
       signoutRedirect: () => Promise.resolve(),
-      signinRedirect: () => Promise.resolve(),
+      signinRedirect: () => signinRedirectMock,
     }),
   };
 });
 
 const testHook = () => {
-  return renderHook(() => useAuth());
+  return renderHook(() => useAuth(), {
+    wrapper: ({ children }) => (
+      <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>
+    ),
+  });
 };
 
 /**
@@ -43,7 +56,7 @@ describe('useAuth', () => {
 
   test('login', async () => {
     const { result } = testHook();
-    await expect(result.current.login()).resolves.not.toThrowError();
+    expect(await result.current.login()).not.toThrowError();
   });
 
   test('logout', async () => {
@@ -51,5 +64,12 @@ describe('useAuth', () => {
     await expect(
       result.current.logout({ returnTo: '/' }),
     ).resolves.not.toThrowError();
+  });
+
+  test('login redirect', async () => {
+    isAuthenticated = false;
+    const { result } = testHook();
+    expect(result.current.isAuthenticated).toBe(false);
+    expect(signinRedirectMock).toHaveBeenCalledOnce();
   });
 });
