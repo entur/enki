@@ -3,12 +3,6 @@ import { useConfig } from '../config/ConfigContext';
 import { SandboxFeatures } from '../config/config';
 import { TestFeatures } from './__tests__';
 
-/*export type Features = {
-  'Fintraffic/CustomIntlProvider'?: boolean;
-  'Fintraffic/CustomLogo'?: boolean;
-  'Fintraffic/CustomStyle'?: boolean;
-};*/
-
 /**
  * The base props interface for the SandboxFeature component. It is a generic interface that
  * takes a single type parameter `Features`, and has  a single property `feature` which can
