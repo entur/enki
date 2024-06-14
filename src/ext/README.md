@@ -11,12 +11,12 @@ inside.
 Sandbox features are placed in a folder with the same name as the feature. The feature name should be added
 to the SandboxFeatures interface.
 
-The folder should have an index.tsx, with a default export. The default
+The folder should have an index.ts, with a default export. The default
 export should be the main entry (React) component of your sandbox feature.
 
 Example with a feature called `foobar`:
 
-    //  ext/foobar/index.tsx
+    //  ext/foobar/index.ts
     const Foobar: SandboxComponent<SandboxFeatures, FoobarProps> = (props) => {
         return (
             <h1>{props.foo}</h1>

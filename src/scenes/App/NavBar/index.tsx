@@ -74,7 +74,7 @@ const NavBar = () => {
     showConfirm: false,
     path: '',
   });
-  const { partnerCompany } = useConfig();
+  const { extPath } = useConfig();
 
   const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
 
@@ -82,8 +82,8 @@ const NavBar = () => {
     <Contrast as="nav" className="navbar-wrapper">
       <SideNavigation className="side-navigation">
         <Link to={'/'}>
-          <SandboxFeature<{}>
-            feature={`${partnerCompany}/CustomLogo`}
+          <SandboxFeature
+            feature={`${extPath}/CustomLogo`}
             renderFallback={() => <Logo />}
           />
         </Link>

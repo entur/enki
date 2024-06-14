@@ -24,25 +24,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.logo {
-  width: 72px;
-  height: auto;
-  margin-right: 5px;
-}
-
-.logo-wrapper {
-  display: inline-block;
-  padding-left: 30px;
-  padding-right: 30px;
-  cursor: pointer;
-  margin-top: 30px;
-  margin-bottom: 20px;
-
-  span {
-    margin-left: 0.25rem;
-    color: $colors-brand-coral;
-    font-size: 1.3em;
-    font-weight: 500;
-  }
-}

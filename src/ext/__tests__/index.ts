@@ -1,7 +1,7 @@
 import { SandboxFeatureProps } from '../SandboxFeature';
 
-export type Features = {
-  '__tests__/testcomponent'?: boolean;
-};
+export interface TestFeatures {
+  '__tests__/testcomponent': boolean;
+}
 
-export interface TestComponentProps extends SandboxFeatureProps<Features> {}
+export interface TestComponentProps extends SandboxFeatureProps<TestFeatures> {}

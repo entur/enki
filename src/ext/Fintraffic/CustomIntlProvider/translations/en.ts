@@ -1,4 +1,4 @@
 export const messages = {
   appTitle: 'RAE',
-  appLongTitle: 'Rutt- och schemaredigerare',
+  appLogoTitle: 'Route and schedule editor',
 };

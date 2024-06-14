@@ -49,11 +49,20 @@ const AuthenticatedApp = () => {
   return (
     (authStateLoaded && configStateLoaded && auth.isAuthenticated && (
       <Apollo>
-        <SandboxFeature<{}> feature={`${config.partnerCompany}/CustomStyle`} />
         <App />
       </Apollo>
     )) ||
     null
+  );
+};
+
+const EnkiApp = () => {
+  return (
+    <EnkiIntlProvider>
+      <AuthProvider>
+        <AuthenticatedApp />
+      </AuthProvider>
+    </EnkiIntlProvider>
   );
 };
 
@@ -68,11 +77,14 @@ const renderIndex = async () => {
     <Sentry.ErrorBoundary>
       <ConfigContext.Provider value={config}>
         <Provider store={store}>
-          <EnkiIntlProvider>
+          <SandboxFeature
+            feature={`${config.extPath}/CustomIntlProvider`}
+            renderFallback={() => <EnkiApp />}
+          >
             <AuthProvider>
               <AuthenticatedApp />
             </AuthProvider>
-          </EnkiIntlProvider>
+          </SandboxFeature>
         </Provider>
       </ConfigContext.Provider>
     </Sentry.ErrorBoundary>,

@@ -1,6 +1,13 @@
 import { FC, lazy, memo, ReactNode, Suspense, useMemo } from 'react';
 import { useConfig } from '../config/ConfigContext';
 import { SandboxFeatures } from '../config/config';
+import { TestFeatures } from './__tests__';
+
+/*export type Features = {
+  'Fintraffic/CustomIntlProvider'?: boolean;
+  'Fintraffic/CustomLogo'?: boolean;
+  'Fintraffic/CustomStyle'?: boolean;
+};*/
 
 /**
  * The base props interface for the SandboxFeature component. It is a generic interface that
@@ -43,10 +50,10 @@ const SandboxFeature = <Features, Props extends SandboxFeatureProps<Features>>({
     throw new Error('Max feature depth is 2');
   } else if (splitFeature.length === 2) {
     Component = memo(
-      lazy(() => import(`./${splitFeature[0]}/${splitFeature[1]}/index.tsx`)),
+      lazy(() => import(`./${splitFeature[0]}/${splitFeature[1]}/index.ts`)),
     );
   } else {
-    Component = memo(lazy(() => import(`./${splitFeature[0]}/index.tsx`)));
+    Component = memo(lazy(() => import(`./${splitFeature[0]}/index.ts`)));
   }
 
   const featureEnabled = useMemo(
@@ -74,4 +81,7 @@ export default memo(SandboxFeature) as typeof SandboxFeature<
   any
 >;
 
-export const TestSandboxFeature = memo(SandboxFeature) as typeof SandboxFeature;
+export const TestSandboxFeature = memo(SandboxFeature) as typeof SandboxFeature<
+  TestFeatures,
+  any
+>;

@@ -3,19 +3,17 @@ import { useIntl } from 'react-intl';
 import logo from './logo.png';
 import React from 'react';
 
-const Logo = () => {
+export const FintrafficLogo = () => {
   const { formatMessage } = useIntl();
 
   return (
-    <div className="logo-wrapper">
+    <div className="custom-logo-wrapper">
       <img
         className="logo"
         src={logo}
         alt={formatMessage({ id: 'navBarRootLinkLogoAltText' })}
       />
-      <div>{formatMessage({ id: 'appLongTitle' })}</div>
+      <div>{formatMessage({ id: 'appLogoTitle' })}</div>
     </div>
   );
 };
-
-export default Logo;

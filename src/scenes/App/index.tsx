@@ -22,6 +22,9 @@ import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
 import MarkerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { fetchUserContext } from '../../auth/userContextSlice';
 import { useConfig } from '../../config/ConfigContext';
+import { CustomStyleProps } from '../../ext/Fintraffic/CustomStyle/types';
+import SandboxFeature from '../../ext/SandboxFeature';
+import { SandboxFeatures } from '../../config/config';
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: MarkerIcon2x,
@@ -32,7 +35,7 @@ L.Icon.Default.mergeOptions({
 const App = () => {
   const dispatch = useDispatch<any>();
   const auth = useAuth();
-  const { uttuApiUrl, partnerCompany } = useConfig();
+  const { uttuApiUrl, extPath } = useConfig();
 
   const userContext = useAppSelector((state) => state.userContext);
 
@@ -58,23 +61,8 @@ const App = () => {
 
   return (
     <div className="app">
-      <Helmet
-        defaultTitle={formatMessage({ id: 'appTitle' })}
-        link={[
-          {
-            rel: 'shortcut icon',
-            href: partnerCompany
-              ? `src/ext/${partnerCompany}/assets/favicon.ico`
-              : '/favicon.ico',
-          },
-          {
-            rel: 'manifest',
-            href: partnerCompany
-              ? `src/ext/${partnerCompany}/assets/manifest.json`
-              : '/manifest.json',
-          },
-        ]}
-      />
+      <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
+      <SandboxFeature feature={`${extPath}/CustomStyle`} />
 
       <BrowserRouter basename={basename}>
         <ScrollToTop>
