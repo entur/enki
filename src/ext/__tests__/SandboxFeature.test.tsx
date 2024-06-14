@@ -1,6 +1,6 @@
-import { ConfigContext } from '../../config/ConfigContext';
-import { TestSandboxFeature } from '../SandboxFeature';
-import { prettyDOM, render, screen, waitFor } from '@testing-library/react';
+import { prettyDOM, render, screen } from '@testing-library/react';
+import { TestSandboxFeature } from './index';
+import { ConfigContext } from 'config/ConfigContext';
 
 describe('SandboxFeature', () => {
   it('should render nothing if feature is turned off', () => {
@@ -8,6 +8,7 @@ describe('SandboxFeature', () => {
       <ConfigContext.Provider
         value={{
           sandboxFeatures: {
+            // @ts-ignore
             '__tests__/testcomponent': false,
           },
         }}
@@ -26,6 +27,7 @@ describe('SandboxFeature', () => {
       <ConfigContext.Provider
         value={{
           sandboxFeatures: {
+            // @ts-ignore
             '__tests__/testcomponent': true,
           },
         }}

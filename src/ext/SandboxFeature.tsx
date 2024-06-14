@@ -1,7 +1,6 @@
 import { FC, lazy, memo, ReactNode, Suspense, useMemo } from 'react';
 import { useConfig } from '../config/ConfigContext';
 import { SandboxFeatures } from '../config/config';
-import { TestFeatures } from './__tests__';
 
 /**
  * The base props interface for the SandboxFeature component. It is a generic interface that
@@ -29,7 +28,10 @@ export type SandboxComponent<
  * parameters as the SandboxComponent. It optionally and lazily renders the SandboxComponent
  * identified by through the `feature` prop, which identifies the path of the component to load.
  */
-const SandboxFeature = <Features, Props extends SandboxFeatureProps<Features>>({
+export const _SandboxFeature = <
+  Features,
+  Props extends SandboxFeatureProps<Features>,
+>({
   feature,
   renderFallback,
   ...props
@@ -70,12 +72,7 @@ const SandboxFeature = <Features, Props extends SandboxFeatureProps<Features>>({
   );
 };
 
-export default memo(SandboxFeature) as typeof SandboxFeature<
+export default memo(_SandboxFeature) as typeof _SandboxFeature<
   SandboxFeatures,
-  any
->;
-
-export const TestSandboxFeature = memo(SandboxFeature) as typeof SandboxFeature<
-  TestFeatures,
   any
 >;

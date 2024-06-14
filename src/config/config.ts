@@ -1,7 +1,6 @@
 import { OidcClientSettings } from 'oidc-client-ts';
 import { FlexibleLineType } from '../model/FlexibleLine';
 import { Locale } from '../i18n';
-import { TestFeatures } from '../ext/__tests__';
 
 /**
  * All sandbox features should be added to this interface like this:
@@ -71,7 +70,7 @@ export interface Config {
   /**
    * Sandbox feature configuration
    */
-  sandboxFeatures?: SandboxFeatures | TestFeatures;
+  sandboxFeatures?: SandboxFeatures;
 
   /**
    * Path to folder inder /ext that contains features or assets of a company that adopted Nplan.
