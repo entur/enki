@@ -629,4 +629,6 @@ export const messages: MessagesKey = {
   saveProviderErrorFallback: 'Unknown error saving provider',
   noProvidersDescriptionText:
     'Your Nplan installation needs at least one provider',
+  landingPageNotLoggedIn: 'Not logged in',
+  landingPageLoginButtonText: 'Log in',
 };
