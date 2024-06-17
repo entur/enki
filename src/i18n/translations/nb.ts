@@ -628,4 +628,6 @@ export const messages = {
   saveProviderErrorFallback: 'Ukjent feil ved lagring av dataleverandør',
   noProvidersDescriptionText:
     'Din Nplan-installasjon trenger minst en dataleverandør',
+  landingPageNotLoggedIn: 'Ikke logget inn',
+  landingPageLoginButtonText: 'Logg inn',
 };
