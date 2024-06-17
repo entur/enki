@@ -77,6 +77,7 @@ const renderIndex = async () => {
     <Sentry.ErrorBoundary>
       <ConfigContext.Provider value={config}>
         <Provider store={store}>
+          <SandboxFeature feature={`${config.extPath}/CustomStyle`} />
           <SandboxFeature
             feature={`${config.extPath}/CustomIntlProvider`}
             renderFallback={() => <EnkiApp />}
