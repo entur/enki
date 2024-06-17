@@ -10,6 +10,10 @@ import { Locale } from '../i18n';
  *  toggled.
  */
 export interface SandboxFeatures {
+  /**
+   * Fintraffic's custom features or assets grouped in one location;
+   * For example: custom styles override, logo component and translations provider.
+   */
   Fintraffic: boolean;
 }
 

@@ -6,6 +6,13 @@ import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 import { useConfig } from '../../../config/ConfigContext';
 import { getExtMessages } from './getExtMessages';
 
+/**
+ * Main objective of this was to override certain translation values (e.g. appTitle)
+ * and use additional translation keys that are relevant only for the custom Fintraffic features;
+ *
+ * @param children
+ * @constructor
+ */
 export const FintrafficIntlProvider = ({
   children,
 }: {
