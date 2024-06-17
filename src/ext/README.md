@@ -17,7 +17,7 @@ export should be the main entry (React) component of your sandbox feature.
 Example with a feature called `foobar`:
 
     //  ext/foobar/index.ts
-    const Foobar: SandboxComponent<FoobarProps> = (props) => {
+    const Foobar: SandboxComponent<SandboxFeatures, FoobarProps> = (props) => {
         return (
             <h1>{props.foo}</h1>
         )
@@ -29,7 +29,7 @@ The folder must also have
 a types.d.ts file which exports the props type declaration for your component.
 
     // ext/foobar/types.d.ts
-    export type FoobarProps extends SandboxFeatureProps = {
+    export interface FoobarProps extends SandboxFeatureProps<SandboxFeatures> {
         foo: string;
     }
 

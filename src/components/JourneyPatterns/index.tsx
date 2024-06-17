@@ -77,7 +77,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
             })}
             ref={textFieldRef}
           />
-          <div>
+          <div className={'confirm-dialog-buttons'}>
             <SecondaryButton
               onClick={() => setShowModal(false)}
               className="margin-right"

@@ -97,11 +97,7 @@ const Exports = () => {
     <div className="exports">
       <Heading1>{formatMessage({ id: 'exportsHeader' })}</Heading1>
 
-      <SecondaryButton
-        as={Link}
-        to="/exports/create"
-        className="create-export-button"
-      >
+      <SecondaryButton as={Link} to="/exports/create" className="create">
         <AddIcon />
         {formatMessage({ id: 'exportsCreateExportButtonLabel' })}
       </SecondaryButton>
