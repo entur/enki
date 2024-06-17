@@ -16,6 +16,7 @@ import { Provider } from 'react-redux';
 import './styles/index.scss';
 import { browserTracingIntegration } from '@sentry/react';
 import SandboxFeature from './ext/SandboxFeature';
+import { LandingPage } from './scenes/App/LandingPage';
 
 const initSentry = (dsn?: string) => {
   if (dsn) {
@@ -51,8 +52,7 @@ const AuthenticatedApp = () => {
       <Apollo>
         <App />
       </Apollo>
-    )) ||
-    null
+    )) || <LandingPage />
   );
 };
 

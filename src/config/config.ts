@@ -39,6 +39,11 @@ export interface Config {
   disableAuthentication?: boolean;
 
   /**
+   * Disable automatic login redirect
+   */
+  disableAutomaticLoginRedirect?: boolean;
+
+  /**
    * Prefix used in XML namespace for providers in exported datasets
    */
   xmlnsUrlPrefix?: string;
