@@ -12,8 +12,7 @@ export const fetchConfig = async (): Promise<Config> => {
   if (import.meta.env.VITE_REACT_APP_UTTU_API_URL) {
     overrides.uttuApiUrl = import.meta.env.VITE_REACT_APP_UTTU_API_URL;
   }
-
-  const response = await fetch('/bootstrap.json');
+  const response = await fetch(`${import.meta.env.BASE_URL}bootstrap.json`);
   const config: Config = await response.json();
 
   return Object.assign({}, defaultConfig, config, overrides);

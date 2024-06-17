@@ -1,7 +1,6 @@
 import { useConfig } from 'config/ConfigContext';
 import { useCallback, useEffect } from 'react';
 import {
-  AuthContextProps,
   AuthProvider as OidcAuthProvider,
   hasAuthParams,
   useAuth as useOidcAuth,
@@ -58,7 +57,7 @@ export const useAuth = (): Auth => {
   let auth;
 
   const oidcAuth = useOidcAuth();
-  const { disableAuthentication } = useConfig();
+  const { disableAuthentication, disableAutomaticLoginRedirect } = useConfig();
 
   if (disableAuthentication) {
     auth = fakeAuthContextProps;
@@ -80,7 +79,8 @@ export const useAuth = (): Auth => {
       !hasAuthParams() &&
       !isAuthenticated &&
       !activeNavigator &&
-      !isLoading
+      !isLoading &&
+      !disableAutomaticLoginRedirect
     ) {
       signinRedirect().catch((err: any) => {
         throw err;
