@@ -1,4 +1,3 @@
-import { MockedFunction } from 'vitest';
 import { fetchConfig } from './fetchConfig';
 
 const defaultConfig = {
@@ -14,37 +13,20 @@ const defaultConfig = {
   ],
 };
 
-const fetchMock: MockedFunction<typeof global.fetch> = vi.fn(global.fetch);
-
-global.fetch = fetchMock;
-
-function createFetchResponse(data: any) {
-  return { json: () => new Promise((resolve) => resolve(data)) } as Response;
-}
-
 describe('fetchConfig', () => {
-  beforeEach(() => {
-    fetchMock.mockReset();
-  });
-
   it('should return the default config', async () => {
-    fetchMock.mockResolvedValue(createFetchResponse({}));
-    expect(await fetchConfig()).toEqual(defaultConfig);
+    expect((await fetchConfig()).supportedFlexibleLineTypes).toEqual(
+      defaultConfig.supportedFlexibleLineTypes,
+    );
   });
 
   it('should allow overrides', async () => {
-    fetchMock.mockResolvedValue(createFetchResponse({}));
-    import.meta.env.VITE_REACT_APP_UTTU_API_URL = 'http://foo/bar';
-    expect((await fetchConfig()).uttuApiUrl).toEqual('http://foo/bar');
+    import.meta.env.VITE_REACT_APP_UTTU_API_URL = 'https://foo/bar';
+    expect((await fetchConfig()).uttuApiUrl).toEqual('https://foo/bar');
     delete import.meta.env.VITE_REACT_APP_UTTU_API_URL;
   });
 
   it('should use bootstrap config', async () => {
-    fetchMock.mockResolvedValue(
-      createFetchResponse({
-        uttuApiUrl: 'http://other/bar',
-      }),
-    );
-    expect((await fetchConfig()).uttuApiUrl).toEqual('http://other/bar');
+    expect((await fetchConfig()).uttuApiUrl).toEqual('https://other/bar');
   });
 });

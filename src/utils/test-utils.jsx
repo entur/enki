@@ -6,6 +6,7 @@ import intlSlice from '../i18n/intlSlice';
 import { messages } from '../i18n/translations/en';
 import reducers from '../reducers';
 import { TestIntlProvider } from './TestIntlProvider';
+import userContextSlice from '../auth/userContextSlice';
 
 afterEach(() => {
   cleanup();
@@ -14,6 +15,7 @@ afterEach(() => {
 export const store = configureStore({
   reducer: combineReducers({
     ...reducers,
+    userContext: userContextSlice,
     intl: intlSlice,
   }),
   middleware: (getDefaultMiddleware) =>
