@@ -1,4 +1,4 @@
-import { Suspense, useDeferredValue, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
 import { selectLocale, updateConfiguredLocale } from 'i18n/intlSlice';
 import { getMessages } from 'i18n';
@@ -23,7 +23,6 @@ export const FintrafficIntlProvider = ({
   );
   const { defaultLocale, extPath } = useConfig();
   const selectedLocale = useAppSelector(selectLocale);
-  const deferredMessages = useDeferredValue(messages);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,21 +33,20 @@ export const FintrafficIntlProvider = ({
 
   useEffect(() => {
     getMessages(selectedLocale).then(async (messagesForLocale) => {
-      setMessages(() => messagesForLocale);
       if (extPath) {
         const extMessages = await getExtMessages(extPath, selectedLocale);
         const combinedMessages = {
           ...messagesForLocale,
           ...extMessages,
         } as Record<string, string>;
-        setMessages(() => combinedMessages);
+        setMessages(combinedMessages);
       }
     });
   }, [selectedLocale, extPath]);
 
   return (
     <Suspense>
-      {deferredMessages !== null && (
+      {messages !== undefined && (
         <IntlProvider
           locale={selectedLocale}
           messages={messages}

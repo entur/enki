@@ -52,7 +52,8 @@ const AuthenticatedApp = () => {
       <Apollo>
         <App />
       </Apollo>
-    )) || <LandingPage />
+    )) ||
+    (authStateLoaded && configStateLoaded && <LandingPage />)
   );
 };
 
