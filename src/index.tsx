@@ -15,7 +15,6 @@ import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
 import './styles/index.scss';
 import { browserTracingIntegration } from '@sentry/react';
-import SandboxFeature from './ext/SandboxFeature';
 import { LandingPage } from './scenes/App/LandingPage';
 
 const initSentry = (dsn?: string) => {
@@ -56,16 +55,6 @@ const AuthenticatedApp = () => {
   );
 };
 
-const EnkiApp = () => {
-  return (
-    <EnkiIntlProvider>
-      <AuthProvider>
-        <AuthenticatedApp />
-      </AuthProvider>
-    </EnkiIntlProvider>
-  );
-};
-
 const renderIndex = async () => {
   const container = document.getElementById('root');
   const root = ReactDOM.createRoot(container!);
@@ -77,15 +66,11 @@ const renderIndex = async () => {
     <Sentry.ErrorBoundary>
       <ConfigContext.Provider value={config}>
         <Provider store={store}>
-          <SandboxFeature feature={`${config.extPath}/CustomStyle`} />
-          <SandboxFeature
-            feature={`${config.extPath}/CustomIntlProvider`}
-            renderFallback={() => <EnkiApp />}
-          >
+          <EnkiIntlProvider>
             <AuthProvider>
               <AuthenticatedApp />
             </AuthProvider>
-          </SandboxFeature>
+          </EnkiIntlProvider>
         </Provider>
       </ConfigContext.Provider>
     </Sentry.ErrorBoundary>,

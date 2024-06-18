@@ -28,10 +28,7 @@ export type SandboxComponent<
  * parameters as the SandboxComponent. It optionally and lazily renders the SandboxComponent
  * identified by through the `feature` prop, which identifies the path of the component to load.
  */
-export const _SandboxFeature = <
-  Features,
-  Props extends SandboxFeatureProps<Features>,
->({
+const SandboxFeature = <Features, Props extends SandboxFeatureProps<Features>>({
   feature,
   renderFallback,
   ...props
@@ -72,7 +69,9 @@ export const _SandboxFeature = <
   );
 };
 
-export default memo(_SandboxFeature) as typeof _SandboxFeature<
+export default memo(SandboxFeature) as typeof SandboxFeature<
   SandboxFeatures,
   any
 >;
+
+export const TestSandboxFeature = memo(SandboxFeature) as typeof SandboxFeature;

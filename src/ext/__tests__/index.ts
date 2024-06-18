@@ -1,12 +1,7 @@
-import { _SandboxFeature, SandboxFeatureProps } from '../SandboxFeature';
-import { memo } from 'react';
+import { SandboxFeatureProps } from '../SandboxFeature';
 
-export interface TestFeatures {
+export type Features = {
   '__tests__/testcomponent'?: boolean;
-}
+};
 
-export interface TestComponentProps extends SandboxFeatureProps<TestFeatures> {}
-
-export const TestSandboxFeature = memo(
-  _SandboxFeature,
-) as typeof _SandboxFeature<TestFeatures, any>;
+export interface TestComponentProps extends SandboxFeatureProps<Features> {}

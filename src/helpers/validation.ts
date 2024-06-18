@@ -245,6 +245,13 @@ export const validateServiceJourney = (
   const validDayTimes = (sj.dayTypes?.[0]?.daysOfWeek?.length ?? 0) > 0;
   const { isValid } = validateTimes(sj.passingTimes ?? [], intl);
   const validDayTypes = validateDayTypes(sj.dayTypes);
+  console.log('validateServiceJourney', {
+    sj,
+    validName: !isBlankName,
+    validDayTimes,
+    validPassingTimes: isValid,
+    validDayTypes,
+  });
   return !isBlankName && isValid && validDayTimes && validDayTypes;
 };
 
