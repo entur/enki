@@ -19,7 +19,9 @@ export default defineConfig({
         manualChunks: (id) => {
           if (id.includes("node_modules")) {
             return 'vendor';
-          } else if (id.includes("/src/ext/") && !id.includes("__tests__")) {
+          } else if (!id.includes("/src/ext/") && !id.includes("/i18n/translations/")) {
+            return 'index';
+          } else if (/\/src\/ext\/.+\/.+/.test(id) && !id.includes("__tests__")) {
             const split = id.split("/src/ext/");
             return `ext-${split[split.length - 1].split("/")[0]}`;
           }

@@ -1,5 +1,5 @@
 import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
-import { MessagesKey } from 'i18n/translations/translationKeys';
+import { MessagesKey } from 'i18n/translationKeys';
 import StopPoint from 'model/StopPoint';
 import { useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
