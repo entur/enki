@@ -10,7 +10,7 @@ export const FintrafficLogo = () => {
   return (
     <>
       <Helmet>
-        <link href={stylesURL} rel="stylesheet" media="all" />;
+        <link href={stylesURL} rel="stylesheet" media="all" />
       </Helmet>
       <div className="custom-logo-wrapper">
         <img
