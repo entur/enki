@@ -34,7 +34,7 @@ export const EnkiIntlProvider = ({
         <IntlProvider
           locale={selectedLocale}
           messages={deferredMessages}
-          defaultLocale={defaultLocale || 'nb'}
+          defaultLocale={defaultLocale ?? 'nb'}
         >
           {children}
         </IntlProvider>

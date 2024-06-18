@@ -50,7 +50,7 @@ export const FintrafficIntlProvider = ({
         <IntlProvider
           locale={selectedLocale}
           messages={deferredMessages}
-          defaultLocale={defaultLocale || 'fi'}
+          defaultLocale={defaultLocale ?? 'fi'}
         >
           {children}
         </IntlProvider>
