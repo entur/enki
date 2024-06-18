@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useDeferredValue, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
 import { selectLocale, updateConfiguredLocale } from 'i18n/intlSlice';
 import { getMessages } from 'i18n';
@@ -24,7 +24,7 @@ export const FintrafficIntlProvider = ({
   const { defaultLocale, extPath } = useConfig();
   const selectedLocale = useAppSelector(selectLocale);
   const dispatch = useAppDispatch();
-
+  const deferredMessages = useDeferredValue(messages);
   useEffect(() => {
     if (defaultLocale) {
       dispatch(updateConfiguredLocale(defaultLocale));
@@ -46,10 +46,10 @@ export const FintrafficIntlProvider = ({
 
   return (
     <Suspense>
-      {messages !== undefined && (
+      {deferredMessages && (
         <IntlProvider
           locale={selectedLocale}
-          messages={messages}
+          messages={deferredMessages}
           defaultLocale={defaultLocale || 'fi'}
         >
           {children}

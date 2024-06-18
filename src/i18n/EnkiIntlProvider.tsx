@@ -30,7 +30,7 @@ export const EnkiIntlProvider = ({
 
   return (
     <Suspense>
-      {deferredMessages !== null && (
+      {deferredMessages && (
         <IntlProvider
           locale={selectedLocale}
           messages={deferredMessages}
