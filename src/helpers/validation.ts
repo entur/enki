@@ -6,7 +6,7 @@ import {
   parseISO,
 } from 'date-fns';
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
-import { MessagesKey } from 'i18n/translations/translationKeys';
+import { MessagesKey } from 'i18n/translationKeys';
 import BookingArrangement from 'model/BookingArrangement';
 import DayType from 'model/DayType';
 import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';

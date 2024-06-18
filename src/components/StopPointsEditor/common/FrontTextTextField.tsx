@@ -1,7 +1,7 @@
 import { TextField } from '@entur/form';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import usePristine from 'hooks/usePristine';
-import { MessagesKey } from 'i18n/translations/translationKeys';
+import { MessagesKey } from 'i18n/translationKeys';
 import StopPoint from 'model/StopPoint';
 import { ChangeEvent, useCallback } from 'react';
 import { useIntl } from 'react-intl';

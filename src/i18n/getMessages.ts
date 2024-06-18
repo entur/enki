@@ -1,6 +1,6 @@
 import { IntlShape } from 'react-intl';
 import { Locale } from './locale';
-import { Messages } from './translations/translationKeys';
+import { Messages } from './translationKeys';
 
 export const getMessages = async (
   locale: Locale,

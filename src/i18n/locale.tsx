@@ -1,5 +1,5 @@
 import { NorwayIcon, SwedenIcon, UKIcon } from '@entur/icons';
-import { MessagesKey } from './translations/translationKeys';
+import { MessagesKey } from './translationKeys';
 
 /**
  * This is a last-resort fallback. Default locale is configurable in bootstrap config

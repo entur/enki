@@ -1,7 +1,7 @@
 import { ApolloError } from '@apollo/client';
 import { showErrorNotification } from 'actions/notification';
 import { getInternationalizedUttuError } from 'helpers/uttu';
-import { MessagesKey } from 'i18n/translations/translationKeys';
+import { MessagesKey } from 'i18n/translationKeys';
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';

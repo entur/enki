@@ -1,5 +1,5 @@
 import { isBlank } from 'helpers/forms';
-import { MessagesKey } from 'i18n/translations/translationKeys';
+import { MessagesKey } from 'i18n/translationKeys';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { KeyValues } from 'model/KeyValues';
 import { FLEXIBLE_STOP_AREA_TYPE } from 'model/enums';

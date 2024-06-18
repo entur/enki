@@ -1,6 +1,6 @@
 import { NormalizedDropdownItemType } from '@entur/dropdown';
 import { FlexibleLineType } from 'model/FlexibleLine';
-import { MessagesKey } from '../i18n/translations/translationKeys';
+import { MessagesKey } from '../i18n/translationKeys';
 import {
   VEHICLE_MODE,
   VEHICLE_SUBMODE,

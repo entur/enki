@@ -1,7 +1,7 @@
 import { Drawer } from '@entur/modal';
 import { Heading4 } from '@entur/typography';
 import { useConfig } from 'config/ConfigContext';
-import { MessagesKey } from 'i18n/translations/translationKeys';
+import { MessagesKey } from 'i18n/translationKeys';
 import { useIntl } from 'react-intl';
 
 type Props = {

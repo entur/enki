@@ -1,4 +1,4 @@
-import { MessagesKey } from 'i18n/translations/translationKeys';
+import { MessagesKey } from 'i18n/translationKeys';
 
 export enum ORGANISATION_TYPE {
   STATUTORY_BODY = 'statutoryBody',
