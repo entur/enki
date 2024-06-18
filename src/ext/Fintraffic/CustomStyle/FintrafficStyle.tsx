@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 export const FintrafficStyle = () => {
   return (
     <Helmet>
-      <link href={stylesURL} rel="stylesheet" media="all" />;
+      <link href={stylesURL} rel="stylesheet" media="all" />
     </Helmet>
   );
 };

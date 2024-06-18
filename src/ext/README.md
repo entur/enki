@@ -112,3 +112,22 @@ and
         feature="foobar/bar"
         bar="foo"
     />
+
+## How to include stylesheets in sandbox components
+
+Importing stylesheets directly must be avoided, because the bundler will preload it regardless of the configuration.
+Therefore, stylesheets must be imported using the `url` option, and rendered inside `Helmet`:
+
+    import stylesheetUrl from './styles.scss?url';
+    import Helmet from 'react-helmet';
+
+    export const SomeComponent = () => {
+        return (
+            <>
+                <Helmet>
+                    <link href={stylesheetUrl} rel="stylesheet" media="all" />
+                </Helmet>
+                <p>My content</p>
+            </>
+        );
+    }
