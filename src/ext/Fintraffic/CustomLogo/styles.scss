@@ -1,0 +1,21 @@
+@import '@fintraffic/fds-coreui-css/dist/tokens';
+
+.custom-logo-wrapper {
+  cursor: pointer;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding-left: 30px;
+  padding-right: 30px;
+  height: auto;
+}
+
+.custom-logo-wrapper > div {
+  color: #3388ff;
+  width: fit-content;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.logo {
+  width: 150px;
+}

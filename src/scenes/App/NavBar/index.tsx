@@ -10,11 +10,13 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Link, useLocation } from 'react-router-dom';
 import UserPreference from 'scenes/App/NavBar/UserPreference';
-import logo from 'static/img/logo.png';
 import { useAppSelector } from '../../../store/hooks';
 import LanguagePicker from './LanguagePicker';
 import LogoutChip from './LogoutChip';
 import './styles.scss';
+import Logo from './Logo';
+import { useConfig } from '../../../config/ConfigContext';
+import SandboxFeature from '../../../ext/SandboxFeature';
 
 const isActive = (pathname: string, path: string) =>
   pathname.split('/')[1] === path.split('/')[1];
@@ -72,21 +74,18 @@ const NavBar = () => {
     showConfirm: false,
     path: '',
   });
+  const { extPath } = useConfig();
 
   const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
 
   return (
     <Contrast as="nav" className="navbar-wrapper">
       <SideNavigation className="side-navigation">
-        <Link to="/">
-          <div className="logo-wrapper">
-            <img
-              className="logo"
-              src={logo}
-              alt={formatMessage({ id: 'navBarRootLinkLogoAltText' })}
-            />
-            <span>{formatMessage({ id: 'appTitle' })}</span>
-          </div>
+        <Link to={'/'}>
+          <SandboxFeature
+            feature={`${extPath}/CustomLogo`}
+            renderFallback={() => <Logo />}
+          />
         </Link>
 
         {providers && providers.length > 0 && <UserPreference />}

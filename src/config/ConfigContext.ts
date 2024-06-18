@@ -3,4 +3,6 @@ import { Config } from './config';
 
 export const ConfigContext = createContext<Config>({});
 
-export const useConfig = () => useContext(ConfigContext);
+export const useConfig = () => {
+  return useContext(ConfigContext);
+};

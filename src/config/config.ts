@@ -9,7 +9,13 @@ import { Locale } from '../i18n';
  *  For multi-level features, only the top-level featureName should be
  *  toggled.
  */
-export interface SandboxFeatures {}
+export interface SandboxFeatures {
+  /**
+   * Fintraffic's custom features or assets grouped in one location;
+   * For example: custom styles override, logo component and translations provider.
+   */
+  Fintraffic: boolean;
+}
 
 export interface Config {
   /**
@@ -74,4 +80,13 @@ export interface Config {
    * Sandbox feature configuration
    */
   sandboxFeatures?: SandboxFeatures;
+
+  /**
+   * Path to folder inder /ext that contains features or assets of a company that adopted Nplan.
+   * This is used e.g. for:
+   *    CustomStyle, when determining the relevant custom style class;
+   *    CustomLogo;
+   *    overriding translations (case appTitle)
+   */
+  extPath?: string;
 }
