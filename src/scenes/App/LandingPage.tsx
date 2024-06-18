@@ -7,13 +7,9 @@ import { Contrast } from '@entur/layout';
 import { SideNavigation } from '@entur/menu';
 import { PrimaryButton } from '@entur/button';
 import LanguagePicker from './NavBar/LanguagePicker';
-import Logo from './NavBar/Logo';
-import SandboxFeature from '../../ext/SandboxFeature';
-import { useConfig } from '../../config/ConfigContext';
 
 export const LandingPage = () => {
   const { formatMessage } = useIntl();
-  const { extPath } = useConfig();
   const auth = useAuth();
   return (
     <div className="app">
@@ -22,10 +18,14 @@ export const LandingPage = () => {
         <div className="navbar-and-routes">
           <Contrast as="nav" className="navbar-wrapper">
             <SideNavigation className="side-navigation">
-              <SandboxFeature
-                feature={`${extPath}/CustomLogo`}
-                renderFallback={() => <Logo />}
-              />
+              <div className="logo-wrapper">
+                <img
+                  className="logo"
+                  src={logo}
+                  alt={formatMessage({ id: 'navBarRootLinkLogoAltText' })}
+                />
+                <span>{formatMessage({ id: 'appTitle' })}</span>
+              </div>
             </SideNavigation>
             <div className="bottom-chips">
               <LanguagePicker />

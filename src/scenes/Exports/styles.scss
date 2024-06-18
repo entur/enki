@@ -1,13 +1,11 @@
-@import '@entur/tokens/dist/styles.scss';
 @import '@entur/button/dist/styles.css';
 
 .exports {
   flex: 1;
   display: flex;
   flex-direction: column;
+}
 
-  .create {
-    max-width: 20rem;
-    margin-bottom: $space-large;
-  }
+.create-export-button {
+  width: 20rem;
 }
