@@ -1,5 +1,14 @@
 @import '@entur/tokens/dist/styles.scss';
 
+.stop-point-editor-container {
+  display: flex;
+}
+
+.stop-point-editor-width-limit {
+  max-width: 450px;
+  margin-right: 30px;
+}
+
 .stop-point-editor {
   .stop-point {
     padding-bottom: 0.7rem;

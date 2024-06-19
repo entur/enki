@@ -92,7 +92,7 @@ const JourneyPatternEditor = ({
 
   return (
     <div className="journey-pattern-editor">
-      <div>
+      <div style={{ width: '100%' }}>
         <section>
           <RequiredInputMarker />
           <General

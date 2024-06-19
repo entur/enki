@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../auth/auth';
-import logo from '../../static/img/logo.png';
 import React from 'react';
 import { Contrast } from '@entur/layout';
 import { SideNavigation } from '@entur/menu';
