@@ -50,7 +50,7 @@ const App = () => {
 
   const { formatMessage } = useIntl();
 
-  const basename = '';
+  const basename = import.meta.env.BASE_URL;
 
   if (!userContext.loaded) {
     return null;
