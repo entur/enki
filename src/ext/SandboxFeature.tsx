@@ -38,19 +38,19 @@ export const _SandboxFeature = <
 }: Props) => {
   const { sandboxFeatures } = useConfig();
 
-  const splitFeature = (feature as string).split('/');
+  const splitFeature = useMemo(() => (feature as string).split('/'), [feature]);
 
-  let Component: SandboxComponent<Features, Props>;
-
-  if (splitFeature.length > 2) {
-    throw new Error('Max feature depth is 2');
-  } else if (splitFeature.length === 2) {
-    Component = memo(
-      lazy(() => import(`./${splitFeature[0]}/${splitFeature[1]}/index.ts`)),
-    );
-  } else {
-    Component = memo(lazy(() => import(`./${splitFeature[0]}/index.ts`)));
-  }
+  const Component: SandboxComponent<Features, Props> = useMemo(() => {
+    if (splitFeature.length > 2) {
+      throw new Error('Max feature depth is 2');
+    } else if (splitFeature.length === 2) {
+      return memo(
+        lazy(() => import(`./${splitFeature[0]}/${splitFeature[1]}/index.ts`)),
+      );
+    } else {
+      return memo(lazy(() => import(`./${splitFeature[0]}/index.ts`)));
+    }
+  }, [splitFeature]);
 
   const featureEnabled = useMemo(
     () =>
