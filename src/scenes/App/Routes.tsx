@@ -21,17 +21,23 @@ import StopPlacesEditor from '../StopPlaces/scenes/Editor';
 import { useNoProviders } from './useNoProviders';
 import { useNoSelectedProvider } from './useNoSelectedProvider';
 import { NoSelectedProvider } from './NoSelectedProvider/NoSelectedProvider';
+import { useAppSelector } from '../../store/hooks';
 
 const Routes = () => {
   const noProviders = useNoProviders();
   const noSelectedProvider = useNoSelectedProvider();
   const location = useLocation();
+  const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
 
-  if (noProviders && location.pathname !== '/providers') {
+  if (noProviders && !location.pathname.startsWith('/providers') && isAdmin) {
     return <Navigate to="/providers" replace />;
   }
 
-  if (noSelectedProvider && location.pathname !== '/select-provider') {
+  if (
+    noSelectedProvider &&
+    location.pathname !== '/select-provider' &&
+    !location.pathname.startsWith('/providers')
+  ) {
     return <Navigate to="/select-provider" replace />;
   }
 
