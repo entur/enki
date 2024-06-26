@@ -45,7 +45,6 @@ body {
   color: white !important;
   background-color: black !important;
   border-color: white !important;
-  //border-bottom: 1px solid !important;
   text-transform: none;
   font-size: 1rem;
   border-bottom: 0.0625rem solid var(--fds-color-neutral-200) !important;
@@ -72,13 +71,6 @@ body {
 .eds-side-navigation-group__expand-content
   > .eds-side-navigation
   > .eds-side-navigation__item {
-  background: #222222 !important;
-}
-
-.eds-side-navigation-group__expand-content
-  > .eds-side-navigation
-  > .eds-side-navigation__item
-  :hover {
   background: #222222 !important;
 }
 
@@ -115,7 +107,6 @@ body {
 .eds-button--variant-secondary {
   border: 2px solid var(--fds-color-brand-black);
   color: var(--fds-color-brand-black);
-  //padding: 13px 16px !important;
   --eds-button-text: var(--fds-color-brand-black);
   --eds-button-text-hover: white;
   --eds-button-text-active: var(
@@ -164,11 +155,6 @@ body {
 .eds-square-button__button:focus,
 .eds-square-button:focus .eds-square-button__button {
   outline: none;
-}
-
-.eds-button:host {
-  //display: inline-flex;
-  ///justify-content: center;
 }
 
 .eds-button .eds-icon {
@@ -266,10 +252,6 @@ body {
 
 .eds-checkbox__icon {
   border-color: var(--fds-color-brand-black);
-}
-
-.eds-checkbox__icon:hover {
-  //background-color: #acd7f1;
 }
 
 .eds-checkbox__container:hover input + .eds-checkbox__icon {
@@ -396,7 +378,6 @@ body {
 .eds-form-control-wrapper:focus-within .eds-input-group__label {
   top: -1.75rem;
   left: 0;
-  //margin-top: 0.5rem;
   margin-left: 0;
   transition: unset;
   color: var(--fds-color-text-1000, #000000);
@@ -454,12 +435,6 @@ body {
   outline: 1px solid var(--fds-color-danger-300) !important;
 }
 
-.eds-form-control-wrapper--disabled {
-  //border-color: var(--fds-color-neutral-200);
-  //color: var(--fds-color-neutral-300);
-  //background-color: var(--fds-color-neutral-100);
-}
-
 // Create line:
 
 .required-input {
@@ -505,7 +480,6 @@ section .notices {
 }
 
 .notices .eds-table__body > .eds-table__row--hover:hover {
-  //background: violet;
   background: #e1eff8;
 }
 
@@ -521,15 +495,6 @@ section .notices {
 .journey-pattern-inputs > div {
   margin-top: 3rem;
 }
-
-.stop-point-editor .stop-point {
-  //padding-top: 0.7rem;
-}
-
-/*.eds-dropdown__selected-item__placeholder {
-  color: var(--fds-color-text-300);
-  font-weight: 400 !important;
-}*/
 
 .stop-point #delete-button {
   margin-left: 1rem;
@@ -550,7 +515,6 @@ section .notices {
 .eds-expandable-panel__trigger:focus {
   outline: none;
   background: #e1eff8;
-  // border-bottom: 2px solid var(--fds-color-interactive-200);
 }
 
 // Service journeys
