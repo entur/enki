@@ -38,6 +38,7 @@ import { useHandleOnSaveClick } from './hooks/useHandleOnSaveClick';
 import './styles.scss';
 import { transformToMapCoordinates } from './utils/transformToMapCoordinates';
 import { validateFlexibleStopPlace } from './utils/validateForm';
+import FormMap from '../../../../components/FormMap';
 
 const FlexibleStopPlaceEditor = () => {
   const params = useParams();
@@ -386,23 +387,24 @@ const FlexibleStopPlaceEditor = () => {
               </div>
 
               <div className="stop-place-flexible-area">
-                <PolygonMap
-                  addCoordinate={handleMapOnClick}
-                  polygon={transformToMapCoordinates(
-                    flexibleStopPlace.flexibleAreas?.[currentAreaIndex].polygon
-                      ?.coordinates ?? [],
-                  )}
-                  otherPolygons={
-                    flexibleStopPlace.flexibleAreas
-                      ?.filter((_, index) => index !== currentAreaIndex)
-                      .map((area) =>
-                        transformToMapCoordinates(
-                          area.polygon?.coordinates ?? [],
-                        ),
-                      ) ?? []
-                  }
-                  undo={handleUndoClick}
-                />
+                <FormMap undo={handleUndoClick}>
+                  <PolygonMap
+                    addCoordinate={handleMapOnClick}
+                    polygon={transformToMapCoordinates(
+                      flexibleStopPlace.flexibleAreas?.[currentAreaIndex]
+                        .polygon?.coordinates ?? [],
+                    )}
+                    otherPolygons={
+                      flexibleStopPlace.flexibleAreas
+                        ?.filter((_, index) => index !== currentAreaIndex)
+                        .map((area) =>
+                          transformToMapCoordinates(
+                            area.polygon?.coordinates ?? [],
+                          ),
+                        ) ?? []
+                    }
+                  />
+                </FormMap>
               </div>
             </div>
           </OverlayLoader>

@@ -15,6 +15,10 @@ export interface SandboxFeatures {
    * For example: custom styles override, logo component and translations provider.
    */
   Fintraffic: boolean;
+  /**
+   * Map for editing stop places as part JourneyPattern form
+   */
+  JourneyPatternStopPointMap: boolean;
 }
 
 export interface Config {
