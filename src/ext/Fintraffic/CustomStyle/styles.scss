@@ -738,3 +738,41 @@ section .notices {
 .network-form > .eds-form-control-wrapper {
   margin-top: 3rem;
 }
+
+@media only screen and (min-width: 1600px) {
+  .stop-point #delete-button {
+    margin-left: 2.25rem;
+  }
+
+  .stop-point-editor .stop-point .stop-point-element {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  .stop-point-editor .stop-point .stop-point-element .stop-point-info > div {
+    margin-top: 1rem;
+  }
+
+  .stop-point-editor
+    .stop-point
+    .stop-point-element
+    .stop-point-info
+    .stop-point-info-item {
+    margin-left: 1.2rem;
+    margin-right: 0;
+    width: 170px;
+    min-width: 170px;
+  }
+
+  .stop-point-info > .eds-feedback-text {
+    display: none;
+  }
+
+  .stop-point-editor
+    .stop-point
+    .stop-point-element
+    .stop-point-info
+    .stop-point-info-item {
+    margin-top: 1rem !important;
+  }
+}

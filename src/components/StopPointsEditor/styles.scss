@@ -9,6 +9,12 @@
   margin-right: 30px;
 }
 
+@media only screen and (min-width: 1600px) {
+  .stop-point-editor-width-limit {
+    max-width: 980px;
+  }
+}
+
 .stop-point-editor {
   .stop-point {
     padding-bottom: 0.7rem;

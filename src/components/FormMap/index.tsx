@@ -4,28 +4,24 @@ import { UndoIcon } from '@entur/icons';
 import DefaultMapContainer from './DefaultMapContainer';
 import React from 'react';
 import { useConfig } from '../../config/ConfigContext';
-import FintrafficMapProvider from '../../ext/Fintraffic/CustomMapProvider';
-
+import SandboxFeature from '../../ext/SandboxFeature';
 type Props = {
   undo?: () => void;
   children: React.ReactElement;
 };
 
 const FormMap = (props: Props) => {
-  const { extPath, sandboxFeatures } = useConfig();
+  const { extPath } = useConfig();
   return (
     <div className="map-container eds-contrast">
-      {sandboxFeatures?.Fintraffic ? (
-        <FintrafficMapProvider>{props.children}</FintrafficMapProvider>
-      ) : (
-        <DefaultMapContainer>{props.children}</DefaultMapContainer>
-      )}
-      {/*<SandboxFeature
+      <SandboxFeature
         feature={`${extPath}/CustomMapProvider`}
-        renderFallback={() => <DefaultMapContainer>{props.children}</DefaultMapContainer>}
+        renderFallback={() => (
+          <DefaultMapContainer>{props.children}</DefaultMapContainer>
+        )}
       >
         {props.children}
-      </SandboxFeature>*/}
+      </SandboxFeature>
 
       {props.undo ? (
         <FloatingButton
