@@ -93,7 +93,7 @@
     "redux-immutable-state-invariant": "2.1.0",
     "sass": "1.77.6",
     "source-map-explorer": "2.5.3",
-    "typescript": "5.5.2",
+    "typescript": "5.5.3",
     "vite": "5.3.2",
     "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "4.3.2",
