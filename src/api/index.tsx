@@ -22,12 +22,22 @@ export type SearchForQuayResponse = {
 export type Quay = {
   id: string;
   publicCode: null | string;
-  name: null | string;
+  name: null | { value: string };
+  centroid?: {
+    location: Location;
+  };
+};
+
+export type Location = {
+  longitude: number;
+  latitude: number;
 };
 
 export type StopPlace = {
   id: string;
   name: { value: string };
+  stopPlaceType?: string;
+  transportMode?: string;
   quays: Quay[];
   children: StopPlace[];
 };

@@ -33,6 +33,7 @@
     "@entur/tokens": "3.15.1",
     "@entur/tooltip": "2.7.10",
     "@entur/typography": "1.8.39",
+    "@fintraffic/fds-coreui-css": "0.1.3",
     "@reduxjs/toolkit": "1.9.7",
     "@sentry/react": "7.118.0",
     "axios": "1.7.2",
@@ -53,12 +54,12 @@
     "react-helmet": "6.1.0",
     "react-intl": "6.6.8",
     "react-leaflet": "4.2.1",
+    "react-leaflet-cluster": "^2.1.0",
     "react-oidc-context": "3.1.0",
     "react-redux": "8.1.3",
     "react-router-dom": "6.24.0",
     "redux-sentry-middleware": "0.2.2",
-    "uuid": "10.0.0",
-    "@fintraffic/fds-coreui-css": "0.1.3"
+    "uuid": "10.0.0"
   },
   "devDependencies": {
     "@redux-devtools/extension": "3.3.0",

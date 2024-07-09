@@ -8,6 +8,8 @@ import { GenericStopPointEditor } from './GenericStopPointEditor';
 import { JourneyPatternStopPointMap } from '../../../ext/JourneyPatternStopPointMap/JourneyPatternStopPointMap';
 import SandboxFeature from '../../../ext/SandboxFeature';
 import { useConfig } from '../../../config/ConfigContext';
+import { quays, QuaysContext } from './QuaysContext';
+import { useState } from 'react';
 
 export const GenericStopPointsEditor = ({
   pointsInSequence,
@@ -20,35 +22,40 @@ export const GenericStopPointsEditor = ({
   const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useIntl();
   const { sandboxFeatures } = useConfig();
+  const [quaySelectionStates, setQuaySelectionStates] = useState({});
 
   return (
     <section style={{ marginTop: '2em' }}>
       <Heading3>{formatMessage({ id: 'editorStopPoints' })}</Heading3>
       <Paragraph>{formatMessage({ id: 'stopPointsInfoFixed' })}</Paragraph>
-      <div className={'stop-point-editor-container'}>
-        <div
-          className={`stop-point-editor ${sandboxFeatures?.JourneyPatternStopPointMap ? 'stop-point-editor-width-limit' : ''}`}
-        >
-          {pointsInSequence.map((stopPoint, pointIndex) => (
-            <GenericStopPointEditor
-              key={keys[pointIndex]}
-              order={pointIndex + 1}
-              stopPoint={stopPoint}
-              spoilPristine={spoilPristine}
-              isFirst={pointIndex === 0}
-              isLast={pointIndex === pointsInSequence.length - 1}
-              onChange={(updatedStopPoint: StopPoint) =>
-                updateStopPoint(pointIndex, updatedStopPoint)
-              }
-              onDelete={() => deleteStopPoint(pointIndex)}
-              canDelete={pointsInSequence.length > 2}
-              flexibleLineType={flexibleLineType}
-            />
-          ))}
-        </div>
+      <QuaysContext.Provider
+        value={{ quays, quaySelectionStates, setQuaySelectionStates }}
+      >
+        <div className={'stop-point-editor-container'}>
+          <div
+            className={`stop-point-editor ${sandboxFeatures?.JourneyPatternStopPointMap ? 'stop-point-editor-width-limit' : ''}`}
+          >
+            {pointsInSequence.map((stopPoint, pointIndex) => (
+              <GenericStopPointEditor
+                key={keys[pointIndex]}
+                order={pointIndex + 1}
+                stopPoint={stopPoint}
+                spoilPristine={spoilPristine}
+                isFirst={pointIndex === 0}
+                isLast={pointIndex === pointsInSequence.length - 1}
+                onChange={(updatedStopPoint: StopPoint) =>
+                  updateStopPoint(pointIndex, updatedStopPoint)
+                }
+                onDelete={() => deleteStopPoint(pointIndex)}
+                canDelete={pointsInSequence.length > 2}
+                flexibleLineType={flexibleLineType}
+              />
+            ))}
+          </div>
 
-        <SandboxFeature feature={'JourneyPatternStopPointMap'} />
-      </div>
+          <SandboxFeature feature={'JourneyPatternStopPointMap'} />
+        </div>
+      </QuaysContext.Provider>
 
       <AddButton
         onClick={addStopPoint}

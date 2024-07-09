@@ -9,8 +9,9 @@ const organisationsReducer = (
   action: AnyAction,
 ) => {
   switch (action.type) {
-    case RECEIVE_ORGANISATIONS:
-      return [...action.organisations];
+    case RECEIVE_ORGANISATIONS: {
+      return !state ? [...action.organisations] : state;
+    }
 
     default:
       return state;

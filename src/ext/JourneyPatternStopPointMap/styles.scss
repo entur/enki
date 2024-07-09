@@ -1,0 +1,17 @@
+.cluster-icon {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  border-color: black;
+  color: white;
+  font-weight: 800;
+  font-size: 1.25rem;
+  transform: translate(-25%, -25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaflet-popup-content {
+  width: fit-content !important;
+}

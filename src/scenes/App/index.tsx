@@ -22,6 +22,7 @@ import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
 import MarkerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { fetchUserContext } from '../../auth/userContextSlice';
 import { useConfig } from '../../config/ConfigContext';
+import { getStopPlaces } from '../../actions/stopPlaces';
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: MarkerIcon2x,
@@ -47,6 +48,12 @@ const App = () => {
   useEffect(() => {
     dispatch(getOrganisations());
   }, [dispatch, userContext.activeProviderCode]);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      dispatch(getStopPlaces());
+    }
+  }, [dispatch, auth.isAuthenticated]);
 
   const { formatMessage } = useIntl();
 

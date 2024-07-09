@@ -35,7 +35,23 @@ export default () => {
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   const dispatch = useDispatch<any>();
-  const organisations = useAppSelector((state) => state.organisations);
+  const organisations = [
+    {
+      id: 'NOG:GeneralOrganisation:1',
+      name: {
+        value: 'Fake Organisation',
+      },
+      legalName: {
+        value: 'Fake Organisation LLC',
+      },
+      contactDetails: {
+        email: '',
+        phone: '+15551234545',
+        url: 'https://www.fake.com/',
+      },
+      keyList: null,
+    },
+  ];
   const editor = useAppSelector((state) => state.editor);
 
   const activeProviderCode = useAppSelector(
