@@ -37,33 +37,23 @@ const QuayMarker = ({
       ]}
     >
       <Popup>
-        <div
-          style={{
-            fontWeight: 600,
-            color: '#1777F8',
-            fontSize: '16px',
-            textWrap: 'nowrap',
-          }}
-        >
-          {stopPlace.name.value}
-        </div>
-        {quay.name?.value && quay.name?.value !== stopPlace.name.value ? (
-          <div style={{ fontWeight: 600, color: '#1777F8' }}>
-            Quay {quay.name?.value}
-          </div>
-        ) : (
-          ''
-        )}
-        <div style={{ fontWeight: 600, paddingBottom: '0.25rem' }}>
-          {quay.id}
-        </div>
-        <div style={{ paddingBottom: '0.5rem' }}>{stopPlace.transportMode}</div>
-        <div style={{ display: 'flex' }}>
+        <section>
+          <div className={'popup-title'}>{stopPlace.name.value}</div>
+          {quay.name?.value && quay.name?.value !== stopPlace.name.value ? (
+            <div className={'popup-title'}>Quay {quay.name?.value}</div>
+          ) : (
+            ''
+          )}
+          <div className={'popup-id'}>{quay.id}</div>
+        </section>
+
+        <section>{stopPlace.transportMode}</section>
+
+        <div className={'popup-button-panel'}>
           <Button
+            className={'popup-button'}
             style={{
               marginRight: '0.5rem',
-              fontSize: '14px',
-              textWrap: 'nowrap',
             }}
             onClick={() => {
               const newQuaySelectionStates = {
@@ -87,7 +77,7 @@ const QuayMarker = ({
           </Button>
           {selectedQuay && stopPlace.quays.length > 1 ? (
             <Button
-              style={{ fontSize: '14px', textWrap: 'nowrap' }}
+              className={'popup-button'}
               onClick={() =>
                 hideNonSelectedQuaysCallback(!hideNonSelectedQuaysState)
               }
@@ -102,7 +92,7 @@ const QuayMarker = ({
           )}
           {!selectedQuay && stopPlace.quays.length > 1 ? (
             <Button
-              style={{ fontSize: '14px', textWrap: 'nowrap' }}
+              className={'popup-button'}
               onClick={() => showQuaysCallback(false)}
               width="auto"
               variant="primary"

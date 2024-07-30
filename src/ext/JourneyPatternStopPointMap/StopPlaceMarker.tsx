@@ -2,7 +2,7 @@ import { StopPlace } from '../../api';
 import { Button } from '@entur/button';
 import { useQuays } from '../../components/StopPointsEditor/Generic/QuaysContext';
 import { getMarkerIcon } from './markers';
-import { Marker, Popup, Tooltip } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
@@ -25,35 +25,28 @@ const StopPlaceMarker = ({
       ]}
     >
       <Popup>
-        <div
-          style={{
-            fontWeight: 600,
-            color: '#1777F8',
-            fontSize: '16px',
-            textWrap: 'nowrap',
-          }}
-        >
-          {stopPlace.name.value}
-        </div>
-        <div style={{ fontWeight: 600, paddingBottom: '0.25rem' }}>
-          {stopPlace.id}
-        </div>
-        <div>{stopPlace.transportMode}</div>
-        <div style={{ paddingBottom: '0.5rem' }}>{stopPlace.stopPlaceType}</div>
+        <section>
+          <div className={'popup-title'}>{stopPlace.name.value}</div>
+          <div className={'popup-id'}>{stopPlace.id}</div>
+        </section>
+
+        <section>
+          <div>{stopPlace.transportMode}</div>
+          <div>{stopPlace.stopPlaceType}</div>
+        </section>
+
         {stopPlace.quays.length > 1 ? (
-          <div style={{ paddingBottom: '0.5rem' }}>
-            {stopPlace.quays.length} quays
-          </div>
+          <section>{stopPlace.quays.length} quays</section>
         ) : (
-          <div style={{ paddingBottom: '0.5rem' }}>
+          <section>
             <div>1 quay:</div>
-            <div style={{ fontWeight: 600 }}>{stopPlace.quays[0].id}</div>
-          </div>
+            <div className={'popup-id'}>{stopPlace.quays[0].id}</div>
+          </section>
         )}
 
         <Button
-          style={{ fontSize: '14px', textWrap: 'nowrap' }}
-          onClick={(event) => {
+          className={'popup-button'}
+          onClick={() => {
             if (stopPlace.quays?.length === 1) {
               const newQuaySelectionStates = {
                 ...quaySelectionStates,
@@ -68,10 +61,9 @@ const StopPlaceMarker = ({
           variant="primary"
           size="small"
         >
-          {stopPlace.quays?.length > 1 ? 'Show quays' : 'Select quay'}
+          {stopPlace.quays?.length > 1 ? 'Show quays' : 'Add to route'}
         </Button>
       </Popup>
-      <Tooltip>Click to view quays or select one</Tooltip>
     </Marker>
   );
 };

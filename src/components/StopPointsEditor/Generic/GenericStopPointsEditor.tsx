@@ -8,7 +8,7 @@ import { GenericStopPointEditor } from './GenericStopPointEditor';
 import { JourneyPatternStopPointMap } from '../../../ext/JourneyPatternStopPointMap/JourneyPatternStopPointMap';
 import SandboxFeature from '../../../ext/SandboxFeature';
 import { useConfig } from '../../../config/ConfigContext';
-import { quays, QuaysContext } from './QuaysContext';
+import { QuaysContext } from './QuaysContext';
 import { useState } from 'react';
 
 export const GenericStopPointsEditor = ({
@@ -29,7 +29,7 @@ export const GenericStopPointsEditor = ({
       <Heading3>{formatMessage({ id: 'editorStopPoints' })}</Heading3>
       <Paragraph>{formatMessage({ id: 'stopPointsInfoFixed' })}</Paragraph>
       <QuaysContext.Provider
-        value={{ quays, quaySelectionStates, setQuaySelectionStates }}
+        value={{ quaySelectionStates, setQuaySelectionStates }}
       >
         <div className={'stop-point-editor-container'}>
           <div
@@ -52,7 +52,6 @@ export const GenericStopPointsEditor = ({
               />
             ))}
           </div>
-
           <SandboxFeature feature={'JourneyPatternStopPointMap'} />
         </div>
       </QuaysContext.Provider>

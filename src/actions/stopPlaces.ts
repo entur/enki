@@ -2,7 +2,6 @@ import { AppThunk, sentryCaptureException } from '../store/store';
 import { StopPlace, UttuQuery } from '../api';
 import { getStopPlacesQuery } from '../api/uttu/queries';
 import { RECEIVE_STOP_PLACES } from './constants';
-import { receiveOrganisations } from './organisations';
 
 const receiveStopPlacesActionCreator = (stopPlaces: StopPlace[]) => ({
   type: RECEIVE_STOP_PLACES,
@@ -23,7 +22,6 @@ export const getStopPlaces = (): AppThunk => async (dispatch, getState) => {
       token,
     );
     dispatch(receiveStopPlacesActionCreator(data.stopPlaces));
-    dispatch(receiveOrganisations([]));
   } catch (e) {
     sentryCaptureException(e);
   }

@@ -1,17 +1,27 @@
-.cluster-icon {
-  height: 3rem;
-  width: 3rem;
-  border-radius: 50%;
-  border-color: black;
-  color: white;
-  font-weight: 800;
-  font-size: 1.25rem;
-  transform: translate(-25%, -25%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .leaflet-popup-content {
   width: fit-content !important;
+}
+
+.leaflet-popup-content section {
+  padding-bottom: 0.5rem;
+}
+
+.popup-title {
+  font-weight: 600;
+  color: #1777f8;
+  font-size: 16px;
+  text-wrap: nowrap;
+}
+
+.popup-id {
+  font-weight: 600;
+}
+
+.popup-button-panel {
+  display: flex;
+}
+
+.popup-button {
+  font-size: 14px;
+  text-wrap: nowrap;
 }

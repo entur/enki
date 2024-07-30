@@ -33,7 +33,7 @@ L.Icon.Default.mergeOptions({
 const App = () => {
   const dispatch = useDispatch<any>();
   const auth = useAuth();
-  const { uttuApiUrl } = useConfig();
+  const { uttuApiUrl, sandboxFeatures } = useConfig();
 
   const userContext = useAppSelector((state) => state.userContext);
 
@@ -50,10 +50,10 @@ const App = () => {
   }, [dispatch, userContext.activeProviderCode]);
 
   useEffect(() => {
-    if (auth.isAuthenticated) {
+    if (auth.isAuthenticated && sandboxFeatures?.JourneyPatternStopPointMap) {
       dispatch(getStopPlaces());
     }
-  }, [dispatch, auth.isAuthenticated]);
+  }, [dispatch, auth.isAuthenticated, sandboxFeatures]);
 
   const { formatMessage } = useIntl();
 

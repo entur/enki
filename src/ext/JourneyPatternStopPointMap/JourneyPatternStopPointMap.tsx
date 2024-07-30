@@ -1,28 +1,40 @@
 import './styles.scss';
 import FormMap from '../../components/FormMap';
-import L from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useQuays } from '../../components/StopPointsEditor/Generic/QuaysContext';
 import { useAppSelector } from '../../store/hooks';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import StopPlaceMarker from './StopPlaceMarker';
 import QuayMarker from './QuayMarker';
-import { StopPlace } from '../../api';
-
-/*let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow
-});
-L.Marker.prototype.options.icon = DefaultIcon;*/
 
 export const JourneyPatternStopPointMap = () => {
-  const { quaySelectionStates, setQuaySelectionStates } = useQuays();
+  const { quaySelectionStates } = useQuays();
   const stopPlaces = useAppSelector((state) => state.stopPlaces);
   const [showQuaysState, setShowQuaysState] = useState({});
   const [hideNonSelectedQuaysState, setHideNonSelectedQuaysState] = useState(
     {},
+  );
+
+  const showQuaysCallback = useCallback(
+    (showAll: boolean, stopPlaceId: string) => {
+      const newShowQuaysState = {
+        ...showQuaysState,
+      };
+      newShowQuaysState[stopPlaceId] = showAll;
+      setShowQuaysState(newShowQuaysState);
+    },
+    [setShowQuaysState],
+  );
+
+  const hideNonSelectedQuaysCallback = useCallback(
+    (hideNonSelected: boolean, stopPlaceId: string) => {
+      const newHideNonSelectedQuaysState = {
+        ...hideNonSelectedQuaysState,
+      };
+      newHideNonSelectedQuaysState[stopPlaceId] = hideNonSelected;
+      setHideNonSelectedQuaysState(newHideNonSelectedQuaysState);
+    },
+    [setHideNonSelectedQuaysState],
   );
 
   return (
@@ -48,20 +60,12 @@ export const JourneyPatternStopPointMap = () => {
                       hideNonSelectedQuaysState[stopPlace.id]
                     }
                     showQuaysCallback={(showAll) => {
-                      const newShowQuaysState = {
-                        ...showQuaysState,
-                      };
-                      newShowQuaysState[stopPlace.id] = showAll;
-                      setShowQuaysState(newShowQuaysState);
+                      showQuaysCallback(showAll, stopPlace.id);
                     }}
                     hideNonSelectedQuaysCallback={(hideNonSelected) => {
-                      const newHideNonSelectedQuaysState = {
-                        ...hideNonSelectedQuaysState,
-                      };
-                      newHideNonSelectedQuaysState[stopPlace.id] =
-                        hideNonSelected;
-                      setHideNonSelectedQuaysState(
-                        newHideNonSelectedQuaysState,
+                      hideNonSelectedQuaysCallback(
+                        hideNonSelected,
+                        stopPlace.id,
                       );
                     }}
                   />
@@ -75,11 +79,7 @@ export const JourneyPatternStopPointMap = () => {
               stopPlace={stopPlace}
               key={stopPlace.id}
               showQuaysCallback={() => {
-                const newShowQuaysState = {
-                  ...showQuaysState,
-                };
-                newShowQuaysState[stopPlace.id] = true;
-                setShowQuaysState(newShowQuaysState);
+                showQuaysCallback(true, stopPlace.id);
               }}
             />
           );
