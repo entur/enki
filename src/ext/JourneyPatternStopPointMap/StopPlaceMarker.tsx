@@ -1,28 +1,29 @@
 import { StopPlace } from '../../api';
 import { Button } from '@entur/button';
-import { useQuays } from '../../components/StopPointsEditor/Generic/QuaysContext';
 import { getMarkerIcon } from './markers';
 import { Marker, Popup } from 'react-leaflet';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
   showQuaysCallback: () => void;
+  addStopPointCallback: (quayRef: string) => void;
 }
 
 const StopPlaceMarker = ({
   stopPlace,
   showQuaysCallback,
+  addStopPointCallback,
 }: StopPlaceMarkerProps) => {
-  const { quaySelectionStates, setQuaySelectionStates } = useQuays();
+  const stopPlaceLocation =
+    stopPlace.centroid && stopPlace.quays.length > 1
+      ? stopPlace.centroid.location
+      : stopPlace.quays[0].centroid.location;
 
   return (
     <Marker
-      key={stopPlace.id}
+      key={'stop-place-marker-' + stopPlace.id}
       icon={getMarkerIcon(stopPlace.transportMode, true, false)}
-      position={[
-        stopPlace.quays[0].centroid.location.latitude,
-        stopPlace.quays[0].centroid.location.longitude,
-      ]}
+      position={[stopPlaceLocation.latitude, stopPlaceLocation.longitude]}
     >
       <Popup>
         <section>
@@ -32,7 +33,6 @@ const StopPlaceMarker = ({
 
         <section>
           <div>{stopPlace.transportMode}</div>
-          <div>{stopPlace.stopPlaceType}</div>
         </section>
 
         {stopPlace.quays.length > 1 ? (
@@ -48,13 +48,9 @@ const StopPlaceMarker = ({
           className={'popup-button'}
           onClick={() => {
             if (stopPlace.quays?.length === 1) {
-              const newQuaySelectionStates = {
-                ...quaySelectionStates,
-              };
-              newQuaySelectionStates[stopPlace.quays[0].id] = true;
-              setQuaySelectionStates(newQuaySelectionStates);
+              addStopPointCallback(stopPlace.quays[0].id);
             }
-            // If user selected a single quay, we also want to enter the "show quays" mode:
+            // When user selected a single quay, we still want to enter the "show quays" mode:
             showQuaysCallback();
           }}
           width="auto"

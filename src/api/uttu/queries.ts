@@ -557,14 +557,19 @@ export const STOP_PLACE_BY_QUAY_REF_QUERY = gql`
 `;
 
 export const getStopPlacesQuery = `
-  query StopPlacesQuery {
-    stopPlaces {
+  query StopPlacesQuery($transportMode:TransportModeEnumeration) {
+    stopPlaces(transportMode: $transportMode) {
       id
       name {
         value
       }
-      stopPlaceType
       transportMode
+      centroid {
+          location {
+            longitude
+            latitude
+          }
+        }
       quays {
         id
         name {

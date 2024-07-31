@@ -18,6 +18,7 @@ type Props = {
   onDelete?: () => void;
   spoilPristine: boolean;
   flexibleLineType?: FlexibleLineType;
+  transportMode?: string;
 };
 
 const JourneyPatternEditor = ({
@@ -26,6 +27,7 @@ const JourneyPatternEditor = ({
   onDelete,
   spoilPristine,
   flexibleLineType,
+  transportMode,
 }: Props) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
 
@@ -65,6 +67,27 @@ const JourneyPatternEditor = ({
       serviceJourneys: newServiceJourneys,
     });
   }, [journeyPattern, onSave, serviceJourneys]);
+
+  const addStopPointFromMap = useCallback(
+    (quayRef: string) => {
+      let newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
+        ...serviceJourney,
+        passingTimes: [...serviceJourney.passingTimes, {}],
+      }));
+
+      let newPointsInSequence = [
+        ...journeyPattern.pointsInSequence,
+        { quayRef },
+      ];
+
+      onSave({
+        ...journeyPattern,
+        pointsInSequence: newPointsInSequence,
+        serviceJourneys: newServiceJourneys,
+      });
+    },
+    [journeyPattern, onSave, serviceJourneys],
+  );
 
   const updateStopPoint = useCallback(
     (pointIndex: number, stopPlace: StopPoint) =>
@@ -109,7 +132,9 @@ const JourneyPatternEditor = ({
           updateStopPoint={updateStopPoint}
           deleteStopPoint={deleteStopPoint}
           addStopPoint={addStopPoint}
+          addStopPointFromMap={addStopPointFromMap}
           onPointsInSequenceChange={onPointsInSequenceChange}
+          transportMode={transportMode}
         />
       </div>
       {onDelete && (

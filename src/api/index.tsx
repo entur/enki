@@ -23,9 +23,11 @@ export type Quay = {
   id: string;
   publicCode: null | string;
   name: null | { value: string };
-  centroid?: {
-    location: Location;
-  };
+  centroid?: Centroid;
+};
+
+export type Centroid = {
+  location: Location;
 };
 
 export type Location = {
@@ -36,8 +38,8 @@ export type Location = {
 export type StopPlace = {
   id: string;
   name: { value: string };
-  stopPlaceType?: string;
   transportMode?: string;
+  centroid?: Centroid;
   quays: Quay[];
   children: StopPlace[];
 };

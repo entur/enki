@@ -1,36 +1,35 @@
 import { Quay, StopPlace } from '../../api';
-import { useQuays } from '../../components/StopPointsEditor/Generic/QuaysContext';
 import { getMarkerIcon } from './markers';
 import { Marker, Popup } from 'react-leaflet';
 import { Button } from '@entur/button';
 
 interface QuayMarkerProps {
-  selectedQuay: Quay | undefined;
   quay: Quay;
   stopPlace: StopPlace;
-  showQuaysCallback: (showAll: boolean) => void;
-  hideNonSelectedQuaysCallback: (hideNonSelected: boolean) => void;
+  stopPointIndex: number | undefined;
+  hasSelectedQuay: boolean;
   hideNonSelectedQuaysState: boolean;
+  hideNonSelectedQuaysCallback: (hideNonSelected: boolean) => void;
+  showQuaysCallback: (showAll: boolean) => void;
+  addStopPointCallback: (quayId: string) => void;
+  deleteStopPointCallback: (index: number) => void;
 }
 
 const QuayMarker = ({
   quay,
+  stopPointIndex,
   stopPlace,
-  selectedQuay,
+  hasSelectedQuay,
   showQuaysCallback,
   hideNonSelectedQuaysCallback,
   hideNonSelectedQuaysState,
+  addStopPointCallback,
+  deleteStopPointCallback,
 }: QuayMarkerProps) => {
-  const { quaySelectionStates, setQuaySelectionStates } = useQuays();
-
   return (
     <Marker
-      key={quay.id}
-      icon={getMarkerIcon(
-        stopPlace.transportMode,
-        false,
-        quaySelectionStates[quay.id],
-      )}
+      key={'quay-marker-' + quay.id}
+      icon={getMarkerIcon(stopPlace.transportMode, false, !!stopPointIndex)}
       position={[
         quay.centroid?.location.latitude,
         quay.centroid?.location.longitude,
@@ -56,26 +55,26 @@ const QuayMarker = ({
               marginRight: '0.5rem',
             }}
             onClick={() => {
-              const newQuaySelectionStates = {
-                ...quaySelectionStates,
-              };
-              newQuaySelectionStates[quay.id] = !quaySelectionStates[quay.id];
-              if (selectedQuay && selectedQuay.id !== quay.id) {
-                newQuaySelectionStates[selectedQuay.id] = false;
-              }
-              if (quaySelectionStates[quay.id] && hideNonSelectedQuaysState) {
+              // If the quay got unselected and hideNonSelectedQuaysState mode was on, then switching to a stop place view:
+              if (stopPointIndex && hideNonSelectedQuaysState) {
                 showQuaysCallback(false);
                 hideNonSelectedQuaysCallback(false);
               }
-              setQuaySelectionStates(newQuaySelectionStates);
+
+              // Callback to update the GenericStopPointsEditor form state:
+              if (stopPointIndex) {
+                deleteStopPointCallback(stopPointIndex);
+              } else {
+                addStopPointCallback(quay.id);
+              }
             }}
             width="auto"
             variant="primary"
             size="small"
           >
-            {quaySelectionStates[quay.id] ? 'Remove from' : 'Add to'} route
+            {stopPointIndex ? 'Remove from' : 'Add to'} route
           </Button>
-          {selectedQuay && stopPlace.quays.length > 1 ? (
+          {hasSelectedQuay && stopPlace.quays.length > 1 ? (
             <Button
               className={'popup-button'}
               onClick={() =>
@@ -85,12 +84,15 @@ const QuayMarker = ({
               variant="primary"
               size="small"
             >
-              {hideNonSelectedQuaysState ? 'Show other' : 'Hide other'} quays
+              {hideNonSelectedQuaysState
+                ? 'Show non-selected'
+                : 'Hide non-selected'}{' '}
+              quays
             </Button>
           ) : (
             ''
           )}
-          {!selectedQuay && stopPlace.quays.length > 1 ? (
+          {!hasSelectedQuay && stopPlace.quays.length > 1 ? (
             <Button
               className={'popup-button'}
               onClick={() => showQuaysCallback(false)}

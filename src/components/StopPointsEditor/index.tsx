@@ -12,8 +12,9 @@ export type StopPointsEditorProps = {
   spoilPristine: boolean;
   updateStopPoint: (index: number, stopPoint: StopPoint) => void;
   deleteStopPoint: (index: number) => void;
-  addStopPoint: () => void;
+  addStopPoint: (quayRef?: string) => void;
   onPointsInSequenceChange: (pointsInSequence: StopPoint[]) => void;
+  transportMode?: string;
 };
 
 export type StopPointsEditor =

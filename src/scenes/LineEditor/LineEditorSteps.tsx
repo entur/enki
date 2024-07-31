@@ -1,6 +1,6 @@
 import General from 'components/GeneralLineEditor';
 import JourneyPatternEditor from 'components/JourneyPatternEditor';
-import JourneyPattern from 'components/JourneyPatterns';
+import JourneyPatterns from 'components/JourneyPatterns';
 import ServiceJourneyEditor from 'components/ServiceJourneyEditor';
 import ServiceJourneys from 'components/ServiceJourneys';
 import Line from 'model/Line';
@@ -35,14 +35,14 @@ const LineEditorSteps = (props: Props) => {
 
       {props.activeStep === 1 && (
         <section>
-          <JourneyPattern
+          <JourneyPatterns
             journeyPatterns={props.line.journeyPatterns ?? []}
-            onChange={(jps) =>
+            onChange={(jps) => {
               props.changeLine({
                 ...props.line,
                 journeyPatterns: jps,
-              })
-            }
+              });
+            }}
           >
             {(journeyPattern, onSave, onDelete) => (
               <JourneyPatternEditor
@@ -50,9 +50,10 @@ const LineEditorSteps = (props: Props) => {
                 onSave={onSave}
                 onDelete={onDelete}
                 spoilPristine={props.spoilPristine}
+                transportMode={props.line.transportMode}
               />
             )}
-          </JourneyPattern>
+          </JourneyPatterns>
         </section>
       )}
 

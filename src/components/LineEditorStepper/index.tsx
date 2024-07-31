@@ -138,6 +138,20 @@ export default ({
           cancelText={formatMessage({ id: 'redirectNo' })}
         />
       )}
+      {authoritiesMissing && (
+        <ConfirmDialog
+          className="authority-missing-modal"
+          isOpen={true}
+          title={formatMessage({ id: 'networkAuthorityMissing' })}
+          message={formatMessage({ id: 'networkAuthorityMissingDetails' })}
+          onDismiss={() => navigate('/')}
+          buttons={[
+            <PrimaryButton key="0" onClick={() => navigate('/')}>
+              {formatMessage({ id: 'homePage' })}
+            </PrimaryButton>,
+          ]}
+        />
+      )}
     </>
   );
 };

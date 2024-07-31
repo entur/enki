@@ -8,21 +8,23 @@ const receiveStopPlacesActionCreator = (stopPlaces: StopPlace[]) => ({
   stopPlaces,
 });
 
-export const getStopPlaces = (): AppThunk => async (dispatch, getState) => {
-  const activeProvider = getState().userContext.activeProviderCode ?? '';
-  const uttuApiUrl = getState().config.uttuApiUrl;
-  const token = await getState().auth.getAccessToken();
+export const getStopPlaces =
+  (transportMode?: string): AppThunk =>
+  async (dispatch, getState) => {
+    const activeProvider = getState().userContext.activeProviderCode ?? '';
+    const uttuApiUrl = getState().config.uttuApiUrl;
+    const token = await getState().auth.getAccessToken();
 
-  try {
-    const data = await UttuQuery(
-      uttuApiUrl,
-      activeProvider,
-      getStopPlacesQuery,
-      {},
-      token,
-    );
-    dispatch(receiveStopPlacesActionCreator(data.stopPlaces));
-  } catch (e) {
-    sentryCaptureException(e);
-  }
-};
+    try {
+      const data = await UttuQuery(
+        uttuApiUrl,
+        activeProvider,
+        getStopPlacesQuery,
+        { transportMode },
+        token,
+      );
+      dispatch(receiveStopPlacesActionCreator(data.stopPlaces));
+    } catch (e) {
+      sentryCaptureException(e);
+    }
+  };
