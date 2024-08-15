@@ -2,6 +2,7 @@ import { Quay, StopPlace } from '../../api';
 import { getMarkerIcon } from './markers';
 import { Marker, Popup } from 'react-leaflet';
 import { Button } from '@entur/button';
+import { useIntl } from 'react-intl';
 
 interface QuayMarkerProps {
   quay: Quay;
@@ -26,6 +27,8 @@ const QuayMarker = ({
   addStopPointCallback,
   deleteStopPointCallback,
 }: QuayMarkerProps) => {
+  const intl = useIntl();
+  const { formatMessage } = intl;
   return (
     <Marker
       key={'quay-marker-' + quay.id}
@@ -37,16 +40,20 @@ const QuayMarker = ({
     >
       <Popup>
         <section>
-          <div className={'popup-title'}>{stopPlace.name.value}</div>
+          <h4 className={'popup-title'}>{stopPlace.name.value}</h4>
           {quay.name?.value && quay.name?.value !== stopPlace.name.value ? (
-            <div className={'popup-title'}>Quay {quay.name?.value}</div>
+            <h4 className={'popup-title'}>
+              {formatMessage({ id: 'quayTitle' }, { name: quay.name?.value })}
+            </h4>
           ) : (
             ''
           )}
           <div className={'popup-id'}>{quay.id}</div>
         </section>
 
-        <section>{stopPlace.transportMode}</section>
+        <section>
+          {formatMessage({ id: stopPlace.transportMode?.toLowerCase() })}
+        </section>
 
         <div className={'popup-button-panel'}>
           <Button
@@ -72,7 +79,9 @@ const QuayMarker = ({
             variant="primary"
             size="small"
           >
-            {stopPointIndex ? 'Remove from' : 'Add to'} route
+            {stopPointIndex
+              ? formatMessage({ id: 'removeFromRoute' })
+              : formatMessage({ id: 'addToRoute' })}
           </Button>
           {hasSelectedQuay && stopPlace.quays.length > 1 ? (
             <Button
@@ -85,9 +94,8 @@ const QuayMarker = ({
               size="small"
             >
               {hideNonSelectedQuaysState
-                ? 'Show non-selected'
-                : 'Hide non-selected'}{' '}
-              quays
+                ? formatMessage({ id: 'showNonSelectedQuays' })
+                : formatMessage({ id: 'hideNonSelectedQuays' })}
             </Button>
           ) : (
             ''
@@ -100,7 +108,7 @@ const QuayMarker = ({
               variant="primary"
               size="small"
             >
-              Hide all quays
+              {formatMessage({ id: 'hideQuays' })}
             </Button>
           ) : (
             ''

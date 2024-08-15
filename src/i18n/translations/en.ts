@@ -631,4 +631,14 @@ export const messages: MessagesKey = {
     'Your Nplan installation needs at least one provider',
   landingPageNotLoggedIn: 'Not logged in',
   landingPageLoginButtonText: 'Log in',
+  // Journey patterns map:
+  showQuays: 'Show quays',
+  hideQuays: 'Hide quays',
+  oneQuay: '1 quay',
+  numberOfQuays: '{count} quays',
+  addToRoute: 'Add to route',
+  removeFromRoute: 'Remove from route',
+  quayTitle: 'Quay {name}',
+  showNonSelectedQuays: 'Show non-selected quays',
+  hideNonSelectedQuays: 'Hide non-selected quays',
 };

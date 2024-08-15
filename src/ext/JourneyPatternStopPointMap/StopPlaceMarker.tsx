@@ -2,6 +2,7 @@ import { StopPlace } from '../../api';
 import { Button } from '@entur/button';
 import { getMarkerIcon } from './markers';
 import { Marker, Popup } from 'react-leaflet';
+import { useIntl } from 'react-intl';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
@@ -14,6 +15,8 @@ const StopPlaceMarker = ({
   showQuaysCallback,
   addStopPointCallback,
 }: StopPlaceMarkerProps) => {
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const stopPlaceLocation =
     stopPlace.centroid && stopPlace.quays.length > 1
       ? stopPlace.centroid.location
@@ -27,19 +30,24 @@ const StopPlaceMarker = ({
     >
       <Popup>
         <section>
-          <div className={'popup-title'}>{stopPlace.name.value}</div>
+          <h4 className={'popup-title'}>{stopPlace.name.value}</h4>
           <div className={'popup-id'}>{stopPlace.id}</div>
         </section>
 
         <section>
-          <div>{stopPlace.transportMode}</div>
+          {formatMessage({ id: stopPlace.transportMode?.toLowerCase() })}
         </section>
 
         {stopPlace.quays.length > 1 ? (
-          <section>{stopPlace.quays.length} quays</section>
+          <section>
+            {formatMessage(
+              { id: 'numberOfQuays' },
+              { count: stopPlace.quays.length },
+            )}
+          </section>
         ) : (
           <section>
-            <div>1 quay:</div>
+            <div>{formatMessage({ id: 'oneQuay' })}</div>
             <div className={'popup-id'}>{stopPlace.quays[0].id}</div>
           </section>
         )}
@@ -57,7 +65,9 @@ const StopPlaceMarker = ({
           variant="primary"
           size="small"
         >
-          {stopPlace.quays?.length > 1 ? 'Show quays' : 'Add to route'}
+          {stopPlace.quays?.length > 1
+            ? formatMessage({ id: 'showQuays' })
+            : formatMessage({ id: 'addToRoute' })}
         </Button>
       </Popup>
     </Marker>

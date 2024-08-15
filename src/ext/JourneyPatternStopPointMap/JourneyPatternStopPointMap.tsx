@@ -71,7 +71,7 @@ export const JourneyPatternStopPointMap = ({
       newQuayIndexRecord[point.quayRef] = stopPointIndex++;
       const stopPlaceId = quayStopPlaceIndex[point.quayRef];
 
-      // Let's get into show quays mode, so that a quay entered through the form get visible:
+      // Let's get into show quays mode, so that a quay entered through the form gets visible:
       newShowQuaysState[stopPlaceId] = true;
 
       if (quayLocationsIndex[point.quayRef]?.location) {
