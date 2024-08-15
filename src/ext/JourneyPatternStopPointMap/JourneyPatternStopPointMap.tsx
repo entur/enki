@@ -115,57 +115,54 @@ export const JourneyPatternStopPointMap = ({
     <FormMap>
       <MarkerClusterGroup chunkedLoading disableClusteringAtZoom={13}>
         <Polyline positions={mapState.stopPointLocationSequence} />
-        {mapState.quayStopPointIndexRecord !== null &&
-          stopPlaces?.map((stopPlace) => {
-            const selectedQuayIds: string[] = stopPlace.quays
-              .filter((quay) => mapState.quayStopPointIndexRecord[quay.id])
-              .map((quay) => quay.id);
-            return mapState.showQuaysState[stopPlace.id] ? (
-              <>
-                {stopPlace.quays.map((quay) => {
-                  const isSelectedQuay = selectedQuayIds.includes(quay.id);
-                  const hasSelectedQuay = !!selectedQuayIds?.length;
-                  return !mapState.hideNonSelectedQuaysState[stopPlace.id] ||
-                    isSelectedQuay ? (
-                    <QuayMarker
-                      key={quay.id}
-                      quay={quay}
-                      stopPointIndex={
-                        mapState.quayStopPointIndexRecord[quay.id]
-                      }
-                      stopPlace={stopPlace}
-                      hasSelectedQuay={hasSelectedQuay}
-                      hideNonSelectedQuaysState={
-                        mapState.hideNonSelectedQuaysState[stopPlace.id]
-                      }
-                      showQuaysCallback={(showAll) => {
-                        showQuaysCallback(showAll, stopPlace.id);
-                      }}
-                      hideNonSelectedQuaysCallback={(hideNonSelected) => {
-                        hideNonSelectedQuaysCallback(
-                          hideNonSelected,
-                          stopPlace.id,
-                        );
-                      }}
-                      addStopPointCallback={addStopPoint}
-                      deleteStopPointCallback={deleteStopPoint}
-                    />
-                  ) : (
-                    ''
-                  );
-                })}
-              </>
-            ) : (
-              <StopPlaceMarker
-                key={stopPlace.id}
-                stopPlace={stopPlace}
-                showQuaysCallback={() => {
-                  showQuaysCallback(true, stopPlace.id);
-                }}
-                addStopPointCallback={addStopPoint}
-              />
-            );
-          })}
+        {stopPlaces?.map((stopPlace) => {
+          const selectedQuayIds: string[] = stopPlace.quays
+            .filter((quay) => mapState.quayStopPointIndexRecord[quay.id])
+            .map((quay) => quay.id);
+          return mapState.showQuaysState[stopPlace.id] ? (
+            <>
+              {stopPlace.quays.map((quay) => {
+                const isSelectedQuay = selectedQuayIds.includes(quay.id);
+                const hasSelectedQuay = !!selectedQuayIds?.length;
+                return !mapState.hideNonSelectedQuaysState[stopPlace.id] ||
+                  isSelectedQuay ? (
+                  <QuayMarker
+                    key={quay.id}
+                    quay={quay}
+                    stopPointIndex={mapState.quayStopPointIndexRecord[quay.id]}
+                    stopPlace={stopPlace}
+                    hasSelectedQuay={hasSelectedQuay}
+                    hideNonSelectedQuaysState={
+                      mapState.hideNonSelectedQuaysState[stopPlace.id]
+                    }
+                    showQuaysCallback={(showAll) => {
+                      showQuaysCallback(showAll, stopPlace.id);
+                    }}
+                    hideNonSelectedQuaysCallback={(hideNonSelected) => {
+                      hideNonSelectedQuaysCallback(
+                        hideNonSelected,
+                        stopPlace.id,
+                      );
+                    }}
+                    addStopPointCallback={addStopPoint}
+                    deleteStopPointCallback={deleteStopPoint}
+                  />
+                ) : (
+                  ''
+                );
+              })}
+            </>
+          ) : (
+            <StopPlaceMarker
+              key={stopPlace.id}
+              stopPlace={stopPlace}
+              showQuaysCallback={() => {
+                showQuaysCallback(true, stopPlace.id);
+              }}
+              addStopPointCallback={addStopPoint}
+            />
+          );
+        })}
       </MarkerClusterGroup>
     </FormMap>
   );

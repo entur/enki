@@ -12,7 +12,8 @@ export type StopPointsEditorProps = {
   spoilPristine: boolean;
   updateStopPoint: (index: number, stopPoint: StopPoint) => void;
   deleteStopPoint: (index: number) => void;
-  addStopPoint: (quayRef?: string) => void;
+  addStopPoint: () => void;
+  addStopPointFromMap?: (quayRef: string) => void;
   onPointsInSequenceChange: (pointsInSequence: StopPoint[]) => void;
   transportMode?: string;
 };
