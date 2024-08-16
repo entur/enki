@@ -7,7 +7,7 @@ export type StopPlacesState = {
   stopPlaces: StopPlace[];
   quayLocationsIndex: Record<string, Centroid>;
   quayStopPlaceIndex: Record<string, string>;
-};
+} | null;
 
 const stopPlacesReducer = (
   state: StopPlacesState = null,

@@ -23,7 +23,7 @@ export type Quay = {
   id: string;
   publicCode: null | string;
   name: null | { value: string };
-  centroid?: Centroid;
+  centroid: Centroid;
 };
 
 export type Centroid = {

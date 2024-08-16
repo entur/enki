@@ -10,6 +10,7 @@ import { Polyline } from 'react-leaflet';
 import { getStopPlaces } from '../../actions/stopPlaces';
 import { useDispatch } from 'react-redux';
 import { StopPointLocation } from '../../reducers/stopPlaces';
+import { Quay, StopPlace } from '../../api';
 
 interface MapState {
   quayStopPointIndexRecord: Record<string, number>;
@@ -56,9 +57,9 @@ export const JourneyPatternStopPointMap = ({
 
   useEffect(() => {
     let stopPointIndex = 0;
-    const newQuayIndexRecord = {};
-    const newShowQuaysState = {};
-    const newStopPointLocations = [];
+    const newQuayIndexRecord: Record<string, number> = {};
+    const newShowQuaysState: Record<string, boolean> = {};
+    const newStopPointLocations: StopPointLocation[] = [];
     if (!quayStopPlaceIndex || !quayLocationsIndex) {
       return;
     }
@@ -115,13 +116,13 @@ export const JourneyPatternStopPointMap = ({
     <FormMap>
       <MarkerClusterGroup chunkedLoading disableClusteringAtZoom={13}>
         <Polyline positions={mapState.stopPointLocationSequence} />
-        {stopPlaces?.map((stopPlace) => {
+        {stopPlaces?.map((stopPlace: StopPlace) => {
           const selectedQuayIds: string[] = stopPlace.quays
-            .filter((quay) => mapState.quayStopPointIndexRecord[quay.id])
-            .map((quay) => quay.id);
+            .filter((quay: Quay) => mapState.quayStopPointIndexRecord[quay.id])
+            .map((quay: Quay) => quay.id);
           return mapState.showQuaysState[stopPlace.id] ? (
             <>
-              {stopPlace.quays.map((quay) => {
+              {stopPlace.quays.map((quay: Quay) => {
                 const isSelectedQuay = selectedQuayIds.includes(quay.id);
                 const hasSelectedQuay = !!selectedQuayIds?.length;
                 return !mapState.hideNonSelectedQuaysState[stopPlace.id] ||

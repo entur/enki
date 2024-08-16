@@ -630,4 +630,14 @@ export const messages = {
     'Din Nplan-installasjon trenger minst en dataleverandør',
   landingPageNotLoggedIn: 'Ikke logget inn',
   landingPageLoginButtonText: 'Logg inn',
+  // Journey patterns map, TODO:
+  showQuays: 'Show quays',
+  hideQuays: 'Hide quays',
+  oneQuay: '1 quay',
+  numberOfQuays: '{count} quays',
+  addToRoute: 'Add to route',
+  removeFromRoute: 'Remove from route',
+  quayTitle: 'Quay {name}',
+  showNonSelectedQuays: 'Show non-selected quays',
+  hideNonSelectedQuays: 'Hide non-selected quays',
 };
