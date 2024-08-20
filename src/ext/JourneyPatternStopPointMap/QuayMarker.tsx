@@ -9,6 +9,7 @@ interface QuayMarkerProps {
   stopPlace: StopPlace;
   stopPointIndex: number | undefined;
   hasSelectedQuay: boolean;
+  hasNonSelectedQuays: boolean;
   hideNonSelectedQuaysState: boolean;
   hideNonSelectedQuaysCallback: (hideNonSelected: boolean) => void;
   showQuaysCallback: (showAll: boolean) => void;
@@ -21,6 +22,7 @@ const QuayMarker = ({
   stopPointIndex,
   stopPlace,
   hasSelectedQuay,
+  hasNonSelectedQuays,
   showQuaysCallback,
   hideNonSelectedQuaysCallback,
   hideNonSelectedQuaysState,
@@ -32,7 +34,11 @@ const QuayMarker = ({
   return (
     <Marker
       key={'quay-marker-' + quay.id}
-      icon={getMarkerIcon(stopPlace.transportMode, false, !!stopPointIndex)}
+      icon={getMarkerIcon(
+        stopPlace.transportMode,
+        false,
+        stopPointIndex !== undefined,
+      )}
       position={[
         quay.centroid?.location.latitude,
         quay.centroid?.location.longitude,
@@ -63,13 +69,13 @@ const QuayMarker = ({
             }}
             onClick={() => {
               // If the quay got unselected and hideNonSelectedQuaysState mode was on, then switching to a stop place view:
-              if (stopPointIndex && hideNonSelectedQuaysState) {
+              if (stopPointIndex !== undefined && hideNonSelectedQuaysState) {
                 showQuaysCallback(false);
                 hideNonSelectedQuaysCallback(false);
               }
 
               // Callback to update the GenericStopPointsEditor form state:
-              if (stopPointIndex) {
+              if (stopPointIndex !== undefined) {
                 deleteStopPointCallback(stopPointIndex);
               } else {
                 addStopPointCallback(quay.id);
@@ -79,11 +85,11 @@ const QuayMarker = ({
             variant="primary"
             size="small"
           >
-            {stopPointIndex
+            {stopPointIndex !== undefined
               ? formatMessage({ id: 'removeFromRoute' })
               : formatMessage({ id: 'addToRoute' })}
           </Button>
-          {hasSelectedQuay && stopPlace.quays.length > 1 ? (
+          {hasSelectedQuay && hasNonSelectedQuays ? (
             <Button
               className={'popup-button'}
               onClick={() =>

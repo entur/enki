@@ -3,9 +3,15 @@
   display: flex;
   position: relative;
   z-index: 1;
+  min-height: 65rem;
+  max-height: 78rem;
 
-  @media only screen and (min-width: 1600px) {
-    min-height: 65rem;
+  @media only screen and (max-width: 1950px) {
+    min-width: 61%;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    min-width: 25rem;
   }
 
   .map {

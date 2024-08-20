@@ -692,7 +692,8 @@ section .notices {
 }
 
 .stop-point-editor .stop-point .stop-point-element .stop-point-info > div {
-  margin-top: 3rem;
+  margin-top: 1.5rem !important;
+  margin-right: 16px;
 }
 
 // Flexible stop places:
@@ -708,34 +709,25 @@ section .notices {
   margin-top: 3rem;
 }
 
-@media only screen and (min-width: 1600px) {
-  .stop-point #delete-button {
-    margin-left: 2.25rem;
-  }
+.stop-point-editor .stop-point {
+  padding-bottom: 0.1rem;
+}
 
-  .stop-point-editor .stop-point .stop-point-element {
-    display: block;
-    margin-top: 1rem;
-  }
+.stop-point-editor .stop-point .stop-point-element .stop-point-info {
+  margin-left: 0;
+}
 
-  .stop-point-editor
-    .stop-point
-    .stop-point-element
-    .stop-point-info
-    > div
-    > .eds-feedback-text {
-    margin-left: 1.2rem;
-  }
+.stop-point-editor .stop-point .stop-point-element {
+  margin-top: 1rem;
+}
 
+@media only screen and (min-width: 1950px) {
   .stop-point-editor
     .stop-point
     .stop-point-element
     .stop-point-info
     .stop-point-info-item {
-    margin-left: 1.2rem;
-    margin-right: 0;
-    width: 170px;
-    min-width: 170px;
+    width: 230px;
   }
 }
 

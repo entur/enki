@@ -114,17 +114,23 @@ export const JourneyPatternStopPointMap = ({
 
   return (
     <FormMap>
-      <MarkerClusterGroup chunkedLoading disableClusteringAtZoom={13}>
+      <MarkerClusterGroup chunkedLoading disableClusteringAtZoom={12}>
         <Polyline positions={mapState.stopPointLocationSequence} />
         {stopPlaces?.map((stopPlace: StopPlace) => {
           const selectedQuayIds: string[] = stopPlace.quays
-            .filter((quay: Quay) => mapState.quayStopPointIndexRecord[quay.id])
+            .filter(
+              (quay: Quay) =>
+                mapState.quayStopPointIndexRecord[quay.id] !== undefined,
+            )
             .map((quay: Quay) => quay.id);
           return mapState.showQuaysState[stopPlace.id] ? (
             <>
               {stopPlace.quays.map((quay: Quay) => {
                 const isSelectedQuay = selectedQuayIds.includes(quay.id);
                 const hasSelectedQuay = !!selectedQuayIds?.length;
+                const hasNonSelectedQuays =
+                  selectedQuayIds.length < stopPlace.quays.length;
+
                 return !mapState.hideNonSelectedQuaysState[stopPlace.id] ||
                   isSelectedQuay ? (
                   <QuayMarker
@@ -133,6 +139,7 @@ export const JourneyPatternStopPointMap = ({
                     stopPointIndex={mapState.quayStopPointIndexRecord[quay.id]}
                     stopPlace={stopPlace}
                     hasSelectedQuay={hasSelectedQuay}
+                    hasNonSelectedQuays={hasNonSelectedQuays}
                     hideNonSelectedQuaysState={
                       mapState.hideNonSelectedQuaysState[stopPlace.id]
                     }
