@@ -52,23 +52,33 @@ const StopPlaceMarker = ({
           </section>
         )}
 
-        <Button
-          className={'popup-button'}
-          onClick={() => {
-            if (stopPlace.quays?.length === 1) {
+        {stopPlace.quays?.length > 1 ? (
+          <Button
+            className={'popup-button'}
+            onClick={() => {
+              showQuaysCallback();
+            }}
+            width="auto"
+            variant="primary"
+            size="small"
+          >
+            {formatMessage({ id: 'showQuays' })}
+          </Button>
+        ) : (
+          <Button
+            className={'popup-button'}
+            onClick={() => {
               addStopPointCallback(stopPlace.quays[0].id);
-            }
-            // When user selected a single quay, we still want to enter the "show quays" mode:
-            showQuaysCallback();
-          }}
-          width="auto"
-          variant="primary"
-          size="small"
-        >
-          {stopPlace.quays?.length > 1
-            ? formatMessage({ id: 'showQuays' })
-            : formatMessage({ id: 'addToRoute' })}
-        </Button>
+              // When user selected a single quay, we still want to enter the "show quays" mode:
+              showQuaysCallback();
+            }}
+            width="auto"
+            variant="primary"
+            size="small"
+          >
+            {formatMessage({ id: 'addToRoute' })}
+          </Button>
+        )}
       </Popup>
     </Marker>
   );

@@ -37,12 +37,12 @@ const LineEditorSteps = (props: Props) => {
         <section>
           <JourneyPatterns
             journeyPatterns={props.line.journeyPatterns ?? []}
-            onChange={(jps) => {
+            onChange={(jps) =>
               props.changeLine({
                 ...props.line,
                 journeyPatterns: jps,
-              });
-            }}
+              })
+            }
           >
             {(journeyPattern, onSave, onDelete) => (
               <JourneyPatternEditor
