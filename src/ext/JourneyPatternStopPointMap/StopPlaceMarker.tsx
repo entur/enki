@@ -3,6 +3,7 @@ import { Button } from '@entur/button';
 import { getMarkerIcon } from './markers';
 import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
+import { Heading5 } from '@entur/typography';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
@@ -30,7 +31,7 @@ const StopPlaceMarker = ({
     >
       <Popup>
         <section>
-          <h4 className={'popup-title'}>{stopPlace.name.value}</h4>
+          <Heading5 className={'popup-title'}>{stopPlace.name.value}</Heading5>
           <div className={'popup-id'}>{stopPlace.id}</div>
         </section>
 

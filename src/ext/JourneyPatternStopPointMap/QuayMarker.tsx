@@ -3,6 +3,7 @@ import { getMarkerIcon } from './markers';
 import { Marker, Popup } from 'react-leaflet';
 import { Button } from '@entur/button';
 import { useIntl } from 'react-intl';
+import { Heading5 } from '@entur/typography';
 
 interface QuayMarkerProps {
   quay: Quay;
@@ -46,14 +47,7 @@ const QuayMarker = ({
     >
       <Popup>
         <section>
-          <h4 className={'popup-title'}>{stopPlace.name.value}</h4>
-          {quay.name?.value && quay.name?.value !== stopPlace.name.value ? (
-            <h4 className={'popup-title'}>
-              {formatMessage({ id: 'quayTitle' }, { name: quay.name?.value })}
-            </h4>
-          ) : (
-            ''
-          )}
+          <Heading5 className={'popup-title'}>{stopPlace.name.value}</Heading5>
           <div className={'popup-id'}>{quay.id}</div>
         </section>
 

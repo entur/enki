@@ -28,3 +28,11 @@
 .leaflet-popup {
   padding-bottom: 26px;
 }
+
+.popup-title {
+  text-wrap: nowrap;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  // The color couldn't get picked otherwise...
+  color: #181c56;
+}
