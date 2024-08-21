@@ -33,7 +33,7 @@ const stopPlacesReducer = (
             accumulator[quay.id] = currentStopPlace.id;
           });
           return accumulator;
-        });
+        }, {});
 
       return {
         stopPlaces,

@@ -40,7 +40,7 @@ export const MixedFlexibleStopPointsEditor = ({
         ))}
       </div>
       <AddButton
-        onClick={addStopPoint}
+        onClick={() => addStopPoint()}
         buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
       />
     </section>

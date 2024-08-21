@@ -65,34 +65,16 @@ const JourneyPatternEditor = ({
     [journeyPattern, onSave, serviceJourneys],
   );
 
-  const addStopPoint = useCallback(() => {
-    const newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
-      ...serviceJourney,
-      passingTimes: [...serviceJourney.passingTimes, {}],
-    }));
-
-    onSave({
-      ...journeyPattern,
-      pointsInSequence: [...journeyPattern.pointsInSequence, {}],
-      serviceJourneys: newServiceJourneys,
-    });
-
-    if (sandboxFeatures?.JourneyPatternStopPointMap) {
-      // To avoid grey area on the map once the container gets bigger in the height:
-      window.dispatchEvent(new Event('resize'));
-    }
-  }, [journeyPattern, onSave, serviceJourneys]);
-
-  const addStopPointFromMap = useCallback(
-    (quayRef: string) => {
-      let newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
+  const addStopPoint = useCallback(
+    (quayRef?: string) => {
+      const newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
         ...serviceJourney,
         passingTimes: [...serviceJourney.passingTimes, {}],
       }));
 
       let newPointsInSequence = [
         ...journeyPattern.pointsInSequence,
-        { quayRef },
+        quayRef && quayRef ? { quayRef } : {},
       ];
 
       onSave({
@@ -100,6 +82,11 @@ const JourneyPatternEditor = ({
         pointsInSequence: newPointsInSequence,
         serviceJourneys: newServiceJourneys,
       });
+
+      if (sandboxFeatures?.JourneyPatternStopPointMap) {
+        // To avoid grey area on the map once the container gets bigger in the height:
+        window.dispatchEvent(new Event('resize'));
+      }
     },
     [journeyPattern, onSave, serviceJourneys],
   );
@@ -147,7 +134,6 @@ const JourneyPatternEditor = ({
           updateStopPoint={updateStopPoint}
           deleteStopPoint={deleteStopPoint}
           addStopPoint={addStopPoint}
-          addStopPointFromMap={addStopPointFromMap}
           onPointsInSequenceChange={onPointsInSequenceChange}
           transportMode={transportMode}
         />
