@@ -2,6 +2,7 @@ import { AppThunk, sentryCaptureException } from '../store/store';
 import { StopPlace, UttuQuery } from '../api';
 import { getStopPlacesQuery } from '../api/uttu/queries';
 import { RECEIVE_STOP_PLACES } from './constants';
+import { VEHICLE_MODE } from '../model/enums';
 
 const receiveStopPlacesActionCreator = (stopPlaces: StopPlace[]) => ({
   type: RECEIVE_STOP_PLACES,
@@ -9,7 +10,7 @@ const receiveStopPlacesActionCreator = (stopPlaces: StopPlace[]) => ({
 });
 
 export const getStopPlaces =
-  (transportMode?: string): AppThunk =>
+  (transportMode?: VEHICLE_MODE): AppThunk =>
   async (dispatch, getState) => {
     const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
@@ -20,7 +21,7 @@ export const getStopPlaces =
         uttuApiUrl,
         activeProvider,
         getStopPlacesQuery,
-        { transportMode },
+        { transportMode: transportMode },
         token,
       );
       dispatch(receiveStopPlacesActionCreator(data.stopPlaces));

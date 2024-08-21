@@ -5,6 +5,7 @@ import { FlexibleAreasOnlyStopPointsEditor } from './FlexibleAreasOnly/FlexibleA
 import { GenericStopPointsEditor } from './Generic/GenericStopPointsEditor';
 import { MixedFlexibleStopPointsEditor } from './MixedFlexible/MixedFlexibleStopPointsEditor';
 import './styles.scss';
+import { VEHICLE_MODE } from '../../model/enums';
 
 export type StopPointsEditorProps = {
   flexibleLineType?: FlexibleLineType;
@@ -15,7 +16,7 @@ export type StopPointsEditorProps = {
   addStopPoint: () => void;
   addStopPointFromMap?: (quayRef: string) => void;
   onPointsInSequenceChange: (pointsInSequence: StopPoint[]) => void;
-  transportMode?: string;
+  transportMode?: VEHICLE_MODE;
 };
 
 export type StopPointsEditor =

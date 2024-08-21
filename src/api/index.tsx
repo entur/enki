@@ -12,6 +12,7 @@ import { Auth, useAuth } from 'auth/auth';
 import { useConfig } from 'config/ConfigContext';
 import { ReactElement } from 'react';
 import { useAppSelector } from '../store/hooks';
+import { VEHICLE_MODE } from '../model/enums';
 
 export const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 
@@ -38,7 +39,7 @@ export type Location = {
 export type StopPlace = {
   id: string;
   name: { value: string };
-  transportMode?: string;
+  transportMode?: VEHICLE_MODE;
   centroid?: Centroid;
   quays: Quay[];
   children: StopPlace[];

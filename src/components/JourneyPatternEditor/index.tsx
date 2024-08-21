@@ -12,6 +12,7 @@ import { useIntl } from 'react-intl';
 import General from './General';
 import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
+import { VEHICLE_MODE } from '../../model/enums';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -19,7 +20,7 @@ type Props = {
   onDelete?: () => void;
   spoilPristine: boolean;
   flexibleLineType?: FlexibleLineType;
-  transportMode?: string;
+  transportMode?: VEHICLE_MODE;
 };
 
 const JourneyPatternEditor = ({
