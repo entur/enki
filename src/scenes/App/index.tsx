@@ -32,7 +32,7 @@ L.Icon.Default.mergeOptions({
 const App = () => {
   const dispatch = useDispatch<any>();
   const auth = useAuth();
-  const { uttuApiUrl, sandboxFeatures } = useConfig();
+  const { uttuApiUrl } = useConfig();
 
   const userContext = useAppSelector((state) => state.userContext);
 

@@ -42,10 +42,7 @@ export const GenericStopPointsEditor = ({
               onChange={(updatedStopPoint: StopPoint) =>
                 updateStopPoint(pointIndex, updatedStopPoint)
               }
-              onDelete={() => {
-                console.log('Delete button clicked', pointIndex);
-                deleteStopPoint(pointIndex);
-              }}
+              onDelete={() => deleteStopPoint(pointIndex)}
               canDelete={pointsInSequence.length > 2}
               flexibleLineType={flexibleLineType}
             />
