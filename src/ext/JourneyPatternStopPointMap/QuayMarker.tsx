@@ -115,9 +115,11 @@ const QuayMarker = ({
           )}
         </div>
       </Popup>
-      <Tooltip direction="right" offset={[12, -17]} opacity={1} permanent>
-        {stopPointIndex + 1}
-      </Tooltip>
+      {stopPointIndex !== undefined && (
+        <Tooltip direction="right" offset={[12, -17]} opacity={1} permanent>
+          {stopPointIndex + 1}
+        </Tooltip>
+      )}
     </Marker>
   );
 };
