@@ -48,7 +48,7 @@ const StopPlaceMarker = ({
           </section>
         ) : (
           <section>
-            <div>{formatMessage({ id: 'oneQuay' })}</div>
+            <div>{formatMessage({ id: 'oneQuay' })}:</div>
             <div className={'popup-id'}>{stopPlace.quays[0].id}</div>
           </section>
         )}

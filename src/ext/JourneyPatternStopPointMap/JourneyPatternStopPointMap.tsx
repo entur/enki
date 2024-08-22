@@ -4,13 +4,13 @@ import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useAppSelector } from '../../store/hooks';
 import { Reducer, useCallback, useEffect, useReducer } from 'react';
 import StopPlaceMarker from './StopPlaceMarker';
-import QuayMarker from './QuayMarker';
 import { JourneyPatternStopPointMapProps } from './types';
 import { Polyline } from 'react-leaflet';
 import { getStopPlaces } from '../../actions/stopPlaces';
 import { useDispatch } from 'react-redux';
 import { StopPointLocation } from '../../reducers/stopPlaces';
-import { Quay, StopPlace } from '../../api';
+import { StopPlace } from '../../api';
+import QuaysWrapper from './QuaysWrapper';
 
 interface MapState {
   quayStopPointIndexRecord: Record<string, number>;
@@ -117,49 +117,18 @@ export const JourneyPatternStopPointMap = ({
       <MarkerClusterGroup chunkedLoading disableClusteringAtZoom={12}>
         <Polyline positions={mapState.stopPointLocationSequence} />
         {stopPlaces?.map((stopPlace: StopPlace) => {
-          const selectedQuayIds: string[] = stopPlace.quays
-            .filter(
-              (quay: Quay) =>
-                mapState.quayStopPointIndexRecord[quay.id] !== undefined,
-            )
-            .map((quay: Quay) => quay.id);
           return mapState.showQuaysState[stopPlace.id] ? (
-            <>
-              {stopPlace.quays.map((quay: Quay) => {
-                const isSelectedQuay = selectedQuayIds.includes(quay.id);
-                const hasSelectedQuay = !!selectedQuayIds?.length;
-                const hasNonSelectedQuays =
-                  selectedQuayIds.length < stopPlace.quays.length;
-
-                return !mapState.hideNonSelectedQuaysState[stopPlace.id] ||
-                  isSelectedQuay ? (
-                  <QuayMarker
-                    key={quay.id}
-                    quay={quay}
-                    stopPointIndex={mapState.quayStopPointIndexRecord[quay.id]}
-                    stopPlace={stopPlace}
-                    hasSelectedQuay={hasSelectedQuay}
-                    hasNonSelectedQuays={hasNonSelectedQuays}
-                    hideNonSelectedQuaysState={
-                      mapState.hideNonSelectedQuaysState[stopPlace.id]
-                    }
-                    showQuaysCallback={(showAll) => {
-                      showQuaysCallback(showAll, stopPlace.id);
-                    }}
-                    hideNonSelectedQuaysCallback={(hideNonSelected) => {
-                      hideNonSelectedQuaysCallback(
-                        hideNonSelected,
-                        stopPlace.id,
-                      );
-                    }}
-                    addStopPointCallback={addStopPoint}
-                    deleteStopPointCallback={deleteStopPoint}
-                  />
-                ) : (
-                  ''
-                );
-              })}
-            </>
+            <QuaysWrapper
+              stopPlace={stopPlace}
+              quayStopPointIndexRecord={mapState.quayStopPointIndexRecord}
+              hideNonSelectedQuaysState={
+                mapState.hideNonSelectedQuaysState[stopPlace.id]
+              }
+              deleteStopPoint={deleteStopPoint}
+              addStopPoint={addStopPoint}
+              hideNonSelectedQuaysCallback={hideNonSelectedQuaysCallback}
+              showQuaysCallback={showQuaysCallback}
+            />
           ) : (
             <StopPlaceMarker
               key={stopPlace.id}
