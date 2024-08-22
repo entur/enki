@@ -36,3 +36,9 @@
   // The color couldn't get picked otherwise...
   color: #181c56;
 }
+
+.leaflet-tooltip {
+  padding: 2px 5px;
+  font-weight: 600;
+  border-radius: 8px;
+}

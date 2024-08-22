@@ -1,6 +1,6 @@
 import { Quay, StopPlace } from '../../api';
 import { getMarkerIcon } from './markers';
-import { Marker, Popup } from 'react-leaflet';
+import { Marker, Popup, Tooltip } from 'react-leaflet';
 import { Button } from '@entur/button';
 import { useIntl } from 'react-intl';
 import { Heading5 } from '@entur/typography';
@@ -115,6 +115,9 @@ const QuayMarker = ({
           )}
         </div>
       </Popup>
+      <Tooltip direction="right" offset={[12, -17]} opacity={1} permanent>
+        {stopPointIndex + 1}
+      </Tooltip>
     </Marker>
   );
 };
