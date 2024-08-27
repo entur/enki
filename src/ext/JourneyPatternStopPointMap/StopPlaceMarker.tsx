@@ -4,6 +4,7 @@ import { getMarkerIcon } from './markers';
 import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { Heading5 } from '@entur/typography';
+import { AddIcon } from '@entur/icons';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
@@ -77,7 +78,8 @@ const StopPlaceMarker = ({
             variant="primary"
             size="small"
           >
-            {formatMessage({ id: 'addToRoute' })}
+            <AddIcon />
+            {formatMessage({ id: 'addToJourneyPattern' })}
           </Button>
         )}
       </Popup>

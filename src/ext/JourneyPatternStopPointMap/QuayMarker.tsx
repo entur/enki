@@ -4,6 +4,7 @@ import { Marker, Popup, Tooltip } from 'react-leaflet';
 import { Button } from '@entur/button';
 import { useIntl } from 'react-intl';
 import { Heading5 } from '@entur/typography';
+import { AddIcon, DeleteIcon } from '@entur/icons';
 
 interface QuayMarkerProps {
   quay: Quay;
@@ -79,9 +80,10 @@ const QuayMarker = ({
             variant="primary"
             size="small"
           >
+            {stopPointIndex !== undefined ? <DeleteIcon /> : <AddIcon />}
             {stopPointIndex !== undefined
               ? formatMessage({ id: 'removeFromRoute' })
-              : formatMessage({ id: 'addToRoute' })}
+              : formatMessage({ id: 'addToJourneyPattern' })}
           </Button>
           {hasSelectedQuay && hasNonSelectedQuays ? (
             <Button

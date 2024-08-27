@@ -634,7 +634,7 @@ export const messages = {
   hideQuays: 'Skjul quayer',
   oneQuay: '1 quay',
   numberOfQuays: '{count} quayer',
-  addToRoute: 'Legg til',
+  addToJourneyPattern: 'Legg til',
   removeFromRoute: 'Fjern',
   quayTitle: 'Quay {name}',
   showNonSelectedQuays: 'Vis ikke valgte quayer',

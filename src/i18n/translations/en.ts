@@ -636,7 +636,7 @@ export const messages: MessagesKey = {
   hideQuays: 'Hide quays',
   oneQuay: '1 quay',
   numberOfQuays: '{count} quays',
-  addToRoute: 'Add to route',
+  addToJourneyPattern: 'Add',
   removeFromRoute: 'Remove from route',
   quayTitle: 'Quay {name}',
   showNonSelectedQuays: 'Show non-selected quays',
