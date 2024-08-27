@@ -16,6 +16,7 @@ export const GenericStopPointsEditor = ({
   deleteStopPoint,
   addStopPoint,
   flexibleLineType,
+  transportMode,
 }: StopPointsEditorProps) => {
   const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useIntl();
@@ -46,12 +47,16 @@ export const GenericStopPointsEditor = ({
             />
           ))}
         </div>
-
-        <SandboxFeature feature={'JourneyPatternStopPointMap'} />
+        <SandboxFeature
+          feature={'JourneyPatternStopPointMap'}
+          pointsInSequence={pointsInSequence}
+          addStopPoint={addStopPoint}
+          deleteStopPoint={deleteStopPoint}
+          transportMode={transportMode}
+        />
       </div>
-
       <AddButton
-        onClick={addStopPoint}
+        onClick={() => addStopPoint()}
         buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
       />
     </section>

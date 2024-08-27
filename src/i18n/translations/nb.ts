@@ -630,4 +630,13 @@ export const messages = {
     'Din Nplan-installasjon trenger minst en dataleverandør',
   landingPageNotLoggedIn: 'Ikke logget inn',
   landingPageLoginButtonText: 'Logg inn',
+  showQuays: 'Vis quayer',
+  hideQuays: 'Skjul quayer',
+  oneQuay: '1 quay',
+  numberOfQuays: '{count} quayer',
+  addToJourneyPattern: 'Legg til',
+  removeFromRoute: 'Fjern',
+  quayTitle: 'Quay {name}',
+  showNonSelectedQuays: 'Vis ikke valgte quayer',
+  hideNonSelectedQuays: 'Skjul ikke valgte quayer',
 };

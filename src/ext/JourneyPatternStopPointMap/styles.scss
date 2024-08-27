@@ -1,0 +1,44 @@
+.leaflet-popup-content {
+  width: fit-content !important;
+}
+
+.leaflet-popup-content section {
+  padding-bottom: 0.5rem;
+}
+
+.popup-title {
+  text-wrap: nowrap;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.popup-id {
+  font-weight: 600;
+}
+
+.popup-button-panel {
+  display: flex;
+}
+
+.popup-button {
+  font-size: 14px;
+  text-wrap: nowrap;
+}
+
+.leaflet-popup {
+  padding-bottom: 26px;
+}
+
+.popup-title {
+  text-wrap: nowrap;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  // The color couldn't get picked otherwise...
+  color: #181c56;
+}
+
+.leaflet-tooltip {
+  padding: 2px 5px;
+  font-weight: 600;
+  border-radius: 8px;
+}

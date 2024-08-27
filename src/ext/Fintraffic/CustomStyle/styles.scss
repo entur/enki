@@ -214,6 +214,11 @@ body {
   text-decoration: none !important;
 }
 
+.eds-contrast .eds-button--variant-primary {
+  --eds-button-background: var(--fds-color-brand-black);
+  color: var(--fds-color-brand-white);
+}
+
 .eds-button--variant-primary,
 .eds-button--variant-success {
   --eds-button-background: var(--fds-color-brand-black);
@@ -687,7 +692,8 @@ section .notices {
 }
 
 .stop-point-editor .stop-point .stop-point-element .stop-point-info > div {
-  margin-top: 3rem;
+  margin-top: 1.5rem !important;
+  margin-right: 16px;
 }
 
 // Flexible stop places:
@@ -703,40 +709,34 @@ section .notices {
   margin-top: 3rem;
 }
 
-@media only screen and (min-width: 1600px) {
-  .stop-point #delete-button {
-    margin-left: 2.25rem;
-  }
+.stop-point-editor .stop-point {
+  padding-bottom: 0.1rem;
+}
 
-  .stop-point-editor .stop-point .stop-point-element {
-    display: block;
-    margin-top: 1rem;
-  }
+.stop-point-editor .stop-point .stop-point-element .stop-point-info {
+  margin-left: 0;
+}
 
-  .stop-point-editor .stop-point .stop-point-element .stop-point-info > div {
-    margin-top: 1rem;
-  }
+.stop-point-editor .stop-point .stop-point-element {
+  margin-top: 1rem;
+}
 
+@media only screen and (min-width: 1950px) {
   .stop-point-editor
     .stop-point
     .stop-point-element
     .stop-point-info
     .stop-point-info-item {
-    margin-left: 1.2rem;
-    margin-right: 0;
-    width: 170px;
-    min-width: 170px;
+    width: 230px;
   }
+}
 
-  .stop-point-info > .eds-feedback-text {
-    display: none;
-  }
+// Journey patterns map;
 
-  .stop-point-editor
-    .stop-point
-    .stop-point-element
-    .stop-point-info
-    .stop-point-info-item {
-    margin-top: 1rem !important;
-  }
+.popup-title {
+  font-weight: 600;
+  color: #1777f8 !important;
+  font-size: 16px;
+  text-wrap: nowrap;
+  margin-bottom: 0.1rem;
 }

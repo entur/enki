@@ -556,6 +556,37 @@ export const STOP_PLACE_BY_QUAY_REF_QUERY = gql`
   }
 `;
 
+export const getStopPlacesQuery = `
+  query StopPlacesQuery($transportMode:TransportModeEnumeration) {
+    stopPlaces(transportMode: $transportMode) {
+      id
+      name {
+        value
+      }
+      transportMode
+      centroid {
+          location {
+            longitude
+            latitude
+          }
+        }
+      quays {
+        id
+        name {
+          value
+        }
+        publicCode
+        centroid {
+          location {
+            longitude
+            latitude
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const getOrganisationsQuery = `
   query OrganisationsQuery {
     organisations {

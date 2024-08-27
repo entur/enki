@@ -10,6 +10,7 @@ import flexibleStopPlaces, {
 import networks, { NetworksState } from './networks';
 import organisations, { OrganisationState } from './organisations';
 import providers, { ProvidersState } from './providers';
+import stopPlaces, { StopPlacesState } from './stopPlaces';
 
 export type GlobalState = {
   notification: NotificationState;
@@ -22,6 +23,7 @@ export type GlobalState = {
   flexibleStopPlaces: FlexibleStopPlacesState;
   editor: EditorState;
   config: ConfigState;
+  stopPlaces: StopPlacesState;
 };
 
 const reducers = {
@@ -33,6 +35,7 @@ const reducers = {
   flexibleLines,
   flexibleStopPlaces,
   editor,
+  stopPlaces,
 };
 
 export default reducers;

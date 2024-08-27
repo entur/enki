@@ -12,6 +12,7 @@ import { Auth, useAuth } from 'auth/auth';
 import { useConfig } from 'config/ConfigContext';
 import { ReactElement } from 'react';
 import { useAppSelector } from '../store/hooks';
+import { VEHICLE_MODE } from '../model/enums';
 
 export const staticHeaders = { 'ET-Client-Name': 'Entur - Flex editor' };
 
@@ -22,12 +23,24 @@ export type SearchForQuayResponse = {
 export type Quay = {
   id: string;
   publicCode: null | string;
-  name: null | string;
+  name: null | { value: string };
+  centroid: Centroid;
+};
+
+export type Centroid = {
+  location: Location;
+};
+
+export type Location = {
+  longitude: number;
+  latitude: number;
 };
 
 export type StopPlace = {
   id: string;
   name: { value: string };
+  transportMode?: VEHICLE_MODE;
+  centroid?: Centroid;
   quays: Quay[];
   children: StopPlace[];
 };

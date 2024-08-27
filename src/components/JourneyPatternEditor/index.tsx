@@ -11,6 +11,8 @@ import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import General from './General';
 import './styles.scss';
+import { useConfig } from '../../config/ConfigContext';
+import { VEHICLE_MODE } from '../../model/enums';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -18,6 +20,7 @@ type Props = {
   onDelete?: () => void;
   spoilPristine: boolean;
   flexibleLineType?: FlexibleLineType;
+  transportMode?: VEHICLE_MODE;
 };
 
 const JourneyPatternEditor = ({
@@ -26,11 +29,13 @@ const JourneyPatternEditor = ({
   onDelete,
   spoilPristine,
   flexibleLineType,
+  transportMode,
 }: Props) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
 
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const { formatMessage } = useIntl();
+  const { sandboxFeatures } = useConfig();
 
   const deleteStopPoint = useCallback(
     (stopPointIndex: number) => {
@@ -41,30 +46,50 @@ const JourneyPatternEditor = ({
           : [],
       }));
 
+      const newPointsInSequence = removeElementByIndex(
+        journeyPattern.pointsInSequence,
+        stopPointIndex,
+      );
+
+      if (newPointsInSequence.length == 1) {
+        // Case when unselecting a quay from a map, making sure the form still has at least 2 stop points
+        newPointsInSequence.push({});
+      }
+
       onSave({
         ...journeyPattern,
         serviceJourneys: newServiceJourneys,
-        pointsInSequence: removeElementByIndex(
-          journeyPattern.pointsInSequence,
-          stopPointIndex,
-        ),
+        pointsInSequence: newPointsInSequence,
       });
     },
     [journeyPattern, onSave, serviceJourneys],
   );
 
-  const addStopPoint = useCallback(() => {
-    const newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
-      ...serviceJourney,
-      passingTimes: [...serviceJourney.passingTimes, {}],
-    }));
+  const addStopPoint = useCallback(
+    (quayRef?: string) => {
+      const newServiceJourneys = serviceJourneys.map((serviceJourney) => ({
+        ...serviceJourney,
+        passingTimes: [...serviceJourney.passingTimes, {}],
+      }));
 
-    onSave({
-      ...journeyPattern,
-      pointsInSequence: [...journeyPattern.pointsInSequence, {}],
-      serviceJourneys: newServiceJourneys,
-    });
-  }, [journeyPattern, onSave, serviceJourneys]);
+      let newPointsInSequence = [
+        ...journeyPattern.pointsInSequence,
+        quayRef && quayRef ? { quayRef } : {},
+      ];
+
+      onSave({
+        ...journeyPattern,
+        pointsInSequence: newPointsInSequence,
+        serviceJourneys: newServiceJourneys,
+      });
+
+      if (sandboxFeatures?.JourneyPatternStopPointMap) {
+        // To avoid grey area on the map once the container gets bigger in the height:
+        window.dispatchEvent(new Event('resize'));
+      }
+    },
+    [journeyPattern, onSave, serviceJourneys],
+  );
 
   const updateStopPoint = useCallback(
     (pointIndex: number, stopPlace: StopPoint) =>
@@ -110,6 +135,7 @@ const JourneyPatternEditor = ({
           deleteStopPoint={deleteStopPoint}
           addStopPoint={addStopPoint}
           onPointsInSequenceChange={onPointsInSequenceChange}
+          transportMode={transportMode}
         />
       </div>
       {onDelete && (
