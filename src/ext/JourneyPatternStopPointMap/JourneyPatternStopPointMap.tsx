@@ -13,7 +13,7 @@ import { StopPlace } from '../../api';
 import QuaysWrapper from './QuaysWrapper';
 
 interface MapState {
-  quayStopPointIndexRecord: Record<string, number>;
+  quayStopPointIndexesRecord: Record<string, number[]>;
   stopPointLocationSequence: StopPointLocation[];
   showQuaysState: Record<string, boolean>;
   hideNonSelectedQuaysState: Record<string, boolean>;
@@ -34,7 +34,7 @@ export const JourneyPatternStopPointMap = ({
       ...newState,
     }),
     {
-      quayStopPointIndexRecord: {},
+      quayStopPointIndexesRecord: {},
       stopPointLocationSequence: [],
       showQuaysState: {},
       hideNonSelectedQuaysState: {},
@@ -57,7 +57,7 @@ export const JourneyPatternStopPointMap = ({
 
   useEffect(() => {
     let stopPointIndex = 0;
-    const newQuayIndexRecord: Record<string, number> = {};
+    const newQuayIndexesRecord: Record<string, number[]> = {};
     const newShowQuaysState: Record<string, boolean> = {};
     const newStopPointLocations: StopPointLocation[] = [];
     if (!quayStopPlaceIndex || !quayLocationsIndex) {
@@ -69,9 +69,14 @@ export const JourneyPatternStopPointMap = ({
         stopPointIndex++;
         return;
       }
-      newQuayIndexRecord[point.quayRef] = stopPointIndex++;
-      const stopPlaceId = quayStopPlaceIndex[point.quayRef];
 
+      const newIndexArray: number[] = newQuayIndexesRecord[point.quayRef]
+        ? [...newQuayIndexesRecord[point.quayRef]]
+        : [];
+      newIndexArray.push(stopPointIndex++);
+      newQuayIndexesRecord[point.quayRef] = newIndexArray;
+
+      const stopPlaceId = quayStopPlaceIndex[point.quayRef];
       // Let's get into show quays mode, so that a quay entered through the form gets visible:
       newShowQuaysState[stopPlaceId] = true;
 
@@ -84,7 +89,7 @@ export const JourneyPatternStopPointMap = ({
     });
 
     setMapState({
-      quayStopPointIndexRecord: newQuayIndexRecord,
+      quayStopPointIndexesRecord: newQuayIndexesRecord,
       stopPointLocationSequence: newStopPointLocations,
       showQuaysState: newShowQuaysState,
     });
@@ -120,7 +125,7 @@ export const JourneyPatternStopPointMap = ({
           return mapState.showQuaysState[stopPlace.id] ? (
             <QuaysWrapper
               stopPlace={stopPlace}
-              quayStopPointIndexRecord={mapState.quayStopPointIndexRecord}
+              quayStopPointIndexesRecord={mapState.quayStopPointIndexesRecord}
               hideNonSelectedQuaysState={
                 mapState.hideNonSelectedQuaysState[stopPlace.id]
               }
