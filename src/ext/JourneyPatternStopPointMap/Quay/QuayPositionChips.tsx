@@ -1,6 +1,8 @@
 import { TagChip } from '@entur/chip';
-import React from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
+import { SecondaryButton, SuccessButton } from '@entur/button';
+import ConfirmDialog from '../../../components/ConfirmDialog';
 
 interface QuayPositionChipsProps {
   stopPointIndexes: number[];
@@ -13,6 +15,7 @@ const QuayPositionChips = ({
 }: QuayPositionChipsProps) => {
   const intl = useIntl();
   const { formatMessage } = intl;
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   return (
     <section>
@@ -24,15 +27,40 @@ const QuayPositionChips = ({
       </div>
       <div style={{ display: 'flex', marginBottom: '0.3rem' }}>
         {stopPointIndexes.map((index) => (
-          <TagChip
-            className={'stop-point-index-chip'}
-            size={'small'}
-            onClose={() => {
-              deleteStopPointCallback(index);
-            }}
-          >
-            {index + 1}
-          </TagChip>
+          <>
+            <TagChip
+              className={'stop-point-index-chip'}
+              size={'small'}
+              onClose={() => {
+                setDeleteDialogOpen(true);
+              }}
+            >
+              {index + 1}
+            </TagChip>
+            <ConfirmDialog
+              isOpen={isDeleteDialogOpen}
+              title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
+              message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
+              buttons={[
+                <SecondaryButton
+                  key="no"
+                  onClick={() => setDeleteDialogOpen(false)}
+                >
+                  {formatMessage({ id: 'no' })}
+                </SecondaryButton>,
+                <SuccessButton
+                  key="yes"
+                  onClick={() => {
+                    setDeleteDialogOpen(false);
+                    deleteStopPointCallback(index);
+                  }}
+                >
+                  {formatMessage({ id: 'yes' })}
+                </SuccessButton>,
+              ]}
+              onDismiss={() => setDeleteDialogOpen(false)}
+            />
+          </>
         ))}
       </div>
     </section>
