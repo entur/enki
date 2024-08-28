@@ -1,4 +1,4 @@
-import { Quay, StopPlace } from '../../api';
+import { Quay, StopPlace } from '../../../api';
 import QuayMarker from './QuayMarker';
 
 interface QuaysWrapperProps {
@@ -26,8 +26,6 @@ const QuaysWrapper = ({
   const selectedQuayIds: string[] = stopPlace.quays
     .filter((quay: Quay) => quayStopPointIndexesRecord[quay.id] !== undefined)
     .map((quay: Quay) => quay.id);
-
-  console.log('selectedQuayIds', selectedQuayIds);
 
   return (
     <>

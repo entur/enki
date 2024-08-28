@@ -10,7 +10,7 @@ import { getStopPlaces } from '../../actions/stopPlaces';
 import { useDispatch } from 'react-redux';
 import { StopPointLocation } from '../../reducers/stopPlaces';
 import { StopPlace } from '../../api';
-import QuaysWrapper from './QuaysWrapper';
+import QuaysWrapper from './Quay/QuaysWrapper';
 
 interface MapState {
   quayStopPointIndexesRecord: Record<string, number[]>;
