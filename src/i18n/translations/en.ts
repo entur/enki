@@ -640,6 +640,5 @@ export const messages: MessagesKey = {
   quayTitle: 'Quay {name}',
   showNonSelectedQuays: 'Show non-selected quays',
   hideNonSelectedQuays: 'Hide non-selected quays',
-  quayPosition: 'Position',
-  quayPositions: 'Positions',
+  quayOrder: 'Order',
 };

@@ -5,64 +5,75 @@ import { SecondaryButton, SuccessButton } from '@entur/button';
 import ConfirmDialog from '../../../components/ConfirmDialog';
 
 interface QuayPositionChipsProps {
-  stopPointIndexes: number[];
+  quayId: string;
+  stopPointSequenceIndexes: number[];
   deleteStopPointCallback: (index: number) => void;
 }
 
+interface QuayDeleteDialogState {
+  index: number | undefined;
+}
+
 const QuayPositionChips = ({
-  stopPointIndexes,
+  quayId,
+  stopPointSequenceIndexes,
   deleteStopPointCallback,
 }: QuayPositionChipsProps) => {
   const intl = useIntl();
   const { formatMessage } = intl;
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteDialogState, setDeleteDialogState] =
+    useState<QuayDeleteDialogState>({ index: undefined });
 
   return (
     <section>
-      <div>
+      <div style={{ textWrap: 'nowrap' }}>
         {formatMessage({
-          id: `quayPosition${stopPointIndexes?.length > 1 ? 's' : ''}`,
+          id: `quayOrder`,
         })}
         :
       </div>
       <div style={{ display: 'flex', marginBottom: '0.3rem' }}>
-        {stopPointIndexes.map((index) => (
-          <>
-            <TagChip
-              className={'stop-point-index-chip'}
-              size={'small'}
-              onClose={() => {
-                setDeleteDialogOpen(true);
-              }}
-            >
-              {index + 1}
-            </TagChip>
-            <ConfirmDialog
-              isOpen={isDeleteDialogOpen}
-              title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
-              message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
-              buttons={[
-                <SecondaryButton
-                  key="no"
-                  onClick={() => setDeleteDialogOpen(false)}
-                >
-                  {formatMessage({ id: 'no' })}
-                </SecondaryButton>,
-                <SuccessButton
-                  key="yes"
-                  onClick={() => {
-                    setDeleteDialogOpen(false);
-                    deleteStopPointCallback(index);
-                  }}
-                >
-                  {formatMessage({ id: 'yes' })}
-                </SuccessButton>,
-              ]}
-              onDismiss={() => setDeleteDialogOpen(false)}
-            />
-          </>
+        {stopPointSequenceIndexes.map((index) => (
+          <TagChip
+            key={'stop-point-sequence-index-chip-' + quayId + '-' + index}
+            className={'stop-point-sequence-index-chip'}
+            size={'small'}
+            onClose={() => {
+              setDeleteDialogState({ index });
+            }}
+          >
+            {index + 1}
+          </TagChip>
         ))}
       </div>
+
+      <ConfirmDialog
+        isOpen={!!deleteDialogState.index}
+        title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
+        message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
+        buttons={[
+          <SecondaryButton
+            key="no"
+            onClick={() => setDeleteDialogState({ index: undefined })}
+          >
+            {formatMessage({ id: 'no' })}
+          </SecondaryButton>,
+          <SuccessButton
+            key="yes"
+            onClick={() => {
+              if (!deleteDialogState.index) {
+                return;
+              }
+              const indexToDelete = deleteDialogState.index;
+              setDeleteDialogState({ index: undefined });
+              deleteStopPointCallback(indexToDelete);
+            }}
+          >
+            {formatMessage({ id: 'yes' })}
+          </SuccessButton>,
+        ]}
+        onDismiss={() => setDeleteDialogState({ index: undefined })}
+      />
     </section>
   );
 };

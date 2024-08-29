@@ -13,7 +13,7 @@ import { StopPlace } from '../../api';
 import QuaysWrapper from './Quay/QuaysWrapper';
 
 interface MapState {
-  quayStopPointIndexesRecord: Record<string, number[]>;
+  quayStopPointSequenceIndexes: Record<string, number[]>;
   stopPointLocationSequence: StopPointLocation[];
   showQuaysState: Record<string, boolean>;
   hideNonSelectedQuaysState: Record<string, boolean>;
@@ -34,7 +34,7 @@ export const JourneyPatternStopPointMap = ({
       ...newState,
     }),
     {
-      quayStopPointIndexesRecord: {},
+      quayStopPointSequenceIndexes: {},
       stopPointLocationSequence: [],
       showQuaysState: {},
       hideNonSelectedQuaysState: {},
@@ -89,7 +89,7 @@ export const JourneyPatternStopPointMap = ({
     });
 
     setMapState({
-      quayStopPointIndexesRecord: newQuayIndexesRecord,
+      quayStopPointSequenceIndexes: newQuayIndexesRecord,
       stopPointLocationSequence: newStopPointLocations,
       showQuaysState: newShowQuaysState,
     });
@@ -125,7 +125,7 @@ export const JourneyPatternStopPointMap = ({
           return mapState.showQuaysState[stopPlace.id] ? (
             <QuaysWrapper
               stopPlace={stopPlace}
-              quayStopPointIndexesRecord={mapState.quayStopPointIndexesRecord}
+              stopPointSequenceIndexes={mapState.quayStopPointSequenceIndexes}
               hideNonSelectedQuaysState={
                 mapState.hideNonSelectedQuaysState[stopPlace.id]
               }

@@ -3,13 +3,13 @@ import React, { MutableRefObject } from 'react';
 
 interface QuayIndexTooltipProps {
   markerRef: MutableRefObject<any>;
-  stopPointIndexes: number[];
+  stopPointSequenceIndexes: number[];
   quayId: string;
 }
 
-const QuayIndexTooltip = ({
+const QuaySequenceIndexTooltip = ({
   markerRef,
-  stopPointIndexes,
+  stopPointSequenceIndexes,
   quayId,
 }: QuayIndexTooltipProps) => {
   return (
@@ -30,12 +30,14 @@ const QuayIndexTooltip = ({
         opacity={1}
         permanent
       >
-        {stopPointIndexes.map((index, i) => {
-          const isLast = i == stopPointIndexes.length - 1;
+        {stopPointSequenceIndexes.map((index, i) => {
+          const isLast = i == stopPointSequenceIndexes.length - 1;
           return (
             <span
-              key={'tooltip-index-' + quayId + '-' + index}
-              className={!isLast ? 'stop-point-index-tooltip-item' : ''}
+              key={'stop-point-sequence-index-tooltip-' + quayId + '-' + index}
+              className={
+                !isLast ? 'stop-point-sequence-index-tooltip-item' : ''
+              }
             >
               {index + 1}
             </span>
@@ -46,4 +48,4 @@ const QuayIndexTooltip = ({
   );
 };
 
-export default QuayIndexTooltip;
+export default QuaySequenceIndexTooltip;

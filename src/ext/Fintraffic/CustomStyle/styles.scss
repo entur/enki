@@ -741,22 +741,22 @@ section .notices {
   margin-bottom: 0.1rem;
 }
 
-.stop-point-index-chip .eds-tag-chip__close-button {
+.stop-point-sequence-index-chip .eds-tag-chip__close-button {
   margin-left: 0.35rem !important;
   color: white;
   background-color: var(--fds-color-danger-200) !important;
 }
 
-.stop-point-index-chip .eds-tag-chip__close-button:hover {
+.stop-point-sequence-index-chip .eds-tag-chip__close-button:hover {
   color: white;
   background-color: var(--fds-color-danger-300) !important;
 }
 
-.stop-point-index-chip .eds-tag-chip__close-button:focus {
+.stop-point-sequence-index-chip .eds-tag-chip__close-button:focus {
   outline: none !important;
 }
 
-.stop-point-index-chip {
+.stop-point-sequence-index-chip {
   font-weight: 600;
   border: 2px solid var(--fds-color-text-600) !important;
 }

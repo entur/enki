@@ -638,6 +638,5 @@ export const messages = {
   quayTitle: 'Quay {name}',
   showNonSelectedQuays: 'Vis ikke valgte quayer',
   hideNonSelectedQuays: 'Skjul ikke valgte quayer',
-  quayPosition: 'Posisjonen',
-  quayPositions: 'Posisjonene',
+  quayOrder: 'Rekkefølgen',
 };

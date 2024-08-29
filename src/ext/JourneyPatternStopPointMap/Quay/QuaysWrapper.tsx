@@ -3,7 +3,7 @@ import QuayMarker from './QuayMarker';
 
 interface QuaysWrapperProps {
   stopPlace: StopPlace;
-  quayStopPointIndexesRecord: Record<string, number[]>;
+  stopPointSequenceIndexes: Record<string, number[]>;
   hideNonSelectedQuaysState: boolean;
   deleteStopPoint: (index: number) => void;
   addStopPoint: (quayRef?: string) => void;
@@ -16,7 +16,7 @@ interface QuaysWrapperProps {
 
 const QuaysWrapper = ({
   stopPlace,
-  quayStopPointIndexesRecord,
+  stopPointSequenceIndexes,
   hideNonSelectedQuaysState,
   addStopPoint,
   deleteStopPoint,
@@ -24,7 +24,7 @@ const QuaysWrapper = ({
   hideNonSelectedQuaysCallback,
 }: QuaysWrapperProps) => {
   const selectedQuayIds: string[] = stopPlace.quays
-    .filter((quay: Quay) => quayStopPointIndexesRecord[quay.id] !== undefined)
+    .filter((quay: Quay) => stopPointSequenceIndexes[quay.id] !== undefined)
     .map((quay: Quay) => quay.id);
 
   return (
@@ -39,7 +39,7 @@ const QuaysWrapper = ({
           <QuayMarker
             key={quay.id}
             quay={quay}
-            stopPointIndexes={quayStopPointIndexesRecord[quay.id]}
+            stopPointSequenceIndexes={stopPointSequenceIndexes[quay.id]}
             stopPlace={stopPlace}
             hasSelectedQuay={hasSelectedQuay}
             hasNonSelectedQuays={hasNonSelectedQuays}

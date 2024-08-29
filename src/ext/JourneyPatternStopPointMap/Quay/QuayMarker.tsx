@@ -4,14 +4,14 @@ import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { Heading5 } from '@entur/typography';
 import React, { MutableRefObject, useRef } from 'react';
-import QuayIndexTooltip from './QuayIndexTooltip';
+import QuaySequenceIndexTooltip from './QuaySequenceIndexTooltip';
 import QuayPositionChips from './QuayPositionChips';
 import QuayPopupButtonPanel from './QuayPopupButtonPanel';
 
 interface QuayMarkerProps {
   quay: Quay;
   stopPlace: StopPlace;
-  stopPointIndexes: number[];
+  stopPointSequenceIndexes: number[];
   hasSelectedQuay: boolean;
   hasNonSelectedQuays: boolean;
   hideNonSelectedQuaysState: boolean;
@@ -23,7 +23,7 @@ interface QuayMarkerProps {
 
 const QuayMarker = ({
   quay,
-  stopPointIndexes,
+  stopPointSequenceIndexes,
   stopPlace,
   hasSelectedQuay,
   hasNonSelectedQuays,
@@ -36,7 +36,7 @@ const QuayMarker = ({
   const intl = useIntl();
   const { formatMessage } = intl;
   const markerRef: MutableRefObject<any> = useRef();
-  const isQuaySelected = stopPointIndexes?.length > 0;
+  const isQuaySelected = stopPointSequenceIndexes?.length > 0;
 
   return (
     <Marker
@@ -58,9 +58,10 @@ const QuayMarker = ({
           {formatMessage({ id: stopPlace.transportMode?.toLowerCase() })}
         </section>
 
-        {stopPointIndexes?.length > 0 && (
+        {isQuaySelected && (
           <QuayPositionChips
-            stopPointIndexes={stopPointIndexes}
+            quayId={quay.id}
+            stopPointSequenceIndexes={stopPointSequenceIndexes}
             deleteStopPointCallback={deleteStopPointCallback}
           />
         )}
@@ -77,10 +78,10 @@ const QuayMarker = ({
         />
       </Popup>
 
-      {stopPointIndexes?.length > 0 && (
-        <QuayIndexTooltip
+      {isQuaySelected && (
+        <QuaySequenceIndexTooltip
           markerRef={markerRef}
-          stopPointIndexes={stopPointIndexes}
+          stopPointSequenceIndexes={stopPointSequenceIndexes}
           quayId={quay.id}
         />
       )}
