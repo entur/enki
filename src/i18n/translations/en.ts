@@ -14,7 +14,7 @@ export const messages: MessagesKey = {
   exportsSaveExportSuccessHeader: 'Saving export',
   exportsSaveExportSuccessMessage: 'Export was saved.',
   deleteLineErrorHeader: 'Delete line',
-  deleteLineErrorMessage: 'An error occured while deleting the line: {details}',
+  deleteLineErrorMessage: 'An error occurred while deleting the line: {details}',
   deleteLineSuccessHeader: 'Delete line',
   deleteLineSuccessMessage: 'The line was deleted',
   loadLineByIdErrorHeader: 'Load line',
@@ -149,7 +149,7 @@ export const messages: MessagesKey = {
   bookingInfoHelpText: `Booking information can be added to a flexible line, to a
   stop point in a journey pattern, or to a service journey.
   When you define booking information at several levels, stop points
-  take precendence over service journeys, which in turn takes precedence
+  take precedence over service journeys, which in turn takes precedence
   over the flexible line.`,
   bookingInfoAddButtonText: 'Add',
   bookingInfoRemoveButtonText: 'Remove',
@@ -243,7 +243,7 @@ export const messages: MessagesKey = {
   flexibleLineTypeDrawer_flexibleAreasOnly:
     'Pickup and dropoff anywhere within a defined area and given opening hours.',
   flexibleLineTypeDrawer_hailAndRideSections:
-    'The route is defined, but along selected streches there is the possibility for boarding/alighting at any time.',
+    'The route is defined, but along selected stretches there is the possibility for boarding/alighting at any time.',
   flexibleLineTypeDrawer_mixedFlexible:
     'A mix of pre-defined stops and flexible areas, with time windows and fixed times for boarding and alighting.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Add journey pattern',
