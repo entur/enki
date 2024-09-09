@@ -5,18 +5,25 @@ import { useAppSelector } from '../../store/hooks';
 import { Reducer, useCallback, useEffect, useReducer } from 'react';
 import StopPlaceMarker from './StopPlaceMarker';
 import { JourneyPatternStopPointMapProps } from './types';
-import { Polyline } from 'react-leaflet';
-import { getStopPlaces } from '../../actions/stopPlaces';
+import { Polyline, ZoomControl } from 'react-leaflet';
+import { getStopPlaces, searchStopPlaces } from '../../actions/stopPlaces';
 import { useDispatch } from 'react-redux';
-import { StopPointLocation } from '../../reducers/stopPlaces';
+import { StopPlacesState, StopPointLocation } from '../../reducers/stopPlaces';
 import { StopPlace } from '../../api';
 import QuaysWrapper from './Quay/QuaysWrapper';
+import SearchPopover from './Popovers/SearchPopover';
 
 interface MapState {
   quayStopPointSequenceIndexes: Record<string, number[]>;
   stopPointLocationSequence: StopPointLocation[];
   showQuaysState: Record<string, boolean>;
   hideNonSelectedQuaysState: Record<string, boolean>;
+  locatedSearchResult: MapSearchResult | undefined;
+}
+
+export interface MapSearchResult {
+  searchText: string;
+  stopPlace: StopPlace;
 }
 
 export const JourneyPatternStopPointMap = ({
@@ -38,20 +45,41 @@ export const JourneyPatternStopPointMap = ({
       stopPointLocationSequence: [],
       showQuaysState: {},
       hideNonSelectedQuaysState: {},
+      locatedSearchResult: undefined,
     },
   );
 
-  const stopPlaces = useAppSelector((state) => state.stopPlaces)?.stopPlaces;
-  const quayLocationsIndex = useAppSelector(
+  const stopPlacesState: StopPlacesState = useAppSelector(
     (state) => state.stopPlaces,
-  )?.quayLocationsIndex;
-  const quayStopPlaceIndex = useAppSelector(
-    (state) => state.stopPlaces,
-  )?.quayStopPlaceIndex;
+  ) as StopPlacesState;
+  const stopPlaces = stopPlacesState?.stopPlaces || [];
+  const searchedStopPlaces = stopPlacesState?.searchedStopPlaces;
+  const totalStopPlaces = stopPlaces ? [...stopPlaces] : [];
+  searchedStopPlaces?.forEach((stopPlace) => {
+    if (stopPlaces.filter((s) => s.id === stopPlace.id).length === 0) {
+      totalStopPlaces.push(stopPlace);
+    }
+  });
+
+  const quayLocationsIndex = stopPlacesState?.quayLocationsIndex;
+  const quayStopPlaceIndex = stopPlacesState?.quayStopPlaceIndex;
+
+  const locateSearchResultCallback = useCallback(
+    (searchText: string, stopPlace: StopPlace) => {
+      setMapState({ locatedSearchResult: { searchText, stopPlace } });
+    },
+    [setMapState],
+  );
+
+  const clearLocateSearchResult = useCallback(() => {
+    setMapState({ locatedSearchResult: undefined });
+  }, [setMapState]);
 
   useEffect(() => {
     if (transportMode) {
       dispatch(getStopPlaces(transportMode));
+      // This is for clearing any previous search state:
+      dispatch(searchStopPlaces(transportMode, undefined));
     }
   }, []);
 
@@ -92,6 +120,7 @@ export const JourneyPatternStopPointMap = ({
       quayStopPointSequenceIndexes: newQuayIndexesRecord,
       stopPointLocationSequence: newStopPointLocations,
       showQuaysState: newShowQuaysState,
+      locatedSearchResult: undefined,
     });
   }, [pointsInSequence, quayStopPlaceIndex, quayLocationsIndex, setMapState]);
 
@@ -118,34 +147,53 @@ export const JourneyPatternStopPointMap = ({
   );
 
   return (
-    <FormMap>
-      <MarkerClusterGroup chunkedLoading disableClusteringAtZoom={12}>
-        <Polyline positions={mapState.stopPointLocationSequence} />
-        {stopPlaces?.map((stopPlace: StopPlace) => {
-          return mapState.showQuaysState[stopPlace.id] ? (
-            <QuaysWrapper
-              stopPlace={stopPlace}
-              stopPointSequenceIndexes={mapState.quayStopPointSequenceIndexes}
-              hideNonSelectedQuaysState={
-                mapState.hideNonSelectedQuaysState[stopPlace.id]
-              }
-              deleteStopPoint={deleteStopPoint}
-              addStopPoint={addStopPoint}
-              hideNonSelectedQuaysCallback={hideNonSelectedQuaysCallback}
-              showQuaysCallback={showQuaysCallback}
-            />
-          ) : (
-            <StopPlaceMarker
-              key={stopPlace.id}
-              stopPlace={stopPlace}
-              showQuaysCallback={() => {
-                showQuaysCallback(true, stopPlace.id);
-              }}
-              addStopPointCallback={addStopPoint}
-            />
-          );
-        })}
-      </MarkerClusterGroup>
+    <FormMap zoomControl={false} doubleClickZoom={false}>
+      <>
+        <SearchPopover
+          transportMode={transportMode}
+          locateSearchResultCallback={locateSearchResultCallback}
+        />
+        <ZoomControl position={'topright'} />
+        <MarkerClusterGroup chunkedLoading disableClusteringAtZoom={12}>
+          <Polyline positions={mapState.stopPointLocationSequence} />
+          {totalStopPlaces.map((stopPlace: StopPlace) => {
+            return mapState.showQuaysState[stopPlace.id] ? (
+              <QuaysWrapper
+                key={'quays-wrapper-for-' + stopPlace.id}
+                stopPlace={stopPlace}
+                stopPointSequenceIndexes={mapState.quayStopPointSequenceIndexes}
+                hideNonSelectedQuaysState={
+                  mapState.hideNonSelectedQuaysState[stopPlace.id]
+                }
+                deleteStopPoint={deleteStopPoint}
+                addStopPoint={addStopPoint}
+                hideNonSelectedQuaysCallback={hideNonSelectedQuaysCallback}
+                showQuaysCallback={showQuaysCallback}
+                locatedSearchResult={
+                  stopPlace.id === mapState.locatedSearchResult?.stopPlace.id
+                    ? mapState.locatedSearchResult
+                    : undefined
+                }
+                clearLocateSearchResult={clearLocateSearchResult}
+              />
+            ) : (
+              <StopPlaceMarker
+                key={'stop-place-marker-' + stopPlace.id}
+                stopPlace={stopPlace}
+                showQuaysCallback={() => {
+                  showQuaysCallback(true, stopPlace.id);
+                }}
+                addStopPointCallback={addStopPoint}
+                isPopupToBeOpen={
+                  stopPlace.id === mapState.locatedSearchResult?.stopPlace.id
+                }
+                locatedSearchResult={mapState.locatedSearchResult}
+                clearLocateSearchResult={clearLocateSearchResult}
+              />
+            );
+          })}
+        </MarkerClusterGroup>
+      </>
     </FormMap>
   );
 };

@@ -639,4 +639,8 @@ export const messages = {
   showNonSelectedQuays: 'Vis ikke valgte quayer',
   hideNonSelectedQuays: 'Skjul ikke valgte quayer',
   quayOrder: 'Rekkefølge',
+  mapSearchInProgress: 'Søker...',
+  mapSearchNoResults: 'Ingen resultater funnet',
+  mapSearchResults: 'Resultater:',
+  mapSearchPlaceholder: 'Stoppested etter ID, navn eller plattform-ID',
 };

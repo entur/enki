@@ -641,4 +641,8 @@ export const messages: MessagesKey = {
   showNonSelectedQuays: 'Show non-selected quays',
   hideNonSelectedQuays: 'Hide non-selected quays',
   quayOrder: 'Order',
+  mapSearchInProgress: 'Searching...',
+  mapSearchNoResults: 'No results found',
+  mapSearchResults: 'Results:',
+  mapSearchPlaceholder: 'Stop place by ID, name or quay ID',
 };

@@ -3,7 +3,7 @@ import { getMarkerIcon } from '../markers';
 import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { Heading5 } from '@entur/typography';
-import React, { MutableRefObject, useRef } from 'react';
+import React, { MutableRefObject, useEffect, useRef } from 'react';
 import QuaySequenceIndexTooltip from './QuaySequenceIndexTooltip';
 import QuayPositionChips from './QuayPositionChips';
 import QuayPopupButtonPanel from './QuayPopupButtonPanel';
@@ -12,6 +12,7 @@ interface QuayMarkerProps {
   quay: Quay;
   stopPlace: StopPlace;
   stopPointSequenceIndexes: number[];
+  isSelectedQuay: boolean;
   hasSelectedQuay: boolean;
   hasNonSelectedQuays: boolean;
   hideNonSelectedQuaysState: boolean;
@@ -19,12 +20,15 @@ interface QuayMarkerProps {
   showQuaysCallback: (showAll: boolean) => void;
   addStopPointCallback: (quayId: string) => void;
   deleteStopPointCallback: (index: number) => void;
+  isPopupToBeOpen: boolean;
+  clearLocateSearchResult: () => void;
 }
 
 const QuayMarker = ({
   quay,
   stopPointSequenceIndexes,
   stopPlace,
+  isSelectedQuay,
   hasSelectedQuay,
   hasNonSelectedQuays,
   showQuaysCallback,
@@ -32,17 +36,28 @@ const QuayMarker = ({
   hideNonSelectedQuaysState,
   addStopPointCallback,
   deleteStopPointCallback,
+  isPopupToBeOpen,
+  clearLocateSearchResult,
 }: QuayMarkerProps) => {
   const intl = useIntl();
   const { formatMessage } = intl;
   const markerRef: MutableRefObject<any> = useRef();
-  const isQuaySelected = stopPointSequenceIndexes?.length > 0;
+
+  useEffect(() => {
+    if (isPopupToBeOpen) {
+      if (markerRef && markerRef.current) {
+        markerRef.current.openPopup();
+        // Mission accomplished, locateSearchResult can be cleared now
+        clearLocateSearchResult();
+      }
+    }
+  }, [isPopupToBeOpen, markerRef, clearLocateSearchResult]);
 
   return (
     <Marker
       key={'quay-marker-' + quay.id}
       ref={markerRef}
-      icon={getMarkerIcon(stopPlace.transportMode, false, isQuaySelected)}
+      icon={getMarkerIcon(stopPlace.transportMode, false, isSelectedQuay)}
       position={[
         quay.centroid?.location.latitude,
         quay.centroid?.location.longitude,
@@ -58,7 +73,7 @@ const QuayMarker = ({
           {formatMessage({ id: stopPlace.transportMode?.toLowerCase() })}
         </section>
 
-        {isQuaySelected && (
+        {isSelectedQuay && (
           <QuayPositionChips
             quayId={quay.id}
             stopPointSequenceIndexes={stopPointSequenceIndexes}
@@ -78,7 +93,7 @@ const QuayMarker = ({
         />
       </Popup>
 
-      {isQuaySelected && (
+      {isSelectedQuay && (
         <QuaySequenceIndexTooltip
           markerRef={markerRef}
           stopPointSequenceIndexes={stopPointSequenceIndexes}
