@@ -12,13 +12,12 @@ import { StopPlace } from '../../../api';
 import { Label } from '@entur/typography';
 import { StopPlacesState } from '../../../reducers/stopPlaces';
 import { useIntl } from 'react-intl';
+import { FocusedMarker } from '../JourneyPatternStopPointMap';
 
-interface ControlsPopoverProps {
+interface SearchPopoverProps {
   transportMode: VEHICLE_MODE;
-  locateSearchResultCallback: (
-    searchText: string,
-    stopPlace: StopPlace,
-  ) => void;
+  focusMarkerCallback: (focusedMarker: FocusedMarker) => void;
+  getSelectedQuayIdsCallback: (stopPlace: StopPlace) => string[];
 }
 
 const sortStopPlaces = (a: StopPlace, b: StopPlace) => {
@@ -33,8 +32,9 @@ const sortStopPlaces = (a: StopPlace, b: StopPlace) => {
 
 const SearchPopover = ({
   transportMode,
-  locateSearchResultCallback,
-}: ControlsPopoverProps) => {
+  focusMarkerCallback,
+  getSelectedQuayIdsCallback,
+}: SearchPopoverProps) => {
   const dispatch = useDispatch<any>();
   const stopPlacesState: StopPlacesState = useAppSelector(
     (state) => state.stopPlaces,
@@ -119,10 +119,11 @@ const SearchPopover = ({
               {sortedStopPlaces.map((stopPlace: StopPlace, i: number) => (
                 <SearchResult
                   key={'map-search-result-' + stopPlace.id}
-                  locateSearchResultCallback={locateSearchResultCallback}
+                  focusMarkerCallback={focusMarkerCallback}
                   stopPlace={stopPlace}
                   isLast={i == searchedStopPlaces.length - 1}
                   searchText={searchText as string}
+                  getSelectedQuayIdsCallback={getSelectedQuayIdsCallback}
                 />
               ))}
             </div>

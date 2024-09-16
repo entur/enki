@@ -1,8 +1,7 @@
 import { Quay, StopPlace } from '../../../api';
 import QuayMarker from './QuayMarker';
-import { MapSearchResult } from '../JourneyPatternStopPointMap';
-import { useEffect, useState } from 'react';
-import StopPlaceDetails from '../StopPlaceDetails';
+import { getSelectedQuayIds } from '../helpers';
+import { FocusedMarker } from '../JourneyPatternStopPointMap';
 
 interface QuaysWrapperProps {
   stopPlace: StopPlace;
@@ -15,18 +14,9 @@ interface QuaysWrapperProps {
     stopPlaceId: string,
   ) => void;
   showQuaysCallback: (showAll: boolean, stopPlaceId: string) => void;
-  locatedSearchResult: MapSearchResult | undefined;
-  clearLocateSearchResult: () => void;
+  focusedMarker: FocusedMarker | undefined;
+  focusMarkerCallback: (focusedMarker: FocusedMarker | undefined) => void;
 }
-
-const getSelectedQuays = (
-  stopPlace: StopPlace,
-  stopPointSequenceIndexes: Record<string, number[]>,
-) => {
-  return stopPlace.quays.filter(
-    (quay: Quay) => stopPointSequenceIndexes[quay.id]?.length > 0,
-  );
-};
 
 const QuaysWrapper = ({
   stopPlace,
@@ -36,72 +26,13 @@ const QuaysWrapper = ({
   deleteStopPoint,
   showQuaysCallback,
   hideNonSelectedQuaysCallback,
-  locatedSearchResult,
-  clearLocateSearchResult,
+  focusedMarker,
+  focusMarkerCallback,
 }: QuaysWrapperProps) => {
-  const selectedQuays = getSelectedQuays(stopPlace, stopPointSequenceIndexes);
-  const selectedQuayIds: string[] = selectedQuays.map((quay: Quay) => quay.id);
-  // When locating a stop/quay from the search input results, choosing which quay to have with open popup:
-  const [quayToOpenPopup, setQuayToOpenPopup] = useState<Quay | undefined>(
-    undefined,
+  const selectedQuayIds: string[] = getSelectedQuayIds(
+    stopPlace,
+    stopPointSequenceIndexes,
   );
-
-  useEffect(() => {
-    if (!locatedSearchResult) {
-      setQuayToOpenPopup(undefined);
-      return;
-    }
-
-    if (
-      !locatedSearchResult.searchText.includes('Quay') &&
-      selectedQuays?.length == 0
-    ) {
-      // User searched for the stop place, and unless there is a quay selected, the stop shall be what we show
-      showQuaysCallback(false, stopPlace.id);
-      return;
-    }
-
-    const quayFullyMatchingSearch = locatedSearchResult?.searchText
-      ? stopPlace.quays.filter(
-          (q) => q.id === locatedSearchResult?.searchText,
-        )[0]
-      : undefined;
-    if (quayFullyMatchingSearch) {
-      setQuayToOpenPopup(quayFullyMatchingSearch);
-      return;
-    }
-
-    const quayContainingSearch = locatedSearchResult?.searchText
-      ? stopPlace.quays.filter((q) =>
-          q.id.includes(locatedSearchResult.searchText),
-        )[0]
-      : undefined;
-    if (quayContainingSearch) {
-      setQuayToOpenPopup(quayContainingSearch);
-      return;
-    }
-
-    const firstSelectedQuay =
-      selectedQuays.length > 0 ? selectedQuays[0] : undefined;
-    if (firstSelectedQuay) {
-      setQuayToOpenPopup(firstSelectedQuay);
-      return;
-    }
-
-    const justTheFirstQuay = stopPlace.quays[0];
-    setQuayToOpenPopup(justTheFirstQuay);
-  }, [locatedSearchResult, stopPlace, setQuayToOpenPopup, selectedQuays]);
-
-  useEffect(() => {
-    // If quayToOpenPopup happens to be something that is in hidden state, then time to un-hide it
-    if (
-      quayToOpenPopup &&
-      hideNonSelectedQuaysState &&
-      !selectedQuayIds.includes(quayToOpenPopup.id)
-    ) {
-      hideNonSelectedQuaysCallback(false, stopPlace.id);
-    }
-  }, [quayToOpenPopup, hideNonSelectedQuaysState, selectedQuayIds, stopPlace]);
 
   return (
     <>
@@ -129,8 +60,8 @@ const QuaysWrapper = ({
             }}
             addStopPointCallback={addStopPoint}
             deleteStopPointCallback={deleteStopPoint}
-            clearLocateSearchResult={clearLocateSearchResult}
-            isPopupToBeOpen={quay.id === quayToOpenPopup?.id}
+            clearLocateSearchResult={() => focusMarkerCallback(undefined)}
+            isPopupToBeOpen={quay.id === focusedMarker?.marker.id}
           />
         ) : (
           ''

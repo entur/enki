@@ -6,15 +6,14 @@ import { useIntl } from 'react-intl';
 import { AddIcon } from '@entur/icons';
 import StopPlaceDetails from './StopPlaceDetails';
 import { MutableRefObject, useEffect, useRef } from 'react';
-import { MapSearchResult } from './JourneyPatternStopPointMap';
+import { FocusedMarker } from './JourneyPatternStopPointMap';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
   showQuaysCallback: () => void;
   addStopPointCallback: (quayRef: string) => void;
-  isPopupToBeOpen: boolean;
-  locatedSearchResult: MapSearchResult | undefined;
-  clearLocateSearchResult: () => void;
+  focusedMarker: FocusedMarker | undefined;
+  focusMarkerCallback: (focusedMarker: FocusedMarker | undefined) => void;
 }
 
 export const getStopPlaceLocation = (stopPlace: StopPlace) => {
@@ -27,36 +26,24 @@ const StopPlaceMarker = ({
   stopPlace,
   showQuaysCallback,
   addStopPointCallback,
-  isPopupToBeOpen,
-  locatedSearchResult,
-  clearLocateSearchResult,
+  focusedMarker,
+  focusMarkerCallback,
 }: StopPlaceMarkerProps) => {
   const intl = useIntl();
   const { formatMessage } = intl;
   const stopPlaceLocation = getStopPlaceLocation(stopPlace);
+  const isPopupToBeOpen = stopPlace.id === focusedMarker?.stopPlace.id;
   const markerRef: MutableRefObject<any> = useRef();
 
   useEffect(() => {
-    if (isPopupToBeOpen && locatedSearchResult?.searchText.includes('Quay')) {
-      // User actually searched for a quay, let's get into 'show quays mode'
-      showQuaysCallback();
-      return;
-    }
     if (isPopupToBeOpen) {
       if (markerRef && markerRef.current) {
         markerRef.current.openPopup();
         // Mission accomplished, locateSearchResult can be cleared now
-        clearLocateSearchResult();
+        focusMarkerCallback(undefined);
       }
     }
-  }, [
-    isPopupToBeOpen,
-    markerRef,
-    clearLocateSearchResult,
-    locatedSearchResult,
-    showQuaysCallback,
-    stopPlace,
-  ]);
+  }, [isPopupToBeOpen, markerRef, focusMarkerCallback]);
 
   return (
     <Marker
