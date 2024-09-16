@@ -22,7 +22,7 @@ interface SearchResultProps {
 const determineQuayToFocus = (
   searchText: string,
   stopPlace: StopPlace,
-  getSelectedQuayIdsCallback: (stopPlace: StopPlace) => string[],
+  selectedQuayIds: string[],
 ) => {
   const quayFullyMatchingSearch = stopPlace.quays.filter(
     (q) => q.id === searchText,
@@ -41,9 +41,8 @@ const determineQuayToFocus = (
     return { id: quayContainingSearch.id, type: JourneyPatternMarkerType.QUAY };
   }
 
-  const selectedQuaysIds = getSelectedQuayIdsCallback(stopPlace);
   const firstSelectedQuayId =
-    selectedQuaysIds.length > 0 ? selectedQuaysIds[0] : undefined;
+    selectedQuayIds.length > 0 ? selectedQuayIds[0] : undefined;
   if (firstSelectedQuayId) {
     return { id: firstSelectedQuayId, type: JourneyPatternMarkerType.QUAY };
   }
@@ -74,12 +73,13 @@ const SearchResult = ({
       <TertiarySquareButton
         onClick={() => {
           let focusedMarker: JourneyPatternMarker;
-          if (searchText.includes('Quay')) {
+          const selectedQuayIds = getSelectedQuayIdsCallback(stopPlace);
+          if (searchText.includes('Quay') || selectedQuayIds?.length > 0) {
             // Find the most suitable quayId to open the popup of
             focusedMarker = determineQuayToFocus(
               searchText,
               stopPlace,
-              getSelectedQuayIdsCallback,
+              selectedQuayIds,
             );
           } else {
             focusedMarker = {
