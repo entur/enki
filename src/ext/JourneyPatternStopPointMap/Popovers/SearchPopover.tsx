@@ -1,7 +1,7 @@
 import './styles.scss';
 import { TextField } from '@entur/form';
 import { SearchIcon } from '@entur/icons';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import debounce from '../../../components/StopPointsEditor/common/debounce';
 import { searchStopPlaces } from '../../../actions/stopPlaces';
 import { useDispatch } from 'react-redux';
@@ -42,8 +42,12 @@ const SearchPopover = ({
   const searchedStopPlaces = stopPlacesState
     ? stopPlacesState.searchedStopPlaces
     : [];
-  const sortedStopPlaces =
-    searchedStopPlaces && [...searchedStopPlaces].sort(sortStopPlaces);
+  const sortedStopPlaces = useMemo(() => {
+    return searchedStopPlaces
+      ? [...searchedStopPlaces].sort(sortStopPlaces)
+      : [];
+  }, [searchedStopPlaces, sortStopPlaces]);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string | undefined>(undefined);

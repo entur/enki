@@ -2,7 +2,14 @@ import './styles.scss';
 import FormMap from '../../components/FormMap';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useAppSelector } from '../../store/hooks';
-import { Reducer, useCallback, useEffect, useReducer, useRef } from 'react';
+import {
+  Reducer,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+} from 'react';
 import StopPlaceMarker from './StopPlaceMarker';
 import { JourneyPatternStopPointMapProps } from './types';
 import { Polyline, ZoomControl } from 'react-leaflet';
@@ -83,12 +90,15 @@ export const JourneyPatternStopPointMap = ({
   ) as StopPlacesState;
   const stopPlaces = stopPlacesState?.stopPlaces || [];
   const searchedStopPlaces = stopPlacesState?.searchedStopPlaces;
-  const totalStopPlaces = stopPlaces ? [...stopPlaces] : [];
-  searchedStopPlaces?.forEach((stopPlace) => {
-    if (stopPlaces.filter((s) => s.id === stopPlace.id).length === 0) {
-      totalStopPlaces.push(stopPlace);
-    }
-  });
+  const totalStopPlaces = useMemo(() => {
+    const total = stopPlaces ? [...stopPlaces] : [];
+    searchedStopPlaces?.forEach((stopPlace) => {
+      if (stopPlaces.filter((s) => s.id === stopPlace.id).length === 0) {
+        total.push(stopPlace);
+      }
+    });
+    return total;
+  }, [stopPlaces, searchedStopPlaces]);
 
   const quayLocationsIndex = stopPlacesState?.quayLocationsIndex;
   const quayStopPlaceIndex = stopPlacesState?.quayStopPlaceIndex;
