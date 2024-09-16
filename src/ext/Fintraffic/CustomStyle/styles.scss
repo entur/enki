@@ -104,6 +104,12 @@ body {
 
 // Buttons:
 
+.eds-textfield__clear-button:hover {
+  color: var(--fds-color-interactive-200);
+  font-weight: 700;
+  background: none;
+}
+
 .eds-contrast .eds-square-button--tertiary {
   --icon-color: var(--fds-color-brand-black);
 }
@@ -793,4 +799,7 @@ section .notices {
 }
 .map-search-results-container .eds-square-button__button:hover {
   color: var(--fds-color-brand-white) !important;
+}
+.eds-textfield__divider {
+  display: none;
 }

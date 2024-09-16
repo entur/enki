@@ -83,8 +83,9 @@ const SearchPopover = ({
         prepend={<SearchIcon inline />}
         placeholder="Stop place by ID, name or quay ID"
         clearable={true}
+        value={searchText}
         onClear={() => {
-          setSearchText(undefined);
+          setSearchText('');
         }}
         onChange={(e: any) => {
           setIsTyping(true);
