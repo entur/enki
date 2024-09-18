@@ -1,6 +1,6 @@
-import { MessagesKey } from 'i18n/translationKeys';
+//import { MessagesKey } from 'i18n/translationKeys';
 
-export const messages: MessagesKey = {
+export const messages = {
   appLoadingMessage: 'Loading providers and organisations...',
   exportsLoadExportByIdErrorHeader: 'Load export',
   exportsLoadExportByIdErrorMessage:
