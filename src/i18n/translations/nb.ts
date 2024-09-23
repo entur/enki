@@ -635,7 +635,6 @@ export const messages = {
   oneQuay: '1 quay',
   numberOfQuays: '{count} quayer',
   addToJourneyPattern: 'Legg til',
-  quayTitle: 'Quay {name}',
   showNonSelectedQuays: 'Vis ikke valgte quayer',
   hideNonSelectedQuays: 'Skjul ikke valgte quayer',
   quayOrder: 'Rekkefølge',

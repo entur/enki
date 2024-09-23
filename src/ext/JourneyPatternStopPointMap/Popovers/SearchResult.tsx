@@ -9,7 +9,8 @@ import {
   FocusedMarker,
   JourneyPatternMarker,
   JourneyPatternMarkerType,
-} from '../JourneyPatternStopPointMap';
+} from '../types';
+import { determineQuayToFocus } from '../helpers';
 
 interface SearchResultProps {
   stopPlace: StopPlace;
@@ -18,38 +19,6 @@ interface SearchResultProps {
   focusMarkerCallback: (focusedMarker: FocusedMarker) => void;
   getSelectedQuayIdsCallback: (stopPlace: StopPlace) => string[];
 }
-
-const determineQuayToFocus = (
-  searchText: string,
-  stopPlace: StopPlace,
-  selectedQuayIds: string[],
-) => {
-  const quayFullyMatchingSearch = stopPlace.quays.filter(
-    (q) => q.id === searchText,
-  )[0];
-  if (quayFullyMatchingSearch) {
-    return {
-      id: quayFullyMatchingSearch.id,
-      type: JourneyPatternMarkerType.QUAY,
-    };
-  }
-
-  const quayContainingSearch = stopPlace.quays.filter((q) =>
-    q.id.includes(searchText),
-  )[0];
-  if (quayContainingSearch) {
-    return { id: quayContainingSearch.id, type: JourneyPatternMarkerType.QUAY };
-  }
-
-  const firstSelectedQuayId =
-    selectedQuayIds.length > 0 ? selectedQuayIds[0] : undefined;
-  if (firstSelectedQuayId) {
-    return { id: firstSelectedQuayId, type: JourneyPatternMarkerType.QUAY };
-  }
-
-  const justTheFirstQuay = stopPlace.quays[0];
-  return { id: justTheFirstQuay.id, type: JourneyPatternMarkerType.QUAY };
-};
 
 const SearchResult = ({
   stopPlace,

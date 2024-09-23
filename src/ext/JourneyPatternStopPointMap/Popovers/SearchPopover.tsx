@@ -3,7 +3,10 @@ import { TextField } from '@entur/form';
 import { SearchIcon } from '@entur/icons';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import debounce from '../../../components/StopPointsEditor/common/debounce';
-import { searchStopPlaces } from '../../../actions/stopPlaces';
+import {
+  clearStopPlacesSearchResults,
+  searchStopPlaces,
+} from '../../../actions/stopPlaces';
 import { useDispatch } from 'react-redux';
 import { VEHICLE_MODE } from '../../../model/enums';
 import { useAppSelector } from '../../../store/hooks';
@@ -12,7 +15,8 @@ import { StopPlace } from '../../../api';
 import { Label } from '@entur/typography';
 import { StopPlacesState } from '../../../reducers/stopPlaces';
 import { useIntl } from 'react-intl';
-import { FocusedMarker } from '../JourneyPatternStopPointMap';
+import { sortStopPlaces } from '../helpers';
+import { FocusedMarker } from '../types';
 
 interface SearchPopoverProps {
   transportMode: VEHICLE_MODE;
@@ -20,15 +24,7 @@ interface SearchPopoverProps {
   getSelectedQuayIdsCallback: (stopPlace: StopPlace) => string[];
 }
 
-const sortStopPlaces = (a: StopPlace, b: StopPlace) => {
-  if (a.name.value < b.name.value) {
-    return -1;
-  }
-  if (a.name.value > b.name.value) {
-    return 1;
-  }
-  return 0;
-};
+const defaultSearchResults: StopPlace[] = [];
 
 const SearchPopover = ({
   transportMode,
@@ -41,11 +37,9 @@ const SearchPopover = ({
   ) as StopPlacesState;
   const searchedStopPlaces = stopPlacesState
     ? stopPlacesState.searchedStopPlaces
-    : [];
+    : defaultSearchResults;
   const sortedStopPlaces = useMemo(() => {
-    return searchedStopPlaces
-      ? [...searchedStopPlaces].sort(sortStopPlaces)
-      : [];
+    return [...searchedStopPlaces].sort(sortStopPlaces);
   }, [searchedStopPlaces, sortStopPlaces]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -58,10 +52,6 @@ const SearchPopover = ({
     debounce(
       async (inputValue: string) => {
         setIsTyping(false);
-        if (searchText === inputValue) {
-          // well, just in case
-          return;
-        }
         setIsLoading(true);
         dispatch(searchStopPlaces(transportMode, inputValue));
       },
@@ -81,11 +71,12 @@ const SearchPopover = ({
         label={''}
         className={'search-input'}
         prepend={<SearchIcon inline />}
-        placeholder="Stop place by ID, name or quay ID"
+        placeholder={formatMessage({ id: 'mapSearchPlaceholder' })}
         clearable={true}
         value={searchText}
         onClear={() => {
           setSearchText('');
+          dispatch(clearStopPlacesSearchResults());
         }}
         onChange={(e: any) => {
           setIsTyping(true);
@@ -96,14 +87,14 @@ const SearchPopover = ({
       {searchText && (
         <div className={'map-search-results-wrapper'}>
           {isLoading && (
-            <div style={{ padding: '0.75rem' }}>
+            <div className={'map-search-status-label'}>
               <Label>
                 <i>{formatMessage({ id: 'mapSearchInProgress' })}</i>
               </Label>
             </div>
           )}
           {!isLoading && !isTyping && !(searchedStopPlaces?.length > 0) && (
-            <div style={{ padding: '0.75rem' }}>
+            <div className={'map-search-status-label'}>
               <Label>
                 <i>{formatMessage({ id: 'mapSearchNoResults' })}</i>
               </Label>
@@ -111,14 +102,7 @@ const SearchPopover = ({
           )}
           {!isLoading && searchedStopPlaces?.length > 0 ? (
             <div className={'map-search-results-container'}>
-              <Label
-                style={{
-                  marginTop: '0.5rem',
-                  marginLeft: '1rem',
-                  marginBottom: 0,
-                }}
-                className="required-input"
-              >
+              <Label className="required-input map-search-results-label">
                 <i>{formatMessage({ id: 'mapSearchResults' })}</i>
               </Label>
               {sortedStopPlaces.map((stopPlace: StopPlace, i: number) => (

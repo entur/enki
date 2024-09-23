@@ -1,7 +1,7 @@
 import { Quay, StopPlace } from '../../../api';
 import QuayMarker from './QuayMarker';
 import { getSelectedQuayIds } from '../helpers';
-import { FocusedMarker } from '../JourneyPatternStopPointMap';
+import { FocusedMarker } from '../types';
 
 interface QuaysWrapperProps {
   stopPlace: StopPlace;
@@ -15,7 +15,7 @@ interface QuaysWrapperProps {
   ) => void;
   showQuaysCallback: (showAll: boolean, stopPlaceId: string) => void;
   focusedMarker: FocusedMarker | undefined;
-  focusMarkerCallback: (focusedMarker: FocusedMarker | undefined) => void;
+  clearFocusedMarker: () => void;
 }
 
 const QuaysWrapper = ({
@@ -27,7 +27,7 @@ const QuaysWrapper = ({
   showQuaysCallback,
   hideNonSelectedQuaysCallback,
   focusedMarker,
-  focusMarkerCallback,
+  clearFocusedMarker,
 }: QuaysWrapperProps) => {
   const selectedQuayIds: string[] = getSelectedQuayIds(
     stopPlace,
@@ -60,7 +60,7 @@ const QuaysWrapper = ({
             }}
             addStopPointCallback={addStopPoint}
             deleteStopPointCallback={deleteStopPoint}
-            clearLocateSearchResult={() => focusMarkerCallback(undefined)}
+            clearFocusedMarker={clearFocusedMarker}
             isPopupToBeOpen={quay.id === focusedMarker?.marker.id}
           />
         ) : (

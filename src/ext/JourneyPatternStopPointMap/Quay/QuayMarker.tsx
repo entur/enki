@@ -3,10 +3,11 @@ import { getMarkerIcon } from '../markers';
 import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { Heading5 } from '@entur/typography';
-import React, { MutableRefObject, useEffect, useRef } from 'react';
+import React, { MutableRefObject, useRef } from 'react';
 import QuaySequenceIndexTooltip from './QuaySequenceIndexTooltip';
 import QuayPositionChips from './QuayPositionChips';
 import QuayPopupButtonPanel from './QuayPopupButtonPanel';
+import { usePopupOpeningOnFocus } from '../hooks';
 
 interface QuayMarkerProps {
   quay: Quay;
@@ -21,7 +22,7 @@ interface QuayMarkerProps {
   addStopPointCallback: (quayId: string) => void;
   deleteStopPointCallback: (index: number) => void;
   isPopupToBeOpen: boolean;
-  clearLocateSearchResult: () => void;
+  clearFocusedMarker: () => void;
 }
 
 const QuayMarker = ({
@@ -37,21 +38,12 @@ const QuayMarker = ({
   addStopPointCallback,
   deleteStopPointCallback,
   isPopupToBeOpen,
-  clearLocateSearchResult,
+  clearFocusedMarker,
 }: QuayMarkerProps) => {
   const intl = useIntl();
   const { formatMessage } = intl;
   const markerRef: MutableRefObject<any> = useRef();
-
-  useEffect(() => {
-    if (isPopupToBeOpen) {
-      if (markerRef && markerRef.current) {
-        markerRef.current.openPopup();
-        // Mission accomplished, locateSearchResult can be cleared now
-        clearLocateSearchResult();
-      }
-    }
-  }, [isPopupToBeOpen, markerRef, clearLocateSearchResult]);
+  usePopupOpeningOnFocus(isPopupToBeOpen, markerRef, clearFocusedMarker);
 
   return (
     <Marker

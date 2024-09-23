@@ -40,6 +40,17 @@
   padding-bottom: 0.7rem;
 }
 
+.map-search-status-label {
+  padding: 0.75rem !important;
+}
+
+.map-search-results-label {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  margin-bottom: 0;
+}
+
+// These had to be explicitly stated because otherwise aren't applied
 .map-search-results-container .eds-label,
 .search-popover .eds-label {
   color: var(--components-typography-label-standard-text-accent) !important;

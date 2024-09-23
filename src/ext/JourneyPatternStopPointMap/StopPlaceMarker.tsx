@@ -5,15 +5,16 @@ import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { AddIcon } from '@entur/icons';
 import StopPlaceDetails from './StopPlaceDetails';
-import { MutableRefObject, useEffect, useRef } from 'react';
-import { FocusedMarker } from './JourneyPatternStopPointMap';
+import { MutableRefObject, useRef } from 'react';
+import { FocusedMarker } from './types';
+import { usePopupOpeningOnFocus } from './hooks';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
   showQuaysCallback: () => void;
   addStopPointCallback: (quayRef: string) => void;
   focusedMarker: FocusedMarker | undefined;
-  focusMarkerCallback: (focusedMarker: FocusedMarker | undefined) => void;
+  clearFocusedMarker: () => void;
 }
 
 export const getStopPlaceLocation = (stopPlace: StopPlace) => {
@@ -27,23 +28,14 @@ const StopPlaceMarker = ({
   showQuaysCallback,
   addStopPointCallback,
   focusedMarker,
-  focusMarkerCallback,
+  clearFocusedMarker,
 }: StopPlaceMarkerProps) => {
   const intl = useIntl();
   const { formatMessage } = intl;
   const stopPlaceLocation = getStopPlaceLocation(stopPlace);
   const isPopupToBeOpen = stopPlace.id === focusedMarker?.stopPlace.id;
   const markerRef: MutableRefObject<any> = useRef();
-
-  useEffect(() => {
-    if (isPopupToBeOpen) {
-      if (markerRef && markerRef.current) {
-        markerRef.current.openPopup();
-        // Mission accomplished, locateSearchResult can be cleared now
-        focusMarkerCallback(undefined);
-      }
-    }
-  }, [isPopupToBeOpen, markerRef, focusMarkerCallback]);
+  usePopupOpeningOnFocus(isPopupToBeOpen, markerRef, clearFocusedMarker);
 
   return (
     <Marker

@@ -60,3 +60,8 @@ export const searchStopPlaces =
       sentryCaptureException(e);
     }
   };
+
+export const clearStopPlacesSearchResults =
+  (): AppThunk => async (dispatch) => {
+    dispatch(receiveSearchedStopPlacesActionCreator([]));
+  };
