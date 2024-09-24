@@ -1,0 +1,73 @@
+@import '../../../../node_modules/@entur/tokens/dist/styles';
+
+.search-popover {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+  background: white;
+  color: black;
+  background-clip: padding-box;
+  box-shadow: none;
+  border-radius: 4px;
+  cursor: default;
+}
+
+.search-input {
+  min-width: 21rem;
+  width: auto;
+}
+
+.map-search-results-wrapper {
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-top: none;
+}
+
+.map-search-results-container {
+  max-height: 14rem;
+  overflow: auto;
+  padding-bottom: 0.5rem;
+}
+
+.map-search-result {
+  margin: 0.7rem 1.15rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.map-search-result--not-last {
+  border-bottom: 1px solid $colors-greys-grey20;
+  padding-bottom: 0.7rem;
+}
+
+.map-search-status-label {
+  padding: 0.75rem !important;
+}
+
+.map-search-results-label {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  margin-bottom: 0;
+}
+
+// These had to be explicitly stated because otherwise aren't applied
+.map-search-results-container .eds-label,
+.search-popover .eds-label {
+  color: var(--components-typography-label-standard-text-accent) !important;
+}
+.map-search-results-container .eds-square-button__button {
+  color: $colors-greys-grey20;
+}
+.search-popover .eds-form-control {
+  padding: 0.4rem 1rem 0.25rem;
+  font-family: 'Nationale', serif;
+}
+.search-popover .eds-form-control-wrapper:focus-within {
+  border-color: var(--components-form-baseform-standard-border-interactive);
+}
+.search-popover .eds-form-control-wrapper:hover {
+  border-color: var(--components-form-baseform-standard-border-interactive);
+}
+.search-popover .eds-contrast .eds-form-control-wrapper:focus-within {
+  outline: 1px solid var(--components-form-baseform-standard-border-interactive);
+}

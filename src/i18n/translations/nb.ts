@@ -635,8 +635,11 @@ export const messages = {
   oneQuay: '1 quay',
   numberOfQuays: '{count} quayer',
   addToJourneyPattern: 'Legg til',
-  quayTitle: 'Quay {name}',
   showNonSelectedQuays: 'Vis ikke valgte quayer',
   hideNonSelectedQuays: 'Skjul ikke valgte quayer',
   quayOrder: 'Rekkefølge',
+  mapSearchInProgress: 'Søker...',
+  mapSearchNoResults: 'Ingen resultater funnet',
+  mapSearchResults: 'Resultater:',
+  mapSearchPlaceholder: 'Stoppested etter ID, navn eller plattform-ID',
 };

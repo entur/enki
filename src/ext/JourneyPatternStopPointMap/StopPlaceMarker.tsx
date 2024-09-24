@@ -3,56 +3,49 @@ import { Button } from '@entur/button';
 import { getMarkerIcon } from './markers';
 import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
-import { Heading5 } from '@entur/typography';
 import { AddIcon } from '@entur/icons';
+import StopPlaceDetails from './StopPlaceDetails';
+import { MutableRefObject, useRef } from 'react';
+import { FocusedMarker } from './types';
+import { usePopupOpeningOnFocus } from './hooks';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
   showQuaysCallback: () => void;
   addStopPointCallback: (quayRef: string) => void;
+  focusedMarker: FocusedMarker | undefined;
+  clearFocusedMarker: () => void;
 }
+
+export const getStopPlaceLocation = (stopPlace: StopPlace) => {
+  return stopPlace.centroid && stopPlace.quays.length > 1
+    ? stopPlace.centroid.location
+    : stopPlace.quays[0].centroid.location;
+};
 
 const StopPlaceMarker = ({
   stopPlace,
   showQuaysCallback,
   addStopPointCallback,
+  focusedMarker,
+  clearFocusedMarker,
 }: StopPlaceMarkerProps) => {
   const intl = useIntl();
   const { formatMessage } = intl;
-  const stopPlaceLocation =
-    stopPlace.centroid && stopPlace.quays.length > 1
-      ? stopPlace.centroid.location
-      : stopPlace.quays[0].centroid.location;
+  const stopPlaceLocation = getStopPlaceLocation(stopPlace);
+  const isPopupToBeOpen = stopPlace.id === focusedMarker?.stopPlace.id;
+  const markerRef: MutableRefObject<any> = useRef();
+  usePopupOpeningOnFocus(isPopupToBeOpen, markerRef, clearFocusedMarker);
 
   return (
     <Marker
       key={'stop-place-marker-' + stopPlace.id}
+      ref={markerRef}
       icon={getMarkerIcon(stopPlace.transportMode, true, false)}
       position={[stopPlaceLocation.latitude, stopPlaceLocation.longitude]}
     >
       <Popup>
-        <section>
-          <Heading5 className={'popup-title'}>{stopPlace.name.value}</Heading5>
-          <div className={'popup-id'}>{stopPlace.id}</div>
-        </section>
-
-        <section>
-          {formatMessage({ id: stopPlace.transportMode?.toLowerCase() })}
-        </section>
-
-        {stopPlace.quays.length > 1 ? (
-          <section>
-            {formatMessage(
-              { id: 'numberOfQuays' },
-              { count: stopPlace.quays.length },
-            )}
-          </section>
-        ) : (
-          <section>
-            <div>{formatMessage({ id: 'oneQuay' })}:</div>
-            <div className={'popup-id'}>{stopPlace.quays[0].id}</div>
-          </section>
-        )}
+        <StopPlaceDetails stopPlace={stopPlace} />
 
         {stopPlace.quays?.length > 1 ? (
           <Button

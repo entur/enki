@@ -557,8 +557,8 @@ export const STOP_PLACE_BY_QUAY_REF_QUERY = gql`
 `;
 
 export const getStopPlacesQuery = `
-  query StopPlacesQuery($transportMode:TransportModeEnumeration) {
-    stopPlaces(transportMode: $transportMode) {
+  query StopPlacesQuery($transportMode:TransportModeEnumeration, $searchText:String) {
+    stopPlaces(transportMode: $transportMode, searchText: $searchText) {
       id
       name {
         value
