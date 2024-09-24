@@ -40,7 +40,7 @@ const SearchPopover = ({
     : defaultSearchResults;
   const sortedStopPlaces = useMemo(() => {
     return [...searchedStopPlaces].sort(sortStopPlaces);
-  }, [searchedStopPlaces, sortStopPlaces]);
+  }, [searchedStopPlaces]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState<boolean>(false);

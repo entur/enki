@@ -22,6 +22,8 @@ import SearchPopover from './Popovers/SearchPopover';
 import { getSelectedQuayIds, onFocusedMarkerNewMapState } from './helpers';
 import { useMapState } from './hooks';
 
+const defaultStopPlaces: StopPlace[] = [];
+
 export const JourneyPatternStopPointMap = ({
   pointsInSequence,
   addStopPoint,
@@ -32,7 +34,7 @@ export const JourneyPatternStopPointMap = ({
   const stopPlacesState: StopPlacesState = useAppSelector(
     (state) => state.stopPlaces,
   ) as StopPlacesState;
-  const stopPlaces = stopPlacesState?.stopPlaces || [];
+  const stopPlaces = stopPlacesState?.stopPlaces || defaultStopPlaces;
   const searchedStopPlaces = stopPlacesState?.searchedStopPlaces;
   const totalStopPlaces = useMemo(() => {
     const total = [...stopPlaces];
