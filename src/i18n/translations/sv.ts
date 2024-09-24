@@ -60,6 +60,7 @@ export const messages = {
   userMenuMenuItemTextLanguage: 'Språk',
   userMenuMenuItemTextNorwegian: 'Norsk',
   userMenuMenuItemTextSwedish: 'Svenska',
+  userMenuMenuItemTextFinnish: 'Suomi',
   languagePickerAriaLabel: 'Välj språk',
   navBarDataProvider: 'Välj dataleverantör',
   redirectTitle: 'Ändringar är inte sparade!',

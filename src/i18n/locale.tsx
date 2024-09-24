@@ -17,7 +17,7 @@ export const Locale = ['nb', 'en', 'sv'] as const;
  */
 export type Locale = (typeof Locale)[number];
 
-export const getLanguagePickerFlagIcon = (locale: Locale) => {
+export const getLanguagePickerFlagIcon = (locale: any) => {
   switch (locale) {
     case 'nb':
       return <NorwayIcon inline />;
@@ -25,13 +25,25 @@ export const getLanguagePickerFlagIcon = (locale: Locale) => {
       return <SwedenIcon inline />;
     case 'en':
       return <UKIcon inline />;
+    case 'fi':
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 18 11"
+        >
+          <rect width="18" height="11" fill="#fff" />
+          <path d="M0,5.5h18M6.5,0v11" stroke="#002F6C" stroke-width="3" />
+        </svg>
+      );
     default: {
       return <NorwayIcon inline />;
     }
   }
 };
 export const getLanguagePickerLocaleMessageKey = (
-  locale: Locale,
+  locale: any,
 ): keyof MessagesKey => {
   switch (locale) {
     case 'en':
@@ -40,6 +52,8 @@ export const getLanguagePickerLocaleMessageKey = (
       return 'userMenuMenuItemTextSwedish';
     case 'nb':
       return 'userMenuMenuItemTextNorwegian';
+    case 'fi':
+      return 'userMenuMenuItemTextFinnish';
     default:
       return 'userMenuMenuItemTextNorwegian';
   }
