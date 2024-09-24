@@ -10,14 +10,14 @@ export const DEFAULT_LOCALE: Locale = 'nb';
 /**
  * When adding new translations, the locale needs to be added to the Locale array.
  */
-export const Locale = ['nb', 'en', 'sv'] as const;
+export const Locale = ['nb', 'en', 'sv', 'fi'] as const;
 
 /**
  * The Locale type is generated from the list of supported locales
  */
 export type Locale = (typeof Locale)[number];
 
-export const getLanguagePickerFlagIcon = (locale: any) => {
+export const getLanguagePickerFlagIcon = (locale: Locale) => {
   switch (locale) {
     case 'nb':
       return <NorwayIcon inline />;
@@ -43,7 +43,7 @@ export const getLanguagePickerFlagIcon = (locale: any) => {
   }
 };
 export const getLanguagePickerLocaleMessageKey = (
-  locale: any,
+  locale: Locale,
 ): keyof MessagesKey => {
   switch (locale) {
     case 'en':

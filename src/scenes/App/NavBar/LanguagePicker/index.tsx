@@ -57,7 +57,7 @@ const LanguagePicker = () => {
     <div className="language-picker-wrapper">
       {toggled && (
         <div className="language-picker__dropdown">
-          {(supportedLocales || Locale).map((locale: any) => (
+          {(supportedLocales || Locale).map((locale: Locale) => (
             <FloatingButton
               key={locale}
               className="language-picker__item"
