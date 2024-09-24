@@ -803,3 +803,7 @@ section .notices {
 .eds-textfield__divider {
   display: none;
 }
+
+.eds-contrast .eds-floating-button {
+  color: var(--fds-color-brand-black);
+}
