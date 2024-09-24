@@ -1,0 +1,7 @@
+.app-layout {
+  font-family: 'Public Sans';
+  min-height: 100%;
+  display: grid;
+  /* Grid division: Fintraffic navbar - VACO navbar - service wide notification - Page content - Footer */
+  grid-template-rows: auto auto auto 1fr auto;
+}

@@ -1,0 +1,40 @@
+.footer {
+  color: white;
+  background-color: black;
+  width: 100%;
+  height: 248px;
+  padding: 0.5rem 1.5rem;
+
+  &__brand {
+    display: flex;
+    flex-basis: 100%;
+    justify-content: space-between;
+    border-bottom: 1px solid #404040;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+
+  &__links-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+  }
+
+  &__link-column {
+    margin-right: 4rem;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #9696aa;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+}

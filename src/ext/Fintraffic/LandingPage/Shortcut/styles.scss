@@ -1,0 +1,47 @@
+.shortcut-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  margin-top: 1.5rem;
+  a {
+    text-decoration: none;
+    width: 45%;
+  }
+}
+
+.shortcut-card {
+  display: flex;
+  cursor: pointer;
+  flex-direction: row;
+  margin-right: 3rem;
+  padding: 1.25rem;
+  border-radius: 2px;
+
+  &__icon {
+    background: #1777f8;
+    width: 48px;
+    height: 48px;
+    padding: 8px;
+    margin-right: 1.5rem;
+  }
+
+  &__label {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 110%;
+    margin-bottom: 0.75rem;
+  }
+
+  &__description {
+    color: var(--neutral-300, #505064);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+  }
+}
+
+.shortcut-card:hover {
+  background-color: var(--Colors-Interactive-50, #eff8ff);
+}
