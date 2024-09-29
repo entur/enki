@@ -80,7 +80,7 @@
     "@types/react-modal": "3.16.3",
     "@types/redux-immutable-state-invariant": "2.1.4",
     "@types/uuid": "9.0.8",
-    "@vitejs/plugin-react": "4.3.1",
+    "@vitejs/plugin-react": "4.3.2",
     "@vitest/coverage-v8": "1.6.0",
     "@vitest/ui": "1.6.0",
     "check-node-version": "4.2.1",
