@@ -2,6 +2,41 @@
   font-family: 'Public Sans';
   min-height: 100%;
   display: grid;
-  /* Grid division: Fintraffic navbar - VACO navbar - service wide notification - Page content - Footer */
-  grid-template-rows: auto auto auto 1fr auto;
+  /* Grid division: Fintraffic navbar - VACO navbar - Page content - Footer */
+  grid-template-rows: auto auto 1fr auto;
+}
+
+.page-content {
+  padding: 3rem 5rem;
+  overflow-x: hidden;
+  width: 100%;
+
+  h1 {
+    font-size: 42px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h6,
+  h5,
+  h4,
+  h3,
+  h2,
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    line-height: 110%;
+  }
+}
+
+.page-intro {
+  margin: 2.5rem 0;
+  width: 100%;
+  white-space: pre-line;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6em;
 }

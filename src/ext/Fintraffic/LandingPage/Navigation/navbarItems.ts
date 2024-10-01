@@ -1,10 +1,9 @@
-import { FdsIconType } from '../../../../coreui-components/src/fds-icon';
 import {
   FdsNavigationItem,
   FdsNavigationItemPosition,
-} from '../../../../coreui-components/src/fds-navigation';
-import { TFunction } from 'i18next';
-import { createAccount, login } from '../../../hooks/auth';
+} from '../../Fds/fds-navigation';
+import React from 'react';
+import { MessageDescriptor, PrimitiveType } from 'react-intl';
 
 export const raeItem = (): FdsNavigationItem => {
   return {
@@ -14,68 +13,65 @@ export const raeItem = (): FdsNavigationItem => {
   };
 };
 
-export const aboutItem = (
-  t: TFunction<'translation', undefined>,
-): FdsNavigationItem => {
+class FormatXMLElementFn<T, U> {}
+
+export const aboutItem = (formatMessage: any): FdsNavigationItem => {
   return {
-    label: t('vaco:about'),
+    label: formatMessage({ id: 'about' }),
     value: '/about',
     dropDownItems: [
       {
-        label: t('vaco:instructions'),
+        label: formatMessage({ id: 'instructions' }),
         value:
-          'https://www.fintraffic.fi/fi/fintraffic/validointi-ja-konvertointipalvelu',
-        icon: 'external-link' as FdsIconType,
+          'https://www.fintraffic.fi/fi/digitaalisetpalvelut/fintrafficin-datapalvelut/liikkumisen-tietopalvelut/joukkoliikenteen-tietopalvelut/rae',
+        icon: 'external-link',
       },
       {
-        label: t('vaco:terms'),
+        label: formatMessage({ id: 'terms' }),
         value:
-          'https://www.fintraffic.fi/fi/fintraffic/validointi-ja-konvertointipalvelu',
-        icon: 'external-link' as FdsIconType,
+          'https://www.fintraffic.fi/fi/digitaalisetpalvelut/fintrafficin-datapalvelut/liikkumisen-tietopalvelut/joukkoliikenteen-tietopalvelut/rae',
+        icon: 'external-link',
       },
       {
-        label: t('vaco:privacy'),
+        label: formatMessage({ id: 'privacy' }),
         value:
-          'https://www.fintraffic.fi/fi/fintraffic/validointi-ja-konvertointipalvelu',
-        icon: 'external-link' as FdsIconType,
+          'https://www.fintraffic.fi/fi/digitaalisetpalvelut/fintrafficin-datapalvelut/liikkumisen-tietopalvelut/joukkoliikenteen-tietopalvelut/rae',
+        icon: 'external-link',
       },
     ],
   };
 };
 
-export const supportItem = (
-  t: TFunction<'translation', undefined>,
-): FdsNavigationItem => {
+export const supportItem = (formatMessage: any): FdsNavigationItem => {
   return {
-    label: t('vaco:support'),
+    label: formatMessage({ id: 'support' }) as string,
     value: '',
     dropDownItems: [
       {
-        label: t('vaco:channels'),
+        label: formatMessage({ id: 'channels' }) as string,
         value:
-          'https://www.fintraffic.fi/fi/fintraffic/validointi-ja-konvertointipalvelu',
-        icon: 'external-link' as FdsIconType,
+          'https://www.fintraffic.fi/fi/digitaalisetpalvelut/fintrafficin-datapalvelut/liikkumisen-tietopalvelut/joukkoliikenteen-tietopalvelut/rae',
+        icon: 'external-link',
       },
     ],
   };
 };
 
 export const loginItem = (
-  t: TFunction<'translation', undefined>,
+  formatMessage: any,
+  login: any,
 ): FdsNavigationItem => {
   return {
-    label: t('vaco:login'),
-    value: login,
+    label: formatMessage({ id: 'login' }),
+    value: () => login(window.location.href),
     position: FdsNavigationItemPosition.right,
   };
 };
 
-export const registerItem = (
-  t: TFunction<'translation', undefined>,
-): FdsNavigationItem => {
+export const registerItem = (formatMessage: any): FdsNavigationItem => {
   return {
-    label: t('vaco:register'),
-    value: createAccount,
+    label: formatMessage({ id: 'register' }),
+    value: 'createAccount',
     position: FdsNavigationItemPosition.right,
   };
 };
@@ -85,7 +81,7 @@ export const localeItem = (): FdsNavigationItem => {
     label: '',
     value: '/locale',
     position: FdsNavigationItemPosition.right,
-    icon: 'globe' as FdsIconType,
+    icon: 'globe',
     dropDownItems: [
       {
         label: 'Suomeksi',
@@ -108,14 +104,14 @@ export const localeItem = (): FdsNavigationItem => {
 
 export const getSelectedLocaleItem = (
   localeCode: string,
-  translate: TFunction<'translation', undefined>,
+  formatMessage: any,
 ): FdsNavigationItem => {
   const selectedLocale: FdsNavigationItem = localeItem();
-  selectedLocale.label = translate('locales:' + localeCode);
+  selectedLocale.label = formatMessage({ id: 'locale' + localeCode });
   selectedLocale.dropDownItems = localeItem().dropDownItems?.map(
     (i: FdsNavigationItem) => {
       if ((i.value as string).includes(localeCode)) {
-        i.icon = 'check' as FdsIconType;
+        i.icon = 'check';
       } else {
         i.icon = undefined;
       }

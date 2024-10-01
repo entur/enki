@@ -1,5 +1,5 @@
 import './styles.scss';
-//import { ReactComponent as FintrafficLogo } from '../../static/svg/fintraffic_logo.svg'
+import FintrafficLogo from '../../static/svg/fintraffic_logo.svg?react';
 import { useIntl } from 'react-intl';
 
 const Footer = () => {
@@ -19,7 +19,7 @@ const Footer = () => {
               flexShrink: 0,
             }}
           >
-            {/*<FintrafficLogo />*/}
+            {<FintrafficLogo />}
           </div>
         </a>
         <a href={'https://www.fintraffic.fi/' + selectedLocaleCode}>
@@ -63,6 +63,15 @@ const Footer = () => {
                 }
               >
                 {formatMessage({ id: 'train' })}
+              </a>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`https://www.fintraffic.fi/${selectedLocaleCode}/${formatMessage({ id: 'fintrafficAppLink' })}`}
+              >
+                {formatMessage({ id: 'fintrafficApp' })}
               </a>
             </li>
           </ul>

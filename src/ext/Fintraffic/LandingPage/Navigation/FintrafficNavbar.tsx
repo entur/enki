@@ -1,5 +1,4 @@
-import MyImageSvg from '../../../static/svg/fintraffic_logo.svg';
-//import FintrafficLogo from '../../static/svg/fintraffic_logo.svg'
+import FintrafficLogo from '../../static/svg/fintraffic_logo.svg?react';
 import Navbar from './Navbar';
 import { useIntl } from 'react-intl';
 import {
@@ -32,6 +31,10 @@ const FintrafficNavbar = () => {
         (selectedLocaleCode === 'sv' ? 'se' : selectedLocaleCode),
     },
     {
+      label: formatMessage({ id: 'fintrafficApp' }),
+      value: `https://www.fintraffic.fi/${selectedLocaleCode}/${formatMessage({ id: 'fintrafficAppLink' })}`,
+    },
+    {
       label: 'Digitraffic',
       value: 'https://www.digitraffic.fi/',
     },
@@ -43,17 +46,12 @@ const FintrafficNavbar = () => {
       label: formatMessage({ id: 'nap' }),
       value: 'https://finap.fi/#/',
     },
-    {
-      label: 'VACO',
-      value: '/',
-    },
   ];
   return (
     <Navbar
       variant={FdsNavigationVariant.primary}
       items={items}
       barIndex={0}
-      selectedItem={items[items.length - 1]}
       isSelectedItemStatic={true}
     >
       <a
@@ -65,10 +63,12 @@ const FintrafficNavbar = () => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            width: '100px',
+            width: '106px',
             flexShrink: 0,
           }}
-        ></div>
+        >
+          <FintrafficLogo />
+        </div>
       </a>
     </Navbar>
   );

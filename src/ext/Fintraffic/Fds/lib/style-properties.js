@@ -31,3 +31,6 @@ export const FdsColorNeutral100 = /*#__PURE__*/ unsafeCSS(
 export const FdsColorNeutral300 = /*#__PURE__*/ unsafeCSS(
   'var(--fds-color-neutral-300, #505064)',
 );
+export const FdsColorText300 = /*#__PURE__*/ unsafeCSS(
+  'var(--fds-color-text-300, #9696aa)',
+);

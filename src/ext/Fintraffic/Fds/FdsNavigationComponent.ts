@@ -1,4 +1,4 @@
-import FdsNavigation from './fds-navigation.ts';
+import FdsNavigation from './fds-navigation';
 import * as React from 'react';
 import { createComponent } from '@lit-labs/react';
 

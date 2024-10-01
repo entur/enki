@@ -3,7 +3,6 @@ import {
   FdsColorBrandWhite,
   FdsColorNeutral100,
   FdsColorText300,
-  FdsSizeToken,
   uiLabelTextClass,
 } from './lib';
 import {
@@ -18,7 +17,6 @@ import {
 import { nothing, TemplateResult } from 'lit-html';
 import { customElement, property, state } from 'lit/decorators.js';
 import './fds-icon';
-import { FdsIconType } from './fds-icon';
 import './global-types';
 import { styleMap } from 'lit/directives/style-map.js';
 
@@ -32,8 +30,7 @@ export interface FdsNavigationItem {
   value: unknown;
   position?: FdsNavigationItemPosition;
   mobileOrder?: number;
-  icon?: FdsIconType;
-  iconSize?: FdsSizeToken;
+  icon?: string;
   bold?: boolean;
   dropDownItems?: FdsNavigationItem[];
   isCheckable?: boolean;
@@ -100,36 +97,7 @@ export default class FdsNavigation extends LitElement {
             ),
           )}
       </ul>
-      <div class="navigation__button-wrapper">
-        ${this.renderNavigationButton()}
-      </div>
     </div>`;
-  }
-
-  renderNavigationButton(): TemplateResult {
-    let icon;
-    switch (this.variant) {
-      case FdsNavigationVariant.primary:
-        icon = this._open
-          ? html`<fds-icon icon="chevron-up"></fds-icon>`
-          : html`<fds-icon icon="chevron-down"></fds-icon>`;
-        break;
-      case FdsNavigationVariant.secondary:
-        icon = html`<fds-icon icon="menu"></fds-icon>`;
-        break;
-    }
-    return html`
-      <button
-        class="navigation__button navigation__button--${this.variant}"
-        type="button"
-        @click=${this.handleNavigationClick}
-      >
-        <span class="navigation__label ui-label-text"
-          >${this.mobileNavText}</span
-        >
-        ${icon}
-      </button>
-    `;
   }
 
   handleNavigationClick(): void {

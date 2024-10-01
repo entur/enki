@@ -43,11 +43,6 @@ const AuthenticatedApp = () => {
   const configStateLoaded = useAppSelector(selectConfigLoaded);
   const auth = useAuth();
   const config = useConfig();
-  console.log('auth', authStateLoaded, auth);
-  console.log('config', configStateLoaded, config);
-
-  console.log('auth', authStateLoaded);
-  console.log('config', configStateLoaded);
 
   dispatch(updateConfig(config));
   dispatch(updateAuth(auth));

@@ -23,4 +23,10 @@ export const messages = {
   redirecting: 'Redirecting...',
   loginIntro: 'Log in to start using the service.',
   registerIntro: 'Create an account if you are new to the service.',
+  shortcuts: 'Shortcuts',
+  localeen: 'In English',
+  localefi: 'Suomeksi',
+  localesv: 'På Svenska',
+  fintrafficApp: 'Fintraffic App',
+  fintrafficAppLink: 'fintraffic_app',
 };

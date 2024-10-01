@@ -5,16 +5,17 @@ import {
 } from '../../Fds/fds-navigation';
 import { FdsNavigationComponent } from '../../Fds/FdsNavigationComponent';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useIntl } from 'react-intl';
+import { Locale } from '../../../../i18n';
+import { updateLocale } from '../../../../i18n/intlSlice';
+import { useDispatch } from 'react-redux';
 
 interface NavbarProps {
   items: FdsNavigationItem[];
   barIndex: number;
   variant: FdsNavigationVariant;
-  selectedItem: FdsNavigationItem;
+  selectedItem?: FdsNavigationItem | undefined;
   children?: React.ReactNode;
   isSelectedItemStatic?: boolean;
-  languageSelectionCallback?: (newLocaleCode: string) => void;
 }
 
 const Navbar = ({
@@ -24,43 +25,42 @@ const Navbar = ({
   selectedItem: initialSelectedItem,
   children,
   isSelectedItemStatic,
-  languageSelectionCallback,
 }: NavbarProps) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedItem, setSelectedItem] =
-    useState<FdsNavigationItem>(initialSelectedItem);
-  const intl = useIntl();
-  const { formatMessage } = intl;
-  const selectedLocaleCode: string = intl.locale;
+  const [selectedItem, setSelectedItem] = useState<
+    FdsNavigationItem | undefined
+  >(initialSelectedItem);
 
-  /*const handleLanguageSelection = useCallback(
-    async (value: string) => {
-      const newLocaleCode = value.split('/')[2]
-      await i18n.changeLanguage(newLocaleCode)
-      if (languageSelectionCallback) {
-        languageSelectionCallback(newLocaleCode)
-      }
-      localStorage.setItem(localStorageKey, newLocaleCode)
+  const handleLanguageSelection = useCallback(
+    async (localeValue: string) => {
+      const newLocaleCode = localeValue.split('/')[2] as Locale;
+      dispatch(updateLocale(newLocaleCode));
     },
-    [languageSelectionCallback, i18n]
-  )*/
+    [dispatch],
+  );
 
   const useSelectListener: EventListenerOrEventListenerObject = useCallback(
     (e: Event) => {
       const detail = (e as CustomEvent).detail as FdsNavigationItem;
-
       if (typeof detail.value !== 'string') {
-        // e.g. login or register
-        //const msalMethod = detail.value as MsalMethod
-        //msalMethod(instance)
+        try {
+          // @ts-ignore
+          detail.value();
+        } catch (error) {
+          console.error(
+            'Login or register from navigation menu could not be invoked',
+            error,
+          );
+        }
         return;
       }
 
       if (detail.value.startsWith('/locales')) {
-        /*handleLanguageSelection(detail.value).catch((err) => {
-          console.error('Selected language could not be fetched', err)
-        })*/
+        handleLanguageSelection(detail.value as Locale).catch((err) => {
+          console.error('Selected language could not be fetched', err);
+        });
         return;
       }
 
@@ -75,7 +75,7 @@ const Navbar = ({
         navigate(route);
       }
     },
-    [/*handleLanguageSelection, instance,*/ navigate],
+    [handleLanguageSelection, navigate],
   );
 
   useEffect(() => {
@@ -83,7 +83,6 @@ const Navbar = ({
     if (element && element.getAttribute('listener') !== 'true') {
       element.addEventListener('select', useSelectListener);
     }
-
     return () => {
       element?.removeEventListener('select', useSelectListener);
     };

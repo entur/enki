@@ -1,47 +1,39 @@
-import { FdsNavigationVariant } from '../../../../coreui-components/src/fds-navigation';
+import { FdsNavigationVariant } from '../../Fds/fds-navigation';
 import Navbar from './Navbar';
-import { FdsNavigationItem } from '../../../../coreui-components/src/fds-navigation';
+import { FdsNavigationItem } from '../../Fds/fds-navigation';
 import {
   aboutItem,
   getSelectedLocaleItem,
   loginItem,
   registerItem,
   supportItem,
-  vacoItem,
+  raeItem,
 } from './navbarItems';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { useAuth } from '../../../../auth/auth';
 
 const RaeLandingNavbar = () => {
   const [userNavbarItems, setUserNavbarItems] = useState<FdsNavigationItem[]>(
     [],
   );
   const intl = useIntl();
-  const { formatMessage } = intl;
-
-  const languageSelectionCallback = useCallback(
-    (newLocaleCode: string) => {
-      // This 't' from a hook has to be used because that's the only way to have
-      // these translation updated with user's actual selected language and not the default one
-      const vacoNavbarItems: FdsNavigationItem[] = [
-        vacoItem(),
-        aboutItem(intl),
-        supportItem(intl),
-        loginItem(intl),
-        registerItem(intl),
-        getSelectedLocaleItem(newLocaleCode, intl),
-      ];
-      setUserNavbarItems(vacoNavbarItems);
-    },
-    [intl],
-  );
+  const auth = useAuth();
 
   useEffect(() => {
-    if (userNavbarItems.length === 0) {
-      const selectedLocaleCode = i18n.resolvedLanguage || i18n.language;
-      languageSelectionCallback(selectedLocaleCode);
-    }
-  }, [i18n, languageSelectionCallback, userNavbarItems]);
+    const { formatMessage } = intl;
+    // This 'formatMessage' from a hook has to be used because that's the only way to have
+    // these translation updated with user's actual selected language and not the default one
+    const raeNavbarItems: FdsNavigationItem[] = [
+      raeItem(),
+      aboutItem(formatMessage),
+      supportItem(formatMessage),
+      loginItem(formatMessage, auth.login),
+      registerItem(formatMessage),
+      getSelectedLocaleItem(intl.locale, formatMessage),
+    ];
+    setUserNavbarItems(raeNavbarItems);
+  }, [intl, auth.login]);
 
   return (
     <>
@@ -51,9 +43,7 @@ const RaeLandingNavbar = () => {
         barIndex={1}
         selectedItem={userNavbarItems[0]}
         isSelectedItemStatic={false}
-        languageSelectionCallback={languageSelectionCallback}
       />
-      <EnvironmentBar />
     </>
   );
 };

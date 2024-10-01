@@ -5,7 +5,7 @@
   margin-top: 1.5rem;
   a {
     text-decoration: none;
-    width: 45%;
+    width: 39%;
   }
 }
 
@@ -13,7 +13,7 @@
   display: flex;
   cursor: pointer;
   flex-direction: row;
-  margin-right: 3rem;
+  margin-right: 1rem;
   padding: 1.25rem;
   border-radius: 2px;
 
@@ -26,6 +26,7 @@
   }
 
   &__label {
+    color: black;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
