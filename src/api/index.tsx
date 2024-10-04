@@ -40,7 +40,7 @@ export type StopPlace = {
   id: string;
   name: { value: string };
   transportMode?: VEHICLE_MODE;
-  centroid?: Centroid;
+  centroid?: Centroid | null;
   quays: Quay[];
   children: StopPlace[];
 };
