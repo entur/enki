@@ -2,8 +2,8 @@ import {
   FdsNavigationItem,
   FdsNavigationItemPosition,
 } from '../../Fds/fds-navigation';
-import React from 'react';
-import { MessageDescriptor, PrimitiveType } from 'react-intl';
+import { createAccount } from '../../Auth/msal';
+import { Configuration, IPublicClientApplication } from '@azure/msal-browser';
 
 export const raeItem = (): FdsNavigationItem => {
   return {
@@ -58,20 +58,27 @@ export const supportItem = (formatMessage: any): FdsNavigationItem => {
 };
 
 export const loginItem = (
+  redirectUrl: string | undefined,
   formatMessage: any,
   login: any,
 ): FdsNavigationItem => {
   return {
     label: formatMessage({ id: 'login' }),
-    value: () => login(window.location.href),
+    value: () => login(redirectUrl || window.location.href),
     position: FdsNavigationItemPosition.right,
   };
 };
 
-export const registerItem = (formatMessage: any): FdsNavigationItem => {
+export const registerItem = (
+  msalInstance: IPublicClientApplication | undefined,
+  msalConfig: Configuration,
+  formatMessage: any,
+): FdsNavigationItem => {
   return {
     label: formatMessage({ id: 'register' }),
-    value: 'createAccount',
+    value: () => {
+      msalInstance && createAccount(msalInstance, msalConfig);
+    },
     position: FdsNavigationItemPosition.right,
   };
 };

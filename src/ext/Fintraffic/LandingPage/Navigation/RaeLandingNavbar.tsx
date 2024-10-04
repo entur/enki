@@ -12,6 +12,9 @@ import {
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../../../auth/auth';
+import { useConfig } from '../../../../config/ConfigContext';
+import { useMsalProvider } from '../../Auth/msal';
+import { FintrafficConfig } from '../../Config/types';
 
 const RaeLandingNavbar = () => {
   const [userNavbarItems, setUserNavbarItems] = useState<FdsNavigationItem[]>(
@@ -19,6 +22,8 @@ const RaeLandingNavbar = () => {
   );
   const intl = useIntl();
   const auth = useAuth();
+  const config = useConfig() as FintrafficConfig;
+  const { msalInstance } = useMsalProvider(config.msalConfig, auth);
 
   useEffect(() => {
     const { formatMessage } = intl;
@@ -28,12 +33,12 @@ const RaeLandingNavbar = () => {
       raeItem(),
       aboutItem(formatMessage),
       supportItem(formatMessage),
-      loginItem(formatMessage, auth.login),
-      registerItem(formatMessage),
+      loginItem(config.msalConfig.auth.redirectUri, formatMessage, auth.login),
+      registerItem(msalInstance, config.msalConfig, formatMessage),
       getSelectedLocaleItem(intl.locale, formatMessage),
     ];
     setUserNavbarItems(raeNavbarItems);
-  }, [intl, auth.login]);
+  }, [intl, auth.login, msalInstance]);
 
   return (
     <>
