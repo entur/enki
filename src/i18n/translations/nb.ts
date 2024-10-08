@@ -260,6 +260,8 @@ export const messages = {
     'Du må legge til minst to stopp; ett for start og ett for slutt. Velg mellom fleksible stoppesteder eller platform-IDer fra Nasjonalt stoppestedsregister.',
   stopPointsInfoFixed:
     'Du må legge til minst to stopp; ett for start og ett for slutt. Skriv inn platform-ID fra stoppestedsregisteret.',
+  stopPointsMapInfo:
+    'Du må legge til minst to stopp; ett for start og ett for slutt.',
   stopPointsInfoFlexibleAreaOnly:
     'Denne typen fleksibel linje tillater kun et fleksibelt stoppested der all ombord- og avstigning skjer.',
   stopPointsInfoMixedFlexible:

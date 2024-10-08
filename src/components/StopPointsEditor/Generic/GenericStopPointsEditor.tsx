@@ -8,6 +8,8 @@ import { GenericStopPointEditor } from './GenericStopPointEditor';
 import { JourneyPatternStopPointMap } from '../../../ext/JourneyPatternStopPointMap/JourneyPatternStopPointMap';
 import SandboxFeature from '../../../ext/SandboxFeature';
 import { useConfig } from '../../../config/ConfigContext';
+import { SmallAlertBox } from '@entur/alert';
+import '../styles.scss';
 
 export const GenericStopPointsEditor = ({
   pointsInSequence,
@@ -21,15 +23,26 @@ export const GenericStopPointsEditor = ({
   const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useIntl();
   const { sandboxFeatures } = useConfig();
+  const isMapEnabled = sandboxFeatures?.JourneyPatternStopPointMap;
 
   return (
     <section style={{ marginTop: '2em' }}>
       <Heading3>{formatMessage({ id: 'editorStopPoints' })}</Heading3>
-      <Paragraph>{formatMessage({ id: 'stopPointsInfoFixed' })}</Paragraph>
+      {!isMapEnabled && (
+        <Paragraph>{formatMessage({ id: 'stopPointsInfoFixed' })}</Paragraph>
+      )}
       <div className={'stop-point-editor-container'}>
         <div
-          className={`stop-point-editor ${sandboxFeatures?.JourneyPatternStopPointMap ? 'stop-point-editor-width-limit' : ''}`}
+          className={`stop-point-editor ${isMapEnabled ? 'stop-point-editor-width-limit' : ''}`}
         >
+          {pointsInSequence?.length < 2 && (
+            <SmallAlertBox
+              className={'stop-point-number-alert'}
+              variant={'info'}
+            >
+              {formatMessage({ id: 'stopPointsMapInfo' })}
+            </SmallAlertBox>
+          )}
           {pointsInSequence.map((stopPoint, pointIndex) => (
             <GenericStopPointEditor
               key={keys[pointIndex]}

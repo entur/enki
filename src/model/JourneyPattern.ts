@@ -15,13 +15,13 @@ export type JourneyPattern = VersionedType & {
   notices?: Notice[] | null;
 };
 
-export const initJourneyPatterns = (): JourneyPattern[] => [
-  initJourneyPattern(),
-];
+export const initJourneyPatterns = (
+  isMapEnabled?: boolean,
+): JourneyPattern[] => [initJourneyPattern(isMapEnabled)];
 
-export const initJourneyPattern = (): JourneyPattern => ({
+export const initJourneyPattern = (isMapEnabled?: boolean): JourneyPattern => ({
   serviceJourneys: [{ id: `new_${createUuid()}`, passingTimes: [{}, {}] }],
-  pointsInSequence: [{}, {}],
+  pointsInSequence: isMapEnabled ? [] : [{}, {}],
 });
 
 export const journeyPatternToPayload = (journeyPattern: JourneyPattern) => ({

@@ -6,6 +6,7 @@ import Line, { initLine } from 'model/Line';
 import { Network } from 'model/Network';
 import { useEffect, useState } from 'react';
 import { useMatch, useNavigate } from 'react-router-dom';
+import { useConfig } from '../../config/ConfigContext';
 
 export const useUttuErrors = (
   error: ApolloError | undefined,
@@ -46,7 +47,10 @@ interface LineData {
 
 export const useLine: UseLineType = () => {
   const match = useMatch('/lines/edit/:id');
-  const [line, setLine] = useState<Line | undefined>(initLine());
+  const { sandboxFeatures } = useConfig();
+  const [line, setLine] = useState<Line | undefined>(
+    initLine(sandboxFeatures?.JourneyPatternStopPointMap),
+  );
 
   const { loading, error, data, refetch } = useQuery<LineData>(
     LINE_EDITOR_QUERY,
