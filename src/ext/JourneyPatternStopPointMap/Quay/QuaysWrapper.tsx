@@ -1,5 +1,7 @@
 import { Quay, StopPlace } from '../../../api';
 import QuayMarker from './QuayMarker';
+import { getSelectedQuayIds } from '../helpers';
+import { FocusedMarker } from '../types';
 
 interface QuaysWrapperProps {
   stopPlace: StopPlace;
@@ -12,6 +14,8 @@ interface QuaysWrapperProps {
     stopPlaceId: string,
   ) => void;
   showQuaysCallback: (showAll: boolean, stopPlaceId: string) => void;
+  focusedMarker: FocusedMarker | undefined;
+  clearFocusedMarker: () => void;
 }
 
 const QuaysWrapper = ({
@@ -22,10 +26,13 @@ const QuaysWrapper = ({
   deleteStopPoint,
   showQuaysCallback,
   hideNonSelectedQuaysCallback,
+  focusedMarker,
+  clearFocusedMarker,
 }: QuaysWrapperProps) => {
-  const selectedQuayIds: string[] = stopPlace.quays
-    .filter((quay: Quay) => stopPointSequenceIndexes[quay.id] !== undefined)
-    .map((quay: Quay) => quay.id);
+  const selectedQuayIds: string[] = getSelectedQuayIds(
+    stopPlace,
+    stopPointSequenceIndexes,
+  );
 
   return (
     <>
@@ -37,10 +44,11 @@ const QuaysWrapper = ({
 
         return !hideNonSelectedQuaysState || isSelectedQuay ? (
           <QuayMarker
-            key={quay.id}
+            key={'quay-marker-' + quay.id}
             quay={quay}
             stopPointSequenceIndexes={stopPointSequenceIndexes[quay.id]}
             stopPlace={stopPlace}
+            isSelectedQuay={isSelectedQuay}
             hasSelectedQuay={hasSelectedQuay}
             hasNonSelectedQuays={hasNonSelectedQuays}
             hideNonSelectedQuaysState={hideNonSelectedQuaysState}
@@ -52,6 +60,8 @@ const QuaysWrapper = ({
             }}
             addStopPointCallback={addStopPoint}
             deleteStopPointCallback={deleteStopPoint}
+            clearFocusedMarker={clearFocusedMarker}
+            isPopupToBeOpen={quay.id === focusedMarker?.marker.id}
           />
         ) : (
           ''

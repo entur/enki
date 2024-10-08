@@ -10,20 +10,28 @@ const DEFAULT_CENTER = {
 
 type Props = {
   children: React.ReactElement;
+  zoomControl?: boolean;
+  doubleClickZoom?: boolean;
 };
 
-const DefaultMapContainer = (props: Props) => {
+const DefaultMapContainer = ({
+  children,
+  zoomControl = true,
+  doubleClickZoom = true,
+}: Props) => {
   return (
     <MapContainer
       className="map"
       center={DEFAULT_CENTER}
       zoom={DEFAULT_ZOOM_LEVEL}
+      zoomControl={zoomControl}
+      doubleClickZoom={doubleClickZoom}
     >
       <TileLayer
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {props.children}
+      {children}
     </MapContainer>
   );
 };

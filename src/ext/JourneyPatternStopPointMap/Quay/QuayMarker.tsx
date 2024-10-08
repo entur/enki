@@ -7,11 +7,13 @@ import React, { MutableRefObject, useRef } from 'react';
 import QuaySequenceIndexTooltip from './QuaySequenceIndexTooltip';
 import QuayPositionChips from './QuayPositionChips';
 import QuayPopupButtonPanel from './QuayPopupButtonPanel';
+import { usePopupOpeningOnFocus } from '../hooks';
 
 interface QuayMarkerProps {
   quay: Quay;
   stopPlace: StopPlace;
   stopPointSequenceIndexes: number[];
+  isSelectedQuay: boolean;
   hasSelectedQuay: boolean;
   hasNonSelectedQuays: boolean;
   hideNonSelectedQuaysState: boolean;
@@ -19,12 +21,15 @@ interface QuayMarkerProps {
   showQuaysCallback: (showAll: boolean) => void;
   addStopPointCallback: (quayId: string) => void;
   deleteStopPointCallback: (index: number) => void;
+  isPopupToBeOpen: boolean;
+  clearFocusedMarker: () => void;
 }
 
 const QuayMarker = ({
   quay,
   stopPointSequenceIndexes,
   stopPlace,
+  isSelectedQuay,
   hasSelectedQuay,
   hasNonSelectedQuays,
   showQuaysCallback,
@@ -32,17 +37,19 @@ const QuayMarker = ({
   hideNonSelectedQuaysState,
   addStopPointCallback,
   deleteStopPointCallback,
+  isPopupToBeOpen,
+  clearFocusedMarker,
 }: QuayMarkerProps) => {
   const intl = useIntl();
   const { formatMessage } = intl;
   const markerRef: MutableRefObject<any> = useRef();
-  const isQuaySelected = stopPointSequenceIndexes?.length > 0;
+  usePopupOpeningOnFocus(isPopupToBeOpen, markerRef, clearFocusedMarker);
 
   return (
     <Marker
       key={'quay-marker-' + quay.id}
       ref={markerRef}
-      icon={getMarkerIcon(stopPlace.transportMode, false, isQuaySelected)}
+      icon={getMarkerIcon(stopPlace.transportMode, false, isSelectedQuay)}
       position={[
         quay.centroid?.location.latitude,
         quay.centroid?.location.longitude,
@@ -58,7 +65,7 @@ const QuayMarker = ({
           {formatMessage({ id: stopPlace.transportMode?.toLowerCase() })}
         </section>
 
-        {isQuaySelected && (
+        {isSelectedQuay && (
           <QuayPositionChips
             quayId={quay.id}
             stopPointSequenceIndexes={stopPointSequenceIndexes}
@@ -78,7 +85,7 @@ const QuayMarker = ({
         />
       </Popup>
 
-      {isQuaySelected && (
+      {isSelectedQuay && (
         <QuaySequenceIndexTooltip
           markerRef={markerRef}
           stopPointSequenceIndexes={stopPointSequenceIndexes}
