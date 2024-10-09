@@ -3,27 +3,11 @@ type MultilingualString = {
   value: string;
 };
 
-type ContactDetails = {
-  email: string;
-  phone: string;
-  url: string;
-};
-
-type KeyValue = {
-  key: string;
-  value: string;
-};
-
-type KeyList = {
-  keyValue?: KeyValue[];
-};
-
 export type Organisation = {
   id: string;
   name: MultilingualString;
   legalName: MultilingualString;
-  contactDetails: ContactDetails;
-  keyList?: KeyList;
+  type: 'authority' | 'operator';
 };
 
 /**
@@ -35,13 +19,7 @@ export const filterAuthorities = (
   enableFilter?: boolean,
 ) =>
   enableFilter
-    ? organisations?.filter((org) =>
-        org.keyList?.keyValue
-          ?.find((kv) => kv.key === 'LegacyId')
-          ?.value?.split(',')
-          .find((v) => v.indexOf('Authority') > -1)
-          ?.startsWith(activeProvider?.toUpperCase() ?? 'INVALID'),
-      )
+    ? organisations?.filter((org) => org.type === 'authority')
     : organisations;
 
 /**
@@ -52,10 +30,5 @@ export const filterNetexOperators = (
   enableFilter?: boolean,
 ): Organisation[] =>
   enableFilter
-    ? organisations.filter((org) =>
-        org.keyList?.keyValue
-          ?.find((kv) => kv.key === 'LegacyId')
-          ?.value?.split(',')
-          .find((v) => v.indexOf('Operator') > -1),
-      )
+    ? organisations.filter((org) => org.type === 'operator')
     : organisations;

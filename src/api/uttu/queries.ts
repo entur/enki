@@ -593,17 +593,7 @@ export const getOrganisationsQuery = `
       id
       name { value }
       legalName { value }
-      contactDetails {
-        email
-        phone
-        url
-      }
-      keyList {
-        keyValue {
-          key
-          value
-        }
-      }
+      type
     }
   }
 `;
