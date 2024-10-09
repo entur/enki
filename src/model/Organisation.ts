@@ -6,7 +6,6 @@ type MultilingualString = {
 export type Organisation = {
   id: string;
   name: MultilingualString;
-  legalName: MultilingualString;
   type: 'authority' | 'operator';
 };
 
