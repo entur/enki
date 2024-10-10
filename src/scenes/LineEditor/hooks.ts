@@ -6,6 +6,7 @@ import Line, { initLine } from 'model/Line';
 import { Network } from 'model/Network';
 import { useEffect, useState } from 'react';
 import { useMatch, useNavigate } from 'react-router-dom';
+import { useConfig } from '../../config/ConfigContext';
 
 export const useUttuErrors = (
   error: ApolloError | undefined,

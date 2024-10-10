@@ -73,7 +73,7 @@ export default <T extends Line>({
               passingTimes: [{}, {}],
             }),
           ),
-          pointsInSequence: [{}, {}],
+          pointsInSequence: [],
         }),
       ),
       flexibleLineType: newFlexibleLineType,

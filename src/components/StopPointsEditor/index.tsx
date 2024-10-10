@@ -16,6 +16,7 @@ export type StopPointsEditorProps = {
   addStopPoint: (quayRef?: string) => void;
   onPointsInSequenceChange: (pointsInSequence: StopPoint[]) => void;
   transportMode?: VEHICLE_MODE;
+  initStopPoints: () => void;
 };
 
 export type StopPointsEditor =

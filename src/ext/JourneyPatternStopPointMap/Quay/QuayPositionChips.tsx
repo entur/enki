@@ -48,7 +48,7 @@ const QuayPositionChips = ({
       </div>
 
       <ConfirmDialog
-        isOpen={!!deleteDialogState.index}
+        isOpen={deleteDialogState.index !== undefined}
         title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
         message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
         buttons={[
@@ -61,7 +61,7 @@ const QuayPositionChips = ({
           <SuccessButton
             key="yes"
             onClick={() => {
-              if (!deleteDialogState.index) {
+              if (deleteDialogState.index === undefined) {
                 return;
               }
               const indexToDelete = deleteDialogState.index;

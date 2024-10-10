@@ -266,6 +266,8 @@ export const messages = {
     'Sinun on lisättävä vähintään kaksi pysäkkipistettä; yksi aloitusta ja yksi pysähtymistä varten. Valitse joustavien pysähdyspaikkojen ja laituritunnusten väliltä pysäkkitietokannasta.',
   stopPointsInfoFixed:
     'Sinun on lisättävä vähintään kaksi pysäkkipistettä; yksi aloitusta ja yksi pysähtymistä varten. Kirjoita laituritunnus pysäkkitietokannasta.',
+  stopPointsMapInfo:
+    'Sinun on lisättävä vähintään kaksi pysäkkipistettä; yksi aloitusta ja yksi pysähtymistä varten.',
   stopPointsInfoFlexibleAreaOnly:
     'Tämäntyyppinen kutsulinja sallii vain yhden joustavan pysähdyspaikan, jossa kaikki nousut ja poistumiset tapahtuvat.',
   stopPointsInfoMixedFlexible:
