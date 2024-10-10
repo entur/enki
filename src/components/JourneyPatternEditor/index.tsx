@@ -86,6 +86,14 @@ const JourneyPatternEditor = ({
     [journeyPattern, onSave, serviceJourneys],
   );
 
+  const initStopPoints = useCallback(() => {
+    onSave({
+      ...journeyPattern,
+      pointsInSequence: [{}, {}],
+      serviceJourneys,
+    });
+  }, [journeyPattern, onSave, serviceJourneys]);
+
   const updateStopPoint = useCallback(
     (pointIndex: number, stopPlace: StopPoint) =>
       onSave({
@@ -131,6 +139,7 @@ const JourneyPatternEditor = ({
           addStopPoint={addStopPoint}
           onPointsInSequenceChange={onPointsInSequenceChange}
           transportMode={transportMode}
+          initStopPoints={initStopPoints}
         />
       </div>
       {onDelete && (

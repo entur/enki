@@ -47,10 +47,7 @@ interface LineData {
 
 export const useLine: UseLineType = () => {
   const match = useMatch('/lines/edit/:id');
-  const { sandboxFeatures } = useConfig();
-  const [line, setLine] = useState<Line | undefined>(
-    initLine(sandboxFeatures?.JourneyPatternStopPointMap),
-  );
+  const [line, setLine] = useState<Line | undefined>(initLine());
 
   const { loading, error, data, refetch } = useQuery<LineData>(
     LINE_EDITOR_QUERY,

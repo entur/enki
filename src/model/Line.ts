@@ -21,8 +21,8 @@ interface Line extends VersionedType {
   notices?: Notice[];
 }
 
-export const initLine = (isMapEnabled?: boolean) => ({
-  journeyPatterns: initJourneyPatterns(isMapEnabled),
+export const initLine = () => ({
+  journeyPatterns: initJourneyPatterns(),
 });
 
 export const lineToPayload = (line: Line) => {

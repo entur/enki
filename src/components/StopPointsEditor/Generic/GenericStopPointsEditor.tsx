@@ -10,6 +10,7 @@ import SandboxFeature from '../../../ext/SandboxFeature';
 import { useConfig } from '../../../config/ConfigContext';
 import { SmallAlertBox } from '@entur/alert';
 import '../styles.scss';
+import { useEffect } from 'react';
 
 export const GenericStopPointsEditor = ({
   pointsInSequence,
@@ -19,11 +20,19 @@ export const GenericStopPointsEditor = ({
   addStopPoint,
   flexibleLineType,
   transportMode,
+  initStopPoints,
 }: StopPointsEditorProps) => {
   const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useIntl();
   const { sandboxFeatures } = useConfig();
   const isMapEnabled = sandboxFeatures?.JourneyPatternStopPointMap;
+
+  useEffect(() => {
+    // if map isn't enabled, let's produce two empty stop points
+    if (!isMapEnabled && pointsInSequence?.length === 0) {
+      initStopPoints();
+    }
+  }, []);
 
   return (
     <section style={{ marginTop: '2em' }}>
@@ -35,7 +44,7 @@ export const GenericStopPointsEditor = ({
         <div
           className={`stop-point-editor ${isMapEnabled ? 'stop-point-editor-width-limit' : ''}`}
         >
-          {pointsInSequence?.length < 2 && (
+          {isMapEnabled && pointsInSequence?.length < 2 && (
             <SmallAlertBox
               className={'stop-point-number-alert'}
               variant={'info'}
