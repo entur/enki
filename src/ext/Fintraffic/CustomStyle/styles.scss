@@ -51,8 +51,8 @@ body {
   font-weight: 500;
   letter-spacing: unset;
   line-height: unset;
-  padding-top: 14px !important;
-  padding-bottom: 14px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
   height: unset;
 }
 
@@ -61,7 +61,7 @@ body {
 }
 
 .eds-side-navigation {
-  --padding-vertical: 14px !important;
+  --padding-vertical: 10px !important;
 }
 
 .eds-side-navigation-group__trigger:hover {
@@ -78,12 +78,31 @@ body {
   color: white !important;
 }
 
-.eds-side-navigation__click-target {
+.eds-side-navigation-group + .eds-side-navigation-group {
+  padding-top: 0;
+}
+
+.eds-contrast .eds-side-navigation-group__trigger:focus-visible {
+  outline: none;
+}
+
+.eds-side-navigation__click-target,
+.eds-side-navigation-group__trigger {
+  padding-left: 1.9rem !important;
+}
+
+.eds-side-navigation .eds-side-navigation .eds-side-navigation__click-target {
+  padding-left: 2.7rem !important;
 }
 
 .eds-side-navigation__click-target:not([disabled]):hover {
   background-color: var(--fds-color-brand-black) !important;
   color: var(--fds-color-neutral-100);
+}
+
+.eds-side-navigation-group__expand-content
+  .eds-side-navigation__click-target:not([disabled]):hover {
+  background-color: #222222 !important;
 }
 
 .eds-side-navigation__click-target--active {
@@ -291,7 +310,7 @@ body {
 }
 
 .eds-form-control-wrapper:focus-within {
-  outline: 1px solid var(--fds-color-interactive-200) !important;
+  outline: 1px solid var(--fds-color-interactive-200);
   border-color: var(--fds-color-interactive-200);
 }
 
@@ -344,6 +363,23 @@ body {
 .eds-form-control-wrapper {
   border: 1px solid var(--fds-color-neutral-200);
   height: fit-content;
+  padding-left: 0;
+}
+
+.day-type-section .eds-form-control-wrapper {
+  padding-left: 0 !important;
+}
+
+.eds-dropdown .eds-form-control-wrapper {
+  padding-left: 1rem;
+}
+
+.ReactCollapse--content .eds-form-control-wrapper {
+  margin-top: 1rem;
+}
+
+.lines-editor-general .transport-mode-dropdowns > div {
+  margin-top: 3rem !important;
 }
 
 .eds-dropdown__list__item {
@@ -360,7 +396,7 @@ body {
 }
 
 .eds-input-group__label {
-  top: -2.75rem;
+  top: -1.75rem; //-2.75rem;
   margin-left: 0;
   transition: unset;
   color: var(--fds-color-text-1000, #000000);
@@ -415,6 +451,18 @@ body {
 
 .eds-dropdown__wrapper {
   margin-top: 3rem !important;
+}
+
+.eds-dropdown--searchable .eds-form-control:focus {
+  padding-left: 0 !important;
+}
+
+.eds-dropdown--searchable .eds-input-group__label {
+  left: 0;
+}
+
+.eds-dropdown--searchable__selected-item {
+  top: -0.5rem;
 }
 
 .eds-dropdown__selected-item__placeholder {
@@ -474,6 +522,18 @@ body {
   .eds-input-group__label {
   color: var(--fds-color-brand-white);
   font-size: 14px !important;
+}
+
+.user-preference .provider-wrapper {
+  margin-top: 3rem;
+}
+
+.provider-form .required-input {
+  margin-bottom: 3rem;
+}
+
+.provider-form .form-section {
+  margin-bottom: 3rem;
 }
 
 .eds-contrast .eds-dropdown .eds-icon-button:hover {
@@ -537,6 +597,10 @@ section .notices {
   margin-top: 3rem;
 }
 
+.service-journey-editor .service-journey-inputs {
+  margin-bottom: 3rem;
+}
+
 .service-journey-editor .form-section {
   margin-bottom: unset;
 }
@@ -547,15 +611,17 @@ section .notices {
   border-color: transparent;
 }
 
-.service-journey-editor .day-type-section {
-  margin-top: 1rem;
-}
-
 .eds-pagination__page {
   border-color: var(--fds-color-neutral-200);
 }
 
 .eds-pagination__page--selected {
+  background: var(--fds-color-interactive-200);
+  border-color: transparent;
+  color: white;
+}
+
+.eds-pagination__controls__page--selected {
   background: var(--fds-color-interactive-200);
   border-color: transparent;
   color: white;
@@ -607,16 +673,44 @@ section .notices {
 }
 
 .passing-times-editor .passing-time .timepicker {
-  width: unset;
+  min-width: unset;
+  max-width: unset;
+  width: fit-content !important;
   margin-right: 0.25rem;
+  margin-left: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.passing-times-editor
+  .passing-time
+  .timepicker
+  > .eds-form-control-wrapper--disabled {
+  width: 167px !important;
+  padding-left: 2.5rem;
+  //align-items: center;
+}
+
+.passing-times-editor .passing-time .timepicker .eds-form-control-wrapper {
+  //width: fit-content !important;
+  margin-right: 0.25rem;
+}
+
+.timepicker .eds-form-control__prepend {
+  margin-right: 0.25rem;
+}
+
+.timepicker .eds-form-control__append {
+  margin-left: 0.25rem;
 }
 
 .eds-date-and-time-field__segment {
   margin-top: unset;
   color: var(--fds-color-brand-black);
+  padding: 0 1px;
 }
 
-.eds-timepicker__wrapper .eds-timepicker__arrowbutton {
+.eds-timepicker__arrowbutton {
   margin: unset;
   padding: 0.25rem;
 }
@@ -625,7 +719,12 @@ section .notices {
   background-color: #e1eff8;
 }
 
-.eds-timepicker__wrapper .eds-timepicker__arrowbutton.eds-icon-button:hover {
+.eds-timepicker__arrowbutton.eds-icon-button {
+  margin-right: 0.25rem;
+  margin-left: 0.25rem;
+}
+
+.eds-timepicker__arrowbutton.eds-icon-button:hover {
   background-color: var(--fds-color-interactive-200);
   color: var(--fds-color-brand-white);
 }
@@ -647,6 +746,10 @@ section .notices {
 .eds-datepicker__open-calendar-button.eds-icon-button:hover {
   background: var(--fds-color-interactive-200);
   color: white;
+}
+
+.eds-datepicker__open-calendar-button.eds-icon-button:focus {
+  outline: none;
 }
 
 .day-types-modal_new-day-type-button {
@@ -683,14 +786,52 @@ section .notices {
 
 .passing-times-editor .passing-time .title,
 .passing-times-editor .passing-time .time-number {
-  margin-bottom: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.passing-times-editor .passing-time .title {
+  max-width: 12rem;
+  width: 100% !important;
+  margin-right: 1rem;
 }
 
 .passing-times-editor .passing-time {
-  padding-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  padding-top: 2.5rem;
+}
+
+.passing-time .eds-form-control__field-and-feedback-text--has-tooltip {
+  min-width: 140px !important;
+  max-width: 140px !important;
+  width: 140px !important;
+  margin-left: 0.25rem;
+}
+
+.passing-time .eds-dropdown__appendix__toggle-button {
+  padding: 0.25rem;
+}
+
+.passing-time .eds-form-control__append--tooltip {
+  right: -1.65rem;
 }
 
 // Flexible lines:
+
+.line-type-dropdown-tooltip {
+  margin-bottom: 2rem;
+}
+
+.time-unit-picker .pickers-container {
+  padding-top: 3rem;
+}
+
+.time-unit-picker .pickers-container .picker {
+  margin-bottom: 2.5rem;
+}
+
+.booking-editor .booking-time-info > :first-child {
+  margin-top: 3rem;
+}
 
 .eds-contrast > .booking {
   background-color: #e1eff8 !important;
@@ -706,6 +847,10 @@ section .notices {
   margin-right: 16px;
 }
 
+.eds-timepicker .eds-form-control-wrapper {
+  width: fit-content;
+}
+
 // Flexible stop places:
 
 .stop-place-editor .stop-place-form-container .stop-place-form > div,
@@ -715,7 +860,9 @@ section .notices {
 
 // Networks:
 
-.network-form .eds-form-control-wrapper {
+.network-form > .eds-form-control-wrapper,
+.network-form > .eds-textfield__wrapper,
+.network-form > .eds-form-control__field-and-feedback-text {
   margin-top: 3rem;
 }
 
@@ -806,4 +953,28 @@ section .notices {
 
 .eds-contrast .eds-floating-button {
   color: var(--fds-color-brand-black);
+}
+
+// Export
+.export-dry-run .question-icon {
+  padding-bottom: 0.35rem;
+}
+
+// Drawer
+.eds-drawer {
+  background-color: #e1eff8;
+  color: var(--fds-color-brand-black);
+}
+
+.user-preference {
+  margin: 15px auto 30px;
+
+  .provider-wrapper {
+    margin-top: 2.25rem !important;
+  }
+}
+
+.navbar-wrapper .bottom-chips {
+  position: relative;
+  margin-top: 2rem;
 }
