@@ -51,8 +51,8 @@ body {
   font-weight: 500;
   letter-spacing: unset;
   line-height: unset;
-  padding-top: 14px !important;
-  padding-bottom: 14px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
   height: unset;
 }
 
@@ -61,7 +61,7 @@ body {
 }
 
 .eds-side-navigation {
-  --padding-vertical: 14px !important;
+  --padding-vertical: 10px !important;
 }
 
 .eds-side-navigation-group__trigger:hover {
@@ -78,12 +78,37 @@ body {
   color: white !important;
 }
 
-.eds-side-navigation__click-target {
+.eds-side-navigation-group + .eds-side-navigation-group {
+  padding-top: 0;
+}
+
+.eds-contrast .eds-side-navigation-group__trigger:focus-visible {
+  outline: none;
+}
+
+.eds-side-navigation-group__expand-content
+  > .eds-side-navigation-group
+  > .eds-side-navigation-group__trigger
+  > span {
+  padding-left: 1rem;
+}
+
+.eds-side-navigation
+  .eds-side-navigation-group
+  .eds-side-navigation-group
+  .eds-side-navigation
+  .eds-side-navigation__click-target {
+  padding-left: 4.5rem !important;
 }
 
 .eds-side-navigation__click-target:not([disabled]):hover {
   background-color: var(--fds-color-brand-black) !important;
   color: var(--fds-color-neutral-100);
+}
+
+.eds-side-navigation-group__expand-content
+  .eds-side-navigation__click-target:not([disabled]):hover {
+  background-color: #222222 !important;
 }
 
 .eds-side-navigation__click-target--active {
@@ -806,4 +831,17 @@ section .notices {
 
 .eds-contrast .eds-floating-button {
   color: var(--fds-color-brand-black);
+}
+
+.user-preference {
+  margin: 15px auto 30px;
+
+  .provider-wrapper {
+    margin-top: 2.25rem !important;
+  }
+}
+
+.navbar-wrapper .bottom-chips {
+  position: relative;
+  margin-top: 2rem;
 }
