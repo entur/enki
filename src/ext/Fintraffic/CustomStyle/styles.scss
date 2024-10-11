@@ -86,19 +86,13 @@ body {
   outline: none;
 }
 
-.eds-side-navigation-group__expand-content
-  > .eds-side-navigation-group
-  > .eds-side-navigation-group__trigger
-  > span {
-  padding-left: 1rem;
+.eds-side-navigation__click-target,
+.eds-side-navigation-group__trigger {
+  padding-left: 1.9rem !important;
 }
 
-.eds-side-navigation
-  .eds-side-navigation-group
-  .eds-side-navigation-group
-  .eds-side-navigation
-  .eds-side-navigation__click-target {
-  padding-left: 4.5rem !important;
+.eds-side-navigation .eds-side-navigation .eds-side-navigation__click-target {
+  padding-left: 2.7rem !important;
 }
 
 .eds-side-navigation__click-target:not([disabled]):hover {

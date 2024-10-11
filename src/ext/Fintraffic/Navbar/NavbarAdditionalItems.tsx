@@ -113,7 +113,7 @@ export const NavbarAdditionalItems = () => {
           />
           <NavBarExternalLinkItem
             text={formatMessage({ id: 'fintrafficApp' })}
-            path="https://www.digitraffic.fi/"
+            path={`https://www.fintraffic.fi/${selectedLocaleCode}/${formatMessage({ id: 'fintrafficAppLink' })}`}
           />
           <NavBarExternalLinkItem
             text={formatMessage({ id: 'digitraffic' })}

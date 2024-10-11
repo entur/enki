@@ -41,7 +41,7 @@ export const useMsalProvider = (
       await PublicClientApplication.createPublicClientApplication(msalConfig);
     pca.addEventCallback((event: EventMessage) => {
       if (event.eventType === EventType.LOGIN_SUCCESS) {
-        oidcAuthProvider.login(window.location.href);
+        oidcAuthProvider.login(msalConfig.auth.redirectUri);
       }
     });
     setMsalInstance(pca);
