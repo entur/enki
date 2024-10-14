@@ -417,6 +417,21 @@ body {
   margin-top: 3rem !important;
 }
 
+.eds-dropdown--searchable .eds-input-group__label {
+  top: -2.75rem;
+  left: 0;
+}
+
+.eds-dropdown--searchable.eds-form-control-wrapper--is-filled
+  .eds-input-group__label {
+  top: -1.75rem;
+  left: 0;
+}
+
+.eds-dropdown--searchable__selected-item {
+  top: -0.42rem;
+}
+
 .eds-dropdown__selected-item__placeholder {
   color: var(--fds-color-text-300);
   font-weight: 400 !important;
