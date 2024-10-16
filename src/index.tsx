@@ -53,7 +53,12 @@ const AuthenticatedApp = () => {
         <App />
       </Apollo>
     )) ||
-    (authStateLoaded && configStateLoaded && <LandingPage />)
+    (authStateLoaded && configStateLoaded && (
+      <SandboxFeature
+        feature={`${config.extPath}/LandingPage`}
+        renderFallback={() => <LandingPage />}
+      />
+    ))
   );
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "@entur/enki",
-  "version": "0.212.0",
+  "version": "0.224.0",
   "author": "Entur",
   "private": false,
   "repository": "https://github.com/entur/enki.git",
@@ -34,7 +34,7 @@
     "@entur/tooltip": "5.0.0",
     "@entur/typography": "1.8.46",
     "@reduxjs/toolkit": "1.9.7",
-    "@sentry/react": "7.119.0",
+    "@sentry/react": "7.119.1",
     "axios": "1.7.7",
     "classnames": "2.5.1",
     "date-fns": "2.30.0",
@@ -47,19 +47,23 @@
     "lodash.isempty": "4.4.0",
     "lodash.isequal": "4.5.0",
     "moment": "2.30.1",
-    "oidc-client-ts": "3.0.1",
+    "oidc-client-ts": "3.1.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-helmet": "6.1.0",
     "react-intl": "6.7.0",
     "react-leaflet": "4.2.1",
-    "react-oidc-context": "3.1.1",
+    "react-oidc-context": "3.2.0",
     "react-redux": "8.1.3",
     "react-router-dom": "6.26.2",
     "redux-sentry-middleware": "0.2.2",
     "uuid": "10.0.0",
     "@fintraffic/fds-coreui-css": "0.1.3",
-    "react-leaflet-cluster": "2.1.0"
+    "react-leaflet-cluster": "2.1.0",
+    "@lit-labs/react": "2.1.3",
+    "lit": "3.2.1",
+    "@azure/msal-browser": "3.25.0",
+    "@azure/msal-react": "2.1.1"
   },
   "devDependencies": {
     "@redux-devtools/extension": "3.3.0",
@@ -71,7 +75,7 @@
     "@types/lodash.clonedeep": "4.5.9",
     "@types/lodash.isempty": "4.4.9",
     "@types/lodash.isequal": "4.5.8",
-    "@types/node": "18.19.54",
+    "@types/node": "18.19.55",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
     "@types/react-helmet": "6.1.11",
@@ -99,7 +103,8 @@
     "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "4.3.2",
     "vitest": "1.6.0",
-    "vitest-sonar-reporter": "2.0.0"
+    "vitest-sonar-reporter": "2.0.0",
+    "lit-html": "3.2.1"
   },
   "prettier": {
     "singleQuote": true
