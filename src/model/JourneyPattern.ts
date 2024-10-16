@@ -21,7 +21,7 @@ export const initJourneyPatterns = (): JourneyPattern[] => [
 
 export const initJourneyPattern = (): JourneyPattern => ({
   serviceJourneys: [{ id: `new_${createUuid()}`, passingTimes: [{}, {}] }],
-  pointsInSequence: [{}, {}],
+  pointsInSequence: [],
 });
 
 export const journeyPatternToPayload = (journeyPattern: JourneyPattern) => ({

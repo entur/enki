@@ -51,11 +51,6 @@ const JourneyPatternEditor = ({
         stopPointIndex,
       );
 
-      if (newPointsInSequence.length == 1) {
-        // Case when unselecting a quay from a map, making sure the form still has at least 2 stop points
-        newPointsInSequence.push({});
-      }
-
       onSave({
         ...journeyPattern,
         serviceJourneys: newServiceJourneys,
@@ -90,6 +85,14 @@ const JourneyPatternEditor = ({
     },
     [journeyPattern, onSave, serviceJourneys],
   );
+
+  const initStopPoints = useCallback(() => {
+    onSave({
+      ...journeyPattern,
+      pointsInSequence: [{}, {}],
+      serviceJourneys,
+    });
+  }, [journeyPattern, onSave, serviceJourneys]);
 
   const updateStopPoint = useCallback(
     (pointIndex: number, stopPlace: StopPoint) =>
@@ -136,6 +139,7 @@ const JourneyPatternEditor = ({
           addStopPoint={addStopPoint}
           onPointsInSequenceChange={onPointsInSequenceChange}
           transportMode={transportMode}
+          initStopPoints={initStopPoints}
         />
       </div>
       {onDelete && (
