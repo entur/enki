@@ -11,6 +11,20 @@
   overflow-x: hidden;
   width: 100%;
 
+  p {
+    a {
+      text-decoration: none;
+      color: var(--interactive-200, #1777f8);
+      cursor: pointer;
+    }
+
+    a:hover {
+      color: var(--interactive-200, #1777f8);
+      text-decoration: underline;
+      filter: brightness(1.25);
+    }
+  }
+
   h1 {
     font-size: 42px;
   }

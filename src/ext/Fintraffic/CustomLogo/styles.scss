@@ -3,7 +3,6 @@
 .custom-logo-wrapper {
   cursor: pointer;
   margin-top: 16px;
-  margin-bottom: 16px;
   padding-left: 30px;
   padding-right: 30px;
   height: auto;
@@ -14,8 +13,9 @@
   width: fit-content;
   font-size: 1rem;
   font-weight: 600;
+  margin-top: -0.5rem;
 }
 
 .logo {
-  width: 150px;
+  width: 130px;
 }

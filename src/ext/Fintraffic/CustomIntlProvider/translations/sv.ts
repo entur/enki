@@ -29,4 +29,8 @@ export const messages = {
   shortcuts: 'Genvägar',
   fintrafficApp: 'Fintraffic Appen',
   fintrafficAppLink: 'fintraffic_appen',
+  landingPageIntroP1: ' ',
+  landingPageIntroP2: ' ',
+  landingPageIntroP3: ' ',
+  landingPageIntroP4: ' ',
 };

@@ -141,6 +141,11 @@ const NavBar = () => {
             setRedirect={setRedirect}
           />
         )}
+
+        <SandboxFeature
+          feature={`${extPath}/Navbar`}
+          renderFallback={() => <></>}
+        />
       </SideNavigation>
 
       <div className="bottom-chips">

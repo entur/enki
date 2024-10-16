@@ -29,4 +29,8 @@ export const messages = {
   localesv: 'På Svenska',
   fintrafficApp: 'Fintraffic App',
   fintrafficAppLink: 'fintraffic_app',
+  landingPageIntroP1: ' ',
+  landingPageIntroP2: ' ',
+  landingPageIntroP3: ' ',
+  landingPageIntroP4: ' ',
 };

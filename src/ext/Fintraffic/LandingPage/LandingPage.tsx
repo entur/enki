@@ -6,7 +6,7 @@ import { Shortcut } from './Shortcut/types';
 import Footer from './Footer/Footer';
 import ShortcutPanel from './Shortcut/ShortcutPanel';
 import FintrafficNavbar from './Navigation/FintrafficNavbar';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
 import RaeLandingNavbar from './Navigation/RaeLandingNavbar';
 import LoginSvg from '../static/svg/login.svg?react';
 import NewUserSvg from '../static/svg/new_user.svg?react';
@@ -52,8 +52,25 @@ export const LandingPage = () => {
             <div className={'page-content'}>
               <h1>{formatMessage({ id: 'rae' })}</h1>
               <div className={'page-intro'}>
-                <p>{formatMessage({ id: 'Sometext' })}</p>
-                <p>{formatMessage({ id: 'Moretext' })}</p>
+                <p>{formatMessage({ id: 'landingPageIntroP1' })}</p>
+                <p>{formatMessage({ id: 'landingPageIntroP2' })}</p>
+                <p>{formatMessage({ id: 'landingPageIntroP3' })}</p>
+                <p>
+                  {formatMessage(
+                    { id: 'landingPageIntroP4' },
+                    {
+                      link: (
+                        <Link
+                          to={'https://extidp.traficom.fi/FIM/sps/auth'}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          https://extidp.traficom.fi/FIM/sps/auth
+                        </Link>
+                      ),
+                    },
+                  )}
+                </p>
               </div>
               <h2>{formatMessage({ id: 'shortcuts' })}</h2>
               <ShortcutPanel items={shortcuts} />
