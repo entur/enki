@@ -1,4 +1,4 @@
-import { Dropdown } from '@entur/dropdown';
+import { Dropdown, SearchableDropdown } from '@entur/dropdown';
 import { TextField } from '@entur/form';
 import { Heading1 } from '@entur/typography';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
@@ -165,7 +165,7 @@ export default <T extends Line>({
           }
         />
 
-        <Dropdown<string>
+        <SearchableDropdown<string>
           selectedItem={
             getOperatorItems().find(
               (item) => item.value === line.operatorRef,
