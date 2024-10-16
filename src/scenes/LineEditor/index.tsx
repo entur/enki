@@ -5,7 +5,6 @@ import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
 import LineEditorStepper from 'components/LineEditorStepper';
 import Loading from 'components/Loading';
 import Page from 'components/Page';
-import { useConfig } from 'config/ConfigContext';
 import { isBlank } from 'helpers/forms';
 import {
   currentStepIsValid,
@@ -37,10 +36,6 @@ export default () => {
   const dispatch = useDispatch<any>();
   const organisations = useAppSelector((state) => state.organisations);
   const editor = useAppSelector((state) => state.editor);
-
-  const activeProviderCode = useAppSelector(
-    (state) => state.userContext.activeProviderCode,
-  );
 
   const { line, setLine, refetchLine, loading, error, networks, notFound } =
     useLine();
@@ -110,15 +105,8 @@ export default () => {
   const onBackButtonClicked = () =>
     editor.isSaved ? navigate('/lines') : setShowConfirm(true);
 
-  const config = useConfig();
-
   const authoritiesMissing =
-    organisations &&
-    filterAuthorities(
-      organisations,
-      activeProviderCode,
-      config.enableLegacyOrganisationsFilter,
-    ).length === 0;
+    organisations && filterAuthorities(organisations).length === 0;
 
   return (
     <Page
@@ -156,10 +144,7 @@ export default () => {
                 activeStep={activeStep}
                 line={line!}
                 changeLine={onChange}
-                operators={filterNetexOperators(
-                  organisations ?? [],
-                  config.enableLegacyOrganisationsFilter,
-                )}
+                operators={filterNetexOperators(organisations ?? [])}
                 networks={networks || []}
                 spoilPristine={nextClicked}
               />

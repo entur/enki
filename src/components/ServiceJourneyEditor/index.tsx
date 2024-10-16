@@ -10,7 +10,6 @@ import DeleteActionChip from 'components/DeleteActionChip';
 import Notices from 'components/Notices';
 import { usePassingTimesEditor } from 'components/PassingTimesEditor';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import { useConfig } from 'config/ConfigContext';
 import { getInit, mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
@@ -63,12 +62,7 @@ const ServiceJourneyEditor = (props: Props) => {
     setOperatorSelection(newOperatorSelection);
   };
 
-  const config = useConfig();
-
-  const operators = filterNetexOperators(
-    organisations ?? [],
-    config.enableLegacyOrganisationsFilter,
-  );
+  const operators = filterNetexOperators(organisations ?? []);
 
   const onFieldChange = <T extends keyof ServiceJourney>(
     field: T,

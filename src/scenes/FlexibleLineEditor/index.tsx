@@ -45,9 +45,6 @@ const EditorFrame = () => {
   const organisations = useAppSelector((state) => state.organisations);
   const networks = useAppSelector((state) => state.networks);
   const editor = useAppSelector((state) => state.editor);
-  const activeProviderCode = useAppSelector(
-    (state) => state.userContext.activeProviderCode,
-  );
 
   const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies();
 
@@ -97,12 +94,7 @@ const EditorFrame = () => {
   };
 
   const authoritiesMissing =
-    organisations &&
-    filterAuthorities(
-      organisations,
-      activeProviderCode,
-      config.enableLegacyOrganisationsFilter,
-    ).length === 0;
+    organisations && filterAuthorities(organisations).length === 0;
 
   return (
     <Page
@@ -153,10 +145,7 @@ const EditorFrame = () => {
                     activeStep={activeStep}
                     flexibleLine={line!}
                     changeFlexibleLine={onFlexibleLineChange}
-                    operators={filterNetexOperators(
-                      organisations ?? [],
-                      config.enableLegacyOrganisationsFilter,
-                    )}
+                    operators={filterNetexOperators(organisations ?? [])}
                     networks={networks || []}
                     spoilPristine={nextClicked}
                   />
