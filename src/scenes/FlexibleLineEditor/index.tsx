@@ -3,7 +3,6 @@ import { deleteLine, saveFlexibleLine } from 'actions/flexibleLines';
 import LineEditorStepper from 'components/LineEditorStepper';
 import Loading from 'components/Loading';
 import Page from 'components/Page';
-import { useConfig } from 'config/ConfigContext';
 import { isBlank } from 'helpers/forms';
 import { getFlexibleLineFromPath } from 'helpers/url';
 import {
@@ -47,8 +46,6 @@ const EditorFrame = () => {
   const editor = useAppSelector((state) => state.editor);
 
   const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies();
-
-  const config = useConfig();
 
   useEffect(() => {
     if (!isBlank(params.id))
