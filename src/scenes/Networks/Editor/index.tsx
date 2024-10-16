@@ -14,7 +14,6 @@ import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import { useConfig } from 'config/ConfigContext';
 import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { isBlank } from 'helpers/forms';
@@ -37,9 +36,6 @@ const NetworkEditor = () => {
   const navigate = useNavigate();
   const intl = useIntl();
   const { formatMessage } = intl;
-  const activeProvider = useAppSelector(
-    (state) => state.userContext.activeProviderCode,
-  );
   const organisations = useAppSelector(({ organisations }) => organisations);
   const lines = useAppSelector(({ flexibleLines }) => flexibleLines);
   let currentNetwork = useAppSelector(getCurrentNetworkSelector(params));
@@ -112,13 +108,7 @@ const NetworkEditor = () => {
     dispatch(deleteNetworkById(network?.id)).then(() => navigate('/networks'));
   };
 
-  const config = useConfig();
-
-  const authorities = filterAuthorities(
-    organisations ?? [],
-    activeProvider,
-    config.enableLegacyOrganisationsFilter,
-  );
+  const authorities = filterAuthorities(organisations ?? []);
 
   const isDeleteDisabled =
     !network ||

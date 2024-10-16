@@ -592,18 +592,7 @@ export const getOrganisationsQuery = `
     organisations {
       id
       name { value }
-      legalName { value }
-      contactDetails {
-        email
-        phone
-        url
-      }
-      keyList {
-        keyValue {
-          key
-          value
-        }
-      }
+      type
     }
   }
 `;

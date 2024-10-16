@@ -53,12 +53,6 @@ export interface Config {
   xmlnsUrlPrefix?: string;
 
   /**
-   * Enables Entur specific legacy bevaior for filtering authorities and operators.
-   * {@see ../model/Organisation.ts}
-   */
-  enableLegacyOrganisationsFilter?: boolean;
-
-  /**
    * Optionally restrict available flexible line types available for users to choose from when
    * creating flexible lines.
    */
