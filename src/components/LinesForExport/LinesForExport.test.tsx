@@ -131,7 +131,7 @@ const lineAssociations: ExportLineAssociation[] = [
 
 describe('LinesForExport', () => {
   let renderResult: RenderResult;
-  let mockedOnChange: Mock<any, any>;
+  let mockedOnChange: Mock<any>;
   beforeEach(() => {
     mockedOnChange = vi.fn();
     renderResult = render(
