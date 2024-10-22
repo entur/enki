@@ -1,6 +1,6 @@
 import { Heading3, Paragraph } from '@entur/typography';
 import StopPoint from 'model/StopPoint';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { StopPointsEditorProps } from '..';
 import { FlexibleAreasOnlyStopPointEditor } from './FlexibleAreasOnlyStopPointEditor';
@@ -9,8 +9,15 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
   pointsInSequence,
   spoilPristine,
   onPointsInSequenceChange,
+  initStopPoints,
 }: StopPointsEditorProps) => {
   const { formatMessage } = useIntl();
+
+  useEffect(() => {
+    if (pointsInSequence?.length === 0) {
+      initStopPoints();
+    }
+  }, []);
 
   const onStopPointUpdate = useCallback(
     (updatedStopPoint: StopPoint) => {
@@ -40,11 +47,13 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
         {formatMessage({ id: 'stopPointsInfoFlexibleAreaOnly' })}
       </Paragraph>
       <div className="stop-point-editor">
-        <FlexibleAreasOnlyStopPointEditor
-          stopPoint={pointsInSequence[0]}
-          spoilPristine={spoilPristine}
-          onChange={onStopPointUpdate}
-        />
+        {pointsInSequence[0] && (
+          <FlexibleAreasOnlyStopPointEditor
+            stopPoint={pointsInSequence[0]}
+            spoilPristine={spoilPristine}
+            onChange={onStopPointUpdate}
+          />
+        )}
       </div>
     </section>
   );
