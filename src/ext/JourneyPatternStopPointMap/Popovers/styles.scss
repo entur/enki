@@ -14,7 +14,7 @@
 }
 
 .search-input {
-  min-width: 21rem;
+  min-width: 21.5rem;
   width: auto;
 }
 
@@ -70,4 +70,8 @@
 }
 .search-popover .eds-contrast .eds-form-control-wrapper:focus-within {
   outline: 1px solid var(--components-form-baseform-standard-border-interactive);
+}
+
+.search-popover .eds-icon.eds-icon--inline {
+  left: 0.75rem;
 }
