@@ -23,6 +23,10 @@ body {
   margin: 3.5rem 1.5rem;
 }
 
+.page-content {
+  margin: 0 !important;
+}
+
 // Navigation menu:
 
 .eds-contrast .eds-floating-button:focus {
@@ -98,6 +102,11 @@ body {
 .eds-side-navigation__click-target:not([disabled]):hover {
   background-color: var(--fds-color-brand-black) !important;
   color: var(--fds-color-neutral-100);
+}
+
+.eds-side-navigation-group__expand-content
+  .eds-side-navigation__click-target:not([disabled]):hover {
+  background-color: #222222 !important;
 }
 
 .eds-side-navigation-group__expand-content
@@ -310,7 +319,7 @@ body {
 }
 
 .eds-form-control-wrapper:focus-within {
-  outline: 1px solid var(--fds-color-interactive-200) !important;
+  outline: 1px solid var(--fds-color-interactive-200);
   border-color: var(--fds-color-interactive-200);
 }
 
@@ -363,6 +372,23 @@ body {
 .eds-form-control-wrapper {
   border: 1px solid var(--fds-color-neutral-200);
   height: fit-content;
+  padding-left: 0;
+}
+
+.day-type-section .eds-form-control-wrapper {
+  padding-left: 0 !important;
+}
+
+.eds-dropdown .eds-form-control-wrapper {
+  padding-left: 1rem;
+}
+
+.eds-table__body .ReactCollapse--content .eds-form-control-wrapper {
+  margin-top: 1rem;
+}
+
+.lines-editor-general .transport-mode-dropdowns > div {
+  margin-top: 3rem !important;
 }
 
 .eds-dropdown__list__item {
@@ -378,8 +404,13 @@ body {
   background-color: #e1eff8;
 }
 
+.eds-modal__content > .eds-textfield__wrapper {
+  margin-top: 3rem;
+}
+
 .eds-input-group__label {
-  top: -2.75rem;
+  top: -1.75rem;
+  left: 0;
   margin-left: 0;
   transition: unset;
   color: var(--fds-color-text-1000, #000000);
@@ -436,10 +467,10 @@ body {
   margin-top: 3rem !important;
 }
 
-.eds-dropdown--searchable .eds-input-group__label {
+/*.eds-dropdown--searchable .eds-input-group__label {
   top: -2.75rem;
   left: 0;
-}
+}*/
 
 .eds-dropdown--searchable.eds-form-control-wrapper--is-filled
   .eds-input-group__label {
@@ -447,8 +478,20 @@ body {
   left: 0;
 }
 
-.eds-dropdown--searchable__selected-item {
+/*.eds-dropdown--searchable__selected-item {
   top: -0.42rem;
+}*/
+
+.eds-dropdown--searchable .eds-form-control:focus {
+  padding-left: 0 !important;
+}
+
+.eds-dropdown--searchable .eds-input-group__label {
+  left: 0;
+}
+
+.eds-dropdown--searchable__selected-item {
+  top: -0.5rem;
 }
 
 .eds-dropdown__selected-item__placeholder {
@@ -468,10 +511,6 @@ body {
 
 .eds-feedback-text__text {
   color: var(--fds-color-text-600);
-}
-
-.eds-input-group__label-tooltip-icon {
-  color: var(--fds-color-interactive-300);
 }
 
 .eds-form-control-wrapper--negative:focus-within {
@@ -555,6 +594,7 @@ section .notices {
 
 .eds-expandable-panel__trigger {
   background: #edf0f2;
+  width: 100%;
 }
 
 .eds-expandable-panel__trigger:hover {
@@ -571,8 +611,32 @@ section .notices {
   margin-top: 3rem;
 }
 
+.service-journey-editor .service-journey-inputs {
+  margin-bottom: 3rem;
+}
+
 .service-journey-editor .form-section {
   margin-bottom: unset;
+}
+
+.service-journey-editor .passing-times-section {
+  margin-bottom: 3rem;
+}
+
+.service-journey-editor
+  .service-journey-editor-action-chips
+  .service-journey-editor-action-chip {
+  margin-right: 0;
+  margin-bottom: 0.2rem;
+}
+
+.service-journey-editor .service-journey-editor-action-chips {
+  flex-direction: column;
+  margin-left: 0.5rem;
+}
+
+.eds-action-chip:focus {
+  outline: none;
 }
 
 .eds-action-chip:hover {
@@ -581,15 +645,21 @@ section .notices {
   border-color: transparent;
 }
 
-.service-journey-editor .day-type-section {
+/*.service-journey-editor .day-type-section {
   margin-top: 1rem;
-}
+}*/
 
 .eds-pagination__page {
   border-color: var(--fds-color-neutral-200);
 }
 
 .eds-pagination__page--selected {
+  background: var(--fds-color-interactive-200);
+  border-color: transparent;
+  color: white;
+}
+
+.eds-pagination__controls__page--selected {
   background: var(--fds-color-interactive-200);
   border-color: transparent;
   color: white;
@@ -641,16 +711,44 @@ section .notices {
 }
 
 .passing-times-editor .passing-time .timepicker {
-  width: unset;
+  min-width: unset;
+  max-width: unset;
+  width: fit-content !important;
   margin-right: 0.25rem;
+  margin-left: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.passing-times-editor
+  .passing-time
+  .timepicker
+  > .eds-form-control-wrapper--disabled {
+  width: 167px !important;
+  padding-left: 2.5rem;
+  //align-items: center;
+}
+
+.passing-times-editor .passing-time .timepicker .eds-form-control-wrapper {
+  //width: fit-content !important;
+  margin-right: 0.25rem;
+}
+
+.timepicker .eds-form-control__prepend {
+  margin-right: 0.25rem;
+}
+
+.timepicker .eds-form-control__append {
+  margin-left: 0.25rem;
 }
 
 .eds-date-and-time-field__segment {
   margin-top: unset;
   color: var(--fds-color-brand-black);
+  padding: 0 1px;
 }
 
-.eds-timepicker__wrapper .eds-timepicker__arrowbutton {
+.eds-timepicker__arrowbutton {
   margin: unset;
   padding: 0.25rem;
 }
@@ -659,7 +757,12 @@ section .notices {
   background-color: #e1eff8;
 }
 
-.eds-timepicker__wrapper .eds-timepicker__arrowbutton.eds-icon-button:hover {
+.eds-timepicker__arrowbutton.eds-icon-button {
+  margin-right: 0.25rem;
+  margin-left: 0.25rem;
+}
+
+.eds-timepicker__arrowbutton.eds-icon-button:hover {
   background-color: var(--fds-color-interactive-200);
   color: var(--fds-color-brand-white);
 }
@@ -681,6 +784,10 @@ section .notices {
 .eds-datepicker__open-calendar-button.eds-icon-button:hover {
   background: var(--fds-color-interactive-200);
   color: white;
+}
+
+.eds-datepicker__open-calendar-button.eds-icon-button:focus {
+  outline: none;
 }
 
 .day-types-modal_new-day-type-button {
@@ -717,14 +824,52 @@ section .notices {
 
 .passing-times-editor .passing-time .title,
 .passing-times-editor .passing-time .time-number {
-  margin-bottom: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.passing-times-editor .passing-time .title {
+  max-width: 12rem;
+  width: 100% !important;
+  margin-right: 1rem;
 }
 
 .passing-times-editor .passing-time {
-  padding-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  padding-top: 2.5rem;
+}
+
+.passing-time .eds-form-control__field-and-feedback-text--has-tooltip {
+  min-width: 140px !important;
+  max-width: 140px !important;
+  width: 140px !important;
+  margin-left: 0.25rem;
+}
+
+.passing-time .eds-dropdown__appendix__toggle-button {
+  padding: 0.25rem;
+}
+
+.passing-time .eds-form-control__append--tooltip {
+  right: -1.65rem;
 }
 
 // Flexible lines:
+
+.line-type-dropdown-tooltip {
+  margin-bottom: 2rem;
+}
+
+.time-unit-picker .pickers-container {
+  padding-top: 3rem;
+}
+
+.time-unit-picker .pickers-container .picker {
+  margin-bottom: 2.5rem;
+}
+
+.booking-editor .booking-time-info > :first-child {
+  margin-top: 3rem;
+}
 
 .eds-contrast > .booking {
   background-color: #e1eff8 !important;
@@ -740,6 +885,10 @@ section .notices {
   margin-right: 16px;
 }
 
+.eds-timepicker .eds-form-control-wrapper {
+  width: fit-content;
+}
+
 // Flexible stop places:
 
 .stop-place-editor .stop-place-form-container .stop-place-form > div,
@@ -749,7 +898,9 @@ section .notices {
 
 // Networks:
 
-.network-form .eds-form-control-wrapper {
+.network-form > .eds-form-control-wrapper,
+.network-form > .eds-textfield__wrapper,
+.network-form > .eds-form-control__field-and-feedback-text {
   margin-top: 3rem;
 }
 
@@ -796,6 +947,17 @@ section .notices {
   background-color: var(--fds-color-danger-300) !important;
 }
 
+// Export
+.export-dry-run .question-icon {
+  padding-bottom: 0.35rem;
+}
+
+// Drawer
+.eds-drawer {
+  background-color: #e1eff8;
+  color: var(--fds-color-brand-black);
+}
+
 .stop-point-sequence-index-chip .eds-tag-chip__close-button:focus {
   outline: none !important;
 }
@@ -805,8 +967,16 @@ section .notices {
   border: 2px solid var(--fds-color-text-600) !important;
 }
 
-.provider-form .eds-form-control-wrapper {
+/*.provider-form .eds-form-control-wrapper {
   margin-top: 3rem;
+}*/
+
+.provider-form .required-input {
+  margin-bottom: 3rem;
+}
+
+.provider-form .form-section {
+  margin-bottom: 3rem;
 }
 
 .map-search-results-container .eds-label,
@@ -818,6 +988,7 @@ section .notices {
 }
 .search-popover .eds-form-control-wrapper:focus-within {
   border-color: var(--fds-color-interactive-200) !important;
+  outline: 1px solid var(--fds-color-interactive-200) !important;
 }
 .search-popover .eds-form-control-wrapper:focus-within:hover {
   border-color: var(--fds-color-interactive-200) !important;
