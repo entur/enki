@@ -13,6 +13,7 @@ import General from './General';
 import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 import { VEHICLE_MODE } from '../../model/enums';
+import ServiceJourney from '../../model/ServiceJourney';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -86,11 +87,16 @@ const JourneyPatternEditor = ({
     [journeyPattern, onSave, serviceJourneys],
   );
 
-  const initStopPoints = useCallback(() => {
+  const initDefaultJourneyPattern = useCallback(() => {
     onSave({
       ...journeyPattern,
       pointsInSequence: [{}, {}],
-      serviceJourneys,
+      serviceJourneys: journeyPattern.serviceJourneys.map(
+        (serviceJourney: ServiceJourney) => ({
+          ...serviceJourney,
+          passingTimes: [{}, {}],
+        }),
+      ),
     });
   }, [journeyPattern, onSave, serviceJourneys]);
 
@@ -139,7 +145,7 @@ const JourneyPatternEditor = ({
           addStopPoint={addStopPoint}
           onPointsInSequenceChange={onPointsInSequenceChange}
           transportMode={transportMode}
-          initStopPoints={initStopPoints}
+          initDefaultJourneyPattern={initDefaultJourneyPattern}
         />
       </div>
       {onDelete && (
