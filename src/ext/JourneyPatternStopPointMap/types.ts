@@ -5,8 +5,14 @@ import { VEHICLE_MODE } from '../../model/enums';
 import { StopPlace } from '../../api';
 import { StopPointLocation } from '../../reducers/stopPlaces';
 
-export interface JourneyPatternStopPointMapProps
-  extends SandboxFeatureProps<SandboxFeatures> {
+export interface MapWrapperProps extends SandboxFeatureProps<SandboxFeatures> {
+  transportMode: VEHICLE_MODE;
+  pointsInSequence: StopPoint[];
+  deleteStopPoint: (index: number) => void;
+  addStopPoint: (quayRef?: string) => void;
+}
+
+export interface JourneyPatternStopPointMapProps {
   transportMode: VEHICLE_MODE;
   pointsInSequence: StopPoint[];
   deleteStopPoint: (index: number) => void;

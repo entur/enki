@@ -20,11 +20,9 @@ body {
 }
 
 .page .page-content {
-  margin: 3.5rem 1.5rem;
-}
-
-.page-content {
-  margin: 0 !important;
+  margin: 1.5rem 1rem;
+  padding: 0rem;
+  padding-right: 2rem;
 }
 
 // Navigation menu:
@@ -845,12 +843,22 @@ section .notices {
   margin-left: 0.25rem;
 }
 
+.eds-form-control__field-and-feedback-text--has-tooltip {
+  padding-right: 1.5rem;
+}
+
 .passing-time .eds-dropdown__appendix__toggle-button {
   padding: 0.25rem;
 }
 
 .passing-time .eds-form-control__append--tooltip {
   right: -1.65rem;
+}
+
+.passing-times-editor .passing-time .title {
+  max-width: unset !important;
+  width: unset !important;
+  flex-grow: 1 !important;
 }
 
 // Flexible lines:
@@ -882,7 +890,15 @@ section .notices {
 
 .stop-point-editor .stop-point .stop-point-element .stop-point-info > div {
   margin-top: 1.5rem !important;
-  margin-right: 16px;
+  margin-right: 14px;
+}
+
+.stop-point-editor
+  .stop-point
+  .stop-point-element
+  .stop-point-key-info
+  > :first-child {
+  margin: auto 1.6rem auto 0;
 }
 
 .eds-timepicker .eds-form-control-wrapper {

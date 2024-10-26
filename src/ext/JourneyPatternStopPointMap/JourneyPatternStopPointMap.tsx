@@ -24,7 +24,7 @@ import { useMapState } from './hooks';
 
 const defaultStopPlaces: StopPlace[] = [];
 
-export const JourneyPatternStopPointMap = ({
+const JourneyPatternStopPointMap = ({
   pointsInSequence,
   addStopPoint,
   deleteStopPoint,
@@ -130,47 +130,47 @@ export const JourneyPatternStopPointMap = ({
   );
 
   return (
-    <FormMap zoomControl={false} doubleClickZoom={false}>
-      <>
-        <SearchPopover
-          transportMode={transportMode}
-          focusMarkerCallback={focusMarkerCallback}
-          getSelectedQuayIdsCallback={getSelectedQuayIdsCallback}
-        />
-        <ZoomControl position={'topright'} />
-        <MarkerClusterGroup chunkedLoading disableClusteringAtZoom={12}>
-          <Polyline positions={mapState.stopPointLocationSequence} />
-          {totalStopPlaces.map((stopPlace: StopPlace) => {
-            return mapState.showQuaysState[stopPlace.id] ? (
-              <QuaysWrapper
-                key={'quays-wrapper-for-' + stopPlace.id}
-                stopPlace={stopPlace}
-                stopPointSequenceIndexes={mapState.quayStopPointSequenceIndexes}
-                hideNonSelectedQuaysState={
-                  mapState.hideNonSelectedQuaysState[stopPlace.id]
-                }
-                deleteStopPoint={deleteStopPoint}
-                addStopPoint={addStopPoint}
-                hideNonSelectedQuaysCallback={hideNonSelectedQuaysCallback}
-                showQuaysCallback={showQuaysCallback}
-                focusedMarker={mapState.focusedMarker}
-                clearFocusedMarker={() => focusMarkerCallback(undefined)}
-              />
-            ) : (
-              <StopPlaceMarker
-                key={'stop-place-marker-' + stopPlace.id}
-                stopPlace={stopPlace}
-                showQuaysCallback={() => {
-                  showQuaysCallback(true, stopPlace.id);
-                }}
-                addStopPointCallback={addStopPoint}
-                focusedMarker={mapState.focusedMarker}
-                clearFocusedMarker={() => focusMarkerCallback(undefined)}
-              />
-            );
-          })}
-        </MarkerClusterGroup>
-      </>
-    </FormMap>
+    <>
+      <SearchPopover
+        transportMode={transportMode}
+        focusMarkerCallback={focusMarkerCallback}
+        getSelectedQuayIdsCallback={getSelectedQuayIdsCallback}
+      />
+      <ZoomControl position={'topright'} />
+      <MarkerClusterGroup chunkedLoading disableClusteringAtZoom={12}>
+        <Polyline positions={mapState.stopPointLocationSequence} />
+        {totalStopPlaces.map((stopPlace: StopPlace) => {
+          return mapState.showQuaysState[stopPlace.id] ? (
+            <QuaysWrapper
+              key={'quays-wrapper-for-' + stopPlace.id}
+              stopPlace={stopPlace}
+              stopPointSequenceIndexes={mapState.quayStopPointSequenceIndexes}
+              hideNonSelectedQuaysState={
+                mapState.hideNonSelectedQuaysState[stopPlace.id]
+              }
+              deleteStopPoint={deleteStopPoint}
+              addStopPoint={addStopPoint}
+              hideNonSelectedQuaysCallback={hideNonSelectedQuaysCallback}
+              showQuaysCallback={showQuaysCallback}
+              focusedMarker={mapState.focusedMarker}
+              clearFocusedMarker={() => focusMarkerCallback(undefined)}
+            />
+          ) : (
+            <StopPlaceMarker
+              key={'stop-place-marker-' + stopPlace.id}
+              stopPlace={stopPlace}
+              showQuaysCallback={() => {
+                showQuaysCallback(true, stopPlace.id);
+              }}
+              addStopPointCallback={addStopPoint}
+              focusedMarker={mapState.focusedMarker}
+              clearFocusedMarker={() => focusMarkerCallback(undefined)}
+            />
+          );
+        })}
+      </MarkerClusterGroup>
+    </>
   );
 };
+
+export default JourneyPatternStopPointMap;
