@@ -11,7 +11,7 @@ import { usePopupOpeningOnFocus } from './hooks';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
-  showQuaysCallback: () => void;
+  showQuaysCallback: (showAll: boolean, stopPlaceId: string) => void;
   addStopPointCallback: (quayRef: string) => void;
   focusedMarker: FocusedMarker | undefined;
   clearFocusedMarker: () => void;
@@ -51,7 +51,7 @@ const StopPlaceMarker = ({
           <Button
             className={'popup-button'}
             onClick={() => {
-              showQuaysCallback();
+              showQuaysCallback(true, stopPlace.id);
             }}
             width="auto"
             variant="primary"
@@ -65,7 +65,7 @@ const StopPlaceMarker = ({
             onClick={() => {
               addStopPointCallback(stopPlace.quays[0].id);
               // When user selected a single quay, we still want to enter the "show quays" mode:
-              showQuaysCallback();
+              showQuaysCallback(true, stopPlace.id);
             }}
             width="auto"
             variant="primary"
