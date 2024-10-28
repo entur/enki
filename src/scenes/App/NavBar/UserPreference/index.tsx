@@ -3,14 +3,19 @@ import { SelectProvider } from '../../SelectProvider/SelectProvider';
 import { Contrast } from '@entur/layout';
 import './styles.scss';
 import { useNoSelectedProvider } from '../../useNoSelectedProvider';
+import Provider from '../../../../model/Provider';
 
-const UserPreference = () => {
+type UserPreferenceProps = {
+  providers: Provider[] | undefined;
+};
+
+const UserPreference = ({ providers }: UserPreferenceProps) => {
   const noSelectedProvider = useNoSelectedProvider();
 
   return (
     <div className="user-preference">
       <UserMenu />
-      {!noSelectedProvider && (
+      {providers && providers.length > 0 && !noSelectedProvider && (
         <Contrast>
           <SelectProvider />
         </Contrast>
