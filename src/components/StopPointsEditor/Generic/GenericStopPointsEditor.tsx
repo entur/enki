@@ -20,7 +20,7 @@ export const GenericStopPointsEditor = ({
   addStopPoint,
   flexibleLineType,
   transportMode,
-  initStopPoints,
+  initDefaultJourneyPattern,
 }: StopPointsEditorProps) => {
   const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useIntl();
@@ -30,7 +30,7 @@ export const GenericStopPointsEditor = ({
   useEffect(() => {
     // if map isn't enabled, let's produce two empty stop points
     if (!isMapEnabled && pointsInSequence?.length === 0) {
-      initStopPoints();
+      initDefaultJourneyPattern();
     }
   }, []);
 

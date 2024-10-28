@@ -70,7 +70,7 @@ export default <T extends Line>({
           serviceJourneys: journeyPattern.serviceJourneys.map(
             (serviceJourney: ServiceJourney) => ({
               ...serviceJourney,
-              passingTimes: [{}, {}],
+              passingTimes: [],
             }),
           ),
           pointsInSequence: [],

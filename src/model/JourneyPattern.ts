@@ -20,7 +20,7 @@ export const initJourneyPatterns = (): JourneyPattern[] => [
 ];
 
 export const initJourneyPattern = (): JourneyPattern => ({
-  serviceJourneys: [{ id: `new_${createUuid()}`, passingTimes: [{}, {}] }],
+  serviceJourneys: [{ id: `new_${createUuid()}`, passingTimes: [] }],
   pointsInSequence: [],
 });
 
