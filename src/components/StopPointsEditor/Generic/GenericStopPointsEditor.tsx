@@ -5,7 +5,6 @@ import StopPoint from 'model/StopPoint';
 import { useIntl } from 'react-intl';
 import { StopPointsEditorProps } from '..';
 import { GenericStopPointEditor } from './GenericStopPointEditor';
-import { JourneyPatternStopPointMap } from '../../../ext/JourneyPatternStopPointMap/JourneyPatternStopPointMap';
 import SandboxFeature from '../../../ext/SandboxFeature';
 import { useConfig } from '../../../config/ConfigContext';
 import { SmallAlertBox } from '@entur/alert';

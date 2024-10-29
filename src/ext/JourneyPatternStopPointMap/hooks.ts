@@ -5,10 +5,68 @@ import {
   useReducer,
   useRef,
 } from 'react';
-import { StopPointLocation } from '../../reducers/stopPlaces';
 import StopPoint from '../../model/StopPoint';
-import { JourneyPatternsMapState } from './types';
-import { Centroid } from '../../api';
+import {
+  JourneyPatternsMapState,
+  JourneyPatternsStopPlacesState,
+  StopPointLocation,
+} from './types';
+import { Centroid, UttuQuery } from '../../api';
+import { useAppSelector } from '../../store/hooks';
+import { useConfig } from '../../config/ConfigContext';
+import { useAuth } from '../../auth/auth';
+import { getStopPlacesQuery } from '../../api/uttu/queries';
+import { getStopPlacesState } from './helpers';
+
+/**
+ * Fetching stops data
+ */
+export const useStopPlacesData = (transportMode: string | undefined) => {
+  const activeProvider =
+    useAppSelector((state) => state.userContext.activeProviderCode) ?? '';
+  const { uttuApiUrl } = useConfig();
+  const auth = useAuth();
+
+  const [stopPlacesState, setStopPlacesState] = useReducer<
+    Reducer<
+      JourneyPatternsStopPlacesState,
+      Partial<JourneyPatternsStopPlacesState>
+    >
+  >(
+    (
+      state: JourneyPatternsStopPlacesState,
+      newState: Partial<JourneyPatternsStopPlacesState>,
+    ) => ({
+      ...state,
+      ...newState,
+    }),
+    {
+      stopPlaces: [],
+      quayLocationsIndex: {},
+      quayStopPlaceIndex: {},
+    },
+  );
+
+  useEffect(() => {
+    if (transportMode) {
+      auth.getAccessToken().then((token) => {
+        UttuQuery(
+          uttuApiUrl,
+          activeProvider,
+          getStopPlacesQuery,
+          { transportMode },
+          token,
+        ).then((data) => {
+          setStopPlacesState(getStopPlacesState(data?.stopPlaces || []));
+        });
+      });
+    }
+  }, []);
+
+  return {
+    stopPlacesState,
+  };
+};
 
 /**
  * How and what kind of markers are shown on map is determined here
@@ -65,7 +123,7 @@ export const useMapState = (
     const newHideQuaysState: Record<string, boolean> = {
       ...mapStateRef.current.hideNonSelectedQuaysState,
     };
-    //
+    // Locations of the selected quays, to be used in Polyline
     const newStopPointLocations: StopPointLocation[] = [];
     if (!quayStopPlaceIndex || !quayLocationsIndex) {
       return;

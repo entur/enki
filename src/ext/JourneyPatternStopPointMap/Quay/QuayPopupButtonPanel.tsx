@@ -1,6 +1,6 @@
 import { Button, SecondaryButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import { useIntl } from 'react-intl';
 
 interface QuayPopupButtonPanelProps {
@@ -12,6 +12,7 @@ interface QuayPopupButtonPanelProps {
   hideNonSelectedQuaysCallback: (hideNonSelected: boolean) => void;
   showQuaysCallback: (showAll: boolean) => void;
   addStopPointCallback: (quayId: string) => void;
+  markerRef: MutableRefObject<any>;
 }
 
 const QuayPopupButtonPanel = ({
@@ -23,6 +24,7 @@ const QuayPopupButtonPanel = ({
   hideNonSelectedQuaysState,
   hideNonSelectedQuaysCallback,
   showQuaysCallback,
+  markerRef,
 }: QuayPopupButtonPanelProps) => {
   const intl = useIntl();
   const { formatMessage } = intl;
@@ -32,6 +34,7 @@ const QuayPopupButtonPanel = ({
       <Button
         className={'popup-button'}
         onClick={() => {
+          markerRef.current.closePopup();
           addStopPointCallback(quayId);
         }}
         width="auto"
@@ -47,9 +50,10 @@ const QuayPopupButtonPanel = ({
           style={{
             marginLeft: '0.5rem',
           }}
-          onClick={() =>
-            hideNonSelectedQuaysCallback(!hideNonSelectedQuaysState)
-          }
+          onClick={() => {
+            markerRef.current.closePopup();
+            hideNonSelectedQuaysCallback(!hideNonSelectedQuaysState);
+          }}
           width="auto"
           size="small"
         >

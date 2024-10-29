@@ -31,7 +31,6 @@ const {
   flexibleLines,
   flexibleStopPlaces,
   editor,
-  stopPlaces,
 } = reducers;
 
 const staticReducers = {
@@ -47,7 +46,6 @@ const staticReducers = {
   config,
   intl,
   userContext,
-  stopPlaces,
 };
 
 const devMiddlewares =

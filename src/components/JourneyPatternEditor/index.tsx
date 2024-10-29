@@ -7,12 +7,13 @@ import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
 import { FlexibleLineType } from 'model/FlexibleLine';
 import JourneyPattern from 'model/JourneyPattern';
 import StopPoint from 'model/StopPoint';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import General from './General';
 import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 import { VEHICLE_MODE } from '../../model/enums';
+import ServiceJourney from '../../model/ServiceJourney';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -32,6 +33,16 @@ const JourneyPatternEditor = ({
   transportMode,
 }: Props) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
+  const journeyPatternRef = useRef<any>({
+    pointsInSequence: [],
+    serviceJourneys: [],
+  });
+
+  useEffect(() => {
+    journeyPatternRef.current = {
+      journeyPattern,
+    };
+  }, [journeyPattern, journeyPatternRef.current]);
 
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const { formatMessage } = useIntl();
@@ -77,13 +88,37 @@ const JourneyPatternEditor = ({
         pointsInSequence: newPointsInSequence,
         serviceJourneys: newServiceJourneys,
       });
+    },
+    [journeyPattern, onSave, serviceJourneys],
+  );
+
+  const addStopPointForMap = useCallback(
+    (quayRef?: string) => {
+      const newServiceJourneys =
+        journeyPatternRef.current.journeyPattern.serviceJourneys.map(
+          (serviceJourney: ServiceJourney) => ({
+            ...serviceJourney,
+            passingTimes: [...serviceJourney.passingTimes, {}],
+          }),
+        );
+
+      let newPointsInSequence = [
+        ...journeyPatternRef.current.journeyPattern.pointsInSequence,
+        quayRef && quayRef ? { quayRef } : {},
+      ];
+
+      onSave({
+        ...journeyPatternRef.current.journeyPattern,
+        pointsInSequence: newPointsInSequence,
+        serviceJourneys: newServiceJourneys,
+      });
 
       if (sandboxFeatures?.JourneyPatternStopPointMap) {
         // To avoid grey area on the map once the container gets bigger in the height:
         window.dispatchEvent(new Event('resize'));
       }
     },
-    [journeyPattern, onSave, serviceJourneys],
+    [journeyPatternRef],
   );
 
   const initStopPoints = useCallback(() => {
@@ -136,7 +171,11 @@ const JourneyPatternEditor = ({
           spoilPristine={spoilPristine}
           updateStopPoint={updateStopPoint}
           deleteStopPoint={deleteStopPoint}
-          addStopPoint={addStopPoint}
+          addStopPoint={
+            sandboxFeatures?.JourneyPatternStopPointMap
+              ? addStopPointForMap
+              : addStopPoint
+          }
           onPointsInSequenceChange={onPointsInSequenceChange}
           transportMode={transportMode}
           initStopPoints={initStopPoints}
