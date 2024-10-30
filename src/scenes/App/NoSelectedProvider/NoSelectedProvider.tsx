@@ -12,7 +12,7 @@ export const NoSelectedProvider = () => {
         title={formatMessage({ id: 'navBarDataProvider' })}
         titleIcon={<AdjustmentsIcon />}
       >
-        <div style={{ width: '400px', textAlign: 'left' }}>
+        <div style={{ width: '400px', textAlign: 'left', marginTop: '1.5rem' }}>
           <SelectProvider />
         </div>
       </NavigationCard>

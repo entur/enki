@@ -24,6 +24,17 @@ export const getMarkerIcon = (
   }
 };
 
+export const getClusterIcon = (count, size) => {
+  const specificStyle =
+    'cluster-marker--' +
+    (count > 99 ? 'large' : count > 9 ? 'medium' : 'small');
+  return L.divIcon({
+    html: `<div class="cluster-marker ${specificStyle}" style="width: ${size}px; height: ${size}px;">
+        ${count}
+      </div>`,
+  });
+};
+
 const getQuayIconColor = (isSelected: boolean) => {
   return isSelected ? '#1777F8' : '#6e7781';
 };

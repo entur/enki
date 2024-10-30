@@ -53,3 +53,40 @@
   border-right: 1px solid #b3b4bd;
   margin-right: 0.25rem;
 }
+
+.leaflet-div-icon {
+  background: none !important;
+  border: none !important;
+  z-index: 300 !important;
+}
+
+.cluster-marker {
+  z-index: 300 !important;
+  color: #fff;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600 !important;
+  // box-shadow: 4px 4px 10px rgba(255, 155, 138, 0.7);
+
+  &--medium {
+    background: rgba(230, 192, 43, 0.7);
+    border: 4px solid rgba(253, 255, 255, 0.3);
+    padding: 13px;
+  }
+
+  &--small {
+    background: rgba(117, 206, 33, 0.7);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    padding: 11px;
+  }
+
+  &--large {
+    background: rgba(253, 156, 115, 0.7);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    padding: 15px;
+  }
+}

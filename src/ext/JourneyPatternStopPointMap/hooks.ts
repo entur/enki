@@ -1,7 +1,9 @@
 import {
   MutableRefObject,
   Reducer,
+  useCallback,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
 } from 'react';
@@ -9,6 +11,7 @@ import StopPoint from '../../model/StopPoint';
 import {
   JourneyPatternsMapState,
   JourneyPatternsStopPlacesState,
+  MapParams,
   StopPointLocation,
 } from './types';
 import { Centroid, UttuQuery } from '../../api';
@@ -17,6 +20,10 @@ import { useConfig } from '../../config/ConfigContext';
 import { useAuth } from '../../auth/auth';
 import { getStopPlacesQuery } from '../../api/uttu/queries';
 import { getStopPlacesState } from './helpers';
+import { Marker, useMap } from 'react-leaflet';
+import { getClusterIcon } from './markers';
+import QuaysWrapper from './Quay/QuaysWrapper';
+import StopPlaceMarker from './StopPlaceMarker';
 
 /**
  * Fetching stops data
@@ -178,6 +185,8 @@ export const useMapState = (
     mapStateRef.current['hideNonSelectedQuaysState'] = newHideQuaysState;
     mapStateRef.current['quayStopPointSequenceIndexes'] =
       newQuayStopPointSequenceIndexes;
+    mapStateRef.current['showQuaysState'] = newShowQuaysState;
+    mapStateRef.current['focusedMarker'] = undefined;
     setMapState(newMapState);
   }, [
     pointsInSequence,
@@ -214,4 +223,42 @@ export const usePopupOpeningOnFocus = (
       }
     }
   }, [isPopupToBeOpen, markerRef, clearFocusedMarker]);
+};
+
+export const useMapSpecs = () => {
+  const map = useMap();
+  const [mapSpecsState, setMapSpecsState] = useReducer<
+    Reducer<MapParams, Partial<MapParams>>
+  >(
+    (state: MapParams, newState: Partial<MapParams>) => ({
+      ...state,
+      ...newState,
+    }),
+    {
+      zoom: 0,
+      bounds: [],
+    },
+  );
+
+  const updateMapSpecs = useCallback(() => {
+    const newBounds = map.getBounds();
+    setMapSpecsState({
+      zoom: map.getZoom(),
+      bounds: [
+        newBounds.getSouthWest().lng,
+        newBounds.getSouthWest().lat,
+        newBounds.getNorthEast().lng,
+        newBounds.getNorthEast().lat,
+      ],
+    });
+  }, [map]);
+
+  useEffect(() => {
+    updateMapSpecs();
+  }, []);
+
+  return {
+    mapSpecsState,
+    updateMapSpecs,
+  };
 };

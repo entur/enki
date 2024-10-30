@@ -109,7 +109,7 @@ const SearchPopover = memo(
           }}
           onChange={(e: any) => {
             setIsTyping(true);
-            if (e.target.value?.length > 2) {
+            if (e.target.value?.length > 1) {
               debouncedSearch(e.target.value);
             } else {
               setIsTyping(false);
@@ -130,7 +130,7 @@ const SearchPopover = memo(
             {!isLoading &&
               !isTyping &&
               !(searchedStopPlaces?.length > 0) &&
-              searchText?.length > 2 && (
+              searchText?.length > 1 && (
                 <div className={'map-search-status-label'}>
                   <Label>
                     <i>{formatMessage({ id: 'mapSearchNoResults' })}</i>

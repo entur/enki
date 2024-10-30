@@ -1,5 +1,4 @@
 import './styles.scss';
-import MarkerClusterGroup from 'react-leaflet-cluster';
 import { memo, useCallback, useMemo, useState } from 'react';
 import StopPlaceMarker from './StopPlaceMarker';
 import {
@@ -8,7 +7,13 @@ import {
   FocusedMarkerNewMapState,
   JourneyPatternsStopPlacesState,
 } from './types';
-import { Polyline, ZoomControl } from 'react-leaflet';
+import {
+  Polyline,
+  ZoomControl,
+  useMapEvents,
+  Marker,
+  Pane,
+} from 'react-leaflet';
 import { Centroid, StopPlace } from '../../api';
 import QuaysWrapper from './Quay/QuaysWrapper';
 import SearchPopover from './Popovers/SearchPopover';
@@ -17,7 +22,9 @@ import {
   getStopPlacesState,
   onFocusedMarkerNewMapState,
 } from './helpers';
-import { useMapState, useStopPlacesData } from './hooks';
+import { useMapSpecs, useMapState, useStopPlacesData } from './hooks';
+import useSupercluster from 'use-supercluster';
+import ClusterMarker from './ClusterMarker';
 
 const defaultStopPlaces: StopPlace[] = [];
 
@@ -28,6 +35,14 @@ const JourneyPatternStopPointMap = memo(
     deleteStopPoint,
     transportMode,
   }: JourneyPatternStopPointMapProps) => {
+    const { mapSpecsState, updateMapSpecs } = useMapSpecs();
+
+    const mapEvents = useMapEvents({
+      moveend: () => {
+        updateMapSpecs();
+      },
+    });
+
     // Fetching stop places data and the indexes:
     const { stopPlacesState } = useStopPlacesData(transportMode);
     const stopPlaces = stopPlacesState?.stopPlaces || defaultStopPlaces;
@@ -119,10 +134,7 @@ const JourneyPatternStopPointMap = memo(
           mapStateRef.current.quayStopPointSequenceIndexes,
         );
       },
-      [
-        /*mapState.quayStopPointSequenceIndexes*/ mapStateRef.current,
-        getSelectedQuayIds,
-      ],
+      [mapStateRef.current, getSelectedQuayIds],
     );
 
     /**
@@ -163,8 +175,54 @@ const JourneyPatternStopPointMap = memo(
       [mapStateRef.current],
     );
 
+    const points = useMemo(() => {
+      return totalStopPlaces.map((stopPlace) => ({
+        type: 'Feature',
+        properties: { cluster: false, stopPlace },
+        geometry: {
+          type: 'Point',
+          coordinates: [
+            parseFloat(stopPlace.quays[0].centroid.location.longitude),
+            parseFloat(stopPlace.quays[0].centroid.location.latitude),
+          ],
+        },
+      }));
+    }, [totalStopPlaces]);
+
+    const { clusters } = useSupercluster({
+      points: points,
+      bounds: mapSpecsState.bounds,
+      zoom: mapSpecsState.zoom,
+      options: {
+        radius:
+          mapSpecsState.zoom < 10 ? 150 : mapSpecsState.zoom < 15 ? 125 : 1,
+        maxZoom: 22,
+      },
+    });
+
     const markers = useMemo(() => {
-      return totalStopPlaces.map((stopPlace: StopPlace) => {
+      const totalPointCount = points.length;
+      return clusters.map((cluster) => {
+        const [longitude, latitude] = cluster.geometry.coordinates;
+        // the point may be either a cluster or a single point
+        const {
+          cluster: isCluster,
+          point_count: pointCount,
+          stopPlace,
+        } = cluster.properties;
+
+        if (isCluster) {
+          return (
+            <ClusterMarker
+              clusterId={cluster.id}
+              longitude={longitude}
+              latitude={latitude}
+              pointCount={pointCount}
+              totalPointCount={totalPointCount}
+            />
+          );
+        }
+
         return mapState.showQuaysState[stopPlace.id] ? (
           <QuaysWrapper
             key={'quays-wrapper-for-' + stopPlace.id}
@@ -194,6 +252,7 @@ const JourneyPatternStopPointMap = memo(
         );
       });
     }, [
+      clusters,
       mapState.showQuaysState,
       mapState.focusedMarker,
       mapState.hideNonSelectedQuaysState,
@@ -210,14 +269,8 @@ const JourneyPatternStopPointMap = memo(
           updateSearchedStopPlacesCallback={updateSearchedStopPlacesCallback}
         />
         <ZoomControl position={'topright'} />
-        <MarkerClusterGroup
-          chunkedLoading
-          disableClusteringAtZoom={12}
-          removeOutsideVisibleBounds={true}
-        >
-          <Polyline positions={mapState.stopPointLocationSequence} />
-          {markers}
-        </MarkerClusterGroup>
+        <Polyline positions={mapState.stopPointLocationSequence} />
+        {markers}
       </>
     );
   },

@@ -1,6 +1,6 @@
 import { Quay, StopPlace } from '../../../api';
 import { getMarkerIcon } from '../markers';
-import { Marker, Popup } from 'react-leaflet';
+import { Marker, Pane, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { Heading5 } from '@entur/typography';
 import React, { memo, MutableRefObject, useRef } from 'react';
