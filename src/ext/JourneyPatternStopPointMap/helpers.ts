@@ -1,10 +1,39 @@
-import { Quay, StopPlace } from '../../api';
+import { Centroid, Quay, StopPlace } from '../../api';
 import {
   FocusedMarker,
   FocusedMarkerNewMapState,
   JourneyPatternMarker,
   JourneyPatternMarkerType,
+  JourneyPatternsStopPlacesState,
 } from './types';
+
+export const getStopPlacesState = (
+  stopPlaces: StopPlace[] | undefined,
+): JourneyPatternsStopPlacesState => {
+  if (!stopPlaces) {
+    return {
+      stopPlaces: [],
+      quayLocationsIndex: {},
+      quayStopPlaceIndex: {},
+    };
+  }
+
+  const quayLocations: Record<string, Centroid> = {};
+  const quayStopPlace: Record<string, string> = {};
+
+  for (let i = 0; i < stopPlaces.length; i++) {
+    stopPlaces[i].quays.forEach((quay) => {
+      quayLocations[quay.id] = quay.centroid;
+      quayStopPlace[quay.id] = stopPlaces[i].id;
+    });
+  }
+
+  return {
+    stopPlaces: [...stopPlaces],
+    quayLocationsIndex: quayLocations,
+    quayStopPlaceIndex: quayStopPlace,
+  };
+};
 
 /**
  * Returns an array of quay id-s in a stop place that are selected to be part of a journey pattern

@@ -2,15 +2,26 @@ import { SandboxFeatureProps } from '../SandboxFeature';
 import { SandboxFeatures } from '../../config/config';
 import StopPoint from '../../model/StopPoint';
 import { VEHICLE_MODE } from '../../model/enums';
-import { StopPlace } from '../../api';
-import { StopPointLocation } from '../../reducers/stopPlaces';
+import { Centroid, StopPlace } from '../../api';
 
-export interface JourneyPatternStopPointMapProps
-  extends SandboxFeatureProps<SandboxFeatures> {
+export interface MapWrapperProps extends SandboxFeatureProps<SandboxFeatures> {
   transportMode: VEHICLE_MODE;
   pointsInSequence: StopPoint[];
   deleteStopPoint: (index: number) => void;
   addStopPoint: (quayRef?: string) => void;
+}
+
+export interface JourneyPatternStopPointMapProps {
+  transportMode: VEHICLE_MODE;
+  pointsInSequence: StopPoint[];
+  deleteStopPoint: (index: number) => void;
+  addStopPoint: (quayRef?: string) => void;
+}
+
+export interface JourneyPatternsStopPlacesState {
+  stopPlaces: StopPlace[];
+  quayLocationsIndex: Record<string, Centroid>;
+  quayStopPlaceIndex: Record<string, string>;
 }
 
 export interface JourneyPatternsMapState {
@@ -47,4 +58,11 @@ export interface FocusedMarkerNewMapState {
   showQuaysState?: Record<string, boolean>;
   hideNonSelectedQuaysState?: Record<string, boolean>;
   focusedMarker: FocusedMarker | undefined;
+}
+
+export type StopPointLocation = [number, number];
+
+export interface MapSpecs {
+  zoom: number;
+  bounds: [number, number, number, number];
 }

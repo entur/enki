@@ -1,2 +1,2 @@
-import { JourneyPatternStopPointMap } from './JourneyPatternStopPointMap';
-export default JourneyPatternStopPointMap;
+import { MapWrapper } from './MapWrapper';
+export default MapWrapper;
