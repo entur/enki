@@ -7,13 +7,7 @@ import {
   FocusedMarkerNewMapState,
   JourneyPatternsStopPlacesState,
 } from './types';
-import {
-  Polyline,
-  ZoomControl,
-  useMapEvents,
-  Marker,
-  Pane,
-} from 'react-leaflet';
+import { Polyline, ZoomControl, useMapEvents } from 'react-leaflet';
 import { Centroid, StopPlace } from '../../api';
 import QuaysWrapper from './Quay/QuaysWrapper';
 import SearchPopover from './Popovers/SearchPopover';
@@ -25,6 +19,7 @@ import {
 import { useMapSpecs, useMapState, useStopPlacesData } from './hooks';
 import useSupercluster from 'use-supercluster';
 import ClusterMarker from './ClusterMarker';
+import Supercluster, { AnyProps, ClusterProperties } from 'supercluster';
 
 const defaultStopPlaces: StopPlace[] = [];
 
@@ -36,8 +31,7 @@ const JourneyPatternStopPointMap = memo(
     transportMode,
   }: JourneyPatternStopPointMapProps) => {
     const { mapSpecsState, updateMapSpecs } = useMapSpecs();
-
-    const mapEvents = useMapEvents({
+    useMapEvents({
       moveend: () => {
         updateMapSpecs();
       },
@@ -182,15 +176,17 @@ const JourneyPatternStopPointMap = memo(
         geometry: {
           type: 'Point',
           coordinates: [
-            parseFloat(stopPlace.quays[0].centroid.location.longitude),
-            parseFloat(stopPlace.quays[0].centroid.location.latitude),
+            stopPlace.quays[0].centroid.location.longitude,
+            stopPlace.quays[0].centroid.location.latitude,
           ],
         },
       }));
     }, [totalStopPlaces]);
 
     const { clusters } = useSupercluster({
-      points: points,
+      points: points as Array<
+        Supercluster.PointFeature<{ cluster: boolean; stopPlace: StopPlace }>
+      >,
       bounds: mapSpecsState.bounds,
       zoom: mapSpecsState.zoom,
       options: {
@@ -205,11 +201,11 @@ const JourneyPatternStopPointMap = memo(
       return clusters.map((cluster) => {
         const [longitude, latitude] = cluster.geometry.coordinates;
         // the point may be either a cluster or a single point
-        const {
-          cluster: isCluster,
-          point_count: pointCount,
-          stopPlace,
-        } = cluster.properties;
+        const { cluster: isCluster, point_count: pointCount } =
+          cluster.properties as ClusterProperties;
+        const stopPlace = (cluster.properties as AnyProps).stopPlace;
+
+        console.log(pointCount, typeof pointCount);
 
         if (isCluster) {
           return (

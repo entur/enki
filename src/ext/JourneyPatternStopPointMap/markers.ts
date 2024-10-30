@@ -24,7 +24,7 @@ export const getMarkerIcon = (
   }
 };
 
-export const getClusterIcon = (count, size) => {
+export const getClusterIcon = (count: number, size: number) => {
   const specificStyle =
     'cluster-marker--' +
     (count > 99 ? 'large' : count > 9 ? 'medium' : 'small');

@@ -62,7 +62,7 @@ export interface FocusedMarkerNewMapState {
 
 export type StopPointLocation = [number, number];
 
-export interface MapParams {
+export interface MapSpecs {
   zoom: number;
-  bounds: [number, number, number];
+  bounds: [number, number, number, number];
 }
