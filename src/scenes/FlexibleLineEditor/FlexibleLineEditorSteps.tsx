@@ -52,6 +52,7 @@ const FlexibleLineEditor = (props: Props) => {
                 onDelete={onDelete}
                 spoilPristine={props.spoilPristine}
                 flexibleLineType={props.flexibleLine.flexibleLineType}
+                transportMode={props.flexibleLine.transportMode}
               />
             )}
           </JourneyPatterns>

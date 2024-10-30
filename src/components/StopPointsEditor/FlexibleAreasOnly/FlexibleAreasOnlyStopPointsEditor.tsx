@@ -9,13 +9,13 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
   pointsInSequence,
   spoilPristine,
   onPointsInSequenceChange,
-  initStopPoints,
+  initDefaultJourneyPattern,
 }: StopPointsEditorProps) => {
   const { formatMessage } = useIntl();
 
   useEffect(() => {
     if (pointsInSequence?.length === 0) {
-      initStopPoints();
+      initDefaultJourneyPattern();
     }
   }, []);
 

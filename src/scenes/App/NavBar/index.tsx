@@ -88,7 +88,7 @@ const NavBar = () => {
           />
         </Link>
 
-        {providers && providers.length > 0 && <UserPreference />}
+        <UserPreference providers={providers} />
 
         {active && (
           <>

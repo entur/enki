@@ -121,11 +121,16 @@ const JourneyPatternEditor = ({
     [journeyPatternRef],
   );
 
-  const initStopPoints = useCallback(() => {
+  const initDefaultJourneyPattern = useCallback(() => {
     onSave({
       ...journeyPattern,
       pointsInSequence: [{}, {}],
-      serviceJourneys,
+      serviceJourneys: journeyPattern.serviceJourneys.map(
+        (serviceJourney: ServiceJourney) => ({
+          ...serviceJourney,
+          passingTimes: [{}, {}],
+        }),
+      ),
     });
   }, [journeyPattern, onSave, serviceJourneys]);
 
@@ -178,7 +183,7 @@ const JourneyPatternEditor = ({
           }
           onPointsInSequenceChange={onPointsInSequenceChange}
           transportMode={transportMode}
-          initStopPoints={initStopPoints}
+          initDefaultJourneyPattern={initDefaultJourneyPattern}
         />
       </div>
       {onDelete && (

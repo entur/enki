@@ -5,6 +5,7 @@ import StopPoint from 'model/StopPoint';
 import { useIntl } from 'react-intl';
 import { StopPointsEditorProps } from '..';
 import { MixedFlexibleStopPointEditor } from './MixedFlexibleStopPointEditor';
+import { useEffect } from 'react';
 
 export const MixedFlexibleStopPointsEditor = ({
   pointsInSequence,
@@ -12,9 +13,16 @@ export const MixedFlexibleStopPointsEditor = ({
   updateStopPoint,
   deleteStopPoint,
   addStopPoint,
+  initDefaultJourneyPattern,
 }: StopPointsEditorProps) => {
   const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useIntl();
+
+  useEffect(() => {
+    if (pointsInSequence?.length === 0) {
+      initDefaultJourneyPattern();
+    }
+  }, []);
 
   return (
     <section style={{ marginTop: '2em' }}>
