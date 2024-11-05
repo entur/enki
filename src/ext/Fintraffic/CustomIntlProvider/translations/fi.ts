@@ -32,7 +32,7 @@ export const messages = {
   landingPageIntroP1:
     'Reitti- ja aikataulueditori (RAE) on Fintraffic Oy:n hallinnoima editori, jolla voidaan digitoida ja tallentaa joukkoliikennereittejä ja kutsujoukkoliikennettä pysäkkiketjuineen ja pysäkkikohtaisine aikatauluineen NeTEx-muotoiseksi matkatietoaineistoksi.',
   landingPageIntroP2:
-    'RAE-työkalussa julkaistut reitit muodostavat operaattorikohtaisen matkatietoaineiston, jonka voitte ilmoittaa osana matkatietorajapintojanne kansalliseen yhteyspisteeseen https://finap.fi/#/ osana muita tietojanne. Finapiin ilmoitettu aineisto lisätään automaattisesti valtakunnalliseen Koontipalveluun ja sitä kautta reittioppaille. Lisää aineiston toimittamisesta Finapiin löydät ohjesivustolta.',
+    'RAE-työkalussa julkaistut reitit muodostavat operaattorikohtaisen matkatietoaineiston, jonka voitte ilmoittaa osana matkatietorajapintojanne kansalliseen yhteyspisteeseen {link} osana muita tietojanne. Finapiin ilmoitettu aineisto lisätään automaattisesti valtakunnalliseen Koontipalveluun ja sitä kautta reittioppaille. Lisää aineiston toimittamisesta Finapiin löydät ohjesivustolta.',
   landingPageIntroP3:
     'RAE on niin sanottu olennaisten tietojen peruseditori, joka on tarkoitettu toimijoille, joiden reitti- ja vuoromäärätarjonta ei ole suuri (esim. 1-20 ylläpidettävää reittiä). Työkalun avulla on mahdollista mallintaa reittiliikenteen lisäksi kutsujoukkoliikennettä.',
   landingPageIntroP4:

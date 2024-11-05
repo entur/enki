@@ -53,7 +53,22 @@ export const LandingPage = () => {
               <h1>{formatMessage({ id: 'rae' })}</h1>
               <div className={'page-intro'}>
                 <p>{formatMessage({ id: 'landingPageIntroP1' })}</p>
-                <p>{formatMessage({ id: 'landingPageIntroP2' })}</p>
+                <p>
+                  {formatMessage(
+                    { id: 'landingPageIntroP2' },
+                    {
+                      link: (
+                        <Link
+                          to={'https://finap.fi/'}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          https://finap.fi/
+                        </Link>
+                      ),
+                    },
+                  )}
+                </p>
                 <p>{formatMessage({ id: 'landingPageIntroP3' })}</p>
                 <p>
                   {formatMessage(
