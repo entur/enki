@@ -42,6 +42,7 @@ const ExportsViewer = () => {
   const currentExport = useAppSelector(getCurrentExportSelector(params));
   const [theExport, setTheExport] = useState(currentExport);
   const dispatch = useDispatch<any>();
+  const { hideExportDryRun } = useConfig();
 
   const dispatchLoadExport = useCallback(() => {
     if (params.id) {
@@ -83,14 +84,16 @@ const ExportsViewer = () => {
                 label={formatMessage({ id: 'viewerNameLabel' })}
                 value={theExport!.name}
               />
-              <ExportItem
-                label={formatMessage({ id: 'viewerDryRunLabel' })}
-                value={
-                  theExport!.dryRun
-                    ? formatMessage({ id: 'viewerDryRunYes' })
-                    : formatMessage({ id: 'viewerDryRunNo' })
-                }
-              />
+              {!hideExportDryRun && (
+                <ExportItem
+                  label={formatMessage({ id: 'viewerDryRunLabel' })}
+                  value={
+                    theExport!.dryRun
+                      ? formatMessage({ id: 'viewerDryRunYes' })
+                      : formatMessage({ id: 'viewerDryRunNo' })
+                  }
+                />
+              )}
               <ExportItem
                 label={formatMessage({ id: 'viewerStatusLabel' })}
                 value={

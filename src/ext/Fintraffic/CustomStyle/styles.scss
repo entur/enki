@@ -21,8 +21,7 @@ body {
 
 .page .page-content {
   margin: 1.5rem 1rem;
-  padding: 0rem;
-  padding-right: 2rem;
+  padding: 0rem 2rem 0rem 1px;
 }
 
 // Navigation menu:
@@ -60,6 +59,10 @@ body {
 
 .eds-side-navigation__item {
   line-height: unset;
+}
+
+.eds-side-navigation__item:focus-visible {
+  outline: none;
 }
 
 .eds-side-navigation {
