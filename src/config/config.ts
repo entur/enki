@@ -87,4 +87,6 @@ export interface Config {
    *    overriding translations (case appTitle)
    */
   extPath?: string;
+
+  hideExportDryRun?: boolean;
 }

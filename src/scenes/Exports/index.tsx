@@ -28,6 +28,7 @@ const Exports = () => {
   const exports: ExportsState = useAppSelector((state) => state.exports);
   const intl = useIntl();
   const { formatMessage, locale } = intl;
+  const { hideExportDryRun } = useConfig();
 
   const dispatch = useAppDispatch();
 
@@ -63,11 +64,13 @@ const Exports = () => {
                 </SecondarySquareButton>
               )}
             </DataCell>
-            <DataCell>
-              {e.dryRun
-                ? formatMessage({ id: 'exportsDryRunYes' })
-                : formatMessage({ id: 'exportsDryRunNo' })}
-            </DataCell>
+            {!hideExportDryRun && (
+              <DataCell>
+                {e.dryRun
+                  ? formatMessage({ id: 'exportsDryRunYes' })
+                  : formatMessage({ id: 'exportsDryRunNo' })}
+              </DataCell>
+            )}
           </TableRow>
         ))
       ) : (
@@ -117,9 +120,11 @@ const Exports = () => {
             <HeaderCell>
               {formatMessage({ id: 'exportsTableHeaderLabelDownload' })}
             </HeaderCell>
-            <HeaderCell>
-              {formatMessage({ id: 'exportsTableHeaderLabelDryrun' })}
-            </HeaderCell>
+            {!hideExportDryRun && (
+              <HeaderCell>
+                {formatMessage({ id: 'exportsTableHeaderLabelDryrun' })}
+              </HeaderCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>{renderTableRows()}</TableBody>

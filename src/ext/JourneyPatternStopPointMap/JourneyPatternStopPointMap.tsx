@@ -205,8 +205,6 @@ const JourneyPatternStopPointMap = memo(
           cluster.properties as ClusterProperties;
         const stopPlace = (cluster.properties as AnyProps).stopPlace;
 
-        console.log(pointCount, typeof pointCount);
-
         if (isCluster) {
           return (
             <ClusterMarker

@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './styles.scss';
 import { exportIsValid } from './validateForm';
+import { useConfig } from '../../../config/ConfigContext';
 
 const ExportsCreator = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const ExportsCreator = () => {
   const [saveClicked, setSaveClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState<boolean>(false);
   const [theExport, setTheExport] = useState<Export>(newExport());
+  const { hideExportDryRun } = useConfig();
 
   const dispatch = useDispatch<any>();
 
@@ -87,27 +89,31 @@ const ExportsCreator = () => {
             }}
           />
         </div>
-        <div className="export-dry-run">
-          <Checkbox
-            value="1"
-            checked={theExport.dryRun}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onFieldChange('dryRun', e.target.checked)
-            }
-          >
-            {formatMessage({ id: 'exportCreatorDryRunFormLabel' })}
-          </Checkbox>
-          <Tooltip
-            placement="right"
-            content={formatMessage({
-              id: 'exportCreatorDryRunFormLabelTooltip',
-            })}
-          >
-            <span className="question-icon">
-              <QuestionIcon />
-            </span>
-          </Tooltip>
-        </div>
+        {!hideExportDryRun ? (
+          <div className="export-dry-run">
+            <Checkbox
+              value="1"
+              checked={theExport.dryRun}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('dryRun', e.target.checked)
+              }
+            >
+              {formatMessage({ id: 'exportCreatorDryRunFormLabel' })}
+            </Checkbox>
+            <Tooltip
+              placement="right"
+              content={formatMessage({
+                id: 'exportCreatorDryRunFormLabelTooltip',
+              })}
+            >
+              <span className="question-icon">
+                <QuestionIcon />
+              </span>
+            </Tooltip>
+          </div>
+        ) : (
+          <></>
+        )}
         <SuccessButton className="export-save" onClick={handleOnSaveClick}>
           {formatMessage({ id: 'exportCreatorSaveButtonLabelText' })}
         </SuccessButton>
