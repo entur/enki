@@ -643,9 +643,9 @@ export const messages = {
   landingPageLoginButtonText: 'Logg inn',
   // Journey patterns map:
   showQuays: 'Näytä laiturit',
-  hideQuays: 'Piilota laituria',
+  hideQuays: 'Piilota laiturit',
   oneQuay: '1 laituri',
-  numberOfQuays: '{count} laiturit',
+  numberOfQuays: '{count} laituria',
   addToJourneyPattern: 'Lisää',
   showNonSelectedQuays: 'Näytä  ei-valitut laiturit',
   hideNonSelectedQuays: 'Piilota ei-valitut laiturit',
