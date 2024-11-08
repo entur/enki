@@ -1,3 +1,15 @@
 {
-  "extends": ["github>entur/ror-renovate-config"]
+  "extends": ["github>entur/ror-renovate-config"],
+  "packageRules": [
+    {
+      "groupName": "vite",
+      "matchPackageNames": [
+        "vite-*",
+        "@vitejs/*",
+        "vitest",
+        "@vitest/*"
+      ]
+    }
+  ]
+
 }
