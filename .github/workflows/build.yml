@@ -39,7 +39,7 @@ jobs:
       - run: npm run check
       - run: npm run test -- run --coverage --coverage.reporter=lcov --reporter=vitest-sonar-reporter --outputFile.vitest-sonar-reporter=test-report.xml --reporter=default
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v2.3.0
+        uses: sonarsource/sonarqube-scan-action@v3.1.0
         env:
           SONAR_TOKEN: ${{ secrets.ENTUR_SONAR_PASSWORD }}
           SONAR_HOST_URL: https://sonarcloud.io
