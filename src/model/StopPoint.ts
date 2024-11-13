@@ -8,6 +8,7 @@ type DestinationDisplay = {
 };
 
 type StopPoint = VersionedType & {
+  key: string;
   flexibleStopPlace?: FlexibleStopPlace;
   flexibleStopPlaceRef?: string | null;
   quayRef?: string | null;
