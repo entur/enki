@@ -7,6 +7,7 @@ import { Network } from 'model/Network';
 import { useEffect, useState } from 'react';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { useConfig } from '../../config/ConfigContext';
+import { createUuid } from '../../helpers/generators';
 
 export const useUttuErrors = (
   error: ApolloError | undefined,
@@ -63,6 +64,13 @@ export const useLine: UseLineType = () => {
     if (data?.line) {
       setLine({
         ...data?.line,
+        journeyPatterns: data?.line.journeyPatterns?.map((jp) => ({
+          ...jp,
+          pointsInSequence: jp.pointsInSequence.map((pis) => ({
+            ...pis,
+            key: createUuid(),
+          })),
+        })),
         networkRef: data?.line.network?.id,
       });
     }

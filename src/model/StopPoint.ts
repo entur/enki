@@ -8,6 +8,7 @@ type DestinationDisplay = {
 };
 
 type StopPoint = VersionedType & {
+  key: string;
   flexibleStopPlace?: FlexibleStopPlace;
   flexibleStopPlaceRef?: string | null;
   quayRef?: string | null;
@@ -19,7 +20,7 @@ type StopPoint = VersionedType & {
 };
 
 export const stopPointToPayload = (stopPoint: StopPoint) => {
-  const { flexibleStopPlace, ...rest } = stopPoint;
+  const { flexibleStopPlace, key, ...rest } = stopPoint;
   return rest;
 };
 

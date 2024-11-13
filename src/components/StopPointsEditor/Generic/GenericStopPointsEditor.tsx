@@ -21,7 +21,6 @@ export const GenericStopPointsEditor = ({
   transportMode,
   initDefaultJourneyPattern,
 }: StopPointsEditorProps) => {
-  const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useIntl();
   const { sandboxFeatures } = useConfig();
   const isMapEnabled = sandboxFeatures?.JourneyPatternStopPointMap;
@@ -53,7 +52,7 @@ export const GenericStopPointsEditor = ({
           )}
           {pointsInSequence.map((stopPoint, pointIndex) => (
             <GenericStopPointEditor
-              key={keys[pointIndex]}
+              key={stopPoint.key}
               order={pointIndex + 1}
               stopPoint={stopPoint}
               spoilPristine={spoilPristine}

@@ -14,6 +14,7 @@ import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 import { VEHICLE_MODE } from '../../model/enums';
 import ServiceJourney from '../../model/ServiceJourney';
+import { createUuid } from '../../helpers/generators';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -78,9 +79,11 @@ const JourneyPatternEditor = ({
         passingTimes: [...serviceJourney.passingTimes, {}],
       }));
 
+      const key = createUuid();
+
       let newPointsInSequence = [
         ...journeyPattern.pointsInSequence,
-        quayRef && quayRef ? { quayRef } : {},
+        quayRef && quayRef ? { quayRef, key } : { key },
       ];
 
       onSave({
@@ -102,9 +105,11 @@ const JourneyPatternEditor = ({
           }),
         );
 
+      const key = createUuid();
+
       let newPointsInSequence = [
         ...journeyPatternRef.current.journeyPattern.pointsInSequence,
-        quayRef && quayRef ? { quayRef } : {},
+        quayRef && quayRef ? { quayRef, key } : { key },
       ];
 
       onSave({
@@ -124,7 +129,7 @@ const JourneyPatternEditor = ({
   const initDefaultJourneyPattern = useCallback(() => {
     onSave({
       ...journeyPattern,
-      pointsInSequence: [{}, {}],
+      pointsInSequence: [{ key: createUuid() }, { key: createUuid() }],
       serviceJourneys: journeyPattern.serviceJourneys.map(
         (serviceJourney: ServiceJourney) => ({
           ...serviceJourney,
