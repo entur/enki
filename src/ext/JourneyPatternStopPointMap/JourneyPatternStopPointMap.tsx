@@ -1,13 +1,14 @@
 import './styles.scss';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import StopPlaceMarker from './StopPlaceMarker';
 import {
-  JourneyPatternStopPointMapProps,
   FocusedMarker,
   FocusedMarkerNewMapState,
+  JourneyPatternMarkerType,
   JourneyPatternsStopPlacesState,
+  JourneyPatternStopPointMapProps,
 } from './types';
-import { Polyline, ZoomControl, useMapEvents } from 'react-leaflet';
+import { Polyline, useMapEvents, ZoomControl } from 'react-leaflet';
 import { Centroid, StopPlace } from '../../api';
 import QuaysWrapper from './Quay/QuaysWrapper';
 import SearchPopover from './Popovers/SearchPopover';
@@ -16,7 +17,12 @@ import {
   getStopPlacesState,
   onFocusedMarkerNewMapState,
 } from './helpers';
-import { useMapSpecs, useMapState, useStopPlacesData } from './hooks';
+import {
+  useMapSpecs,
+  useMapState,
+  useMapZoomIntoLocation,
+  useStopPlacesData,
+} from './hooks';
 import useSupercluster from 'use-supercluster';
 import ClusterMarker from './ClusterMarker';
 import Supercluster, { AnyProps, ClusterProperties } from 'supercluster';
@@ -29,7 +35,10 @@ const JourneyPatternStopPointMap = memo(
     addStopPoint,
     deleteStopPoint,
     transportMode,
+    focusedQuayId,
+    updateFocusedQuayIdCallback,
   }: JourneyPatternStopPointMapProps) => {
+    // Map spaces are zoom level and view bounds
     const { mapSpecsState, updateMapSpecs } = useMapSpecs();
     useMapEvents({
       moveend: () => {
@@ -80,7 +89,29 @@ const JourneyPatternStopPointMap = memo(
       totalQuayLocationsIndex,
       totalQuayStopPlaceIndex,
     );
+    useMapZoomIntoLocation(mapState.focusedMarker?.marker.location);
 
+    // When "locate stop point" was clicked from GenericStopPointEditor:
+    useEffect(() => {
+      if (focusedQuayId && totalQuayLocationsIndex[focusedQuayId]) {
+        const focusedStopPlaceId: string =
+          totalQuayStopPlaceIndex[focusedQuayId];
+        // Let's produce a proper focusedMarker out of this
+        const newFocusedMarker: FocusedMarker = {
+          stopPlaceId: focusedStopPlaceId,
+          // This array won't play any role in this particular case, so can be just left empty
+          stopPlaceQuays: [],
+          marker: {
+            id: focusedQuayId,
+            location: totalQuayLocationsIndex[focusedQuayId].location,
+            type: JourneyPatternMarkerType.QUAY,
+          },
+        };
+        focusMarkerCallback(newFocusedMarker);
+      }
+    }, [focusedQuayId, totalQuayStopPlaceIndex, totalQuayLocationsIndex]);
+
+    // Below proceeds a bunch of callbacks that are passed further down the component tree to trigger map's state updates from those:
     const updateSearchedStopPlacesCallback = useCallback(
       (newSearchedStopPlacesState: JourneyPatternsStopPlacesState) => {
         setSearchedStopPlacesState(newSearchedStopPlacesState);
@@ -95,36 +126,49 @@ const JourneyPatternStopPointMap = memo(
           return;
         }
 
+        const oldMapState = {
+          showQuaysState: mapStateRef.current.showQuaysState,
+          hideNonSelectedQuaysState:
+            mapStateRef.current.hideNonSelectedQuaysState,
+          quayStopPointSequenceIndexes:
+            mapStateRef.current.quayStopPointSequenceIndexes,
+          stopPointLocationSequence:
+            mapStateRef.current.stopPointLocationSequence,
+        };
+
         const changedMapState: FocusedMarkerNewMapState =
           onFocusedMarkerNewMapState(
             focusedMarker,
-            mapState.showQuaysState,
-            mapState.hideNonSelectedQuaysState,
-            mapState.quayStopPointSequenceIndexes,
+            mapStateRef.current.showQuaysState,
+            mapStateRef.current.hideNonSelectedQuaysState,
+            mapStateRef.current.quayStopPointSequenceIndexes,
           );
 
         if (changedMapState.hideNonSelectedQuaysState) {
           // mapStateRef needs to be kept up-to-date to fulfil its purpose in the useMap hook
-          mapStateRef.current['hideNonSelectedQuaysState'] =
+          mapStateRef.current.hideNonSelectedQuaysState =
             changedMapState.hideNonSelectedQuaysState;
         }
 
         setMapState({
-          ...mapState,
+          ...oldMapState,
           ...changedMapState,
         });
       },
-      [setMapState, mapState, mapStateRef.current],
+      [mapStateRef.current],
     );
 
     const clearFocusedMarker = useCallback(() => {
       focusMarkerCallback(undefined);
-    }, []);
+      if (focusedQuayId) {
+        updateFocusedQuayIdCallback(undefined);
+      }
+    }, [focusedQuayId]);
 
     const getSelectedQuayIdsCallback = useCallback(
       (stopPlace: StopPlace) => {
         return getSelectedQuayIds(
-          stopPlace,
+          stopPlace.quays,
           mapStateRef.current.quayStopPointSequenceIndexes,
         );
       },
@@ -169,6 +213,7 @@ const JourneyPatternStopPointMap = memo(
       [mapStateRef.current],
     );
 
+    // Below goes production of the map markers and clusters:
     const points = useMemo(() => {
       return totalStopPlaces.map((stopPlace) => ({
         type: 'Feature',
@@ -200,7 +245,7 @@ const JourneyPatternStopPointMap = memo(
       const totalPointCount = points.length;
       return clusters.map((cluster) => {
         const [longitude, latitude] = cluster.geometry.coordinates;
-        // the point may be either a cluster or a single point
+        // the point may be either a cluster or a single stop point
         const { cluster: isCluster, point_count: pointCount } =
           cluster.properties as ClusterProperties;
         const stopPlace = (cluster.properties as AnyProps).stopPlace;
@@ -208,6 +253,7 @@ const JourneyPatternStopPointMap = memo(
         if (isCluster) {
           return (
             <ClusterMarker
+              key={'cluster-' + cluster.id}
               clusterId={cluster.id}
               longitude={longitude}
               latitude={latitude}
@@ -239,7 +285,7 @@ const JourneyPatternStopPointMap = memo(
             showQuaysCallback={showQuaysCallback}
             addStopPointCallback={addStopPoint}
             isPopupToBeOpen={
-              stopPlace.id === mapState.focusedMarker?.stopPlace.id
+              stopPlace.id === mapState.focusedMarker?.stopPlaceId
             }
             clearFocusedMarker={clearFocusedMarker}
           />

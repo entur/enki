@@ -37,14 +37,14 @@ export const getStopPlacesState = (
 
 /**
  * Returns an array of quay id-s in a stop place that are selected to be part of a journey pattern
- * @param stopPlace
+ * @param stopPlaceQuays
  * @param stopPointSequenceIndexes contains all the quay id keys that are part of the journey pattern
  */
 export const getSelectedQuayIds = (
-  stopPlace: StopPlace,
+  stopPlaceQuays: Quay[],
   stopPointSequenceIndexes: Record<string, number[]>,
 ) => {
-  const selectedQuays = stopPlace.quays.filter(
+  const selectedQuays = stopPlaceQuays.filter(
     (quay: Quay) => stopPointSequenceIndexes[quay.id]?.length > 0,
   );
   return selectedQuays.map((quay: Quay) => quay.id);
@@ -68,28 +68,28 @@ export const onFocusedMarkerNewMapState = (
 ): FocusedMarkerNewMapState => {
   if (
     focusedMarker.marker.type === JourneyPatternMarkerType.QUAY &&
-    !showQuaysState[focusedMarker.stopPlace.id]
+    !showQuaysState[focusedMarker.stopPlaceId]
   ) {
     // User actually searched for a quay, let's get into 'show quays mode' if not already
     const newShowQuaysState = {
       ...showQuaysState,
     };
-    newShowQuaysState[focusedMarker.stopPlace.id] = true;
+    newShowQuaysState[focusedMarker.stopPlaceId] = true;
     // Cleaning up any previous hideNonSelectedQuaysState state when showing all
     const newHideNonSelectedQuaysState = {
       ...hideNonSelectedQuaysState,
     };
-    newHideNonSelectedQuaysState[focusedMarker.stopPlace.id] = false;
+    newHideNonSelectedQuaysState[focusedMarker.stopPlaceId] = false;
     return { showQuaysState: newShowQuaysState, focusedMarker };
   }
 
   const selectedQuayIds = getSelectedQuayIds(
-    focusedMarker.stopPlace,
+    focusedMarker.stopPlaceQuays,
     quayStopPointSequenceIndexes,
   );
   if (
     focusedMarker.marker.type === JourneyPatternMarkerType.QUAY &&
-    hideNonSelectedQuaysState[focusedMarker.stopPlace.id] &&
+    hideNonSelectedQuaysState[focusedMarker.stopPlaceId] &&
     (selectedQuayIds?.length === 0 ||
       !selectedQuayIds.includes(focusedMarker.marker.id))
   ) {
@@ -97,7 +97,7 @@ export const onFocusedMarkerNewMapState = (
     const newHideNonSelectedQuaysState = {
       ...hideNonSelectedQuaysState,
     };
-    newHideNonSelectedQuaysState[focusedMarker.stopPlace.id] = false;
+    newHideNonSelectedQuaysState[focusedMarker.stopPlaceId] = false;
     return {
       hideNonSelectedQuaysState: newHideNonSelectedQuaysState,
       focusedMarker,
@@ -106,14 +106,14 @@ export const onFocusedMarkerNewMapState = (
 
   if (
     focusedMarker.marker.type === JourneyPatternMarkerType.STOP_PLACE &&
-    showQuaysState[focusedMarker.stopPlace.id] &&
+    showQuaysState[focusedMarker.stopPlaceId] &&
     selectedQuayIds?.length === 0
   ) {
     // User search for a stop place and currently quays show (yet none selected) - going into stop place icon mode
     const newShowQuaysState = {
       ...showQuaysState,
     };
-    newShowQuaysState[focusedMarker.stopPlace.id] = false;
+    newShowQuaysState[focusedMarker.stopPlaceId] = false;
     return { showQuaysState: newShowQuaysState, focusedMarker: focusedMarker };
   }
 
@@ -154,6 +154,7 @@ export const determineQuayToFocus = (
   if (quayFullyMatchingSearch) {
     return {
       id: quayFullyMatchingSearch.id,
+      location: quayFullyMatchingSearch.centroid.location,
       type: JourneyPatternMarkerType.QUAY,
     };
   }
@@ -162,15 +163,30 @@ export const determineQuayToFocus = (
     q.id.includes(searchText),
   )[0];
   if (quayContainingSearch) {
-    return { id: quayContainingSearch.id, type: JourneyPatternMarkerType.QUAY };
+    return {
+      id: quayContainingSearch.id,
+      location: quayContainingSearch.centroid.location,
+      type: JourneyPatternMarkerType.QUAY,
+    };
   }
 
   const firstSelectedQuayId =
     selectedQuayIds.length > 0 ? selectedQuayIds[0] : undefined;
   if (firstSelectedQuayId) {
-    return { id: firstSelectedQuayId, type: JourneyPatternMarkerType.QUAY };
+    const fullQuay = stopPlace.quays.filter(
+      (s) => s.id === firstSelectedQuayId,
+    )[0];
+    return {
+      id: firstSelectedQuayId,
+      location: fullQuay.centroid.location,
+      type: JourneyPatternMarkerType.QUAY,
+    };
   }
 
   const justTheFirstQuay = stopPlace.quays[0];
-  return { id: justTheFirstQuay.id, type: JourneyPatternMarkerType.QUAY };
+  return {
+    id: justTheFirstQuay.id,
+    location: stopPlace.quays[0].centroid.location,
+    type: JourneyPatternMarkerType.QUAY,
+  };
 };

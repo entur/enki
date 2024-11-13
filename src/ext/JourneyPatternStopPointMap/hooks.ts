@@ -13,7 +13,7 @@ import {
   MapSpecs,
   StopPointLocation,
 } from './types';
-import { Centroid, UttuQuery } from '../../api';
+import { Centroid, Location, UttuQuery } from '../../api';
 import { useAppSelector } from '../../store/hooks';
 import { useConfig } from '../../config/ConfigContext';
 import { useAuth } from '../../auth/auth';
@@ -178,11 +178,13 @@ export const useMapState = (
       hideNonSelectedQuaysState: newHideQuaysState,
       focusedMarker: undefined,
     };
-    mapStateRef.current['hideNonSelectedQuaysState'] = newHideQuaysState;
-    mapStateRef.current['quayStopPointSequenceIndexes'] =
+    mapStateRef.current.hideNonSelectedQuaysState = newHideQuaysState;
+    mapStateRef.current.quayStopPointSequenceIndexes =
       newQuayStopPointSequenceIndexes;
-    mapStateRef.current['showQuaysState'] = newShowQuaysState;
-    mapStateRef.current['focusedMarker'] = undefined;
+    mapStateRef.current.showQuaysState = newShowQuaysState;
+    mapStateRef.current.focusedMarker = undefined;
+    mapStateRef.current.stopPointLocationSequence = newStopPointLocations;
+
     setMapState(newMapState);
   }, [
     pointsInSequence,
@@ -221,6 +223,24 @@ export const usePopupOpeningOnFocus = (
   }, [isPopupToBeOpen, markerRef, clearFocusedMarker]);
 };
 
+/**
+ * Zoom into location. For example, when location a stop/quay from the search or stop point editor
+ * @param location
+ */
+export const useMapZoomIntoLocation = (location: Location | undefined) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (location) {
+      map.setView([location.latitude, location.longitude], 16);
+    }
+  }, [location, map]);
+};
+
+/**
+ * This captures current zoom level and view bounds and updates the state containing those.
+ * Used by supercluster to produce clusters and single stops based on the "map specs" (such as zoom or view bounds)
+ */
 export const useMapSpecs = () => {
   const map = useMap();
   const [mapSpecsState, setMapSpecsState] = useReducer<
@@ -238,6 +258,7 @@ export const useMapSpecs = () => {
 
   const updateMapSpecs = useCallback(() => {
     const newBounds = map.getBounds();
+
     const newState: MapSpecs = {
       zoom: map.getZoom(),
       bounds: [

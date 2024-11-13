@@ -89,7 +89,7 @@ describe('Journey pattern map', () => {
   describe('getSelectedQuayIds', () => {
     it('should find selected quay id-s when a stop place has some quays selected', () => {
       expect(
-        getSelectedQuayIds(stopPlace, {
+        getSelectedQuayIds(stopPlace.quays, {
           Some_quay_not_part_of_given_stop_place: [0],
           'FIN:Quay:OL_0': [1, 4],
           'FIN:Quay:OL_2': [3],
@@ -99,20 +99,21 @@ describe('Journey pattern map', () => {
 
     it('should return empty array when a stop places has no quays selected', () => {
       expect(
-        getSelectedQuayIds(stopPlace, {
+        getSelectedQuayIds(stopPlace.quays, {
           Some_quay_not_part_of_given_stop_place: [0],
         }),
       ).toEqual([]);
     });
 
     it('should return empty array when stopPointSequenceIndexes is empty (journey pattern is empty)', () => {
-      expect(getSelectedQuayIds(stopPlace, {})).toEqual([]);
+      expect(getSelectedQuayIds(stopPlace.quays, {})).toEqual([]);
     });
   });
 
   describe('onFocusedMarkerNewMapState', () => {
     const focusedQuayMarker: FocusedMarker = {
-      stopPlace,
+      stopPlaceId: stopPlace.id,
+      stopPlaceQuays: stopPlace.quays,
       marker: {
         id: 'FIN:Quay:OL_0',
         type: JourneyPatternMarkerType.QUAY,
@@ -146,7 +147,8 @@ describe('Journey pattern map', () => {
     });
 
     const focusedStopMarker: FocusedMarker = {
-      stopPlace,
+      stopPlaceId: stopPlace.id,
+      stopPlaceQuays: stopPlace.quays,
       marker: {
         id: 'FIN:Quay:OL',
         type: JourneyPatternMarkerType.STOP_PLACE,

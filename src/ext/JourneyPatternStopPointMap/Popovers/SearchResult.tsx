@@ -3,14 +3,13 @@ import { Heading5 } from '@entur/typography';
 import { PositionIcon } from '@entur/icons';
 import React from 'react';
 import { TertiarySquareButton } from '@entur/button';
-import { useMap } from 'react-leaflet';
-import { getStopPlaceLocation } from '../StopPlaceMarker';
 import {
   FocusedMarker,
   JourneyPatternMarker,
   JourneyPatternMarkerType,
 } from '../types';
 import { determineQuayToFocus } from '../helpers';
+import { getStopPlaceLocation } from '../StopPlaceMarker';
 
 interface SearchResultProps {
   stopPlace: StopPlace;
@@ -27,9 +26,6 @@ const SearchResult = ({
   searchText,
   getSelectedQuayIdsCallback,
 }: SearchResultProps) => {
-  const map = useMap();
-  const stopPlaceLocation = getStopPlaceLocation(stopPlace);
-
   return (
     <div
       className={`map-search-result ${!isLast ? 'map-search-result--not-last' : ''}`}
@@ -53,18 +49,16 @@ const SearchResult = ({
           } else {
             focusedMarker = {
               id: stopPlace.id,
+              location: getStopPlaceLocation(stopPlace),
               type: JourneyPatternMarkerType.STOP_PLACE,
             };
           }
 
           focusMarkerCallback({
-            stopPlace,
+            stopPlaceId: stopPlace.id,
+            stopPlaceQuays: stopPlace.quays,
             marker: focusedMarker,
           });
-          map.setView(
-            [stopPlaceLocation.latitude, stopPlaceLocation.longitude],
-            16,
-          );
         }}
       >
         <PositionIcon />

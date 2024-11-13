@@ -30,7 +30,7 @@ const QuaysWrapper = ({
   clearFocusedMarker,
 }: QuaysWrapperProps) => {
   const selectedQuayIds: string[] = getSelectedQuayIds(
-    stopPlace,
+    stopPlace.quays,
     stopPointSequenceIndexes,
   );
 

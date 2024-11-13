@@ -13,4 +13,5 @@ export type StopPointEditorProps = {
   canDelete?: boolean;
   flexibleStopPlaces?: FlexibleStopPlace[];
   flexibleLineType?: FlexibleLineType;
+  updateFocusedQuayIdCallback?: (quayId: string | undefined | null) => void;
 };

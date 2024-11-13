@@ -82,4 +82,16 @@
       border-bottom: none;
     }
   }
+
+  #locate-button {
+    margin: 0;
+    padding: 0 0.5rem;
+    min-width: fit-content;
+    width: fit-content;
+    margin-top: 0.68rem;
+
+    svg {
+      margin-right: 0;
+    }
+  }
 }

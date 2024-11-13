@@ -1,4 +1,9 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import {
+  SecondaryButton,
+  SuccessButton,
+  TertiaryButton,
+  TertiarySquareButton,
+} from '@entur/button';
 import { Paragraph } from '@entur/typography';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -7,7 +12,7 @@ import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import {
   BoardingTypeSelect,
@@ -20,6 +25,9 @@ import {
 } from '../common/FrontTextTextField';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
+import { PositionIcon } from '@entur/icons';
+import '../styles.scss';
+import { useConfig } from '../../../config/ConfigContext';
 
 export const GenericStopPointEditor = ({
   order,
@@ -31,6 +39,7 @@ export const GenericStopPointEditor = ({
   onDelete,
   canDelete,
   flexibleLineType,
+  updateFocusedQuayIdCallback,
 }: StopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const {
@@ -47,6 +56,9 @@ export const GenericStopPointEditor = ({
   const onBoardingTypeChange = useOnBoardingTypeChange(stopPoint, onChange);
 
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const { sandboxFeatures } = useConfig();
+  const isMapEnabled = sandboxFeatures?.JourneyPatternStopPointMap;
 
   return (
     <div className="stop-point">
@@ -80,11 +92,29 @@ export const GenericStopPointEditor = ({
           />
         </div>
 
-        <DeleteButton
-          disabled={!canDelete}
-          onClick={() => setDeleteDialogOpen(true)}
-          title={formatMessage({ id: 'editorDeleteButtonText' })}
-        />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <DeleteButton
+            thin={true}
+            disabled={!canDelete}
+            onClick={() => setDeleteDialogOpen(true)}
+            title={formatMessage({ id: 'editorDeleteButtonText' })}
+          />
+
+          {!flexibleLineType && isMapEnabled && (
+            <TertiaryButton
+              id={'locate-button'}
+              title={'Näytä kartalla'}
+              onClick={() => {
+                if (updateFocusedQuayIdCallback) {
+                  updateFocusedQuayIdCallback(stopPoint.quayRef);
+                }
+              }}
+            >
+              <PositionIcon inline />
+              {formatMessage({ id: 'locateStopPoint' })}
+            </TertiaryButton>
+          )}
+        </div>
 
         <ConfirmDialog
           isOpen={isDeleteDialogOpen}
