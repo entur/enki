@@ -1,6 +1,5 @@
 {
   "uttuApiUrl": "https://api.dev.entur.io/timetable-admin/v1/flexible-lines",
-  "enableLegacyOrganisationsFilter": true,
   "xmlnsUrlPrefix": "http://www.rutebanken.org/ns/",
   "oidcConfig": {
     "authority": "https://ror-entur-dev.eu.auth0.com",
