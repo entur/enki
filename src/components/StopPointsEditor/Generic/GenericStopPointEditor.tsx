@@ -1,9 +1,4 @@
-import {
-  SecondaryButton,
-  SuccessButton,
-  TertiaryButton,
-  TertiarySquareButton,
-} from '@entur/button';
+import { SecondaryButton, SuccessButton, TertiaryButton } from '@entur/button';
 import { Paragraph } from '@entur/typography';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -28,6 +23,7 @@ import { StopPointEditorProps } from '../common/StopPointEditorProps';
 import { PositionIcon } from '@entur/icons';
 import '../styles.scss';
 import { useConfig } from '../../../config/ConfigContext';
+import { FlexibleLineType } from '../../../model/FlexibleLine';
 
 export const GenericStopPointEditor = ({
   order,
@@ -59,6 +55,9 @@ export const GenericStopPointEditor = ({
 
   const { sandboxFeatures } = useConfig();
   const isMapEnabled = sandboxFeatures?.JourneyPatternStopPointMap;
+  const isLocateButtonAvailable =
+    (!flexibleLineType || flexibleLineType === FlexibleLineType.FIXED) &&
+    isMapEnabled;
 
   return (
     <div className="stop-point">
@@ -92,7 +91,7 @@ export const GenericStopPointEditor = ({
           />
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className={'buttons-group'}>
           <DeleteButton
             thin={true}
             disabled={!canDelete}
@@ -100,10 +99,10 @@ export const GenericStopPointEditor = ({
             title={formatMessage({ id: 'editorDeleteButtonText' })}
           />
 
-          {!flexibleLineType && isMapEnabled && (
+          {isLocateButtonAvailable && (
             <TertiaryButton
               id={'locate-button'}
-              title={'Näytä kartalla'}
+              title={formatMessage({ id: 'locateStopPointTooltip' })}
               onClick={() => {
                 if (updateFocusedQuayIdCallback) {
                   updateFocusedQuayIdCallback(stopPoint.quayRef);

@@ -655,4 +655,5 @@ export const messages = {
   mapSearchResults: 'Tulokset',
   mapSearchPlaceholder: 'Pysäkki ID, nimi tai laituri ID',
   locateStopPoint: 'Näytä',
+  locateStopPointTooltip: 'Näytä kartalla',
 };

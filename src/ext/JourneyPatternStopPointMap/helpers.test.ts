@@ -62,6 +62,10 @@ describe('Journey pattern map', () => {
     it('should find the quay fully matching the search word', () => {
       expect(determineQuayToFocus('FIN:Quay:OL_33', stopPlace, [])).toEqual({
         id: 'FIN:Quay:OL_33',
+        location: {
+          longitude: 25.482790868743646,
+          latitude: 65.01002311528012,
+        },
         type: JourneyPatternMarkerType.QUAY,
       });
     });
@@ -69,18 +73,36 @@ describe('Journey pattern map', () => {
     it('should find the quay containing the search word', () => {
       expect(
         determineQuayToFocus('FIN:Quay:OL_3', stopPlace, ['FIN:Quay:OL_0']),
-      ).toEqual({ id: 'FIN:Quay:OL_33', type: JourneyPatternMarkerType.QUAY });
+      ).toEqual({
+        id: 'FIN:Quay:OL_33',
+        location: {
+          longitude: 25.482790868743646,
+          latitude: 65.01002311528012,
+        },
+        type: JourneyPatternMarkerType.QUAY,
+      });
     });
 
     it('should find a selected quay if none match or contain the search word', () => {
       expect(
         determineQuayToFocus('Oulu', stopPlace, ['FIN:Quay:OL_0']),
-      ).toEqual({ id: 'FIN:Quay:OL_0', type: JourneyPatternMarkerType.QUAY });
+      ).toEqual({
+        id: 'FIN:Quay:OL_0',
+        location: {
+          longitude: 25.486121,
+          latitude: 65.012409,
+        },
+        type: JourneyPatternMarkerType.QUAY,
+      });
     });
 
     it('should find the first quay if no other conditions met', () => {
       expect(determineQuayToFocus('Oulu', stopPlace, [])).toEqual({
         id: 'FIN:Quay:OL_0',
+        location: {
+          longitude: 25.486121,
+          latitude: 65.012409,
+        },
         type: JourneyPatternMarkerType.QUAY,
       });
     });
@@ -113,9 +135,13 @@ describe('Journey pattern map', () => {
   describe('onFocusedMarkerNewMapState', () => {
     const focusedQuayMarker: FocusedMarker = {
       stopPlaceId: stopPlace.id,
-      stopPlaceQuays: stopPlace.quays,
+      quays: stopPlace.quays,
       marker: {
         id: 'FIN:Quay:OL_0',
+        location: {
+          longitude: 25.486121,
+          latitude: 65.012409,
+        },
         type: JourneyPatternMarkerType.QUAY,
       },
     };
@@ -148,9 +174,13 @@ describe('Journey pattern map', () => {
 
     const focusedStopMarker: FocusedMarker = {
       stopPlaceId: stopPlace.id,
-      stopPlaceQuays: stopPlace.quays,
+      quays: stopPlace.quays,
       marker: {
         id: 'FIN:Quay:OL',
+        location: {
+          longitude: 25.486121,
+          latitude: 65.012409,
+        },
         type: JourneyPatternMarkerType.STOP_PLACE,
       },
     };

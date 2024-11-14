@@ -1,7 +1,7 @@
 import { StopPlace } from '../../api';
 import { Button } from '@entur/button';
 import { getMarkerIcon } from './markers';
-import { Marker, Popup, Pane } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { AddIcon } from '@entur/icons';
 import StopPlaceDetails from './StopPlaceDetails';

@@ -56,7 +56,7 @@ const SearchResult = ({
 
           focusMarkerCallback({
             stopPlaceId: stopPlace.id,
-            stopPlaceQuays: stopPlace.quays,
+            quays: stopPlace.quays,
             marker: focusedMarker,
           });
         }}

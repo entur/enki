@@ -99,15 +99,15 @@ const JourneyPatternStopPointMap = memo(
         // Let's produce a proper focusedMarker out of this
         const newFocusedMarker: FocusedMarker = {
           stopPlaceId: focusedStopPlaceId,
-          // This array won't play any role in this particular case, so can be just left empty
-          stopPlaceQuays: [],
           marker: {
             id: focusedQuayId,
             location: totalQuayLocationsIndex[focusedQuayId].location,
             type: JourneyPatternMarkerType.QUAY,
           },
         };
-        focusMarkerCallback(newFocusedMarker);
+        setMapState({
+          focusedMarker: newFocusedMarker,
+        });
       }
     }, [focusedQuayId, totalQuayStopPlaceIndex, totalQuayLocationsIndex]);
 
@@ -127,13 +127,7 @@ const JourneyPatternStopPointMap = memo(
         }
 
         const oldMapState = {
-          showQuaysState: mapStateRef.current.showQuaysState,
-          hideNonSelectedQuaysState:
-            mapStateRef.current.hideNonSelectedQuaysState,
-          quayStopPointSequenceIndexes:
-            mapStateRef.current.quayStopPointSequenceIndexes,
-          stopPointLocationSequence:
-            mapStateRef.current.stopPointLocationSequence,
+          ...mapStateRef.current,
         };
 
         const changedMapState: FocusedMarkerNewMapState =
@@ -148,6 +142,9 @@ const JourneyPatternStopPointMap = memo(
           // mapStateRef needs to be kept up-to-date to fulfil its purpose in the useMap hook
           mapStateRef.current.hideNonSelectedQuaysState =
             changedMapState.hideNonSelectedQuaysState;
+        }
+        if (changedMapState.showQuaysState) {
+          mapStateRef.current.showQuaysState = changedMapState.showQuaysState;
         }
 
         setMapState({

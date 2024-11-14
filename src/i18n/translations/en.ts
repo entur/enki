@@ -648,4 +648,5 @@ export const messages: MessagesKey = {
   mapSearchResults: 'Results:',
   mapSearchPlaceholder: 'Stop place by ID, name or quay ID',
   locateStopPoint: 'Locate',
+  locateStopPointTooltip: 'Locate on map',
 };

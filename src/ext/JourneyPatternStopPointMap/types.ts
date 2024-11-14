@@ -56,7 +56,7 @@ export interface JourneyPatternMarker {
  */
 export interface FocusedMarker {
   stopPlaceId: string;
-  stopPlaceQuays: Quay[];
+  quays?: Quay[];
   marker: JourneyPatternMarker;
 }
 

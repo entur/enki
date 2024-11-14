@@ -37,16 +37,18 @@ export const getStopPlacesState = (
 
 /**
  * Returns an array of quay id-s in a stop place that are selected to be part of a journey pattern
- * @param stopPlaceQuays
+ * @param quays
  * @param stopPointSequenceIndexes contains all the quay id keys that are part of the journey pattern
  */
 export const getSelectedQuayIds = (
-  stopPlaceQuays: Quay[],
+  quays: Quay[] | undefined,
   stopPointSequenceIndexes: Record<string, number[]>,
 ) => {
-  const selectedQuays = stopPlaceQuays.filter(
-    (quay: Quay) => stopPointSequenceIndexes[quay.id]?.length > 0,
-  );
+  const selectedQuays = quays
+    ? quays.filter(
+        (quay: Quay) => stopPointSequenceIndexes[quay.id]?.length > 0,
+      )
+    : [];
   return selectedQuays.map((quay: Quay) => quay.id);
 };
 
@@ -84,7 +86,7 @@ export const onFocusedMarkerNewMapState = (
   }
 
   const selectedQuayIds = getSelectedQuayIds(
-    focusedMarker.stopPlaceQuays,
+    focusedMarker.quays,
     quayStopPointSequenceIndexes,
   );
   if (
