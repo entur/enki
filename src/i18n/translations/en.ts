@@ -647,4 +647,5 @@ export const messages: MessagesKey = {
   mapSearchNoResults: 'No results found',
   mapSearchResults: 'Results:',
   mapSearchPlaceholder: 'Stop place by ID, name or quay ID',
+  mapLoadingStopsDataText: 'Loading stops...',
 };

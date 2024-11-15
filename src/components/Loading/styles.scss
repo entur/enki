@@ -14,6 +14,11 @@
     }
   }
 
+  &.ignore-overlay {
+    position: unset !important;
+    top: unset !important;
+  }
+
   &.fullscreen {
     display: block;
     position: fixed;

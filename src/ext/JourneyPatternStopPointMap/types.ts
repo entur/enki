@@ -12,6 +12,7 @@ export interface MapWrapperProps extends SandboxFeatureProps<SandboxFeatures> {
 }
 
 export interface JourneyPatternStopPointMapProps {
+  stopPlacesState: JourneyPatternsStopPlacesState;
   transportMode: VEHICLE_MODE;
   pointsInSequence: StopPoint[];
   deleteStopPoint: (index: number) => void;

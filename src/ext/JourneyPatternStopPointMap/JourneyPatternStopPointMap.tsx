@@ -29,7 +29,10 @@ const JourneyPatternStopPointMap = memo(
     addStopPoint,
     deleteStopPoint,
     transportMode,
+    stopPlacesState,
   }: JourneyPatternStopPointMapProps) => {
+    // Capture and store map's zoom level and view bounds.
+    // Will be used later to produce markers within the visible bounds:
     const { mapSpecsState, updateMapSpecs } = useMapSpecs();
     useMapEvents({
       moveend: () => {
@@ -37,8 +40,7 @@ const JourneyPatternStopPointMap = memo(
       },
     });
 
-    // Fetching stop places data and the indexes:
-    const { stopPlacesState } = useStopPlacesData(transportMode);
+    // All fetched stop places:
     const stopPlaces = stopPlacesState?.stopPlaces || defaultStopPlaces;
 
     // Search results stop places and its respective indexes:

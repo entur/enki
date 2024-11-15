@@ -8,6 +8,7 @@ import './styles.scss';
 type Props = {
   isLoading?: boolean;
   isFullScreen?: boolean;
+  ignoreOverlay?: boolean;
   text: string;
   className?: string;
   children: ReactElement | null | (() => ReactElement);
@@ -17,6 +18,7 @@ const Loading = ({
   className,
   isLoading = true,
   isFullScreen,
+  ignoreOverlay = false,
   text,
   children,
 }: Props) => {
@@ -29,6 +31,7 @@ const Loading = ({
     className,
     { visible: isLoading },
     { fullscreen: isFullScreen },
+    { 'ignore-overlay': ignoreOverlay },
   );
 
   return (
