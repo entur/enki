@@ -7,6 +7,7 @@ import { AddIcon } from '@entur/icons';
 import StopPlaceDetails from './StopPlaceDetails';
 import { memo, MutableRefObject, useRef } from 'react';
 import { usePopupOpeningOnFocus } from './hooks';
+import { getStopPlaceLocation } from './helpers';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
@@ -15,12 +16,6 @@ interface StopPlaceMarkerProps {
   isPopupToBeOpen: boolean;
   clearFocusedMarker: () => void;
 }
-
-export const getStopPlaceLocation = (stopPlace: StopPlace) => {
-  return stopPlace.centroid && stopPlace.quays.length > 1
-    ? stopPlace.centroid.location
-    : stopPlace.quays[0].centroid.location;
-};
 
 const StopPlaceMarker = memo(
   ({

@@ -1,4 +1,4 @@
-import { SecondaryButton, SuccessButton, TertiaryButton } from '@entur/button';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import { Paragraph } from '@entur/typography';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -7,7 +7,7 @@ import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import {
   BoardingTypeSelect,
@@ -20,10 +20,7 @@ import {
 } from '../common/FrontTextTextField';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
-import { PositionIcon } from '@entur/icons';
-import '../styles.scss';
-import { useConfig } from '../../../config/ConfigContext';
-import { FlexibleLineType } from '../../../model/FlexibleLine';
+import SandboxFeature from '../../../ext/SandboxFeature';
 
 export const GenericStopPointEditor = ({
   order,
@@ -35,7 +32,7 @@ export const GenericStopPointEditor = ({
   onDelete,
   canDelete,
   flexibleLineType,
-  updateFocusedQuayIdCallback,
+  onFocusedQuayIdUpdate,
 }: StopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const {
@@ -53,11 +50,9 @@ export const GenericStopPointEditor = ({
 
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  const { sandboxFeatures } = useConfig();
-  const isMapEnabled = sandboxFeatures?.JourneyPatternStopPointMap;
-  const isLocateButtonAvailable =
-    (!flexibleLineType || flexibleLineType === FlexibleLineType.FIXED) &&
-    isMapEnabled;
+  const onDeleteDialogOpen = useCallback((isOpen: boolean) => {
+    setDeleteDialogOpen(isOpen);
+  }, []);
 
   return (
     <div className="stop-point">
@@ -91,29 +86,24 @@ export const GenericStopPointEditor = ({
           />
         </div>
 
-        <div className={'buttons-group'}>
-          <DeleteButton
-            thin={true}
-            disabled={!canDelete}
-            onClick={() => setDeleteDialogOpen(true)}
-            title={formatMessage({ id: 'editorDeleteButtonText' })}
-          />
-
-          {isLocateButtonAvailable && (
-            <TertiaryButton
-              id={'locate-button'}
-              title={formatMessage({ id: 'locateStopPointTooltip' })}
+        <SandboxFeature
+          feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
+          renderFallback={() => (
+            <DeleteButton
+              thin={true}
+              disabled={!canDelete}
               onClick={() => {
-                if (updateFocusedQuayIdCallback) {
-                  updateFocusedQuayIdCallback(stopPoint.quayRef);
-                }
+                onDeleteDialogOpen(true);
               }}
-            >
-              <PositionIcon inline />
-              {formatMessage({ id: 'locateStopPoint' })}
-            </TertiaryButton>
+              title={formatMessage({ id: 'editorDeleteButtonText' })}
+            />
           )}
-        </div>
+          stopPoint={stopPoint}
+          onDeleteDialogOpen={onDeleteDialogOpen}
+          flexibleLineType={flexibleLineType}
+          onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
+          canDelete={canDelete}
+        />
 
         <ConfirmDialog
           isOpen={isDeleteDialogOpen}

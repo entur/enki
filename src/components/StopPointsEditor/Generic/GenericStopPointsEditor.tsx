@@ -36,7 +36,7 @@ export const GenericStopPointsEditor = ({
     }
   }, []);
 
-  const updateFocusedQuayIdCallback = useCallback(
+  const onFocusedQuayIdUpdate = useCallback(
     (quayId: string | undefined | null) => {
       setFocusedQuayId(quayId);
     },
@@ -75,7 +75,7 @@ export const GenericStopPointsEditor = ({
               onDelete={() => deleteStopPoint(pointIndex)}
               canDelete={pointsInSequence.length > 2}
               flexibleLineType={flexibleLineType}
-              updateFocusedQuayIdCallback={updateFocusedQuayIdCallback}
+              onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
             />
           ))}
         </div>
@@ -86,7 +86,7 @@ export const GenericStopPointsEditor = ({
           deleteStopPoint={deleteStopPoint}
           transportMode={transportMode}
           focusedQuayId={focusedQuayId}
-          updateFocusedQuayIdCallback={updateFocusedQuayIdCallback}
+          onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
         />
       </div>
       <AddButton

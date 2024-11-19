@@ -9,7 +9,7 @@ export const MapWrapper = ({
   deleteStopPoint,
   transportMode,
   focusedQuayId,
-  updateFocusedQuayIdCallback,
+  onFocusedQuayIdUpdate,
 }: MapWrapperProps) => {
   return (
     <FormMap zoomControl={false} doubleClickZoom={false}>
@@ -19,7 +19,7 @@ export const MapWrapper = ({
         deleteStopPoint={deleteStopPoint}
         addStopPoint={addStopPoint}
         focusedQuayId={focusedQuayId}
-        updateFocusedQuayIdCallback={updateFocusedQuayIdCallback}
+        onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
       />
     </FormMap>
   );

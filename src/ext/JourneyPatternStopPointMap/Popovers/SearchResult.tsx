@@ -8,14 +8,16 @@ import {
   JourneyPatternMarker,
   JourneyPatternMarkerType,
 } from '../types';
-import { determineQuayToFocus } from '../helpers';
-import { getStopPlaceLocation } from '../StopPlaceMarker';
+import { determineQuayToFocus, getStopPlaceLocation } from '../helpers';
 
 interface SearchResultProps {
   stopPlace: StopPlace;
   isLast: boolean;
   searchText: string;
-  focusMarkerCallback: (focusedMarker: FocusedMarker) => void;
+  focusMarkerCallback: (
+    focusedMarker: FocusedMarker,
+    updateOnlyFocusedMarkerState?: boolean,
+  ) => void;
   getSelectedQuayIdsCallback: (stopPlace: StopPlace) => string[];
 }
 

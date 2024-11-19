@@ -3,17 +3,20 @@ import {
   Reducer,
   useCallback,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
 } from 'react';
 import StopPoint from '../../model/StopPoint';
 import {
+  FocusedMarker,
+  JourneyPatternMarkerType,
   JourneyPatternsMapState,
   JourneyPatternsStopPlacesState,
   MapSpecs,
   StopPointLocation,
 } from './types';
-import { Centroid, Location, UttuQuery } from '../../api';
+import { Centroid, Location, StopPlace, UttuQuery } from '../../api';
 import { useAppSelector } from '../../store/hooks';
 import { useConfig } from '../../config/ConfigContext';
 import { useAuth } from '../../auth/auth';
@@ -68,6 +71,58 @@ export const useStopPlacesData = (transportMode: string | undefined) => {
 
   return {
     stopPlacesState,
+  };
+};
+
+const defaultStopPlaces: StopPlace[] = [];
+
+/**
+ * Combines two stop places data sets: one gotten from a normal initial stop places fetch,
+ * and the other gotten by using the search input
+ * @param stopPlacesState
+ * @param searchedStopPlacesState
+ */
+export const useStopPlacesStateCombinedWithSearchResults = (
+  stopPlacesState: JourneyPatternsStopPlacesState,
+  searchedStopPlacesState: JourneyPatternsStopPlacesState,
+) => {
+  const stopPlaces = stopPlacesState?.stopPlaces || defaultStopPlaces;
+
+  // Combining the whole stop places set and the search results:
+  const totalStopPlaces = useMemo(() => {
+    const total = [...stopPlaces];
+    searchedStopPlacesState.stopPlaces?.forEach((stopPlace) => {
+      if (stopPlaces.filter((s) => s.id === stopPlace.id).length === 0) {
+        total.push(stopPlace);
+      }
+    });
+    return total;
+  }, [stopPlaces, searchedStopPlacesState.stopPlaces]);
+
+  const totalQuayLocationsIndex: Record<string, Centroid> = useMemo(() => {
+    return {
+      ...stopPlacesState?.quayLocationsIndex,
+      ...searchedStopPlacesState.quayLocationsIndex,
+    };
+  }, [
+    stopPlacesState?.quayLocationsIndex,
+    searchedStopPlacesState.quayLocationsIndex,
+  ]);
+
+  const totalQuayStopPlaceIndex: Record<string, string> = useMemo(() => {
+    return {
+      ...stopPlacesState?.quayStopPlaceIndex,
+      ...searchedStopPlacesState.quayStopPlaceIndex,
+    };
+  }, [
+    stopPlacesState?.quayStopPlaceIndex,
+    searchedStopPlacesState.quayStopPlaceIndex,
+  ]);
+
+  return {
+    totalStopPlaces,
+    totalQuayLocationsIndex,
+    totalQuayStopPlaceIndex,
   };
 };
 
@@ -279,4 +334,37 @@ export const useMapSpecs = () => {
     mapSpecsState,
     updateMapSpecs,
   };
+};
+
+/**
+ * When "locate stop point" was clicked from GenericStopPointEditor
+ * @param focusedQuayId
+ * @param quayLocationsIndex
+ * @param quayStopPlaceIndex
+ * @param focusMarkerCallback
+ */
+export const useHandleFocusedQuayId = (
+  focusedQuayId: string | undefined | null,
+  quayLocationsIndex: Record<string, Centroid>,
+  quayStopPlaceIndex: Record<string, string>,
+  focusMarkerCallback: (
+    focusedMarker: FocusedMarker,
+    updateOnlyFocusedMarkerState?: boolean,
+  ) => void,
+) => {
+  useEffect(() => {
+    if (focusedQuayId && quayLocationsIndex[focusedQuayId]) {
+      const focusedStopPlaceId: string = quayStopPlaceIndex[focusedQuayId];
+      // Let's produce a proper focusedMarker out of this
+      const newFocusedMarker: FocusedMarker = {
+        stopPlaceId: focusedStopPlaceId,
+        marker: {
+          id: focusedQuayId,
+          location: quayLocationsIndex[focusedQuayId].location,
+          type: JourneyPatternMarkerType.QUAY,
+        },
+      };
+      focusMarkerCallback(newFocusedMarker, true);
+    }
+  }, [focusedQuayId, quayStopPlaceIndex, quayLocationsIndex]);
 };

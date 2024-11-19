@@ -7,6 +7,10 @@ import {
   JourneyPatternsStopPlacesState,
 } from './types';
 
+/**
+ * Returns an object containing a list of stop places and some helpful records calculated based on it
+ * @param stopPlaces
+ */
 export const getStopPlacesState = (
   stopPlaces: StopPlace[] | undefined,
 ): JourneyPatternsStopPlacesState => {
@@ -33,6 +37,16 @@ export const getStopPlacesState = (
     quayLocationsIndex: quayLocations,
     quayStopPlaceIndex: quayStopPlace,
   };
+};
+
+/**
+ * Extracts location of the stop place
+ * @param stopPlace
+ */
+export const getStopPlaceLocation = (stopPlace: StopPlace) => {
+  return stopPlace.centroid && stopPlace.quays.length > 1
+    ? stopPlace.centroid.location
+    : stopPlace.quays[0].centroid.location;
 };
 
 /**
