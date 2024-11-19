@@ -5,7 +5,9 @@ import {
   JourneyPatternMarker,
   JourneyPatternMarkerType,
   JourneyPatternsStopPlacesState,
+  StopPointLocation,
 } from './types';
+import StopPoint from '../../model/StopPoint';
 
 export const getStopPlacesState = (
   stopPlaces: StopPlace[] | undefined,
@@ -173,4 +175,20 @@ export const determineQuayToFocus = (
 
   const justTheFirstQuay = stopPlace.quays[0];
   return { id: justTheFirstQuay.id, type: JourneyPatternMarkerType.QUAY };
+};
+
+export const getStopPointLocationSequence = (
+  pointsInSequence: StopPoint[],
+  quayLocationsIndex: Record<string, Centroid>,
+) => {
+  const stopPointLocationSequence: StopPointLocation[] = [];
+  pointsInSequence.forEach((point) => {
+    if (point.quayRef && quayLocationsIndex[point.quayRef]?.location) {
+      stopPointLocationSequence.push([
+        quayLocationsIndex[point.quayRef].location.latitude,
+        quayLocationsIndex[point.quayRef].location.longitude,
+      ]);
+    }
+  });
+  return stopPointLocationSequence;
 };

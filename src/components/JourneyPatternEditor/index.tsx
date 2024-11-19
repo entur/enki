@@ -68,6 +68,11 @@ const JourneyPatternEditor = ({
         serviceJourneys: newServiceJourneys,
         pointsInSequence: newPointsInSequence,
       });
+
+      if (sandboxFeatures?.JourneyPatternStopPointMap) {
+        // To avoid grey area on the map once the container gets bigger in the height:
+        window.dispatchEvent(new Event('resize'));
+      }
     },
     [journeyPattern, onSave, serviceJourneys],
   );
@@ -118,10 +123,8 @@ const JourneyPatternEditor = ({
         serviceJourneys: newServiceJourneys,
       });
 
-      if (sandboxFeatures?.JourneyPatternStopPointMap) {
-        // To avoid grey area on the map once the container gets bigger in the height:
-        window.dispatchEvent(new Event('resize'));
-      }
+      // To avoid grey area on the map once the container gets bigger in the height:
+      window.dispatchEvent(new Event('resize'));
     },
     [journeyPatternRef],
   );

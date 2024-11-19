@@ -16,7 +16,12 @@ import {
   getStopPlacesState,
   onFocusedMarkerNewMapState,
 } from './helpers';
-import { useMapSpecs, useMapState, useStopPlacesData } from './hooks';
+import {
+  useFitMapBounds,
+  useMapSpecs,
+  useMapState,
+  useStopPlacesData,
+} from './hooks';
 import useSupercluster from 'use-supercluster';
 import ClusterMarker from './ClusterMarker';
 import Supercluster, { AnyProps, ClusterProperties } from 'supercluster';
@@ -80,6 +85,8 @@ const JourneyPatternStopPointMap = memo(
       totalQuayLocationsIndex,
       totalQuayStopPlaceIndex,
     );
+
+    useFitMapBounds(pointsInSequence, totalQuayLocationsIndex);
 
     const updateSearchedStopPlacesCallback = useCallback(
       (newSearchedStopPlacesState: JourneyPatternsStopPlacesState) => {
