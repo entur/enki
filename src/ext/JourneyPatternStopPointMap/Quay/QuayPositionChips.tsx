@@ -26,7 +26,7 @@ const QuayPositionChips = ({
 
   return (
     <section>
-      <div style={{ textWrap: 'nowrap' }}>
+      <div style={{ textWrap: 'nowrap', marginBottom: '0.15rem' }}>
         {formatMessage({
           id: `quayOrder`,
         })}

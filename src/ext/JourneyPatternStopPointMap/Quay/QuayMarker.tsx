@@ -1,5 +1,5 @@
 import { Quay, StopPlace } from '../../../api';
-import { getMarkerIcon } from '../markers';
+import { getMarkerIcon } from '../markerIcons';
 import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { Heading5 } from '@entur/typography';
@@ -17,10 +17,10 @@ interface QuayMarkerProps {
   hasSelectedQuay: boolean;
   hasNonSelectedQuays: boolean;
   hideNonSelectedQuaysState: boolean;
-  hideNonSelectedQuaysCallback: (hideNonSelected: boolean) => void;
-  showQuaysCallback: (showAll: boolean) => void;
-  addStopPointCallback: (quayId: string) => void;
-  deleteStopPointCallback: (index: number) => void;
+  hideNonSelectedQuays: (hideNonSelected: boolean) => void;
+  showQuays: (showAll: boolean) => void;
+  addStopPoint: (quayId: string) => void;
+  deleteStopPoint: (index: number) => void;
   isPopupToBeOpen: boolean;
   clearFocusedMarker: () => void;
 }
@@ -33,11 +33,11 @@ const QuayMarker = memo(
     isSelectedQuay,
     hasSelectedQuay,
     hasNonSelectedQuays,
-    showQuaysCallback,
-    hideNonSelectedQuaysCallback,
+    showQuays,
+    hideNonSelectedQuays,
     hideNonSelectedQuaysState,
-    addStopPointCallback,
-    deleteStopPointCallback,
+    addStopPoint,
+    deleteStopPoint,
     isPopupToBeOpen,
     clearFocusedMarker,
   }: QuayMarkerProps) => {
@@ -72,7 +72,7 @@ const QuayMarker = memo(
             <QuayPositionChips
               quayId={quay.id}
               stopPointSequenceIndexes={stopPointSequenceIndexes}
-              deleteStopPointCallback={deleteStopPointCallback}
+              deleteStopPointCallback={deleteStopPoint}
             />
           )}
 
@@ -83,9 +83,9 @@ const QuayMarker = memo(
             hasSelectedQuay={hasSelectedQuay}
             hasNonSelectedQuays={hasNonSelectedQuays}
             hideNonSelectedQuaysState={hideNonSelectedQuaysState}
-            hideNonSelectedQuaysCallback={hideNonSelectedQuaysCallback}
-            showQuaysCallback={showQuaysCallback}
-            addStopPointCallback={addStopPointCallback}
+            hideNonSelectedQuaysCallback={hideNonSelectedQuays}
+            showQuaysCallback={showQuays}
+            addStopPointCallback={addStopPoint}
           />
         </Popup>
 

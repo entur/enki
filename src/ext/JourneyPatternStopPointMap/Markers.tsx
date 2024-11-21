@@ -3,11 +3,11 @@ import useSupercluster from 'use-supercluster';
 import Supercluster, { AnyProps, ClusterProperties } from 'supercluster';
 import { StopPlace } from '../../api';
 import ClusterMarker from './ClusterMarker';
-import QuaysWrapper from './Quay/QuaysWrapper';
+import Quays from './Quay/Quays';
 import StopPlaceMarker from './StopPlaceMarker';
 import { JourneyPatternsMapState, MapSpecs } from './types';
 
-interface MarkersWrapper {
+interface MarkersProps {
   mapSpecsState: MapSpecs;
   mapState: JourneyPatternsMapState;
   mapStateRef: MutableRefObject<JourneyPatternsMapState>;
@@ -15,10 +15,10 @@ interface MarkersWrapper {
   deleteStopPoint: (index: number) => void;
   addStopPoint: (quayRef?: string) => void;
   clearFocusedMarker: () => void;
-  mapStateUpdateCallback: (newMapState: any) => void;
+  onStopPointAddedOrDeleted: (newMapState: any) => void;
 }
 
-const MarkersWrapper = ({
+const Markers = ({
   mapSpecsState,
   stopPlaces,
   mapState,
@@ -26,8 +26,8 @@ const MarkersWrapper = ({
   addStopPoint,
   deleteStopPoint,
   clearFocusedMarker,
-  mapStateUpdateCallback,
-}: MarkersWrapper) => {
+  onStopPointAddedOrDeleted,
+}: MarkersProps) => {
   // Below goes production of the map markers and clusters:
   const points = useMemo(() => {
     return stopPlaces.map((stopPlace) => ({
@@ -57,11 +57,11 @@ const MarkersWrapper = ({
 
   /**
    * Note that method and deps don't rely on mapState.showQuaysState;
-   * Reason for that is, when state changes, so does the showQuaysCallback and
+   * Reason for that is, when state changes, so does the showQuays and
    * that can result in the many thousands of stop places markers being re-rendered -
    * - and that we must avoid
    */
-  const showQuaysCallback = useCallback(
+  const showQuays = useCallback(
     (showAll: boolean, stopPlaceId: string) => {
       const newShowQuaysState = {
         ...mapStateRef.current.showQuaysState,
@@ -69,14 +69,14 @@ const MarkersWrapper = ({
 
       newShowQuaysState[stopPlaceId] = showAll;
       mapStateRef.current.showQuaysState = newShowQuaysState;
-      mapStateUpdateCallback({
+      onStopPointAddedOrDeleted({
         showQuaysState: newShowQuaysState,
       });
     },
     [mapStateRef.current],
   );
 
-  const hideNonSelectedQuaysCallback = useCallback(
+  const hideNonSelectedQuays = useCallback(
     (hideNonSelected: boolean, stopPlaceId: string) => {
       const newHideNonSelectedQuaysState = {
         ...mapStateRef.current.hideNonSelectedQuaysState,
@@ -85,7 +85,7 @@ const MarkersWrapper = ({
       // mapStateRef needs to be kept up-to-date to fulfil its purpose in the useMap hook
       mapStateRef.current['hideNonSelectedQuaysState'] =
         newHideNonSelectedQuaysState;
-      mapStateUpdateCallback({
+      onStopPointAddedOrDeleted({
         hideNonSelectedQuaysState: newHideNonSelectedQuaysState,
       });
     },
@@ -115,7 +115,7 @@ const MarkersWrapper = ({
       }
 
       return mapState.showQuaysState[stopPlace.id] ? (
-        <QuaysWrapper
+        <Quays
           key={'quays-wrapper-for-' + stopPlace.id}
           stopPlace={stopPlace}
           stopPointSequenceIndexes={mapState.quayStopPointSequenceIndexes}
@@ -124,8 +124,8 @@ const MarkersWrapper = ({
           }
           deleteStopPoint={deleteStopPoint}
           addStopPoint={addStopPoint}
-          hideNonSelectedQuaysCallback={hideNonSelectedQuaysCallback}
-          showQuaysCallback={showQuaysCallback}
+          hideNonSelectedQuays={hideNonSelectedQuays}
+          showQuays={showQuays}
           focusedMarker={mapState.focusedMarker}
           clearFocusedMarker={clearFocusedMarker}
         />
@@ -133,8 +133,8 @@ const MarkersWrapper = ({
         <StopPlaceMarker
           key={'stop-place-marker-' + stopPlace.id}
           stopPlace={stopPlace}
-          showQuaysCallback={showQuaysCallback}
-          addStopPointCallback={addStopPoint}
+          showQuays={showQuays}
+          addStopPoint={addStopPoint}
           isPopupToBeOpen={stopPlace.id === mapState.focusedMarker?.stopPlaceId}
           clearFocusedMarker={clearFocusedMarker}
         />
@@ -151,4 +151,4 @@ const MarkersWrapper = ({
   return <>{markers}</>;
 };
 
-export default MarkersWrapper;
+export default Markers;

@@ -365,6 +365,8 @@ export const useHandleFocusedQuayId = (
         },
       };
       focusMarkerCallback(newFocusedMarker, true);
+      // Located stop point can be at the end of a long list of stop points, map needs to get into the view if not visible:
+      window.scrollTo(0, 520);
     }
   }, [focusedQuayId, quayStopPlaceIndex, quayLocationsIndex]);
 };

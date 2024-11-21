@@ -22,7 +22,7 @@ import {
   useStopPlacesData,
   useStopPlacesStateCombinedWithSearchResults,
 } from './hooks';
-import MarkersWrapper from './MarkersWrapper';
+import Markers from './Markers';
 
 const JourneyPatternStopPointMap = memo(
   ({
@@ -66,14 +66,17 @@ const JourneyPatternStopPointMap = memo(
     // Zoom into location of a focused marker:
     useMapZoomIntoLocation(mapState.focusedMarker?.marker.location);
 
-    const updateSearchedStopPlacesCallback = useCallback(
+    const updateSearchedStopPlaces = useCallback(
       (newSearchedStopPlacesState: JourneyPatternsStopPlacesState) => {
         setSearchedStopPlacesState(newSearchedStopPlacesState);
       },
       [],
     );
 
-    const focusMarkerCallback = useCallback(
+    /**
+     * Focused marker may lead to various ways the overall map state would need to be updated:
+     */
+    const processFocusedMarker = useCallback(
       (
         focusedMarker: FocusedMarker | undefined,
         updateOnlyFocusedMarkerState?: boolean,
@@ -119,16 +122,16 @@ const JourneyPatternStopPointMap = memo(
       [mapStateRef.current],
     );
 
-    // Process the focusedQuayId gotten from outside the stop point editor:
+    // Process the focusedQuayId gotten from outside, e.g. from the stop point editor:
     useHandleFocusedQuayId(
       focusedQuayId,
       totalQuayLocationsIndex,
       totalQuayStopPlaceIndex,
-      focusMarkerCallback,
+      processFocusedMarker,
     );
 
     const clearFocusedMarker = useCallback(() => {
-      focusMarkerCallback(undefined);
+      processFocusedMarker(undefined);
       if (focusedQuayId) {
         onFocusedQuayIdUpdate(undefined);
       }
@@ -144,7 +147,7 @@ const JourneyPatternStopPointMap = memo(
       [mapStateRef.current, getSelectedQuayIds],
     );
 
-    const mapStateUpdateCallback = useCallback((newMapState: any) => {
+    const updateMapState = useCallback((newMapState: any) => {
       setMapState(newMapState);
     }, []);
 
@@ -153,13 +156,13 @@ const JourneyPatternStopPointMap = memo(
         <SearchPopover
           searchedStopPlaces={searchedStopPlacesState.stopPlaces}
           transportMode={transportMode}
-          focusMarkerCallback={focusMarkerCallback}
-          getSelectedQuayIdsCallback={getSelectedQuayIdsCallback}
-          updateSearchedStopPlacesCallback={updateSearchedStopPlacesCallback}
+          getSelectedQuayIds={getSelectedQuayIdsCallback}
+          onSearchResultLocated={processFocusedMarker}
+          onSearchedStopPlacesFetched={updateSearchedStopPlaces}
         />
         <ZoomControl position={'topright'} />
         <Polyline positions={mapState.stopPointLocationSequence} />
-        <MarkersWrapper
+        <Markers
           mapSpecsState={mapSpecsState}
           mapState={mapState}
           mapStateRef={mapStateRef}
@@ -167,7 +170,7 @@ const JourneyPatternStopPointMap = memo(
           deleteStopPoint={deleteStopPoint}
           addStopPoint={addStopPoint}
           clearFocusedMarker={clearFocusedMarker}
-          mapStateUpdateCallback={mapStateUpdateCallback}
+          onStopPointAddedOrDeleted={updateMapState}
         />
       </>
     );

@@ -14,19 +14,19 @@ interface SearchResultProps {
   stopPlace: StopPlace;
   isLast: boolean;
   searchText: string;
-  focusMarkerCallback: (
+  onSearchResultLocated: (
     focusedMarker: FocusedMarker,
     updateOnlyFocusedMarkerState?: boolean,
   ) => void;
-  getSelectedQuayIdsCallback: (stopPlace: StopPlace) => string[];
+  getSelectedQuayIds: (stopPlace: StopPlace) => string[];
 }
 
 const SearchResult = ({
   stopPlace,
   isLast,
-  focusMarkerCallback,
+  onSearchResultLocated,
   searchText,
-  getSelectedQuayIdsCallback,
+  getSelectedQuayIds,
 }: SearchResultProps) => {
   return (
     <div
@@ -40,7 +40,7 @@ const SearchResult = ({
       <TertiarySquareButton
         onClick={() => {
           let focusedMarker: JourneyPatternMarker;
-          const selectedQuayIds = getSelectedQuayIdsCallback(stopPlace);
+          const selectedQuayIds = getSelectedQuayIds(stopPlace);
           if (searchText.includes('Quay') || selectedQuayIds?.length > 0) {
             // Find the most suitable quayId to open the popup of
             focusedMarker = determineQuayToFocus(
@@ -56,7 +56,7 @@ const SearchResult = ({
             };
           }
 
-          focusMarkerCallback({
+          onSearchResultLocated({
             stopPlaceId: stopPlace.id,
             quays: stopPlace.quays,
             marker: focusedMarker,
