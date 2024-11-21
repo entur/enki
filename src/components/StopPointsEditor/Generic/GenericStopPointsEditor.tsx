@@ -9,7 +9,7 @@ import SandboxFeature from '../../../ext/SandboxFeature';
 import { useConfig } from '../../../config/ConfigContext';
 import { SmallAlertBox } from '@entur/alert';
 import '../styles.scss';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const GenericStopPointsEditor = ({
   pointsInSequence,
@@ -24,6 +24,9 @@ export const GenericStopPointsEditor = ({
   const { formatMessage } = useIntl();
   const { sandboxFeatures } = useConfig();
   const isMapEnabled = sandboxFeatures?.JourneyPatternStopPointMap;
+  const [focusedQuayId, setFocusedQuayId] = useState<string | undefined | null>(
+    undefined,
+  );
 
   useEffect(() => {
     // if map isn't enabled, let's produce two empty stop points
@@ -31,6 +34,13 @@ export const GenericStopPointsEditor = ({
       initDefaultJourneyPattern();
     }
   }, []);
+
+  const onFocusedQuayIdUpdate = useCallback(
+    (quayId: string | undefined | null) => {
+      setFocusedQuayId(quayId);
+    },
+    [],
+  );
 
   return (
     <section style={{ marginTop: '2em' }}>
@@ -64,6 +74,7 @@ export const GenericStopPointsEditor = ({
               onDelete={() => deleteStopPoint(pointIndex)}
               canDelete={pointsInSequence.length > 2}
               flexibleLineType={flexibleLineType}
+              onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
             />
           ))}
         </div>
@@ -73,6 +84,8 @@ export const GenericStopPointsEditor = ({
           addStopPoint={addStopPoint}
           deleteStopPoint={deleteStopPoint}
           transportMode={transportMode}
+          focusedQuayId={focusedQuayId}
+          onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
         />
       </div>
       <AddButton
