@@ -12,6 +12,8 @@ export const MapWrapper = ({
   addStopPoint,
   deleteStopPoint,
   transportMode,
+  focusedQuayId,
+  onFocusedQuayIdUpdate,
 }: MapWrapperProps) => {
   // Fetching stop places data and the indexes:
   const { stopPlacesState, isLoading } = useStopPlacesData(transportMode);
@@ -26,6 +28,8 @@ export const MapWrapper = ({
           pointsInSequence={pointsInSequence}
           deleteStopPoint={deleteStopPoint}
           addStopPoint={addStopPoint}
+          focusedQuayId={focusedQuayId}
+          onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
         />
       ) : (
         <div className="stop-places-spinner">

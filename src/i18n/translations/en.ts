@@ -648,4 +648,6 @@ export const messages: MessagesKey = {
   mapSearchResults: 'Results:',
   mapSearchPlaceholder: 'Stop place by ID, name or quay ID',
   mapLoadingStopsDataText: 'Loading stops...',
+  locateStopPoint: 'Locate',
+  locateStopPointTooltip: 'Locate on map',
 };

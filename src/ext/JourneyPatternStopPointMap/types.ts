@@ -2,13 +2,15 @@ import { SandboxFeatureProps } from '../SandboxFeature';
 import { SandboxFeatures } from '../../config/config';
 import StopPoint from '../../model/StopPoint';
 import { VEHICLE_MODE } from '../../model/enums';
-import { Centroid, StopPlace } from '../../api';
+import { Centroid, Location, Quay, StopPlace } from '../../api';
 
 export interface MapWrapperProps extends SandboxFeatureProps<SandboxFeatures> {
   transportMode: VEHICLE_MODE;
   pointsInSequence: StopPoint[];
   deleteStopPoint: (index: number) => void;
   addStopPoint: (quayRef?: string) => void;
+  focusedQuayId: string | undefined | null;
+  onFocusedQuayIdUpdate: (quayId: string | undefined | null) => void;
 }
 
 export interface JourneyPatternStopPointMapProps {
@@ -17,6 +19,8 @@ export interface JourneyPatternStopPointMapProps {
   pointsInSequence: StopPoint[];
   deleteStopPoint: (index: number) => void;
   addStopPoint: (quayRef?: string) => void;
+  focusedQuayId: string | undefined | null;
+  onFocusedQuayIdUpdate: (quayId: string | undefined | null) => void;
 }
 
 export interface JourneyPatternsStopPlacesState {
@@ -43,6 +47,7 @@ export enum JourneyPatternMarkerType {
 
 export interface JourneyPatternMarker {
   id: string;
+  location: Location;
   type: JourneyPatternMarkerType;
 }
 
@@ -51,7 +56,8 @@ export interface JourneyPatternMarker {
  * a certain marker gets into a "focused" state - meaning e.g. its popup opens up
  */
 export interface FocusedMarker {
-  stopPlace: StopPlace;
+  stopPlaceId: string;
+  quays?: Quay[];
   marker: JourneyPatternMarker;
 }
 

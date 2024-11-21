@@ -1,5 +1,5 @@
 import { Marker, useMap } from 'react-leaflet';
-import { getClusterIcon } from './markers';
+import { getClusterIcon } from './markerIcons';
 
 interface ClusterMarkerProps {
   longitude: number;

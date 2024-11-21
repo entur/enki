@@ -75,11 +75,30 @@
         > :last-child {
           margin-right: 0;
         }
+
+        .buttons-group {
+          display: flex;
+          flex-direction: column;
+          min-width: fit-content;
+          margin-left: 0.25rem;
+        }
       }
     }
 
     > :last-child {
       border-bottom: none;
+    }
+  }
+
+  #locate-button {
+    margin: 0;
+    padding: 0 0.5rem;
+    min-width: fit-content;
+    width: fit-content;
+    margin-top: 1.5rem;
+
+    svg {
+      margin-right: 0;
     }
   }
 }

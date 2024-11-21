@@ -7,7 +7,7 @@ import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import {
   BoardingTypeSelect,
@@ -20,6 +20,7 @@ import {
 } from '../common/FrontTextTextField';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
+import SandboxFeature from '../../../ext/SandboxFeature';
 
 export const GenericStopPointEditor = ({
   order,
@@ -31,6 +32,7 @@ export const GenericStopPointEditor = ({
   onDelete,
   canDelete,
   flexibleLineType,
+  onFocusedQuayIdUpdate,
 }: StopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const {
@@ -47,6 +49,10 @@ export const GenericStopPointEditor = ({
   const onBoardingTypeChange = useOnBoardingTypeChange(stopPoint, onChange);
 
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const onDeleteDialogOpen = useCallback((isOpen: boolean) => {
+    setDeleteDialogOpen(isOpen);
+  }, []);
 
   return (
     <div className="stop-point">
@@ -80,10 +86,23 @@ export const GenericStopPointEditor = ({
           />
         </div>
 
-        <DeleteButton
-          disabled={!canDelete}
-          onClick={() => setDeleteDialogOpen(true)}
-          title={formatMessage({ id: 'editorDeleteButtonText' })}
+        <SandboxFeature
+          feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
+          renderFallback={() => (
+            <DeleteButton
+              thin={true}
+              disabled={!canDelete}
+              onClick={() => {
+                onDeleteDialogOpen(true);
+              }}
+              title={formatMessage({ id: 'editorDeleteButtonText' })}
+            />
+          )}
+          stopPoint={stopPoint}
+          onDeleteDialogOpen={onDeleteDialogOpen}
+          flexibleLineType={flexibleLineType}
+          onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
+          canDelete={canDelete}
         />
 
         <ConfirmDialog
