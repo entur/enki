@@ -1,32 +1,27 @@
 import { StopPlace } from '../../api';
 import { Button } from '@entur/button';
-import { getMarkerIcon } from './markers';
-import { Marker, Popup, Pane } from 'react-leaflet';
+import { getMarkerIcon } from './markerIcons';
+import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { AddIcon } from '@entur/icons';
 import StopPlaceDetails from './StopPlaceDetails';
 import { memo, MutableRefObject, useRef } from 'react';
 import { usePopupOpeningOnFocus } from './hooks';
+import { getStopPlaceLocation } from './helpers';
 
 interface StopPlaceMarkerProps {
   stopPlace: StopPlace;
-  showQuaysCallback: (showAll: boolean, stopPlaceId: string) => void;
-  addStopPointCallback: (quayRef: string) => void;
+  showQuays: (showAll: boolean, stopPlaceId: string) => void;
+  addStopPoint: (quayRef: string) => void;
   isPopupToBeOpen: boolean;
   clearFocusedMarker: () => void;
 }
 
-export const getStopPlaceLocation = (stopPlace: StopPlace) => {
-  return stopPlace.centroid && stopPlace.quays.length > 1
-    ? stopPlace.centroid.location
-    : stopPlace.quays[0].centroid.location;
-};
-
 const StopPlaceMarker = memo(
   ({
     stopPlace,
-    showQuaysCallback,
-    addStopPointCallback,
+    showQuays,
+    addStopPoint,
     isPopupToBeOpen,
     clearFocusedMarker,
   }: StopPlaceMarkerProps) => {
@@ -51,7 +46,7 @@ const StopPlaceMarker = memo(
               className={'popup-button'}
               onClick={() => {
                 markerRef.current.closePopup();
-                showQuaysCallback(true, stopPlace.id);
+                showQuays(true, stopPlace.id);
               }}
               width="auto"
               variant="primary"
@@ -64,7 +59,7 @@ const StopPlaceMarker = memo(
               className={'popup-button'}
               onClick={() => {
                 markerRef.current.closePopup();
-                addStopPointCallback(stopPlace.quays[0].id);
+                addStopPoint(stopPlace.quays[0].id);
                 // To avoid grey area on the map once the container gets bigger in the height:
                 window.dispatchEvent(new Event('resize'));
               }}

@@ -645,4 +645,7 @@ export const messages = {
   mapSearchNoResults: 'Ingen resultater funnet',
   mapSearchResults: 'Resultater:',
   mapSearchPlaceholder: 'Stoppested etter ID, navn eller plattform-ID',
+  mapLoadingStopsDataText: 'Laster inn stopper...',
+  locateStopPoint: 'Vis',
+  locateStopPointTooltip: 'Vis på kartet',
 };

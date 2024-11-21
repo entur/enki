@@ -19,9 +19,9 @@ import { sentryCaptureException } from '../../../store/store';
 interface SearchPopoverProps {
   searchedStopPlaces: StopPlace[];
   transportMode: VEHICLE_MODE;
-  focusMarkerCallback: (focusedMarker: FocusedMarker) => void;
-  getSelectedQuayIdsCallback: (stopPlace: StopPlace) => string[];
-  updateSearchedStopPlacesCallback: (
+  onSearchResultLocated: (focusedMarker: FocusedMarker) => void;
+  getSelectedQuayIds: (stopPlace: StopPlace) => string[];
+  onSearchedStopPlacesFetched: (
     stopPlacesState: JourneyPatternsStopPlacesState,
   ) => void;
 }
@@ -30,9 +30,9 @@ const SearchPopover = memo(
   ({
     searchedStopPlaces,
     transportMode,
-    focusMarkerCallback,
-    getSelectedQuayIdsCallback,
-    updateSearchedStopPlacesCallback,
+    onSearchResultLocated,
+    getSelectedQuayIds,
+    onSearchedStopPlacesFetched,
   }: SearchPopoverProps) => {
     const activeProvider =
       useAppSelector((state) => state.userContext.activeProviderCode) ?? '';
@@ -65,7 +65,7 @@ const SearchPopover = memo(
                 token,
               );
               const newStopPlacesState = getStopPlacesState(data?.stopPlaces);
-              updateSearchedStopPlacesCallback(newStopPlacesState);
+              onSearchedStopPlacesFetched(newStopPlacesState);
             } catch (e) {
               sentryCaptureException(e);
             }
@@ -85,11 +85,11 @@ const SearchPopover = memo(
       return sortedStopPlaces.map((stopPlace: StopPlace, i: number) => (
         <SearchResult
           key={'map-search-result-' + stopPlace.id}
-          focusMarkerCallback={focusMarkerCallback}
+          onSearchResultLocated={onSearchResultLocated}
           stopPlace={stopPlace}
           isLast={i == searchedStopPlaces.length - 1}
           searchText={searchText as string}
-          getSelectedQuayIdsCallback={getSelectedQuayIdsCallback}
+          getSelectedQuayIds={getSelectedQuayIds}
         />
       ));
     }, [searchedStopPlaces]);
@@ -105,7 +105,7 @@ const SearchPopover = memo(
           value={searchText}
           onClear={() => {
             setSearchText('');
-            updateSearchedStopPlacesCallback(getStopPlacesState(undefined));
+            onSearchedStopPlacesFetched(getStopPlacesState(undefined));
           }}
           onChange={(e: any) => {
             setIsTyping(true);
@@ -113,7 +113,7 @@ const SearchPopover = memo(
               debouncedSearch(e.target.value);
             } else {
               setIsTyping(false);
-              updateSearchedStopPlacesCallback(getStopPlacesState(undefined));
+              onSearchedStopPlacesFetched(getStopPlacesState(undefined));
             }
             setSearchText(e.target.value);
           }}
