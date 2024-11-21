@@ -105,7 +105,6 @@ const Markers = ({
         return (
           <ClusterMarker
             key={'cluster-' + cluster.id}
-            clusterId={cluster.id}
             longitude={longitude}
             latitude={latitude}
             pointCount={pointCount}

@@ -4,7 +4,6 @@ import { getClusterIcon } from './markerIcons';
 interface ClusterMarkerProps {
   longitude: number;
   latitude: number;
-  clusterId: string | number | undefined;
   pointCount: number;
   totalPointCount: number;
 }
@@ -12,7 +11,6 @@ interface ClusterMarkerProps {
 const ClusterMarker = ({
   longitude,
   latitude,
-  clusterId,
   pointCount,
   totalPointCount,
 }: ClusterMarkerProps) => {
@@ -20,7 +18,6 @@ const ClusterMarker = ({
 
   return (
     <Marker
-      key={`cluster-${clusterId}`}
       position={[latitude, longitude]}
       eventHandlers={{
         click: (e) => {

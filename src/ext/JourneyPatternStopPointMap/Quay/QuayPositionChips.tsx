@@ -67,6 +67,8 @@ const QuayPositionChips = ({
               const indexToDelete = deleteDialogState.index;
               setDeleteDialogState({ index: undefined });
               deleteStopPointCallback(indexToDelete);
+              // To avoid grey area on the map once the container gets bigger in the height:
+              window.dispatchEvent(new Event('resize'));
             }}
           >
             {formatMessage({ id: 'yes' })}

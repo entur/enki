@@ -15,9 +15,10 @@ import {
   onFocusedMarkerNewMapState,
 } from './helpers';
 import {
-  useHandleFocusedQuayId,
+  useFitMapBounds,
   useMapSpecs,
   useMapState,
+  useHandleFocusedQuayId,
   useMapZoomIntoLocation,
   useStopPlacesStateCombinedWithSearchResults,
 } from './hooks';
@@ -45,6 +46,7 @@ const JourneyPatternStopPointMap = memo(
     // Search results stop places and its respective indexes:
     const [searchedStopPlacesState, setSearchedStopPlacesState] =
       useState<JourneyPatternsStopPlacesState>(getStopPlacesState(undefined));
+
     // Get the final stop places data that will be the base for Markers:
     const {
       totalStopPlaces,
@@ -61,6 +63,9 @@ const JourneyPatternStopPointMap = memo(
       totalQuayLocationsIndex,
       totalQuayStopPlaceIndex,
     );
+
+    // If there are already stop points selected, zoom in to the route on initial map load:
+    useFitMapBounds(pointsInSequence, totalQuayLocationsIndex);
 
     // Zoom into location of a focused marker:
     useMapZoomIntoLocation(mapState.focusedMarker?.marker.location);

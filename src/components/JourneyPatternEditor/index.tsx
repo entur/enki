@@ -117,11 +117,6 @@ const JourneyPatternEditor = ({
         pointsInSequence: newPointsInSequence,
         serviceJourneys: newServiceJourneys,
       });
-
-      if (sandboxFeatures?.JourneyPatternStopPointMap) {
-        // To avoid grey area on the map once the container gets bigger in the height:
-        window.dispatchEvent(new Event('resize'));
-      }
     },
     [journeyPatternRef],
   );
