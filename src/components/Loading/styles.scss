@@ -1,7 +1,10 @@
+@import '@entur/tokens/dist/styles.scss';
+
 .loader {
   display: none;
   min-width: 100px;
   text-align: center;
+  color: $colors-brand-blue;
 
   &.visible {
     display: flex;
@@ -12,11 +15,6 @@
       font-size: 17px;
       font-weight: 500;
     }
-  }
-
-  &.ignore-overlay {
-    position: unset !important;
-    top: unset !important;
   }
 
   &.fullscreen {

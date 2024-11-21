@@ -17,26 +17,27 @@ export const MapWrapper = ({
   const { stopPlacesState, isLoading } = useStopPlacesData(transportMode);
   const { formatMessage } = useIntl();
 
-  return !isLoading ? (
+  return (
     <FormMap zoomControl={false} doubleClickZoom={false}>
-      <JourneyPatternStopPointMap
-        stopPlacesState={stopPlacesState}
-        transportMode={transportMode}
-        pointsInSequence={pointsInSequence}
-        deleteStopPoint={deleteStopPoint}
-        addStopPoint={addStopPoint}
-      />
+      {!isLoading ? (
+        <JourneyPatternStopPointMap
+          stopPlacesState={stopPlacesState}
+          transportMode={transportMode}
+          pointsInSequence={pointsInSequence}
+          deleteStopPoint={deleteStopPoint}
+          addStopPoint={addStopPoint}
+        />
+      ) : (
+        <div className="stop-places-spinner">
+          <Loading
+            isFullScreen={false}
+            text={formatMessage({ id: 'mapLoadingStopsDataText' })}
+            isLoading={isLoading}
+            children={null}
+            className=""
+          />
+        </div>
+      )}
     </FormMap>
-  ) : (
-    <div className="stop-places-spinner">
-      <Loading
-        isFullScreen={false}
-        ignoreOverlay={true}
-        text={formatMessage({ id: 'mapLoadingStopsDataText' })}
-        isLoading={isLoading}
-        children={null}
-        className=""
-      />
-    </div>
   );
 };
