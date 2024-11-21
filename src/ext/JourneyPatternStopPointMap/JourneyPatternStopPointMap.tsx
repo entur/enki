@@ -215,6 +215,7 @@ const JourneyPatternStopPointMap = memo(
         if (isCluster) {
           return (
             <ClusterMarker
+              key={`cluster-${cluster.id}`}
               clusterId={cluster.id}
               longitude={longitude}
               latitude={latitude}

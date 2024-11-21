@@ -65,6 +65,8 @@ const StopPlaceMarker = memo(
               onClick={() => {
                 markerRef.current.closePopup();
                 addStopPointCallback(stopPlace.quays[0].id);
+                // To avoid grey area on the map once the container gets bigger in the height:
+                window.dispatchEvent(new Event('resize'));
               }}
               width="auto"
               variant="primary"
