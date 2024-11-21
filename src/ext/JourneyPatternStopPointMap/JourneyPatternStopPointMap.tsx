@@ -19,7 +19,6 @@ import {
   useMapSpecs,
   useMapState,
   useMapZoomIntoLocation,
-  useStopPlacesData,
   useStopPlacesStateCombinedWithSearchResults,
 } from './hooks';
 import Markers from './Markers';
@@ -30,10 +29,12 @@ const JourneyPatternStopPointMap = memo(
     addStopPoint,
     deleteStopPoint,
     transportMode,
+    stopPlacesState,
     focusedQuayId,
     onFocusedQuayIdUpdate,
   }: JourneyPatternStopPointMapProps) => {
-    // Map spaces are zoom level and view bounds
+    // Capture and store map's zoom level and view bounds.
+    // Will be used later to produce markers within the visible bounds:
     const { mapSpecsState, updateMapSpecs } = useMapSpecs();
     useMapEvents({
       moveend: () => {
@@ -41,12 +42,10 @@ const JourneyPatternStopPointMap = memo(
       },
     });
 
-    // Fetching stop places data and the indexes:
-    const { stopPlacesState } = useStopPlacesData(transportMode);
-
     // Search results stop places and its respective indexes:
     const [searchedStopPlacesState, setSearchedStopPlacesState] =
       useState<JourneyPatternsStopPlacesState>(getStopPlacesState(undefined));
+    // Get the final stop places data that will be the base for Markers:
     const {
       totalStopPlaces,
       totalQuayLocationsIndex,

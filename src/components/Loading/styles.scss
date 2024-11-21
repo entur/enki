@@ -1,7 +1,10 @@
+@import '@entur/tokens/dist/styles.scss';
+
 .loader {
   display: none;
   min-width: 100px;
   text-align: center;
+  color: $colors-brand-blue;
 
   &.visible {
     display: flex;

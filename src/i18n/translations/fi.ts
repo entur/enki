@@ -654,6 +654,7 @@ export const messages = {
   mapSearchNoResults: 'Ei löytynyt tuloksia',
   mapSearchResults: 'Tulokset',
   mapSearchPlaceholder: 'Pysäkki ID, nimi tai laituri ID',
+  mapLoadingStopsDataText: 'Ladataan pysäkit...',
   locateStopPoint: 'Näytä',
   locateStopPointTooltip: 'Näytä kartalla',
 };

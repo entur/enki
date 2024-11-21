@@ -6,6 +6,7 @@ import {
   useMemo,
   useReducer,
   useRef,
+  useState,
 } from 'react';
 import StopPoint from '../../model/StopPoint';
 import {
@@ -32,6 +33,7 @@ export const useStopPlacesData = (transportMode: string | undefined) => {
     useAppSelector((state) => state.userContext.activeProviderCode) ?? '';
   const { uttuApiUrl } = useConfig();
   const auth = useAuth();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [stopPlacesState, setStopPlacesState] = useReducer<
     Reducer<
@@ -56,6 +58,7 @@ export const useStopPlacesData = (transportMode: string | undefined) => {
   useEffect(() => {
     if (transportMode) {
       auth.getAccessToken().then((token) => {
+        setIsLoading(true);
         UttuQuery(
           uttuApiUrl,
           activeProvider,
@@ -63,6 +66,7 @@ export const useStopPlacesData = (transportMode: string | undefined) => {
           { transportMode },
           token,
         ).then((data) => {
+          setIsLoading(false);
           setStopPlacesState(getStopPlacesState(data?.stopPlaces || []));
         });
       });
@@ -71,6 +75,7 @@ export const useStopPlacesData = (transportMode: string | undefined) => {
 
   return {
     stopPlacesState,
+    isLoading,
   };
 };
 
