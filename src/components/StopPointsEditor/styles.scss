@@ -28,14 +28,13 @@
     .stop-point-element {
       display: flex;
       justify-content: space-between;
-      margin-top: $space-extra-large;
+      margin-top: $space-large;
 
       .stop-point-key-info {
-        display: flex;
         min-width: fit-content;
 
-        > :first-child {
-          margin: auto 2rem auto 0;
+        .eds-paragraph {
+          margin: $space-small 2rem $space-small 0.4rem !important;
         }
 
         > fieldset {
@@ -48,6 +47,15 @@
           flex-direction: column;
           justify-content: center;
         }
+
+        .move-up {
+          transform: rotate(90deg);
+        }
+
+        .move-down {
+          transform: rotate(-90deg);
+          margin-bottom: 0.5rem;
+        }
       }
 
       .stop-point-info {
@@ -57,6 +65,7 @@
         max-width: 50rem;
         flex-basis: 100%;
         margin-left: 1rem;
+        margin-right: 1rem;
 
         .eds-input-group + .eds-input-group {
           margin-top: 0;
@@ -76,11 +85,10 @@
           margin-right: 0;
         }
 
-        .buttons-group {
+        .action-buttons-group {
           display: flex;
           flex-direction: column;
           min-width: fit-content;
-          margin-left: 0.25rem;
         }
       }
     }
@@ -94,8 +102,9 @@
     margin: 0;
     padding: 0 0.5rem;
     min-width: fit-content;
+    white-space: nowrap;
     width: fit-content;
-    margin-top: 1.5rem;
+    margin-top: 2.25rem;
 
     svg {
       margin-right: 0;

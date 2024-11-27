@@ -15,6 +15,7 @@ import { useConfig } from '../../config/ConfigContext';
 import { VEHICLE_MODE } from '../../model/enums';
 import ServiceJourney from '../../model/ServiceJourney';
 import { createUuid } from '../../helpers/generators';
+import serviceJourney from '../../model/ServiceJourney';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -156,6 +157,41 @@ const JourneyPatternEditor = ({
     [journeyPattern, onSave],
   );
 
+  const swapStopPoints = useCallback(
+    (positionIndex1, positionIndex2) => {
+      const newPointsInSequence: StopPoint[] = [
+        ...journeyPattern.pointsInSequence,
+      ];
+      newPointsInSequence[positionIndex1] =
+        journeyPattern.pointsInSequence[positionIndex2];
+      newPointsInSequence[positionIndex2] =
+        journeyPattern.pointsInSequence[positionIndex1];
+
+      const newServiceJourneys: ServiceJourney[] = [];
+      for (let i = 0; i < journeyPattern.serviceJourneys.length; i++) {
+        const newPassingTimes = [
+          ...journeyPattern.serviceJourneys[i].passingTimes,
+        ];
+        newPassingTimes[positionIndex1] =
+          journeyPattern.serviceJourneys[i].passingTimes[positionIndex2];
+        newPassingTimes[positionIndex2] =
+          journeyPattern.serviceJourneys[i].passingTimes[positionIndex1];
+        const newServiceJourney = {
+          ...journeyPattern.serviceJourneys[i],
+          passingTimes: newPassingTimes,
+        };
+        newServiceJourneys.push(newServiceJourney);
+      }
+
+      onSave({
+        ...journeyPattern,
+        pointsInSequence: newPointsInSequence,
+        serviceJourneys: newServiceJourneys,
+      });
+    },
+    [journeyPattern],
+  );
+
   const StopPointsEditor = useStopPointsEditor(flexibleLineType);
 
   return (
@@ -184,6 +220,7 @@ const JourneyPatternEditor = ({
           onPointsInSequenceChange={onPointsInSequenceChange}
           transportMode={transportMode}
           initDefaultJourneyPattern={initDefaultJourneyPattern}
+          swapStopPoints={swapStopPoints}
         />
       </div>
       {onDelete && (

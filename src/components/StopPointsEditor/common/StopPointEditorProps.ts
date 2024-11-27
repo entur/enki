@@ -14,4 +14,8 @@ export type StopPointEditorProps = {
   flexibleStopPlaces?: FlexibleStopPlace[];
   flexibleLineType?: FlexibleLineType;
   onFocusedQuayIdUpdate?: (quayId: string | undefined | null) => void;
+  swapStopPoints: (
+    position1: number | undefined,
+    position2: number | undefined,
+  ) => void;
 };
