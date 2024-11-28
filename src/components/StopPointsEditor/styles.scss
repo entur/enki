@@ -22,19 +22,35 @@
 
 .stop-point-editor {
   .stop-point {
-    padding-bottom: 0.7rem;
     border-bottom: 2px solid $colors-greys-grey20;
 
     .stop-point-element {
       display: flex;
       justify-content: space-between;
-      margin-top: $space-large;
+      margin-top: $space-medium;
 
       .stop-point-key-info {
         min-width: fit-content;
+        display: flex;
 
-        .eds-paragraph {
-          margin: $space-small 2rem $space-small 0.4rem !important;
+        .order {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          // To center better:
+          margin-bottom: $space-small;
+
+          .eds-paragraph {
+            margin: 0 2rem 0 0.4rem;
+          }
+
+          .move-up {
+            transform: rotate(90deg);
+          }
+
+          .move-down {
+            transform: rotate(-90deg);
+          }
         }
 
         > fieldset {
@@ -46,15 +62,6 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
-        }
-
-        .move-up {
-          transform: rotate(90deg);
-        }
-
-        .move-down {
-          transform: rotate(-90deg);
-          margin-bottom: 0.5rem;
         }
       }
 

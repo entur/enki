@@ -1,5 +1,4 @@
-import { IconButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { Paragraph } from '@entur/typography';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -21,7 +20,7 @@ import {
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
 import SandboxFeature from '../../../ext/SandboxFeature';
-import { BackArrowIcon } from '@entur/icons';
+import StopPointOrder from '../common/StopPointOrder';
 
 export const GenericStopPointEditor = ({
   order,
@@ -59,27 +58,15 @@ export const GenericStopPointEditor = ({
   return (
     <div className="stop-point">
       <div className="stop-point-element">
-        <div className="stop-point-key-info">
-          {!isFirst && (
-            <IconButton
-              onClick={() => swapStopPoints(order - 2, order - 1)}
-              className={'move-up'}
-              size={'small'}
-            >
-              <BackArrowIcon />
-            </IconButton>
-          )}
-
-          <Paragraph>{order}</Paragraph>
-          {!isLast && (
-            <IconButton
-              onClick={() => swapStopPoints(order - 1, order)}
-              className={'move-down'}
-              size={'small'}
-            >
-              <BackArrowIcon />
-            </IconButton>
-          )}
+        <div className="stop-point-key-info stop-point-key-info--general">
+          <StopPointOrder
+            order={order as number}
+            isLast={isLast as boolean}
+            isFirst={isFirst as boolean}
+            swapStopPoints={
+              swapStopPoints as (pos1: number, pos2: number) => void
+            }
+          />
         </div>
         <div className="stop-point-info">
           <QuayRefField

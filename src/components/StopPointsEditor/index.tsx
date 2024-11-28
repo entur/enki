@@ -17,10 +17,7 @@ export type StopPointsEditorProps = {
   onPointsInSequenceChange: (pointsInSequence: StopPoint[]) => void;
   transportMode?: VEHICLE_MODE;
   initDefaultJourneyPattern: () => void;
-  swapStopPoints: (
-    position1: number | undefined,
-    position2: number | undefined,
-  ) => void;
+  swapStopPoints: (position1: number, position2: number) => void;
 };
 
 export type StopPointsEditor =

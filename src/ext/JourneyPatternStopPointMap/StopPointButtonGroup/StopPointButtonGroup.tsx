@@ -49,8 +49,7 @@ export const StopPointButtonGroup = ({
             }
           }}
         >
-          <PositionIcon inline />
-          {formatMessage({ id: 'locateStopPoint' })}
+          <PositionIcon inline /> {formatMessage({ id: 'locateStopPoint' })}
         </TertiaryButton>
       )}
     </div>

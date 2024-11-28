@@ -14,6 +14,7 @@ export const MixedFlexibleStopPointsEditor = ({
   deleteStopPoint,
   addStopPoint,
   initDefaultJourneyPattern,
+  swapStopPoints,
 }: StopPointsEditorProps) => {
   const keys = useUniqueKeys(pointsInSequence);
   const { formatMessage } = useIntl();
@@ -44,6 +45,7 @@ export const MixedFlexibleStopPointsEditor = ({
             }
             onDelete={() => deleteStopPoint(pointIndex)}
             canDelete={pointsInSequence.length > 2}
+            swapStopPoints={swapStopPoints}
           />
         ))}
       </div>

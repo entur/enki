@@ -1,4 +1,4 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { IconButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
 import { Radio, RadioGroup } from '@entur/form';
 import { Paragraph } from '@entur/typography';
@@ -10,7 +10,7 @@ import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useAppSelector } from '../../../store/hooks';
 import {
@@ -24,6 +24,8 @@ import {
 } from '../common/FrontTextTextField';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
+import { BackArrowIcon } from '@entur/icons';
+import StopPointOrder from '../common/StopPointOrder';
 
 enum StopPlaceMode {
   NSR = 'nsr',
@@ -39,6 +41,7 @@ export const MixedFlexibleStopPointEditor = ({
   onChange,
   onDelete,
   canDelete,
+  swapStopPoints,
 }: StopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const [selectMode, setSelectMode] = useState<StopPlaceMode>(
@@ -70,8 +73,15 @@ export const MixedFlexibleStopPointEditor = ({
   return (
     <div className="stop-point">
       <div className="stop-point-element">
-        <div className="stop-point-key-info">
-          <Paragraph>{order}</Paragraph>
+        <div className="stop-point-key-info stop-point-key-info--flexible">
+          <StopPointOrder
+            order={order as number}
+            isLast={isLast as boolean}
+            isFirst={isFirst as boolean}
+            swapStopPoints={
+              swapStopPoints as (pos1: number, pos2: number) => void
+            }
+          />
           <RadioGroup
             name={`stopPointMode-${order! - 1}`}
             value={selectMode}
