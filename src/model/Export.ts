@@ -43,16 +43,16 @@ export const download = async (
     isFileSaverSupported = !!new Blob();
   } catch (e) {
     showErrorNotification(
-      intl.formatMessage({ id: 'exports.download.unsupportedBrowser.title' }),
-      intl.formatMessage({ id: 'exports.download.unsupportedBrowser.message' }),
+      intl.formatMessage({ id: 'exportsDownloadUnsupportedBrowserTitle' }),
+      intl.formatMessage({ id: 'exportsDownloadUnsupportedBrowserMessage' }),
     );
     return;
   }
 
   if (!isFileSaverSupported) {
     showErrorNotification(
-      intl.formatMessage({ id: 'exports.download.unsupportedBrowser.title' }),
-      intl.formatMessage({ id: 'exports.download.unsupportedBrowser.message' }),
+      intl.formatMessage({ id: 'exportsDownloadUnsupportedBrowserTitle' }),
+      intl.formatMessage({ id: 'exportsDownloadUnsupportedBrowserMessage' }),
     );
     return;
   }
@@ -72,8 +72,8 @@ export const download = async (
     saveAs(data, `${id.replace(':', '-')}-${selectedExport.created}.zip`);
   } catch (e) {
     showErrorNotification(
-      intl.formatMessage({ id: 'exports.download.error.title' }),
-      intl.formatMessage({ id: 'exports.download.error.message' }),
+      intl.formatMessage({ id: 'exportsDownloadErrorTitle' }),
+      intl.formatMessage({ id: 'exportsDownloadErrorMessage' }),
     );
   }
 };
