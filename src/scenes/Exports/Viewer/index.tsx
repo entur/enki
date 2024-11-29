@@ -116,6 +116,7 @@ const ExportsViewer = () => {
                       uttuApiUrl,
                       theExport!,
                       await auth.getAccessToken(),
+                      intl,
                     );
                   }}
                 >
