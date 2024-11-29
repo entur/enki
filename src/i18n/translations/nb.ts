@@ -648,4 +648,5 @@ export const messages = {
   mapLoadingStopsDataText: 'Laster inn stopper...',
   locateStopPoint: 'Vis',
   locateStopPointTooltip: 'Vis på kartet',
+  dropdownNoMatchesText: 'Ingen tilgjengelige valg',
 };
