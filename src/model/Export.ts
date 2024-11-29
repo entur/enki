@@ -4,6 +4,8 @@ import { VersionedType } from 'model/VersionedType';
 import { EXPORT_STATUS } from 'model/enums';
 import Line from './Line';
 import Message from './Message';
+import { showErrorNotification } from 'actions/notification';
+import { IntlShape } from 'react-intl';
 
 export type ExportLineAssociation = VersionedType & {
   lineRef?: string;
@@ -32,12 +34,30 @@ export const download = async (
   apiBase: string | undefined,
   selectedExport: Export,
   token: string,
+  intl: IntlShape,
 ) => {
+  let isFileSaverSupported = false;
   try {
     // feature detection
     // eslint-disable-next-line
-    const isFileSaverSupported = !!new Blob();
+    isFileSaverSupported = !!new Blob();
+  } catch (e) {
+    showErrorNotification(
+      intl.formatMessage({ id: 'exports.download.unsupportedBrowser.title' }),
+      intl.formatMessage({ id: 'exports.download.unsupportedBrowser.message' }),
+    );
+    return;
+  }
 
+  if (!isFileSaverSupported) {
+    showErrorNotification(
+      intl.formatMessage({ id: 'exports.download.unsupportedBrowser.title' }),
+      intl.formatMessage({ id: 'exports.download.unsupportedBrowser.message' }),
+    );
+    return;
+  }
+
+  try {
     const { data } = await http.get(
       `${apiBase || ''}/${selectedExport.downloadUrl}`,
       {
@@ -49,9 +69,11 @@ export const download = async (
     );
 
     const id = selectedExport.id ?? 'EXPORT_ID';
-
     saveAs(data, `${id.replace(':', '-')}-${selectedExport.created}.zip`);
   } catch (e) {
-    alert('Sorry, your browser is not supported for downloads.');
+    showErrorNotification(
+      intl.formatMessage({ id: 'exports.download.error.title' }),
+      intl.formatMessage({ id: 'exports.download.error.message' }),
+    );
   }
 };

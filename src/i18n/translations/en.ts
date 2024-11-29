@@ -650,4 +650,11 @@ export const messages: MessagesKey = {
   mapLoadingStopsDataText: 'Loading stops...',
   locateStopPoint: 'Locate',
   locateStopPointTooltip: 'Locate on map',
+  // Export download messages
+  'exports.download.unsupportedBrowser.title': 'Browser Not Supported',
+  'exports.download.unsupportedBrowser.message':
+    'Sorry, your browser does not support file downloads.',
+  'exports.download.error.title': 'Download Failed',
+  'exports.download.error.message':
+    'An error occurred while downloading the export. Please try again.',
 };
