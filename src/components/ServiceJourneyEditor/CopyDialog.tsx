@@ -11,6 +11,7 @@ import {
   CalendarDateTime,
   fromDate,
   getLocalTimeZone,
+  now,
   parseTime,
   Time,
   toCalendarDate,
@@ -104,6 +105,10 @@ const offsetPassingTimes = (
   );
 };
 
+const addDays = (time: Time, days: number) => {
+  return now(getLocalTimeZone()).set(time).add({ days });
+};
+
 export const copyServiceJourney = (
   serviceJourney: ServiceJourney,
   newServiceJourneys: ServiceJourney[],
@@ -114,48 +119,54 @@ export const copyServiceJourney = (
   untilDayOffset: number,
   repeatDuration: duration.Duration,
 ): ServiceJourney[] => {
-  if (isAfter(departureTime, dayOffset, untilTime, untilDayOffset)) {
+  const departure = parseTime(departureTime);
+  const until = parseTime(untilTime);
+
+  // Compare times including day offset
+  const departureDateTime = addDays(departure, dayOffset);
+  const untilDateTime = addDays(until, untilDayOffset);
+
+  if (departureDateTime.compare(untilDateTime) >= 0) {
     return newServiceJourneys;
-  } else {
-    const { id, passingTimes, dayTypesRefs, ...copyableServiceJourney } =
-      serviceJourney;
-
-    const departure = parseTime(departureTime);
-
-    const newPassingTimes = offsetPassingTimes(
-      passingTimes.map(({ id, ...pt }) => pt),
-      repeatDuration.minutes,
-    );
-
-    const newServiceJourney = {
-      ...cloneDeep(copyableServiceJourney),
-      id: `new_${createUuid()}`,
-      name: nameTemplate.replace(
-        '<% time %>',
-        `${departureTime.slice(0, -3)} +${dayOffset}`,
-      ),
-      dayTypesRefs,
-      passingTimes: newPassingTimes,
-    };
-    newServiceJourneys.push(newServiceJourney);
-
-    const nextDeparture = departure.add({
-      minutes: duration.toMinutes(repeatDuration),
-    });
-    const nextDayOffset =
-      departure.hour < nextDeparture.hour ? dayOffset + 1 : dayOffset;
-
-    return copyServiceJourney(
-      newServiceJourney,
-      newServiceJourneys,
-      nameTemplate,
-      nextDeparture.toString(),
-      nextDayOffset,
-      untilTime,
-      untilDayOffset,
-      repeatDuration,
-    );
   }
+
+  const { id, passingTimes, dayTypesRefs, ...copyableServiceJourney } =
+    serviceJourney;
+
+  const minutesOffset = duration.toMinutes(repeatDuration);
+
+  const newPassingTimes = offsetPassingTimes(
+    passingTimes.map(({ id, ...pt }) => pt),
+    minutesOffset,
+  );
+
+  const newServiceJourney = {
+    ...cloneDeep(copyableServiceJourney),
+    id: `new_${createUuid()}`,
+    name: nameTemplate.replace(
+      '<% number %>',
+      (newServiceJourneys.length + 1).toString(),
+    ),
+    dayTypesRefs,
+    passingTimes: newPassingTimes,
+  };
+  newServiceJourneys.push(newServiceJourney);
+
+  // Calculate next departure time
+  const nextDeparture = departure.add({ minutes: minutesOffset });
+  const nextDayOffset =
+    dayOffset + (nextDeparture.hour < departure.hour ? 1 : 0);
+
+  return copyServiceJourney(
+    newServiceJourney,
+    newServiceJourneys,
+    nameTemplate,
+    nextDeparture.toString(),
+    nextDayOffset,
+    untilTime,
+    untilDayOffset,
+    repeatDuration,
+  );
 };
 
 export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
@@ -165,7 +176,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
     serviceJourney.passingTimes[0].departureDayOffset || 0;
 
   const [nameTemplate, setNameTemplate] = useState<string>(
-    `${serviceJourney.name || 'New'} (<% time %>)`,
+    `${serviceJourney.name || 'New'} (<% number %>)`,
   );
   const [initialDepartureTime, setInitialDepartureTime] =
     useState<string>(defaultDepartureTime);
