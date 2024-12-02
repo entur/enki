@@ -8,9 +8,10 @@ import { Dropdown } from '@entur/dropdown';
 import { Fieldset, Radio, RadioGroup, TextArea, TextField } from '@entur/form';
 import { Label, LeadParagraph } from '@entur/typography';
 import { TimeValue } from '@react-types/datepicker';
+import { CalendarDateTime } from '@internationalized/date';
 import DurationPicker from 'components/DurationPicker';
 import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
-import { format } from 'date-fns';
+import { getCurrentDateTime } from '../../utils/dates';
 import { addOrRemove } from 'helpers/arrays';
 import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
 import BookingArrangement from 'model/BookingArrangement';
@@ -58,13 +59,15 @@ export default (props: Props) => {
     minimumBookingPeriod,
   } = bookingArrangement;
 
-  let latestbookingTimeAsDate: Date | undefined = undefined;
+  let latestbookingTimeAsDate: CalendarDateTime | undefined = undefined;
   if (latestBookingTime && latestBookingTime !== '') {
-    latestbookingTimeAsDate = new Date();
-    latestbookingTimeAsDate.setHours(parseInt(latestBookingTime.split(':')[0]));
-    latestbookingTimeAsDate.setMinutes(
-      parseInt(latestBookingTime.split(':')[1]),
-    );
+    const currentDateTime = getCurrentDateTime();
+    const [hours, minutes] = latestBookingTime.split(':').map(Number);
+    latestbookingTimeAsDate = currentDateTime.copy();
+    latestbookingTimeAsDate.set({
+      hour: hours,
+      minute: minutes,
+    });
   }
 
   const onContactChange = (contact: Contact) =>
@@ -249,16 +252,13 @@ export default (props: Props) => {
             locale={locale}
             disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
             selectedTime={
-              latestbookingTimeAsDate
-                ? nativeDateToTimeValue(latestbookingTimeAsDate)
-                : null
+              latestbookingTimeAsDate ? latestbookingTimeAsDate : null
             }
             onChange={(date: TimeValue | null) => {
               let formattedDate;
-              const nativeDate = timeOrDateValueToNativeDate(date);
 
-              if (nativeDate != null) {
-                formattedDate = format(nativeDate, 'HH:mm');
+              if (date != null) {
+                formattedDate = `${date.hour}:${date.minute}`;
               }
 
               onLatestBookingTimeChange(formattedDate);

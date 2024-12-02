@@ -1,4 +1,11 @@
-import moment from 'moment';
+import {
+  fromDate,
+  getLocalTimeZone,
+  toCalendarDate,
+} from '@internationalized/date';
+
+const dateString = (date: Date): string =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
 export const dateToString = (date: Date | null): string =>
-  moment(date ?? undefined).format('YYYY-MM-DD');
+  date ? dateString(date) : dateString(new Date());

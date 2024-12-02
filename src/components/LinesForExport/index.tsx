@@ -11,8 +11,6 @@ import {
 } from '@entur/table';
 import { SmallText, StrongText } from '@entur/typography';
 import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
-import { differenceInCalendarDays, isAfter, isBefore } from 'date-fns';
-import parseDate from 'date-fns/parseISO';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import { ExportLineAssociation } from 'model/Export';
 import FlexibleLine from 'model/FlexibleLine';
@@ -21,6 +19,13 @@ import Line from 'model/Line';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import {
+  parseISOToCalendarDate,
+  getCurrentDate,
+  CalendarDate,
+} from '../../utils/dates';
+import { getLocale } from 'i18n/getLocale';
+import { DateFormatter, getLocalTimeZone } from '@internationalized/date';
 
 type Props = {
   onChange: (lines: ExportLineAssociation[]) => void;
@@ -37,20 +42,20 @@ type ExportableLine = {
   id: string;
   name: string;
   status: Status;
-  from: Date;
-  to: Date;
+  from: CalendarDate;
+  to: CalendarDate;
   selected: boolean;
 };
 
 type Availability = {
-  from: Date;
-  to: Date;
+  from: CalendarDate;
+  to: CalendarDate;
 };
 
 const union = (left: Availability, right: Availability): Availability => {
   return {
-    from: isBefore(right.from, left.from) ? right.from : left.from,
-    to: isAfter(right.to, left.to) ? right.to : left.to,
+    from: right.from.compare(left.from) < 0 ? right.from : left.from,
+    to: right.to.compare(left.to) > 0 ? right.to : left.to,
   };
 };
 
@@ -59,8 +64,8 @@ const mergeAvailability = (
   operatingPeriod: OperatingPeriod,
 ) => {
   const availabilityFromOperatingPeriod = {
-    from: parseDate(operatingPeriod.fromDate),
-    to: parseDate(operatingPeriod.toDate),
+    from: parseISOToCalendarDate(operatingPeriod.fromDate)!,
+    to: parseISOToCalendarDate(operatingPeriod.toDate)!,
   };
 
   return availability
@@ -93,12 +98,9 @@ const getAvailability = (journeyPatterns?: JourneyPattern[]): Availability => {
 };
 
 const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
-  const today = new Date();
+  const today = getCurrentDate();
   const jpAvailability = getAvailability(journeyPatterns);
-  const availableForDaysFromNow = differenceInCalendarDays(
-    jpAvailability.to,
-    today,
-  );
+  const availableForDaysFromNow = jpAvailability.to.compare(today);
 
   let status: Status;
 
@@ -254,7 +256,7 @@ export default ({ onChange }: Props) => {
               <DataCell status={line.status}>
                 {mapStatusToText(line.status)}
               </DataCell>
-              <DataCell>{`${line.from.toLocaleDateString()} - ${line.to.toLocaleDateString()}`}</DataCell>
+              <DataCell>{`${new DateFormatter(getLocale().toString()).format(line.from.toDate(getLocalTimeZone()))} - ${new DateFormatter(getLocale().toString()).format(line.to.toDate(getLocalTimeZone()))}`}</DataCell>
             </TableRow>
           ))}
       </TableBody>

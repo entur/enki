@@ -1,5 +1,5 @@
 import { MockedProvider } from '@apollo/client/testing';
-import { addDays, format, subDays } from 'date-fns';
+import { getCurrentDate } from '../../utils/dates';
 import { MemoryRouter } from 'react-router-dom';
 
 import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
@@ -30,8 +30,8 @@ const line = {
               dayTypeAssignments: [
                 {
                   operatingPeriod: {
-                    fromDate: format(addDays(new Date(), 10), 'yyyy-MM-dd'),
-                    toDate: format(addDays(new Date(), 130), 'yyyy-MM-dd'),
+                    fromDate: getCurrentDate().add({ days: 10 }).toString(),
+                    toDate: getCurrentDate().add({ days: 130 }).toString(),
                   },
                 },
               ],
@@ -55,8 +55,10 @@ const secondLine = {
               dayTypeAssignments: [
                 {
                   operatingPeriod: {
-                    fromDate: format(subDays(new Date(), 30), 'yyyy-MM-dd'),
-                    toDate: format(subDays(new Date(), 10), 'yyyy-MM-dd'),
+                    fromDate: getCurrentDate()
+                      .subtract({ days: 30 })
+                      .toString(),
+                    toDate: getCurrentDate().subtract({ days: 10 }).toString(),
                   },
                 },
               ],
@@ -80,8 +82,8 @@ const flexibleLine = {
               dayTypeAssignments: [
                 {
                   operatingPeriod: {
-                    fromDate: format(new Date(), 'yyyy-MM-dd'),
-                    toDate: format(addDays(new Date(), 10), 'yyyy-MM-dd'),
+                    fromDate: getCurrentDate().toString(),
+                    toDate: getCurrentDate().add({ days: 10 }).toString(),
                   },
                 },
               ],

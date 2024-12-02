@@ -12,10 +12,10 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import OperatingPeriod from 'model/OperatingPeriod';
-import moment from 'moment/moment';
-import React from 'react';
 import { useIntl } from 'react-intl';
+import { getCurrentDate, calendarDateToISO } from '../../utils/dates';
 import './styles.scss';
+import { parseAbsoluteToLocal } from '@internationalized/date';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
@@ -26,13 +26,13 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
   const { formatMessage } = useIntl();
 
   const addNewDayTypeAssignment = () => {
-    const today: string = moment().format('YYYY-MM-DD');
-    const tomorrow: string = moment().add(1, 'days').format('YYYY-MM-DD');
+    const today = getCurrentDate();
+    const tomorrow = today.add({ days: 1 });
     const dayTypeAssignment = {
       isAvailable: true,
       operatingPeriod: {
-        fromDate: today,
-        toDate: tomorrow,
+        fromDate: today.toString(),
+        toDate: tomorrow.toString(),
       },
     };
     onChange([...dayTypeAssignments, dayTypeAssignment]);
@@ -49,7 +49,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
   };
 
   const isNotBefore = (toDate: string, fromDate: string): boolean =>
-    !moment(toDate).isBefore(moment(fromDate));
+    parseAbsoluteToLocal(toDate).compare(parseAbsoluteToLocal(fromDate)) > -1;
 
   if (dayTypeAssignments.length === 0) addNewDayTypeAssignment();
 
@@ -74,7 +74,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                   <DatePicker
                     label={formatMessage({ id: 'dayTypeEditorFromDate' })}
                     selectedDate={nativeDateToDateValue(
-                      moment(dta.operatingPeriod.fromDate).toDate(),
+                      new Date(dta.operatingPeriod.fromDate),
                     )}
                     onChange={(date) => {
                       changeDay(
@@ -102,7 +102,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                       false,
                     )}
                     selectedDate={nativeDateToDateValue(
-                      moment(dta.operatingPeriod.toDate).toDate(),
+                      new Date(dta.operatingPeriod.toDate),
                     )}
                     onChange={(date) => {
                       changeDay(
