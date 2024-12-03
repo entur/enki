@@ -24,4 +24,17 @@ export const stopPointToPayload = (stopPoint: StopPoint) => {
   return rest;
 };
 
+export const flexibleStopPointToPayload = (stopPoint: StopPoint) => {
+  const { flexibleStopPlace, key, ...rest } = stopPoint;
+  // Since in MixedFlexibleStopPointsEditor there is a cleanup of extra fields going on, time to bring them back
+  // Apparently it can matter for the backend in some cases
+  if (!Object.keys(rest).includes('flexibleStopPlaceRef')) {
+    rest['flexibleStopPlaceRef'] = null;
+  }
+  if (!Object.keys(rest).includes('quayRef')) {
+    rest['quayRef'] = null;
+  }
+  return rest;
+};
+
 export default StopPoint;

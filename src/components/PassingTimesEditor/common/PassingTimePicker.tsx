@@ -13,6 +13,7 @@ type Props = {
   required?: boolean;
   onChange: (e: string | null) => void;
   selectedTime: string | null | undefined;
+  ignoreSelectedTime?: boolean;
 };
 
 export const PassingTimePicker = ({
@@ -21,6 +22,7 @@ export const PassingTimePicker = ({
   required = false,
   onChange,
   selectedTime,
+  ignoreSelectedTime = false,
 }: Props) => {
   const { locale } = useIntl();
   return (
@@ -39,7 +41,7 @@ export const PassingTimePicker = ({
         onChange(date || null);
       }}
       selectedTime={
-        disabled || !selectedTime
+        disabled || !selectedTime || ignoreSelectedTime
           ? null
           : nativeDateToTimeValue(toDate(selectedTime!)!)
       }

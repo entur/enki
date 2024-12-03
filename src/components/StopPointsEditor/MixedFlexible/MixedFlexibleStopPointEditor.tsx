@@ -1,7 +1,6 @@
-import { IconButton, SecondaryButton, SuccessButton } from '@entur/button';
+import { SecondaryButton, SuccessButton } from '@entur/button';
 import { Dropdown } from '@entur/dropdown';
 import { Radio, RadioGroup } from '@entur/form';
-import { Paragraph } from '@entur/typography';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -10,7 +9,7 @@ import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'helpers/validation';
 import usePristine from 'hooks/usePristine';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useAppSelector } from '../../../store/hooks';
 import {
@@ -24,8 +23,8 @@ import {
 } from '../common/FrontTextTextField';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
-import { BackArrowIcon } from '@entur/icons';
 import StopPointOrder from '../common/StopPointOrder';
+import StopPoint from '../../../model/StopPoint';
 
 enum StopPlaceMode {
   NSR = 'nsr',
@@ -70,6 +69,21 @@ export const MixedFlexibleStopPointEditor = ({
     frontText: frontTextError,
   } = validateStopPoint(stopPoint, isFirst!, isLast!);
 
+  useEffect(() => {
+    // Stop point's mode (nsr or flexible) can change when reordering
+    const stopPointObjectKeys = Object.keys(stopPoint);
+    const modeWasChangedToNsr = stopPointObjectKeys.includes('quayRef');
+    const modeWasChangedToFlexible = stopPointObjectKeys.includes(
+      'flexibleStopPlaceRef',
+    );
+
+    if (modeWasChangedToNsr && selectMode === StopPlaceMode.FLEXIBLE) {
+      setSelectMode(StopPlaceMode.NSR);
+    } else if (modeWasChangedToFlexible && selectMode === StopPlaceMode.NSR) {
+      setSelectMode(StopPlaceMode.FLEXIBLE);
+    }
+  }, [stopPoint.key]);
+
   return (
     <div className="stop-point">
       <div className="stop-point-element">
@@ -87,12 +101,19 @@ export const MixedFlexibleStopPointEditor = ({
             value={selectMode}
             onChange={(e) => {
               setSelectMode(e.target.value as StopPlaceMode);
-              onChange({
+              const newStopPoint: StopPoint = {
                 ...stopPoint,
                 quayRef: null,
                 flexibleStopPlaceRef: null,
                 flexibleStopPlace: undefined,
-              });
+              };
+              if ((e.target.value as StopPlaceMode) === StopPlaceMode.NSR) {
+                delete newStopPoint['flexibleStopPlaceRef'];
+                delete newStopPoint['flexibleStopPlace'];
+              } else {
+                delete newStopPoint['quayRef'];
+              }
+              onChange(newStopPoint);
             }}
           >
             <div className="radio-buttons">
