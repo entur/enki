@@ -1,8 +1,5 @@
 import cx from 'classnames';
-import formatDuration from 'date-fns/formatDuration';
-import { nb } from 'date-fns/locale';
 import * as durationLib from 'duration-fns';
-import moment from 'moment';
 import { useIntl } from 'react-intl';
 import TimeUnitPicker, { TimeUnitPickerPosition } from '../TimeUnitPicker';
 
@@ -19,6 +16,59 @@ type Props = {
   position?: TimeUnitPickerPosition;
   className?: string;
   disabled?: boolean;
+};
+
+const formatDuration = (duration: any, intl: any) => {
+  const parts = [];
+  if (duration.years) {
+    parts.push(
+      intl.formatMessage(
+        { id: 'duration.years', defaultMessage: '{years} years' },
+        { years: duration.years },
+      ),
+    );
+  }
+  if (duration.months) {
+    parts.push(
+      intl.formatMessage(
+        { id: 'duration.months', defaultMessage: '{months} months' },
+        { months: duration.months },
+      ),
+    );
+  }
+  if (duration.days) {
+    parts.push(
+      intl.formatMessage(
+        { id: 'duration.days', defaultMessage: '{days} days' },
+        { days: duration.days },
+      ),
+    );
+  }
+  if (duration.hours) {
+    parts.push(
+      intl.formatMessage(
+        { id: 'duration.hours', defaultMessage: '{hours} hours' },
+        { hours: duration.hours },
+      ),
+    );
+  }
+  if (duration.minutes) {
+    parts.push(
+      intl.formatMessage(
+        { id: 'duration.minutes', defaultMessage: '{minutes} minutes' },
+        { minutes: duration.minutes },
+      ),
+    );
+  }
+  if (duration.seconds) {
+    parts.push(
+      intl.formatMessage(
+        { id: 'duration.seconds', defaultMessage: '{seconds} seconds' },
+        { seconds: duration.seconds },
+      ),
+    );
+  }
+  return parts.join(', ');
 };
 
 export default (props: Props) => {
@@ -44,10 +94,7 @@ export default (props: Props) => {
       const durationObj = durationLib.parse(duration);
       return {
         ...durationObj,
-        textValue: formatDuration(durationObj, {
-          locale: intl.locale === 'nb' ? nb : undefined,
-          delimiter: ', ',
-        }),
+        textValue: formatDuration(durationObj, intl),
       };
     } else {
       return undefined;
@@ -55,19 +102,19 @@ export default (props: Props) => {
   })();
 
   const handleOnUnitChange = (unit: string, value: number) => {
-    const newDuration = moment.duration({
+    const newDuration = {
       seconds: unit === 'seconds' ? value : parsedDuration?.seconds,
       minutes: unit === 'minutes' ? value : parsedDuration?.minutes,
       hours: unit === 'hours' ? value : parsedDuration?.hours,
       days: unit === 'days' ? value : parsedDuration?.days,
       months: unit === 'months' ? value : parsedDuration?.months,
       years: unit === 'years' ? value : parsedDuration?.years,
-    });
+    };
 
     onChange(
-      resetOnZero && newDuration.asSeconds() === 0
+      resetOnZero && Object.values(newDuration).every((val) => val === 0)
         ? undefined
-        : newDuration.toISOString(),
+        : JSON.stringify(newDuration),
     );
   };
 
