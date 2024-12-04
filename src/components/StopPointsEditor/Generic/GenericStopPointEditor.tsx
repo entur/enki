@@ -1,5 +1,4 @@
 import { SecondaryButton, SuccessButton } from '@entur/button';
-import { Paragraph } from '@entur/typography';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -21,6 +20,7 @@ import {
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
 import SandboxFeature from '../../../ext/SandboxFeature';
+import StopPointOrder from '../common/StopPointOrder';
 
 export const GenericStopPointEditor = ({
   order,
@@ -33,6 +33,7 @@ export const GenericStopPointEditor = ({
   canDelete,
   flexibleLineType,
   onFocusedQuayIdUpdate,
+  swapStopPoints,
 }: StopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const {
@@ -57,8 +58,15 @@ export const GenericStopPointEditor = ({
   return (
     <div className="stop-point">
       <div className="stop-point-element">
-        <div className="stop-point-key-info">
-          <Paragraph>{order}</Paragraph>
+        <div className="stop-point-key-info stop-point-key-info--general">
+          <StopPointOrder
+            order={order as number}
+            isLast={isLast as boolean}
+            isFirst={isFirst as boolean}
+            swapStopPoints={
+              swapStopPoints as (pos1: number, pos2: number) => void
+            }
+          />
         </div>
         <div className="stop-point-info">
           <QuayRefField
