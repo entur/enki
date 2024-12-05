@@ -650,4 +650,5 @@ export const messages: MessagesKey = {
   mapLoadingStopsDataText: 'Loading stops...',
   locateStopPoint: 'Locate',
   locateStopPointTooltip: 'Locate on map',
+  dropdownNoMatchesText: 'No options available',
 };

@@ -196,6 +196,9 @@ const NetworkEditor = () => {
                 placeholder={formatMessage({ id: 'defaultOption' })}
                 clearable
                 label={formatMessage({ id: 'editorNetworkAuthorityLabelText' })}
+                noMatchesText={formatMessage({
+                  id: 'dropdownNoMatchesText',
+                })}
                 onChange={(organisation) =>
                   handleAuthoritySelectionChange(organisation?.value ?? '')
                 }
