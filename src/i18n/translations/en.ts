@@ -651,4 +651,10 @@ export const messages: MessagesKey = {
   locateStopPoint: 'Locate',
   locateStopPointTooltip: 'Locate on map',
   dropdownNoMatchesText: 'No options available',
+  exportsDownloadUnsupportedBrowserTitle: 'Browser Not Supported',
+  exportsDownloadUnsupportedBrowserMessage:
+    'Sorry, your browser does not support file downloads.',
+  exportsDownloadErrorTitle: 'Download Failed',
+  exportsDownloadErrorMessage:
+    'An error occurred while downloading the export. Please try again.',
 };

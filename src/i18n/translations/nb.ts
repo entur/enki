@@ -649,4 +649,10 @@ export const messages = {
   locateStopPoint: 'Vis',
   locateStopPointTooltip: 'Vis på kartet',
   dropdownNoMatchesText: 'Ingen tilgjengelige valg',
+  exportsDownloadUnsupportedBrowserTitle: 'Nettleser ikke støttet',
+  exportsDownloadUnsupportedBrowserMessage:
+    'Beklager, nettleseren din støtter ikke filnedlastinger.',
+  exportsDownloadErrorTitle: 'Nedlasting mislyktes',
+  exportsDownloadErrorMessage:
+    'Det oppstod en feil under nedlasting av eksporten. Vennligst prøv igjen.',
 };
