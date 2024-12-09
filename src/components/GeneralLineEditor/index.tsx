@@ -175,6 +175,9 @@ export default <T extends Line>({
           items={getOperatorItems}
           clearable
           label={formatMessage({ id: 'generalOperatorFormGroupTitle' })}
+          noMatchesText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
           onChange={(element) =>
             onChange<Line>({
               ...(line as Line),
@@ -197,6 +200,9 @@ export default <T extends Line>({
           items={getNetworkItems}
           clearable
           label={formatMessage({ id: 'generalNetworkFormGroupTitle' })}
+          noMatchesText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
           onChange={(element) =>
             onChange<Line>({
               ...(line as Line),

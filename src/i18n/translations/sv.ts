@@ -639,6 +639,7 @@ export const messages = {
   saveProviderErrorFallback: 'Okänt fel vid sparning av dataleverantör',
   noProvidersDescriptionText:
     'Din Nplan-installation behöver minst en dataleverantör',
+  dropdownNoMatchesText: 'Inga val tillgängliga',
   exportsDownloadUnsupportedBrowserTitle: 'Webbläsaren stöds inte',
   exportsDownloadUnsupportedBrowserMessage:
     'Din webbläsare stöder inte nedladdning av filer',

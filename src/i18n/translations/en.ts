@@ -650,6 +650,7 @@ export const messages: MessagesKey = {
   mapLoadingStopsDataText: 'Loading stops...',
   locateStopPoint: 'Locate',
   locateStopPointTooltip: 'Locate on map',
+  dropdownNoMatchesText: 'No options available',
   exportsDownloadUnsupportedBrowserTitle: 'Browser Not Supported',
   exportsDownloadUnsupportedBrowserMessage:
     'Sorry, your browser does not support file downloads.',
