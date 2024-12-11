@@ -37,7 +37,7 @@
     "@entur/typography": "1.8.49",
     "@fintraffic/fds-coreui-css": "0.1.3",
     "@lit-labs/react": "2.1.3",
-    "@reduxjs/toolkit": "1.9.7",
+    "@reduxjs/toolkit": "2.5.0",
     "@sentry/react": "7.120.1",
     "axios": "1.7.9",
     "classnames": "2.5.1",
