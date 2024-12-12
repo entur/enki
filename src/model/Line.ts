@@ -25,12 +25,12 @@ export const initLine = () => ({
   journeyPatterns: initJourneyPatterns(),
 });
 
-export const lineToPayload = (line: Line) => {
+export const lineToPayload = (line: Line, isFlexible = false) => {
   const { network, ...rest } = line;
   return {
     ...rest,
     journeyPatterns: line.journeyPatterns?.map((journeyPattern) =>
-      journeyPatternToPayload(journeyPattern),
+      journeyPatternToPayload(journeyPattern, isFlexible),
     ),
     notices: line.notices?.filter(
       (notice) => notice && notice.text && notice.text !== '',

@@ -2,7 +2,7 @@ import { TextField } from '@entur/form';
 import { useQuaySearch } from 'api/useQuaySearch';
 import { ErrorHandling } from 'helpers/errorHandling';
 import StopPoint from 'model/StopPoint';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import debounce from './debounce';
 import { quaySearchResults } from './quaySearchResults';
@@ -50,6 +50,14 @@ export const QuayRefField = ({
     }, 1000),
     [],
   );
+
+  useEffect(() => {
+    // For some reason no need for this when a general line,
+    // but a mixed flexible doesn't work fine without this on occasion of reordering between two "external" stop points
+    if (quayRefInputValue !== initialQuayRef) {
+      setQuayRefInputValue(initialQuayRef);
+    }
+  }, [initialQuayRef]);
 
   return (
     <TextField

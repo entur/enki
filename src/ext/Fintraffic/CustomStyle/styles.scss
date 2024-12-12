@@ -905,7 +905,7 @@ section .notices {
   .stop-point-element
   .stop-point-key-info
   > :first-child {
-  margin: auto 1.6rem auto 0;
+  //margin: 0 1.65rem 0 0;
 }
 
 .eds-timepicker .eds-form-control-wrapper {
@@ -936,7 +936,7 @@ section .notices {
 }
 
 .stop-point-editor .stop-point .stop-point-element {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
 }
 
 @media only screen and (min-width: 1950px) {
