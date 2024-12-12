@@ -152,6 +152,9 @@ export const MixedFlexibleStopPointEditor = ({
                   flexibleStopPlaceRef: e?.value,
                 })
               }
+              noMatchesText={formatMessage({
+                id: 'dropdownNoMatchesText',
+              })}
               {...getErrorFeedback(
                 stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
                 !stopPlaceError,

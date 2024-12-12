@@ -47,6 +47,9 @@ export const SelectProvider = () => {
             label: active?.name ?? '',
           }}
           onChange={(e) => handleActiveProviderChange(e?.value)}
+          noMatchesText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
         />
       )}
     </>
