@@ -29,7 +29,7 @@ export const StopPointButtonGroup = ({
     !flexibleLineType || flexibleLineType === FlexibleLineType.FIXED;
 
   return (
-    <div className={'buttons-group'}>
+    <div className={'action-buttons-group'}>
       <DeleteButton
         thin={true}
         disabled={!canDelete}
@@ -49,8 +49,7 @@ export const StopPointButtonGroup = ({
             }
           }}
         >
-          <PositionIcon inline />
-          {formatMessage({ id: 'locateStopPoint' })}
+          <PositionIcon inline /> {formatMessage({ id: 'locateStopPoint' })}
         </TertiaryButton>
       )}
     </div>

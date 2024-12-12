@@ -657,4 +657,11 @@ export const messages = {
   mapLoadingStopsDataText: 'Ladataan pysäkit...',
   locateStopPoint: 'Näytä',
   locateStopPointTooltip: 'Näytä kartalla',
+  dropdownNoMatchesText: 'Ei valintoja',
+  exportsDownloadUnsupportedBrowserTitle: 'Tätä selainta ei tueta',
+  exportsDownloadUnsupportedBrowserMessage:
+    'Käyttämäsi selain ei tue tiedostojen lataamista.',
+  exportsDownloadErrorTitle: 'Lataus epäonnistui',
+  exportsDownloadErrorMessage:
+    'Latauksen aikana tapahtui odottamaton virhe. Yritä uudelleen.',
 };

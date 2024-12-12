@@ -15,6 +15,7 @@ import { useConfig } from '../../config/ConfigContext';
 import { VEHICLE_MODE } from '../../model/enums';
 import ServiceJourney from '../../model/ServiceJourney';
 import { createUuid } from '../../helpers/generators';
+import { getJourneyPatternWithSwappedStopPoints } from './helpers';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -109,7 +110,7 @@ const JourneyPatternEditor = ({
 
       let newPointsInSequence = [
         ...journeyPatternRef.current.journeyPattern.pointsInSequence,
-        quayRef && quayRef ? { quayRef, key } : { key },
+        quayRef ? { quayRef, key } : { key },
       ];
 
       onSave({
@@ -156,6 +157,19 @@ const JourneyPatternEditor = ({
     [journeyPattern, onSave],
   );
 
+  const swapStopPoints = useCallback(
+    (positionIndex1: number, positionIndex2: number) => {
+      const updatedJourneyPattern: JourneyPattern =
+        getJourneyPatternWithSwappedStopPoints(
+          positionIndex1,
+          positionIndex2,
+          journeyPattern,
+        );
+      onSave(updatedJourneyPattern);
+    },
+    [journeyPattern],
+  );
+
   const StopPointsEditor = useStopPointsEditor(flexibleLineType);
 
   return (
@@ -184,6 +198,7 @@ const JourneyPatternEditor = ({
           onPointsInSequenceChange={onPointsInSequenceChange}
           transportMode={transportMode}
           initDefaultJourneyPattern={initDefaultJourneyPattern}
+          swapStopPoints={swapStopPoints}
         />
       </div>
       {onDelete && (

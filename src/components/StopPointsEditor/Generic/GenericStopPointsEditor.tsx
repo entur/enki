@@ -1,6 +1,5 @@
 import { Heading3, Paragraph } from '@entur/typography';
 import AddButton from 'components/AddButton/AddButton';
-import useUniqueKeys from 'hooks/useUniqueKeys';
 import StopPoint from 'model/StopPoint';
 import { useIntl } from 'react-intl';
 import { StopPointsEditorProps } from '..';
@@ -20,6 +19,7 @@ export const GenericStopPointsEditor = ({
   flexibleLineType,
   transportMode,
   initDefaultJourneyPattern,
+  swapStopPoints,
 }: StopPointsEditorProps) => {
   const { formatMessage } = useIntl();
   const { sandboxFeatures } = useConfig();
@@ -75,6 +75,7 @@ export const GenericStopPointsEditor = ({
               canDelete={pointsInSequence.length > 2}
               flexibleLineType={flexibleLineType}
               onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
+              swapStopPoints={swapStopPoints}
             />
           ))}
         </div>
