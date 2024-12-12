@@ -30,7 +30,7 @@ const StopPointOrder = ({
       <Paragraph>{order}</Paragraph>
       {!isLast && (
         <IconButton
-          onClick={() => swapStopPoints(order - 1, order as number)}
+          onClick={() => swapStopPoints(order - 1, order)}
           className={'move-down'}
           size={'small'}
         >

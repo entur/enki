@@ -18,7 +18,7 @@ import {
   useOnFrontTextChange,
 } from '../common/FrontTextTextField';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
-import { StopPointEditorProps } from '../common/StopPointEditorProps';
+import { GenericStopPointEditorProps } from '../common/StopPointEditorProps';
 import SandboxFeature from '../../../ext/SandboxFeature';
 import StopPointOrder from '../common/StopPointOrder';
 
@@ -34,7 +34,7 @@ export const GenericStopPointEditor = ({
   flexibleLineType,
   onFocusedQuayIdUpdate,
   swapStopPoints,
-}: StopPointEditorProps) => {
+}: GenericStopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const {
     stopPlace: stopPlaceError,
@@ -60,9 +60,9 @@ export const GenericStopPointEditor = ({
       <div className="stop-point-element">
         <div className="stop-point-key-info stop-point-key-info--general">
           <StopPointOrder
-            order={order as number}
-            isLast={isLast as boolean}
-            isFirst={isFirst as boolean}
+            order={order}
+            isLast={isLast}
+            isFirst={isFirst}
             swapStopPoints={
               swapStopPoints as (pos1: number, pos2: number) => void
             }

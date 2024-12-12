@@ -110,7 +110,7 @@ const JourneyPatternEditor = ({
 
       let newPointsInSequence = [
         ...journeyPatternRef.current.journeyPattern.pointsInSequence,
-        quayRef && quayRef ? { quayRef, key } : { key },
+        quayRef ? { quayRef, key } : { key },
       ];
 
       onSave({

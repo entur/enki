@@ -26,8 +26,8 @@ export const stopPointToPayload = (stopPoint: StopPoint) => {
 
 export const flexibleStopPointToPayload = (stopPoint: StopPoint) => {
   const { flexibleStopPlace, key, ...rest } = stopPoint;
-  // Since in MixedFlexibleStopPointsEditor there is a cleanup of extra fields going on, time to bring them back
-  // Apparently it can matter for the backend in some cases
+  // Since in MixedFlexibleStopPointsEditor there is a cleanup of extra fields going on, time to bring them back;
+  // It's needed for the backend when updating a type of the stop point from "external" to "flexible" or vice versa
   if (!Object.keys(rest).includes('flexibleStopPlaceRef')) {
     rest['flexibleStopPlaceRef'] = null;
   }

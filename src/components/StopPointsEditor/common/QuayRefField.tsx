@@ -53,7 +53,7 @@ export const QuayRefField = ({
 
   useEffect(() => {
     // For some reason no need for this when a general line,
-    // but a mixed flexible doesn't work fine without this on occasion of reordering between two nsr stop points
+    // but a mixed flexible doesn't work fine without this on occasion of reordering between two "external" stop points
     if (quayRefInputValue !== initialQuayRef) {
       setQuayRefInputValue(initialQuayRef);
     }

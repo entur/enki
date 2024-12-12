@@ -6,6 +6,7 @@ import { ReceiveFlexibleLineAction } from 'actions/flexibleLines';
 import JourneyPattern from 'model/JourneyPattern';
 import { AnyAction } from 'redux';
 import FlexibleLine from '../model/FlexibleLine';
+import { createUuid } from '../helpers/generators';
 
 export type FlexibleLinesState = FlexibleLine[] | null;
 
@@ -24,6 +25,7 @@ const flexibleLines = (
             ...jp,
             pointsInSequence: jp.pointsInSequence.map((pis) => ({
               ...pis,
+              key: createUuid(),
               flexibleStopPlaceRef: pis.flexibleStopPlace?.id,
             })),
           }),

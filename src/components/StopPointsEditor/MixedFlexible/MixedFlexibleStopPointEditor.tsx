@@ -22,12 +22,12 @@ import {
   useOnFrontTextChange,
 } from '../common/FrontTextTextField';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
-import { StopPointEditorProps } from '../common/StopPointEditorProps';
+import { MixedFlexibleStopPointEditorProps } from '../common/StopPointEditorProps';
 import StopPointOrder from '../common/StopPointOrder';
 import StopPoint from '../../../model/StopPoint';
 
 enum StopPlaceMode {
-  NSR = 'nsr',
+  EXTERNAL = 'external',
   FLEXIBLE = 'flexible',
 }
 
@@ -41,10 +41,10 @@ export const MixedFlexibleStopPointEditor = ({
   onDelete,
   canDelete,
   swapStopPoints,
-}: StopPointEditorProps) => {
+}: MixedFlexibleStopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const [selectMode, setSelectMode] = useState<StopPlaceMode>(
-    stopPoint.quayRef ? StopPlaceMode.NSR : StopPlaceMode.FLEXIBLE,
+    stopPoint.quayRef ? StopPlaceMode.EXTERNAL : StopPlaceMode.FLEXIBLE,
   );
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const flexibleStopPlaces = useAppSelector(
@@ -70,16 +70,19 @@ export const MixedFlexibleStopPointEditor = ({
   } = validateStopPoint(stopPoint, isFirst!, isLast!);
 
   useEffect(() => {
-    // Stop point's mode (nsr or flexible) can change when reordering
+    // Stop point's mode (external or flexible) can change when reordering
     const stopPointObjectKeys = Object.keys(stopPoint);
-    const modeWasChangedToNsr = stopPointObjectKeys.includes('quayRef');
+    const modeWasChangedToExternal = stopPointObjectKeys.includes('quayRef');
     const modeWasChangedToFlexible = stopPointObjectKeys.includes(
       'flexibleStopPlaceRef',
     );
 
-    if (modeWasChangedToNsr && selectMode === StopPlaceMode.FLEXIBLE) {
-      setSelectMode(StopPlaceMode.NSR);
-    } else if (modeWasChangedToFlexible && selectMode === StopPlaceMode.NSR) {
+    if (modeWasChangedToExternal && selectMode === StopPlaceMode.FLEXIBLE) {
+      setSelectMode(StopPlaceMode.EXTERNAL);
+    } else if (
+      modeWasChangedToFlexible &&
+      selectMode === StopPlaceMode.EXTERNAL
+    ) {
       setSelectMode(StopPlaceMode.FLEXIBLE);
     }
   }, [stopPoint.key]);
@@ -89,9 +92,9 @@ export const MixedFlexibleStopPointEditor = ({
       <div className="stop-point-element">
         <div className="stop-point-key-info stop-point-key-info--flexible">
           <StopPointOrder
-            order={order as number}
-            isLast={isLast as boolean}
-            isFirst={isFirst as boolean}
+            order={order}
+            isLast={isLast}
+            isFirst={isFirst}
             swapStopPoints={
               swapStopPoints as (pos1: number, pos2: number) => void
             }
@@ -107,7 +110,9 @@ export const MixedFlexibleStopPointEditor = ({
                 flexibleStopPlaceRef: null,
                 flexibleStopPlace: undefined,
               };
-              if ((e.target.value as StopPlaceMode) === StopPlaceMode.NSR) {
+              if (
+                (e.target.value as StopPlaceMode) === StopPlaceMode.EXTERNAL
+              ) {
                 delete newStopPoint['flexibleStopPlaceRef'];
                 delete newStopPoint['flexibleStopPlace'];
               } else {
@@ -120,7 +125,7 @@ export const MixedFlexibleStopPointEditor = ({
               <Radio value={StopPlaceMode.FLEXIBLE}>
                 {formatMessage({ id: 'selectCustom' })}
               </Radio>
-              <Radio value={StopPlaceMode.NSR}>
+              <Radio value={StopPlaceMode.EXTERNAL}>
                 {formatMessage({ id: 'selectNsr' })}
               </Radio>
             </div>
@@ -155,7 +160,7 @@ export const MixedFlexibleStopPointEditor = ({
             />
           )}
 
-          {selectMode === StopPlaceMode.NSR && (
+          {selectMode === StopPlaceMode.EXTERNAL && (
             <QuayRefField
               initialQuayRef={stopPoint.quayRef}
               errorFeedback={getErrorFeedback(
