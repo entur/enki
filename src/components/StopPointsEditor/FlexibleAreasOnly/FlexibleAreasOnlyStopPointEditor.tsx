@@ -57,6 +57,9 @@ export const FlexibleAreasOnlyStopPointEditor = ({
                 flexibleStopPlaceRef: e?.value,
               })
             }
+            noMatchesText={formatMessage({
+              id: 'dropdownNoMatchesText',
+            })}
             {...getErrorFeedback(
               stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
               !stopPlaceError,
