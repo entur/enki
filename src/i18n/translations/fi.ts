@@ -664,4 +664,6 @@ export const messages = {
   exportsDownloadErrorTitle: 'Lataus epäonnistui',
   exportsDownloadErrorMessage:
     'Latauksen aikana tapahtui odottamaton virhe. Yritä uudelleen.',
+  selectAll: 'Valitse kaikki',
+  clearAll: 'Poista kaikki valinnat',
 };
