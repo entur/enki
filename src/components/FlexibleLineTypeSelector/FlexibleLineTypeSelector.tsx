@@ -57,6 +57,7 @@ export const FlexibleLineTypeSelector = ({
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={getDropdownItems}
           clearable
+          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
           label={formatMessage({ id: 'generalTypeFormGroupTitle' })}
           onChange={(element) => onChange(element?.value as FlexibleLineType)}
           {...getErrorFeedback(

@@ -666,4 +666,5 @@ export const messages = {
     'Latauksen aikana tapahtui odottamaton virhe. Yritä uudelleen.',
   selectAll: 'Valitse kaikki',
   clearAll: 'Poista kaikki valinnat',
+  clearSelected: 'Poista valinta',
 };

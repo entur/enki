@@ -659,4 +659,5 @@ export const messages: MessagesKey = {
     'An error occurred while downloading the export. Please try again.',
   selectAll: 'Select all',
   clearAll: 'Unselect all',
+  clearSelected: 'Unselect',
 };
