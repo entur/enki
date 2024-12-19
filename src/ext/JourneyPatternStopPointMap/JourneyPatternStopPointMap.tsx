@@ -21,8 +21,10 @@ import {
   useHandleFocusedQuayId,
   useMapZoomIntoLocation,
   useStopPlacesStateCombinedWithSearchResults,
+  useRouteGeometry,
 } from './hooks';
 import Markers from './Markers';
+import { useConfig } from '../../config/ConfigContext';
 
 const JourneyPatternStopPointMap = memo(
   ({
@@ -34,6 +36,13 @@ const JourneyPatternStopPointMap = memo(
     focusedQuayId,
     onFocusedQuayIdUpdate,
   }: JourneyPatternStopPointMapProps) => {
+    const { routeGeometrySupportedVehicleModes } = useConfig();
+    let isRouteGeometryEnabled =
+      routeGeometrySupportedVehicleModes &&
+      routeGeometrySupportedVehicleModes?.filter(
+        (mode) => mode === transportMode,
+      ).length > 0;
+
     // Capture and store map's zoom level and view bounds.
     // Will be used later to produce markers within the visible bounds:
     const { mapSpecsState, updateMapSpecs } = useMapSpecs();
@@ -62,7 +71,14 @@ const JourneyPatternStopPointMap = memo(
       pointsInSequence,
       totalQuayLocationsIndex,
       totalQuayStopPlaceIndex,
+      !!isRouteGeometryEnabled,
     );
+
+    if (isRouteGeometryEnabled) {
+      // Handling service links data;
+      // If route geometry is enabled, this is where the needed coordinates are set up
+      useRouteGeometry(pointsInSequence, totalQuayLocationsIndex, setMapState);
+    }
 
     // If there are already stop points selected, zoom in to the route on initial map load:
     useFitMapBounds(pointsInSequence, totalQuayLocationsIndex);

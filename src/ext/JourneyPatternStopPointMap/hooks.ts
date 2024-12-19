@@ -15,14 +15,24 @@ import {
   JourneyPatternsMapState,
   JourneyPatternsStopPlacesState,
   MapSpecs,
+  ServiceLink,
   StopPointLocation,
 } from './types';
 import { Centroid, Location, StopPlace, UttuQuery } from '../../api';
 import { useAppSelector } from '../../store/hooks';
 import { useConfig } from '../../config/ConfigContext';
 import { useAuth } from '../../auth/auth';
-import { getStopPlacesQuery } from '../../api/uttu/queries';
-import { getStopPlacesState, getStopPointLocationSequence } from './helpers';
+import {
+  getServiceLinkQuery,
+  getStopPlacesQuery,
+} from '../../api/uttu/queries';
+import {
+  getRouteGeometryFetchPromises,
+  getServiceLinkRef,
+  getStopPlacesState,
+  getStopPointLocationSequence,
+  getStopPointLocationSequenceWithRouteGeometry,
+} from './helpers';
 import { useMap } from 'react-leaflet';
 
 /**
@@ -136,11 +146,13 @@ export const useStopPlacesStateCombinedWithSearchResults = (
  * @param pointsInSequence quay that user selected into the journey pattern and its order
  * @param quayLocationsIndex a helpful record containing pairs of [quayId -> its location]
  * @param quayStopPlaceIndex a helpful record containing pairs of [quayId -> stopId the quay belongs to]
+ * @param isRouteGeometryEnabled
  */
 export const useMapState = (
   pointsInSequence: StopPoint[],
   quayLocationsIndex: Record<string, Centroid>,
   quayStopPlaceIndex: Record<string, string>,
+  isRouteGeometryEnabled: boolean,
 ) => {
   const [mapState, setMapState] = useReducer<
     Reducer<JourneyPatternsMapState, Partial<JourneyPatternsMapState>>
@@ -192,7 +204,7 @@ export const useMapState = (
       return;
     }
 
-    pointsInSequence.forEach((point) => {
+    pointsInSequence.forEach((point, i) => {
       if (!point?.quayRef) {
         stopPointIndex++;
         return;
@@ -210,10 +222,15 @@ export const useMapState = (
       // Let's get into show quays mode, so that a quay entered through the form gets visible:
       newShowQuaysState[stopPlaceId] = true;
 
-      if (quayLocationsIndex[point.quayRef]?.location) {
+      if (
+        !isRouteGeometryEnabled &&
+        quayLocationsIndex[point.quayRef]?.location
+      ) {
+        // if route geometry is enabled, the right coordinates sequence will be established as part of useRouteGeometry hook
+        const pointLocation = quayLocationsIndex[point.quayRef].location;
         newStopPointLocations.push([
-          quayLocationsIndex[point.quayRef].location.latitude,
-          quayLocationsIndex[point.quayRef].location.longitude,
+          pointLocation.latitude,
+          pointLocation.longitude,
         ]);
       }
     });
@@ -252,6 +269,7 @@ export const useMapState = (
     quayLocationsIndex,
     setMapState,
     mapStateRef.current,
+    isRouteGeometryEnabled,
   ]);
 
   return {
@@ -436,4 +454,72 @@ export const useFitMapBounds = (
       [maxLat, maxLng],
     ]);
   }, [quayLocationsIndex, boundsBeenFit]);
+};
+
+/**
+ * Service links contain intermediate locations within a pair of stop points;
+ * This allows having a polyline that more realistically follows the shape of the route
+ * @param pointsInSequence
+ * @param quayLocationsIndex
+ * @param setMapState
+ */
+export const useRouteGeometry = (
+  pointsInSequence: StopPoint[],
+  quayLocationsIndex: Record<string, Centroid>,
+  setMapState: (state: Partial<JourneyPatternsMapState>) => void,
+) => {
+  const serviceLinksIndex = useRef<Record<string, number[][]>>({});
+  const activeProvider =
+    useAppSelector((state) => state.userContext.activeProviderCode) ?? '';
+  const { uttuApiUrl } = useConfig();
+  const auth = useAuth();
+
+  const fetchRouteGeometry = useCallback(
+    (quayRefFrom: string, quayRefTo: string) => {
+      return auth.getAccessToken().then((token) => {
+        return UttuQuery(
+          uttuApiUrl,
+          activeProvider,
+          getServiceLinkQuery,
+          { quayRefFrom, quayRefTo },
+          token,
+        );
+      });
+    },
+    [activeProvider, auth, uttuApiUrl],
+  );
+
+  useEffect(() => {
+    const fetchRouteGeometryPromises = getRouteGeometryFetchPromises(
+      pointsInSequence,
+      quayLocationsIndex,
+      fetchRouteGeometry,
+      serviceLinksIndex.current,
+    );
+    const newServiceLinkRefs: Record<string, number[][]> = {};
+
+    Promise.all(fetchRouteGeometryPromises).then((serviceLinkResponses) => {
+      serviceLinkResponses.forEach((data) => {
+        if (!data) {
+          return;
+        }
+        const serviceLink = data?.serviceLink as ServiceLink;
+        newServiceLinkRefs[serviceLink.serviceLinkRef] =
+          serviceLink.routeGeometry.coordinates;
+      });
+
+      serviceLinksIndex.current = {
+        ...serviceLinksIndex.current,
+        ...newServiceLinkRefs,
+      };
+
+      const stopPointLocationSequence =
+        getStopPointLocationSequenceWithRouteGeometry(
+          pointsInSequence,
+          quayLocationsIndex,
+          serviceLinksIndex.current,
+        );
+      setMapState({ stopPointLocationSequence });
+    });
+  }, [pointsInSequence, serviceLinksIndex, quayLocationsIndex]);
 };
