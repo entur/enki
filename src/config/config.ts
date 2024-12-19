@@ -1,6 +1,7 @@
 import { OidcClientSettings } from 'oidc-client-ts';
 import { FlexibleLineType } from '../model/FlexibleLine';
 import { Locale } from '../i18n';
+import { VEHICLE_MODE } from '../model/enums';
 
 /**
  * All sandbox features should be added to this interface like this:
@@ -89,4 +90,6 @@ export interface Config {
   extPath?: string;
 
   hideExportDryRun?: boolean;
+
+  routeGeometrySupportedVehicleModes?: VEHICLE_MODE[];
 }

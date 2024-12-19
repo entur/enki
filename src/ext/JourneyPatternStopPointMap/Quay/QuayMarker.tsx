@@ -83,9 +83,9 @@ const QuayMarker = memo(
             hasSelectedQuay={hasSelectedQuay}
             hasNonSelectedQuays={hasNonSelectedQuays}
             hideNonSelectedQuaysState={hideNonSelectedQuaysState}
-            hideNonSelectedQuaysCallback={hideNonSelectedQuays}
-            showQuaysCallback={showQuays}
-            addStopPointCallback={addStopPoint}
+            hideNonSelectedQuays={hideNonSelectedQuays}
+            showQuays={showQuays}
+            addStopPoint={addStopPoint}
           />
         </Popup>
 
