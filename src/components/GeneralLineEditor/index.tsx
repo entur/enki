@@ -174,6 +174,7 @@ export default <T extends Line>({
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={getOperatorItems}
           clearable
+          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
           label={formatMessage({ id: 'generalOperatorFormGroupTitle' })}
           noMatchesText={formatMessage({
             id: 'dropdownNoMatchesText',
@@ -199,6 +200,7 @@ export default <T extends Line>({
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={getNetworkItems}
           clearable
+          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
           label={formatMessage({ id: 'generalNetworkFormGroupTitle' })}
           noMatchesText={formatMessage({
             id: 'dropdownNoMatchesText',
@@ -236,6 +238,7 @@ export default <T extends Line>({
             placeholder={formatMessage({ id: 'defaultOption' })}
             items={getModeItems}
             clearable
+            labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
             label={formatMessage({ id: 'transportModeTitle' })}
             onChange={(element) =>
               onChange<Line>({

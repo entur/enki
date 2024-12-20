@@ -55,6 +55,11 @@ export const DayTypesEditor = ({
               value: dt.id!,
             })) || []
           }
+          labelSelectAll={formatMessage({ id: 'selectAll' })}
+          labelClearAllItems={formatMessage({ id: 'clearAll' })}
+          noMatchesText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
           onChange={(items: any) => {
             const selectedIds = items?.map((item: any) => item.value);
             onChange(

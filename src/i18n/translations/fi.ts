@@ -149,11 +149,8 @@ export const messages = {
   linesCreateLineIconButtonLabel: 'Luo linja',
   linesFlexibleDataCell: 'Kutsu',
   bookingInfoHeader: 'Varaustiedot',
-  bookingInfoHelpText: `Booking information can be added to a flexible line, to a
-  stop point in a journey pattern, or to a service journey.
-  When you define booking information at several levels, stop points
-  take precendence over service journeys, which in turn takes precedence
-  over the flexible line.`,
+  bookingInfoHelpText:
+    'Kutsujoukkoliikenteelle voidaan lisätä varaustiedot pysäkeille (osana linjatietoa) tai liikennöintikalenterille. Jos määrittelet varaustiedot useammalle kuin yhdelle tasolle pysäkkikohtaiset varaustiedot ovat ensisijaisia.',
   bookingInfoAddButtonText: 'Lisää',
   bookingInfoRemoveButtonText: 'Poista',
   bookingInfoShowEditButtonText: 'Näytä / Muokkaa',
@@ -234,21 +231,21 @@ export const messages = {
   generalDrawer: 'Alla on lyhyt kuvaus kustakin linjatyypistä.',
   drawerAria: 'Lue lisää erilaisista linjatyypeistä.',
   generalDrawerTitle: 'Kutsujoukkoliikenteen muodot',
-  flexibleLineType_fixed: 'Kiinteä',
-  flexibleLineType_flexibleAreasOnly: 'Vain kutsualueet',
-  flexibleLineType_mixedFlexible: 'Sekoitettu kutsuliikenne',
+  flexibleLineType_fixed: 'Pysäkkipohjainen',
+  flexibleLineType_flexibleAreasOnly: 'Kutsualueet',
+  flexibleLineType_mixedFlexible: 'Osin joustava',
   flexibleLineTypeDrawer_fixed:
-    'Kiinteä reitti kiinteisiin aikoihin, on varattava etukäteen linja-auton ajoa varten.',
+    'Kiinteä ja aikataulutettu reitti, joka on tilattava etukäteen.',
   flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
-    'Kiinteä reitti kiinteisiin aikoihin, mahdollisuudella varata nousu tai nousu pois pysähdyspaikoilta reitin ulkopuolelta.',
+    'Pysäkkipohjainen reitti pysäkkipohjaisiin aikoihin, mahdollisuudella varata nousu tai nousu pois pysähdyspaikoilta reitin ulkopuolelta.',
   flexibleLineTypeDrawer_fixedStopAreaWide:
     'Joustava reitti, joka on määritelty yhdellä tai useammalla alueella, joissa kullakin alueella voi olla erilaisia ennalta määriteltyjä pysäkkejä.',
   flexibleLineTypeDrawer_flexibleAreasOnly:
-    'Kyytiin nousu ja poistuminen mihin tahansa määriteltyyn alueeseen ja annettuihin aukioloaikoihin.',
+    'Liikennevälineeseen nousu ja poistuminen perustuen kutsualueeseen ja liikennöintiaikoihin.',
   flexibleLineTypeDrawer_hailAndRideSections:
     'Reitti on määritelty, mutta valituilla osuuksilla on mahdollista nousta tai poistua milloin tahansa.',
   flexibleLineTypeDrawer_mixedFlexible:
-    'Sekoitus ennalta määrättyjä pysäkkejä ja kutsualueita, joilla on aikavälejä ja kiinteitä aikoja nousulle ja poistumiseen.',
+    'Osin joustava, määrättyjä pysäkkejä ja kutsualueita yhdistelevä liikenne, joka sisältää aikataulutettuja pysäkkejä.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Lisää pysäkkiketju',
   journeyPatternsUnsavedChanges: 'Sinulla on tallentamattomia muutoksia.',
   journeyPatternsSaveAndContinue: 'Tallenna ja jatka',
@@ -271,7 +268,7 @@ export const messages = {
   stopPointsInfoFlexibleAreaOnly:
     'Tämäntyyppinen kutsulinja sallii vain yhden joustavan pysähdyspaikan, jossa kaikki nousut ja poistumiset tapahtuvat.',
   stopPointsInfoMixedFlexible:
-    'Lisää vähintään kahden kiinteän pysähtymisaseman tai kutsualueiden sekvenssi siinä järjestyksessä, jossa ne kuljetaan.',
+    'Lisää vähintään kaksi pysäkkiä pysäkkipohjaiselle kutsuliikenteelle siinä aikataulun mukaisessa järjestyksessä.',
   deleteStopPointDialogTitle: 'Poista pysäkkipiste',
   deleteStopPointDialogMessage:
     'Haluatko varmasti poistaa tämän pysäkkipisteen?',
@@ -392,14 +389,14 @@ export const messages = {
   tableDeleteMessage: 'Haluatko varmasti poistaa tämän pysäkin?',
   serviceJourneyAvailability: 'Saatavuus',
   serviceJourneyPassingTimes: 'Ohitusaikojen määrittäminen',
-  serviceJourneyBusinessHours: 'Aukioloajat',
+  serviceJourneyBusinessHours: 'Liikennöintiaijat',
   serviceJourneyMixedFlexiblePassingTimes:
     'Ohitusaikojen ja aikavälien määrittäminen',
   passingTimesInfo: 'Anna ohitusaika eri pysäkeille.',
   passingTimesInfoFlexibleAreasOnly:
     'Anna palveluajat kutsujoukkoliikennepalvelulle.',
   passingTimesInfoMixedFlexible:
-    'Anna ohitusaikoja kiinteille pysäkeille ja aikavälejä kutsualueille.',
+    'Anna ohitus- ja liikennöintiaikoja pysäkkipohjaisille kutsuliikennealueille.',
   serviceJourneyBooking: 'Varaus',
   generalName: 'Nimi *',
   nameIsRequired: 'Nimi vaaditaan.',
@@ -498,7 +495,7 @@ export const messages = {
   stopPlaceAreaLabelPrefix: 'Alue',
   stopPlaceAddAreaButtonLabel: 'Lisää alue',
   stopPlaceRemoveAreaButtonLabel: 'Poista alue',
-  passingTimesTypeFixed: 'Kiinteä',
+  passingTimesTypeFixed: 'Pysäkkipohjainen',
   passingTimesTypeFlexible: 'Joustava',
   passingTimesArrivalTime: 'Saapumisaika',
   passingTimesDepartureTime: 'Lähtöaika',
@@ -664,4 +661,7 @@ export const messages = {
   exportsDownloadErrorTitle: 'Lataus epäonnistui',
   exportsDownloadErrorMessage:
     'Latauksen aikana tapahtui odottamaton virhe. Yritä uudelleen.',
+  selectAll: 'Valitse kaikki',
+  clearAll: 'Poista kaikki valinnat',
+  clearSelected: 'Poista valinta',
 };

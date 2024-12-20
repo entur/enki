@@ -655,4 +655,7 @@ export const messages = {
   exportsDownloadErrorTitle: 'Nedlasting mislyktes',
   exportsDownloadErrorMessage:
     'Det oppstod en feil under nedlasting av eksporten. Vennligst prøv igjen.',
+  selectAll: 'Velg alle',
+  clearAll: 'Fjern valgte',
+  clearSelected: 'Fjern valgt',
 };

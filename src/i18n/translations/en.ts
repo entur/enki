@@ -657,4 +657,7 @@ export const messages: MessagesKey = {
   exportsDownloadErrorTitle: 'Download Failed',
   exportsDownloadErrorMessage:
     'An error occurred while downloading the export. Please try again.',
+  selectAll: 'Select all',
+  clearAll: 'Unselect all',
+  clearSelected: 'Unselect',
 };

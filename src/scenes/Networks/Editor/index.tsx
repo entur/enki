@@ -195,6 +195,7 @@ const NetworkEditor = () => {
                 }
                 placeholder={formatMessage({ id: 'defaultOption' })}
                 clearable
+                labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
                 label={formatMessage({ id: 'editorNetworkAuthorityLabelText' })}
                 noMatchesText={formatMessage({
                   id: 'dropdownNoMatchesText',

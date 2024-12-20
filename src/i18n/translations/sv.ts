@@ -646,4 +646,7 @@ export const messages = {
   exportsDownloadErrorTitle: 'Nedladdning misslyckades',
   exportsDownloadErrorMessage:
     'Ett fel har uppstått medan filen laddades ner. Försök igen.',
+  selectAll: 'Välj alla',
+  clearAll: 'Ta bort valda',
+  clearSelected: 'Ta bort valda',
 };
