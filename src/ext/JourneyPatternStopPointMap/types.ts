@@ -73,3 +73,15 @@ export interface MapSpecs {
   zoom: number;
   bounds: [number, number, number, number];
 }
+
+export interface ServiceLink {
+  serviceLinkRef: string;
+  quayRefFrom: string;
+  quayRefTo: string;
+  routeGeometry: RouteGeometry;
+}
+
+export interface RouteGeometry {
+  distance: number;
+  coordinates: number[][];
+}

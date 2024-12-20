@@ -596,3 +596,17 @@ export const getOrganisationsQuery = `
     }
   }
 `;
+
+export const getServiceLinkQuery = `
+  query ServiceLinkQuery($quayRefFrom:String, $quayRefTo:String) {
+    serviceLink(quayRefFrom: $quayRefFrom, quayRefTo: $quayRefTo) {
+      quayRefFrom,
+      quayRefTo,
+      serviceLinkRef,
+      routeGeometry {
+         distance
+         coordinates
+      }
+    }
+  }
+`;
