@@ -99,7 +99,7 @@
     "prettier": "3.4.2",
     "prettier-plugin-organize-imports": "4.1.0",
     "redux-immutable-state-invariant": "2.1.0",
-    "sass": "1.83.0",
+    "sass": "1.83.1",
     "source-map-explorer": "2.5.3",
     "typescript": "5.7.2",
     "vite": "6.0.7",
