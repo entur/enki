@@ -664,4 +664,9 @@ export const messages = {
   selectAll: 'Valitse kaikki',
   clearAll: 'Poista kaikki valinnat',
   clearSelected: 'Poista valinta',
+  copyJourneyPatternDialogTitle: 'Kopioi pysäkkiketju',
+  copyJourneyPatternDialogNameTemplateLabel: 'Nimi',
+  copyJourneyPatternDialogCancelButtonText: 'Peruta',
+  copyJourneyPatternDialogSaveButtonText: 'Luo kopio',
+  copyInstance: 'kopio',
 };

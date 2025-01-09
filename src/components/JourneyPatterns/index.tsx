@@ -10,6 +10,9 @@ import JourneyPattern, { initJourneyPattern } from 'model/JourneyPattern';
 import { ReactElement, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import './styles.scss';
+import ServiceJourney from '../../model/ServiceJourney';
+import StopPoint from '../../model/StopPoint';
+import { createUuid } from '../../helpers/generators';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
@@ -18,6 +21,7 @@ type Props = {
     journeyPattern: JourneyPattern,
     handleUpdate: (journeyPattern: JourneyPattern) => void,
     handleDelete?: () => void,
+    handleCopy?: (jpName: string) => void,
   ) => ReactElement;
 };
 
@@ -56,6 +60,40 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
       () => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }),
       100,
     );
+  };
+
+  const copyJourneyPattern = (
+    journeyPatterns: JourneyPattern[],
+    journeyPatternIndex: number,
+    name: string,
+  ) => {
+    const newJourneyPattern: JourneyPattern = {
+      ...journeyPatterns[journeyPatternIndex],
+    };
+    newJourneyPattern.id = undefined;
+    newJourneyPattern.name = name;
+    newJourneyPattern.pointsInSequence = journeyPatterns[
+      journeyPatternIndex
+    ].pointsInSequence.map((point: StopPoint) => ({
+      ...point,
+      id: undefined,
+      key: createUuid(),
+    }));
+
+    newJourneyPattern.serviceJourneys = [
+      {
+        id: `new_${createUuid()}`,
+        name: undefined,
+        passingTimes: journeyPatterns[journeyPatternIndex].pointsInSequence.map(
+          (_) => ({}),
+        ),
+      },
+    ];
+    const newJourneyPatterns: JourneyPattern[] = [
+      ...journeyPatterns,
+      newJourneyPattern,
+    ];
+    onChange(newJourneyPatterns);
   };
 
   return (
@@ -103,7 +141,12 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
           {formatMessage({ id: 'editorFillInformation' })}
         </LeadParagraph>
         {journeyPatterns.length === 1 ? (
-          children(journeyPatterns[0], updateJourneyPattern(0))
+          children(
+            journeyPatterns[0],
+            updateJourneyPattern(0),
+            undefined,
+            (name: string) => copyJourneyPattern(journeyPatterns, 0, name),
+          )
         ) : (
           <Accordion>
             {journeyPatterns.map((jp: JourneyPattern, index: number) => (
@@ -116,6 +159,8 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
                   jp,
                   updateJourneyPattern(index),
                   deleteJourneyPattern(index),
+                  (name: string) =>
+                    copyJourneyPattern(journeyPatterns, index, name),
                 )}
               </AccordionItem>
             ))}

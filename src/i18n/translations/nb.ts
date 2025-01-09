@@ -658,4 +658,9 @@ export const messages = {
   selectAll: 'Velg alle',
   clearAll: 'Fjern valgte',
   clearSelected: 'Fjern valgt',
+  copyJourneyPatternDialogTitle: 'Kopiér Journey Pattern',
+  copyJourneyPatternDialogNameTemplateLabel: 'Navnmal',
+  copyJourneyPatternDialogCancelButtonText: 'Avbryt',
+  copyJourneyPatternDialogSaveButtonText: 'Lag kopi',
+  copyInstance: 'en kopi',
 };

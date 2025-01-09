@@ -649,4 +649,9 @@ export const messages = {
   selectAll: 'Välj alla',
   clearAll: 'Ta bort valda',
   clearSelected: 'Ta bort valda',
+  copyJourneyPatternDialogTitle: 'Kopiera pysäkkiketju',
+  copyJourneyPatternDialogNameTemplateLabel: 'Namnmall',
+  copyJourneyPatternDialogCancelButtonText: 'Nej',
+  copyJourneyPatternDialogSaveButtonText: 'Ja',
+  copyInstance: 'en kopia',
 };

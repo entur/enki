@@ -3,4 +3,12 @@
 .journey-pattern-editor {
   display: flex;
   justify-content: space-between;
+
+  .journey-pattern-editor-action-chips {
+    display: flex;
+
+    .journey-pattern-editor-action-chip {
+      margin-right: 1rem;
+    }
+  }
 }

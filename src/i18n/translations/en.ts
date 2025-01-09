@@ -660,4 +660,9 @@ export const messages: MessagesKey = {
   selectAll: 'Select all',
   clearAll: 'Unselect all',
   clearSelected: 'Unselect',
+  copyJourneyPatternDialogTitle: 'Copy Journey Pattern',
+  copyJourneyPatternDialogNameTemplateLabel: 'Name',
+  copyJourneyPatternDialogCancelButtonText: 'Cancel',
+  copyJourneyPatternDialogSaveButtonText: 'Create copy',
+  copyInstance: 'copy',
 };

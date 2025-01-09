@@ -631,13 +631,22 @@ section .notices {
 .service-journey-editor
   .service-journey-editor-action-chips
   .service-journey-editor-action-chip {
-  margin-right: 0;
-  margin-bottom: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .service-journey-editor .service-journey-editor-action-chips {
-  flex-direction: column;
-  margin-left: 0.5rem;
+  // flex-direction: column;
+  //margin-left: 0.5rem;
+}
+
+.journey-pattern-editor
+  .journey-pattern-editor-action-chips
+  .journey-pattern-editor-action-chip {
+  margin-right: 0.2rem;
+}
+
+.copy-dialog .copy-dialog-section {
+  margin-top: 3rem;
 }
 
 .eds-action-chip:focus {
@@ -702,6 +711,10 @@ section .notices {
   color: var(--fds-color-brand-black);
 }
 
+.eds-chip--leading-icon .eds-icon:first-of-type {
+  margin-bottom: 0.3rem;
+}
+
 .eds-filter-chip__input:checked ~ .eds-chip {
   background-color: #acd7f1;
   color: var(--fds-color-brand-black);
@@ -729,7 +742,7 @@ section .notices {
   .passing-time
   .timepicker
   > .eds-form-control-wrapper--disabled {
-  width: 167px !important;
+  width: 160px !important;
   padding-left: 2.5rem;
   //align-items: center;
 }
