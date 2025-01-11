@@ -64,7 +64,7 @@
     "redux-sentry-middleware": "0.2.2",
     "supercluster": "8.0.1",
     "use-supercluster": "1.2.0",
-    "uuid": "11.0.4"
+    "uuid": "11.0.5"
   },
   "devDependencies": {
     "@redux-devtools/extension": "3.3.0",
