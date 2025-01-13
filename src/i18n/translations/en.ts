@@ -343,6 +343,8 @@ export const messages: MessagesKey = {
   editorJourneyPatternsTabLabel: 'Journey Patterns',
   newJourneyPatternModalTitle: 'New journey pattern',
   newJourneyPatternModalSubTitle: 'Enter a name and press Create',
+  newJourneyPatternModalUniqueName:
+    'The journey pattern must have a unique name',
   newJourneyPatternModalCancel: 'Cancel',
   newJourneyPatternModalCreate: 'Create',
   newJourneyPatternModalLabel: 'Name',
@@ -661,8 +663,10 @@ export const messages: MessagesKey = {
   clearAll: 'Unselect all',
   clearSelected: 'Unselect',
   copyJourneyPatternDialogTitle: 'Copy Journey Pattern',
-  copyJourneyPatternDialogNameTemplateLabel: 'Name',
+  copyJourneyPatternDialogNameTemplateLabel: 'Name *',
   copyJourneyPatternDialogCancelButtonText: 'Cancel',
   copyJourneyPatternDialogSaveButtonText: 'Create copy',
   copyInstance: 'copy',
+  journeyPatternDuplicateNameValidationError:
+    'The journey pattern must have a unique name',
 };

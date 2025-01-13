@@ -514,6 +514,10 @@ body {
   color: var(--fds-color-text-600);
 }
 
+.modal-content > .eds-feedback-text {
+  margin-top: -2rem;
+}
+
 .eds-form-control-wrapper--negative:focus-within {
   outline: 1px solid var(--fds-color-danger-300) !important;
   border-color: var(--fds-color-danger-300);
@@ -742,7 +746,7 @@ section .notices {
   .passing-time
   .timepicker
   > .eds-form-control-wrapper--disabled {
-  width: 160px !important;
+  width: 167px !important;
   padding-left: 2.5rem;
   //align-items: center;
 }

@@ -341,6 +341,7 @@ export const messages = {
   editorJourneyPatternsTabLabel: 'Journey patterns',
   newJourneyPatternModalTitle: 'Nytt journey pattern',
   newJourneyPatternModalSubTitle: 'Fyll inn navn og trykk deretter Opprett',
+  newJourneyPatternModalUniqueName: 'Journey patternet må ha et unikt navn',
   newJourneyPatternModalCancel: 'Avbryt',
   newJourneyPatternModalCreate: 'Opprett',
   newJourneyPatternModalLabel: 'Navn',
@@ -659,8 +660,10 @@ export const messages = {
   clearAll: 'Fjern valgte',
   clearSelected: 'Fjern valgt',
   copyJourneyPatternDialogTitle: 'Kopiér Journey Pattern',
-  copyJourneyPatternDialogNameTemplateLabel: 'Navnmal',
+  copyJourneyPatternDialogNameTemplateLabel: 'Navnmal *',
   copyJourneyPatternDialogCancelButtonText: 'Avbryt',
   copyJourneyPatternDialogSaveButtonText: 'Lag kopi',
   copyInstance: 'en kopi',
+  journeyPatternDuplicateNameValidationError:
+    'Journey patternet må ha et unikt navn',
 };

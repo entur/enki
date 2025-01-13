@@ -1,6 +1,5 @@
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
-import DeleteButton from 'components/DeleteButton/DeleteButton';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useStopPointsEditor } from 'components/StopPointsEditor';
 import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
@@ -28,6 +27,7 @@ type Props = {
   spoilPristine: boolean;
   flexibleLineType?: FlexibleLineType;
   transportMode?: VEHICLE_MODE;
+  journeyPatternsNames: string[];
 };
 
 const JourneyPatternEditor = ({
@@ -38,6 +38,7 @@ const JourneyPatternEditor = ({
   flexibleLineType,
   transportMode,
   onCopy,
+  journeyPatternsNames,
 }: Props) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const journeyPatternRef = useRef<any>({
@@ -249,6 +250,7 @@ const JourneyPatternEditor = ({
             setShowCopyDialog(false);
           }}
           onDismiss={() => setShowCopyDialog(false)}
+          journeyPatternsNames={journeyPatternsNames}
         />
       )}
     </div>

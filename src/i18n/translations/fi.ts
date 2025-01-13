@@ -343,6 +343,8 @@ export const messages = {
   editorJourneyPatternsTabLabel: 'Pysäkkiketju',
   newJourneyPatternModalTitle: 'Uusi pysäkkiketju',
   newJourneyPatternModalSubTitle: 'Anna nimi ja paina Luo',
+  newJourneyPatternModalUniqueName:
+    'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
   newJourneyPatternModalCancel: 'Peruuta',
   newJourneyPatternModalCreate: 'Luo',
   newJourneyPatternModalLabel: 'Nimi',
@@ -665,8 +667,10 @@ export const messages = {
   clearAll: 'Poista kaikki valinnat',
   clearSelected: 'Poista valinta',
   copyJourneyPatternDialogTitle: 'Kopioi pysäkkiketju',
-  copyJourneyPatternDialogNameTemplateLabel: 'Nimi',
+  copyJourneyPatternDialogNameTemplateLabel: 'Nimi *',
   copyJourneyPatternDialogCancelButtonText: 'Peruta',
   copyJourneyPatternDialogSaveButtonText: 'Luo kopio',
   copyInstance: 'kopio',
+  journeyPatternDuplicateNameValidationError:
+    'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
 };
