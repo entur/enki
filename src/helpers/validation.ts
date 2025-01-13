@@ -139,6 +139,7 @@ export const validFlexibleLineJourneyPattern = (
 };
 
 export const validateStopPoints = (stopPoints: StopPoint[]): boolean =>
+  stopPoints.length >= 2 &&
   getStopPointsErrors(stopPoints).every((stopPointErrors) =>
     objectValuesAreEmpty(stopPointErrors),
   );

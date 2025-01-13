@@ -28,7 +28,10 @@ const NewJourneyPatternModal = ({
   const [validationError, setValidationError] = useState<ValidationError>({});
 
   useEffect(() => {
-    if (journeyPatternsNames.includes(newJourneyPatternName?.trim())) {
+    if (
+      newJourneyPatternName &&
+      journeyPatternsNames.includes(newJourneyPatternName.trim())
+    ) {
       setValidationError({
         duplicateName: formatMessage({
           id: 'journeyPatternDuplicateNameValidationError',

@@ -27,7 +27,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { formatMessage } = useIntl();
   const journeyPatternsNames: string[] = journeyPatterns
-    ? journeyPatterns.map((jp) => jp?.name?.trim())
+    ? journeyPatterns.map((jp) => jp?.name?.trim() || '')
     : [];
 
   const keys = useUniqueKeys(journeyPatterns);

@@ -18,6 +18,7 @@ type Props = {
 };
 
 const FlexibleLineEditor = (props: Props) => {
+  const journeyPatterns = props.flexibleLine.journeyPatterns ?? [];
   return (
     <>
       {props.activeStep === 0 && (
@@ -37,7 +38,7 @@ const FlexibleLineEditor = (props: Props) => {
       {props.activeStep === 1 && (
         <section>
           <JourneyPatterns
-            journeyPatterns={props.flexibleLine.journeyPatterns ?? []}
+            journeyPatterns={journeyPatterns}
             onChange={(jps) =>
               props.changeFlexibleLine({
                 ...props.flexibleLine,
@@ -45,11 +46,19 @@ const FlexibleLineEditor = (props: Props) => {
               })
             }
           >
-            {(journeyPattern, onSave, onDelete) => (
+            {(
+              journeyPattern,
+              journeyPatternsNames,
+              onSave,
+              onCopy,
+              onDelete,
+            ) => (
               <JourneyPatternEditor
                 journeyPattern={journeyPattern}
+                journeyPatternsNames={journeyPatternsNames}
                 onSave={onSave}
                 onDelete={onDelete}
+                onCopy={onCopy}
                 spoilPristine={props.spoilPristine}
                 flexibleLineType={props.flexibleLine.flexibleLineType}
                 transportMode={props.flexibleLine.transportMode}

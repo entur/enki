@@ -216,13 +216,11 @@ const JourneyPatternEditor = ({
             title={formatMessage({ id: 'editorDeleteButtonText' })}
           />
         )}
-        {onCopy && (
-          <CopyActionChip
-            className="journey-pattern-editor-action-chip"
-            title={formatMessage({ id: 'editorCopyButtonText' })}
-            onClick={() => setShowCopyDialog(true)}
-          />
-        )}
+        <CopyActionChip
+          className="journey-pattern-editor-action-chip"
+          title={formatMessage({ id: 'editorCopyButtonText' })}
+          onClick={() => setShowCopyDialog(true)}
+        />
       </div>
 
       {showDeleteDialog && onDelete && (
@@ -241,7 +239,7 @@ const JourneyPatternEditor = ({
           onDismiss={() => setShowDeleteDialog(false)}
         />
       )}
-      {onCopy && showCopyDialog && (
+      {showCopyDialog && (
         <CopyDialog
           open={showCopyDialog}
           journeyPattern={journeyPattern}
