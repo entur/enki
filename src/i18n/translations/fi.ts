@@ -347,7 +347,7 @@ export const messages = {
     'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
   newJourneyPatternModalCancel: 'Peruuta',
   newJourneyPatternModalCreate: 'Luo',
-  newJourneyPatternModalLabel: 'Nimi',
+  newJourneyPatternModalLabel: 'Nimi *',
   newJourneyPatternModalPlaceholder: 'Esimerkiksi "Paikallisreitti"',
   editorLoadingLineText: 'Lataa linja',
   editorLoadingNetworkAndStopsText: 'Lataa verkko ja pysäkit',

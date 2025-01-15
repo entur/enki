@@ -353,7 +353,7 @@ export const messages = {
   newJourneyPatternModaluniqueName: 'Journey pattern måste ha ett unikt namn',
   newJourneyPatternModalCancel: 'Avbryt',
   newJourneyPatternModalCreate: 'Skapa',
-  newJourneyPatternModalLabel: 'Namn',
+  newJourneyPatternModalLabel: 'Namn *',
   newJourneyPatternModalPlaceholder: 'Ex. "Lokal linje"',
   editorLoadingLineText: 'Läser in linje',
   editorLoadingNetworkAndStopsText: 'Läser in nätverk och hållplatser',

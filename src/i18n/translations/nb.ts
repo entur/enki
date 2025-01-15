@@ -344,7 +344,7 @@ export const messages = {
   newJourneyPatternModalUniqueName: 'Journey patternet må ha et unikt navn',
   newJourneyPatternModalCancel: 'Avbryt',
   newJourneyPatternModalCreate: 'Opprett',
-  newJourneyPatternModalLabel: 'Navn',
+  newJourneyPatternModalLabel: 'Navn *',
   newJourneyPatternModalPlaceholder: 'Eks. "Lokal rute"',
   editorLoadingLineText: 'Laster inn linje',
   editorLoadingNetworkAndStopsText: 'Laster inn nettverk og stoppesteder',

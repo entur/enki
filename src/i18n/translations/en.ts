@@ -347,7 +347,7 @@ export const messages: MessagesKey = {
     'The journey pattern must have a unique name',
   newJourneyPatternModalCancel: 'Cancel',
   newJourneyPatternModalCreate: 'Create',
-  newJourneyPatternModalLabel: 'Name',
+  newJourneyPatternModalLabel: 'Name *',
   newJourneyPatternModalPlaceholder: 'E.g "Local route"',
   editorLoadingLineText: 'Loading line',
   editorLoadingNetworkAndStopsText: 'Loading network and stop places',

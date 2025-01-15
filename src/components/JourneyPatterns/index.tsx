@@ -16,19 +16,23 @@ type Props = {
   onChange: (journeyPatterns: JourneyPattern[]) => void;
   children: (
     journeyPattern: JourneyPattern,
-    journeyPatternsNames: string[],
+    validateJourneyPatternName: (
+      newJourneyPatternName: string | null,
+    ) => JourneyPatternNameValidationError,
     handleUpdate: (journeyPattern: JourneyPattern) => void,
     handleCopy: (jpName: string) => void,
     handleDelete?: () => void,
   ) => ReactElement;
 };
 
+export type JourneyPatternNameValidationError = {
+  duplicateName?: string;
+  emptyName?: string;
+};
+
 const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { formatMessage } = useIntl();
-  const journeyPatternsNames: string[] = journeyPatterns
-    ? journeyPatterns.map((jp) => jp?.name?.trim() || '')
-    : [];
 
   const keys = useUniqueKeys(journeyPatterns);
 
@@ -92,13 +96,37 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
     onChange(newJourneyPatterns);
   };
 
+  const validateJourneyPatternName = (
+    newJourneyPatternName: string | null,
+  ): JourneyPatternNameValidationError => {
+    const validationError: JourneyPatternNameValidationError = {};
+    if (!newJourneyPatternName) {
+      validationError.emptyName = formatMessage({ id: 'nameIsRequired' });
+      return validationError;
+    }
+
+    const journeyPatternsNames: string[] = journeyPatterns
+      ? journeyPatterns.map((jp) => jp?.name?.trim() || '')
+      : [];
+    if (
+      newJourneyPatternName &&
+      journeyPatternsNames.includes(newJourneyPatternName.trim())
+    ) {
+      validationError.duplicateName = formatMessage({
+        id: 'journeyPatternDuplicateNameValidationError',
+      });
+    }
+
+    return validationError;
+  };
+
   return (
     <>
       <NewJourneyPatternModal
         open={showModal}
         onSave={addNewJourneyPattern}
         onDismiss={() => setShowModal(false)}
-        journeyPatternsNames={journeyPatternsNames}
+        validateJourneyPatternName={validateJourneyPatternName}
       />
 
       <div className="journey-patterns-editor">
@@ -111,7 +139,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
         {journeyPatterns.length === 1 ? (
           children(
             journeyPatterns[0],
-            journeyPatternsNames,
+            validateJourneyPatternName,
             updateJourneyPattern(0),
             (name: string) => copyJourneyPattern(journeyPatterns, 0, name),
             undefined,
@@ -126,7 +154,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
               >
                 {children(
                   jp,
-                  journeyPatternsNames,
+                  validateJourneyPatternName,
                   updateJourneyPattern(index),
                   (name: string) =>
                     copyJourneyPattern(journeyPatterns, index, name),

@@ -46,7 +46,7 @@ const LineEditorSteps = (props: Props) => {
           >
             {(
               journeyPattern,
-              journeyPatternsNames,
+              validateJourneyPatternName,
               onSave,
               onCopy,
               onDelete,
@@ -58,7 +58,7 @@ const LineEditorSteps = (props: Props) => {
                 spoilPristine={props.spoilPristine}
                 transportMode={props.line.transportMode}
                 onCopy={onCopy}
-                journeyPatternsNames={journeyPatternsNames}
+                validateJourneyPatternName={validateJourneyPatternName}
               />
             )}
           </JourneyPatterns>

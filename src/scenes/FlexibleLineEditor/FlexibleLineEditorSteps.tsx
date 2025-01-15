@@ -48,14 +48,14 @@ const FlexibleLineEditor = (props: Props) => {
           >
             {(
               journeyPattern,
-              journeyPatternsNames,
+              validateJourneyPatternName,
               onSave,
               onCopy,
               onDelete,
             ) => (
               <JourneyPatternEditor
                 journeyPattern={journeyPattern}
-                journeyPatternsNames={journeyPatternsNames}
+                validateJourneyPatternName={validateJourneyPatternName}
                 onSave={onSave}
                 onDelete={onDelete}
                 onCopy={onCopy}

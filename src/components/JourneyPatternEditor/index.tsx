@@ -18,6 +18,7 @@ import { getJourneyPatternWithSwappedStopPoints } from './helpers';
 import DeleteActionChip from '../DeleteActionChip';
 import CopyActionChip from '../CopyActionChip';
 import CopyDialog from './CopyDialog';
+import { JourneyPatternNameValidationError } from '../JourneyPatterns';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -27,7 +28,9 @@ type Props = {
   spoilPristine: boolean;
   flexibleLineType?: FlexibleLineType;
   transportMode?: VEHICLE_MODE;
-  journeyPatternsNames: string[];
+  validateJourneyPatternName: (
+    newJourneyPatternName: string | null,
+  ) => JourneyPatternNameValidationError;
 };
 
 const JourneyPatternEditor = ({
@@ -38,7 +41,7 @@ const JourneyPatternEditor = ({
   flexibleLineType,
   transportMode,
   onCopy,
-  journeyPatternsNames,
+  validateJourneyPatternName,
 }: Props) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const journeyPatternRef = useRef<any>({
@@ -248,7 +251,7 @@ const JourneyPatternEditor = ({
             setShowCopyDialog(false);
           }}
           onDismiss={() => setShowCopyDialog(false)}
-          journeyPatternsNames={journeyPatternsNames}
+          validateJourneyPatternName={validateJourneyPatternName}
         />
       )}
     </div>

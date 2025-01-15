@@ -4,18 +4,16 @@ import { useIntl } from 'react-intl';
 import { FeedbackText, TextField } from '@entur/form';
 import { Button, ButtonGroup } from '@entur/button';
 import { Modal } from '@entur/modal';
+import { JourneyPatternNameValidationError } from '../JourneyPatterns';
 
 type CopyDialogProps = {
   open: boolean;
   journeyPattern: JourneyPattern;
   onSave: (jpName: string) => void;
   onDismiss: () => void;
-  journeyPatternsNames: string[];
-};
-
-type ValidationError = {
-  duplicateName?: string;
-  emptyName?: string;
+  validateJourneyPatternName: (
+    newJourneyPatternName: string | null,
+  ) => JourneyPatternNameValidationError;
 };
 
 const CopyDialog = ({
@@ -23,35 +21,22 @@ const CopyDialog = ({
   journeyPattern,
   onSave,
   onDismiss,
-  journeyPatternsNames,
+  validateJourneyPatternName,
 }: CopyDialogProps) => {
   const { formatMessage } = useIntl();
   const [nameTemplate, setNameTemplate] = useState<string>(
     `${journeyPattern.name || 'New'} (${formatMessage({ id: 'copyInstance' })})`,
   );
-  const [validationError, setValidationError] = useState<ValidationError>({});
+  const [validationError, setValidationError] =
+    useState<JourneyPatternNameValidationError>({});
 
   const save = () => {
     onSave(nameTemplate);
   };
 
   useEffect(() => {
-    if (!nameTemplate) {
-      setValidationError({
-        emptyName: formatMessage({ id: 'nameIsRequired' }),
-      });
-      return;
-    }
-    if (journeyPatternsNames.includes(nameTemplate.trim())) {
-      setValidationError({
-        duplicateName: formatMessage({
-          id: 'journeyPatternDuplicateNameValidationError',
-        }),
-      });
-      return;
-    }
-    setValidationError({});
-  }, [journeyPatternsNames, nameTemplate]);
+    setValidationError(validateJourneyPatternName(nameTemplate));
+  }, [nameTemplate]);
 
   return (
     <Modal
