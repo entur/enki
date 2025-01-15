@@ -1,13 +1,12 @@
 import { SecondaryButton, SuccessButton } from '@entur/button';
 import ConfirmDialog from 'components/ConfirmDialog';
-import DeleteButton from 'components/DeleteButton/DeleteButton';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useStopPointsEditor } from 'components/StopPointsEditor';
 import { changeElementAtIndex, removeElementByIndex } from 'helpers/arrays';
 import { FlexibleLineType } from 'model/FlexibleLine';
 import JourneyPattern from 'model/JourneyPattern';
 import StopPoint from 'model/StopPoint';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import General from './General';
 import './styles.scss';
@@ -16,14 +15,22 @@ import { VEHICLE_MODE } from '../../model/enums';
 import ServiceJourney from '../../model/ServiceJourney';
 import { createUuid } from '../../helpers/generators';
 import { getJourneyPatternWithSwappedStopPoints } from './helpers';
+import DeleteActionChip from '../DeleteActionChip';
+import CopyActionChip from '../CopyActionChip';
+import CopyDialog from './CopyDialog';
+import { JourneyPatternNameValidationError } from '../JourneyPatterns';
 
 type Props = {
   journeyPattern: JourneyPattern;
   onSave: (journeyPattern: JourneyPattern) => void;
   onDelete?: () => void;
+  onCopy: (jpName: string) => void;
   spoilPristine: boolean;
   flexibleLineType?: FlexibleLineType;
   transportMode?: VEHICLE_MODE;
+  validateJourneyPatternName: (
+    newJourneyPatternName: string | null,
+  ) => JourneyPatternNameValidationError;
 };
 
 const JourneyPatternEditor = ({
@@ -33,6 +40,8 @@ const JourneyPatternEditor = ({
   spoilPristine,
   flexibleLineType,
   transportMode,
+  onCopy,
+  validateJourneyPatternName,
 }: Props) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const journeyPatternRef = useRef<any>({
@@ -47,6 +56,7 @@ const JourneyPatternEditor = ({
   }, [journeyPattern, journeyPatternRef.current]);
 
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
+  const [showCopyDialog, setShowCopyDialog] = useState<boolean>(false);
   const { formatMessage } = useIntl();
   const { sandboxFeatures } = useConfig();
 
@@ -201,12 +211,21 @@ const JourneyPatternEditor = ({
           swapStopPoints={swapStopPoints}
         />
       </div>
-      {onDelete && (
-        <DeleteButton
-          onClick={() => setShowDeleteDialog(true)}
-          title={formatMessage({ id: 'editorDeleteButtonText' })}
+      <div className="journey-pattern-editor-action-chips">
+        {onDelete && (
+          <DeleteActionChip
+            className="journey-pattern-editor-action-chip"
+            onClick={() => setShowDeleteDialog(true)}
+            title={formatMessage({ id: 'editorDeleteButtonText' })}
+          />
+        )}
+        <CopyActionChip
+          className="journey-pattern-editor-action-chip"
+          title={formatMessage({ id: 'editorCopyButtonText' })}
+          onClick={() => setShowCopyDialog(true)}
         />
-      )}
+      </div>
+
       {showDeleteDialog && onDelete && (
         <ConfirmDialog
           isOpen={showDeleteDialog}
@@ -221,6 +240,18 @@ const JourneyPatternEditor = ({
             </SuccessButton>,
           ]}
           onDismiss={() => setShowDeleteDialog(false)}
+        />
+      )}
+      {showCopyDialog && (
+        <CopyDialog
+          open={showCopyDialog}
+          journeyPattern={journeyPattern}
+          onSave={(jpName: string) => {
+            onCopy(jpName);
+            setShowCopyDialog(false);
+          }}
+          onDismiss={() => setShowCopyDialog(false)}
+          validateJourneyPatternName={validateJourneyPatternName}
         />
       )}
     </div>

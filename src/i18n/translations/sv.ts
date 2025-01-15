@@ -350,9 +350,10 @@ export const messages = {
   editorJourneyPatternsTabLabel: 'Journey patterns',
   newJourneyPatternModalTitle: 'Nytt journey pattern',
   newJourneyPatternModalSubTitle: 'Fyll i namn och tryck därefter på Skapa',
+  newJourneyPatternModaluniqueName: 'Journey pattern måste ha ett unikt namn',
   newJourneyPatternModalCancel: 'Avbryt',
   newJourneyPatternModalCreate: 'Skapa',
-  newJourneyPatternModalLabel: 'Namn',
+  newJourneyPatternModalLabel: 'Namn *',
   newJourneyPatternModalPlaceholder: 'Ex. "Lokal linje"',
   editorLoadingLineText: 'Läser in linje',
   editorLoadingNetworkAndStopsText: 'Läser in nätverk och hållplatser',
@@ -649,4 +650,11 @@ export const messages = {
   selectAll: 'Välj alla',
   clearAll: 'Ta bort valda',
   clearSelected: 'Ta bort valda',
+  copyJourneyPatternDialogTitle: 'Kopiera pysäkkiketju',
+  copyJourneyPatternDialogNameTemplateLabel: 'Namnmall *',
+  copyJourneyPatternDialogCancelButtonText: 'Nej',
+  copyJourneyPatternDialogSaveButtonText: 'Ja',
+  copyInstance: 'en kopia',
+  journeyPatternDuplicateNameValidationError:
+    'Journey pattern måste ha ett unikt namn',
 };

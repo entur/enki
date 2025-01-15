@@ -44,13 +44,21 @@ const LineEditorSteps = (props: Props) => {
               })
             }
           >
-            {(journeyPattern, onSave, onDelete) => (
+            {(
+              journeyPattern,
+              validateJourneyPatternName,
+              onSave,
+              onCopy,
+              onDelete,
+            ) => (
               <JourneyPatternEditor
                 journeyPattern={journeyPattern}
                 onSave={onSave}
                 onDelete={onDelete}
                 spoilPristine={props.spoilPristine}
                 transportMode={props.line.transportMode}
+                onCopy={onCopy}
+                validateJourneyPatternName={validateJourneyPatternName}
               />
             )}
           </JourneyPatterns>

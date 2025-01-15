@@ -341,9 +341,10 @@ export const messages = {
   editorJourneyPatternsTabLabel: 'Journey patterns',
   newJourneyPatternModalTitle: 'Nytt journey pattern',
   newJourneyPatternModalSubTitle: 'Fyll inn navn og trykk deretter Opprett',
+  newJourneyPatternModalUniqueName: 'Journey patternet må ha et unikt navn',
   newJourneyPatternModalCancel: 'Avbryt',
   newJourneyPatternModalCreate: 'Opprett',
-  newJourneyPatternModalLabel: 'Navn',
+  newJourneyPatternModalLabel: 'Navn *',
   newJourneyPatternModalPlaceholder: 'Eks. "Lokal rute"',
   editorLoadingLineText: 'Laster inn linje',
   editorLoadingNetworkAndStopsText: 'Laster inn nettverk og stoppesteder',
@@ -658,4 +659,11 @@ export const messages = {
   selectAll: 'Velg alle',
   clearAll: 'Fjern valgte',
   clearSelected: 'Fjern valgt',
+  copyJourneyPatternDialogTitle: 'Kopiér Journey Pattern',
+  copyJourneyPatternDialogNameTemplateLabel: 'Navnmal *',
+  copyJourneyPatternDialogCancelButtonText: 'Avbryt',
+  copyJourneyPatternDialogSaveButtonText: 'Lag kopi',
+  copyInstance: 'en kopi',
+  journeyPatternDuplicateNameValidationError:
+    'Journey patternet må ha et unikt navn',
 };

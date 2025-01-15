@@ -343,9 +343,11 @@ export const messages = {
   editorJourneyPatternsTabLabel: 'Pysäkkiketju',
   newJourneyPatternModalTitle: 'Uusi pysäkkiketju',
   newJourneyPatternModalSubTitle: 'Anna nimi ja paina Luo',
+  newJourneyPatternModalUniqueName:
+    'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
   newJourneyPatternModalCancel: 'Peruuta',
   newJourneyPatternModalCreate: 'Luo',
-  newJourneyPatternModalLabel: 'Nimi',
+  newJourneyPatternModalLabel: 'Nimi *',
   newJourneyPatternModalPlaceholder: 'Esimerkiksi "Paikallisreitti"',
   editorLoadingLineText: 'Lataa linja',
   editorLoadingNetworkAndStopsText: 'Lataa verkko ja pysäkit',
@@ -664,4 +666,11 @@ export const messages = {
   selectAll: 'Valitse kaikki',
   clearAll: 'Poista kaikki valinnat',
   clearSelected: 'Poista valinta',
+  copyJourneyPatternDialogTitle: 'Kopioi pysäkkiketju',
+  copyJourneyPatternDialogNameTemplateLabel: 'Nimi *',
+  copyJourneyPatternDialogCancelButtonText: 'Peruta',
+  copyJourneyPatternDialogSaveButtonText: 'Luo kopio',
+  copyInstance: 'kopio',
+  journeyPatternDuplicateNameValidationError:
+    'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
 };
