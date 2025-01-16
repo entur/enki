@@ -10,11 +10,9 @@ import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { store } from 'store/store';
 import { selectAuthLoaded, updateAuth } from 'auth/authSlice';
 import { selectConfigLoaded, updateConfig } from 'config/configSlice';
-import { normalizeAllUrls } from 'helpers/url';
 import { EnkiIntlProvider } from 'i18n/EnkiIntlProvider';
 import { Provider } from 'react-redux';
 import './styles/index.scss';
-import { browserTracingIntegration } from '@sentry/react';
 import SandboxFeature from './ext/SandboxFeature';
 import { LandingPage } from './scenes/App/LandingPage';
 
@@ -22,7 +20,7 @@ const initSentry = (dsn?: string) => {
   if (dsn) {
     Sentry.init({
       dsn: dsn,
-      integrations: [browserTracingIntegration()],
+      integrations: [Sentry.browserTracingIntegration()],
 
       // We recommend adjusting this value in production, or using tracesSampler
       // for finer control
@@ -30,9 +28,6 @@ const initSentry = (dsn?: string) => {
 
       release: import.meta.env.REACT_APP_VERSION,
       attachStacktrace: true,
-      beforeSend(e) {
-        return normalizeAllUrls(e);
-      },
     });
   }
 };
