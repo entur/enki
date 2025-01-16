@@ -125,5 +125,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "@azure/msal-react": {
+      "react": "^16.8.0 || ^17 || ^18 || ^19"
+    }
   }
 }
