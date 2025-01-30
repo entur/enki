@@ -55,6 +55,37 @@ export const getNetworkByIdQuery = `
   }
 `;
 
+export const getBrandingsQuery = `
+  query GetBrandings {
+    brandings {
+      id,
+      name,
+      shortName,
+      description,
+      url,
+      imageUrl
+    }
+  }
+`;
+
+export const getBrandingByIdQuery = `
+  query GetBrandingById($id:ID!) {
+    branding(id: $id) {
+      id,
+      version,
+      created,
+      createdBy,
+      changed,
+      changedBy,
+      name,
+      shortName,
+      description,
+      url,
+      imageUrl
+    }
+  }
+`;
+
 export const getFlexibleLinesQuery = `
 query getFlexibleLines {
   flexibleLines {
