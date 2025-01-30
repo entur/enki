@@ -20,6 +20,10 @@ export interface SandboxFeatures {
    * Map for editing stop places as part JourneyPattern form
    */
   JourneyPatternStopPointMap: boolean;
+  /**
+   * Enables Matomo tracking; Requires also specifying trackerUrl in the Config type in the feature folder
+   */
+  MatomoTracker: boolean;
 }
 
 export interface Config {
