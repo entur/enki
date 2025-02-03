@@ -21,9 +21,13 @@ export interface SandboxFeatures {
    */
   JourneyPatternStopPointMap: boolean;
   /**
-   * Enables Matomo tracking; Requires also specifying trackerUrl in the Config type in the feature folder
+   * Matomo web analytics
    */
   MatomoTracker: boolean;
+  /**
+   * Cookie consent management provider
+   */
+  CookieInformation: boolean;
 }
 
 export interface Config {

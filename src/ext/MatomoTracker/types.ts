@@ -2,7 +2,6 @@ import { Config } from '../../config/config';
 
 export interface MatomoConfig extends Config {
   matomo: {
-    trackerUrl: string;
-    cookieConsentUrl: string;
+    src: string;
   };
 }

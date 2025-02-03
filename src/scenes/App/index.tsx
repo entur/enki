@@ -60,7 +60,8 @@ const App = () => {
   return (
     <div className="app">
       <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
-      <SandboxFeature feature={'MatomoTracker'} />
+      <SandboxFeature feature="MatomoTracker" />
+      <SandboxFeature feature="CookieInformation" />
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <div>
