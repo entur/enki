@@ -20,6 +20,14 @@ export interface SandboxFeatures {
    * Map for editing stop places as part JourneyPattern form
    */
   JourneyPatternStopPointMap: boolean;
+  /**
+   * Matomo web analytics
+   */
+  MatomoTracker: boolean;
+  /**
+   * Cookie consent management provider
+   */
+  CookieInformation: boolean;
 }
 
 export interface Config {
