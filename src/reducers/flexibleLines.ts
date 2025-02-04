@@ -34,6 +34,7 @@ const flexibleLines = (
       const newFlexibleLine: FlexibleLine = {
         ...action.line,
         networkRef: action.line.network?.id,
+        brandingRef: action.line.branding?.id,
         journeyPatterns: newJourneyPatterns,
       };
 

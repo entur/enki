@@ -99,6 +99,9 @@ query getFlexibleLines {
     network {
       id
     },
+    branding {
+      id
+      },
     journeyPatterns {
       pointsInSequence {
         flexibleStopPlace {
@@ -130,6 +133,9 @@ export const getFlexibleLineByIdQuery = `
       notices { text }
       bookingArrangement { ...bookingArrangementFields },
       network {
+        id
+      },
+      branding {
         id
       },
       journeyPatterns {
@@ -226,6 +232,9 @@ export const getlineByIdQuery = `
       notices { text }
       network {
         id
+      },
+      branding {
+      id
       },
       journeyPatterns {
         id,
