@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { useConfig } from '../../config/ConfigContext';
 import { createUuid } from '../../helpers/generators';
+import { Branding } from '../../model/Branding';
 
 export const useUttuErrors = (
   error: ApolloError | undefined,
@@ -36,6 +37,7 @@ type UseLineReturnType = {
   loading: boolean;
   error: ApolloError | undefined;
   networks: Network[] | undefined;
+  brandings: Branding[] | undefined;
   notFound: boolean;
 };
 
@@ -44,6 +46,7 @@ type UseLineType = () => UseLineReturnType;
 interface LineData {
   line: Line;
   networks: Network[] | undefined;
+  brandings: Branding[] | undefined;
 }
 
 export const useLine: UseLineType = () => {
@@ -57,6 +60,7 @@ export const useLine: UseLineType = () => {
         id: match?.params.id || '',
         includeLine: !isBlank(match?.params.id),
       },
+      fetchPolicy: 'network-only',
     },
   );
 
@@ -72,6 +76,7 @@ export const useLine: UseLineType = () => {
           })),
         })),
         networkRef: data?.line.network?.id,
+        brandingRef: data?.line.branding?.id,
       });
     }
   }, [data?.line]);
@@ -83,6 +88,7 @@ export const useLine: UseLineType = () => {
     loading,
     error,
     networks: data?.networks,
+    brandings: data?.brandings,
     notFound: data?.line === null && !isBlank(match?.params.id),
   };
 };

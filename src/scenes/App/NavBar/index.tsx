@@ -126,6 +126,11 @@ const NavBar = () => {
               setRedirect={setRedirect}
             />
             <NavBarItem
+              text={formatMessage({ id: 'navBarBrandingsMenuItemLabel' })}
+              path="/brandings"
+              setRedirect={setRedirect}
+            />
+            <NavBarItem
               text={formatMessage({ id: 'navBarExportsMenuItemLabel' })}
               path="/exports"
               setRedirect={setRedirect}

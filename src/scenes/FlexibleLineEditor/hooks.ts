@@ -5,11 +5,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
+import { loadBrandings } from '../../actions/brandings';
 
 export const useLoadDependencies = () => {
   const params = useParams();
   const navigate = useNavigate();
   const [networksIsLoading, setNetworksIsLoading] = useState(true);
+  const [brandingsIsLoading, setBrandingsIsLoading] = useState(true);
   const [flexibleLineIsLoading, setFlexibleLineIsLoading] = useState(true);
   const [flexibleStopPlacesIsLoading, setFlexibleStopPlacesIsLoading] =
     useState(true);
@@ -30,6 +32,11 @@ export const useLoadDependencies = () => {
     [dispatch],
   );
 
+  const dispatchLoadBrandings = useCallback(
+    () => dispatch(loadBrandings()).then(() => setBrandingsIsLoading(false)),
+    [dispatch],
+  );
+
   const dispatchLoadFlexibleLineById = useCallback(() => {
     if (params.id) {
       const lineType = params.id.split(':')[1];
@@ -44,16 +51,21 @@ export const useLoadDependencies = () => {
 
   useEffect(() => {
     dispatchLoadNetworks();
+    dispatchLoadBrandings();
     dispatchLoadFlexibleLineById();
     dispatchLoadFlexibleStopPlaces();
   }, [
     dispatchLoadNetworks,
+    dispatchLoadBrandings,
     dispatchLoadFlexibleStopPlaces,
     dispatchLoadFlexibleLineById,
   ]);
   return {
     isLoadingDependencies:
-      networksIsLoading || flexibleLineIsLoading || flexibleStopPlacesIsLoading,
+      networksIsLoading ||
+      brandingsIsLoading ||
+      flexibleLineIsLoading ||
+      flexibleStopPlacesIsLoading,
     refetchFlexibleLine: dispatchLoadFlexibleLineById,
   };
 };
