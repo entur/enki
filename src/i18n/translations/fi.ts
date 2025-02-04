@@ -487,6 +487,7 @@ export const messages = {
   editorDeleteBrandingConfirmationDialogTitle: 'Poista brändi',
   editorDeleteBrandingConfirmationDialogMessage:
     'Oletko varma, että haluat poistaa tämän brändin?',
+  brandingsDropdownLabelText: 'Brändi',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Luo joustava pysäkki',
   stopPlaceText: 'Joustava pysäkki',
   stopPlace: 'Joustava pysäkki *',

@@ -411,6 +411,9 @@ const LineEditorPage = {
           id
           authorityRef
         }
+        branding {
+          id
+        }
         journeyPatterns {
           id
           name
@@ -476,6 +479,16 @@ const LineEditorPage = {
         authorityRef
       }
     `,
+    brandings: gql`
+      fragment LineEditorPageBrandings on Branding {
+        id
+        name
+        shortName
+        description
+        url
+        imageUrl
+      }
+    `,
   },
 };
 
@@ -487,9 +500,13 @@ export const LINE_EDITOR_QUERY = gql`
     networks {
       ...LineEditorPageNetworks
     }
+    brandings {
+      ...LineEditorPageBrandings
+    }
   }
   ${LineEditorPage.fragments.line}
   ${LineEditorPage.fragments.networks}
+  ${LineEditorPage.fragments.brandings}
 `;
 
 const ExportPage = {

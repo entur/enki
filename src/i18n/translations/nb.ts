@@ -485,6 +485,7 @@ export const messages = {
   editorDeleteBrandingConfirmationDialogTitle: 'Slette merkevare',
   editorDeleteBrandingConfirmationDialogMessage:
     'Er du sikker på at du ønsker å slette denne merkevaren?',
+  brandingsDropdownLabelText: 'Merkevare',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Opprett fleksibelt stoppested',
   editorDescription:
     'Fyll inn liste med koordinater på GeoJSON-format, eller klikk i kartet for å opprette polygon.',

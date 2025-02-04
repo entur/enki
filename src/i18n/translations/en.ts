@@ -486,6 +486,7 @@ export const messages: MessagesKey = {
   editorDeleteBrandingConfirmationDialogMessage:
     'Are you sure you want to delete this branding?',
   editorEditBrandingHeaderText: 'Edit branding',
+  brandingsDropdownLabelText: 'Branding',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Create flexible stop place',
   stopPlaceText: 'flexible stop place',
   stopPlace: 'Flexible stop place *',

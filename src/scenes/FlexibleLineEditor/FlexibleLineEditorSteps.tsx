@@ -7,12 +7,14 @@ import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
 import './styles.scss';
+import { Branding } from '../../model/Branding';
 
 type Props = {
   activeStep: number;
   flexibleLine: FlexibleLine;
   changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
   networks: Network[];
+  brandings: Branding[];
   operators: Organisation[];
   spoilPristine: boolean;
 };
@@ -28,6 +30,7 @@ const FlexibleLineEditor = (props: Props) => {
               line={props.flexibleLine}
               operators={props.operators}
               networks={props.networks}
+              brandings={props.brandings}
               onChange={props.changeFlexibleLine}
               spoilPristine={props.spoilPristine}
             />

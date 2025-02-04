@@ -494,6 +494,7 @@ export const messages = {
   editorDeleteBrandingConfirmationDialogTitle: 'Ta bort varumärke',
   editorDeleteBrandingConfirmationDialogMessage:
     'Är du säker på att du vill ta bort detta varumärke?',
+  brandingsDropdownLabelText: 'Varumärke',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Skapa flexibel hållplats',
   editorDescription:
     'Fyll i lista med koordinater i GeoJSON-formatet, eller klicka i kartan för att skapa en polygon.',

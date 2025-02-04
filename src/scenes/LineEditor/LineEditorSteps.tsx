@@ -6,12 +6,14 @@ import ServiceJourneys from 'components/ServiceJourneys';
 import Line from 'model/Line';
 import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
+import { Branding } from '../../model/Branding';
 
 type Props = {
   activeStep: number;
   line: Line;
   changeLine: (line: Line) => void;
   networks: Network[];
+  brandings: Branding[];
   operators: Organisation[];
   spoilPristine: boolean;
 };
@@ -26,6 +28,7 @@ const LineEditorSteps = (props: Props) => {
               line={props.line}
               operators={props.operators}
               networks={props.networks}
+              brandings={props.brandings}
               onChange={props.changeLine}
               spoilPristine={props.spoilPristine}
             />

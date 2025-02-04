@@ -13,7 +13,7 @@ import {
 } from 'helpers/validation';
 import Line, { lineToPayload } from 'model/Line';
 import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Navigate, useMatch, useNavigate } from 'react-router-dom';
@@ -37,8 +37,16 @@ export default () => {
   const organisations = useAppSelector((state) => state.organisations);
   const editor = useAppSelector((state) => state.editor);
 
-  const { line, setLine, refetchLine, loading, error, networks, notFound } =
-    useLine();
+  const {
+    line,
+    setLine,
+    refetchLine,
+    loading,
+    error,
+    networks,
+    brandings,
+    notFound,
+  } = useLine();
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
@@ -146,6 +154,7 @@ export default () => {
                 changeLine={onChange}
                 operators={filterNetexOperators(organisations ?? [])}
                 networks={networks || []}
+                brandings={brandings || []}
                 spoilPristine={nextClicked}
               />
             )}

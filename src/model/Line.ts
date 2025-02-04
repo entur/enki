@@ -6,6 +6,7 @@ import JourneyPattern, {
 } from './JourneyPattern';
 import { Network } from './Network';
 import Notice from './Notice';
+import { Branding } from './Branding';
 
 interface Line extends VersionedType {
   name?: string;
@@ -15,8 +16,10 @@ interface Line extends VersionedType {
   transportMode?: VEHICLE_MODE;
   transportSubmode?: VEHICLE_SUBMODE;
   network?: Network;
-  networkRef?: string; // Either of network or networkRef seems useless / duplicated
+  networkRef?: string;
   operatorRef?: string;
+  branding?: Branding;
+  brandingRef?: string;
   journeyPatterns?: JourneyPattern[];
   notices?: Notice[];
 }
@@ -26,9 +29,10 @@ export const initLine = () => ({
 });
 
 export const lineToPayload = (line: Line, isFlexible = false) => {
-  const { network, ...rest } = line;
+  const { network, branding, ...rest } = line;
   return {
     ...rest,
+    brandingRef: rest.brandingRef || null,
     journeyPatterns: line.journeyPatterns?.map((journeyPattern) =>
       journeyPatternToPayload(journeyPattern, isFlexible),
     ),
