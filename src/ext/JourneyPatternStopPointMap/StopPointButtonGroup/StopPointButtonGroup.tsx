@@ -4,25 +4,18 @@ import { TertiaryButton } from '@entur/button';
 import { PositionIcon } from '@entur/icons';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import StopPoint from '../../../model/StopPoint';
+import { StopPointButtonGroupProps } from './types';
+import { FeatureComponent } from '@entur/react-component-toggle';
 
-interface StopPointButtonGroupProps {
-  flexibleLineType: FlexibleLineType | undefined;
-  canDelete: boolean | undefined;
-  stopPoint: StopPoint;
-  onFocusedQuayIdUpdate?:
-    | ((quayId: string | undefined | null) => void)
-    | undefined;
-  onDeleteDialogOpen: (isOpen: boolean) => void;
-}
-
-export const StopPointButtonGroup = ({
+export const StopPointButtonGroup: FeatureComponent<
+  StopPointButtonGroupProps
+> = ({
   flexibleLineType,
   canDelete,
   stopPoint,
   onFocusedQuayIdUpdate,
   onDeleteDialogOpen,
-}: StopPointButtonGroupProps) => {
+}) => {
   const intl = useIntl();
   const { formatMessage } = intl;
   const isLocateButtonAvailable =

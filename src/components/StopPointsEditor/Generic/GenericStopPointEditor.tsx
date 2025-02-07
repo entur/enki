@@ -21,6 +21,8 @@ import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { GenericStopPointEditorProps } from '../common/StopPointEditorProps';
 import StopPointOrder from '../common/StopPointOrder';
 import { ComponentToggle } from '@entur/react-component-toggle';
+import { StopPointButtonGroupProps } from '../../../ext/JourneyPatternStopPointMap/StopPointButtonGroup/types';
+import { SandboxFeatures } from '../../../config/config';
 
 export const GenericStopPointEditor = ({
   order,
@@ -94,7 +96,7 @@ export const GenericStopPointEditor = ({
           />
         </div>
 
-        <ComponentToggle
+        <ComponentToggle<keyof SandboxFeatures, StopPointButtonGroupProps>
           feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
           renderFallback={() => (
             <DeleteButton
