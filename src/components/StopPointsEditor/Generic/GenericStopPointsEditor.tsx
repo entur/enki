@@ -4,11 +4,11 @@ import StopPoint from 'model/StopPoint';
 import { useIntl } from 'react-intl';
 import { StopPointsEditorProps } from '..';
 import { GenericStopPointEditor } from './GenericStopPointEditor';
-import SandboxFeature from '../../../ext/SandboxFeature';
 import { useConfig } from '../../../config/ConfigContext';
 import { SmallAlertBox } from '@entur/alert';
 import '../styles.scss';
 import { useCallback, useEffect, useState } from 'react';
+import { ComponentToggle } from '@entur/react-component-toggle';
 
 export const GenericStopPointsEditor = ({
   pointsInSequence,
@@ -79,14 +79,16 @@ export const GenericStopPointsEditor = ({
             />
           ))}
         </div>
-        <SandboxFeature
+        <ComponentToggle
           feature={'JourneyPatternStopPointMap'}
-          pointsInSequence={pointsInSequence}
-          addStopPoint={addStopPoint}
-          deleteStopPoint={deleteStopPoint}
-          transportMode={transportMode}
-          focusedQuayId={focusedQuayId}
-          onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
+          componentProps={{
+            pointsInSequence,
+            addStopPoint,
+            deleteStopPoint,
+            transportMode,
+            focusedQuayId,
+            onFocusedQuayIdUpdate,
+          }}
         />
       </div>
       <AddButton

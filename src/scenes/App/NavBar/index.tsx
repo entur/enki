@@ -16,7 +16,7 @@ import LogoutChip from './LogoutChip';
 import './styles.scss';
 import Logo from './Logo';
 import { useConfig } from '../../../config/ConfigContext';
-import SandboxFeature from '../../../ext/SandboxFeature';
+import { ComponentToggle } from '@entur/react-component-toggle';
 
 const isActive = (pathname: string, path: string) =>
   pathname.split('/')[1] === path.split('/')[1];
@@ -82,7 +82,7 @@ const NavBar = () => {
     <Contrast as="nav" className="navbar-wrapper">
       <SideNavigation className="side-navigation">
         <Link to={'/'}>
-          <SandboxFeature
+          <ComponentToggle
             feature={`${extPath}/CustomLogo`}
             renderFallback={() => <Logo />}
           />
@@ -147,7 +147,7 @@ const NavBar = () => {
           />
         )}
 
-        <SandboxFeature
+        <ComponentToggle
           feature={`${extPath}/Navbar`}
           renderFallback={() => <></>}
         />

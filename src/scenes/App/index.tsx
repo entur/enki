@@ -22,7 +22,7 @@ import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
 import MarkerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { fetchUserContext } from '../../auth/userContextSlice';
 import { useConfig } from '../../config/ConfigContext';
-import SandboxFeature from '../../ext/SandboxFeature';
+import { ComponentToggle } from '@entur/react-component-toggle';
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: MarkerIcon2x,
@@ -60,8 +60,8 @@ const App = () => {
   return (
     <div className="app">
       <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
-      <SandboxFeature feature="MatomoTracker" />
-      <SandboxFeature feature="CookieInformation" />
+      <ComponentToggle feature="MatomoTracker" />
+      <ComponentToggle feature="CookieInformation" />
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <div>
