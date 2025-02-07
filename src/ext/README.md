@@ -41,7 +41,7 @@ to your component's runtime code.
 To use your sandbox feature in the main code, you'll use the SandboxFeature component
 to wrap it:
 
-    <ComponentToggle<keyof SandboxFeatures, FoobarProps>
+    <ComponentToggle<SandboxFeatures, FoobarProps>
         feature="foobar"
         foo="bar"
     />
@@ -54,7 +54,7 @@ If "foobar" is `true` it will render:
 A `renderFallback` function prop is also available to give the option to render something else
 if the feature is not enabled:
 
-    <ComponentToggle<keyof SandboxFeatures, FoobarProps>
+    <ComponentToggle<SandboxFeatures, FoobarProps>
         feature="foobar"
         foo="bar"
         renderFallback={() => <h1>foo</h1>}
@@ -103,14 +103,14 @@ and configuration setting:
 
 You can reference each sub-level feature as follows:
 
-    <ComponentToggle<keyof SandboxFeatures, FoobarProps>
+    <ComponentToggle<SandboxFeatures, FoobarProps>
         feature="foobar/foo"
         foo="bar"
     />
 
 and
 
-    <ComponentToggle<keyof SandboxFeatures, FoobarProps>
+    <ComponentToggle<SandboxFeatures, FoobarProps>
         feature="foobar/bar"
         bar="foo"
     />

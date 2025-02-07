@@ -96,7 +96,7 @@ export const GenericStopPointEditor = ({
           />
         </div>
 
-        <ComponentToggle<keyof SandboxFeatures, StopPointButtonGroupProps>
+        <ComponentToggle<SandboxFeatures, StopPointButtonGroupProps>
           feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
           renderFallback={() => (
             <DeleteButton

@@ -10,7 +10,7 @@ import { VEHICLE_MODE } from '../model/enums';
  *  For multi-level features, only the top-level featureName should be
  *  toggled.
  */
-export interface SandboxFeatures {
+export interface SandboxFeatureConfig {
   /**
    * Fintraffic's custom features or assets grouped in one location;
    * For example: custom styles override, logo component and translations provider.
@@ -29,6 +29,8 @@ export interface SandboxFeatures {
    */
   CookieInformation: boolean;
 }
+
+export type SandboxFeatures = keyof SandboxFeatureConfig;
 
 export interface Config {
   /**
@@ -86,7 +88,7 @@ export interface Config {
   /**
    * Sandbox feature configuration
    */
-  sandboxFeatures?: SandboxFeatures;
+  sandboxFeatures?: SandboxFeatureConfig;
 
   /**
    * Path to folder inder /ext that contains features or assets of a company that adopted Nplan.
