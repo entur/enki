@@ -20,6 +20,8 @@ export const GenericStopPointsEditor = ({
   transportMode,
   initDefaultJourneyPattern,
   swapStopPoints,
+  stopPlacesUsedInLineIndex,
+  onUpdateStopPlacesUsedInLineIndex,
 }: StopPointsEditorProps) => {
   const { formatMessage } = useIntl();
   const { sandboxFeatures } = useConfig();
@@ -76,12 +78,17 @@ export const GenericStopPointsEditor = ({
               flexibleLineType={flexibleLineType}
               onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
               swapStopPoints={swapStopPoints}
+              stopPlacesUsedInLineIndex={stopPlacesUsedInLineIndex}
+              onUpdateStopPlacesUsedInLineIndex={
+                onUpdateStopPlacesUsedInLineIndex
+              }
             />
           ))}
         </div>
         <SandboxFeature
           feature={'JourneyPatternStopPointMap'}
           pointsInSequence={pointsInSequence}
+          stopPlacesUsedInLineIndex={stopPlacesUsedInLineIndex}
           addStopPoint={addStopPoint}
           deleteStopPoint={deleteStopPoint}
           transportMode={transportMode}

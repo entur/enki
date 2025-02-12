@@ -6,6 +6,7 @@ import { GenericStopPointsEditor } from './Generic/GenericStopPointsEditor';
 import { MixedFlexibleStopPointsEditor } from './MixedFlexible/MixedFlexibleStopPointsEditor';
 import './styles.scss';
 import { VEHICLE_MODE } from '../../model/enums';
+import { StopPlace } from '../../api';
 
 export type StopPointsEditorProps = {
   flexibleLineType?: FlexibleLineType;
@@ -18,6 +19,8 @@ export type StopPointsEditorProps = {
   transportMode?: VEHICLE_MODE;
   initDefaultJourneyPattern: () => void;
   swapStopPoints: (position1: number, position2: number) => void;
+  stopPlacesUsedInLineIndex: StopPoint[];
+  onUpdateStopPlacesUsedInLineIndex: (stopPlace: StopPlace) => void;
 };
 
 export type StopPointsEditor =

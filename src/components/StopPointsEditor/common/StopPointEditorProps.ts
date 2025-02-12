@@ -1,6 +1,7 @@
 import { FlexibleLineType } from 'model/FlexibleLine';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import StopPoint from 'model/StopPoint';
+import { StopPlace } from '../../../api';
 
 export interface StopPointEditorProps {
   order?: number;
@@ -21,6 +22,8 @@ export interface GenericStopPointEditorProps extends StopPointEditorProps {
   order: number;
   isFirst: boolean;
   isLast: boolean;
+  stopPlacesUsedInLineIndex: StopPlace[];
+  onUpdateStopPlacesUsedInLineIndex: (stopPlace: StopPlace) => void;
 }
 
 export interface MixedFlexibleStopPointEditorProps

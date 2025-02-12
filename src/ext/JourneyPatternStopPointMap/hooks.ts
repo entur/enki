@@ -34,16 +34,20 @@ import {
   getStopPointLocationSequenceWithRouteGeometry,
 } from './helpers';
 import { useMap } from 'react-leaflet';
+import debounce from '../../components/StopPointsEditor/common/debounce';
 
 /**
  * Fetching stops data
  */
-export const useStopPlacesData = (transportMode: string | undefined) => {
+export const useStopPlacesData = (
+  transportMode: string | undefined,
+  mapSpecsState: MapSpecs,
+) => {
   const activeProvider =
     useAppSelector((state) => state.userContext.activeProviderCode) ?? '';
   const { uttuApiUrl } = useConfig();
   const auth = useAuth();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isStopDataLoading, setIsStopDataLoading] = useState<boolean>(false);
 
   const [stopPlacesState, setStopPlacesState] = useReducer<
     Reducer<
@@ -66,72 +70,131 @@ export const useStopPlacesData = (transportMode: string | undefined) => {
   );
 
   useEffect(() => {
-    if (transportMode) {
+    if (
+      transportMode &&
+      mapSpecsState &&
+      mapSpecsState.zoom &&
+      mapSpecsState.bounds[3] &&
+      mapSpecsState.bounds[2] &&
+      mapSpecsState.bounds[1] &&
+      mapSpecsState.bounds[0]
+    ) {
       auth.getAccessToken().then((token) => {
-        setIsLoading(true);
+        const loadingTimeout = setTimeout(() => {
+          setIsStopDataLoading(true);
+        }, 1250);
+
         UttuQuery(
           uttuApiUrl,
           activeProvider,
           getStopPlacesQuery,
-          { transportMode },
+          {
+            transportMode,
+            searchText: undefined,
+            northEastLat: mapSpecsState.bounds[3],
+            northEastLng: mapSpecsState.bounds[2],
+            southWestLat: mapSpecsState.bounds[1],
+            southWestLng: mapSpecsState.bounds[0],
+          },
           token,
-        ).then((data) => {
-          setIsLoading(false);
-          setStopPlacesState(getStopPlacesState(data?.stopPlaces || []));
-        });
+        )
+          .then((data) => {
+            setStopPlacesState(getStopPlacesState(data?.stopPlaces || []));
+          })
+          .finally(() => {
+            clearTimeout(loadingTimeout);
+            setIsStopDataLoading(false);
+          });
       });
     }
-  }, []);
+  }, [
+    mapSpecsState.bounds[3],
+    mapSpecsState.bounds[2],
+    mapSpecsState.bounds[1],
+    mapSpecsState.bounds[0],
+  ]);
 
   return {
     stopPlacesState,
-    isLoading,
+    isStopDataLoading,
   };
 };
 
 const defaultStopPlaces: StopPlace[] = [];
+
+export const useStopPlacesInLine = (stopPlacesUsedInLineIndex: StopPlace[]) => {
+  const [stopPlacesInLineState, setStopPlacesInLineState] =
+    useState<JourneyPatternsStopPlacesState>({
+      stopPlaces: [],
+      quayLocationsIndex: {},
+      quayStopPlaceIndex: {},
+    });
+
+  useEffect(() => {
+    setStopPlacesInLineState(getStopPlacesState(stopPlacesUsedInLineIndex));
+  }, [stopPlacesUsedInLineIndex]);
+
+  return {
+    stopPlacesInLineState,
+  };
+};
 
 /**
  * Combines two stop places data sets: one gotten from a normal initial stop places fetch,
  * and the other gotten by using the search input
  * @param stopPlacesState
  * @param searchedStopPlacesState
+ * @param stopPlacesUsedInLineIndex
  */
 export const useStopPlacesStateCombinedWithSearchResults = (
   stopPlacesState: JourneyPatternsStopPlacesState,
   searchedStopPlacesState: JourneyPatternsStopPlacesState,
+  stopPlacesInLineState: JourneyPatternsStopPlacesState,
 ) => {
   const stopPlaces = stopPlacesState?.stopPlaces || defaultStopPlaces;
 
   // Combining the whole stop places set and the search results:
   const totalStopPlaces = useMemo(() => {
     const total = [...stopPlaces];
-    searchedStopPlacesState.stopPlaces?.forEach((stopPlace) => {
+    const stopPlacesToCombine = [
+      ...stopPlacesInLineState.stopPlaces,
+      ...searchedStopPlacesState.stopPlaces,
+    ];
+    stopPlacesToCombine.forEach((stopPlace) => {
       if (stopPlaces.filter((s) => s.id === stopPlace.id).length === 0) {
         total.push(stopPlace);
       }
     });
+
     return total;
-  }, [stopPlaces, searchedStopPlacesState.stopPlaces]);
+  }, [
+    stopPlaces,
+    searchedStopPlacesState.stopPlaces,
+    stopPlacesInLineState.stopPlaces,
+  ]);
 
   const totalQuayLocationsIndex: Record<string, Centroid> = useMemo(() => {
     return {
       ...stopPlacesState?.quayLocationsIndex,
       ...searchedStopPlacesState.quayLocationsIndex,
+      ...stopPlacesInLineState.quayLocationsIndex,
     };
   }, [
     stopPlacesState?.quayLocationsIndex,
     searchedStopPlacesState.quayLocationsIndex,
+    stopPlacesInLineState.quayLocationsIndex,
   ]);
 
   const totalQuayStopPlaceIndex: Record<string, string> = useMemo(() => {
     return {
       ...stopPlacesState?.quayStopPlaceIndex,
       ...searchedStopPlacesState.quayStopPlaceIndex,
+      ...stopPlacesInLineState.quayStopPlaceIndex,
     };
   }, [
     stopPlacesState?.quayStopPlaceIndex,
     searchedStopPlacesState.quayStopPlaceIndex,
+    stopPlacesInLineState.quayStopPlaceIndex,
   ]);
 
   return {
@@ -334,20 +397,26 @@ export const useMapSpecs = () => {
     },
   );
 
-  const updateMapSpecs = useCallback(() => {
-    const newBounds = map.getBounds();
-
-    const newState: MapSpecs = {
-      zoom: map.getZoom(),
-      bounds: [
-        newBounds.getSouthWest().lng,
-        newBounds.getSouthWest().lat,
-        newBounds.getNorthEast().lng,
-        newBounds.getNorthEast().lat,
-      ],
-    };
-    setMapSpecsState(newState);
-  }, [map]);
+  const updateMapSpecs = useCallback(
+    debounce(
+      () => {
+        const newBounds = map.getBounds();
+        const newState: MapSpecs = {
+          zoom: map.getZoom(),
+          bounds: [
+            newBounds.getSouthWest().lng,
+            newBounds.getSouthWest().lat,
+            newBounds.getNorthEast().lng,
+            newBounds.getNorthEast().lat,
+          ],
+        };
+        setMapSpecsState(newState);
+      },
+      500,
+      undefined,
+    ),
+    [map],
+  );
 
   useEffect(() => {
     updateMapSpecs();
@@ -410,12 +479,17 @@ export const useFitMapBounds = (
   const map = useMap();
 
   useEffect(() => {
+    if (!boundsBeenFit.current && pointsInSequence?.length < 1) {
+      // That's a new line form, boundsBeenFit needs to be set to avoid this hook being triggered when the first stopPoint is added
+      boundsBeenFit.current = true;
+      return;
+    }
     if (
       boundsBeenFit.current ||
-      pointsInSequence?.length < 1 ||
       !quayLocationsIndex ||
       Object.keys(quayLocationsIndex).length === 0
     ) {
+      // gotta try again once quayLocationsIndex has the contents gathered
       return;
     }
 

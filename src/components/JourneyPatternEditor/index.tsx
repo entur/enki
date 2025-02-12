@@ -16,6 +16,7 @@ import { VEHICLE_MODE } from '../../model/enums';
 import ServiceJourney from '../../model/ServiceJourney';
 import { createUuid } from '../../helpers/generators';
 import { getJourneyPatternWithSwappedStopPoints } from './helpers';
+import { StopPlace } from '../../api';
 
 type Props = {
   journeyPattern: JourneyPattern;
@@ -24,6 +25,8 @@ type Props = {
   spoilPristine: boolean;
   flexibleLineType?: FlexibleLineType;
   transportMode?: VEHICLE_MODE;
+  stopPlacesUsedInLineIndex: StopPlace[];
+  onUpdateStopPlacesUsedInLineIndex: (stopPlace: StopPlace) => void;
 };
 
 const JourneyPatternEditor = ({
@@ -33,6 +36,8 @@ const JourneyPatternEditor = ({
   spoilPristine,
   flexibleLineType,
   transportMode,
+  stopPlacesUsedInLineIndex,
+  onUpdateStopPlacesUsedInLineIndex,
 }: Props) => {
   const { pointsInSequence, serviceJourneys } = journeyPattern;
   const journeyPatternRef = useRef<any>({
@@ -199,6 +204,8 @@ const JourneyPatternEditor = ({
           transportMode={transportMode}
           initDefaultJourneyPattern={initDefaultJourneyPattern}
           swapStopPoints={swapStopPoints}
+          stopPlacesUsedInLineIndex={stopPlacesUsedInLineIndex}
+          onUpdateStopPlacesUsedInLineIndex={onUpdateStopPlacesUsedInLineIndex}
         />
       </div>
       {onDelete && (

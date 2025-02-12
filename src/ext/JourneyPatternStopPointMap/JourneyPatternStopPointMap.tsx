@@ -1,5 +1,5 @@
 import './styles.scss';
-import { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import {
   FocusedMarker,
   FocusedMarkerNewMapState,
@@ -22,9 +22,13 @@ import {
   useMapZoomIntoLocation,
   useStopPlacesStateCombinedWithSearchResults,
   useRouteGeometry,
+  useStopPlacesData,
+  useStopPlacesInLine,
 } from './hooks';
 import Markers from './Markers';
 import { useConfig } from '../../config/ConfigContext';
+import Loading from '../../components/Loading';
+import { useIntl } from 'react-intl';
 
 const JourneyPatternStopPointMap = memo(
   ({
@@ -32,9 +36,9 @@ const JourneyPatternStopPointMap = memo(
     addStopPoint,
     deleteStopPoint,
     transportMode,
-    stopPlacesState,
     focusedQuayId,
     onFocusedQuayIdUpdate,
+    stopPlacesUsedInLineIndex,
   }: JourneyPatternStopPointMapProps) => {
     const { routeGeometrySupportedVehicleModes } = useConfig();
     let isRouteGeometryEnabled =
@@ -42,6 +46,10 @@ const JourneyPatternStopPointMap = memo(
       routeGeometrySupportedVehicleModes?.filter(
         (mode) => mode === transportMode,
       ).length > 0;
+
+    const { stopPlacesInLineState } = useStopPlacesInLine(
+      stopPlacesUsedInLineIndex,
+    );
 
     // Capture and store map's zoom level and view bounds.
     // Will be used later to produce markers within the visible bounds:
@@ -51,6 +59,12 @@ const JourneyPatternStopPointMap = memo(
         updateMapSpecs();
       },
     });
+
+    const { stopPlacesState, isStopDataLoading } = useStopPlacesData(
+      transportMode,
+      mapSpecsState,
+    );
+    const { formatMessage } = useIntl();
 
     // Search results stop places and its respective indexes:
     const [searchedStopPlacesState, setSearchedStopPlacesState] =
@@ -64,6 +78,7 @@ const JourneyPatternStopPointMap = memo(
     } = useStopPlacesStateCombinedWithSearchResults(
       stopPlacesState,
       searchedStopPlacesState,
+      stopPlacesInLineState,
     );
 
     // This hook manages what's shown on the map and how exactly:
@@ -173,25 +188,39 @@ const JourneyPatternStopPointMap = memo(
 
     return (
       <>
-        <SearchPopover
-          searchedStopPlaces={searchedStopPlacesState.stopPlaces}
-          transportMode={transportMode}
-          getSelectedQuayIds={getSelectedQuayIdsCallback}
-          onSearchResultLocated={processFocusedMarker}
-          onSearchedStopPlacesFetched={updateSearchedStopPlaces}
-        />
-        <ZoomControl position={'topright'} />
-        <Polyline positions={mapState.stopPointLocationSequence} />
-        <Markers
-          mapSpecsState={mapSpecsState}
-          mapState={mapState}
-          mapStateRef={mapStateRef}
-          stopPlaces={totalStopPlaces}
-          deleteStopPoint={deleteStopPoint}
-          addStopPoint={addStopPoint}
-          clearFocusedMarker={clearFocusedMarker}
-          onStopPointAddedOrDeleted={updateMapState}
-        />
+        {!isStopDataLoading ? (
+          <>
+            <SearchPopover
+              searchedStopPlaces={searchedStopPlacesState.stopPlaces}
+              transportMode={transportMode}
+              getSelectedQuayIds={getSelectedQuayIdsCallback}
+              onSearchResultLocated={processFocusedMarker}
+              onSearchedStopPlacesFetched={updateSearchedStopPlaces}
+            />
+            <ZoomControl position={'topright'} />
+            <Polyline positions={mapState.stopPointLocationSequence} />
+            <Markers
+              mapSpecsState={mapSpecsState}
+              mapState={mapState}
+              mapStateRef={mapStateRef}
+              stopPlaces={totalStopPlaces}
+              deleteStopPoint={deleteStopPoint}
+              addStopPoint={addStopPoint}
+              clearFocusedMarker={clearFocusedMarker}
+              onStopPointAddedOrDeleted={updateMapState}
+            />
+          </>
+        ) : (
+          <div className="stop-places-spinner">
+            <Loading
+              isFullScreen={false}
+              text={formatMessage({ id: 'mapLoadingStopsDataText' })}
+              isLoading={isStopDataLoading}
+              children={null}
+              className=""
+            />
+          </div>
+        )}
       </>
     );
   },

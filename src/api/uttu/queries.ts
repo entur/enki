@@ -445,6 +445,34 @@ const LineEditorPage = {
         authorityRef
       }
     `,
+    stopPlaces: gql`
+      fragment LineEditorPageStopPlaces on StopPlace {
+        id
+        name {
+          value
+        }
+        transportMode
+        centroid {
+          location {
+            longitude
+            latitude
+          }
+        }
+        quays {
+          id
+          name {
+            value
+          }
+          publicCode
+          centroid {
+            location {
+              longitude
+              latitude
+            }
+          }
+        }
+      }
+    `,
   },
 };
 
@@ -456,9 +484,13 @@ export const LINE_EDITOR_QUERY = gql`
     networks {
       ...LineEditorPageNetworks
     }
+    stopPlaces(lineId: $id) {
+      ...LineEditorPageStopPlaces
+    }
   }
   ${LineEditorPage.fragments.line}
   ${LineEditorPage.fragments.networks}
+  ${LineEditorPage.fragments.stopPlaces}
 `;
 
 const ExportPage = {
@@ -548,17 +580,30 @@ export const STOP_PLACE_BY_QUAY_REF_QUERY = gql`
       name {
         value
       }
+      transportMode
+      centroid {
+        location {
+          longitude
+          latitude
+        }
+      }
       quays {
         id
         publicCode
+        centroid {
+          location {
+            longitude
+            latitude
+          }
+        }
       }
     }
   }
 `;
 
 export const getStopPlacesQuery = `
-  query StopPlacesQuery($transportMode:TransportModeEnumeration, $searchText:String) {
-    stopPlaces(transportMode: $transportMode, searchText: $searchText) {
+  query StopPlacesQuery($transportMode:TransportModeEnumeration, $searchText:String, $northEastLat:BigDecimal, $northEastLng:BigDecimal, $southWestLat:BigDecimal, $southWestLng:BigDecimal) {
+    stopPlaces(transportMode: $transportMode, searchText: $searchText, northEastLat: $northEastLat, northEastLng: $northEastLng, southWestLat: $southWestLat, southWestLng: $southWestLng) {
       id
       name {
         value

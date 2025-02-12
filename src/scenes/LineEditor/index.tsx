@@ -22,6 +22,7 @@ import LineEditorSteps from './LineEditorSteps';
 import { FIXED_LINE_STEPS } from './constants';
 import { useLine, useUttuErrors } from './hooks';
 import './styles.scss';
+import { StopPlace } from '../../api';
 
 export default () => {
   const intl = useIntl();
@@ -37,8 +38,17 @@ export default () => {
   const organisations = useAppSelector((state) => state.organisations);
   const editor = useAppSelector((state) => state.editor);
 
-  const { line, setLine, refetchLine, loading, error, networks, notFound } =
-    useLine();
+  const {
+    line,
+    setLine,
+    refetchLine,
+    loading,
+    error,
+    networks,
+    notFound,
+    stopPlacesUsedInLineIndex,
+    setStopPlacesUsedInLineIndex,
+  } = useLine();
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
@@ -49,6 +59,27 @@ export default () => {
     setLine(changeLine);
     dispatch(setSavedChanges(false));
   };
+
+  const onUpdateStopPlacesUsedInLineIndex = useCallback(
+    (newStopPlace: StopPlace) => {
+      if (
+        newStopPlace &&
+        stopPlacesUsedInLineIndex &&
+        stopPlacesUsedInLineIndex.filter(
+          (s: StopPlace) => s.id === newStopPlace.id,
+        ).length == 0
+      ) {
+        setStopPlacesUsedInLineIndex([
+          ...stopPlacesUsedInLineIndex,
+          newStopPlace,
+        ]);
+      }
+      if (newStopPlace && !stopPlacesUsedInLineIndex) {
+        setStopPlacesUsedInLineIndex([newStopPlace]);
+      }
+    },
+    [stopPlacesUsedInLineIndex],
+  );
 
   const onSave = useCallback(async () => {
     setNextClicked(true);
@@ -146,6 +177,10 @@ export default () => {
                 changeLine={onChange}
                 operators={filterNetexOperators(organisations ?? [])}
                 networks={networks || []}
+                stopPlacesUsedInLineIndex={stopPlacesUsedInLineIndex || []}
+                onUpdateStopPlacesUsedInLineIndex={
+                  onUpdateStopPlacesUsedInLineIndex
+                }
                 spoilPristine={nextClicked}
               />
             )}

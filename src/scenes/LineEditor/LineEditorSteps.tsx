@@ -6,6 +6,7 @@ import ServiceJourneys from 'components/ServiceJourneys';
 import Line from 'model/Line';
 import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
+import { StopPlace } from '../../api';
 
 type Props = {
   activeStep: number;
@@ -14,6 +15,8 @@ type Props = {
   networks: Network[];
   operators: Organisation[];
   spoilPristine: boolean;
+  stopPlacesUsedInLineIndex: StopPlace[];
+  onUpdateStopPlacesUsedInLineIndex: (stopPlace: StopPlace) => void;
 };
 
 const LineEditorSteps = (props: Props) => {
@@ -51,6 +54,10 @@ const LineEditorSteps = (props: Props) => {
                 onDelete={onDelete}
                 spoilPristine={props.spoilPristine}
                 transportMode={props.line.transportMode}
+                stopPlacesUsedInLineIndex={props.stopPlacesUsedInLineIndex}
+                onUpdateStopPlacesUsedInLineIndex={
+                  props.onUpdateStopPlacesUsedInLineIndex
+                }
               />
             )}
           </JourneyPatterns>

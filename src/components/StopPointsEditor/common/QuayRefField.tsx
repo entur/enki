@@ -6,11 +6,14 @@ import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import debounce from './debounce';
 import { quaySearchResults } from './quaySearchResults';
+import { StopPlace } from '../../../api';
 
 interface Props {
   initialQuayRef?: string | null;
   errorFeedback: ErrorHandling;
   onChange: (quayRef: string) => void;
+  onUpdateStopPlacesUsedInLineIndex: (stopPlace: StopPlace) => void;
+  existingStopPlace: StopPlace | undefined;
 }
 
 export const useOnQuayRefChange = (
@@ -28,6 +31,8 @@ export const QuayRefField = ({
   initialQuayRef,
   errorFeedback,
   onChange,
+  onUpdateStopPlacesUsedInLineIndex,
+  existingStopPlace,
 }: Props) => {
   const { formatMessage } = useIntl();
   const [quayRefInputValue, setQuayRefInputValue] = useState(initialQuayRef);
@@ -35,7 +40,14 @@ export const QuayRefField = ({
   const { stopPlace, quay, refetch, loading } = useQuaySearch(
     initialQuayRef,
     quayRefInputValue,
+    existingStopPlace,
   );
+
+  useEffect(() => {
+    if (stopPlace) {
+      onUpdateStopPlacesUsedInLineIndex(stopPlace);
+    }
+  }, [stopPlace]);
 
   const quaySearchFeedback = quaySearchResults(
     { stopPlace, quay },

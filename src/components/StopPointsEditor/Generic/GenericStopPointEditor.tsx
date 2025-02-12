@@ -34,6 +34,8 @@ export const GenericStopPointEditor = ({
   flexibleLineType,
   onFocusedQuayIdUpdate,
   swapStopPoints,
+  stopPlacesUsedInLineIndex,
+  onUpdateStopPlacesUsedInLineIndex,
 }: GenericStopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const {
@@ -41,7 +43,9 @@ export const GenericStopPointEditor = ({
     boarding: boardingError,
     frontText: frontTextError,
   } = validateStopPoint(stopPoint, isFirst!, isLast!);
-
+  const existingStopPlace = stopPlacesUsedInLineIndex?.find(
+    (stop) => stop.quays.filter((q) => q.id === stopPoint.quayRef).length > 0,
+  );
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
 
   const onQuayRefChange = useOnQuayRefChange(stopPoint, onChange);
@@ -70,6 +74,7 @@ export const GenericStopPointEditor = ({
         </div>
         <div className="stop-point-info">
           <QuayRefField
+            existingStopPlace={existingStopPlace}
             initialQuayRef={stopPoint.quayRef}
             errorFeedback={getErrorFeedback(
               stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
@@ -77,6 +82,9 @@ export const GenericStopPointEditor = ({
               quayRefPristine,
             )}
             onChange={onQuayRefChange}
+            onUpdateStopPlacesUsedInLineIndex={
+              onUpdateStopPlacesUsedInLineIndex
+            }
           />
 
           <FrontTextTextField
