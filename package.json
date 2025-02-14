@@ -15,7 +15,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@apollo/client": "3.13.0",
+    "@apollo/client": "3.13.1",
     "@azure/msal-browser": "3.28.1",
     "@azure/msal-react": "2.2.0",
     "@entur/a11y": "0.2.95",
