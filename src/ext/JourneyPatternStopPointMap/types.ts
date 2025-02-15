@@ -1,10 +1,8 @@
-import { SandboxFeatureProps } from '../SandboxFeature';
-import { SandboxFeatures } from '../../config/config';
 import StopPoint from '../../model/StopPoint';
 import { VEHICLE_MODE } from '../../model/enums';
 import { Centroid, Location, Quay, StopPlace } from '../../api';
 
-export interface MapWrapperProps extends SandboxFeatureProps<SandboxFeatures> {
+export interface MapWrapperProps {
   transportMode: VEHICLE_MODE;
   pointsInSequence: StopPoint[];
   deleteStopPoint: (index: number) => void;

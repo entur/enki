@@ -4,7 +4,7 @@ import { UndoIcon } from '@entur/icons';
 import DefaultMapContainer from './DefaultMapContainer';
 import React from 'react';
 import { useConfig } from '../../config/ConfigContext';
-import SandboxFeature from '../../ext/SandboxFeature';
+import { ComponentToggle } from '@entur/react-component-toggle';
 
 type Props = {
   undo?: () => void;
@@ -23,10 +23,12 @@ const FormMap = ({
 
   return (
     <div className="map-container eds-contrast">
-      <SandboxFeature
+      <ComponentToggle
         feature={`${extPath}/CustomMapProvider`}
-        zoomControl={zoomControl}
-        doubleClickZoom={doubleClickZoom}
+        componentProps={{
+          zoomControl,
+          doubleClickZoom,
+        }}
         renderFallback={() => (
           <DefaultMapContainer
             zoomControl={zoomControl}
@@ -37,7 +39,7 @@ const FormMap = ({
         )}
       >
         {children}
-      </SandboxFeature>
+      </ComponentToggle>
 
       {undo ? (
         <FloatingButton

@@ -18,7 +18,7 @@ As well as tracker configuration provided in bootstrap.json with:
 
 MatomoTracker feature can be wired in as:
 
-    <SandboxFeature
+    <ComponentToggle
         feature="MatomoTracker"
     />
 

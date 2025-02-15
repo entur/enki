@@ -12,6 +12,6 @@ Once enabled in bootstrap.json
 
 CookieInformation feature can be wired in as:
 
-    <SandboxFeature
+    <ComponentToggle
         feature="CookieInformation"
     />
