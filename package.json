@@ -65,7 +65,7 @@
     "redux-sentry-middleware": "0.2.2",
     "supercluster": "8.0.1",
     "use-supercluster": "1.2.0",
-    "uuid": "11.0.5"
+    "uuid": "11.1.0"
   },
   "devDependencies": {
     "@entur/rollup-plugin-react-component-toggle": "0.0.2",
