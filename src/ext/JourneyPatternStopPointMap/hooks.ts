@@ -435,7 +435,7 @@ export const useMapSpecs = () => {
         };
         setMapSpecsState(newState);
       },
-      500,
+      400,
       undefined,
     ),
     [map],

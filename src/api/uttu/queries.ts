@@ -55,6 +55,37 @@ export const getNetworkByIdQuery = `
   }
 `;
 
+export const getBrandingsQuery = `
+  query GetBrandings {
+    brandings {
+      id,
+      name,
+      shortName,
+      description,
+      url,
+      imageUrl
+    }
+  }
+`;
+
+export const getBrandingByIdQuery = `
+  query GetBrandingById($id:ID!) {
+    branding(id: $id) {
+      id,
+      version,
+      created,
+      createdBy,
+      changed,
+      changedBy,
+      name,
+      shortName,
+      description,
+      url,
+      imageUrl
+    }
+  }
+`;
+
 export const getFlexibleLinesQuery = `
 query getFlexibleLines {
   flexibleLines {
@@ -68,6 +99,9 @@ query getFlexibleLines {
     network {
       id
     },
+    branding {
+      id
+      },
     journeyPatterns {
       pointsInSequence {
         flexibleStopPlace {
@@ -99,6 +133,9 @@ export const getFlexibleLineByIdQuery = `
       notices { text }
       bookingArrangement { ...bookingArrangementFields },
       network {
+        id
+      },
+      branding {
         id
       },
       journeyPatterns {
@@ -195,6 +232,9 @@ export const getlineByIdQuery = `
       notices { text }
       network {
         id
+      },
+      branding {
+      id
       },
       journeyPatterns {
         id,
@@ -380,6 +420,9 @@ const LineEditorPage = {
           id
           authorityRef
         }
+        branding {
+          id
+        }
         journeyPatterns {
           id
           name
@@ -445,6 +488,16 @@ const LineEditorPage = {
         authorityRef
       }
     `,
+    brandings: gql`
+      fragment LineEditorPageBrandings on Branding {
+        id
+        name
+        shortName
+        description
+        url
+        imageUrl
+      }
+    `,
   },
 };
 
@@ -456,9 +509,13 @@ export const LINE_EDITOR_QUERY = gql`
     networks {
       ...LineEditorPageNetworks
     }
+    brandings {
+      ...LineEditorPageBrandings
+    }
   }
   ${LineEditorPage.fragments.line}
   ${LineEditorPage.fragments.networks}
+  ${LineEditorPage.fragments.brandings}
 `;
 
 const ExportPage = {

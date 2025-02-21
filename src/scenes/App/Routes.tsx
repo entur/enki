@@ -22,6 +22,8 @@ import { useNoProviders } from './useNoProviders';
 import { useNoSelectedProvider } from './useNoSelectedProvider';
 import { NoSelectedProvider } from './NoSelectedProvider/NoSelectedProvider';
 import { useAppSelector } from '../../store/hooks';
+import Brandings from '../Brandings';
+import BrandingEditor from '../Brandings/Editor';
 
 const Routes = () => {
   const noProviders = useNoProviders();
@@ -45,6 +47,9 @@ const Routes = () => {
     <div className="routes">
       <ReactRoutes>
         <Route path="/" element={<Navigate to="/lines" replace />} />
+        <Route path="/brandings" element={<Brandings />} />
+        <Route path="/brandings/create" element={<BrandingEditor />} />
+        <Route path="/brandings/edit/:id" element={<BrandingEditor />} />
         <Route path="/networks" element={<NetworksOverview />} />
         <Route path="/networks/create" element={<NetworkEditor />} />
         <Route path="/networks/edit/:id" element={<NetworkEditor />} />

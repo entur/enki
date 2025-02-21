@@ -7,17 +7,20 @@ import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
 import './styles.scss';
+import { Branding } from '../../model/Branding';
 
 type Props = {
   activeStep: number;
   flexibleLine: FlexibleLine;
   changeFlexibleLine: (flexibleLine: FlexibleLine) => void;
   networks: Network[];
+  brandings: Branding[];
   operators: Organisation[];
   spoilPristine: boolean;
 };
 
 const FlexibleLineEditor = (props: Props) => {
+  const journeyPatterns = props.flexibleLine.journeyPatterns ?? [];
   return (
     <>
       {props.activeStep === 0 && (
@@ -27,6 +30,7 @@ const FlexibleLineEditor = (props: Props) => {
               line={props.flexibleLine}
               operators={props.operators}
               networks={props.networks}
+              brandings={props.brandings}
               onChange={props.changeFlexibleLine}
               spoilPristine={props.spoilPristine}
             />
@@ -37,7 +41,7 @@ const FlexibleLineEditor = (props: Props) => {
       {props.activeStep === 1 && (
         <section>
           <JourneyPatterns
-            journeyPatterns={props.flexibleLine.journeyPatterns ?? []}
+            journeyPatterns={journeyPatterns}
             onChange={(jps) =>
               props.changeFlexibleLine({
                 ...props.flexibleLine,
@@ -45,11 +49,19 @@ const FlexibleLineEditor = (props: Props) => {
               })
             }
           >
-            {(journeyPattern, onSave, onDelete) => (
+            {(
+              journeyPattern,
+              validateJourneyPatternName,
+              onSave,
+              onCopy,
+              onDelete,
+            ) => (
               <JourneyPatternEditor
                 journeyPattern={journeyPattern}
+                validateJourneyPatternName={validateJourneyPatternName}
                 onSave={onSave}
                 onDelete={onDelete}
+                onCopy={onCopy}
                 spoilPristine={props.spoilPristine}
                 flexibleLineType={props.flexibleLine.flexibleLineType}
                 transportMode={props.flexibleLine.transportMode}

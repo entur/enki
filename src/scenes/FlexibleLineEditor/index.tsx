@@ -43,6 +43,7 @@ const EditorFrame = () => {
   const flexibleLines = useAppSelector((state) => state.flexibleLines);
   const organisations = useAppSelector((state) => state.organisations);
   const networks = useAppSelector((state) => state.networks);
+  const brandings = useAppSelector((state) => state.brandings);
   const editor = useAppSelector((state) => state.editor);
 
   const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies();
@@ -144,6 +145,7 @@ const EditorFrame = () => {
                     changeFlexibleLine={onFlexibleLineChange}
                     operators={filterNetexOperators(organisations ?? [])}
                     networks={networks || []}
+                    brandings={brandings || []}
                     spoilPristine={nextClicked}
                   />
                 )}

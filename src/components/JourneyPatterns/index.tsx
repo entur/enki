@@ -1,30 +1,38 @@
-import { PrimaryButton, SecondaryButton } from '@entur/button';
 import { Accordion, AccordionItem } from '@entur/expand';
-import { TextField } from '@entur/form';
-import { Modal } from '@entur/modal';
 import { Heading1, LeadParagraph } from '@entur/typography';
 import AddButton from 'components/AddButton/AddButton';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern, { initJourneyPattern } from 'model/JourneyPattern';
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useIntl } from 'react-intl';
 import './styles.scss';
+import StopPoint from '../../model/StopPoint';
+import { createUuid } from '../../helpers/generators';
+import NewJourneyPatternModal from './NewJourneyPatternModal';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
   onChange: (journeyPatterns: JourneyPattern[]) => void;
   children: (
     journeyPattern: JourneyPattern,
+    validateJourneyPatternName: (
+      newJourneyPatternName: string | null,
+    ) => JourneyPatternNameValidationError,
     handleUpdate: (journeyPattern: JourneyPattern) => void,
+    handleCopy: (jpName: string) => void,
     handleDelete?: () => void,
   ) => ReactElement;
+};
+
+export type JourneyPatternNameValidationError = {
+  duplicateName?: string;
+  emptyName?: string;
 };
 
 const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { formatMessage } = useIntl();
-  const textFieldRef = useRef<HTMLInputElement>(null);
 
   const keys = useUniqueKeys(journeyPatterns);
 
@@ -58,42 +66,68 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
     );
   };
 
+  const copyJourneyPattern = (
+    journeyPatterns: JourneyPattern[],
+    journeyPatternIndex: number,
+    name: string,
+  ) => {
+    const journeyPatternToCopy = journeyPatterns[journeyPatternIndex];
+    const newJourneyPattern: JourneyPattern = {
+      ...journeyPatternToCopy,
+      id: undefined,
+      name: name,
+    };
+    newJourneyPattern.pointsInSequence =
+      journeyPatternToCopy.pointsInSequence.map((point: StopPoint) => ({
+        ...point,
+        id: undefined,
+        key: createUuid(),
+      }));
+    newJourneyPattern.serviceJourneys = [
+      {
+        id: `new_${createUuid()}`,
+        passingTimes: journeyPatternToCopy.pointsInSequence.map((_) => ({})),
+      },
+    ];
+    const newJourneyPatterns: JourneyPattern[] = [
+      ...journeyPatterns,
+      newJourneyPattern,
+    ];
+    onChange(newJourneyPatterns);
+  };
+
+  const validateJourneyPatternName = (
+    newJourneyPatternName: string | null,
+  ): JourneyPatternNameValidationError => {
+    const validationError: JourneyPatternNameValidationError = {};
+    if (!newJourneyPatternName) {
+      validationError.emptyName = formatMessage({ id: 'nameIsRequired' });
+      return validationError;
+    }
+
+    const journeyPatternsNames: string[] = journeyPatterns
+      ? journeyPatterns.map((jp) => jp?.name?.trim() || '')
+      : [];
+    if (
+      newJourneyPatternName &&
+      journeyPatternsNames.includes(newJourneyPatternName.trim())
+    ) {
+      validationError.duplicateName = formatMessage({
+        id: 'journeyPatternDuplicateNameValidationError',
+      });
+    }
+
+    return validationError;
+  };
+
   return (
     <>
-      <Modal
-        size="small"
+      <NewJourneyPatternModal
         open={showModal}
-        title={formatMessage({ id: 'newJourneyPatternModalTitle' })}
+        onSave={addNewJourneyPattern}
         onDismiss={() => setShowModal(false)}
-        className="modal"
-      >
-        {formatMessage({ id: 'newJourneyPatternModalSubTitle' })}
-        <div className="modal-content">
-          <TextField
-            label={formatMessage({ id: 'newJourneyPatternModalLabel' })}
-            className="modal-input"
-            placeholder={formatMessage({
-              id: 'newJourneyPatternModalPlaceholder',
-            })}
-            ref={textFieldRef}
-          />
-          <div className={'confirm-dialog-buttons'}>
-            <SecondaryButton
-              onClick={() => setShowModal(false)}
-              className="margin-right"
-            >
-              {formatMessage({ id: 'newJourneyPatternModalCancel' })}
-            </SecondaryButton>
-            <PrimaryButton
-              onClick={() =>
-                addNewJourneyPattern(textFieldRef?.current?.value ?? '')
-              }
-            >
-              {formatMessage({ id: 'newJourneyPatternModalCreate' })}
-            </PrimaryButton>
-          </div>
-        </div>
-      </Modal>
+        validateJourneyPatternName={validateJourneyPatternName}
+      />
 
       <div className="journey-patterns-editor">
         <Heading1>
@@ -103,7 +137,13 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
           {formatMessage({ id: 'editorFillInformation' })}
         </LeadParagraph>
         {journeyPatterns.length === 1 ? (
-          children(journeyPatterns[0], updateJourneyPattern(0))
+          children(
+            journeyPatterns[0],
+            validateJourneyPatternName,
+            updateJourneyPattern(0),
+            (name: string) => copyJourneyPattern(journeyPatterns, 0, name),
+            undefined,
+          )
         ) : (
           <Accordion>
             {journeyPatterns.map((jp: JourneyPattern, index: number) => (
@@ -114,7 +154,10 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
               >
                 {children(
                   jp,
+                  validateJourneyPatternName,
                   updateJourneyPattern(index),
+                  (name: string) =>
+                    copyJourneyPattern(journeyPatterns, index, name),
                   deleteJourneyPattern(index),
                 )}
               </AccordionItem>

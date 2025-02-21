@@ -19,8 +19,10 @@ import {
 } from '../common/FrontTextTextField';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { GenericStopPointEditorProps } from '../common/StopPointEditorProps';
-import SandboxFeature from '../../../ext/SandboxFeature';
 import StopPointOrder from '../common/StopPointOrder';
+import { ComponentToggle } from '@entur/react-component-toggle';
+import { StopPointButtonGroupProps } from '../../../ext/JourneyPatternStopPointMap/StopPointButtonGroup/types';
+import { SandboxFeatures } from '../../../config/config';
 
 export const GenericStopPointEditor = ({
   order,
@@ -97,7 +99,7 @@ export const GenericStopPointEditor = ({
           />
         </div>
 
-        <SandboxFeature
+        <ComponentToggle<SandboxFeatures, StopPointButtonGroupProps>
           feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
           renderFallback={() => (
             <DeleteButton
@@ -109,11 +111,13 @@ export const GenericStopPointEditor = ({
               title={formatMessage({ id: 'editorDeleteButtonText' })}
             />
           )}
-          stopPoint={stopPoint}
-          onDeleteDialogOpen={onDeleteDialogOpen}
-          flexibleLineType={flexibleLineType}
-          onFocusedQuayIdUpdate={onFocusedQuayIdUpdate}
-          canDelete={canDelete}
+          componentProps={{
+            stopPoint,
+            onDeleteDialogOpen,
+            flexibleLineType,
+            onFocusedQuayIdUpdate,
+            canDelete,
+          }}
         />
 
         <ConfirmDialog

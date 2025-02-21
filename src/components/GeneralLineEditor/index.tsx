@@ -21,11 +21,13 @@ import { ChangeEvent, useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 import './styles.scss';
+import { Branding } from '../../model/Branding';
 
 interface Props<T extends Line> {
   line: T;
   operators: Organisation[];
   networks: Network[];
+  brandings: Branding[];
   onChange: <T extends Line>(line: T) => void;
   spoilPristine: boolean;
 }
@@ -34,6 +36,7 @@ export default <T extends Line>({
   line,
   operators,
   networks,
+  brandings,
   onChange,
   spoilPristine,
 }: Props<T>) => {
@@ -97,6 +100,11 @@ export default <T extends Line>({
   );
 
   const getNetworkItems = useCallback(() => mapToItems(networks), [networks]);
+
+  const getBrandingItems = useCallback(
+    () => mapToItems(brandings),
+    [brandings],
+  );
 
   return (
     <div className="lines-editor-general">
@@ -216,6 +224,24 @@ export default <T extends Line>({
             !isBlank(line.networkRef),
             networkPristine,
           )}
+        />
+
+        <Dropdown<string>
+          items={getBrandingItems}
+          selectedItem={
+            getBrandingItems().find(
+              (item) => item.value === line.brandingRef,
+            ) || null
+          }
+          clearable
+          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
+          onChange={(element) =>
+            onChange<Line>({
+              ...(line as Line),
+              brandingRef: element?.value,
+            })
+          }
+          label={formatMessage({ id: 'brandingsDropdownLabelText' })}
         />
 
         {isFlexibleLine && (
