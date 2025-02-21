@@ -28,22 +28,25 @@ import {
 } from '../../api/uttu/queries';
 import {
   getRouteGeometryFetchPromises,
-  getServiceLinkRef,
   getStopPlacesState,
   getStopPointLocationSequence,
   getStopPointLocationSequenceWithRouteGeometry,
 } from './helpers';
 import { useMap } from 'react-leaflet';
+import debounce from '../../components/StopPointsEditor/common/debounce';
 
 /**
  * Fetching stops data
  */
-export const useStopPlacesData = (transportMode: string | undefined) => {
+export const useBoundingBoxedStopPlacesData = (
+  transportMode: string | undefined,
+  mapSpecsState: MapSpecs,
+) => {
   const activeProvider =
     useAppSelector((state) => state.userContext.activeProviderCode) ?? '';
   const { uttuApiUrl } = useConfig();
   const auth = useAuth();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isStopDataLoading, setIsStopDataLoading] = useState<boolean>(false);
 
   const [stopPlacesState, setStopPlacesState] = useReducer<
     Reducer<
@@ -66,26 +69,87 @@ export const useStopPlacesData = (transportMode: string | undefined) => {
   );
 
   useEffect(() => {
-    if (transportMode) {
+    if (
+      transportMode &&
+      mapSpecsState.zoom &&
+      mapSpecsState.bounds[3] &&
+      mapSpecsState.bounds[2] &&
+      mapSpecsState.bounds[1] &&
+      mapSpecsState.bounds[0]
+    ) {
       auth.getAccessToken().then((token) => {
-        setIsLoading(true);
+        const loadingTimeout = setTimeout(() => {
+          setIsStopDataLoading(true);
+        }, 1250);
+
         UttuQuery(
           uttuApiUrl,
           activeProvider,
           getStopPlacesQuery,
-          { transportMode },
+          {
+            transportMode,
+            searchText: undefined,
+            quayIds: undefined,
+            northEastLat: mapSpecsState.bounds[3],
+            northEastLng: mapSpecsState.bounds[2],
+            southWestLat: mapSpecsState.bounds[1],
+            southWestLng: mapSpecsState.bounds[0],
+            limit: 3500,
+          },
           token,
-        ).then((data) => {
-          setIsLoading(false);
-          setStopPlacesState(getStopPlacesState(data?.stopPlaces || []));
-        });
+        )
+          .then((data) => {
+            setStopPlacesState(getStopPlacesState(data?.stopPlaces || []));
+          })
+          .finally(() => {
+            clearTimeout(loadingTimeout);
+            setIsStopDataLoading(false);
+          });
       });
     }
-  }, []);
+  }, [
+    mapSpecsState.bounds[3],
+    mapSpecsState.bounds[2],
+    mapSpecsState.bounds[1],
+    mapSpecsState.bounds[0],
+  ]);
 
   return {
     stopPlacesState,
-    isLoading,
+    isStopDataLoading,
+  };
+};
+
+export const useStopPlacesInJourneyPattern = (
+  stopPlacesInJourneyPattern: StopPlace[],
+) => {
+  const [stopPlacesInJourneyPatternState, setStopPlacesInJourneyPatternState] =
+    useState<JourneyPatternsStopPlacesState>(
+      getStopPlacesState(stopPlacesInJourneyPattern),
+    );
+
+  useEffect(() => {
+    // To avoid updating the state needlessly
+    const stopPlacesInJourneyPatternIds = stopPlacesInJourneyPattern
+      .map((s) => s.id)
+      .sort()
+      .join(',');
+    const stopPlacesInJourneyPatternStateIds =
+      stopPlacesInJourneyPatternState.stopPlaces
+        .map((s) => s.id)
+        .sort()
+        .join(',');
+    if (stopPlacesInJourneyPatternIds === stopPlacesInJourneyPatternStateIds) {
+      return;
+    }
+
+    setStopPlacesInJourneyPatternState(
+      getStopPlacesState(stopPlacesInJourneyPattern),
+    );
+  }, [stopPlacesInJourneyPattern]);
+
+  return {
+    stopPlacesInJourneyPatternState,
   };
 };
 
@@ -94,44 +158,66 @@ const defaultStopPlaces: StopPlace[] = [];
 /**
  * Combines two stop places data sets: one gotten from a normal initial stop places fetch,
  * and the other gotten by using the search input
- * @param stopPlacesState
+ * @param boundingBoxedStopPlacesState
  * @param searchedStopPlacesState
+ * @param stopPlacesInJourneyPatternState
  */
 export const useStopPlacesStateCombinedWithSearchResults = (
-  stopPlacesState: JourneyPatternsStopPlacesState,
+  boundingBoxedStopPlacesState: JourneyPatternsStopPlacesState,
   searchedStopPlacesState: JourneyPatternsStopPlacesState,
+  stopPlacesInJourneyPatternState: JourneyPatternsStopPlacesState,
 ) => {
-  const stopPlaces = stopPlacesState?.stopPlaces || defaultStopPlaces;
+  const boundingBoxedStopPlaces =
+    boundingBoxedStopPlacesState?.stopPlaces || defaultStopPlaces;
 
-  // Combining the whole stop places set and the search results:
+  // Combining the bounding box-ed stop places set and the search results and stops from journey pattern:
   const totalStopPlaces = useMemo(() => {
-    const total = [...stopPlaces];
-    searchedStopPlacesState.stopPlaces?.forEach((stopPlace) => {
-      if (stopPlaces.filter((s) => s.id === stopPlace.id).length === 0) {
+    const total = [...boundingBoxedStopPlaces];
+    const searchedStopPlacesToCombine = [...searchedStopPlacesState.stopPlaces];
+    searchedStopPlacesToCombine.forEach((stopPlace) => {
+      if (total.filter((s) => s.id === stopPlace.id).length === 0) {
         total.push(stopPlace);
       }
     });
+
+    const stopPlacesInJourneyPatternToCombine = [
+      ...stopPlacesInJourneyPatternState.stopPlaces,
+    ];
+    stopPlacesInJourneyPatternToCombine.forEach((stopPlace) => {
+      if (total.filter((s) => s.id === stopPlace.id).length === 0) {
+        total.push(stopPlace);
+      }
+    });
+
     return total;
-  }, [stopPlaces, searchedStopPlacesState.stopPlaces]);
+  }, [
+    boundingBoxedStopPlaces,
+    searchedStopPlacesState.stopPlaces,
+    stopPlacesInJourneyPatternState.stopPlaces,
+  ]);
 
   const totalQuayLocationsIndex: Record<string, Centroid> = useMemo(() => {
     return {
-      ...stopPlacesState?.quayLocationsIndex,
+      ...boundingBoxedStopPlacesState?.quayLocationsIndex,
       ...searchedStopPlacesState.quayLocationsIndex,
+      ...stopPlacesInJourneyPatternState.quayLocationsIndex,
     };
   }, [
-    stopPlacesState?.quayLocationsIndex,
+    boundingBoxedStopPlacesState?.quayLocationsIndex,
     searchedStopPlacesState.quayLocationsIndex,
+    stopPlacesInJourneyPatternState.quayLocationsIndex,
   ]);
 
   const totalQuayStopPlaceIndex: Record<string, string> = useMemo(() => {
     return {
-      ...stopPlacesState?.quayStopPlaceIndex,
+      ...boundingBoxedStopPlacesState?.quayStopPlaceIndex,
       ...searchedStopPlacesState.quayStopPlaceIndex,
+      ...stopPlacesInJourneyPatternState.quayStopPlaceIndex,
     };
   }, [
-    stopPlacesState?.quayStopPlaceIndex,
+    boundingBoxedStopPlacesState?.quayStopPlaceIndex,
     searchedStopPlacesState.quayStopPlaceIndex,
+    stopPlacesInJourneyPatternState.quayStopPlaceIndex,
   ]);
 
   return {
@@ -229,8 +315,8 @@ export const useMapState = (
         // if route geometry is enabled, the right coordinates sequence will be established as part of useRouteGeometry hook
         const pointLocation = quayLocationsIndex[point.quayRef].location;
         newStopPointLocations.push([
-          pointLocation.latitude,
-          pointLocation.longitude,
+          pointLocation.latitude as number,
+          pointLocation.longitude as number,
         ]);
       }
     });
@@ -334,20 +420,26 @@ export const useMapSpecs = () => {
     },
   );
 
-  const updateMapSpecs = useCallback(() => {
-    const newBounds = map.getBounds();
-
-    const newState: MapSpecs = {
-      zoom: map.getZoom(),
-      bounds: [
-        newBounds.getSouthWest().lng,
-        newBounds.getSouthWest().lat,
-        newBounds.getNorthEast().lng,
-        newBounds.getNorthEast().lat,
-      ],
-    };
-    setMapSpecsState(newState);
-  }, [map]);
+  const updateMapSpecs = useCallback(
+    debounce(
+      () => {
+        const newBounds = map.getBounds();
+        const newState: MapSpecs = {
+          zoom: map.getZoom(),
+          bounds: [
+            newBounds.getSouthWest().lng,
+            newBounds.getSouthWest().lat,
+            newBounds.getNorthEast().lng,
+            newBounds.getNorthEast().lat,
+          ],
+        };
+        setMapSpecsState(newState);
+      },
+      400,
+      undefined,
+    ),
+    [map],
+  );
 
   useEffect(() => {
     updateMapSpecs();
@@ -410,12 +502,9 @@ export const useFitMapBounds = (
   const map = useMap();
 
   useEffect(() => {
-    if (
-      boundsBeenFit.current ||
-      pointsInSequence?.length < 1 ||
-      !quayLocationsIndex ||
-      Object.keys(quayLocationsIndex).length === 0
-    ) {
+    if (pointsInSequence?.length < 1) {
+      // That's a new line form, boundsBeenFit needs to be set as done
+      //boundsBeenFit.current = true;
       return;
     }
 
@@ -448,12 +537,12 @@ export const useFitMapBounds = (
       }
     });
 
-    boundsBeenFit.current = true;
+    // boundsBeenFit.current = true;
     map.fitBounds([
       [minLat, minLng],
       [maxLat, maxLng],
     ]);
-  }, [quayLocationsIndex, boundsBeenFit]);
+  }, []);
 };
 
 /**
