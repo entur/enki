@@ -22,8 +22,8 @@ import {
   useMapZoomIntoLocation,
   useStopPlacesStateCombinedWithSearchResults,
   useRouteGeometry,
-  useStopPlacesData,
-  useStopPlacesInLine,
+  useBoundingBoxedStopPlacesData,
+  useStopPlacesInJourneyPattern,
 } from './hooks';
 import Markers from './Markers';
 import { useConfig } from '../../config/ConfigContext';
@@ -38,8 +38,9 @@ const JourneyPatternStopPointMap = memo(
     transportMode,
     focusedQuayId,
     onFocusedQuayIdUpdate,
-    stopPlacesUsedInLineIndex,
+    stopPlacesInJourneyPattern,
   }: JourneyPatternStopPointMapProps) => {
+    const { formatMessage } = useIntl();
     const { routeGeometrySupportedVehicleModes } = useConfig();
     let isRouteGeometryEnabled =
       routeGeometrySupportedVehicleModes &&
@@ -47,8 +48,14 @@ const JourneyPatternStopPointMap = memo(
         (mode) => mode === transportMode,
       ).length > 0;
 
-    const { stopPlacesInLineState } = useStopPlacesInLine(
-      stopPlacesUsedInLineIndex,
+    const { stopPlacesInJourneyPatternState } = useStopPlacesInJourneyPattern(
+      stopPlacesInJourneyPattern,
+    );
+
+    // If there are already stop points selected, zoom in to the route on initial map load:
+    useFitMapBounds(
+      pointsInSequence,
+      stopPlacesInJourneyPatternState.quayLocationsIndex,
     );
 
     // Capture and store map's zoom level and view bounds.
@@ -60,11 +67,8 @@ const JourneyPatternStopPointMap = memo(
       },
     });
 
-    const { stopPlacesState, isStopDataLoading } = useStopPlacesData(
-      transportMode,
-      mapSpecsState,
-    );
-    const { formatMessage } = useIntl();
+    const { stopPlacesState, isStopDataLoading } =
+      useBoundingBoxedStopPlacesData(transportMode, mapSpecsState);
 
     // Search results stop places and its respective indexes:
     const [searchedStopPlacesState, setSearchedStopPlacesState] =
@@ -78,14 +82,14 @@ const JourneyPatternStopPointMap = memo(
     } = useStopPlacesStateCombinedWithSearchResults(
       stopPlacesState,
       searchedStopPlacesState,
-      stopPlacesInLineState,
+      stopPlacesInJourneyPatternState,
     );
 
     // This hook manages what's shown on the map and how exactly:
     const { mapState, setMapState, mapStateRef } = useMapState(
       pointsInSequence,
-      totalQuayLocationsIndex,
-      totalQuayStopPlaceIndex,
+      stopPlacesInJourneyPatternState.quayLocationsIndex,
+      stopPlacesInJourneyPatternState.quayStopPlaceIndex,
       !!isRouteGeometryEnabled,
     );
 
@@ -94,9 +98,6 @@ const JourneyPatternStopPointMap = memo(
       // If route geometry is enabled, this is where the needed coordinates are set up
       useRouteGeometry(pointsInSequence, totalQuayLocationsIndex, setMapState);
     }
-
-    // If there are already stop points selected, zoom in to the route on initial map load:
-    useFitMapBounds(pointsInSequence, totalQuayLocationsIndex);
 
     // Zoom into location of a focused marker:
     useMapZoomIntoLocation(mapState.focusedMarker?.marker.location);

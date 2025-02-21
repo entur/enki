@@ -22,8 +22,8 @@ export interface GenericStopPointEditorProps extends StopPointEditorProps {
   order: number;
   isFirst: boolean;
   isLast: boolean;
-  stopPlacesUsedInLineIndex: StopPlace[];
-  onUpdateStopPlacesUsedInLineIndex: (stopPlace: StopPlace) => void;
+  stopPlacesInJourneyPattern: StopPlace[];
+  updateStopPlacesInJourneyPattern: (newStopPlace: StopPlace) => void;
 }
 
 export interface MixedFlexibleStopPointEditorProps

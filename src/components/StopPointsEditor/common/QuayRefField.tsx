@@ -12,8 +12,9 @@ interface Props {
   initialQuayRef?: string | null;
   errorFeedback: ErrorHandling;
   onChange: (quayRef: string) => void;
-  onUpdateStopPlacesUsedInLineIndex: (stopPlace: StopPlace) => void;
-  existingStopPlace: StopPlace | undefined;
+  // The two below are only present in case of GenericStopPointEditor:
+  updateStopPlacesInJourneyPattern?: (newStopPlace: StopPlace) => void;
+  alreadyFetchedStopPlaces?: StopPlace[];
 }
 
 export const useOnQuayRefChange = (
@@ -31,8 +32,8 @@ export const QuayRefField = ({
   initialQuayRef,
   errorFeedback,
   onChange,
-  onUpdateStopPlacesUsedInLineIndex,
-  existingStopPlace,
+  updateStopPlacesInJourneyPattern,
+  alreadyFetchedStopPlaces,
 }: Props) => {
   const { formatMessage } = useIntl();
   const [quayRefInputValue, setQuayRefInputValue] = useState(initialQuayRef);
@@ -40,13 +41,16 @@ export const QuayRefField = ({
   const { stopPlace, quay, refetch, loading } = useQuaySearch(
     initialQuayRef,
     quayRefInputValue,
-    existingStopPlace,
+    alreadyFetchedStopPlaces,
   );
 
   useEffect(() => {
-    if (stopPlace) {
-      onUpdateStopPlacesUsedInLineIndex(stopPlace);
-    }
+    // If there been a change in the QuayRef field and a new stop place been fetched as part validation,
+    // the stopPlacesInJourneyPattern need to get updated with that
+    stopPlace &&
+      updateStopPlacesInJourneyPattern &&
+      !(alreadyFetchedStopPlaces || []).find((s) => s.id === stopPlace.id) &&
+      updateStopPlacesInJourneyPattern(stopPlace);
   }, [stopPlace]);
 
   const quaySearchFeedback = quaySearchResults(

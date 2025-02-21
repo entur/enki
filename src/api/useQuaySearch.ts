@@ -9,28 +9,29 @@ interface StopPlaceByQuayRef {
 export const useQuaySearch = (
   initialQuayRef?: string | null,
   quayRefInput?: string | null,
-  existingStopPlace?: StopPlace,
+  alreadyFetchedStopPlacesInJourneyPattern?: StopPlace[],
 ) => {
+  const alreadyFetchedStopPoint = (
+    alreadyFetchedStopPlacesInJourneyPattern || []
+  ).find(
+    (stop) =>
+      stop.quays.filter(
+        (q) => q.id === (quayRefInput ? quayRefInput : initialQuayRef),
+      ).length > 0,
+  );
+
   const { loading, data, refetch } = useQuery<StopPlaceByQuayRef>(
     STOP_PLACE_BY_QUAY_REF_QUERY,
     {
       variables: {
         id: initialQuayRef,
       },
-      skip: !initialQuayRef || !!existingStopPlace,
+      skip: !initialQuayRef || !!alreadyFetchedStopPoint,
     },
   );
 
-  let foundQuay,
-    foundStopPlace = undefined;
-
-  if (data?.stopPlaceByQuayRef) {
-    foundStopPlace = data?.stopPlaceByQuayRef;
-  } else if (existingStopPlace) {
-    foundStopPlace = { ...existingStopPlace };
-  }
-
-  foundQuay = foundStopPlace?.quays?.find(
+  const foundStopPlace = data?.stopPlaceByQuayRef || alreadyFetchedStopPoint;
+  const foundQuay = foundStopPlace?.quays?.find(
     (q: Quay) => q.id === (quayRefInput ? quayRefInput : initialQuayRef),
   );
 

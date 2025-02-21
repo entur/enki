@@ -10,14 +10,14 @@ export const MapWrapper = ({
   transportMode,
   focusedQuayId,
   onFocusedQuayIdUpdate,
-  stopPlacesUsedInLineIndex,
+  stopPlacesInJourneyPattern,
 }: MapWrapperProps) => {
   return (
     <FormMap zoomControl={false} doubleClickZoom={false}>
       <JourneyPatternStopPointMap
         transportMode={transportMode}
         pointsInSequence={pointsInSequence}
-        stopPlacesUsedInLineIndex={stopPlacesUsedInLineIndex}
+        stopPlacesInJourneyPattern={stopPlacesInJourneyPattern}
         deleteStopPoint={deleteStopPoint}
         addStopPoint={addStopPoint}
         focusedQuayId={focusedQuayId}

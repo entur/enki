@@ -11,7 +11,7 @@ export interface MapWrapperProps extends SandboxFeatureProps<SandboxFeatures> {
   addStopPoint: (quayRef?: string) => void;
   focusedQuayId: string | undefined | null;
   onFocusedQuayIdUpdate: (quayId: string | undefined | null) => void;
-  stopPlacesUsedInLineIndex: StopPlace[];
+  stopPlacesInJourneyPattern: StopPlace[];
 }
 
 export interface JourneyPatternStopPointMapProps {
@@ -21,8 +21,7 @@ export interface JourneyPatternStopPointMapProps {
   addStopPoint: (quayRef?: string) => void;
   focusedQuayId: string | undefined | null;
   onFocusedQuayIdUpdate: (quayId: string | undefined | null) => void;
-  updateMapSpecsState: (mapSpecs: MapSpecs) => void;
-  stopPlacesUsedInLineIndex: StopPlace[];
+  stopPlacesInJourneyPattern: StopPlace[];
 }
 
 export interface JourneyPatternsStopPlacesState {

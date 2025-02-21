@@ -36,10 +36,6 @@ type UseLineReturnType = {
   loading: boolean;
   error: ApolloError | undefined;
   networks: Network[] | undefined;
-  stopPlacesUsedInLineIndex: StopPlace[] | undefined;
-  setStopPlacesUsedInLineIndex: React.Dispatch<
-    React.SetStateAction<StopPlace[]>
-  >;
   notFound: boolean;
 };
 
@@ -48,15 +44,11 @@ type UseLineType = () => UseLineReturnType;
 interface LineData {
   line: Line;
   networks: Network[] | undefined;
-  stopPlaces: StopPlace[] | undefined;
 }
 
 export const useLine: UseLineType = () => {
   const match = useMatch('/lines/edit/:id');
   const [line, setLine] = useState<Line | undefined>(initLine());
-  const [stopPlacesUsedInLineIndex, setStopPlacesUsedInLineIndex] = useState<
-    StopPlace[]
-  >([]);
 
   const { loading, error, data, refetch } = useQuery<LineData>(
     LINE_EDITOR_QUERY,
@@ -81,7 +73,6 @@ export const useLine: UseLineType = () => {
         })),
         networkRef: data?.line.network?.id,
       });
-      setStopPlacesUsedInLineIndex([...data?.stopPlaces]);
     }
   }, [data?.line]);
 
@@ -92,8 +83,6 @@ export const useLine: UseLineType = () => {
     loading,
     error,
     networks: data?.networks,
-    stopPlacesUsedInLineIndex,
-    setStopPlacesUsedInLineIndex,
     notFound: data?.line === null && !isBlank(match?.params.id),
   };
 };
