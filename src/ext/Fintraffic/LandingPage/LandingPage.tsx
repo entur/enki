@@ -70,22 +70,6 @@ export const LandingPage = () => {
                   )}
                 </p>
                 <p>{formatMessage({ id: 'landingPageIntroP3' })}</p>
-                <p>
-                  {formatMessage(
-                    { id: 'landingPageIntroP4' },
-                    {
-                      link: (
-                        <Link
-                          to={'https://extidp.traficom.fi/FIM/sps/auth'}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          https://extidp.traficom.fi/FIM/sps/auth
-                        </Link>
-                      ),
-                    },
-                  )}
-                </p>
               </div>
               <h2>{formatMessage({ id: 'shortcuts' })}</h2>
               <ShortcutPanel items={shortcuts} />

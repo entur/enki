@@ -35,6 +35,4 @@ export const messages = {
     'RAE-työkalussa julkaistut reitit muodostavat operaattorikohtaisen matkatietoaineiston, jonka voitte ilmoittaa osana matkatietorajapintojanne kansalliseen yhteyspisteeseen {link} osana muita tietojanne. Finapiin ilmoitettu aineisto lisätään automaattisesti valtakunnalliseen Koontipalveluun ja sitä kautta reittioppaille. Lisää aineiston toimittamisesta Finapiin löydät ohjesivustolta.',
   landingPageIntroP3:
     'RAE on niin sanottu olennaisten tietojen peruseditori, joka on tarkoitettu toimijoille, joiden reitti- ja vuoromäärätarjonta ei ole suuri (esim. 1-20 ylläpidettävää reittiä). Työkalun avulla on mahdollista mallintaa reittiliikenteen lisäksi kutsujoukkoliikennettä.',
-  landingPageIntroP4:
-    'Vanha RAE, joka löytyy osoitteesta {link} poistuu käytöstä vuoden 2024 päätteeksi.',
 };
