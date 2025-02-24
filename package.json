@@ -97,7 +97,7 @@
     "jsdom": "25.0.1",
     "lint-staged": "15.4.3",
     "lit-html": "3.2.1",
-    "msw": "2.7.1",
+    "msw": "2.7.3",
     "prettier": "3.5.2",
     "prettier-plugin-organize-imports": "4.1.0",
     "redux-immutable-state-invariant": "2.1.0",
