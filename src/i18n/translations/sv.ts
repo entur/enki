@@ -272,7 +272,7 @@ export const messages = {
   stopPointsInfoFixed:
     'Du måste lägga till minst två hållplatser; ett första och ett sista. Fyll i en giltig ID.',
   stopPointsMapInfo:
-    'Du måste lägga till minst två hållplatser; ett första och ett sista.',
+    'Du måste lägga till minst två hållpunkter; en för start och en för stopp.',
   stopPointsInfoFlexibleAreaOnly:
     'Den här typen av flexibel linje tillåter endast en flexibel hållplats där all ombord- och avstigning sker.',
   stopPointsInfoMixedFlexible:
@@ -669,6 +669,21 @@ export const messages = {
   saveProviderErrorFallback: 'Okänt fel vid sparning av dataleverantör',
   noProvidersDescriptionText:
     'Din Nplan-installation behöver minst en dataleverantör',
+  showQuays: 'Visa plattform',
+  hideQuays: 'Dölj plattform',
+  oneQuay: 'En plattform',
+  numberOfQuays: '{count} plattform',
+  addToJourneyPattern: 'Lägg till',
+  showNonSelectedQuays: 'Visa ej valda plattformar',
+  hideNonSelectedQuays: 'Dölj ej valda plattformar',
+  quayOrder: 'Ordning',
+  mapSearchInProgress: 'Söker...',
+  mapSearchNoResults: 'Inga resultat funna',
+  mapSearchResults: 'Resultat:',
+  mapSearchPlaceholder: 'Hållplats efter ID, namn eller plattform-ID',
+  mapLoadingStopsDataText: 'Laddar hållplatser...',
+  locateStopPoint: 'Lokalisera',
+  locateStopPointTooltip: 'Lokalisera på kartan',
   dropdownNoMatchesText: 'Inga val tillgängliga',
   exportsDownloadUnsupportedBrowserTitle: 'Webbläsaren stöds inte',
   exportsDownloadUnsupportedBrowserMessage:
