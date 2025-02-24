@@ -655,8 +655,8 @@ export const getOrganisationsQuery = `
 `;
 
 export const getServiceLinkQuery = `
-  query ServiceLinkQuery($quayRefFrom:String, $quayRefTo:String) {
-    serviceLink(quayRefFrom: $quayRefFrom, quayRefTo: $quayRefTo) {
+  query ServiceLinkQuery($quayRefFrom:String, $quayRefTo:String, $mode:VehicleModeEnumeration) {
+    serviceLink(quayRefFrom: $quayRefFrom, quayRefTo: $quayRefTo, mode: $mode) {
       quayRefFrom,
       quayRefTo,
       serviceLinkRef,
