@@ -29,8 +29,10 @@ export const messages = {
   shortcuts: 'Genvägar',
   fintrafficApp: 'Fintraffic Appen',
   fintrafficAppLink: 'fintraffic_appen',
-  landingPageIntroP1: ' ',
-  landingPageIntroP2: ' ',
-  landingPageIntroP3: ' ',
-  landingPageIntroP4: ' ',
+  landingPageIntroP1:
+    'Rutt- och schemaredigerare (RAE) är en redigerare som hanteras av Fintraffic Oy, som kan användas för att digitalisera och lagra kollektivtrafiklinjer och anropsstyrd trafik med hållplatskedjor och hållplatsspecifika tidtabeller i NeTEx-format resedata.',
+  landingPageIntroP2:
+    'De rutter som publiceras i RAE utgör operatörsspecifika resedata, som du kan rapportera som en del av dina resedatagränssnitt till den nationella åtkomstpunkten {link} tillsammans med dina andra data. De data som rapporteras till Finap läggs automatiskt till i den nationella aggregeringstjänsten och därmed till ruttplanerare. Du kan hitta mer information om att skicka data till Finap på instruktionssidan.',
+  landingPageIntroP3:
+    'RAE är en så kallad grundläggande redigerare för "väsentlig" information, avsedd för operatörer vars rutt- och tjänsteutbud inte är stort (t.ex. 1-20 rutter att underhålla). Förutom rutttrafik kan verktyget också modellera anropsstyrd trafik.',
 };

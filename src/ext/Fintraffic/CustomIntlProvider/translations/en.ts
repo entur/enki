@@ -29,8 +29,10 @@ export const messages = {
   localesv: 'På Svenska',
   fintrafficApp: 'Fintraffic App',
   fintrafficAppLink: 'fintraffic_app',
-  landingPageIntroP1: ' ',
-  landingPageIntroP2: ' ',
-  landingPageIntroP3: ' ',
-  landingPageIntroP4: ' ',
+  landingPageIntroP1:
+    'Route and Schedule Editor (RAE) is an editor managed by Fintraffic Oy, which can be used to digitize and store public transport routes and demand-responsive transport with stop chains and stop-specific schedules into NeTEx-format travel data.',
+  landingPageIntroP2:
+    'The routes published in the RAE tool form operator-specific travel data, which you can report as part of your travel data interfaces to the national access point {link} along with your other data. The data reported to the Finap is automatically added to the national Aggregation Service and thus to route planners. You can find more information about submitting data to the Finap on the instruction site.',
+  landingPageIntroP3:
+    'RAE is a so-called basic editor for essential information, intended for operators whose route and service offerings are not large (e.g., 1-20 routes to be maintained). In addition to route traffic, the tool can also model demand-responsive transport.',
 };
