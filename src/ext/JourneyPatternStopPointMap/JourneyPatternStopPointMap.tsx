@@ -96,7 +96,12 @@ const JourneyPatternStopPointMap = memo(
     if (isRouteGeometryEnabled) {
       // Handling service links data;
       // If route geometry is enabled, this is where the needed coordinates are set up
-      useRouteGeometry(pointsInSequence, totalQuayLocationsIndex, setMapState);
+      useRouteGeometry(
+        pointsInSequence,
+        totalQuayLocationsIndex,
+        setMapState,
+        transportMode,
+      );
     }
 
     // Zoom into location of a focused marker:

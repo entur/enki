@@ -8,6 +8,7 @@ import {
   StopPointLocation,
 } from './types';
 import StopPoint from '../../model/StopPoint';
+import { VEHICLE_MODE } from '../../model/enums';
 
 /**
  * Returns an object containing a list of stop places and some helpful records calculated based on it
@@ -232,11 +233,13 @@ export const getServiceLinkRef = (quayRefFrom: string, quayRefTo: string) => {
 export const getRouteGeometryFetchPromises = (
   pointsInSequence: StopPoint[],
   quayLocationsIndex: Record<string, Centroid>,
-  fetchRouteGeometryFunction: (
-    quayRefFrom: string,
-    quayRefTo: string,
-  ) => Promise<any>,
+  fetchRouteGeometryFunction: ({}: {
+    quayRefFrom: string;
+    quayRefTo: string;
+    mode: VEHICLE_MODE;
+  }) => Promise<any>,
   serviceLinksIndex: Record<string, number[][]>,
+  mode: VEHICLE_MODE,
 ) => {
   return pointsInSequence.map((point, i) => {
     if (
@@ -253,10 +256,11 @@ export const getRouteGeometryFetchPromises = (
 
     const serviceLinkRef = getServiceLinkRef(point.quayRef, nextPoint.quayRef);
     if (!serviceLinksIndex[serviceLinkRef]) {
-      return fetchRouteGeometryFunction(
-        point.quayRef as string,
-        nextPoint.quayRef as string,
-      );
+      return fetchRouteGeometryFunction({
+        quayRefFrom: point.quayRef as string,
+        quayRefTo: nextPoint.quayRef as string,
+        mode: mode,
+      });
     }
   });
 };

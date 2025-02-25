@@ -99,7 +99,13 @@ export interface Config {
    */
   extPath?: string;
 
+  /**
+   * If true, the "dry run" option in create export page will not be visible
+   */
   hideExportDryRun?: boolean;
 
+  /**
+   * Supported modes for calculating route geometry
+   */
   routeGeometrySupportedVehicleModes?: VEHICLE_MODE[];
 }

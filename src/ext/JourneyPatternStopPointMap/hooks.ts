@@ -34,6 +34,7 @@ import {
 } from './helpers';
 import { useMap } from 'react-leaflet';
 import debounce from '../../components/StopPointsEditor/common/debounce';
+import { VEHICLE_MODE } from '../../model/enums';
 
 /**
  * Fetching stops data
@@ -551,11 +552,13 @@ export const useFitMapBounds = (
  * @param pointsInSequence
  * @param quayLocationsIndex
  * @param setMapState
+ * @param mode
  */
 export const useRouteGeometry = (
   pointsInSequence: StopPoint[],
   quayLocationsIndex: Record<string, Centroid>,
   setMapState: (state: Partial<JourneyPatternsMapState>) => void,
+  mode: VEHICLE_MODE,
 ) => {
   const serviceLinksIndex = useRef<Record<string, number[][]>>({});
   const activeProvider =
@@ -563,20 +566,24 @@ export const useRouteGeometry = (
   const { uttuApiUrl } = useConfig();
   const auth = useAuth();
 
-  const fetchRouteGeometry = useCallback(
-    (quayRefFrom: string, quayRefTo: string) => {
-      return auth.getAccessToken().then((token) => {
-        return UttuQuery(
-          uttuApiUrl,
-          activeProvider,
-          getServiceLinkQuery,
-          { quayRefFrom, quayRefTo },
-          token,
-        );
-      });
-    },
-    [activeProvider, auth, uttuApiUrl],
-  );
+  const fetchRouteGeometry = async ({
+    quayRefFrom,
+    quayRefTo,
+    mode,
+  }: {
+    quayRefFrom: string;
+    quayRefTo: string;
+    mode: VEHICLE_MODE;
+  }) => {
+    const token = await auth.getAccessToken();
+    return await UttuQuery(
+      uttuApiUrl,
+      activeProvider,
+      getServiceLinkQuery,
+      { quayRefFrom, quayRefTo, mode },
+      token,
+    );
+  };
 
   useEffect(() => {
     const fetchRouteGeometryPromises = getRouteGeometryFetchPromises(
@@ -584,6 +591,7 @@ export const useRouteGeometry = (
       quayLocationsIndex,
       fetchRouteGeometry,
       serviceLinksIndex.current,
+      mode,
     );
     const newServiceLinkRefs: Record<string, number[][]> = {};
 
