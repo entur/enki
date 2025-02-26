@@ -75,6 +75,9 @@ export const messages = {
   exportCreatorDryRunFormLabel: 'Tørrkjøring',
   exportCreatorDryRunFormLabelTooltip:
     'Eksporterer ikke tilbudet til reisesøk, men genererer en NeTEx-fil man kan se på',
+  exportCreatorGenerateServiceLinksFormLabel: 'Generer service links',
+  exportCreatorGenerateServiceLinksFormLabelTooltip:
+    'Genererer service links geometri mellom stopp',
   exportCreatorFromDateFormLabel: 'Fra dato *',
   exportCreatorHeader: 'Opprett eksport',
   exportCreatorDescription:
@@ -111,6 +114,9 @@ export const messages = {
   viewerDryRunLabel: 'Tørrkjøring',
   viewerDryRunNo: 'Nei',
   viewerDryRunYes: 'Ja',
+  viewerGenerateServiceLinksLabel: 'Generer service links',
+  viewerGenerateServiceLinksNo: 'Nei',
+  viewerGenerateServiceLinksYes: 'Ja',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE: 'Ingen gyldig linjer i datagrunnlaget',
   failed: 'Feilet',
   in_progress: 'Pågår',

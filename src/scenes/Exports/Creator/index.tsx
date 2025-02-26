@@ -133,7 +133,7 @@ const ExportsCreator = () => {
             <Tooltip
               placement="right"
               content={formatMessage({
-                id: 'exportCreatorgenerateServiceLinksFormLabelTooltip',
+                id: 'exportCreatorGenerateServiceLinksFormLabelTooltip',
               })}
             >
               <span className="question-icon">
