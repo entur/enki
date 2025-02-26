@@ -95,6 +95,10 @@ const ExportsViewer = () => {
                 />
               )}
               <ExportItem
+                label="Generate service links"
+                value={theExport?.generateServiceLinks ? 'Yes' : 'No'}
+              />
+              <ExportItem
                 label={formatMessage({ id: 'viewerStatusLabel' })}
                 value={
                   <div className="export-status">
