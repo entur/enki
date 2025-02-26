@@ -16,13 +16,18 @@ export type Export = VersionedType & {
   name: string;
   exportStatus?: EXPORT_STATUS;
   dryRun: boolean;
+  generateServiceLinks: boolean;
   downloadUrl?: string;
   messages?: Message[];
   lineAssociations?: ExportLineAssociation[];
 };
 
-export const newExport = (): Export => {
-  return { name: '', dryRun: false };
+export const newExport = (generateServiceLinks: boolean = true): Export => {
+  return {
+    name: '',
+    dryRun: false,
+    generateServiceLinks: generateServiceLinks,
+  };
 };
 
 export const toPayload = (selectedExport: Export): Export => {

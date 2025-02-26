@@ -75,6 +75,9 @@ export const messages = {
   exportCreatorDryRunFormLabel: 'Skriv endast fil',
   exportCreatorDryRunFormLabelTooltip:
     'Exporterar inte data till sökbar data, men skriver endast en NeTEx-fil som man kan ladda hem och se på',
+  exportCreatorGenerateServiceLinksFormLabel: 'Generera service links',
+  exportCreatorGenerateServiceLinksFormLabelTooltip:
+    'Genererar service links geometri mallan hållplatser',
   exportCreatorFromDateFormLabel: 'Från datum *',
   exportCreatorHeader: 'Skapa export',
   exportCreatorDescription: 'Exportera data till resesökmotor',
@@ -110,6 +113,9 @@ export const messages = {
   viewerDryRunLabel: 'Skriv endast fil',
   viewerDryRunNo: 'Nej',
   viewerDryRunYes: 'Ja',
+  viewerGenerateServiceLinksLabel: 'Generera service links',
+  viewerGenerateServiceLinksNo: 'Nej',
+  viewerGenerateServiceLinksYes: 'Ja',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE: 'Inga giltiga linjer i data',
   failed: 'Misslyckades',
   in_progress: 'Pågår',

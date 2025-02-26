@@ -375,6 +375,7 @@ export const getExportByIdQuery = `
       name,
       exportStatus,
       dryRun,
+      generateServiceLinks,
       downloadUrl,
       messages {
         severity,
