@@ -77,7 +77,7 @@ export const messages = {
     'Eksporterer ikke tilbudet til reisesøk, men genererer en NeTEx-fil man kan se på',
   exportCreatorGenerateServiceLinksFormLabel: 'Generer service links',
   exportCreatorGenerateServiceLinksFormLabelTooltip:
-    'Genererer service links geometri mellom stopp',
+    'Genererer service link-geometri mellom stoppesteder',
   exportCreatorFromDateFormLabel: 'Fra dato *',
   exportCreatorHeader: 'Opprett eksport',
   exportCreatorDescription:
