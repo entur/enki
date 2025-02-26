@@ -26,7 +26,10 @@ const ExportsCreator = () => {
   const { formatMessage } = intl;
   const [saveClicked, setSaveClicked] = useState<boolean>(false);
   const [isSaving, setSaving] = useState<boolean>(false);
-  const [theExport, setTheExport] = useState<Export>(newExport());
+  const config = useConfig();
+  const [theExport, setTheExport] = useState<Export>(
+    newExport(config.exportGenerateServiceLinksDefault),
+  );
   const { hideExportDryRun } = useConfig();
 
   const dispatch = useDispatch<any>();

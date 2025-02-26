@@ -22,8 +22,12 @@ export type Export = VersionedType & {
   lineAssociations?: ExportLineAssociation[];
 };
 
-export const newExport = (): Export => {
-  return { name: '', dryRun: false, generateServiceLinks: true };
+export const newExport = (generateServiceLinks: boolean = true): Export => {
+  return {
+    name: '',
+    dryRun: false,
+    generateServiceLinks: generateServiceLinks,
+  };
 };
 
 export const toPayload = (selectedExport: Export): Export => {
