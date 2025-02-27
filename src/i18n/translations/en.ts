@@ -74,6 +74,9 @@ export const messages: MessagesKey = {
   exportCreatorDryRunFormLabel: 'Dry run',
   exportCreatorDryRunFormLabelTooltip:
     'Will not export the service to travel search, but creates a NeTEx-file to look at',
+  exportCreatorGenerateServiceLinksFormLabel: 'Generate service links',
+  exportCreatorGenerateServiceLinksFormLabelTooltip:
+    'Will generate service links geometry between stops',
   exportCreatorFromDateFormLabel: 'From date *',
   exportCreatorHeader: 'Create export',
   exportCreatorDescription:
@@ -111,6 +114,9 @@ export const messages: MessagesKey = {
   viewerDryRunLabel: 'Dry run',
   viewerDryRunNo: 'No',
   viewerDryRunYes: 'Yes',
+  viewerGenerateServiceLinksLabel: 'Generate service links',
+  viewerGenerateServiceLinksNo: 'No',
+  viewerGenerateServiceLinksYes: 'Yes',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE:
     'No valid flexible lines in data space',
   failed: 'Failed',
