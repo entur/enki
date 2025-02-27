@@ -75,7 +75,7 @@ export const messages = {
     'Ei vie palvelua matkahakuun, mutta luo NeTEx-tiedoston katsottavaksi',
   exportCreatorGenerateServiceLinksFormLabel: 'Luo pysäkkigeometria',
   exportCreatorGenerateServiceLinksFormLabelTooltip:
-    'Luo psyäkkejä yhdistävän geometrian',
+    'Luo pysäkkejä yhdistävän geometrian',
   exportCreatorFromDateFormLabel: 'Alkaen päivämäärä *',
   exportCreatorHeader: 'Luo vienti',
   exportCreatorDescription:
