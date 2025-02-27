@@ -73,6 +73,9 @@ export const messages = {
   exportCreatorDryRunFormLabel: 'Testiajo',
   exportCreatorDryRunFormLabelTooltip:
     'Ei vie palvelua matkahakuun, mutta luo NeTEx-tiedoston katsottavaksi',
+  exportCreatorGenerateServiceLinksFormLabel: 'Luo pysäkkigeometria',
+  exportCreatorGenerateServiceLinksFormLabelTooltip:
+    'Luo psyäkkejä yhdistävän geometrian',
   exportCreatorFromDateFormLabel: 'Alkaen päivämäärä *',
   exportCreatorHeader: 'Luo vienti',
   exportCreatorDescription:
@@ -110,6 +113,9 @@ export const messages = {
   viewerDryRunLabel: 'Testiajo',
   viewerDryRunNo: 'Ei',
   viewerDryRunYes: 'Kyllä',
+  viewerGenerateServiceLinksLabel: 'Luo pysäkkigeometria',
+  viewerGenerateServiceLinksNo: 'Ei',
+  viewerGenerateServiceLinksYes: 'Kyllä',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE:
     'Ei kelvollisia kutsuliikenteitä tietotilassa',
   failed: 'Epäonnistui',
