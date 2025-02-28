@@ -108,4 +108,10 @@ export interface Config {
    * Supported modes for calculating route geometry
    */
   routeGeometrySupportedVehicleModes?: VEHICLE_MODE[];
+
+  /**
+   * Default value for the checkbox-option to generate service links on export
+   * **Note that if not provided, the default is "true".**
+   */
+  exportGenerateServiceLinksDefault?: boolean;
 }

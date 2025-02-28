@@ -36,3 +36,4 @@ src/i18n/build
 
 # Ignore bootstrap config file
 public/bootstrap.json
+.env.development.local
