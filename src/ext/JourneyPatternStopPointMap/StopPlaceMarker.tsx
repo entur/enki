@@ -6,7 +6,7 @@ import { useIntl } from 'react-intl';
 import { AddIcon } from '@entur/icons';
 import StopPlaceDetails from './StopPlaceDetails';
 import { memo, MutableRefObject, useRef } from 'react';
-import { usePopupOpeningOnFocus } from './hooks';
+import { usePopupOpeningOnFocus } from './hooks/usePopupOpeningOnFocus';
 import { getStopPlaceLocation } from './helpers';
 
 interface StopPlaceMarkerProps {

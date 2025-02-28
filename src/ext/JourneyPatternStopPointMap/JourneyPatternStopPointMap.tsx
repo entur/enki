@@ -14,21 +14,19 @@ import {
   getStopPlacesState,
   onFocusedMarkerNewMapState,
 } from './helpers';
-import {
-  useFitMapBounds,
-  useMapSpecs,
-  useMapState,
-  useHandleFocusedQuayId,
-  useMapZoomIntoLocation,
-  useStopPlacesStateCombinedWithSearchResults,
-  useRouteGeometry,
-  useBoundingBoxedStopPlacesData,
-  useStopPlacesInJourneyPattern,
-} from './hooks';
 import Markers from './Markers';
 import { useConfig } from '../../config/ConfigContext';
 import Loading from '../../components/Loading';
 import { useIntl } from 'react-intl';
+import { useStopPlacesInJourneyPattern } from './hooks/useStopPlacesInJourneyPattern';
+import { useFitMapBounds } from './hooks/useFitMapBounds';
+import { useMapSpecs } from './hooks/useMapSpecs';
+import { useBoundingBoxedStopPlacesData } from './hooks/useBoundingBoxedStopPlacesData';
+import { useStopPlacesStateCombinedWithSearchResults } from './hooks/useStopPlacesStateCombinedWithSearchResults';
+import { useMapState } from './hooks/useMapState';
+import { useRouteGeometry } from './hooks/useRouteGeometry';
+import { useMapZoomIntoLocation } from './hooks/useMapZoomIntoLocation';
+import { useHandleFocusedQuayId } from './hooks/useHandleFocusedQuayId';
 
 const JourneyPatternStopPointMap = memo(
   ({

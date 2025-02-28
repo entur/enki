@@ -91,7 +91,7 @@ export const GenericStopPointsEditor = ({
       {!isMapEnabled && (
         <Paragraph>{formatMessage({ id: 'stopPointsInfoFixed' })}</Paragraph>
       )}
-      {stopPlacesInJourneyPattern ? (
+      {stopPlacesInJourneyPattern && (
         <div className={'stop-point-editor-container'}>
           <div
             className={`stop-point-editor ${isMapEnabled ? 'stop-point-editor-width-limit' : ''}`}
@@ -140,8 +140,6 @@ export const GenericStopPointsEditor = ({
             }}
           />
         </div>
-      ) : (
-        <></>
       )}
       <AddButton
         onClick={() => addStopPoint()}
