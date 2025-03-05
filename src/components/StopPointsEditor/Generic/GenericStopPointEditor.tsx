@@ -36,6 +36,8 @@ export const GenericStopPointEditor = ({
   flexibleLineType,
   onFocusedQuayIdUpdate,
   swapStopPoints,
+  stopPlacesInJourneyPattern,
+  updateStopPlacesInJourneyPattern,
 }: GenericStopPointEditorProps) => {
   const { formatMessage } = useIntl();
   const {
@@ -43,7 +45,6 @@ export const GenericStopPointEditor = ({
     boarding: boardingError,
     frontText: frontTextError,
   } = validateStopPoint(stopPoint, isFirst!, isLast!);
-
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
 
   const onQuayRefChange = useOnQuayRefChange(stopPoint, onChange);
@@ -79,6 +80,8 @@ export const GenericStopPointEditor = ({
               quayRefPristine,
             )}
             onChange={onQuayRefChange}
+            updateStopPlacesInJourneyPattern={updateStopPlacesInJourneyPattern}
+            alreadyFetchedStopPlaces={stopPlacesInJourneyPattern}
           />
 
           <FrontTextTextField

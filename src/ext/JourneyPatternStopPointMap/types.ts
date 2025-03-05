@@ -9,16 +9,17 @@ export interface MapWrapperProps {
   addStopPoint: (quayRef?: string) => void;
   focusedQuayId: string | undefined | null;
   onFocusedQuayIdUpdate: (quayId: string | undefined | null) => void;
+  stopPlacesInJourneyPattern: StopPlace[];
 }
 
 export interface JourneyPatternStopPointMapProps {
-  stopPlacesState: JourneyPatternsStopPlacesState;
   transportMode: VEHICLE_MODE;
   pointsInSequence: StopPoint[];
   deleteStopPoint: (index: number) => void;
   addStopPoint: (quayRef?: string) => void;
   focusedQuayId: string | undefined | null;
   onFocusedQuayIdUpdate: (quayId: string | undefined | null) => void;
+  stopPlacesInJourneyPattern: StopPlace[];
 }
 
 export interface JourneyPatternsStopPlacesState {

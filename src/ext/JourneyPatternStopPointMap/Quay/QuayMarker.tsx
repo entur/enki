@@ -7,7 +7,7 @@ import React, { memo, MutableRefObject, useRef } from 'react';
 import QuaySequenceIndexTooltip from './QuaySequenceIndexTooltip';
 import QuayPositionChips from './QuayPositionChips';
 import QuayPopupButtonPanel from './QuayPopupButtonPanel';
-import { usePopupOpeningOnFocus } from '../hooks';
+import { usePopupOpeningOnFocus } from '../hooks/usePopupOpeningOnFocus';
 
 interface QuayMarkerProps {
   quay: Quay;

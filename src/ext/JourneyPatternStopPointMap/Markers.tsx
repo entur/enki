@@ -50,8 +50,9 @@ const Markers = ({
     bounds: mapSpecsState.bounds,
     zoom: mapSpecsState.zoom,
     options: {
-      radius: mapSpecsState.zoom < 10 ? 150 : mapSpecsState.zoom < 15 ? 125 : 1,
-      maxZoom: 22,
+      radius: mapSpecsState.zoom < 10 ? 150 : mapSpecsState.zoom < 15 ? 105 : 1,
+      maxZoom: 25,
+      minPoints: 3,
     },
   });
 

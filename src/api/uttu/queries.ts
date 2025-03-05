@@ -606,17 +606,30 @@ export const STOP_PLACE_BY_QUAY_REF_QUERY = gql`
       name {
         value
       }
+      transportMode
+      centroid {
+        location {
+          longitude
+          latitude
+        }
+      }
       quays {
         id
         publicCode
+        centroid {
+          location {
+            longitude
+            latitude
+          }
+        }
       }
     }
   }
 `;
 
 export const getStopPlacesQuery = `
-  query StopPlacesQuery($transportMode:TransportModeEnumeration, $searchText:String) {
-    stopPlaces(transportMode: $transportMode, searchText: $searchText) {
+  query StopPlacesQuery($transportMode:TransportModeEnumeration, $searchText:String, $quayIds: [ID], $northEastLat:BigDecimal, $northEastLng:BigDecimal, $southWestLat:BigDecimal, $southWestLng:BigDecimal, $limit:Int) {
+    stopPlaces(transportMode: $transportMode, searchText: $searchText, quayIds: $quayIds, northEastLat: $northEastLat, northEastLng: $northEastLng, southWestLat: $southWestLat, southWestLng: $southWestLng, limit: $limit) {
       id
       name {
         value

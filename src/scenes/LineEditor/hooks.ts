@@ -6,7 +6,6 @@ import Line, { initLine } from 'model/Line';
 import { Network } from 'model/Network';
 import { useEffect, useState } from 'react';
 import { useMatch, useNavigate } from 'react-router-dom';
-import { useConfig } from '../../config/ConfigContext';
 import { createUuid } from '../../helpers/generators';
 import { Branding } from '../../model/Branding';
 
