@@ -22,6 +22,8 @@ import { useIntl } from 'react-intl';
 import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 import './styles.scss';
 import { Branding } from '../../model/Branding';
+import { useConfig } from '../../config/ConfigContext';
+import { MessagesKey } from '../../i18n/translationKeys';
 
 interface Props<T extends Line> {
   line: T;
@@ -42,6 +44,7 @@ export default <T extends Line>({
 }: Props<T>) => {
   const { formatMessage } = useIntl();
   const { publicCode } = line;
+  const { lineSupportedVehicleModes } = useConfig();
 
   const { flexibleLineType, isFlexibleLine } = useMemo(() => {
     const flexibleLineType = (line as FlexibleLine).flexibleLineType;
@@ -84,9 +87,29 @@ export default <T extends Line>({
   };
 
   const getModeItems = useCallback(
-    () => mapVehicleModeAndLabelToItems(vehicleModeMessages, formatMessage),
+    () =>
+      mapVehicleModeAndLabelToItems(
+        lineSupportedVehicleModes && lineSupportedVehicleModes.length > 0
+          ? getSupportedVehicleModeMessages()
+          : vehicleModeMessages,
+        formatMessage,
+      ),
     [formatMessage],
   );
+
+  const getSupportedVehicleModeMessages = (): Record<
+    VEHICLE_MODE,
+    keyof MessagesKey
+  > => {
+    const supportedVehicleModeMessages: Record<string, string> = {};
+    lineSupportedVehicleModes?.forEach((mode) => {
+      supportedVehicleModeMessages[mode] = vehicleModeMessages[mode];
+    });
+    return supportedVehicleModeMessages as Record<
+      VEHICLE_MODE,
+      keyof MessagesKey
+    >;
+  };
 
   const namePristine = usePristine(line.name, spoilPristine);
   const publicCodePristine = usePristine(publicCode, spoilPristine);

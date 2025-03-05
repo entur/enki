@@ -114,4 +114,9 @@ export interface Config {
    * **Note that if not provided, the default is "true".**
    */
   exportGenerateServiceLinksDefault?: boolean;
+
+  /**
+   * Supported line modes
+   */
+  lineSupportedVehicleModes?: VEHICLE_MODE[];
 }
