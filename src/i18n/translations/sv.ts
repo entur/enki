@@ -272,7 +272,7 @@ export const messages = {
   stopPointsInfoFixed:
     'Du måste lägga till minst två hållplatser; ett första och ett sista. Fyll i en giltig ID.',
   stopPointsMapInfo:
-    'Du måste lägga till minst två hållpunkter; en för start och en för stopp.',
+    'Du måste lägga till minst två hållplatser; ett första och ett sista.',
   stopPointsInfoFlexibleAreaOnly:
     'Den här typen av flexibel linje tillåter endast en flexibel hållplats där all ombord- och avstigning sker.',
   stopPointsInfoMixedFlexible:
