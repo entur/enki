@@ -31,7 +31,7 @@
     "@entur/layout": "2.4.2",
     "@entur/menu": "5.1.2",
     "@entur/modal": "1.7.62",
-    "@entur/react-component-toggle": "0.0.2",
+    "@entur/react-component-toggle": "0.0.3",
     "@entur/table": "4.9.2",
     "@entur/tokens": "3.17.6",
     "@entur/tooltip": "5.2.2",
