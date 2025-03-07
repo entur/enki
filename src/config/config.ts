@@ -119,4 +119,9 @@ export interface Config {
    * Supported line modes
    */
   lineSupportedVehicleModes?: VEHICLE_MODE[];
+
+  /**
+   * The maximum number of stop places that can be fetched for the journey pattern map
+   */
+  journeyPatternMapStopPlacesLimit?: number;
 }
