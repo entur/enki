@@ -265,6 +265,9 @@ export default <T extends Line>({
             })
           }
           label={formatMessage({ id: 'brandingsDropdownLabelText' })}
+          noMatchesText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
         />
 
         {isFlexibleLine && (
