@@ -230,7 +230,7 @@ export const messages: MessagesKey = {
   generalPrivateCodeFormGroupTitle: 'Private code',
   generalPrivateCodeInputLabelTooltip:
     'Private code is what identifies the line internally for the operator',
-  generalPublicCodeFormGroupTitle: 'Public code *',
+  generalPublicCodeFormGroupTitle: 'Public code {requiredMarker}',
   generalPublicCodeInputLabelTooltip:
     'Public code is what identifies the line externally towards travellers',
   generalTypeFormGroupTitle: 'Flexible line type *',

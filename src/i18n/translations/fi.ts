@@ -229,7 +229,7 @@ export const messages = {
   generalPrivateCodeFormGroupTitle: 'Yksityinen tunnus',
   generalPrivateCodeInputLabelTooltip:
     'Yksityinen tunnus on se, mikä tunnistaa linjan sisäisesti operaattorille',
-  generalPublicCodeFormGroupTitle: 'Julkinen tunnus *',
+  generalPublicCodeFormGroupTitle: 'Julkinen tunnus {requiredMarker}',
   generalPublicCodeInputLabelTooltip:
     'Julkinen tunnus on se, mikä tunnistaa linjan ulkoisesti matkustajille',
   generalTypeFormGroupTitle: 'Joustavan linjan tyyppi *',

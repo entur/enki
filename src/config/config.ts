@@ -119,4 +119,9 @@ export interface Config {
    * Supported line modes
    */
   lineSupportedVehicleModes?: VEHICLE_MODE[];
+
+  /**
+   * Make public code on line optional
+   */
+  optionalPublicCodeOnLine?: boolean;
 }
