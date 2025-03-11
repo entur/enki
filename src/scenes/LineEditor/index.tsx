@@ -22,6 +22,7 @@ import LineEditorSteps from './LineEditorSteps';
 import { FIXED_LINE_STEPS } from './constants';
 import { useLine, useUttuErrors } from './hooks';
 import './styles.scss';
+import { useConfig } from '../../config/ConfigContext';
 
 export default () => {
   const intl = useIntl();
@@ -116,6 +117,8 @@ export default () => {
   const authoritiesMissing =
     organisations && filterAuthorities(organisations).length === 0;
 
+  const config = useConfig();
+
   return (
     <Page
       backButtonTitle={formatMessage({ id: 'navBarLinesMenuItemLabel' })}
@@ -132,8 +135,19 @@ export default () => {
             isValidStepIndex={(i: number) =>
               getMaxAllowedStepIndex(line!, intl) >= i
             }
-            currentStepIsValid={(i) => currentStepIsValid(i, line!, intl)}
-            isLineValid={line ? validLine(line, intl) : false}
+            currentStepIsValid={(i) =>
+              currentStepIsValid(
+                i,
+                line!,
+                intl,
+                config.optionalPublicCodeOnLine,
+              )
+            }
+            isLineValid={
+              line
+                ? validLine(line, intl, config.optionalPublicCodeOnLine)
+                : false
+            }
             setNextClicked={setNextClicked}
             isEdit={!isBlank(match?.params.id)}
             spoilPristine={nextClicked}
