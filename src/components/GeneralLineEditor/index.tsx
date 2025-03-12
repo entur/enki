@@ -129,6 +129,8 @@ export default <T extends Line>({
     [brandings],
   );
 
+  const config = useConfig();
+
   return (
     <div className="lines-editor-general">
       <Heading1> {formatMessage({ id: 'editorAbout' })}</Heading1>
@@ -162,7 +164,12 @@ export default <T extends Line>({
         />
 
         <TextField
-          label={formatMessage({ id: 'generalPublicCodeFormGroupTitle' })}
+          label={formatMessage(
+            { id: 'generalPublicCodeFormGroupTitle' },
+            {
+              requiredMarker: !config.optionalPublicCodeOnLine ? '*' : '',
+            },
+          )}
           labelTooltip={formatMessage({
             id: 'generalPublicCodeInputLabelTooltip',
           })}
@@ -176,7 +183,7 @@ export default <T extends Line>({
           }
           {...getErrorFeedback(
             formatMessage({ id: 'publicCodeEmpty' }),
-            !isBlank(line.publicCode),
+            !isBlank(line.publicCode) || !!config.optionalPublicCodeOnLine,
             publicCodePristine,
           )}
         />

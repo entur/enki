@@ -18,8 +18,12 @@ import StopPoint from 'model/StopPoint';
 import moment from 'moment';
 import { IntlShape } from 'react-intl';
 
-export const validLine = (line: Line, intl: IntlShape): boolean =>
-  aboutLineStepIsValid(line) &&
+export const validLine = (
+  line: Line,
+  intl: IntlShape,
+  optionalPublicCode?: boolean,
+): boolean =>
+  aboutLineStepIsValid(line, optionalPublicCode) &&
   line.journeyPatterns!.every(
     (jp) =>
       validJourneyPattern(jp) && validServiceJourneys(jp.serviceJourneys, intl),
@@ -41,8 +45,9 @@ export const getMaxAllowedStepIndex = (line: Line, intl: IntlShape) => {
 export const getMaxAllowedFlexibleLineStepIndex = (
   line: FlexibleLine,
   intl: IntlShape,
+  optionalPublicCode?: boolean,
 ) => {
-  if (!aboutFlexibleLineStepIsValid(line)) return 0;
+  if (!aboutFlexibleLineStepIsValid(line, optionalPublicCode)) return 0;
   else if (
     line.journeyPatterns!.some(
       (jp) => !validFlexibleLineJourneyPattern(jp, line.flexibleLineType),
@@ -62,8 +67,9 @@ export const currentStepIsValid = (
   currentStep: number,
   line: Line,
   intl: IntlShape,
+  optionalPublicCode?: boolean,
 ) => {
-  if (currentStep === 0) return aboutLineStepIsValid(line);
+  if (currentStep === 0) return aboutLineStepIsValid(line, optionalPublicCode);
   else if (currentStep === 1)
     return line.journeyPatterns!.every((jp) => validJourneyPattern(jp));
   else if (currentStep === 2)
@@ -78,8 +84,10 @@ export const currentFlexibleLineStepIsValid = (
   currentStep: number,
   line: FlexibleLine,
   intl: IntlShape,
+  optionalPublicCode?: boolean,
 ) => {
-  if (currentStep === 0) return aboutFlexibleLineStepIsValid(line);
+  if (currentStep === 0)
+    return aboutFlexibleLineStepIsValid(line, optionalPublicCode);
   else if (currentStep === 1)
     return line.journeyPatterns!.every((jp) =>
       validFlexibleLineJourneyPattern(jp, line.flexibleLineType),
@@ -92,9 +100,12 @@ export const currentFlexibleLineStepIsValid = (
   else return false;
 };
 
-export const aboutLineStepIsValid = (line: Line): boolean =>
+export const aboutLineStepIsValid = (
+  line: Line,
+  optionalPublicCode?: boolean,
+): boolean =>
   !isBlank(line.name) &&
-  !isBlank(line.publicCode) &&
+  (!isBlank(line.publicCode) || !!optionalPublicCode) &&
   !isBlank(line.operatorRef) &&
   !isBlank(line.networkRef) &&
   !isBlank(line.transportMode) &&
@@ -103,16 +114,21 @@ export const aboutLineStepIsValid = (line: Line): boolean =>
 export const validFlexibleLine = (
   line: FlexibleLine,
   intl: IntlShape,
+  optionalPublicCode?: boolean,
 ): boolean =>
-  aboutFlexibleLineStepIsValid(line) &&
+  aboutFlexibleLineStepIsValid(line, optionalPublicCode) &&
   line.journeyPatterns!.every(
     (jp) =>
       validFlexibleLineJourneyPattern(jp, line.flexibleLineType) &&
       validServiceJourneys(jp.serviceJourneys, intl),
   );
 
-export const aboutFlexibleLineStepIsValid = (line: FlexibleLine): boolean =>
-  aboutLineStepIsValid(line) && !isBlank(line.flexibleLineType);
+export const aboutFlexibleLineStepIsValid = (
+  line: FlexibleLine,
+  optionalPublicCode?: boolean,
+): boolean =>
+  aboutLineStepIsValid(line, optionalPublicCode) &&
+  !isBlank(line.flexibleLineType);
 
 export const validJourneyPattern = (
   journeyPatterns?: JourneyPattern,

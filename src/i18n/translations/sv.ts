@@ -226,7 +226,7 @@ export const messages = {
   generalPrivateCodeFormGroupTitle: 'Privat kod',
   generalPrivateCodeInputLabelTooltip:
     'Privat kod är det som kännetecknar linjen internt hos en operatör',
-  generalPublicCodeFormGroupTitle: 'Offentlig kod *',
+  generalPublicCodeFormGroupTitle: 'Offentlig kod {requiredMarker}',
   generalPublicCodeInputLabelTooltip:
     'Offentlig kod är det som kännetecknar linjen ut mot kunder',
   generalTypeFormGroupTitle: 'Flexibel linje-typ *',

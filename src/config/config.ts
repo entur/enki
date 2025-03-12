@@ -121,6 +121,11 @@ export interface Config {
   lineSupportedVehicleModes?: VEHICLE_MODE[];
 
   /**
+   * Make public code on line optional
+   */
+  optionalPublicCodeOnLine?: boolean;
+
+  /**
    * The maximum number of stop places that can be fetched for the journey pattern map
    */
   journeyPatternMapStopPlacesLimit?: number;

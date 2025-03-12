@@ -22,6 +22,7 @@ import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
 import { useLoadDependencies } from './hooks';
 import { FLEXIBLE_LINE_STEPS } from './steps';
 import './styles.scss';
+import { useConfig } from '../../config/ConfigContext';
 
 const EditorFrame = () => {
   const params = useParams();
@@ -94,6 +95,8 @@ const EditorFrame = () => {
   const authoritiesMissing =
     organisations && filterAuthorities(organisations).length === 0;
 
+  const config = useConfig();
+
   return (
     <Page
       backButtonTitle={
@@ -119,11 +122,24 @@ const EditorFrame = () => {
                   formatMessage({ id: step }),
                 )}
                 isValidStepIndex={(i: number) =>
-                  getMaxAllowedFlexibleLineStepIndex(line!, intl) >= i
+                  getMaxAllowedFlexibleLineStepIndex(
+                    line!,
+                    intl,
+                    config.optionalPublicCodeOnLine,
+                  ) >= i
                 }
-                isLineValid={validFlexibleLine(line!, intl)}
+                isLineValid={validFlexibleLine(
+                  line!,
+                  intl,
+                  config.optionalPublicCodeOnLine,
+                )}
                 currentStepIsValid={(i) =>
-                  currentFlexibleLineStepIsValid(i, line, intl)
+                  currentFlexibleLineStepIsValid(
+                    i,
+                    line,
+                    intl,
+                    config.optionalPublicCodeOnLine,
+                  )
                 }
                 setNextClicked={setNextClicked}
                 isEdit={isEdit}

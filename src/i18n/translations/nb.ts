@@ -227,7 +227,7 @@ export const messages = {
   generalPrivateCodeFormGroupTitle: 'Privat kode',
   generalPrivateCodeInputLabelTooltip:
     'Privat kode er det som kjennetegner linjen internt hos en operatør',
-  generalPublicCodeFormGroupTitle: 'Publikumskode *',
+  generalPublicCodeFormGroupTitle: 'Publikumskode {requiredMarker}',
   generalPublicCodeInputLabelTooltip:
     'Publikumskode er det som kjennetegner linjen ut mot publikum',
   generalTypeFormGroupTitle: 'Fleksibel linje-type *',
