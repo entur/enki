@@ -508,6 +508,7 @@ body {
   letter-spacing: var(--fds-typography-ui-label-letter-spacing, 0px);
   line-height: var(--fds-typography-ui-label-line-height, 22px);
   height: 46px;
+  text-wrap: nowrap;
 }
 
 .eds-feedback-text__text {

@@ -18,7 +18,7 @@ export const useBoundingBoxedStopPlacesData = (
 ) => {
   const activeProvider =
     useAppSelector((state) => state.userContext.activeProviderCode) ?? '';
-  const { uttuApiUrl } = useConfig();
+  const { uttuApiUrl, journeyPatternMapStopPlacesLimit } = useConfig();
   const auth = useAuth();
   const [isStopDataLoading, setIsStopDataLoading] = useState<boolean>(false);
 
@@ -68,7 +68,7 @@ export const useBoundingBoxedStopPlacesData = (
             northEastLng: mapSpecsState.bounds[2],
             southWestLat: mapSpecsState.bounds[1],
             southWestLng: mapSpecsState.bounds[0],
-            limit: 3500,
+            limit: journeyPatternMapStopPlacesLimit || 3500,
           },
           token,
         )
