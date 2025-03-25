@@ -1,18 +1,5 @@
 import { MessagesKey } from 'i18n/translationKeys';
 
-export enum ORGANISATION_TYPE {
-  STATUTORY_BODY = 'statutoryBody',
-  AUTHORITY = 'authority',
-  OPERATOR = 'operator',
-  RAIL_OPERATOR = 'railOperator',
-  RAIL_FREIGHT_OPERATOR = 'railFreightOperator',
-  FACILITY_OPERATOR = 'facilityOperator',
-  TRAVEL_AGENT = 'travelAgent',
-  SERVICED_ORGANISATION = 'servicedOrganisation',
-  RETAIL_CONSORTIUM = 'retailConsortium',
-  OTHER = 'other',
-}
-
 export enum VEHICLE_MODE {
   AIR = 'air',
   BUS = 'bus',
