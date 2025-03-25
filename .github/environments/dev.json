@@ -10,6 +10,7 @@
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
   "sentryDSN": "https://cc3cacbc67234cc7bfe1cf391010414b@o209253.ingest.sentry.io/1769954",
+  "routeGeometrySupportedVehicleModes": ["bus", "coach", "taxi", "rail", "water"],
   "exportGenerateServiceLinksDefault": true,
   "optionalPublicCodeOnLine": true,
   "sandboxFeatures": {
