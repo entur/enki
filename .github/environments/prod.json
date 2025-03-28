@@ -10,5 +10,6 @@
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
   "exportGenerateServiceLinksDefault": false,
+  "disableGenerateServiceLinksCheckbox": true,
   "optionalPublicCodeOnLine": true
 }

@@ -10,7 +10,7 @@
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
   "routeGeometrySupportedVehicleModes": ["bus", "coach", "taxi", "rail", "water"],
-  "exportGenerateServiceLinksDefault": true,
+  "exportGenerateServiceLinksDefault": false,
   "optionalPublicCodeOnLine": true,
   "sandboxFeatures": {
     "JourneyPatternStopPointMap": true

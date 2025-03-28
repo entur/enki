@@ -9,6 +9,7 @@
     }
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
+  "disableGenerateServiceLinksCheckbox": true,
   "exportGenerateServiceLinksDefault": false,
   "optionalPublicCodeOnLine": true
 }
