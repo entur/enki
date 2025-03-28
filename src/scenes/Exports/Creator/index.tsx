@@ -121,6 +121,7 @@ const ExportsCreator = () => {
           <div className="export-generate-service-links">
             <Checkbox
               value="1"
+              disabled={config.disableGenerateServiceLinksCheckbox}
               checked={theExport.generateServiceLinks}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onFieldChange('generateServiceLinks', e.target.checked)

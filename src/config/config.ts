@@ -116,6 +116,11 @@ export interface Config {
   exportGenerateServiceLinksDefault?: boolean;
 
   /**
+   * If the generate service links checkbox on export should be enabled.
+   */
+  disableGenerateServiceLinksCheckbox?: boolean;
+
+  /**
    * Supported line modes
    */
   lineSupportedVehicleModes?: VEHICLE_MODE[];
