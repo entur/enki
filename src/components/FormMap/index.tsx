@@ -1,10 +1,8 @@
 import './styles.scss';
 import { FloatingButton } from '@entur/button';
 import { UndoIcon } from '@entur/icons';
-import DefaultMapContainer from './DefaultMapContainer';
 import React from 'react';
-import { useConfig } from '../../config/ConfigContext';
-import { ComponentToggle } from '@entur/react-component-toggle';
+import FormMapContainer from './FormMapContainer';
 
 type Props = {
   undo?: () => void;
@@ -19,27 +17,14 @@ const FormMap = ({
   zoomControl = true,
   doubleClickZoom = true,
 }: Props) => {
-  const { extPath } = useConfig();
-
   return (
     <div className="map-container eds-contrast">
-      <ComponentToggle
-        feature={`${extPath}/CustomMapProvider`}
-        componentProps={{
-          zoomControl,
-          doubleClickZoom,
-        }}
-        renderFallback={() => (
-          <DefaultMapContainer
-            zoomControl={zoomControl}
-            doubleClickZoom={doubleClickZoom}
-          >
-            {children}
-          </DefaultMapContainer>
-        )}
+      <FormMapContainer
+        zoomControl={zoomControl}
+        doubleClickZoom={doubleClickZoom}
       >
         {children}
-      </ComponentToggle>
+      </FormMapContainer>
 
       {undo ? (
         <FloatingButton

@@ -134,4 +134,21 @@ export interface Config {
    * The maximum number of stop places that can be fetched for the journey pattern map
    */
   journeyPatternMapStopPlacesLimit?: number;
+
+  /**
+   * Provide a way to define custom map provider's details, for example the tile layer or map center/zoom
+   */
+  mapConfig?: MapConfig;
+}
+
+export interface MapConfig {
+  tileLayer?: TileLayerConfig;
+  center?: [number, number];
+  zoom?: number;
+}
+
+export interface TileLayerConfig {
+  name: string;
+  attribution: string;
+  url: string;
 }
