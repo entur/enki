@@ -1,11 +1,11 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
 import './styles.scss';
-import { Tile } from '../../config/config';
+import { TileLayerConfig } from '../../config/config';
 import { useConfig } from '../../config/ConfigContext';
 
 const DEFAULT_ZOOM_LEVEL = 14;
 const DEFAULT_CENTER: [number, number] = [59.91, 10.76];
-export const DEFAULT_OSM_TILE: Tile = {
+export const DEFAULT_OSM_TILE: TileLayerConfig = {
   name: 'OpenStreetMap',
   url: '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   attribution:
@@ -25,13 +25,13 @@ const FormMapContainer = ({
 }: Props) => {
   const { mapConfig } = useConfig();
   const isCustomTileToBeUsed =
-    mapConfig?.tile?.url && mapConfig?.tile?.attribution;
+    mapConfig?.tileLayer?.url && mapConfig?.tileLayer?.attribution;
 
   const tileUrl = isCustomTileToBeUsed
-    ? (mapConfig.tile?.url as string)
+    ? (mapConfig?.tileLayer?.url as string)
     : DEFAULT_OSM_TILE.url;
   const tileAttribution = isCustomTileToBeUsed
-    ? (mapConfig?.tile?.attribution as string)
+    ? (mapConfig?.tileLayer?.attribution as string)
     : DEFAULT_OSM_TILE.attribution;
   const center = mapConfig?.center || DEFAULT_CENTER;
   const zoom = mapConfig?.zoom || DEFAULT_ZOOM_LEVEL;

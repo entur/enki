@@ -136,18 +136,18 @@ export interface Config {
   journeyPatternMapStopPlacesLimit?: number;
 
   /**
-   * Provide a way to define custom map provider's details, for example the tile's
+   * Provide a way to define custom map provider's details, for example the tile layer or map center/zoom
    */
   mapConfig?: MapConfig;
 }
 
 export interface MapConfig {
-  tile?: Tile;
-  center: [number, number];
-  zoom: number;
+  tileLayer?: TileLayerConfig;
+  center?: [number, number];
+  zoom?: number;
 }
 
-export interface Tile {
+export interface TileLayerConfig {
   name: string;
   attribution: string;
   url: string;
