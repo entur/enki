@@ -13,7 +13,7 @@ npm install
 npm start
 ```
 
-Note: The app uses Node version 18 (LTS).
+Note: The app uses Node version 22 (LTS).
 
 To run together with a local instance of [Uttu](https://github.com/entur/uttu) on port 11701, add the following to `.env.development.local`.
 
