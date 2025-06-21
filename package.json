@@ -96,7 +96,7 @@
     "identity-obj-proxy": "3.0.0",
     "jsdom": "25.0.1",
     "lint-staged": "15.5.2",
-    "lit-html": "3.2.1",
+    "lit-html": "3.3.0",
     "msw": "2.7.3",
     "prettier": "3.5.3",
     "prettier-plugin-organize-imports": "4.1.0",
