@@ -48,7 +48,7 @@
     "graphql": "16.11.0",
     "graphql-request": "6.1.0",
     "leaflet": "1.9.4",
-    "lit": "3.2.1",
+    "lit": "3.3.0",
     "lodash.clonedeep": "4.5.0",
     "lodash.isempty": "4.4.0",
     "lodash.isequal": "4.5.0",
