@@ -46,7 +46,7 @@
     "duration-fns": "3.0.2",
     "file-saver": "2.0.5",
     "graphql": "16.11.0",
-    "graphql-request": "6.1.0",
+    "graphql-request": "7.2.0",
     "leaflet": "1.9.4",
     "lit": "3.2.1",
     "lodash.clonedeep": "4.5.0",
