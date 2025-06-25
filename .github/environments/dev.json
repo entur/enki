@@ -2,8 +2,8 @@
   "uttuApiUrl": "https://api.dev.entur.io/timetable-admin/v1/flexible-lines",
   "xmlnsUrlPrefix": "http://www.rutebanken.org/ns/",
   "oidcConfig": {
-    "authority": "https://partner.dev.entur.org",
-    "client_id": "fBMaKFexHPwhsASUC57o2wvzrRxvAdNb",
+    "authority": "https://ror-entur-dev.eu.auth0.com",
+    "client_id": "YBG7NvM9lT3pLmcVKeRZCrPFtU7bll4g",
     "extraQueryParams": {
       "audience": "https://ror.api.dev.entur.io"
     }
