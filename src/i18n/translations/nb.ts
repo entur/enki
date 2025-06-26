@@ -54,7 +54,6 @@ export const messages = {
   navBarNetworksMenuItemLabel: 'Nettverk',
   navBarBrandingsMenuItemLabel: 'Merkevarer',
   navBarRootLinkLogoAltText: 'Logo',
-  navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Fleksible stoppesteder',
   userMenuLogoutLinkText: 'Logg ut',
   userMenuMenuItemTextEnglish: 'English',
