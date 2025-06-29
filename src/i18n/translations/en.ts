@@ -54,7 +54,6 @@ export const messages: MessagesKey = {
   navBarNetworksMenuItemLabel: 'Networks',
   navBarBrandingsMenuItemLabel: 'Brandings',
   navBarRootLinkLogoAltText: 'Logo',
-  navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Flexible stop places',
   userMenuLogoutLinkText: 'Log out',
   userMenuMenuItemTextEnglish: 'English',

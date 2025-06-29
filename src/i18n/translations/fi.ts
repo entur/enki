@@ -53,7 +53,6 @@ export const messages = {
   navBarNetworksMenuItemLabel: 'Verkko',
   navBarBrandingsMenuItemLabel: 'Brändäykset',
   navBarRootLinkLogoAltText: 'Logo',
-  navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Kutsujoukkoliikenteen pysäkit',
   userMenuLogoutLinkText: 'Kirjaudu ulos',
   userMenuMenuItemTextEnglish: 'English',
