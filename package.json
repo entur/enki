@@ -45,6 +45,7 @@
     "date-fns": "2.30.0",
     "duration-fns": "3.0.2",
     "file-saver": "2.0.5",
+    "flag-icons": "^7.5.0",
     "graphql": "16.11.0",
     "graphql-request": "7.2.0",
     "leaflet": "1.9.4",
