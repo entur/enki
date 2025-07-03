@@ -54,7 +54,6 @@ export const messages = {
   navBarNetworksMenuItemLabel: 'Nätverk',
   navBarBrandingsMenuItemLabel: 'Varumärken',
   navBarRootLinkLogoAltText: 'Logga',
-  navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Flexibla hållplatser',
   userMenuLogoutLinkText: 'Logga ut',
   userMenuMenuItemTextEnglish: 'English',
@@ -135,7 +134,7 @@ export const messages = {
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'Journey pattern måste ha ett unikt namn',
   uttuErrorENTITY_IS_REFERENCED:
-    'Entiteten kan inte tas bort på grund av {noOfLines, number} {noOfLines, plural, one {en annan entitet} other {andra entiteter}} refererar till den.',
+    'Entiteten kan inte tas bort eftersom {noOfLines, number} {noOfLines, plural, one {linje} other {linjer}} fortfarande refererar till den.',
   uttuErrorFROM_DATE_AFTER_TO_DATE: 'Från datum kan inte vara efter till datum',
   uttuErrorMINIMUM_POINTS_IN_SEQUENCE:
     'Journey pattern måste ha minst 2 sekvensiella hållplatser.',
@@ -235,16 +234,6 @@ export const messages = {
   generalDrawer: 'Här är en kort beskrivning av de olika linjetyperna.',
   drawerAria: 'Läs mer om de olika linjetyperna.',
   generalDrawerTitle: 'Flexibla linjetyper.',
-  drawerFixed:
-    'Fast linje med fasta tider, men måste förhandsbeställas för att den ska köras.',
-  drawerMainRouteWithFlexibleEnds:
-    'Fast linje med fasta tider, med möjlighet för på-/avstigning på hållplatser utanför definerat körmönster på beställning.',
-  drawerFixedStopAreaWide:
-    'Flexibel linje definerad av ett eller flera områden, där varje område kan ha olika förbestämda stopp (t.ex. mötesplatser, knutpunkter eller hållplatser).',
-  drawerFlexibleAreasOnly:
-    'Kunden hämtas och körs till och från valfritt punkt innanför ett definerat område, i en angiven tidsperiod (öppettid).',
-  drawerHailAndRideSections:
-    'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
   flexibleLineType_fixed: 'Fast',
   flexibleLineType_flexibleAreasOnly: 'Endast flexibla områden',
   flexibleLineType_mixedFlexible: 'Blandat',
@@ -357,7 +346,7 @@ export const messages = {
   editorJourneyPatternsTabLabel: 'Journey patterns',
   newJourneyPatternModalTitle: 'Nytt journey pattern',
   newJourneyPatternModalSubTitle: 'Fyll i namn och tryck därefter på Skapa',
-  newJourneyPatternModaluniqueName: 'Journey pattern måste ha ett unikt namn',
+  newJourneyPatternModalUniqueName: 'Journey pattern måste ha ett unikt namn',
   newJourneyPatternModalCancel: 'Avbryt',
   newJourneyPatternModalCreate: 'Skapa',
   newJourneyPatternModalLabel: 'Namn *',
@@ -675,6 +664,8 @@ export const messages = {
   saveProviderErrorFallback: 'Okänt fel vid sparning av dataleverantör',
   noProvidersDescriptionText:
     'Din Nplan-installation behöver minst en dataleverantör',
+  landingPageNotLoggedIn: 'Inte inloggad',
+  landingPageLoginButtonText: 'Logga in',
   showQuays: 'Visa plattform',
   hideQuays: 'Dölj plattform',
   oneQuay: 'En plattform',
