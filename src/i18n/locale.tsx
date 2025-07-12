@@ -10,7 +10,7 @@ export const DEFAULT_LOCALE: Locale = 'nb';
 /**
  * When adding new translations, the locale needs to be added to the Locale array.
  */
-export const Locale = ['nb', 'en', 'sv', 'fi'] as const;
+export const Locale = ['nb', 'en', 'sv', 'fi', 'bg'] as const;
 
 /**
  * The Locale type is generated from the list of supported locales
