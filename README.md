@@ -29,7 +29,7 @@ config to the deployment, along with the built static files (i.e. in the `build/
 
 For local development, add a `bootstrap.json` file to the `public/` folder, e.g.:
 ```
-cp .github/environments/local.json public/bootstrap.json
+$ cp .github/environments/local.json public/bootstrap.json
 ```
 
 See `src/config/ConfigContext.ts` for the shape of the configuration.
