@@ -1,4 +1,4 @@
-@import '../../../../node_modules/@entur/tokens/dist/styles';
+@use '../../../../node_modules/@entur/tokens/dist/styles' as *;
 
 .export-editor {
   flex: 1;

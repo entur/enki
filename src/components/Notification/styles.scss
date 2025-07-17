@@ -1,4 +1,4 @@
-@import '@entur/tokens/dist/styles.scss';
+@use '@entur/tokens/dist/styles.scss' as *;
 
 .notification {
   position: fixed;
