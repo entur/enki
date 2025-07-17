@@ -1,5 +1,5 @@
-@import '@fintraffic/fds-coreui-css/dist/fonts-public-sans';
-@import '@fintraffic/fds-coreui-css/dist/tokens';
+@use '@fintraffic/fds-coreui-css/dist/fonts-public-sans';
+@use '@fintraffic/fds-coreui-css/dist/tokens' as *;
 
 body {
   font-family: 'Public Sans';
