@@ -12,6 +12,7 @@ To run for development, simply do:
 npm install
 npm start
 ```
+See http://localhost:3001/providers or http://localhost:3001/lines for providers and lines.
 
 Note: The app uses Node version 22 (LTS).
 
