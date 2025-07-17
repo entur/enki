@@ -26,7 +26,10 @@ REACT_APP_UTTU_API_URL=http://localhost:11701/services/flexible-lines
 Configuration is bootstrapped from `/bootstrap.json`, when the app loads. You should add your environment-specific
 config to the deployment, along with the built static files (i.e. in the `build/` folder).
 
-For local development, add a `bootstrap.json` file to the `public/` folder.
+For local development, add a `bootstrap.json` file to the `public/` folder, e.g.:
+```
+cp .github/environments/local.json public/bootstrap.json
+```
 
 See `src/config/ConfigContext.ts` for the shape of the configuration.
 
