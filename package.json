@@ -99,7 +99,7 @@
     "lit-html": "3.3.1",
     "msw": "2.10.4",
     "prettier": "3.6.2",
-    "prettier-plugin-organize-imports": "4.1.0",
+    "prettier-plugin-organize-imports": "4.2.0",
     "redux-immutable-state-invariant": "2.1.0",
     "sass": "1.89.2",
     "source-map-explorer": "2.5.3",
