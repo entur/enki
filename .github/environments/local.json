@@ -11,6 +11,7 @@
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
   "routeGeometrySupportedVehicleModes": ["bus", "coach", "taxi", "rail", "water"],
   "exportGenerateServiceLinksDefault": false,
+  "exportIncludeDatedServiceJourneysDefault": false,
   "optionalPublicCodeOnLine": true,
   "sandboxFeatures": {
     "JourneyPatternStopPointMap": true

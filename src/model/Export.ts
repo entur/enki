@@ -17,16 +17,21 @@ export type Export = VersionedType & {
   exportStatus?: EXPORT_STATUS;
   dryRun: boolean;
   generateServiceLinks: boolean;
+  includeDatedServiceJourneys: boolean;
   downloadUrl?: string;
   messages?: Message[];
   lineAssociations?: ExportLineAssociation[];
 };
 
-export const newExport = (generateServiceLinks: boolean = true): Export => {
+export const newExport = (
+  generateServiceLinks: boolean = true,
+  includeDatedServiceJourneys: boolean = false,
+): Export => {
   return {
     name: '',
     dryRun: false,
     generateServiceLinks: generateServiceLinks,
+    includeDatedServiceJourneys: includeDatedServiceJourneys,
   };
 };
 

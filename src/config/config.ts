@@ -120,6 +120,10 @@ export interface Config {
    */
   disableGenerateServiceLinksCheckbox?: boolean;
 
+  exportIncludeDatedServiceJourneysDefault?: boolean;
+
+  disableIncludeDatedServiceJourneysCheckbox?: false;
+
   /**
    * Supported line modes
    */

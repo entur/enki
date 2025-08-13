@@ -9,7 +9,8 @@
     }
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
-  "disableGenerateServiceLinksCheckbox": true,
   "exportGenerateServiceLinksDefault": false,
+  "disableGenerateServiceLinksCheckbox": true,
+  "disableIncludeDatedServiceJourneysCheckbox": false,
   "optionalPublicCodeOnLine": true
 }
