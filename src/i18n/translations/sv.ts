@@ -1,4 +1,6 @@
-export const messages = {
+import { MessagesKey } from 'i18n/translationKeys';
+
+export const messages: MessagesKey = {
   appLoadingMessage: 'Läser in dataleverantörer och organisationer...',
   exportsLoadExportByIdErrorHeader: 'Hämta export',
   exportsLoadExportByIdErrorMessage:
@@ -78,6 +80,10 @@ export const messages = {
   exportCreatorGenerateServiceLinksFormLabel: 'Generera service links',
   exportCreatorGenerateServiceLinksFormLabelTooltip:
     'Genererar service links geometri mallan hållplatser',
+  exportCreatorIncludeDatedServiceJourneysFormLabel:
+    'Generera DatedServiceJourneys',
+  exportCreatorIncludeDatedServiceJourneysFormLabelTooltip:
+    'Genererar DatedServiceJourneys',
   exportCreatorFromDateFormLabel: 'Från datum *',
   exportCreatorHeader: 'Skapa export',
   exportCreatorDescription: 'Exportera data till resesökmotor',
@@ -116,6 +122,9 @@ export const messages = {
   viewerGenerateServiceLinksLabel: 'Generera service links',
   viewerGenerateServiceLinksNo: 'Nej',
   viewerGenerateServiceLinksYes: 'Ja',
+  viewerIncludeDatedServiceJourneysLabel: 'Generera DatedServiceJourneys',
+  viewerIncludeDatedServiceJourneysNo: 'Nej',
+  viewerIncludeDatedServiceJourneysYes: 'Ja',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE: 'Inga giltiga linjer i data',
   failed: 'Misslyckades',
   in_progress: 'Pågår',
@@ -235,16 +244,6 @@ export const messages = {
   generalDrawer: 'Här är en kort beskrivning av de olika linjetyperna.',
   drawerAria: 'Läs mer om de olika linjetyperna.',
   generalDrawerTitle: 'Flexibla linjetyper.',
-  drawerFixed:
-    'Fast linje med fasta tider, men måste förhandsbeställas för att den ska köras.',
-  drawerMainRouteWithFlexibleEnds:
-    'Fast linje med fasta tider, med möjlighet för på-/avstigning på hållplatser utanför definerat körmönster på beställning.',
-  drawerFixedStopAreaWide:
-    'Flexibel linje definerad av ett eller flera områden, där varje område kan ha olika förbestämda stopp (t.ex. mötesplatser, knutpunkter eller hållplatser).',
-  drawerFlexibleAreasOnly:
-    'Kunden hämtas och körs till och från valfritt punkt innanför ett definerat område, i en angiven tidsperiod (öppettid).',
-  drawerHailAndRideSections:
-    'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
   flexibleLineType_fixed: 'Fast',
   flexibleLineType_flexibleAreasOnly: 'Endast flexibla områden',
   flexibleLineType_mixedFlexible: 'Blandat',
@@ -357,11 +356,11 @@ export const messages = {
   editorJourneyPatternsTabLabel: 'Journey patterns',
   newJourneyPatternModalTitle: 'Nytt journey pattern',
   newJourneyPatternModalSubTitle: 'Fyll i namn och tryck därefter på Skapa',
-  newJourneyPatternModaluniqueName: 'Journey pattern måste ha ett unikt namn',
   newJourneyPatternModalCancel: 'Avbryt',
   newJourneyPatternModalCreate: 'Skapa',
   newJourneyPatternModalLabel: 'Namn *',
   newJourneyPatternModalPlaceholder: 'Ex. "Lokal linje"',
+  newJourneyPatternModalUniqueName: 'Journey pattern måste ha ett unikt namn',
   editorLoadingLineText: 'Läser in linje',
   editorLoadingNetworkAndStopsText: 'Läser in nätverk och hållplatser',
   editorSaveButtonText: 'Spara',
@@ -707,4 +706,6 @@ export const messages = {
   copyInstance: 'en kopia',
   journeyPatternDuplicateNameValidationError:
     'Journey pattern måste ha ett unikt namn',
+  landingPageNotLoggedIn: 'Inte inloggad',
+  landingPageLoginButtonText: 'Logga in',
 };

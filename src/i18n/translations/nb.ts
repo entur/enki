@@ -78,6 +78,10 @@ export const messages = {
   exportCreatorGenerateServiceLinksFormLabel: 'Generer service links',
   exportCreatorGenerateServiceLinksFormLabelTooltip:
     'Genererer service link-geometri mellom stoppesteder',
+  exportCreatorIncludeDatedServiceJourneysFormLabel:
+    'Generer DatedServiceJourneys',
+  exportCreatorIncludeDatedServiceJourneysFormLabelTooltip:
+    'Genererer DatedServiceJourneys',
   exportCreatorFromDateFormLabel: 'Fra dato *',
   exportCreatorHeader: 'Opprett eksport',
   exportCreatorDescription:
@@ -117,6 +121,9 @@ export const messages = {
   viewerGenerateServiceLinksLabel: 'Generer service links',
   viewerGenerateServiceLinksNo: 'Nei',
   viewerGenerateServiceLinksYes: 'Ja',
+  viewerIncludeDatedServiceJourneysLabel: 'Generer DatedServiceJourneys',
+  viewerIncludeDatedServiceJourneysNo: 'Nei',
+  viewerIncludeDatedServiceJourneysYes: 'Ja',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE: 'Ingen gyldig linjer i datagrunnlaget',
   failed: 'Feilet',
   in_progress: 'Pågår',

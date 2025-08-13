@@ -77,6 +77,10 @@ export const messages: MessagesKey = {
   exportCreatorGenerateServiceLinksFormLabel: 'Generate service links',
   exportCreatorGenerateServiceLinksFormLabelTooltip:
     'Will generate service links geometry between stops',
+  exportCreatorIncludeDatedServiceJourneysFormLabel:
+    'Generate DatedServiceJourneys',
+  exportCreatorIncludeDatedServiceJourneysFormLabelTooltip:
+    'Will generate DatedServiceJourneys',
   exportCreatorFromDateFormLabel: 'From date *',
   exportCreatorHeader: 'Create export',
   exportCreatorDescription:
@@ -117,6 +121,9 @@ export const messages: MessagesKey = {
   viewerGenerateServiceLinksLabel: 'Generate service links',
   viewerGenerateServiceLinksNo: 'No',
   viewerGenerateServiceLinksYes: 'Yes',
+  viewerIncludeDatedServiceJourneysLabel: 'Generate DatedServiceJourneys',
+  viewerIncludeDatedServiceJourneysNo: 'No',
+  viewerIncludeDatedServiceJourneysYes: 'Yes',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE:
     'No valid flexible lines in data space',
   failed: 'Failed',
