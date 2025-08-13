@@ -11,5 +11,7 @@
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
   "exportGenerateServiceLinksDefault": false,
   "disableGenerateServiceLinksCheckbox": true,
+  "exportIncludeDatedServiceJourneysDefault": false,
+  "disableIncludeDatedServiceJourneysCheckbox": false,
   "optionalPublicCodeOnLine": true
 }
