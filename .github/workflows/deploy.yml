@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 'dev'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4
         with:
@@ -34,7 +34,7 @@ jobs:
     needs: [deploy_dev]
     environment: 'staging'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4
         with:
@@ -57,7 +57,7 @@ jobs:
     needs: [deploy_dev, deploy_staging]
     environment: 'prod'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4
         with:
