@@ -12,6 +12,7 @@
   "routeGeometrySupportedVehicleModes": ["bus", "coach", "taxi", "rail", "water"],
   "exportGenerateServiceLinksDefault": false,
   "exportIncludeDatedServiceJourneysDefault": false,
+  "disableIncludeDatedServiceJourneysCheckbox": false,
   "optionalPublicCodeOnLine": true,
   "sandboxFeatures": {
     "JourneyPatternStopPointMap": true
