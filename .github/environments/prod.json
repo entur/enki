@@ -12,6 +12,6 @@
   "exportGenerateServiceLinksDefault": false,
   "disableGenerateServiceLinksCheckbox": true,
   "exportIncludeDatedServiceJourneysDefault": false,
-  "disableIncludeDatedServiceJourneysCheckbox": true,
+  "disableIncludeDatedServiceJourneysCheckbox": false,
   "optionalPublicCodeOnLine": true
 }
