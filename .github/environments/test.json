@@ -10,8 +10,11 @@
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
   "exportGenerateServiceLinksDefault": false,
-  "disableGenerateServiceLinksCheckbox": true,
+  "disableGenerateServiceLinksCheckbox": false,
   "exportIncludeDatedServiceJourneysDefault": false,
   "disableIncludeDatedServiceJourneysCheckbox": false,
-  "optionalPublicCodeOnLine": true
+  "optionalPublicCodeOnLine": true,
+  "sandboxFeatures": {
+    "JourneyPatternStopPointMap": true
+  }
 }
