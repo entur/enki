@@ -130,7 +130,7 @@
   },
   "overrides": {
     "@azure/msal-react": {
-      "react": "^16.8.0 || ^17 || ^18 || ^19"
+      "react": "18.3.1"
     }
   }
 }
