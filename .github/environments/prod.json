@@ -9,9 +9,13 @@
     }
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
+  "routeGeometrySupportedVehicleModes": ["bus", "coach", "taxi", "rail", "water"],
   "exportGenerateServiceLinksDefault": false,
-  "disableGenerateServiceLinksCheckbox": true,
+  "disableGenerateServiceLinksCheckbox": false,
   "exportIncludeDatedServiceJourneysDefault": false,
   "disableIncludeDatedServiceJourneysCheckbox": false,
-  "optionalPublicCodeOnLine": true
+  "optionalPublicCodeOnLine": true,
+  "sandboxFeatures": {
+    "JourneyPatternStopPointMap": true
+  }
 }
