@@ -9,6 +9,7 @@
     }
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
+  "routeGeometrySupportedVehicleModes": ["bus", "coach", "taxi", "rail", "water"],
   "exportGenerateServiceLinksDefault": false,
   "disableGenerateServiceLinksCheckbox": false,
   "exportIncludeDatedServiceJourneysDefault": false,
