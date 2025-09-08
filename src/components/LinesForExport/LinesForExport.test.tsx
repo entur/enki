@@ -123,9 +123,8 @@ const clickCheckbox = (container: HTMLElement, index: number) => {
   );
 };
 
-const lineAssociations: ExportLineAssociation[] = [
+const selectableLineAssociations: ExportLineAssociation[] = [
   { lineRef: 'TST:Line:1' },
-  { lineRef: 'TST:Line:2' },
   { lineRef: 'TST:FlexibleLine:1' },
 ];
 
@@ -168,7 +167,7 @@ describe('LinesForExport', () => {
 
     await wait();
 
-    expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations);
+    expect(mockedOnChange).toHaveBeenCalledWith(selectableLineAssociations);
 
     clickCheckbox(renderResult.container, 0);
 
@@ -176,7 +175,7 @@ describe('LinesForExport', () => {
 
     clickCheckbox(renderResult.container, 0);
 
-    expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations);
+    expect(mockedOnChange).toHaveBeenCalledWith(selectableLineAssociations);
   });
 
   it('calls onChange with correct lines when selecting deselecting single checkbox', async () => {
@@ -184,12 +183,37 @@ describe('LinesForExport', () => {
 
     await wait();
 
-    expect(mockedOnChange).toHaveBeenCalledWith(lineAssociations);
+    expect(mockedOnChange).toHaveBeenCalledWith(selectableLineAssociations);
 
     clickCheckbox(renderResult.container, 1);
 
     await wait();
 
-    expect(mockedOnChange).toHaveBeenCalledWith([]);
+    expect(mockedOnChange).toHaveBeenCalledWith([
+      { lineRef: 'TST:FlexibleLine:1' },
+    ]);
+  });
+
+  it('does not allow selection of expired lines', async () => {
+    await wait();
+
+    expect(mockedOnChange).toHaveBeenCalledWith(selectableLineAssociations);
+
+    const checkboxes = getAllByRole(renderResult.container, 'checkbox');
+    const expiredLineCheckbox = checkboxes[2]; // Index 2 should be the expired line
+
+    expect(expiredLineCheckbox).toBeDisabled();
+
+    fireEvent(
+      expiredLineCheckbox,
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+
+    await wait();
+
+    expect(mockedOnChange).toHaveBeenCalledWith(selectableLineAssociations);
   });
 });
