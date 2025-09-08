@@ -129,21 +129,30 @@
       "last 1 safari version"
     ]
   },
+
   "overrides": {
-    "@azure/msal-react": {
-      "react": "^16.8.0 || ^17 || ^18 || ^19"
-    },
     "@reach/dialog": {
-      "react": "^16.8.0 || ^17 || ^18 || ^19",
-      "react-dom": "^16.8.0 || ^17 || ^18 || ^19"
+      "peerDependencies": {
+        "react": "18.3.1",
+        "react-dom": "18.3.1"
+      }
     },
     "@reach/portal": {
-      "react": "^16.8.0 || ^17 || ^18 || ^19",
-      "react-dom": "^16.8.0 || ^17 || ^18 || ^19"
+      "peerDependencies": {
+        "react": "18.3.1",
+        "react-dom": "18.3.1"
+      }
     },
     "@reach/utils": {
-      "react": "^16.8.0 || ^17 || ^18 || ^19",
-      "react-dom": "^16.8.0 || ^17 || ^18 || ^19"
+      "peerDependencies": {
+        "react": "18.3.1",
+        "react-dom": "18.3.1"
+      }
+    },
+    "@azure/msal-react": {
+      "peerDependencies": {
+        "react": "18.3.1"
+      }
     }
   }
 }
