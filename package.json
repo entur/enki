@@ -105,7 +105,7 @@
     "sass": "1.91.0",
     "source-map-explorer": "2.5.3",
     "typescript": "5.9.2",
-    "vite": "6.3.5",
+    "vite": "6.3.6",
     "vite-plugin-svgr": "4.5.0",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "3.2.4",
