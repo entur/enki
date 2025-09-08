@@ -1,10 +1,9 @@
-import { render, userEvent } from '../../../utils/test-utils';
+import { render, userEvent, waitFor } from '../../../utils/test-utils';
 import { SelectProvider } from './SelectProvider';
 import { MemoryRouter } from 'react-router-dom';
 import { useAppDispatch } from '../../../store/hooks';
 import { useEffect } from 'react';
 import { fetchUserContext } from '../../../auth/userContextSlice';
-import { waitFor } from '@testing-library/react';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
