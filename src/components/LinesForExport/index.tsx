@@ -115,7 +115,7 @@ const mapLine = ({ id, name, journeyPatterns }: Line): ExportableLine => {
     name: name!,
     status,
     ...jpAvailability,
-    selected: true,
+    selected: status !== 'negative',
   };
 };
 
@@ -161,13 +161,13 @@ export default ({ onChange }: Props) => {
   const { sortedData, getSortableHeaderProps, getSortableTableProps } =
     useSortableData<ExportableLine>(lines);
 
-  const isEverythingSelected = Object.values(lines).every(
-    (value) => value.selected,
-  );
+  const selectableLines = lines.filter((line) => line.status !== 'negative');
 
-  const isNothingSelected = Object.values(lines).every(
-    (value) => !value.selected,
-  );
+  const isEverythingSelected =
+    selectableLines.length > 0 &&
+    selectableLines.every((line) => line.selected);
+
+  const isNothingSelected = selectableLines.every((line) => !line.selected);
 
   const isSomeSelected = !isEverythingSelected && !isNothingSelected;
 
@@ -176,7 +176,10 @@ export default ({ onChange }: Props) => {
       prev.map((prevItem) =>
         isEverythingSelected
           ? { ...prevItem, selected: false }
-          : { ...prevItem, selected: true },
+          : {
+              ...prevItem,
+              selected: prevItem.status !== 'negative',
+            },
       ),
     );
   };
@@ -185,7 +188,11 @@ export default ({ onChange }: Props) => {
     setLines((prev) =>
       prev.map((prevItem) =>
         prevItem.id === id
-          ? { ...prevItem, selected: !prevItem.selected }
+          ? {
+              ...prevItem,
+              selected:
+                prevItem.status === 'negative' ? false : !prevItem.selected,
+            }
           : prevItem,
       ),
     );
@@ -238,18 +245,37 @@ export default ({ onChange }: Props) => {
         {!loading &&
           !error &&
           sortedData.map((line: ExportableLine) => (
-            <TableRow key={line.id}>
+            <TableRow
+              key={line.id}
+              style={{
+                opacity: line.status === 'negative' ? 0.5 : 1,
+                color: line.status === 'negative' ? '#888' : 'inherit',
+              }}
+            >
               <DataCell padding="checkbox" style={{ padding: '.5rem 1rem' }}>
                 <Checkbox
                   name={line.id}
                   checked={line.selected}
+                  disabled={line.status === 'negative'}
                   onChange={() => handleRegularChange(line.id)}
                 />
               </DataCell>
               <DataCell>
-                <StrongText>{line.name}</StrongText>
+                <StrongText
+                  style={{
+                    color: line.status === 'negative' ? '#888' : 'inherit',
+                  }}
+                >
+                  {line.name}
+                </StrongText>
                 <br />
-                <SmallText>{line.id}</SmallText>
+                <SmallText
+                  style={{
+                    color: line.status === 'negative' ? '#888' : 'inherit',
+                  }}
+                >
+                  {line.id}
+                </SmallText>
               </DataCell>
               <DataCell status={line.status}>
                 {mapStatusToText(line.status)}
