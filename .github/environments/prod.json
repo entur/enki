@@ -15,6 +15,7 @@
   "exportIncludeDatedServiceJourneysDefault": false,
   "disableIncludeDatedServiceJourneysCheckbox": false,
   "optionalPublicCodeOnLine": true,
+  "enableLineMigration": true,
   "sandboxFeatures": {
     "JourneyPatternStopPointMap": true
   }

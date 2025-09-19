@@ -9,4 +9,13 @@
     max-width: 20rem;
     margin-bottom: $space-large;
   }
+
+  .action-cell {
+    width: 150px;
+    min-width: 150px;
+
+    button {
+      white-space: nowrap;
+    }
+  }
 }
