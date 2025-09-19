@@ -281,3 +281,25 @@ export const flexibleStopAreaTypeMessages: Record<
   [FLEXIBLE_STOP_AREA_TYPE.UNRESTRICTED_PUBLIC_TRANSPORT_AREAS]:
     'flexibleStopAreaTypeUnrestrictedPublicTransportAreas',
 };
+
+export const mapLineModeToStopPlaceMode = (
+  transportMode?: VEHICLE_MODE,
+  transportSubmode?: VEHICLE_SUBMODE,
+): VEHICLE_MODE | undefined => {
+  if (transportMode === undefined) {
+    return transportMode;
+  }
+
+  if (
+    transportMode == VEHICLE_MODE.TAXI &&
+    transportSubmode == TAXI_SUBMODE.WATER_TAXI
+  ) {
+    return VEHICLE_MODE.WATER;
+  }
+
+  if ([VEHICLE_MODE.COACH, VEHICLE_MODE.TAXI].includes(transportMode)) {
+    return VEHICLE_MODE.BUS;
+  }
+
+  return transportMode;
+};

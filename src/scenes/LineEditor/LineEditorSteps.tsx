@@ -8,6 +8,7 @@ import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
 import { Branding } from '../../model/Branding';
 import {
+  mapLineModeToStopPlaceMode,
   TAXI_SUBMODE,
   VEHICLE_MODE,
   VEHICLE_SUBMODE_LINK,
@@ -64,16 +65,10 @@ const LineEditorSteps = (props: Props) => {
                 onSave={onSave}
                 onDelete={onDelete}
                 spoilPristine={props.spoilPristine}
-                transportMode={
-                  VEHICLE_MODE.TAXI == props.line.transportMode &&
-                  TAXI_SUBMODE.WATER_TAXI == props.line.transportSubmode
-                    ? VEHICLE_MODE.WATER
-                    : [VEHICLE_MODE.COACH, VEHICLE_MODE.TAXI].includes(
-                          props.line.transportMode!,
-                        )
-                      ? VEHICLE_MODE.BUS
-                      : props.line.transportMode
-                }
+                transportMode={mapLineModeToStopPlaceMode(
+                  props.line.transportMode,
+                  props.line.transportSubmode,
+                )}
                 onCopy={onCopy}
                 validateJourneyPatternName={validateJourneyPatternName}
               />
