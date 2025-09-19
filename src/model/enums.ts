@@ -76,7 +76,7 @@ enum WATER_SUBMODE {
   SIGHTSEEING_SERVICE = 'sightseeingService',
 }
 
-enum TAXI_SUBMODE {
+export enum TAXI_SUBMODE {
   CHARTER_TAXI = 'charterTaxi',
   COMMUNAL_TAXI = 'communalTaxi',
   WATER_TAXI = 'waterTaxi',
