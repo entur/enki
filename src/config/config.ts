@@ -143,6 +143,11 @@ export interface Config {
    * Provide a way to define custom map provider's details, for example the tile layer or map center/zoom
    */
   mapConfig?: MapConfig;
+
+  /**
+   * Enable line migration feature for moving lines between providers
+   */
+  enableLineMigration?: boolean;
 }
 
 export interface MapConfig {
