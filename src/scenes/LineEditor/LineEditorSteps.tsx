@@ -7,6 +7,7 @@ import Line from 'model/Line';
 import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
 import { Branding } from '../../model/Branding';
+import { VEHICLE_MODE } from '../../model/enums';
 
 type Props = {
   activeStep: number;
@@ -59,7 +60,13 @@ const LineEditorSteps = (props: Props) => {
                 onSave={onSave}
                 onDelete={onDelete}
                 spoilPristine={props.spoilPristine}
-                transportMode={props.line.transportMode}
+                transportMode={
+                  [VEHICLE_MODE.COACH, VEHICLE_MODE.TAXI].includes(
+                    props.line.transportMode!,
+                  )
+                    ? VEHICLE_MODE.BUS
+                    : props.line.transportMode
+                }
                 onCopy={onCopy}
                 validateJourneyPatternName={validateJourneyPatternName}
               />
