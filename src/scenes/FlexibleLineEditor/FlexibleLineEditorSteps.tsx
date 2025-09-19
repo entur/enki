@@ -8,6 +8,7 @@ import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
 import './styles.scss';
 import { Branding } from '../../model/Branding';
+import { mapLineModeToStopPlaceMode } from '../../model/enums';
 
 type Props = {
   activeStep: number;
@@ -64,7 +65,10 @@ const FlexibleLineEditor = (props: Props) => {
                 onCopy={onCopy}
                 spoilPristine={props.spoilPristine}
                 flexibleLineType={props.flexibleLine.flexibleLineType}
-                transportMode={props.flexibleLine.transportMode}
+                transportMode={mapLineModeToStopPlaceMode(
+                  props.flexibleLine.transportMode,
+                  props.flexibleLine.transportSubmode,
+                )}
               />
             )}
           </JourneyPatterns>
