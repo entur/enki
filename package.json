@@ -57,7 +57,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-helmet": "6.1.0",
-    "react-intl": "6.8.9",
+    "react-intl": "7.1.14",
     "react-leaflet": "4.2.1",
     "react-oidc-context": "3.3.0",
     "react-redux": "8.1.3",
