@@ -28,6 +28,10 @@ export interface SandboxFeatureConfig {
    * Cookie consent management provider
    */
   CookieInformation: boolean;
+  /**
+   * Enable supported tiles
+   */
+  MapTiles: boolean;
 }
 
 export type SandboxFeatures = keyof SandboxFeatureConfig;
@@ -151,7 +155,8 @@ export interface Config {
 }
 
 export interface MapConfig {
-  tileLayer?: TileLayerConfig;
+  tiles: Tile[];
+  defaultTile: string;
   center?: [number, number];
   zoom?: number;
 }
@@ -160,4 +165,16 @@ export interface TileLayerConfig {
   name: string;
   attribution: string;
   url: string;
+}
+/**
+ * Represents a map tile layer configuration.
+ */
+export interface Tile {
+  name: string;
+  attribution?: string;
+  url?: string;
+  maxZoom?: number;
+  component?: boolean;
+  componentName?: string;
+  tms?: boolean;
 }

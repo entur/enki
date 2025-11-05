@@ -9,6 +9,7 @@ export interface UserContext {
   providers: Provider[];
   activeProviderCode?: string | null;
   loaded: boolean;
+  activeMapBaseLayer?: string | null;
 }
 
 const initialState: UserContext = {
@@ -17,6 +18,7 @@ const initialState: UserContext = {
   providers: [],
   activeProviderCode: window.localStorage.getItem('ACTIVE_PROVIDER'),
   loaded: false,
+  activeMapBaseLayer: window.localStorage.getItem('ACTIVE_MAP_BASELAYER'),
 };
 
 export const userContextSlice = createSlice({
@@ -27,6 +29,19 @@ export const userContextSlice = createSlice({
       return {
         ...state,
         activeProviderCode: action.payload,
+      };
+    },
+    /**
+     * Updates the active base map layer in the Redux state.
+     *
+     * @param state - The current Redux state.
+     * @param action - Contains the new base layer name as `payload`.
+     * @returns A new state object with the updated `activeMapBaseLayer` value.
+     */
+    setActiveMapBaseLayer: (state, action) => {
+      return {
+        ...state,
+        activeMapBaseLayer: action.payload,
       };
     },
   },
@@ -42,7 +57,8 @@ export const userContextSlice = createSlice({
 
 export default userContextSlice.reducer;
 
-export const { setActiveProviderCode } = userContextSlice.actions;
+export const { setActiveProviderCode, setActiveMapBaseLayer } =
+  userContextSlice.actions;
 
 export interface FetchUserContextArgs {
   uttuApiUrl?: string;
