@@ -1,19 +1,19 @@
 import { ComponentToggle } from '@entur/react-component-toggle';
 import { MapContainer, LayersControl } from 'react-leaflet';
 import './styles.scss';
-import { Tile } from '../../config/config';
+import { TileLayer } from '../../config/config';
 import { useConfig } from '../../config/ConfigContext';
 import { DynamicTileLayer } from './DynamicTileLayer';
 import { useDispatch } from 'react-redux';
 import { setActiveMapBaseLayer } from '../../auth/userContextSlice';
 import { MapEvents } from './MapEvents';
 import { useAppSelector } from '../../store/hooks';
-import { useEffect } from 'react';
+import { ACTIVE_MAP_BASELAYER, OPEN_STREET_MAP } from '../../actions/constants';
 
 const DEFAULT_ZOOM_LEVEL = 14;
 const DEFAULT_CENTER: [number, number] = [59.91, 10.76];
-export const DEFAULT_OSM_TILE: Tile = {
-  name: 'OpenStreetMap',
+export const DEFAULT_OSM_TILE: TileLayer = {
+  name: OPEN_STREET_MAP,
   url: '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   attribution:
     '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -39,30 +39,10 @@ const FormMapContainer = ({
     (state) => state.userContext.activeMapBaseLayer,
   );
   const dispatch = useDispatch();
-  console.log('activeMapBaseLayer', activeMapBaseLayer);
-  const defaultTiles = [DEFAULT_OSM_TILE];
-  const isCustomTileToBeUsed =
-    mapConfig?.tiles?.length &&
-    mapConfig?.tiles[0]?.url &&
-    mapConfig?.tiles[0].attribution;
+  const defaultTileLayers = [DEFAULT_OSM_TILE];
   const center = mapConfig?.center || DEFAULT_CENTER;
   const zoom = mapConfig?.zoom || DEFAULT_ZOOM_LEVEL;
-  /**
-   * Sets the active base map layer on load or when mapConfig changes.
-   * Priority:
-   * 1. Saved layer from localStorage/Redux
-   * 2. Default or first tile from mapConfig
-   * 3. DEFAULT_OSM_TILE fallback
-   */
-  useEffect(() => {
-    const layerBasedOnMapConfig = isCustomTileToBeUsed
-      ? mapConfig?.defaultTile || mapConfig?.tiles[0]?.name
-      : '';
-    const activeLayer =
-      activeMapBaseLayer || layerBasedOnMapConfig || DEFAULT_OSM_TILE.name;
-    console.log('activeLayer', activeLayer);
-    dispatch(setActiveMapBaseLayer(activeLayer));
-  }, [mapConfig]);
+
   /**
    * Updates the active base map layer in Redux and localStorage.
    * @param activeMapBaseLayer - The selected base layer name.
@@ -70,10 +50,12 @@ const FormMapContainer = ({
   const handleActiveMapBaseLayerChange = (
     activeMapBaseLayer: string | undefined,
   ) => {
-    const tile = mapConfig?.tiles?.find((t) => t.name === activeMapBaseLayer);
-    if (tile) {
-      window.localStorage.setItem('ACTIVE_MAP_BASELAYER', tile.name!);
-      dispatch(setActiveMapBaseLayer(tile.name));
+    const tileLayer = mapConfig?.tileLayers?.find(
+      (t) => t.name === activeMapBaseLayer,
+    );
+    if (tileLayer) {
+      window.localStorage.setItem(ACTIVE_MAP_BASELAYER, tileLayer.name!);
+      dispatch(setActiveMapBaseLayer(tileLayer.name));
     }
   };
   /**
@@ -82,7 +64,6 @@ const FormMapContainer = ({
    * @returns True if the given layer is active, otherwise false.
    */
   const getCheckedBaseLayerByValue = (value: string): boolean => {
-    console.log('🔍 Checking base layer:', { activeMapBaseLayer, value });
     return activeMapBaseLayer === value;
   };
   const { BaseLayer } = LayersControl;
@@ -101,31 +82,32 @@ const FormMapContainer = ({
     >
       <MapEvents handleBaselayerChanged={handleActiveMapBaseLayerChange} />
       <LayersControl position="topright">
-        {(mapConfig?.tiles?.length ? mapConfig.tiles : defaultTiles).map(
-          (tile) => {
-            return (
-              <BaseLayer
-                key={tile.name}
-                checked={getCheckedBaseLayerByValue(tile.name)}
-                name={tile.name}
-              >
-                {tile.component ? (
-                  <ComponentToggle
-                    feature={tile.componentName ?? tile.name}
-                    componentProps={tile}
-                  />
-                ) : (
-                  <DynamicTileLayer
-                    name={tile.name}
-                    attribution={tile.attribution}
-                    url={tile.url}
-                    maxZoom={tile.maxZoom}
-                  />
-                )}
-              </BaseLayer>
-            );
-          },
-        )}
+        {(mapConfig?.tileLayers?.length
+          ? mapConfig.tileLayers
+          : defaultTileLayers
+        ).map((tileLayer) => {
+          return (
+            <BaseLayer
+              key={tileLayer.name}
+              checked={getCheckedBaseLayerByValue(tileLayer.name)}
+              name={tileLayer.name}
+            >
+              {tileLayer.component ? (
+                <ComponentToggle
+                  feature={tileLayer.componentName ?? tileLayer.name}
+                  componentProps={tileLayer}
+                />
+              ) : (
+                <DynamicTileLayer
+                  name={tileLayer.name}
+                  attribution={tileLayer.attribution}
+                  url={tileLayer.url}
+                  maxZoom={tileLayer.maxZoom}
+                />
+              )}
+            </BaseLayer>
+          );
+        })}
       </LayersControl>
       {children}
     </MapContainer>

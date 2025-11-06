@@ -155,8 +155,8 @@ export interface Config {
 }
 
 export interface MapConfig {
-  tiles: Tile[];
-  defaultTile: string;
+  tileLayers: TileLayer[];
+  defaultTileLayer: string;
   center?: [number, number];
   zoom?: number;
 }
@@ -169,7 +169,7 @@ export interface TileLayerConfig {
 /**
  * Represents a map tile layer configuration.
  */
-export interface Tile {
+export interface TileLayer {
   name: string;
   attribution?: string;
   url?: string;

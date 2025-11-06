@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setActiveProviderCode } from '../../../auth/userContextSlice';
 import { sortProviders } from '../../../model/Provider';
 import { Dropdown } from '@entur/dropdown';
+import { ACTIVE_PROVIDER } from '../../../actions/constants';
 
 export const SelectProvider = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const SelectProvider = () => {
   const handleActiveProviderChange = (providerCode: string | undefined) => {
     const provider = providers?.find((p) => p.code === providerCode);
     if (provider) {
-      window.localStorage.setItem('ACTIVE_PROVIDER', provider.code!);
+      window.localStorage.setItem(ACTIVE_PROVIDER, provider.code!);
       dispatch(setActiveProviderCode(provider.code));
       navigate('/', { replace: true });
     }

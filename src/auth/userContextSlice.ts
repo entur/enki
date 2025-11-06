@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Provider from '../model/Provider';
 import { UttuQuery } from '../api';
 import { getUserContextQuery } from '../api/uttu/queries';
+import { ACTIVE_PROVIDER, ACTIVE_MAP_BASELAYER } from '../actions/constants';
 
 export interface UserContext {
   preferredName: string;
@@ -16,9 +17,9 @@ const initialState: UserContext = {
   isAdmin: false,
   preferredName: '',
   providers: [],
-  activeProviderCode: window.localStorage.getItem('ACTIVE_PROVIDER'),
+  activeProviderCode: window.localStorage.getItem(ACTIVE_PROVIDER),
   loaded: false,
-  activeMapBaseLayer: window.localStorage.getItem('ACTIVE_MAP_BASELAYER'),
+  activeMapBaseLayer: window.localStorage.getItem(ACTIVE_MAP_BASELAYER),
 };
 
 export const userContextSlice = createSlice({

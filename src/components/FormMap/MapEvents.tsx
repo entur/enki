@@ -1,32 +1,20 @@
 import React from 'react';
 import { useMapEvents } from 'react-leaflet';
+import { memo } from 'react';
 
 export interface MapEventsProps {
   handleBaselayerChanged: (name: string) => void;
-  onClick?: () => void;
-  onDblclick?: () => void;
-  onZoomEnd?: () => void;
-  onMoveEnd?: () => void;
-  children?: JSX.Element;
 }
 
-export const MapEvents: React.FC<MapEventsProps> = ({
-  children,
-  handleBaselayerChanged = () => {},
-  onClick = () => {},
-  onDblclick = () => {},
-  onZoomEnd = () => {},
-  onMoveEnd = () => {},
-}) => {
+/**
+ * Hook-based component that listens to Leaflet map events.
+ * Currently handles base layer changes and triggers the provided callback.
+ */
+export const MapEvents = memo(({ handleBaselayerChanged }: MapEventsProps) => {
   useMapEvents({
-    baselayerchange: ({ name }) => {
-      handleBaselayerChanged(name);
+    baselayerchange: (e) => {
+      handleBaselayerChanged(e.name);
     },
-    click: onClick,
-    dblclick: onDblclick,
-    zoomend: onZoomEnd,
-    moveend: onMoveEnd,
   });
-
-  return <>{children}</>;
-};
+  return <></>;
+});
