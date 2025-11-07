@@ -7,12 +7,7 @@ import Line from 'model/Line';
 import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
 import { Branding } from '../../model/Branding';
-import {
-  mapLineModeToStopPlaceMode,
-  TAXI_SUBMODE,
-  VEHICLE_MODE,
-  VEHICLE_SUBMODE_LINK,
-} from '../../model/enums';
+import { mapLineModeToStopPlaceMode } from '../../model/enums';
 
 type Props = {
   activeStep: number;
