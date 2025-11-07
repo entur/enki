@@ -16,7 +16,7 @@ import {
   DEFAULT_OSM_TILE,
   DEFAULT_CENTER,
   DEFAULT_ZOOM_LEVEL,
-} from './MapDefaults';
+} from './mapDefaults';
 
 type Props = {
   children: React.ReactElement;
@@ -41,14 +41,14 @@ const FormMapContainer = ({
    * Hook-based component that listens to Leaflet map events.
    * Currently handles base layer changes and triggers the provided callback.
    */
-  function MapEvents() {
+  const MapEvents = () => {
     useMapEvents({
       baselayerchange: (e) => {
         handleActiveMapBaseLayerChange(e.name);
       },
     });
     return null;
-  }
+  };
 
   /**
    * Updates the active base map layer in Redux and localStorage.
