@@ -1,7 +1,7 @@
 name: Deploy
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.environment }}
+  group: ${{ github.workflow }}-${{ github.environment }}
   cancel-in-progress: false
 
 on:
