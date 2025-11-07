@@ -24,7 +24,7 @@ import { fetchUserContext } from '../../auth/userContextSlice';
 import { useConfig } from '../../config/ConfigContext';
 import { ComponentToggle } from '@entur/react-component-toggle';
 
-import { OPEN_STREET_MAP } from '../../actions/constants';
+import { OPEN_STREET_MAP } from '../../components/FormMap/MapDefaults';
 import { setActiveMapBaseLayer } from '../../auth/userContextSlice';
 
 L.Icon.Default.mergeOptions({

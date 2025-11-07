@@ -1,23 +1,22 @@
 import { ComponentToggle } from '@entur/react-component-toggle';
-import { MapContainer, LayersControl } from 'react-leaflet';
+import {
+  MapContainer,
+  LayersControl,
+  ZoomControl,
+  useMapEvents,
+} from 'react-leaflet';
 import './styles.scss';
-import { TileLayer } from '../../config/config';
 import { useConfig } from '../../config/ConfigContext';
 import { DynamicTileLayer } from './DynamicTileLayer';
 import { useDispatch } from 'react-redux';
 import { setActiveMapBaseLayer } from '../../auth/userContextSlice';
-import { MapEvents } from './MapEvents';
 import { useAppSelector } from '../../store/hooks';
-import { ACTIVE_MAP_BASELAYER, OPEN_STREET_MAP } from '../../actions/constants';
-
-const DEFAULT_ZOOM_LEVEL = 14;
-const DEFAULT_CENTER: [number, number] = [59.91, 10.76];
-export const DEFAULT_OSM_TILE: TileLayer = {
-  name: OPEN_STREET_MAP,
-  url: '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  attribution:
-    '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
-};
+import { ACTIVE_MAP_BASELAYER } from '../../actions/constants';
+import {
+  DEFAULT_OSM_TILE,
+  DEFAULT_CENTER,
+  DEFAULT_ZOOM_LEVEL,
+} from './MapDefaults';
 
 type Props = {
   children: React.ReactElement;
@@ -25,13 +24,9 @@ type Props = {
   doubleClickZoom?: boolean;
 };
 
-interface BaseLayerProps {
-  onChange?: () => boolean;
-}
-
 const FormMapContainer = ({
   children,
-  zoomControl = true,
+  zoomControl = false,
   doubleClickZoom = true,
 }: Props) => {
   const { mapConfig } = useConfig();
@@ -42,6 +37,18 @@ const FormMapContainer = ({
   const defaultTileLayers = [DEFAULT_OSM_TILE];
   const center = mapConfig?.center || DEFAULT_CENTER;
   const zoom = mapConfig?.zoom || DEFAULT_ZOOM_LEVEL;
+  /**
+   * Hook-based component that listens to Leaflet map events.
+   * Currently handles base layer changes and triggers the provided callback.
+   */
+  function MapEvents() {
+    useMapEvents({
+      baselayerchange: (e) => {
+        handleActiveMapBaseLayerChange(e.name);
+      },
+    });
+    return null;
+  }
 
   /**
    * Updates the active base map layer in Redux and localStorage.
@@ -80,7 +87,8 @@ const FormMapContainer = ({
       zoomControl={zoomControl}
       doubleClickZoom={doubleClickZoom}
     >
-      <MapEvents handleBaselayerChanged={handleActiveMapBaseLayerChange} />
+      <MapEvents />
+      <ZoomControl position="bottomright" />
       <LayersControl position="topright">
         {(mapConfig?.tileLayers?.length
           ? mapConfig.tileLayers

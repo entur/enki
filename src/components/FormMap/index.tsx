@@ -14,7 +14,7 @@ type Props = {
 const FormMap = ({
   undo,
   children,
-  zoomControl = true,
+  zoomControl = false, // control centrally from FormMapContainer
   doubleClickZoom = true,
 }: Props) => {
   return (
