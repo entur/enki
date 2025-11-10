@@ -46,5 +46,12 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: ["./src/setupTests.js"],
+    reporters: [
+      'default',
+      ['vitest-sonar-reporter', { outputFile: 'test-report.xml' }],
+    ],
+    coverage: {
+      reporter: ['lcov'],
+    },
   },
 });
