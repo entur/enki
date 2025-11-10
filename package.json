@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@apollo/client": "4.0.9",
-    "@azure/msal-browser": "3.30.0",
-    "@azure/msal-react": "2.2.0",
+    "@azure/msal-browser": "4.26.1",
+    "@azure/msal-react": "3.0.21",
     "@entur/a11y": "0.2.102",
     "@entur/alert": "0.17.18",
     "@entur/button": "3.3.18",
