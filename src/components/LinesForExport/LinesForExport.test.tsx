@@ -104,12 +104,13 @@ const mocks = [
         flexibleLines: [flexibleLine],
       },
     },
+    delay: 30,
   },
 ];
 
 const wait = async () => {
   await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await new Promise((resolve) => setTimeout(resolve, 50));
   });
 };
 
@@ -154,9 +155,7 @@ describe('LinesForExport', () => {
 
   // TODO This does not work with vitest
   it('renders without crashing', async () => {
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1));
-    });
+    await wait();
 
     expect(getByText(renderResult.container, 'Test line')).toBeInTheDocument();
     expect(getByText(renderResult.container, 'TST:Line:1')).toBeInTheDocument();
