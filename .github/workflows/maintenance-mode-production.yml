@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
       - name: Copy maintenance mode file
         run: mkdir build && cp .github/maintenance/index.html build/index.html
       - uses: FirebaseExtended/action-hosting-deploy@v0
