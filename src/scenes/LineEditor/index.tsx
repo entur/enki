@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client/react';
 import { setSavedChanges } from 'actions/editor';
 import { showSuccessNotification } from 'actions/notification';
 import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';

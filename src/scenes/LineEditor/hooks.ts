@@ -1,4 +1,4 @@
-import { ApolloError, ApolloQueryResult, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { LINE_EDITOR_QUERY } from 'api/uttu/queries';
 import { isBlank } from 'helpers/forms';
 import useUttuError from 'hooks/useUttuError';
@@ -10,9 +10,9 @@ import { createUuid } from '../../helpers/generators';
 import { Branding } from '../../model/Branding';
 
 export const useUttuErrors = (
-  error: ApolloError | undefined,
-  deleteError: ApolloError | undefined,
-  mutationError: ApolloError | undefined,
+  error: Error | undefined,
+  deleteError: Error | undefined,
+  mutationError: Error | undefined,
 ) => {
   const navigate = useNavigate();
 
@@ -30,11 +30,9 @@ export const useUttuErrors = (
 type UseLineReturnType = {
   line: Line | undefined;
   setLine: React.Dispatch<React.SetStateAction<Line | undefined>>;
-  refetchLine: (
-    variables?: Partial<Record<string, any>> | undefined,
-  ) => Promise<ApolloQueryResult<LineData>>;
+  refetchLine: ReturnType<typeof useQuery<LineData>>['refetch'];
   loading: boolean;
-  error: ApolloError | undefined;
+  error: Error | undefined;
   networks: Network[] | undefined;
   brandings: Branding[] | undefined;
   notFound: boolean;

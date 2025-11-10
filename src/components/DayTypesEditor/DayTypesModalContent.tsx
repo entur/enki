@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client/react';
 import { BannerAlertBox } from '@entur/alert';
 import { ButtonGroup, SecondaryButton } from '@entur/button';
 import { Checkbox } from '@entur/form';

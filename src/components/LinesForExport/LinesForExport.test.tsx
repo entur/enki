@@ -1,4 +1,4 @@
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider } from '@apollo/client/testing/react';
 import { addDays, format, subDays } from 'date-fns';
 import { MemoryRouter } from 'react-router-dom';
 

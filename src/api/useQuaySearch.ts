@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { Quay, StopPlace } from 'api';
 import { STOP_PLACE_BY_QUAY_REF_QUERY } from 'api/uttu/queries';
 
