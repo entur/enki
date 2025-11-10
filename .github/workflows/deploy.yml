@@ -9,6 +9,8 @@ on:
     workflows: [Build]
     types:
       - completed
+    branches:
+      - master
 
 jobs:
   deploy_dev:
