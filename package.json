@@ -1,6 +1,6 @@
 {
   "name": "@entur/enki",
-  "version": "0.586.0",
+  "version": "0.587.0",
   "author": "Entur",
   "private": false,
   "repository": "https://github.com/entur/enki.git",
@@ -42,7 +42,7 @@
     "@sentry/react": "10.24.0",
     "axios": "1.13.2",
     "classnames": "2.5.1",
-    "date-fns": "2.30.0",
+    "date-fns": "4.1.0",
     "duration-fns": "3.0.2",
     "file-saver": "2.0.5",
     "graphql": "16.12.0",

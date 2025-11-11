@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import formatDuration from 'date-fns/formatDuration';
+import { formatDuration } from 'date-fns/formatDuration';
 import { nb } from 'date-fns/locale';
 import * as durationLib from 'duration-fns';
 import moment from 'moment';
