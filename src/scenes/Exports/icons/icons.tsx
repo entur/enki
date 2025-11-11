@@ -1,5 +1,5 @@
 import {
-  ValidationCheckIcon,
+  ValidationSuccessIcon,
   ValidationErrorIcon,
   ValidationExclamationIcon,
 } from '@entur/icons';
@@ -9,7 +9,7 @@ import './styles.scss';
 export const getIconForStatus = (status?: EXPORT_STATUS) => {
   switch (status) {
     case EXPORT_STATUS.SUCCESS:
-      return <ValidationCheckIcon className="success-icon" />;
+      return <ValidationSuccessIcon className="success-icon" />;
     case EXPORT_STATUS.FAILED:
       return <ValidationErrorIcon className="error-icon" />;
     case EXPORT_STATUS.IN_PROGRESS:
