@@ -39,7 +39,7 @@ const Providers = () => {
   );
 
   const handleMigrateClick = useCallback(
-    (providerId: string, event: React.MouseEvent) => {
+    (providerId: string, event: React.MouseEvent<HTMLButtonElement>) => {
       event.stopPropagation(); // Prevent row click
       navigate(`/providers/${providerId}/migrate-line`);
     },
@@ -77,7 +77,9 @@ const Providers = () => {
             <DataCell className="action-cell">
               <SecondaryButton
                 size="small"
-                onClick={(event) => handleMigrateClick(n.code!, event)}
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                  handleMigrateClick(n.code!, event)
+                }
               >
                 Migrate Lines
               </SecondaryButton>

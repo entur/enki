@@ -28,7 +28,7 @@ const StopPlaceMarker = memo(
     const intl = useIntl();
     const { formatMessage } = intl;
     const stopPlaceLocation = getStopPlaceLocation(stopPlace);
-    const markerRef: MutableRefObject<any> = useRef();
+    const markerRef: MutableRefObject<any> = useRef(null);
     usePopupOpeningOnFocus(isPopupToBeOpen, markerRef, clearFocusedMarker);
 
     return (

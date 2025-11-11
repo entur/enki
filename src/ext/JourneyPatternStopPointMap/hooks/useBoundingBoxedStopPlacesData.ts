@@ -1,7 +1,7 @@
 import { useAppSelector } from 'store/hooks';
 import { JourneyPatternsStopPlacesState, MapSpecs } from '../types';
 import { useConfig } from '../../../config/ConfigContext';
-import { Reducer, useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useAuth } from '../../../auth/auth';
 import { UttuQuery } from '../../../api';
 import { getStopPlacesQuery } from '../../../api/uttu/queries';
@@ -23,10 +23,8 @@ export const useBoundingBoxedStopPlacesData = (
   const [isStopDataLoading, setIsStopDataLoading] = useState<boolean>(false);
 
   const [stopPlacesState, setStopPlacesState] = useReducer<
-    Reducer<
-      JourneyPatternsStopPlacesState,
-      Partial<JourneyPatternsStopPlacesState>
-    >
+    JourneyPatternsStopPlacesState,
+    [Partial<JourneyPatternsStopPlacesState>]
   >(
     (
       state: JourneyPatternsStopPlacesState,
