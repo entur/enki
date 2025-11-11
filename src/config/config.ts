@@ -28,10 +28,6 @@ export interface SandboxFeatureConfig {
    * Cookie consent management provider
    */
   CookieInformation: boolean;
-  /**
-   * Enable supported tiles
-   */
-  MapTiles: boolean;
 }
 
 export type SandboxFeatures = keyof SandboxFeatureConfig;
