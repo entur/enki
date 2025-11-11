@@ -1,6 +1,6 @@
 import { Button, SecondaryButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
-import React, { MutableRefObject } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 
 interface QuayPopupButtonPanelProps {
@@ -12,7 +12,7 @@ interface QuayPopupButtonPanelProps {
   hideNonSelectedQuays: (hideNonSelected: boolean) => void;
   showQuays: (showAll: boolean) => void;
   addStopPoint: (quayId: string) => void;
-  markerRef: MutableRefObject<any>;
+  markerRef: React.Ref<any>;
 }
 
 const QuayPopupButtonPanel = ({
@@ -34,7 +34,13 @@ const QuayPopupButtonPanel = ({
       <Button
         className={'popup-button'}
         onClick={() => {
-          markerRef.current.closePopup();
+          if (
+            markerRef &&
+            typeof markerRef === 'object' &&
+            'current' in markerRef
+          ) {
+            markerRef.current?.closePopup();
+          }
           addStopPoint(quayId);
           // To avoid grey area on the map once the container gets bigger in the height:
           window.dispatchEvent(new Event('resize'));
@@ -53,7 +59,13 @@ const QuayPopupButtonPanel = ({
             marginLeft: '0.5rem',
           }}
           onClick={() => {
-            markerRef.current.closePopup();
+            if (
+              markerRef &&
+              typeof markerRef === 'object' &&
+              'current' in markerRef
+            ) {
+              markerRef.current?.closePopup();
+            }
             hideNonSelectedQuays(!hideNonSelectedQuaysState);
           }}
           width="auto"

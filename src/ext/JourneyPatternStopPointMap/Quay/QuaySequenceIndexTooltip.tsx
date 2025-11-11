@@ -1,8 +1,8 @@
 import { Tooltip } from 'react-leaflet';
-import React, { MutableRefObject } from 'react';
+import React from 'react';
 
 interface QuayIndexTooltipProps {
-  markerRef: MutableRefObject<any>;
+  markerRef: React.Ref<any>;
   stopPointSequenceIndexes: number[];
   quayId: string;
 }
@@ -20,7 +20,13 @@ const QuaySequenceIndexTooltip = ({
         display: 'flex',
       }}
       onClick={() => {
-        markerRef.current.openPopup();
+        if (
+          markerRef &&
+          typeof markerRef === 'object' &&
+          'current' in markerRef
+        ) {
+          markerRef.current?.openPopup();
+        }
       }}
     >
       <Tooltip

@@ -5,7 +5,7 @@ import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { AddIcon } from '@entur/icons';
 import StopPlaceDetails from './StopPlaceDetails';
-import { memo, MutableRefObject, useRef } from 'react';
+import { memo, useRef } from 'react';
 import { usePopupOpeningOnFocus } from './hooks/usePopupOpeningOnFocus';
 import { getStopPlaceLocation } from './helpers';
 
@@ -28,7 +28,7 @@ const StopPlaceMarker = memo(
     const intl = useIntl();
     const { formatMessage } = intl;
     const stopPlaceLocation = getStopPlaceLocation(stopPlace);
-    const markerRef: MutableRefObject<any> = useRef(null);
+    const markerRef = useRef<any>(null);
     usePopupOpeningOnFocus(isPopupToBeOpen, markerRef, clearFocusedMarker);
 
     return (
