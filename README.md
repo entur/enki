@@ -14,7 +14,7 @@ npm start
 ```
 See http://localhost:3001/providers or http://localhost:3001/lines for providers and lines.
 
-Note: The app uses Node version 22 (LTS).
+Note: The app uses Node version 24 (LTS).
 
 To run together with a local instance of [Uttu](https://github.com/entur/uttu) on port 11701, add the following to `.env.development.local`.
 
