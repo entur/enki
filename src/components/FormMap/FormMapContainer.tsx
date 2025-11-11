@@ -1,10 +1,5 @@
 import { ComponentToggle } from '@entur/react-component-toggle';
-import {
-  MapContainer,
-  LayersControl,
-  ZoomControl,
-  useMapEvents,
-} from 'react-leaflet';
+import { MapContainer, LayersControl, ZoomControl } from 'react-leaflet';
 import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 import { DynamicTileLayer } from './DynamicTileLayer';
@@ -17,7 +12,7 @@ import {
   DEFAULT_CENTER,
   DEFAULT_ZOOM_LEVEL,
 } from './mapDefaults';
-
+import { MapEvents } from './MapEvents';
 type Props = {
   children: React.ReactElement;
   zoomControl?: boolean;
@@ -37,18 +32,6 @@ const FormMapContainer = ({
   const defaultTileLayers = [DEFAULT_OSM_TILE];
   const center = mapConfig?.center || DEFAULT_CENTER;
   const zoom = mapConfig?.zoom || DEFAULT_ZOOM_LEVEL;
-  /**
-   * Hook-based component that listens to Leaflet map events.
-   * Currently handles base layer changes and triggers the provided callback.
-   */
-  const MapEvents = () => {
-    useMapEvents({
-      baselayerchange: (e) => {
-        handleActiveMapBaseLayerChange(e.name);
-      },
-    });
-    return null;
-  };
 
   /**
    * Updates the active base map layer in Redux and localStorage.
@@ -87,7 +70,7 @@ const FormMapContainer = ({
       zoomControl={zoomControl}
       doubleClickZoom={doubleClickZoom}
     >
-      <MapEvents />
+      <MapEvents handleBaselayerChanged={handleActiveMapBaseLayerChange} />
       <ZoomControl position="bottomright" />
       <LayersControl position="topright">
         {(mapConfig?.tileLayers?.length
