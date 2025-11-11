@@ -12,7 +12,7 @@ import {
 import { SmallText, StrongText } from '@entur/typography';
 import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
 import { differenceInCalendarDays, isAfter, isBefore } from 'date-fns';
-import parseDate from 'date-fns/parseISO';
+import { parseISO } from 'date-fns/parseISO';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import { ExportLineAssociation } from 'model/Export';
 import FlexibleLine from 'model/FlexibleLine';
@@ -59,8 +59,8 @@ const mergeAvailability = (
   operatingPeriod: OperatingPeriod,
 ) => {
   const availabilityFromOperatingPeriod = {
-    from: parseDate(operatingPeriod.fromDate),
-    to: parseDate(operatingPeriod.toDate),
+    from: parseISO(operatingPeriod.fromDate),
+    to: parseISO(operatingPeriod.toDate),
   };
 
   return availability
