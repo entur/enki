@@ -201,7 +201,6 @@ const JourneyPatternStopPointMap = memo(
               onSearchResultLocated={processFocusedMarker}
               onSearchedStopPlacesFetched={updateSearchedStopPlaces}
             />
-            <ZoomControl position={'topright'} />
             <Polyline positions={mapState.stopPointLocationSequence} />
             <Markers
               mapSpecsState={mapSpecsState}

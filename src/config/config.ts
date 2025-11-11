@@ -151,7 +151,8 @@ export interface Config {
 }
 
 export interface MapConfig {
-  tileLayer?: TileLayerConfig;
+  tileLayers: TileLayer[];
+  defaultTileLayer: string;
   center?: [number, number];
   zoom?: number;
 }
@@ -160,4 +161,16 @@ export interface TileLayerConfig {
   name: string;
   attribution: string;
   url: string;
+}
+/**
+ * Represents a map tile layer configuration.
+ */
+export interface TileLayer {
+  name: string;
+  attribution?: string;
+  url?: string;
+  maxZoom?: number;
+  component?: boolean;
+  componentName?: string;
+  tms?: boolean;
 }
