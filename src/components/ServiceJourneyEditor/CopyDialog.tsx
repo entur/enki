@@ -15,6 +15,7 @@ import {
   addMinutes,
   differenceInCalendarDays,
   differenceInMinutes,
+  Duration,
 } from 'date-fns';
 import * as duration from 'duration-fns';
 import { createUuid } from 'helpers/generators';
