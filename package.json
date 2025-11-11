@@ -31,7 +31,7 @@
     "@entur/layout": "3.2.2",
     "@entur/menu": "5.2.6",
     "@entur/modal": "1.7.78",
-    "@entur/react-component-toggle": "0.0.3",
+    "@entur/react-component-toggle": "1.0.0",
     "@entur/table": "4.9.20",
     "@entur/tokens": "3.20.0",
     "@entur/tooltip": "5.2.17",
@@ -69,7 +69,7 @@
     "uuid": "13.0.0"
   },
   "devDependencies": {
-    "@entur/rollup-plugin-react-component-toggle": "0.0.2",
+    "@entur/rollup-plugin-react-component-toggle": "1.0.0",
     "@redux-devtools/extension": "3.3.0",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "6.9.1",
