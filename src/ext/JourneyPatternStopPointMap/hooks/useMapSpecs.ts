@@ -1,5 +1,5 @@
 import { useMap } from 'react-leaflet';
-import { Reducer, useCallback, useEffect, useReducer } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
 import { MapSpecs } from '../types';
 import debounce from '../../../components/StopPointsEditor/common/debounce';
 
@@ -10,7 +10,8 @@ import debounce from '../../../components/StopPointsEditor/common/debounce';
 export const useMapSpecs = () => {
   const map = useMap();
   const [mapSpecsState, setMapSpecsState] = useReducer<
-    Reducer<MapSpecs, Partial<MapSpecs>>
+    MapSpecs,
+    [Partial<MapSpecs>]
   >(
     (state: MapSpecs, newState: Partial<MapSpecs>) => ({
       ...state,

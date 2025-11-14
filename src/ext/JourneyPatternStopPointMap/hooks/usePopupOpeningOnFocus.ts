@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 
 /**
  * Reusable hook for opening up focused marker's popup section
@@ -8,7 +8,7 @@ import { MutableRefObject, useEffect } from 'react';
  */
 export const usePopupOpeningOnFocus = (
   isPopupToBeOpen: boolean,
-  markerRef: MutableRefObject<any>,
+  markerRef: RefObject<any>,
   clearFocusedMarker: () => void,
 ) => {
   useEffect(() => {

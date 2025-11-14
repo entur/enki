@@ -1,4 +1,4 @@
-import { MutableRefObject, useCallback, useMemo } from 'react';
+import { RefObject, useCallback, useMemo } from 'react';
 import useSupercluster from 'use-supercluster';
 import Supercluster, { AnyProps, ClusterProperties } from 'supercluster';
 import { StopPlace } from '../../api';
@@ -10,7 +10,7 @@ import { JourneyPatternsMapState, MapSpecs } from './types';
 interface MarkersProps {
   mapSpecsState: MapSpecs;
   mapState: JourneyPatternsMapState;
-  mapStateRef: MutableRefObject<JourneyPatternsMapState>;
+  mapStateRef: RefObject<JourneyPatternsMapState>;
   stopPlaces: StopPlace[];
   deleteStopPoint: (index: number) => void;
   addStopPoint: (quayRef?: string) => void;
@@ -64,33 +64,37 @@ const Markers = ({
    */
   const showQuays = useCallback(
     (showAll: boolean, stopPlaceId: string) => {
-      const newShowQuaysState = {
-        ...mapStateRef.current.showQuaysState,
-      };
+      if (mapStateRef.current) {
+        const newShowQuaysState = {
+          ...mapStateRef.current.showQuaysState,
+        };
 
-      newShowQuaysState[stopPlaceId] = showAll;
-      mapStateRef.current.showQuaysState = newShowQuaysState;
-      onStopPointAddedOrDeleted({
-        showQuaysState: newShowQuaysState,
-      });
+        newShowQuaysState[stopPlaceId] = showAll;
+        mapStateRef.current.showQuaysState = newShowQuaysState;
+        onStopPointAddedOrDeleted({
+          showQuaysState: newShowQuaysState,
+        });
+      }
     },
-    [mapStateRef.current],
+    [mapStateRef, onStopPointAddedOrDeleted],
   );
 
   const hideNonSelectedQuays = useCallback(
     (hideNonSelected: boolean, stopPlaceId: string) => {
-      const newHideNonSelectedQuaysState = {
-        ...mapStateRef.current.hideNonSelectedQuaysState,
-      };
-      newHideNonSelectedQuaysState[stopPlaceId] = hideNonSelected;
-      // mapStateRef needs to be kept up-to-date to fulfil its purpose in the useMap hook
-      mapStateRef.current['hideNonSelectedQuaysState'] =
-        newHideNonSelectedQuaysState;
-      onStopPointAddedOrDeleted({
-        hideNonSelectedQuaysState: newHideNonSelectedQuaysState,
-      });
+      if (mapStateRef.current) {
+        const newHideNonSelectedQuaysState = {
+          ...mapStateRef.current.hideNonSelectedQuaysState,
+        };
+        newHideNonSelectedQuaysState[stopPlaceId] = hideNonSelected;
+        // mapStateRef needs to be kept up-to-date to fulfil its purpose in the useMap hook
+        mapStateRef.current['hideNonSelectedQuaysState'] =
+          newHideNonSelectedQuaysState;
+        onStopPointAddedOrDeleted({
+          hideNonSelectedQuaysState: newHideNonSelectedQuaysState,
+        });
+      }
     },
-    [mapStateRef.current],
+    [mapStateRef, onStopPointAddedOrDeleted],
   );
 
   const markers = useMemo(() => {
