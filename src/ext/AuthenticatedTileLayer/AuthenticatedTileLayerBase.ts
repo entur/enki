@@ -11,6 +11,10 @@ export type AuthenticatedTileLayerBaseOptions = LeafletTileLayerOptions & {
   url: string;
 };
 
+/**
+ * AuthenticatedTileLayerBase extends the Leaflet TileLayer to support
+ * authenticated tile requests.
+ */
 export class AuthenticatedTileLayerBase extends TileLayer {
   private getAccessToken: () => Promise<string>;
 
@@ -19,6 +23,11 @@ export class AuthenticatedTileLayerBase extends TileLayer {
     this.getAccessToken = options.getAccessToken;
   }
 
+  /**
+   * Creates a tile by requesting it with an authenticated call.
+   * Retrieves an access token, fetches the tile as a blob, and assigns
+   * the resulting object URL to the image element before returning it.
+   */
   createTile(coords: Coords, done: DoneCallback) {
     const imgEl = document.createElement('img');
     const url = this.getTileUrl(coords);

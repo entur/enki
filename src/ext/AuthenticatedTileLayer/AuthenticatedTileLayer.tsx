@@ -11,6 +11,11 @@ import {
   AuthenticatedTileLayerBaseOptions,
 } from './AuthenticatedTileLayerBase';
 
+/**
+ * Wraps the custom AuthenticatedTileLayerBase class in a React-Leaflet
+ * compatible component. Instantiates the authenticated tile layer with
+ * the provided URL and options, then returns it as a React-Leaflet element.
+ */
 const AuthenticatedTileLayerComponent = createTileLayerComponent<
   AuthenticatedTileLayerBase,
   AuthenticatedTileLayerBaseOptions
@@ -20,6 +25,11 @@ const AuthenticatedTileLayerComponent = createTileLayerComponent<
   return createElementObject(layer, context);
 });
 
+/**
+ * Conditionally renders the authenticated tile layer only when the user
+ * is logged in and a valid access-token provider is available. Ensures
+ * all tile requests include a bearer token via getAccessToken.
+ */
 export const AuthenticatedTileLayer: FeatureComponent<TileLayer> = (
   props: TileLayer,
 ) => {
