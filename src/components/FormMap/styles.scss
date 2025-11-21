@@ -15,10 +15,10 @@
   }
   /*
  * Ensures Leaflet UI controls (like layer selectors)
- * stay visible on smaller screens (width ≤ 1280px)
+ * stay visible on smaller screens (width ≤ 1415px)
  * by raising their stacking order (z-index).
  */
-  @media only screen and (max-width: 1280px) {
+  @media only screen and (max-width: 1415px) {
     .leaflet-top,
     .leaflet-bottom {
       z-index: 1001;
