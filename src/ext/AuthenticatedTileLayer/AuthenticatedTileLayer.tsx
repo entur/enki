@@ -10,6 +10,7 @@ import {
   AuthenticatedTileLayerBase,
   AuthenticatedTileLayerBaseOptions,
 } from './AuthenticatedTileLayerBase';
+import { useAuth } from '../../auth/auth';
 
 /**
  * Wraps the custom AuthenticatedTileLayerBase class in a React-Leaflet
@@ -33,12 +34,7 @@ const AuthenticatedTileLayerComponent = createTileLayerComponent<
 export const AuthenticatedTileLayer: FeatureComponent<TileLayer> = (
   props: TileLayer,
 ) => {
-  const isAuthenticated: boolean | undefined = useSelector(
-    (state: RootState) => state.auth.isAuthenticated,
-  );
-  const getAccessToken: (() => Promise<string>) | undefined = useSelector(
-    (state: RootState) => state.auth.getAccessToken,
-  );
+  const { isAuthenticated, getAccessToken } = useAuth();
 
   return (
     isAuthenticated &&
