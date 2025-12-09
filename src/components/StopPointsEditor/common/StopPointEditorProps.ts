@@ -26,8 +26,7 @@ export interface GenericStopPointEditorProps extends StopPointEditorProps {
   updateStopPlacesInJourneyPattern: (newStopPlace: StopPlace) => void;
 }
 
-export interface MixedFlexibleStopPointEditorProps
-  extends StopPointEditorProps {
+export interface MixedFlexibleStopPointEditorProps extends StopPointEditorProps {
   order: number;
   isFirst: boolean;
   isLast: boolean;
