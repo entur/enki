@@ -5,7 +5,7 @@
     "authority": "https://ror-entur-dev.eu.auth0.com",
     "client_id": "YBG7NvM9lT3pLmcVKeRZCrPFtU7bll4g",
     "extraQueryParams": {
-      "audience": "https://ror.api.dev.entur.io"
+      "audience": "https://api.dev.entur.io"
     }
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
