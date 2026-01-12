@@ -1,4 +1,3 @@
-import { SwedenIcon, UKIcon } from '@entur/icons';
 import { MessagesKey } from './translationKeys';
 import bgFlag from 'flag-icons/flags/4x3/bg.svg?url';
 import fiFlag from 'flag-icons/flags/4x3/fi.svg?url';
