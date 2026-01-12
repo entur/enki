@@ -20,7 +20,7 @@ jobs:
           git config --global user.email 'latest-version-bot@entur.org'
       - name: Cache node modules
         id: cache-npm
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         env:
           cache-name: cache-node-modules
         with:
