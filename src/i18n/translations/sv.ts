@@ -56,7 +56,6 @@ export const messages: MessagesKey = {
   navBarNetworksMenuItemLabel: 'Nätverk',
   navBarBrandingsMenuItemLabel: 'Varumärken',
   navBarRootLinkLogoAltText: 'Logga',
-  navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Flexibla hållplatser',
   userMenuLogoutLinkText: 'Logga ut',
   userMenuMenuItemTextEnglish: 'English',
@@ -64,6 +63,7 @@ export const messages: MessagesKey = {
   userMenuMenuItemTextNorwegian: 'Norsk',
   userMenuMenuItemTextSwedish: 'Svenska',
   userMenuMenuItemTextFinnish: 'Suomi',
+  userMenuMenuItemTextBulgarian: 'Български',
   languagePickerAriaLabel: 'Välj språk',
   navBarDataProvider: 'Välj dataleverantör',
   redirectTitle: 'Ändringar är inte sparade!',
@@ -144,7 +144,7 @@ export const messages: MessagesKey = {
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'Journey pattern måste ha ett unikt namn',
   uttuErrorENTITY_IS_REFERENCED:
-    'Entiteten kan inte tas bort på grund av {noOfLines, number} {noOfLines, plural, one {en annan entitet} other {andra entiteter}} refererar till den.',
+    'Entiteten kan inte tas bort eftersom {noOfLines, number} {noOfLines, plural, one {linje} other {linjer}} fortfarande refererar till den.',
   uttuErrorFROM_DATE_AFTER_TO_DATE: 'Från datum kan inte vara efter till datum',
   uttuErrorMINIMUM_POINTS_IN_SEQUENCE:
     'Journey pattern måste ha minst 2 sekvensiella hållplatser.',
@@ -676,6 +676,8 @@ export const messages: MessagesKey = {
   saveProviderErrorFallback: 'Okänt fel vid sparning av dataleverantör',
   noProvidersDescriptionText:
     'Din Nplan-installation behöver minst en dataleverantör',
+  landingPageNotLoggedIn: 'Inte inloggad',
+  landingPageLoginButtonText: 'Logga in',
   showQuays: 'Visa plattform',
   hideQuays: 'Dölj plattform',
   oneQuay: 'En plattform',
@@ -708,6 +710,4 @@ export const messages: MessagesKey = {
   copyInstance: 'en kopia',
   journeyPatternDuplicateNameValidationError:
     'Journey pattern måste ha ett unikt namn',
-  landingPageNotLoggedIn: 'Inte inloggad',
-  landingPageLoginButtonText: 'Logga in',
 };

@@ -1,6 +1,9 @@
-import { NorwayIcon, SwedenIcon, UKIcon } from '@entur/icons';
 import { MessagesKey } from './translationKeys';
-
+import bgFlag from 'flag-icons/flags/4x3/bg.svg?url';
+import fiFlag from 'flag-icons/flags/4x3/fi.svg?url';
+import gbFlag from 'flag-icons/flags/4x3/gb.svg?url';
+import noFlag from 'flag-icons/flags/4x3/no.svg?url';
+import seFlag from 'flag-icons/flags/4x3/se.svg?url';
 /**
  * This is a last-resort fallback. Default locale is configurable in bootstrap config
  * see `../config/ConfigContext.ts`
@@ -10,37 +13,41 @@ export const DEFAULT_LOCALE: Locale = 'nb';
 /**
  * When adding new translations, the locale needs to be added to the Locale array.
  */
-export const Locale = ['nb', 'en', 'sv', 'fi'] as const;
+export const Locale = ['nb', 'en', 'sv', 'fi', 'bg'] as const;
 
 /**
  * The Locale type is generated from the list of supported locales
  */
 export type Locale = (typeof Locale)[number];
 
-export const getLanguagePickerFlagIcon = (locale: Locale) => {
+const getFlagUrl = (locale: Locale): string => {
   switch (locale) {
     case 'nb':
-      return <NorwayIcon inline />;
-    case 'sv':
-      return <SwedenIcon inline />;
+      return noFlag;
     case 'en':
-      return <UKIcon inline />;
+      return gbFlag;
+    case 'sv':
+      return seFlag;
     case 'fi':
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 18 11"
-        >
-          <rect width="18" height="11" fill="#fff" />
-          <path d="M0,5.5h18M6.5,0v11" stroke="#002F6C" stroke-width="3" />
-        </svg>
-      );
-    default: {
-      return <NorwayIcon inline />;
-    }
+      return fiFlag;
+    case 'bg':
+      return bgFlag;
+    default:
+      return gbFlag; // fallback
   }
+};
+
+export const getLanguagePickerFlagIcon = async (locale: Locale) => {
+  const flagUrl = getFlagUrl(locale);
+
+  return ({ className }: { className?: string }) => (
+    <img
+      src={flagUrl}
+      alt={`${locale} flag`}
+      className={className}
+      style={{ width: '1.5em', height: '1em' }}
+    />
+  );
 };
 export const getLanguagePickerLocaleMessageKey = (
   locale: Locale,
@@ -54,6 +61,8 @@ export const getLanguagePickerLocaleMessageKey = (
       return 'userMenuMenuItemTextNorwegian';
     case 'fi':
       return 'userMenuMenuItemTextFinnish';
+    case 'bg':
+      return 'userMenuMenuItemTextBulgarian';
     default:
       return 'userMenuMenuItemTextNorwegian';
   }
