@@ -190,6 +190,7 @@ export default (props: Props) => {
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={mapEnumToItems(BOOKING_ACCESS)}
           clearable
+          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
           onChange={(e) =>
             onChange({
               ...bookingArrangement,
@@ -218,6 +219,7 @@ export default (props: Props) => {
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={mapEnumToItems(PURCHASE_WHEN)}
           clearable
+          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
           onChange={(e) => {
             onBookingLimitTypeChange(
               e?.value ? BOOKING_LIMIT_TYPE.TIME : BOOKING_LIMIT_TYPE.NONE,

@@ -1,18 +1,5 @@
 import { MessagesKey } from 'i18n/translationKeys';
 
-export enum ORGANISATION_TYPE {
-  STATUTORY_BODY = 'statutoryBody',
-  AUTHORITY = 'authority',
-  OPERATOR = 'operator',
-  RAIL_OPERATOR = 'railOperator',
-  RAIL_FREIGHT_OPERATOR = 'railFreightOperator',
-  FACILITY_OPERATOR = 'facilityOperator',
-  TRAVEL_AGENT = 'travelAgent',
-  SERVICED_ORGANISATION = 'servicedOrganisation',
-  RETAIL_CONSORTIUM = 'retailConsortium',
-  OTHER = 'other',
-}
-
 export enum VEHICLE_MODE {
   AIR = 'air',
   BUS = 'bus',
@@ -24,6 +11,7 @@ export enum VEHICLE_MODE {
   TRAM = 'tram',
   WATER = 'water',
   TAXI = 'taxi',
+  SNOW_AND_ICE = 'snowAndIce',
 }
 
 enum AIR_SUBMODE {
@@ -89,10 +77,14 @@ enum WATER_SUBMODE {
   SIGHTSEEING_SERVICE = 'sightseeingService',
 }
 
-enum TAXI_SUBMODE {
+export enum TAXI_SUBMODE {
   CHARTER_TAXI = 'charterTaxi',
   COMMUNAL_TAXI = 'communalTaxi',
   WATER_TAXI = 'waterTaxi',
+}
+
+export enum SNOW_AND_ICE_SUBMODE {
+  SNOW_COACH = 'snowCoach',
 }
 
 export type VEHICLE_SUBMODE =
@@ -105,7 +97,8 @@ export type VEHICLE_SUBMODE =
   | RAIL_SUBMODE
   | TRAM_SUBMODE
   | WATER_SUBMODE
-  | TAXI_SUBMODE;
+  | TAXI_SUBMODE
+  | SNOW_AND_ICE_SUBMODE;
 
 export const VEHICLE_SUBMODE_LINK: Record<VEHICLE_MODE, VEHICLE_SUBMODE[]> = {
   [VEHICLE_MODE.AIR]: Object.values(AIR_SUBMODE),
@@ -118,6 +111,7 @@ export const VEHICLE_SUBMODE_LINK: Record<VEHICLE_MODE, VEHICLE_SUBMODE[]> = {
   [VEHICLE_MODE.TRAM]: Object.values(TRAM_SUBMODE),
   [VEHICLE_MODE.WATER]: Object.values(WATER_SUBMODE),
   [VEHICLE_MODE.TAXI]: Object.values(TAXI_SUBMODE),
+  [VEHICLE_MODE.SNOW_AND_ICE]: Object.values(SNOW_AND_ICE_SUBMODE),
 };
 
 export const vehicleModeMessages: Record<VEHICLE_MODE, keyof MessagesKey> = {
@@ -131,6 +125,7 @@ export const vehicleModeMessages: Record<VEHICLE_MODE, keyof MessagesKey> = {
   [VEHICLE_MODE.TRAM]: 'tram',
   [VEHICLE_MODE.WATER]: 'water',
   [VEHICLE_MODE.TAXI]: 'taxi',
+  [VEHICLE_MODE.SNOW_AND_ICE]: 'snowAndIce',
 };
 
 export const vehicleSubmodeMessages: Record<
@@ -176,6 +171,7 @@ export const vehicleSubmodeMessages: Record<
   [TAXI_SUBMODE.CHARTER_TAXI]: 'charterTaxi',
   [TAXI_SUBMODE.COMMUNAL_TAXI]: 'communalTaxi',
   [TAXI_SUBMODE.WATER_TAXI]: 'waterTaxi',
+  [SNOW_AND_ICE_SUBMODE.SNOW_COACH]: 'snowCoach',
 };
 
 export enum DAY_OF_WEEK {
@@ -293,4 +289,26 @@ export const flexibleStopAreaTypeMessages: Record<
     'flexibleStopAreaTypeUnrestrictedRoadNetwork',
   [FLEXIBLE_STOP_AREA_TYPE.UNRESTRICTED_PUBLIC_TRANSPORT_AREAS]:
     'flexibleStopAreaTypeUnrestrictedPublicTransportAreas',
+};
+
+export const mapLineModeToStopPlaceMode = (
+  transportMode?: VEHICLE_MODE,
+  transportSubmode?: VEHICLE_SUBMODE,
+): VEHICLE_MODE | undefined => {
+  if (transportMode === undefined) {
+    return transportMode;
+  }
+
+  if (
+    transportMode == VEHICLE_MODE.TAXI &&
+    transportSubmode == TAXI_SUBMODE.WATER_TAXI
+  ) {
+    return VEHICLE_MODE.WATER;
+  }
+
+  if ([VEHICLE_MODE.COACH, VEHICLE_MODE.TAXI].includes(transportMode)) {
+    return VEHICLE_MODE.BUS;
+  }
+
+  return transportMode;
 };

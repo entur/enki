@@ -1,6 +1,14 @@
-@import '@entur/tokens/dist/styles.scss';
+@use '@entur/tokens/dist/styles.scss' as *;
 
 .journey-pattern-editor {
   display: flex;
   justify-content: space-between;
+
+  .journey-pattern-editor-action-chips {
+    display: flex;
+
+    .journey-pattern-editor-action-chip {
+      margin-right: 1rem;
+    }
+  }
 }

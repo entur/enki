@@ -1,4 +1,6 @@
-export const messages = {
+import { MessagesKey } from 'i18n/translationKeys';
+
+export const messages: MessagesKey = {
   appLoadingMessage: 'Läser in dataleverantörer och organisationer...',
   exportsLoadExportByIdErrorHeader: 'Hämta export',
   exportsLoadExportByIdErrorMessage:
@@ -52,8 +54,8 @@ export const messages = {
   navBarFlexibleOffersSubMenuHeaderLabel: 'Flexibel trafik',
   navBarFlexibleLinesMenuItemLabel: 'Flexibla linjer',
   navBarNetworksMenuItemLabel: 'Nätverk',
+  navBarBrandingsMenuItemLabel: 'Varumärken',
   navBarRootLinkLogoAltText: 'Logga',
-  navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Flexibla hållplatser',
   userMenuLogoutLinkText: 'Logga ut',
   userMenuMenuItemTextEnglish: 'English',
@@ -61,6 +63,7 @@ export const messages = {
   userMenuMenuItemTextNorwegian: 'Norsk',
   userMenuMenuItemTextSwedish: 'Svenska',
   userMenuMenuItemTextFinnish: 'Suomi',
+  userMenuMenuItemTextBulgarian: 'Български',
   languagePickerAriaLabel: 'Välj språk',
   navBarDataProvider: 'Välj dataleverantör',
   redirectTitle: 'Ändringar är inte sparade!',
@@ -74,6 +77,13 @@ export const messages = {
   exportCreatorDryRunFormLabel: 'Skriv endast fil',
   exportCreatorDryRunFormLabelTooltip:
     'Exporterar inte data till sökbar data, men skriver endast en NeTEx-fil som man kan ladda hem och se på',
+  exportCreatorGenerateServiceLinksFormLabel: 'Generera service links',
+  exportCreatorGenerateServiceLinksFormLabelTooltip:
+    'Genererar service links geometri mallan hållplatser',
+  exportCreatorIncludeDatedServiceJourneysFormLabel:
+    'Generera DatedServiceJourneys',
+  exportCreatorIncludeDatedServiceJourneysFormLabelTooltip:
+    'Genererar DatedServiceJourneys',
   exportCreatorFromDateFormLabel: 'Från datum *',
   exportCreatorHeader: 'Skapa export',
   exportCreatorDescription: 'Exportera data till resesökmotor',
@@ -109,6 +119,12 @@ export const messages = {
   viewerDryRunLabel: 'Skriv endast fil',
   viewerDryRunNo: 'Nej',
   viewerDryRunYes: 'Ja',
+  viewerGenerateServiceLinksLabel: 'Generera service links',
+  viewerGenerateServiceLinksNo: 'Nej',
+  viewerGenerateServiceLinksYes: 'Ja',
+  viewerIncludeDatedServiceJourneysLabel: 'Generera DatedServiceJourneys',
+  viewerIncludeDatedServiceJourneysNo: 'Nej',
+  viewerIncludeDatedServiceJourneysYes: 'Ja',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE: 'Inga giltiga linjer i data',
   failed: 'Misslyckades',
   in_progress: 'Pågår',
@@ -128,7 +144,7 @@ export const messages = {
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'Journey pattern måste ha ett unikt namn',
   uttuErrorENTITY_IS_REFERENCED:
-    'Entiteten kan inte tas bort på grund av {noOfLines, number} {noOfLines, plural, one {en annan entitet} other {andra entiteter}} refererar till den.',
+    'Entiteten kan inte tas bort eftersom {noOfLines, number} {noOfLines, plural, one {linje} other {linjer}} fortfarande refererar till den.',
   uttuErrorFROM_DATE_AFTER_TO_DATE: 'Från datum kan inte vara efter till datum',
   uttuErrorMINIMUM_POINTS_IN_SEQUENCE:
     'Journey pattern måste ha minst 2 sekvensiella hållplatser.',
@@ -219,7 +235,7 @@ export const messages = {
   generalPrivateCodeFormGroupTitle: 'Privat kod',
   generalPrivateCodeInputLabelTooltip:
     'Privat kod är det som kännetecknar linjen internt hos en operatör',
-  generalPublicCodeFormGroupTitle: 'Offentlig kod *',
+  generalPublicCodeFormGroupTitle: 'Offentlig kod {requiredMarker}',
   generalPublicCodeInputLabelTooltip:
     'Offentlig kod är det som kännetecknar linjen ut mot kunder',
   generalTypeFormGroupTitle: 'Flexibel linje-typ *',
@@ -228,16 +244,6 @@ export const messages = {
   generalDrawer: 'Här är en kort beskrivning av de olika linjetyperna.',
   drawerAria: 'Läs mer om de olika linjetyperna.',
   generalDrawerTitle: 'Flexibla linjetyper.',
-  drawerFixed:
-    'Fast linje med fasta tider, men måste förhandsbeställas för att den ska köras.',
-  drawerMainRouteWithFlexibleEnds:
-    'Fast linje med fasta tider, med möjlighet för på-/avstigning på hållplatser utanför definerat körmönster på beställning.',
-  drawerFixedStopAreaWide:
-    'Flexibel linje definerad av ett eller flera områden, där varje område kan ha olika förbestämda stopp (t.ex. mötesplatser, knutpunkter eller hållplatser).',
-  drawerFlexibleAreasOnly:
-    'Kunden hämtas och körs till och från valfritt punkt innanför ett definerat område, i en angiven tidsperiod (öppettid).',
-  drawerHailAndRideSections:
-    'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
   flexibleLineType_fixed: 'Fast',
   flexibleLineType_flexibleAreasOnly: 'Endast flexibla områden',
   flexibleLineType_mixedFlexible: 'Blandat',
@@ -352,8 +358,9 @@ export const messages = {
   newJourneyPatternModalSubTitle: 'Fyll i namn och tryck därefter på Skapa',
   newJourneyPatternModalCancel: 'Avbryt',
   newJourneyPatternModalCreate: 'Skapa',
-  newJourneyPatternModalLabel: 'Namn',
+  newJourneyPatternModalLabel: 'Namn *',
   newJourneyPatternModalPlaceholder: 'Ex. "Lokal linje"',
+  newJourneyPatternModalUniqueName: 'Journey pattern måste ha ett unikt namn',
   editorLoadingLineText: 'Läser in linje',
   editorLoadingNetworkAndStopsText: 'Läser in nätverk och hållplatser',
   editorSaveButtonText: 'Spara',
@@ -465,6 +472,34 @@ export const messages = {
   networksNameTableHeaderLabel: 'Namn',
   networksNoNetworksFoundText: 'Inga nätverk hittades',
   networksPrivateCodeTableHeaderLabel: 'Privat kod',
+  branding: 'varumärke',
+  brandingsHeaderText: 'Varumärken',
+  brandingsLoadingBrandingsText: 'Laddar varumärken...',
+  brandingsNameTableHeaderLabel: 'Namn',
+  brandingsNoBrandingsFoundText: 'Inga varumärken hittades',
+  brandingsShortNameTableHeaderLabel: 'Kort namn',
+  brandingsDescriptionTableHeaderLabel: 'Beskrivning',
+  brandingsUrlTableHeaderLabel: 'URL',
+  brandingsImageUrlTableHeaderLabel: 'Bild URL',
+  editorCreateBrandingHeaderText: 'Skapa varumärke',
+  editorBrandingDescription:
+    'Varumärken kan användas för att lägga till ditt eget varumärke till linjer och nätverk.',
+  editorBrandingNameLabelText: 'Namn *',
+  editorBrandingShortNameLabelText: 'Kort namn',
+  editorBrandingDescriptionLabelText: 'Beskrivning',
+  editorBrandingUrlLabelText: 'URL',
+  editorBrandingImageUrlLabelText: 'Bild URL',
+  editorBrandingValidationName: 'Namn måste fyllas i',
+  editorDeleteBrandingConfirmDialogTitle: 'Ta bort varumärke',
+  editorDeleteBrandingConfirmDialogMessage:
+    'Är du säker på att du vill ta bort detta varumärke?',
+  editorEditBrandingHeaderText: 'Redigera varumärke',
+  editorDeleteBrandingConfirmDialogCancelText: 'Nej',
+  editorDeleteBrandingConfirmDialogConfirmText: 'Ja',
+  editorDeleteBrandingConfirmationDialogTitle: 'Ta bort varumärke',
+  editorDeleteBrandingConfirmationDialogMessage:
+    'Är du säker på att du vill ta bort detta varumärke?',
+  brandingsDropdownLabelText: 'Varumärke',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Skapa flexibel hållplats',
   editorDescription:
     'Fyll i lista med koordinater i GeoJSON-formatet, eller klicka i kartan för att skapa en polygon.',
@@ -540,6 +575,7 @@ export const messages = {
   tram: 'Spårvagn',
   water: 'Vattentransport',
   taxi: 'Taxi',
+  snowAndIce: 'Snö och is',
   domesticFlight: 'Inrikesflyg',
   helicopterService: 'Helikopter',
   internationalFlight: 'Internationellt flyg',
@@ -577,6 +613,7 @@ export const messages = {
   charterTaxi: 'Taxi',
   communalTaxi: 'Planerad taxi',
   waterTaxi: 'Båttaxi',
+  snowCoach: 'Bandfordon',
   timeUnitPickerYearsLabel: 'År',
   timeUnitPickerMonthsLabel: 'Månader',
   timeUnitPickerDaysLabel: 'Dagar',
@@ -639,4 +676,38 @@ export const messages = {
   saveProviderErrorFallback: 'Okänt fel vid sparning av dataleverantör',
   noProvidersDescriptionText:
     'Din Nplan-installation behöver minst en dataleverantör',
+  landingPageNotLoggedIn: 'Inte inloggad',
+  landingPageLoginButtonText: 'Logga in',
+  showQuays: 'Visa plattform',
+  hideQuays: 'Dölj plattform',
+  oneQuay: 'En plattform',
+  numberOfQuays: '{count} plattform',
+  addToJourneyPattern: 'Lägg till',
+  showNonSelectedQuays: 'Visa ej valda plattformar',
+  hideNonSelectedQuays: 'Dölj ej valda plattformar',
+  quayOrder: 'Ordning',
+  mapSearchInProgress: 'Söker...',
+  mapSearchNoResults: 'Inga resultat funna',
+  mapSearchResults: 'Resultat:',
+  mapSearchPlaceholder: 'Hållplats efter ID, namn eller plattform-ID',
+  mapLoadingStopsDataText: 'Laddar hållplatser...',
+  locateStopPoint: 'Lokalisera',
+  locateStopPointTooltip: 'Lokalisera på kartan',
+  dropdownNoMatchesText: 'Inga val tillgängliga',
+  exportsDownloadUnsupportedBrowserTitle: 'Webbläsaren stöds inte',
+  exportsDownloadUnsupportedBrowserMessage:
+    'Din webbläsare stöder inte nedladdning av filer',
+  exportsDownloadErrorTitle: 'Nedladdning misslyckades',
+  exportsDownloadErrorMessage:
+    'Ett fel har uppstått medan filen laddades ner. Försök igen.',
+  selectAll: 'Välj alla',
+  clearAll: 'Ta bort valda',
+  clearSelected: 'Ta bort valda',
+  copyJourneyPatternDialogTitle: 'Kopiera pysäkkiketju',
+  copyJourneyPatternDialogNameTemplateLabel: 'Namnmall *',
+  copyJourneyPatternDialogCancelButtonText: 'Nej',
+  copyJourneyPatternDialogSaveButtonText: 'Ja',
+  copyInstance: 'en kopia',
+  journeyPatternDuplicateNameValidationError:
+    'Journey pattern måste ha ett unikt namn',
 };

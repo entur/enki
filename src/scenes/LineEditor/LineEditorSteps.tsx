@@ -6,12 +6,15 @@ import ServiceJourneys from 'components/ServiceJourneys';
 import Line from 'model/Line';
 import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
+import { Branding } from '../../model/Branding';
+import { mapLineModeToStopPlaceMode } from '../../model/enums';
 
 type Props = {
   activeStep: number;
   line: Line;
   changeLine: (line: Line) => void;
   networks: Network[];
+  brandings: Branding[];
   operators: Organisation[];
   spoilPristine: boolean;
 };
@@ -26,6 +29,7 @@ const LineEditorSteps = (props: Props) => {
               line={props.line}
               operators={props.operators}
               networks={props.networks}
+              brandings={props.brandings}
               onChange={props.changeLine}
               spoilPristine={props.spoilPristine}
             />
@@ -44,13 +48,24 @@ const LineEditorSteps = (props: Props) => {
               })
             }
           >
-            {(journeyPattern, onSave, onDelete) => (
+            {(
+              journeyPattern,
+              validateJourneyPatternName,
+              onSave,
+              onCopy,
+              onDelete,
+            ) => (
               <JourneyPatternEditor
                 journeyPattern={journeyPattern}
                 onSave={onSave}
                 onDelete={onDelete}
                 spoilPristine={props.spoilPristine}
-                transportMode={props.line.transportMode}
+                transportMode={mapLineModeToStopPlaceMode(
+                  props.line.transportMode,
+                  props.line.transportSubmode,
+                )}
+                onCopy={onCopy}
+                validateJourneyPatternName={validateJourneyPatternName}
               />
             )}
           </JourneyPatterns>

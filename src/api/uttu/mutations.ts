@@ -12,6 +12,18 @@ export const deleteNetwork = `
   }
 `;
 
+export const brandingMutation = `
+  mutation MutateBranding($input: BrandingInput!) {
+    mutateBranding(input: $input) { id }
+  }
+`;
+
+export const deleteBranding = `
+  mutation DeleteBranding($id: ID!) {
+    deleteBranding(id: $id) { id }
+  }
+`;
+
 export const flexibleLineMutation = `
   mutation MutateFlexibleLine($input: FlexibleLineInput!) {
     mutateFlexibleLine(input: $input) { id }

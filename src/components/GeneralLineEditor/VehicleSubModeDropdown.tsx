@@ -46,6 +46,7 @@ const VehicleSubModeDropdown = (props: Props) => {
         placeholder={formatMessage({ id: 'defaultOption' })}
         items={getSubModeItems}
         clearable
+        labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
         label={formatMessage({ id: 'transportSubModeTitle' })}
         onChange={(element) =>
           props.submodeChange(element?.value as VEHICLE_SUBMODE)

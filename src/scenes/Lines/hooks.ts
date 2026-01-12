@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client/react';
 import { DELETE_LINE } from 'api/uttu/mutations';
 import { useCallback } from 'react';
 

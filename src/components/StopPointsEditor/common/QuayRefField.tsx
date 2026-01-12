@@ -2,15 +2,19 @@ import { TextField } from '@entur/form';
 import { useQuaySearch } from 'api/useQuaySearch';
 import { ErrorHandling } from 'helpers/errorHandling';
 import StopPoint from 'model/StopPoint';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import debounce from './debounce';
 import { quaySearchResults } from './quaySearchResults';
+import { StopPlace } from '../../../api';
 
 interface Props {
   initialQuayRef?: string | null;
   errorFeedback: ErrorHandling;
   onChange: (quayRef: string) => void;
+  // The two below are only present in case of GenericStopPointEditor:
+  updateStopPlacesInJourneyPattern?: (newStopPlace: StopPlace) => void;
+  alreadyFetchedStopPlaces?: StopPlace[];
 }
 
 export const useOnQuayRefChange = (
@@ -28,6 +32,8 @@ export const QuayRefField = ({
   initialQuayRef,
   errorFeedback,
   onChange,
+  updateStopPlacesInJourneyPattern,
+  alreadyFetchedStopPlaces,
 }: Props) => {
   const { formatMessage } = useIntl();
   const [quayRefInputValue, setQuayRefInputValue] = useState(initialQuayRef);
@@ -35,7 +41,17 @@ export const QuayRefField = ({
   const { stopPlace, quay, refetch, loading } = useQuaySearch(
     initialQuayRef,
     quayRefInputValue,
+    alreadyFetchedStopPlaces,
   );
+
+  useEffect(() => {
+    // If there been a change in the QuayRef field and a new stop place been fetched as part validation,
+    // the stopPlacesInJourneyPattern need to get updated with that
+    stopPlace &&
+      updateStopPlacesInJourneyPattern &&
+      !(alreadyFetchedStopPlaces || []).find((s) => s.id === stopPlace.id) &&
+      updateStopPlacesInJourneyPattern(stopPlace);
+  }, [stopPlace]);
 
   const quaySearchFeedback = quaySearchResults(
     { stopPlace, quay },
@@ -50,6 +66,14 @@ export const QuayRefField = ({
     }, 1000),
     [],
   );
+
+  useEffect(() => {
+    // For some reason no need for this when a general line,
+    // but a mixed flexible doesn't work fine without this on occasion of reordering between two "external" stop points
+    if (quayRefInputValue !== initialQuayRef) {
+      setQuayRefInputValue(initialQuayRef);
+    }
+  }, [initialQuayRef]);
 
   return (
     <TextField

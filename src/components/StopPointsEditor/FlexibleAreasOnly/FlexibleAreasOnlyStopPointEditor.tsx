@@ -50,6 +50,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             placeholder={formatMessage({ id: 'defaultOption' })}
             items={mapToItems(flexibleStopPlaces || [])}
             clearable
+            labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
             label={formatMessage({ id: 'stopPlace' })}
             onChange={(e) =>
               onChange({
@@ -57,6 +58,9 @@ export const FlexibleAreasOnlyStopPointEditor = ({
                 flexibleStopPlaceRef: e?.value,
               })
             }
+            noMatchesText={formatMessage({
+              id: 'dropdownNoMatchesText',
+            })}
             {...getErrorFeedback(
               stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
               !stopPlaceError,

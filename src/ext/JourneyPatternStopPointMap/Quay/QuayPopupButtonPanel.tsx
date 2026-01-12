@@ -1,6 +1,6 @@
 import { Button, SecondaryButton } from '@entur/button';
 import { AddIcon } from '@entur/icons';
-import React, { MutableRefObject } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 
 interface QuayPopupButtonPanelProps {
@@ -9,21 +9,21 @@ interface QuayPopupButtonPanelProps {
   hasSelectedQuay: boolean;
   hasNonSelectedQuays: boolean;
   hideNonSelectedQuaysState: boolean;
-  hideNonSelectedQuaysCallback: (hideNonSelected: boolean) => void;
-  showQuaysCallback: (showAll: boolean) => void;
-  addStopPointCallback: (quayId: string) => void;
-  markerRef: MutableRefObject<any>;
+  hideNonSelectedQuays: (hideNonSelected: boolean) => void;
+  showQuays: (showAll: boolean) => void;
+  addStopPoint: (quayId: string) => void;
+  markerRef: React.Ref<any>;
 }
 
 const QuayPopupButtonPanel = ({
   quayId,
   quaysTotalCount,
-  addStopPointCallback,
+  addStopPoint,
   hasSelectedQuay,
   hasNonSelectedQuays,
   hideNonSelectedQuaysState,
-  hideNonSelectedQuaysCallback,
-  showQuaysCallback,
+  hideNonSelectedQuays,
+  showQuays,
   markerRef,
 }: QuayPopupButtonPanelProps) => {
   const intl = useIntl();
@@ -34,8 +34,14 @@ const QuayPopupButtonPanel = ({
       <Button
         className={'popup-button'}
         onClick={() => {
-          markerRef.current.closePopup();
-          addStopPointCallback(quayId);
+          if (
+            markerRef &&
+            typeof markerRef === 'object' &&
+            'current' in markerRef
+          ) {
+            markerRef.current?.closePopup();
+          }
+          addStopPoint(quayId);
           // To avoid grey area on the map once the container gets bigger in the height:
           window.dispatchEvent(new Event('resize'));
         }}
@@ -53,8 +59,14 @@ const QuayPopupButtonPanel = ({
             marginLeft: '0.5rem',
           }}
           onClick={() => {
-            markerRef.current.closePopup();
-            hideNonSelectedQuaysCallback(!hideNonSelectedQuaysState);
+            if (
+              markerRef &&
+              typeof markerRef === 'object' &&
+              'current' in markerRef
+            ) {
+              markerRef.current?.closePopup();
+            }
+            hideNonSelectedQuays(!hideNonSelectedQuaysState);
           }}
           width="auto"
           size="small"
@@ -72,7 +84,7 @@ const QuayPopupButtonPanel = ({
           style={{
             marginLeft: '0.5rem',
           }}
-          onClick={() => showQuaysCallback(false)}
+          onClick={() => showQuays(false)}
           width="auto"
           size="small"
         >

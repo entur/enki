@@ -1,10 +1,8 @@
 import './styles.scss';
 import { FloatingButton } from '@entur/button';
 import { UndoIcon } from '@entur/icons';
-import DefaultMapContainer from './DefaultMapContainer';
 import React from 'react';
-import { useConfig } from '../../config/ConfigContext';
-import SandboxFeature from '../../ext/SandboxFeature';
+import FormMapContainer from './FormMapContainer';
 
 type Props = {
   undo?: () => void;
@@ -16,28 +14,17 @@ type Props = {
 const FormMap = ({
   undo,
   children,
-  zoomControl = true,
+  zoomControl,
   doubleClickZoom = true,
 }: Props) => {
-  const { extPath } = useConfig();
-
   return (
     <div className="map-container eds-contrast">
-      <SandboxFeature
-        feature={`${extPath}/CustomMapProvider`}
+      <FormMapContainer
         zoomControl={zoomControl}
         doubleClickZoom={doubleClickZoom}
-        renderFallback={() => (
-          <DefaultMapContainer
-            zoomControl={zoomControl}
-            doubleClickZoom={doubleClickZoom}
-          >
-            {children}
-          </DefaultMapContainer>
-        )}
       >
         {children}
-      </SandboxFeature>
+      </FormMapContainer>
 
       {undo ? (
         <FloatingButton

@@ -1,4 +1,3 @@
-import { ApolloError } from '@apollo/client';
 import { showErrorNotification } from 'actions/notification';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { MessagesKey } from 'i18n/translationKeys';
@@ -9,7 +8,7 @@ import { useDispatch } from 'react-redux';
 export default (
   headerKey: keyof MessagesKey,
   messageKey: keyof MessagesKey,
-  error?: ApolloError,
+  error?: Error,
   callback?: () => void,
 ) => {
   const intl = useIntl();

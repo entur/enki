@@ -5,11 +5,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useConfig } from 'config/ConfigContext';
-import {
-  getLanguagePickerFlagIcon,
-  getLanguagePickerLocaleMessageKey,
-  Locale,
-} from 'i18n';
+import FlagIcon from 'components/FlagIcon';
+import { getLanguagePickerLocaleMessageKey, Locale } from 'i18n';
 
 const LanguagePicker = () => {
   const [toggled, setToggle] = useState<boolean>(false);
@@ -45,13 +42,14 @@ const LanguagePicker = () => {
     [selectedLocale],
   );
 
-  const flagIcon = useCallback((locale: Locale) => {
-    return (
+  const flagIcon = useCallback(
+    (locale: Locale) => (
       <div className="language-picker__icon-container language-picker__icon-container__flag">
-        {getLanguagePickerFlagIcon(locale)}
+        <FlagIcon locale={locale} />
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   return (
     <div className="language-picker-wrapper">

@@ -1,26 +1,25 @@
-import { SandboxFeatureProps } from '../SandboxFeature';
-import { SandboxFeatures } from '../../config/config';
 import StopPoint from '../../model/StopPoint';
 import { VEHICLE_MODE } from '../../model/enums';
 import { Centroid, Location, Quay, StopPlace } from '../../api';
 
-export interface MapWrapperProps extends SandboxFeatureProps<SandboxFeatures> {
+export interface MapWrapperProps {
   transportMode: VEHICLE_MODE;
   pointsInSequence: StopPoint[];
   deleteStopPoint: (index: number) => void;
   addStopPoint: (quayRef?: string) => void;
   focusedQuayId: string | undefined | null;
   onFocusedQuayIdUpdate: (quayId: string | undefined | null) => void;
+  stopPlacesInJourneyPattern: StopPlace[];
 }
 
 export interface JourneyPatternStopPointMapProps {
-  stopPlacesState: JourneyPatternsStopPlacesState;
   transportMode: VEHICLE_MODE;
   pointsInSequence: StopPoint[];
   deleteStopPoint: (index: number) => void;
   addStopPoint: (quayRef?: string) => void;
   focusedQuayId: string | undefined | null;
   onFocusedQuayIdUpdate: (quayId: string | undefined | null) => void;
+  stopPlacesInJourneyPattern: StopPlace[];
 }
 
 export interface JourneyPatternsStopPlacesState {
@@ -72,4 +71,16 @@ export type StopPointLocation = [number, number];
 export interface MapSpecs {
   zoom: number;
   bounds: [number, number, number, number];
+}
+
+export interface ServiceLink {
+  serviceLinkRef: string;
+  quayRefFrom: string;
+  quayRefTo: string;
+  routeGeometry: RouteGeometry;
+}
+
+export interface RouteGeometry {
+  distance: number;
+  coordinates: number[][];
 }

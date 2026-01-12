@@ -10,7 +10,6 @@ import auth from 'auth/authSlice';
 import config from 'config/configSlice';
 import intl from 'i18n/intlSlice';
 import reducers from 'reducers';
-import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
 import userContext from '../auth/userContextSlice';
 
 export const sentryCaptureException = (e: any) =>
@@ -28,6 +27,7 @@ const {
   providers,
   exports,
   networks,
+  brandings,
   flexibleLines,
   flexibleStopPlaces,
   editor,
@@ -40,6 +40,7 @@ const staticReducers = {
   providers,
   exports,
   networks,
+  brandings,
   flexibleLines,
   flexibleStopPlaces,
   editor,
@@ -48,19 +49,15 @@ const staticReducers = {
   userContext,
 };
 
-const devMiddlewares =
-  import.meta.env.NODE_ENV !== 'production'
-    ? [immutableStateInvariantMiddleware()]
-    : [];
-
 export const store = configureStore({
   reducer: createReducer(),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      immmutableCheck: false,
+      immutableCheck: import.meta.env.NODE_ENV !== 'production',
       serializableCheck: false,
-    }).concat(...devMiddlewares),
-  enhancers: [sentryReduxEnhancer],
+    }),
+  enhancers: (getDefaultEnhancers) =>
+    getDefaultEnhancers().concat(sentryReduxEnhancer),
 });
 
 const asyncReducers: Record<string, any> = {};

@@ -137,6 +137,7 @@ const ServiceJourneyEditor = (props: Props) => {
               operators.map((op) => ({ ...op, name: op.name.value })),
             )}
             clearable
+            labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
             onChange={(e: NormalizedDropdownItemType | null) =>
               handleOperatorSelectionChange(e?.value)
             }

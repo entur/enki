@@ -22,6 +22,7 @@ import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
 import { useLoadDependencies } from './hooks';
 import { FLEXIBLE_LINE_STEPS } from './steps';
 import './styles.scss';
+import { useConfig } from '../../config/ConfigContext';
 
 const EditorFrame = () => {
   const params = useParams();
@@ -43,6 +44,7 @@ const EditorFrame = () => {
   const flexibleLines = useAppSelector((state) => state.flexibleLines);
   const organisations = useAppSelector((state) => state.organisations);
   const networks = useAppSelector((state) => state.networks);
+  const brandings = useAppSelector((state) => state.brandings);
   const editor = useAppSelector((state) => state.editor);
 
   const { isLoadingDependencies, refetchFlexibleLine } = useLoadDependencies();
@@ -93,6 +95,8 @@ const EditorFrame = () => {
   const authoritiesMissing =
     organisations && filterAuthorities(organisations).length === 0;
 
+  const config = useConfig();
+
   return (
     <Page
       backButtonTitle={
@@ -118,11 +122,24 @@ const EditorFrame = () => {
                   formatMessage({ id: step }),
                 )}
                 isValidStepIndex={(i: number) =>
-                  getMaxAllowedFlexibleLineStepIndex(line!, intl) >= i
+                  getMaxAllowedFlexibleLineStepIndex(
+                    line!,
+                    intl,
+                    config.optionalPublicCodeOnLine,
+                  ) >= i
                 }
-                isLineValid={validFlexibleLine(line!, intl)}
+                isLineValid={validFlexibleLine(
+                  line!,
+                  intl,
+                  config.optionalPublicCodeOnLine,
+                )}
                 currentStepIsValid={(i) =>
-                  currentFlexibleLineStepIsValid(i, line, intl)
+                  currentFlexibleLineStepIsValid(
+                    i,
+                    line,
+                    intl,
+                    config.optionalPublicCodeOnLine,
+                  )
                 }
                 setNextClicked={setNextClicked}
                 isEdit={isEdit}
@@ -144,6 +161,7 @@ const EditorFrame = () => {
                     changeFlexibleLine={onFlexibleLineChange}
                     operators={filterNetexOperators(organisations ?? [])}
                     networks={networks || []}
+                    brandings={brandings || []}
                     spoilPristine={nextClicked}
                   />
                 )}

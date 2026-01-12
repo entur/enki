@@ -57,7 +57,7 @@ const Exports = () => {
                 <SecondarySquareButton
                   onClick={async (event: React.MouseEvent<HTMLElement>) => {
                     event.stopPropagation();
-                    download(uttuApiUrl, e, await auth.getAccessToken());
+                    download(uttuApiUrl, e, await auth.getAccessToken(), intl);
                   }}
                 >
                   <DownloadIcon />

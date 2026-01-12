@@ -3,23 +3,24 @@ name: Build
   push:
     branches:
       - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 18.16
+          node-version: 24.12.0
       - name: Configure git user
         run: |
           git config --global user.name 'Latest version bot'
           git config --global user.email 'latest-version-bot@entur.org'
       - name: Cache node modules
         id: cache-npm
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         env:
           cache-name: cache-node-modules
         with:
@@ -37,9 +38,9 @@ jobs:
         run: npm list
       - run: npm ci
       - run: npm run check
-      - run: npm run test -- run --coverage --coverage.reporter=lcov --reporter=vitest-sonar-reporter --outputFile.vitest-sonar-reporter=test-report.xml --reporter=default
+      - run: npm run test -- run --coverage
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v2.3.0
+        uses: sonarsource/sonarqube-scan-action@v7.0.0
         env:
           SONAR_TOKEN: ${{ secrets.ENTUR_SONAR_PASSWORD }}
           SONAR_HOST_URL: https://sonarcloud.io
@@ -61,7 +62,7 @@ jobs:
         env:
           REACT_APP_VERSION: ${{ env.VERSION }}
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: build
           path: |

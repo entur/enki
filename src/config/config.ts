@@ -1,6 +1,7 @@
 import { OidcClientSettings } from 'oidc-client-ts';
 import { FlexibleLineType } from '../model/FlexibleLine';
 import { Locale } from '../i18n';
+import { VEHICLE_MODE } from '../model/enums';
 
 /**
  * All sandbox features should be added to this interface like this:
@@ -9,7 +10,7 @@ import { Locale } from '../i18n';
  *  For multi-level features, only the top-level featureName should be
  *  toggled.
  */
-export interface SandboxFeatures {
+export interface SandboxFeatureConfig {
   /**
    * Fintraffic's custom features or assets grouped in one location;
    * For example: custom styles override, logo component and translations provider.
@@ -19,7 +20,17 @@ export interface SandboxFeatures {
    * Map for editing stop places as part JourneyPattern form
    */
   JourneyPatternStopPointMap: boolean;
+  /**
+   * Matomo web analytics
+   */
+  MatomoTracker: boolean;
+  /**
+   * Cookie consent management provider
+   */
+  CookieInformation: boolean;
 }
+
+export type SandboxFeatures = keyof SandboxFeatureConfig;
 
 export interface Config {
   /**
@@ -77,7 +88,7 @@ export interface Config {
   /**
    * Sandbox feature configuration
    */
-  sandboxFeatures?: SandboxFeatures;
+  sandboxFeatures?: SandboxFeatureConfig;
 
   /**
    * Path to folder inder /ext that contains features or assets of a company that adopted Nplan.
@@ -88,5 +99,78 @@ export interface Config {
    */
   extPath?: string;
 
+  /**
+   * If true, the "dry run" option in create export page will not be visible
+   */
   hideExportDryRun?: boolean;
+
+  /**
+   * Supported modes for calculating route geometry
+   */
+  routeGeometrySupportedVehicleModes?: VEHICLE_MODE[];
+
+  /**
+   * Default value for the checkbox-option to generate service links on export
+   * **Note that if not provided, the default is "true".**
+   */
+  exportGenerateServiceLinksDefault?: boolean;
+
+  /**
+   * If the generate service links checkbox on export should be enabled.
+   */
+  disableGenerateServiceLinksCheckbox?: boolean;
+
+  exportIncludeDatedServiceJourneysDefault?: boolean;
+
+  disableIncludeDatedServiceJourneysCheckbox?: false;
+
+  /**
+   * Supported line modes
+   */
+  lineSupportedVehicleModes?: VEHICLE_MODE[];
+
+  /**
+   * Make public code on line optional
+   */
+  optionalPublicCodeOnLine?: boolean;
+
+  /**
+   * The maximum number of stop places that can be fetched for the journey pattern map
+   */
+  journeyPatternMapStopPlacesLimit?: number;
+
+  /**
+   * Provide a way to define custom map provider's details, for example the tile layer or map center/zoom
+   */
+  mapConfig?: MapConfig;
+
+  /**
+   * Enable line migration feature for moving lines between providers
+   */
+  enableLineMigration?: boolean;
+}
+
+export interface MapConfig {
+  tileLayers: TileLayer[];
+  defaultTileLayer: string;
+  center?: [number, number];
+  zoom?: number;
+}
+
+export interface TileLayerConfig {
+  name: string;
+  attribution: string;
+  url: string;
+}
+/**
+ * Represents a map tile layer configuration.
+ */
+export interface TileLayer {
+  name: string;
+  attribution?: string;
+  url?: string;
+  maxZoom?: number;
+  component?: boolean;
+  componentName?: string;
+  tms?: boolean;
 }

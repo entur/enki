@@ -3,10 +3,10 @@ import { GraphQLClient, Variables } from 'graphql-request';
 import {
   ApolloClient,
   ApolloLink,
-  ApolloProvider,
+  HttpLink,
   InMemoryCache,
-  createHttpLink,
 } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
 import { setContext } from '@apollo/client/link/context';
 import { Auth, useAuth } from 'auth/auth';
 import { useConfig } from 'config/ConfigContext';
@@ -70,13 +70,11 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
       omitTypename,
     );
   }
-  return forward(operation).map((data) => {
-    return data;
-  });
+  return forward(operation);
 });
 
 const apolloClient = (apiBase: string, provider: string, auth: Auth) => {
-  const httpLink = createHttpLink({
+  const httpLink = new HttpLink({
     uri: apiBase + '/' + provider + '/graphql',
   });
 

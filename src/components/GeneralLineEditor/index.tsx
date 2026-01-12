@@ -21,11 +21,15 @@ import { ChangeEvent, useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import VehicleSubModeDropdown from './VehicleSubModeDropdown';
 import './styles.scss';
+import { Branding } from '../../model/Branding';
+import { useConfig } from '../../config/ConfigContext';
+import { MessagesKey } from '../../i18n/translationKeys';
 
 interface Props<T extends Line> {
   line: T;
   operators: Organisation[];
   networks: Network[];
+  brandings: Branding[];
   onChange: <T extends Line>(line: T) => void;
   spoilPristine: boolean;
 }
@@ -34,11 +38,13 @@ export default <T extends Line>({
   line,
   operators,
   networks,
+  brandings,
   onChange,
   spoilPristine,
 }: Props<T>) => {
   const { formatMessage } = useIntl();
   const { publicCode } = line;
+  const { lineSupportedVehicleModes } = useConfig();
 
   const { flexibleLineType, isFlexibleLine } = useMemo(() => {
     const flexibleLineType = (line as FlexibleLine).flexibleLineType;
@@ -81,9 +87,29 @@ export default <T extends Line>({
   };
 
   const getModeItems = useCallback(
-    () => mapVehicleModeAndLabelToItems(vehicleModeMessages, formatMessage),
+    () =>
+      mapVehicleModeAndLabelToItems(
+        lineSupportedVehicleModes && lineSupportedVehicleModes.length > 0
+          ? getSupportedVehicleModeMessages()
+          : vehicleModeMessages,
+        formatMessage,
+      ),
     [formatMessage],
   );
+
+  const getSupportedVehicleModeMessages = (): Record<
+    VEHICLE_MODE,
+    keyof MessagesKey
+  > => {
+    const supportedVehicleModeMessages: Record<string, string> = {};
+    lineSupportedVehicleModes?.forEach((mode) => {
+      supportedVehicleModeMessages[mode] = vehicleModeMessages[mode];
+    });
+    return supportedVehicleModeMessages as Record<
+      VEHICLE_MODE,
+      keyof MessagesKey
+    >;
+  };
 
   const namePristine = usePristine(line.name, spoilPristine);
   const publicCodePristine = usePristine(publicCode, spoilPristine);
@@ -97,6 +123,13 @@ export default <T extends Line>({
   );
 
   const getNetworkItems = useCallback(() => mapToItems(networks), [networks]);
+
+  const getBrandingItems = useCallback(
+    () => mapToItems(brandings),
+    [brandings],
+  );
+
+  const config = useConfig();
 
   return (
     <div className="lines-editor-general">
@@ -131,7 +164,12 @@ export default <T extends Line>({
         />
 
         <TextField
-          label={formatMessage({ id: 'generalPublicCodeFormGroupTitle' })}
+          label={formatMessage(
+            { id: 'generalPublicCodeFormGroupTitle' },
+            {
+              requiredMarker: !config.optionalPublicCodeOnLine ? '*' : '',
+            },
+          )}
           labelTooltip={formatMessage({
             id: 'generalPublicCodeInputLabelTooltip',
           })}
@@ -145,7 +183,7 @@ export default <T extends Line>({
           }
           {...getErrorFeedback(
             formatMessage({ id: 'publicCodeEmpty' }),
-            !isBlank(line.publicCode),
+            !isBlank(line.publicCode) || !!config.optionalPublicCodeOnLine,
             publicCodePristine,
           )}
         />
@@ -174,7 +212,11 @@ export default <T extends Line>({
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={getOperatorItems}
           clearable
+          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
           label={formatMessage({ id: 'generalOperatorFormGroupTitle' })}
+          noMatchesText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
           onChange={(element) =>
             onChange<Line>({
               ...(line as Line),
@@ -196,7 +238,11 @@ export default <T extends Line>({
           placeholder={formatMessage({ id: 'defaultOption' })}
           items={getNetworkItems}
           clearable
+          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
           label={formatMessage({ id: 'generalNetworkFormGroupTitle' })}
+          noMatchesText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
           onChange={(element) =>
             onChange<Line>({
               ...(line as Line),
@@ -208,6 +254,27 @@ export default <T extends Line>({
             !isBlank(line.networkRef),
             networkPristine,
           )}
+        />
+
+        <Dropdown<string>
+          items={getBrandingItems}
+          selectedItem={
+            getBrandingItems().find(
+              (item) => item.value === line.brandingRef,
+            ) || null
+          }
+          clearable
+          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
+          onChange={(element) =>
+            onChange<Line>({
+              ...(line as Line),
+              brandingRef: element?.value,
+            })
+          }
+          label={formatMessage({ id: 'brandingsDropdownLabelText' })}
+          noMatchesText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
         />
 
         {isFlexibleLine && (
@@ -230,6 +297,7 @@ export default <T extends Line>({
             placeholder={formatMessage({ id: 'defaultOption' })}
             items={getModeItems}
             clearable
+            labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
             label={formatMessage({ id: 'transportModeTitle' })}
             onChange={(element) =>
               onChange<Line>({

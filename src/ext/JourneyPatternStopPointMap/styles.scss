@@ -18,6 +18,16 @@
 
 .popup-button-panel {
   display: flex;
+
+  > .eds-button--variant-secondary {
+    --eds-button-text: var(
+      --components-button-secondary-contrast-text-active
+    ) !important;
+  }
+
+  > .eds-button--variant-secondary:hover {
+    --eds-button-text: white !important;
+  }
 }
 
 .popup-button {

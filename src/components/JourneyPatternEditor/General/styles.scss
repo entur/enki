@@ -1,4 +1,4 @@
-@import '@entur/tokens/dist/styles';
+@use '@entur/tokens/dist/styles' as *;
 
 .journey-pattern-inputs {
   display: flex;

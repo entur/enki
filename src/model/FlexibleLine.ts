@@ -26,7 +26,7 @@ export const initFlexibleLine = () => {
 };
 
 export const flexibleLineToPayload = (line: FlexibleLine) => {
-  return lineToPayload(line);
+  return lineToPayload(line, true);
 };
 
 export default FlexibleLine;

@@ -1,5 +1,5 @@
 import './styles.scss';
-import { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import {
   FocusedMarker,
   FocusedMarkerNewMapState,
@@ -14,15 +14,19 @@ import {
   getStopPlacesState,
   onFocusedMarkerNewMapState,
 } from './helpers';
-import {
-  useFitMapBounds,
-  useMapSpecs,
-  useMapState,
-  useHandleFocusedQuayId,
-  useMapZoomIntoLocation,
-  useStopPlacesStateCombinedWithSearchResults,
-} from './hooks';
 import Markers from './Markers';
+import { useConfig } from '../../config/ConfigContext';
+import Loading from '../../components/Loading';
+import { useIntl } from 'react-intl';
+import { useStopPlacesInJourneyPattern } from './hooks/useStopPlacesInJourneyPattern';
+import { useFitMapBounds } from './hooks/useFitMapBounds';
+import { useMapSpecs } from './hooks/useMapSpecs';
+import { useBoundingBoxedStopPlacesData } from './hooks/useBoundingBoxedStopPlacesData';
+import { useStopPlacesStateCombinedWithSearchResults } from './hooks/useStopPlacesStateCombinedWithSearchResults';
+import { useMapState } from './hooks/useMapState';
+import { useRouteGeometry } from './hooks/useRouteGeometry';
+import { useMapZoomIntoLocation } from './hooks/useMapZoomIntoLocation';
+import { useHandleFocusedQuayId } from './hooks/useHandleFocusedQuayId';
 
 const JourneyPatternStopPointMap = memo(
   ({
@@ -30,10 +34,28 @@ const JourneyPatternStopPointMap = memo(
     addStopPoint,
     deleteStopPoint,
     transportMode,
-    stopPlacesState,
     focusedQuayId,
     onFocusedQuayIdUpdate,
+    stopPlacesInJourneyPattern,
   }: JourneyPatternStopPointMapProps) => {
+    const { formatMessage } = useIntl();
+    const { routeGeometrySupportedVehicleModes } = useConfig();
+    let isRouteGeometryEnabled =
+      routeGeometrySupportedVehicleModes &&
+      routeGeometrySupportedVehicleModes?.filter(
+        (mode) => mode === transportMode,
+      ).length > 0;
+
+    const { stopPlacesInJourneyPatternState } = useStopPlacesInJourneyPattern(
+      stopPlacesInJourneyPattern,
+    );
+
+    // If there are already stop points selected, zoom in to the route on initial map load:
+    useFitMapBounds(
+      pointsInSequence,
+      stopPlacesInJourneyPatternState.quayLocationsIndex,
+    );
+
     // Capture and store map's zoom level and view bounds.
     // Will be used later to produce markers within the visible bounds:
     const { mapSpecsState, updateMapSpecs } = useMapSpecs();
@@ -42,6 +64,9 @@ const JourneyPatternStopPointMap = memo(
         updateMapSpecs();
       },
     });
+
+    const { stopPlacesState, isStopDataLoading } =
+      useBoundingBoxedStopPlacesData(transportMode, mapSpecsState);
 
     // Search results stop places and its respective indexes:
     const [searchedStopPlacesState, setSearchedStopPlacesState] =
@@ -55,17 +80,27 @@ const JourneyPatternStopPointMap = memo(
     } = useStopPlacesStateCombinedWithSearchResults(
       stopPlacesState,
       searchedStopPlacesState,
+      stopPlacesInJourneyPatternState,
     );
 
     // This hook manages what's shown on the map and how exactly:
     const { mapState, setMapState, mapStateRef } = useMapState(
       pointsInSequence,
-      totalQuayLocationsIndex,
-      totalQuayStopPlaceIndex,
+      stopPlacesInJourneyPatternState.quayLocationsIndex,
+      stopPlacesInJourneyPatternState.quayStopPlaceIndex,
+      !!isRouteGeometryEnabled,
     );
 
-    // If there are already stop points selected, zoom in to the route on initial map load:
-    useFitMapBounds(pointsInSequence, totalQuayLocationsIndex);
+    if (isRouteGeometryEnabled) {
+      // Handling service links data;
+      // If route geometry is enabled, this is where the needed coordinates are set up
+      useRouteGeometry(
+        pointsInSequence,
+        totalQuayLocationsIndex,
+        setMapState,
+        transportMode,
+      );
+    }
 
     // Zoom into location of a focused marker:
     useMapZoomIntoLocation(mapState.focusedMarker?.marker.location);
@@ -157,25 +192,38 @@ const JourneyPatternStopPointMap = memo(
 
     return (
       <>
-        <SearchPopover
-          searchedStopPlaces={searchedStopPlacesState.stopPlaces}
-          transportMode={transportMode}
-          getSelectedQuayIds={getSelectedQuayIdsCallback}
-          onSearchResultLocated={processFocusedMarker}
-          onSearchedStopPlacesFetched={updateSearchedStopPlaces}
-        />
-        <ZoomControl position={'topright'} />
-        <Polyline positions={mapState.stopPointLocationSequence} />
-        <Markers
-          mapSpecsState={mapSpecsState}
-          mapState={mapState}
-          mapStateRef={mapStateRef}
-          stopPlaces={totalStopPlaces}
-          deleteStopPoint={deleteStopPoint}
-          addStopPoint={addStopPoint}
-          clearFocusedMarker={clearFocusedMarker}
-          onStopPointAddedOrDeleted={updateMapState}
-        />
+        {!isStopDataLoading ? (
+          <>
+            <SearchPopover
+              searchedStopPlaces={searchedStopPlacesState.stopPlaces}
+              transportMode={transportMode}
+              getSelectedQuayIds={getSelectedQuayIdsCallback}
+              onSearchResultLocated={processFocusedMarker}
+              onSearchedStopPlacesFetched={updateSearchedStopPlaces}
+            />
+            <Polyline positions={mapState.stopPointLocationSequence} />
+            <Markers
+              mapSpecsState={mapSpecsState}
+              mapState={mapState}
+              mapStateRef={mapStateRef}
+              stopPlaces={totalStopPlaces}
+              deleteStopPoint={deleteStopPoint}
+              addStopPoint={addStopPoint}
+              clearFocusedMarker={clearFocusedMarker}
+              onStopPointAddedOrDeleted={updateMapState}
+            />
+          </>
+        ) : (
+          <div className="stop-places-spinner">
+            <Loading
+              isFullScreen={false}
+              text={formatMessage({ id: 'mapLoadingStopsDataText' })}
+              isLoading={isStopDataLoading}
+              children={null}
+              className=""
+            />
+          </div>
+        )}
       </>
     );
   },

@@ -1,4 +1,4 @@
-import { ApolloError, ApolloQueryResult, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { LINE_EDITOR_QUERY } from 'api/uttu/queries';
 import { isBlank } from 'helpers/forms';
 import useUttuError from 'hooks/useUttuError';
@@ -6,13 +6,13 @@ import Line, { initLine } from 'model/Line';
 import { Network } from 'model/Network';
 import { useEffect, useState } from 'react';
 import { useMatch, useNavigate } from 'react-router-dom';
-import { useConfig } from '../../config/ConfigContext';
 import { createUuid } from '../../helpers/generators';
+import { Branding } from '../../model/Branding';
 
 export const useUttuErrors = (
-  error: ApolloError | undefined,
-  deleteError: ApolloError | undefined,
-  mutationError: ApolloError | undefined,
+  error: Error | undefined,
+  deleteError: Error | undefined,
+  mutationError: Error | undefined,
 ) => {
   const navigate = useNavigate();
 
@@ -30,12 +30,11 @@ export const useUttuErrors = (
 type UseLineReturnType = {
   line: Line | undefined;
   setLine: React.Dispatch<React.SetStateAction<Line | undefined>>;
-  refetchLine: (
-    variables?: Partial<Record<string, any>> | undefined,
-  ) => Promise<ApolloQueryResult<LineData>>;
+  refetchLine: ReturnType<typeof useQuery<LineData>>['refetch'];
   loading: boolean;
-  error: ApolloError | undefined;
+  error: Error | undefined;
   networks: Network[] | undefined;
+  brandings: Branding[] | undefined;
   notFound: boolean;
 };
 
@@ -44,6 +43,7 @@ type UseLineType = () => UseLineReturnType;
 interface LineData {
   line: Line;
   networks: Network[] | undefined;
+  brandings: Branding[] | undefined;
 }
 
 export const useLine: UseLineType = () => {
@@ -57,6 +57,7 @@ export const useLine: UseLineType = () => {
         id: match?.params.id || '',
         includeLine: !isBlank(match?.params.id),
       },
+      fetchPolicy: 'network-only',
     },
   );
 
@@ -72,6 +73,7 @@ export const useLine: UseLineType = () => {
           })),
         })),
         networkRef: data?.line.network?.id,
+        brandingRef: data?.line.branding?.id,
       });
     }
   }, [data?.line]);
@@ -83,6 +85,7 @@ export const useLine: UseLineType = () => {
     loading,
     error,
     networks: data?.networks,
+    brandings: data?.brandings,
     notFound: data?.line === null && !isBlank(match?.params.id),
   };
 };

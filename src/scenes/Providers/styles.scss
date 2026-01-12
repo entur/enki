@@ -1,4 +1,4 @@
-@import '@entur/tokens/dist/styles.scss';
+@use '@entur/tokens/dist/styles.scss' as *;
 
 .providers {
   flex: 1;
@@ -8,5 +8,14 @@
   .create {
     max-width: 20rem;
     margin-bottom: $space-large;
+  }
+
+  .action-cell {
+    width: 150px;
+    min-width: 150px;
+
+    button {
+      white-space: nowrap;
+    }
   }
 }

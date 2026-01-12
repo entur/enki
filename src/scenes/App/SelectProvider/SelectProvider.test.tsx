@@ -1,10 +1,9 @@
-import { render, userEvent } from '../../../utils/test-utils';
+import { render, userEvent, waitFor } from '../../../utils/test-utils';
 import { SelectProvider } from './SelectProvider';
 import { MemoryRouter } from 'react-router-dom';
 import { useAppDispatch } from '../../../store/hooks';
 import { useEffect } from 'react';
 import { fetchUserContext } from '../../../auth/userContextSlice';
-import { waitFor } from '@testing-library/react';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
@@ -33,14 +32,31 @@ describe('SelectProvider', () => {
       </Wrapper>,
     );
 
-    await waitFor(async () => {
-      await container.findByText('Test provider');
+    // Wait for the dropdown to be rendered with the provider data
+    await waitFor(() => {
+      expect(container.getByRole('combobox')).toBeInTheDocument();
     });
 
-    expect(container.getByRole('combobox')).toHaveTextContent('');
+    // Open the dropdown
+    const toggleButton = container.getByRole('button', {
+      name: /Åpne liste med valg/i,
+    });
+    await user.click(toggleButton);
 
-    await user.click(container.getByText('Test provider'));
+    // Wait for the dropdown list to appear
+    await waitFor(async () => {
+      const providerOption = await container.findByText('Test provider');
+      expect(providerOption).toBeInTheDocument();
+    });
 
-    expect(container.getByRole('combobox')).toHaveTextContent('Test provider');
+    // Click on the provider option
+    await user.click(await container.findByText('Test provider'));
+
+    // Check if the selected item is displayed in the dropdown
+    await waitFor(() => {
+      expect(container.getByRole('combobox')).toHaveTextContent(
+        'Test provider',
+      );
+    });
   });
 });

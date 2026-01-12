@@ -7,8 +7,8 @@ import { SideNavigation } from '@entur/menu';
 import { PrimaryButton } from '@entur/button';
 import LanguagePicker from './NavBar/LanguagePicker';
 import Logo from './NavBar/Logo';
-import SandboxFeature from '../../ext/SandboxFeature';
 import { useConfig } from '../../config/ConfigContext';
+import { ComponentToggle } from '@entur/react-component-toggle';
 
 export const LandingPage = () => {
   const { formatMessage } = useIntl();
@@ -21,7 +21,7 @@ export const LandingPage = () => {
         <div className="navbar-and-routes">
           <Contrast as="nav" className="navbar-wrapper">
             <SideNavigation className="side-navigation">
-              <SandboxFeature
+              <ComponentToggle
                 feature={`${extPath}/CustomLogo`}
                 renderFallback={() => <Logo />}
               />

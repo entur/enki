@@ -3,11 +3,11 @@ import { getMarkerIcon } from '../markerIcons';
 import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
 import { Heading5 } from '@entur/typography';
-import React, { memo, MutableRefObject, useRef } from 'react';
+import React, { memo, useRef } from 'react';
 import QuaySequenceIndexTooltip from './QuaySequenceIndexTooltip';
 import QuayPositionChips from './QuayPositionChips';
 import QuayPopupButtonPanel from './QuayPopupButtonPanel';
-import { usePopupOpeningOnFocus } from '../hooks';
+import { usePopupOpeningOnFocus } from '../hooks/usePopupOpeningOnFocus';
 
 interface QuayMarkerProps {
   quay: Quay;
@@ -43,7 +43,7 @@ const QuayMarker = memo(
   }: QuayMarkerProps) => {
     const intl = useIntl();
     const { formatMessage } = intl;
-    const markerRef: MutableRefObject<any> = useRef();
+    const markerRef = useRef<any>(null);
     usePopupOpeningOnFocus(isPopupToBeOpen, markerRef, clearFocusedMarker);
 
     return (
@@ -83,9 +83,9 @@ const QuayMarker = memo(
             hasSelectedQuay={hasSelectedQuay}
             hasNonSelectedQuays={hasNonSelectedQuays}
             hideNonSelectedQuaysState={hideNonSelectedQuaysState}
-            hideNonSelectedQuaysCallback={hideNonSelectedQuays}
-            showQuaysCallback={showQuays}
-            addStopPointCallback={addStopPoint}
+            hideNonSelectedQuays={hideNonSelectedQuays}
+            showQuays={showQuays}
+            addStopPoint={addStopPoint}
           />
         </Popup>
 

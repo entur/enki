@@ -43,7 +43,7 @@ export const useOnBoardingTypeChange = (
 };
 
 const useBoardingDropDownItems = () => {
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale } = useIntl();
   const boardingItems = useMemo(
     () => [
       { value: '0', label: formatMessage({ id: 'labelForBoarding' }) },
@@ -53,7 +53,7 @@ const useBoardingDropDownItems = () => {
         label: formatMessage({ id: 'labelForBoardingAndAlighting' }),
       },
     ],
-    [formatMessage],
+    [formatMessage, locale],
   );
 
   return boardingItems;

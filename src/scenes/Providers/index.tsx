@@ -17,12 +17,15 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import './styles.scss';
 import { getProviders } from '../../actions/providers';
+import { useConfig } from 'config/ConfigContext';
 
 const Providers = () => {
   const navigate = useNavigate();
   const { formatMessage } = useIntl();
   const providersState = useAppSelector((s) => s.providers);
   const dispatch = useAppDispatch();
+  const config = useConfig();
+  const isLineMigrationEnabled = config?.enableLineMigration ?? false;
 
   useEffect(() => {
     dispatch(getProviders());
@@ -32,7 +35,15 @@ const Providers = () => {
     (id: string) => {
       navigate(`/providers/edit/${id}`);
     },
-    [history],
+    [navigate],
+  );
+
+  const handleMigrateClick = useCallback(
+    (providerId: string, event: React.MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation(); // Prevent row click
+      navigate(`/providers/${providerId}/migrate-line`);
+    },
+    [navigate],
   );
 
   const providers = useMemo(
@@ -62,6 +73,18 @@ const Providers = () => {
           <DataCell>{n.code}</DataCell>
           <DataCell>{n.codespace?.xmlns}</DataCell>
           <DataCell>{n.codespace?.xmlnsUrl}</DataCell>
+          {isLineMigrationEnabled && (
+            <DataCell className="action-cell">
+              <SecondaryButton
+                size="small"
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                  handleMigrateClick(n.code!, event)
+                }
+              >
+                Migrate Lines
+              </SecondaryButton>
+            </DataCell>
+          )}
         </TableRow>
       ))}
     </>
@@ -103,6 +126,7 @@ const Providers = () => {
                     id: 'providersCodespaceXmlnsUrlHeaderLabel',
                   })}
                 </HeaderCell>
+                {isLineMigrationEnabled && <HeaderCell>Actions</HeaderCell>}
               </TableRow>
             </TableHead>
             <TableBody>

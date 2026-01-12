@@ -22,6 +22,7 @@ export const StopPlaceTypeDropdown = ({
   return (
     <Dropdown
       clearable
+      labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
       label={label}
       items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map((v) => ({
         value: v,

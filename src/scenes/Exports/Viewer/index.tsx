@@ -95,6 +95,28 @@ const ExportsViewer = () => {
                 />
               )}
               <ExportItem
+                label={formatMessage({ id: 'viewerGenerateServiceLinksLabel' })}
+                value={
+                  theExport?.generateServiceLinks
+                    ? formatMessage({ id: 'viewerGenerateServiceLinksYes' })
+                    : formatMessage({ id: 'viewerGenerateServiceLinksNo' })
+                }
+              />
+              <ExportItem
+                label={formatMessage({
+                  id: 'viewerIncludeDatedServiceJourneysLabel',
+                })}
+                value={
+                  theExport?.includeDatedServiceJourneys
+                    ? formatMessage({
+                        id: 'viewerIncludeDatedServiceJourneysYes',
+                      })
+                    : formatMessage({
+                        id: 'viewerIncludeDatedServiceJourneysNo',
+                      })
+                }
+              />
+              <ExportItem
                 label={formatMessage({ id: 'viewerStatusLabel' })}
                 value={
                   <div className="export-status">
@@ -116,6 +138,7 @@ const ExportsViewer = () => {
                       uttuApiUrl,
                       theExport!,
                       await auth.getAccessToken(),
+                      intl,
                     );
                   }}
                 >

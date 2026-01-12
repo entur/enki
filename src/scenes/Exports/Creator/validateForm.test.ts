@@ -10,6 +10,8 @@ it('returns true when valid', () => {
     exportIsValid({
       name: 'Test export',
       dryRun: true,
+      generateServiceLinks: true,
+      includeDatedServiceJourneys: false,
     }),
   ).toBe(true);
 });

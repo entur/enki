@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client/react';
 import { setSavedChanges } from 'actions/editor';
 import { showSuccessNotification } from 'actions/notification';
 import { DELETE_LINE, MUTATE_LINE } from 'api/uttu/mutations';
@@ -13,7 +13,7 @@ import {
 } from 'helpers/validation';
 import Line, { lineToPayload } from 'model/Line';
 import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Navigate, useMatch, useNavigate } from 'react-router-dom';
@@ -22,6 +22,7 @@ import LineEditorSteps from './LineEditorSteps';
 import { FIXED_LINE_STEPS } from './constants';
 import { useLine, useUttuErrors } from './hooks';
 import './styles.scss';
+import { useConfig } from '../../config/ConfigContext';
 
 export default () => {
   const intl = useIntl();
@@ -37,8 +38,16 @@ export default () => {
   const organisations = useAppSelector((state) => state.organisations);
   const editor = useAppSelector((state) => state.editor);
 
-  const { line, setLine, refetchLine, loading, error, networks, notFound } =
-    useLine();
+  const {
+    line,
+    setLine,
+    refetchLine,
+    loading,
+    error,
+    networks,
+    brandings,
+    notFound,
+  } = useLine();
 
   const [deleteLine, { error: deleteError }] = useMutation(DELETE_LINE);
   const [mutateLine, { error: mutationError }] = useMutation(MUTATE_LINE);
@@ -108,6 +117,8 @@ export default () => {
   const authoritiesMissing =
     organisations && filterAuthorities(organisations).length === 0;
 
+  const config = useConfig();
+
   return (
     <Page
       backButtonTitle={formatMessage({ id: 'navBarLinesMenuItemLabel' })}
@@ -124,8 +135,19 @@ export default () => {
             isValidStepIndex={(i: number) =>
               getMaxAllowedStepIndex(line!, intl) >= i
             }
-            currentStepIsValid={(i) => currentStepIsValid(i, line!, intl)}
-            isLineValid={line ? validLine(line, intl) : false}
+            currentStepIsValid={(i) =>
+              currentStepIsValid(
+                i,
+                line!,
+                intl,
+                config.optionalPublicCodeOnLine,
+              )
+            }
+            isLineValid={
+              line
+                ? validLine(line, intl, config.optionalPublicCodeOnLine)
+                : false
+            }
             setNextClicked={setNextClicked}
             isEdit={!isBlank(match?.params.id)}
             spoilPristine={nextClicked}
@@ -146,6 +168,7 @@ export default () => {
                 changeLine={onChange}
                 operators={filterNetexOperators(organisations ?? [])}
                 networks={networks || []}
+                brandings={brandings || []}
                 spoilPristine={nextClicked}
               />
             )}

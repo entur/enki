@@ -9,6 +9,7 @@ import LineEditor from 'scenes/LineEditor';
 import LinesOverview from 'scenes/Lines';
 import Providers from 'scenes/Providers';
 import ProviderEditor from 'scenes/Providers/Editor';
+import LineMigration from 'scenes/Providers/LineMigration';
 import ExportsOverview from '../Exports';
 import ExportsEditor from '../Exports/Creator';
 import ExportsViewer from '../Exports/Viewer';
@@ -22,12 +23,17 @@ import { useNoProviders } from './useNoProviders';
 import { useNoSelectedProvider } from './useNoSelectedProvider';
 import { NoSelectedProvider } from './NoSelectedProvider/NoSelectedProvider';
 import { useAppSelector } from '../../store/hooks';
+import Brandings from '../Brandings';
+import BrandingEditor from '../Brandings/Editor';
+import { useConfig } from 'config/ConfigContext';
 
 const Routes = () => {
   const noProviders = useNoProviders();
   const noSelectedProvider = useNoSelectedProvider();
   const location = useLocation();
   const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
+  const config = useConfig();
+  const isLineMigrationEnabled = config?.enableLineMigration ?? false;
 
   if (noProviders && !location.pathname.startsWith('/providers') && isAdmin) {
     return <Navigate to="/providers" replace />;
@@ -45,6 +51,9 @@ const Routes = () => {
     <div className="routes">
       <ReactRoutes>
         <Route path="/" element={<Navigate to="/lines" replace />} />
+        <Route path="/brandings" element={<Brandings />} />
+        <Route path="/brandings/create" element={<BrandingEditor />} />
+        <Route path="/brandings/edit/:id" element={<BrandingEditor />} />
         <Route path="/networks" element={<NetworksOverview />} />
         <Route path="/networks/create" element={<NetworkEditor />} />
         <Route path="/networks/edit/:id" element={<NetworkEditor />} />
@@ -66,6 +75,12 @@ const Routes = () => {
         <Route path="/providers" element={<Providers />} />
         <Route path="/providers/create" element={<ProviderEditor />} />
         <Route path="/providers/edit/:id" element={<ProviderEditor />} />
+        {isLineMigrationEnabled && (
+          <Route
+            path="/providers/:providerId/migrate-line"
+            element={<LineMigration />}
+          />
+        )}
         <Route path="/select-provider" element={<NoSelectedProvider />} />
       </ReactRoutes>
     </div>

@@ -1,4 +1,4 @@
-import { SuccessButton } from '@entur/button';
+import { SuccessButton, SecondaryButton } from '@entur/button';
 import { TextField } from '@entur/form';
 import { saveProvider } from 'actions/providers';
 import Loading from 'components/Loading';
@@ -13,7 +13,7 @@ import Provider from 'model/Provider';
 import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { Params, useNavigate, useParams } from 'react-router-dom';
+import { Params, useNavigate, useParams, Link } from 'react-router-dom';
 import { useAppSelector } from '../../../store/hooks';
 import './styles.scss';
 import { RootState } from '../../../store/store';
@@ -165,6 +165,15 @@ const ProviderEditor = () => {
                         { details: formatMessage({ id: 'provider' }) },
                       )}
                 </SuccessButton>
+
+                {params.id && (
+                  <SecondaryButton
+                    as={Link}
+                    to={`/providers/${params.id}/migrate-line`}
+                  >
+                    Migrate Lines
+                  </SecondaryButton>
+                )}
               </div>
             </div>
           </OverlayLoader>

@@ -28,6 +28,7 @@ export const FixedPassingTimeEditor = ({
       <PassingTimePicker
         label={formatMessage({ id: 'passingTimesArrivalTime' })}
         disabled={index === 0}
+        ignoreSelectedTime={index === 0}
         required={isLast}
         selectedTime={passingTime.arrivalTime}
         onChange={(arrivalTime: string | null) => {
@@ -56,6 +57,7 @@ export const FixedPassingTimeEditor = ({
       <PassingTimePicker
         label={formatMessage({ id: 'passingTimesDepartureTime' })}
         disabled={isLast}
+        ignoreSelectedTime={isLast}
         required={index === 0}
         selectedTime={passingTime.departureTime}
         onChange={(departureTime: string | null) => {

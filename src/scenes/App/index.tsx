@@ -22,6 +22,10 @@ import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
 import MarkerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { fetchUserContext } from '../../auth/userContextSlice';
 import { useConfig } from '../../config/ConfigContext';
+import { ComponentToggle } from '@entur/react-component-toggle';
+
+import { OPEN_STREET_MAP } from '../../components/FormMap/mapDefaults';
+import { setActiveMapBaseLayer } from '../../auth/userContextSlice';
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: MarkerIcon2x,
@@ -32,7 +36,7 @@ L.Icon.Default.mergeOptions({
 const App = () => {
   const dispatch = useDispatch<any>();
   const auth = useAuth();
-  const { uttuApiUrl } = useConfig();
+  const { uttuApiUrl, mapConfig } = useConfig();
 
   const userContext = useAppSelector((state) => state.userContext);
 
@@ -48,6 +52,26 @@ const App = () => {
     dispatch(getOrganisations());
   }, [dispatch, userContext.activeProviderCode]);
 
+  /**
+   * Sets the active base map layer on load or when mapConfig changes.
+   * Priority:
+   * 1. Saved layer from localStorage/Redux
+   * 2. Default or first tile from mapConfig
+   * 3. DEFAULT_OSM_TILE fallback
+   */
+  useEffect(() => {
+    //fallback to DEFAULT_OSM_TILE when MapConfig has no tiles.
+    const layerBasedOnMapConfig = mapConfig?.tileLayers?.length
+      ? mapConfig?.defaultTileLayer || mapConfig?.tileLayers[0]?.name
+      : OPEN_STREET_MAP;
+
+    const activeLayer =
+      userContext.activeMapBaseLayer ||
+      layerBasedOnMapConfig ||
+      OPEN_STREET_MAP;
+    dispatch(setActiveMapBaseLayer(activeLayer));
+  }, [mapConfig]);
+
   const { formatMessage } = useIntl();
 
   const basename = import.meta.env.BASE_URL;
@@ -59,7 +83,8 @@ const App = () => {
   return (
     <div className="app">
       <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
-
+      <ComponentToggle feature="MatomoTracker" />
+      <ComponentToggle feature="CookieInformation" />
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <div>

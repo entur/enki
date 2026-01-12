@@ -1,0 +1,20 @@
+{
+  "uttuApiUrl": "http://localhost:11701/services/flexible-lines",
+  "xmlnsUrlPrefix": "http://www.rutebanken.org/ns/",
+  "oidcConfig": {
+    "authority": "https://partner.dev.entur.org",
+    "client_id": "fBMaKFexHPwhsASUC57o2wvzrRxvAdNb",
+    "extraQueryParams": {
+      "audience": "https://api.dev.entur.io"
+    }
+  },
+  "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
+  "routeGeometrySupportedVehicleModes": ["bus", "coach", "taxi", "rail", "water"],
+  "exportGenerateServiceLinksDefault": false,
+  "exportIncludeDatedServiceJourneysDefault": false,
+  "disableIncludeDatedServiceJourneysCheckbox": false,
+  "optionalPublicCodeOnLine": true,
+  "sandboxFeatures": {
+    "JourneyPatternStopPointMap": true
+  }
+}

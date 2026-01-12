@@ -8,6 +8,7 @@ import {
   StopPointLocation,
 } from './types';
 import StopPoint from '../../model/StopPoint';
+import { VEHICLE_MODE } from '../../model/enums';
 
 /**
  * Returns an object containing a list of stop places and some helpful records calculated based on it
@@ -222,5 +223,89 @@ export const getStopPointLocationSequence = (
       ]);
     }
   });
+  return stopPointLocationSequence;
+};
+
+export const getServiceLinkRef = (quayRefFrom: string, quayRefTo: string) => {
+  return quayRefFrom + '_' + quayRefTo;
+};
+
+export const getRouteGeometryFetchPromises = (
+  pointsInSequence: StopPoint[],
+  quayLocationsIndex: Record<string, Centroid>,
+  fetchRouteGeometryFunction: ({}: {
+    quayRefFrom: string;
+    quayRefTo: string;
+    mode: VEHICLE_MODE;
+  }) => Promise<any>,
+  serviceLinksIndex: Record<string, number[][]>,
+  mode: VEHICLE_MODE,
+) => {
+  return pointsInSequence.map((point, i) => {
+    if (
+      i == pointsInSequence.length - 1 ||
+      !point.quayRef ||
+      !quayLocationsIndex[point.quayRef]
+    ) {
+      return;
+    }
+    const nextPoint = pointsInSequence[i + 1];
+    if (!nextPoint.quayRef || !quayLocationsIndex[nextPoint.quayRef]) {
+      return;
+    }
+
+    const serviceLinkRef = getServiceLinkRef(point.quayRef, nextPoint.quayRef);
+    if (!serviceLinksIndex[serviceLinkRef]) {
+      return fetchRouteGeometryFunction({
+        quayRefFrom: point.quayRef as string,
+        quayRefTo: nextPoint.quayRef as string,
+        mode: mode,
+      });
+    }
+  });
+};
+
+export const getStopPointLocationSequenceWithRouteGeometry = (
+  pointsInSequence: StopPoint[],
+  quayLocationsIndex: Record<string, Centroid>,
+  serviceLinksIndex: Record<string, number[][]>,
+) => {
+  const stopPointLocationSequence: StopPointLocation[] = [];
+
+  pointsInSequence.forEach((point, i) => {
+    // Adding the point itself first:
+    if (!point.quayRef || !quayLocationsIndex[point.quayRef]) {
+      return;
+    }
+    const pointLocation = quayLocationsIndex[point.quayRef].location;
+    if (!pointLocation) {
+      return;
+    }
+    stopPointLocationSequence.push([
+      pointLocation.latitude,
+      pointLocation.longitude,
+    ]);
+    // Now getting the coordinates from the service link:
+    if (i == pointsInSequence.length - 1) {
+      return;
+    }
+    const nextPoint = pointsInSequence[i + 1];
+    if (!nextPoint.quayRef) {
+      return;
+    }
+    const serviceLinkRef = getServiceLinkRef(point.quayRef, nextPoint.quayRef);
+    const coordinates = serviceLinksIndex[serviceLinkRef];
+
+    if (coordinates) {
+      coordinates.forEach((location) => {
+        const reversedCoordinatesPair = location.slice().reverse() as [
+          number,
+          number,
+        ];
+        stopPointLocationSequence.push(reversedCoordinatesPair);
+      });
+    }
+  });
+
   return stopPointLocationSequence;
 };

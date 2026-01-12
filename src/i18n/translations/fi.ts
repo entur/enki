@@ -1,6 +1,6 @@
-import { MessagesKey } from '../translationKeys';
+import { MessagesKey } from 'i18n/translationKeys';
 
-export const messages = {
+export const messages: MessagesKey = {
   appLoadingMessage: 'Ladataan tarjoajia ja organisaatioita...',
   exportsLoadExportByIdErrorHeader: 'Lataa vienti',
   exportsLoadExportByIdErrorMessage:
@@ -51,8 +51,8 @@ export const messages = {
   navBarFlexibleOffersSubMenuHeaderLabel: 'Joustavat palvelut',
   navBarFlexibleLinesMenuItemLabel: 'Kutsujoukkoliikenne',
   navBarNetworksMenuItemLabel: 'Verkko',
+  navBarBrandingsMenuItemLabel: 'Brändäykset',
   navBarRootLinkLogoAltText: 'Logo',
-  navBarRootLinkText: '',
   navBarStopPlacesMenuItemLabel: 'Kutsujoukkoliikenteen pysäkit',
   userMenuLogoutLinkText: 'Kirjaudu ulos',
   userMenuMenuItemTextEnglish: 'English',
@@ -60,6 +60,7 @@ export const messages = {
   userMenuMenuItemTextNorwegian: 'Norsk',
   userMenuMenuItemTextSwedish: 'Svenska',
   userMenuMenuItemTextFinnish: 'Suomi',
+  userMenuMenuItemTextBulgarian: 'Български',
   languagePickerAriaLabel: 'Valitse kieli',
   navBarDataProvider: 'Valitse tietojen tarjoaja',
   redirectTitle: 'Tallentamattomia muutoksia!',
@@ -72,6 +73,12 @@ export const messages = {
   exportCreatorDryRunFormLabel: 'Testiajo',
   exportCreatorDryRunFormLabelTooltip:
     'Ei vie palvelua matkahakuun, mutta luo NeTEx-tiedoston katsottavaksi',
+  exportCreatorGenerateServiceLinksFormLabel: 'Luo pysäkkigeometria',
+  exportCreatorGenerateServiceLinksFormLabelTooltip:
+    'Luo pysäkkejä yhdistävän geometrian',
+  exportCreatorIncludeDatedServiceJourneysFormLabel: 'Luo DatedServiceJourneys',
+  exportCreatorIncludeDatedServiceJourneysFormLabelTooltip:
+    'Luo DatedServiceJourneys',
   exportCreatorFromDateFormLabel: 'Alkaen päivämäärä *',
   exportCreatorHeader: 'Luo vienti',
   exportCreatorDescription:
@@ -109,6 +116,12 @@ export const messages = {
   viewerDryRunLabel: 'Testiajo',
   viewerDryRunNo: 'Ei',
   viewerDryRunYes: 'Kyllä',
+  viewerGenerateServiceLinksLabel: 'Luo pysäkkigeometria',
+  viewerGenerateServiceLinksNo: 'Ei',
+  viewerGenerateServiceLinksYes: 'Kyllä',
+  viewerIncludeDatedServiceJourneysLabel: 'Luo DatedServiceJourneys',
+  viewerIncludeDatedServiceJourneysNo: 'Ei',
+  viewerIncludeDatedServiceJourneysYes: 'Kyllä',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE:
     'Ei kelvollisia kutsuliikenteitä tietotilassa',
   failed: 'Epäonnistui',
@@ -149,11 +162,8 @@ export const messages = {
   linesCreateLineIconButtonLabel: 'Luo linja',
   linesFlexibleDataCell: 'Kutsu',
   bookingInfoHeader: 'Varaustiedot',
-  bookingInfoHelpText: `Booking information can be added to a flexible line, to a
-  stop point in a journey pattern, or to a service journey.
-  When you define booking information at several levels, stop points
-  take precendence over service journeys, which in turn takes precedence
-  over the flexible line.`,
+  bookingInfoHelpText:
+    'Kutsujoukkoliikenteelle voidaan lisätä varaustiedot pysäkeille (osana linjatietoa) tai liikennöintikalenterille. Jos määrittelet varaustiedot useammalle kuin yhdelle tasolle pysäkkikohtaiset varaustiedot ovat ensisijaisia.',
   bookingInfoAddButtonText: 'Lisää',
   bookingInfoRemoveButtonText: 'Poista',
   bookingInfoShowEditButtonText: 'Näytä / Muokkaa',
@@ -225,7 +235,7 @@ export const messages = {
   generalPrivateCodeFormGroupTitle: 'Yksityinen tunnus',
   generalPrivateCodeInputLabelTooltip:
     'Yksityinen tunnus on se, mikä tunnistaa linjan sisäisesti operaattorille',
-  generalPublicCodeFormGroupTitle: 'Julkinen tunnus *',
+  generalPublicCodeFormGroupTitle: 'Julkinen tunnus {requiredMarker}',
   generalPublicCodeInputLabelTooltip:
     'Julkinen tunnus on se, mikä tunnistaa linjan ulkoisesti matkustajille',
   generalTypeFormGroupTitle: 'Joustavan linjan tyyppi *',
@@ -234,21 +244,21 @@ export const messages = {
   generalDrawer: 'Alla on lyhyt kuvaus kustakin linjatyypistä.',
   drawerAria: 'Lue lisää erilaisista linjatyypeistä.',
   generalDrawerTitle: 'Kutsujoukkoliikenteen muodot',
-  flexibleLineType_fixed: 'Kiinteä',
-  flexibleLineType_flexibleAreasOnly: 'Vain kutsualueet',
-  flexibleLineType_mixedFlexible: 'Sekoitettu kutsuliikenne',
+  flexibleLineType_fixed: 'Pysäkkipohjainen',
+  flexibleLineType_flexibleAreasOnly: 'Kutsualueet',
+  flexibleLineType_mixedFlexible: 'Osin joustava',
   flexibleLineTypeDrawer_fixed:
-    'Kiinteä reitti kiinteisiin aikoihin, on varattava etukäteen linja-auton ajoa varten.',
+    'Kiinteä ja aikataulutettu reitti, joka on tilattava etukäteen.',
   flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
-    'Kiinteä reitti kiinteisiin aikoihin, mahdollisuudella varata nousu tai nousu pois pysähdyspaikoilta reitin ulkopuolelta.',
+    'Pysäkkipohjainen reitti pysäkkipohjaisiin aikoihin, mahdollisuudella varata nousu tai nousu pois pysähdyspaikoilta reitin ulkopuolelta.',
   flexibleLineTypeDrawer_fixedStopAreaWide:
     'Joustava reitti, joka on määritelty yhdellä tai useammalla alueella, joissa kullakin alueella voi olla erilaisia ennalta määriteltyjä pysäkkejä.',
   flexibleLineTypeDrawer_flexibleAreasOnly:
-    'Kyytiin nousu ja poistuminen mihin tahansa määriteltyyn alueeseen ja annettuihin aukioloaikoihin.',
+    'Liikennevälineeseen nousu ja poistuminen perustuen kutsualueeseen ja liikennöintiaikoihin.',
   flexibleLineTypeDrawer_hailAndRideSections:
     'Reitti on määritelty, mutta valituilla osuuksilla on mahdollista nousta tai poistua milloin tahansa.',
   flexibleLineTypeDrawer_mixedFlexible:
-    'Sekoitus ennalta määrättyjä pysäkkejä ja kutsualueita, joilla on aikavälejä ja kiinteitä aikoja nousulle ja poistumiseen.',
+    'Osin joustava, määrättyjä pysäkkejä ja kutsualueita yhdistelevä liikenne, joka sisältää aikataulutettuja pysäkkejä.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Lisää pysäkkiketju',
   journeyPatternsUnsavedChanges: 'Sinulla on tallentamattomia muutoksia.',
   journeyPatternsSaveAndContinue: 'Tallenna ja jatka',
@@ -271,7 +281,7 @@ export const messages = {
   stopPointsInfoFlexibleAreaOnly:
     'Tämäntyyppinen kutsulinja sallii vain yhden joustavan pysähdyspaikan, jossa kaikki nousut ja poistumiset tapahtuvat.',
   stopPointsInfoMixedFlexible:
-    'Lisää vähintään kahden kiinteän pysähtymisaseman tai kutsualueiden sekvenssi siinä järjestyksessä, jossa ne kuljetaan.',
+    'Lisää vähintään kaksi pysäkkiä pysäkkipohjaiselle kutsuliikenteelle siinä aikataulun mukaisessa järjestyksessä.',
   deleteStopPointDialogTitle: 'Poista pysäkkipiste',
   deleteStopPointDialogMessage:
     'Haluatko varmasti poistaa tämän pysäkkipisteen?',
@@ -346,9 +356,11 @@ export const messages = {
   editorJourneyPatternsTabLabel: 'Pysäkkiketju',
   newJourneyPatternModalTitle: 'Uusi pysäkkiketju',
   newJourneyPatternModalSubTitle: 'Anna nimi ja paina Luo',
+  newJourneyPatternModalUniqueName:
+    'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
   newJourneyPatternModalCancel: 'Peruuta',
   newJourneyPatternModalCreate: 'Luo',
-  newJourneyPatternModalLabel: 'Nimi',
+  newJourneyPatternModalLabel: 'Nimi *',
   newJourneyPatternModalPlaceholder: 'Esimerkiksi "Paikallisreitti"',
   editorLoadingLineText: 'Lataa linja',
   editorLoadingNetworkAndStopsText: 'Lataa verkko ja pysäkit',
@@ -392,14 +404,14 @@ export const messages = {
   tableDeleteMessage: 'Haluatko varmasti poistaa tämän pysäkin?',
   serviceJourneyAvailability: 'Saatavuus',
   serviceJourneyPassingTimes: 'Ohitusaikojen määrittäminen',
-  serviceJourneyBusinessHours: 'Aukioloajat',
+  serviceJourneyBusinessHours: 'Liikennöintiaijat',
   serviceJourneyMixedFlexiblePassingTimes:
     'Ohitusaikojen ja aikavälien määrittäminen',
   passingTimesInfo: 'Anna ohitusaika eri pysäkeille.',
   passingTimesInfoFlexibleAreasOnly:
     'Anna palveluajat kutsujoukkoliikennepalvelulle.',
   passingTimesInfoMixedFlexible:
-    'Anna ohitusaikoja kiinteille pysäkeille ja aikavälejä kutsualueille.',
+    'Anna ohitus- ja liikennöintiaikoja pysäkkipohjaisille kutsuliikennealueille.',
   serviceJourneyBooking: 'Varaus',
   generalName: 'Nimi *',
   nameIsRequired: 'Nimi vaaditaan.',
@@ -460,6 +472,34 @@ export const messages = {
   networksNameTableHeaderLabel: 'Nimi',
   networksNoNetworksFoundText: 'Ei verkkoja löytynyt',
   networksPrivateCodeTableHeaderLabel: 'Yksityinen tunnus',
+  branding: 'brändi',
+  brandingsHeaderText: 'Brändit',
+  brandingsLoadingBrandingsText: 'Ladataan brändejä...',
+  brandingsNameTableHeaderLabel: 'Nimi',
+  brandingsNoBrandingsFoundText: 'Yhtään brändiä ei löytynyt',
+  brandingsShortNameTableHeaderLabel: 'Lyhyt nimi',
+  brandingsDescriptionTableHeaderLabel: 'Kuvaus',
+  brandingsUrlTableHeaderLabel: 'URL',
+  brandingsImageUrlTableHeaderLabel: 'Kuvan URL',
+  editorCreateBrandingHeaderText: 'Luo brändi',
+  editorBrandingDescription:
+    'Brändejä voidaan käyttää oman brändin lisäämiseen linjoille ja verkoille.',
+  editorBrandingNameLabelText: 'Nimi *',
+  editorBrandingShortNameLabelText: 'Lyhyt nimi',
+  editorBrandingDescriptionLabelText: 'Kuvaus',
+  editorBrandingUrlLabelText: 'URL',
+  editorBrandingImageUrlLabelText: 'Kuvan URL',
+  editorBrandingValidationName: 'Nimi on pakollinen',
+  editorDeleteBrandingConfirmDialogTitle: 'Poista brändi',
+  editorDeleteBrandingConfirmDialogMessage:
+    'Oletko varma, että haluat poistaa tämän brändin?',
+  editorEditBrandingHeaderText: 'Muokkaa brändiä',
+  editorDeleteBrandingConfirmDialogCancelText: 'Ei',
+  editorDeleteBrandingConfirmDialogConfirmText: 'Kyllä',
+  editorDeleteBrandingConfirmationDialogTitle: 'Poista brändi',
+  editorDeleteBrandingConfirmationDialogMessage:
+    'Oletko varma, että haluat poistaa tämän brändin?',
+  brandingsDropdownLabelText: 'Brändi',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Luo joustava pysäkki',
   stopPlaceText: 'Joustava pysäkki',
   stopPlace: 'Joustava pysäkki *',
@@ -498,7 +538,7 @@ export const messages = {
   stopPlaceAreaLabelPrefix: 'Alue',
   stopPlaceAddAreaButtonLabel: 'Lisää alue',
   stopPlaceRemoveAreaButtonLabel: 'Poista alue',
-  passingTimesTypeFixed: 'Kiinteä',
+  passingTimesTypeFixed: 'Pysäkkipohjainen',
   passingTimesTypeFlexible: 'Joustava',
   passingTimesArrivalTime: 'Saapumisaika',
   passingTimesDepartureTime: 'Lähtöaika',
@@ -538,6 +578,7 @@ export const messages = {
   tram: 'Raitiovaunu',
   water: 'Vesi',
   taxi: 'Taksi',
+  snowAndIce: 'Lumi ja jää',
   domesticFlight: 'Kotimaan lento',
   helicopterService: 'Helikopteripalvelu',
   internationalFlight: 'Kansainvälinen lento',
@@ -575,6 +616,7 @@ export const messages = {
   charterTaxi: 'Taksi',
   communalTaxi: 'Reittitaksi',
   waterTaxi: 'Vesitaksi',
+  snowCoach: 'Telaketjuajoneuvo',
   timeUnitPickerYearsLabel: 'Vuodet',
   timeUnitPickerMonthsLabel: 'Kuukaudet',
   timeUnitPickerDaysLabel: 'Päivät',
@@ -657,4 +699,21 @@ export const messages = {
   mapLoadingStopsDataText: 'Ladataan pysäkit...',
   locateStopPoint: 'Näytä',
   locateStopPointTooltip: 'Näytä kartalla',
+  dropdownNoMatchesText: 'Ei valintoja',
+  exportsDownloadUnsupportedBrowserTitle: 'Tätä selainta ei tueta',
+  exportsDownloadUnsupportedBrowserMessage:
+    'Käyttämäsi selain ei tue tiedostojen lataamista.',
+  exportsDownloadErrorTitle: 'Lataus epäonnistui',
+  exportsDownloadErrorMessage:
+    'Latauksen aikana tapahtui odottamaton virhe. Yritä uudelleen.',
+  selectAll: 'Valitse kaikki',
+  clearAll: 'Poista kaikki valinnat',
+  clearSelected: 'Poista valinta',
+  copyJourneyPatternDialogTitle: 'Kopioi pysäkkiketju',
+  copyJourneyPatternDialogNameTemplateLabel: 'Nimi *',
+  copyJourneyPatternDialogCancelButtonText: 'Peruta',
+  copyJourneyPatternDialogSaveButtonText: 'Luo kopio',
+  copyInstance: 'kopio',
+  journeyPatternDuplicateNameValidationError:
+    'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
 };

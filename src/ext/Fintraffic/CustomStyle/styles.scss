@@ -1,5 +1,5 @@
-@import '@fintraffic/fds-coreui-css/dist/fonts-public-sans';
-@import '@fintraffic/fds-coreui-css/dist/tokens';
+@use '@fintraffic/fds-coreui-css/dist/fonts-public-sans';
+@use '@fintraffic/fds-coreui-css/dist/tokens' as *;
 
 body {
   font-family: 'Public Sans';
@@ -428,7 +428,7 @@ body {
 }
 
 .eds-dropdown--multiselect .eds-input-group__label {
-  top: -2.75rem;
+  //top: -2.75rem;
 }
 
 .eds-dropdown--multiselect.eds-form-control-wrapper--is-filled
@@ -508,10 +508,15 @@ body {
   letter-spacing: var(--fds-typography-ui-label-letter-spacing, 0px);
   line-height: var(--fds-typography-ui-label-line-height, 22px);
   height: 46px;
+  text-wrap: nowrap;
 }
 
 .eds-feedback-text__text {
   color: var(--fds-color-text-600);
+}
+
+.modal-content > .eds-feedback-text {
+  margin-top: -2rem;
 }
 
 .eds-form-control-wrapper--negative:focus-within {
@@ -631,13 +636,22 @@ section .notices {
 .service-journey-editor
   .service-journey-editor-action-chips
   .service-journey-editor-action-chip {
-  margin-right: 0;
-  margin-bottom: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .service-journey-editor .service-journey-editor-action-chips {
-  flex-direction: column;
-  margin-left: 0.5rem;
+  // flex-direction: column;
+  //margin-left: 0.5rem;
+}
+
+.journey-pattern-editor
+  .journey-pattern-editor-action-chips
+  .journey-pattern-editor-action-chip {
+  margin-right: 0.2rem;
+}
+
+.copy-dialog .copy-dialog-section {
+  margin-top: 3rem;
 }
 
 .eds-action-chip:focus {
@@ -700,6 +714,10 @@ section .notices {
 
 .eds-chip {
   color: var(--fds-color-brand-black);
+}
+
+.eds-chip--leading-icon .eds-icon:first-of-type {
+  margin-bottom: 0.3rem;
 }
 
 .eds-filter-chip__input:checked ~ .eds-chip {
@@ -905,7 +923,7 @@ section .notices {
   .stop-point-element
   .stop-point-key-info
   > :first-child {
-  margin: auto 1.6rem auto 0;
+  //margin: 0 1.65rem 0 0;
 }
 
 .eds-timepicker .eds-form-control-wrapper {
@@ -936,7 +954,7 @@ section .notices {
 }
 
 .stop-point-editor .stop-point .stop-point-element {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
 }
 
 @media only screen and (min-width: 1950px) {
@@ -1051,4 +1069,11 @@ section .notices {
 
 .stop-point-key-info .radio-buttons {
   margin-right: 1.25rem;
+}
+
+.branding-form .required-input {
+  margin-bottom: 3rem;
+}
+.branding-form .form-section {
+  margin-bottom: 3rem;
 }

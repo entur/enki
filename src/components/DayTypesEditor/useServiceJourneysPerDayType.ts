@@ -1,4 +1,4 @@
-import { useApolloClient } from '@apollo/client';
+import { useApolloClient } from '@apollo/client/react';
 import { GET_DAY_TYPES_BY_IDS } from 'api/uttu/queries';
 import DayType from 'model/DayType';
 import { useEffect, useState } from 'react';
@@ -20,15 +20,17 @@ export const useServiceJourneysPerDayType = (dayTypes: DayType[]) => {
         variables: { ids: dayTypes.map((dt) => dt.id) },
       });
 
-      setServiceJourneysPerDayType((current) =>
-        data.dayTypesByIds.reduce(
-          (prev, curr) => {
-            prev[curr.id!] = curr.numberOfServiceJourneys!;
-            return prev;
-          },
-          { ...current },
-        ),
-      );
+      if (data) {
+        setServiceJourneysPerDayType((current) =>
+          data.dayTypesByIds.reduce(
+            (prev, curr) => {
+              prev[curr.id!] = curr.numberOfServiceJourneys!;
+              return prev;
+            },
+            { ...current },
+          ),
+        );
+      }
     };
 
     fetchDayTypes();

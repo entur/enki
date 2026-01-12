@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { SecondaryButton } from '@entur/button';
 import { MultiSelect } from '@entur/dropdown';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
@@ -55,6 +55,11 @@ export const DayTypesEditor = ({
               value: dt.id!,
             })) || []
           }
+          labelSelectAll={formatMessage({ id: 'selectAll' })}
+          labelClearAllItems={formatMessage({ id: 'clearAll' })}
+          noMatchesText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
           onChange={(items: any) => {
             const selectedIds = items?.map((item: any) => item.value);
             onChange(

@@ -2,6 +2,7 @@
   margin: auto 0 auto auto;
   padding: 0 0.5rem;
   min-width: fit-content;
+  white-space: nowrap;
 
   svg {
     margin-right: 0;
@@ -13,4 +14,5 @@
   margin: 0;
   min-width: fit-content;
   width: fit-content;
+  white-space: nowrap;
 }
