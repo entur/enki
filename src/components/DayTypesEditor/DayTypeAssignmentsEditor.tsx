@@ -15,7 +15,7 @@ import OperatingPeriod from 'model/OperatingPeriod';
 import { useIntl } from 'react-intl';
 import { getCurrentDate, calendarDateToISO } from '../../utils/dates';
 import './styles.scss';
-import { parseAbsoluteToLocal } from '@internationalized/date';
+import { parseDate } from '@internationalized/date';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
@@ -49,7 +49,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
   };
 
   const isNotBefore = (toDate: string, fromDate: string): boolean =>
-    parseAbsoluteToLocal(toDate).compare(parseAbsoluteToLocal(fromDate)) > -1;
+    parseDate(toDate).compare(parseDate(fromDate)) >= 0;
 
   if (dayTypeAssignments.length === 0) addNewDayTypeAssignment();
 

@@ -14,6 +14,7 @@ import {
   Time,
   CalendarDateTime,
   parseDate,
+  getDayOfWeek,
 } from '@internationalized/date';
 import { getCurrentDateTime } from 'utils/dates';
 
@@ -505,8 +506,10 @@ export const validateDayType = (dayType: DayType) => {
     let from = parseDate(dta.operatingPeriod.fromDate);
     const to = parseDate(dta.operatingPeriod.toDate);
 
-    while (to.compare(from) < 1) {
-      if (daysOfWeek.includes(from.day)) {
+    // Loop while from <= to
+    while (from.compare(to) <= 0) {
+      // getDayOfWeek with 'en-US' locale returns Sunday=0, matching WEEKDAYS array
+      if (daysOfWeek.includes(getDayOfWeek(from, 'en-US'))) {
         return true;
       }
       from = from.add({ days: 1 });
