@@ -7,8 +7,9 @@ interface FlagIconProps {
 }
 
 const FlagIcon: React.FC<FlagIconProps> = ({ locale, className }) => {
-  const [IconComponent, setIconComponent] =
-    useState<React.ComponentType | null>(null);
+  const [IconComponent, setIconComponent] = useState<React.ComponentType<{
+    className?: string;
+  }> | null>(null);
 
   useEffect(() => {
     const loadIcon = async () => {
