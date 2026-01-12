@@ -295,13 +295,16 @@ export const getStopPointLocationSequenceWithRouteGeometry = (
     }
     const serviceLinkRef = getServiceLinkRef(point.quayRef, nextPoint.quayRef);
     const coordinates = serviceLinksIndex[serviceLinkRef];
-    coordinates.forEach((location, i) => {
-      const reversedCoordinatesPair = location.slice().reverse() as [
-        number,
-        number,
-      ];
-      stopPointLocationSequence.push(reversedCoordinatesPair);
-    });
+
+    if (coordinates) {
+      coordinates.forEach((location) => {
+        const reversedCoordinatesPair = location.slice().reverse() as [
+          number,
+          number,
+        ];
+        stopPointLocationSequence.push(reversedCoordinatesPair);
+      });
+    }
   });
 
   return stopPointLocationSequence;

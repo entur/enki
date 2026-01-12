@@ -12,8 +12,9 @@ To run for development, simply do:
 npm install
 npm start
 ```
+See http://localhost:3001/providers or http://localhost:3001/lines for providers and lines.
 
-Note: The app uses Node version 22 (LTS).
+Note: The app uses Node version 24 (LTS).
 
 To run together with a local instance of [Uttu](https://github.com/entur/uttu) on port 11701, add the following to `.env.development.local`.
 
@@ -26,7 +27,10 @@ REACT_APP_UTTU_API_URL=http://localhost:11701/services/flexible-lines
 Configuration is bootstrapped from `/bootstrap.json`, when the app loads. You should add your environment-specific
 config to the deployment, along with the built static files (i.e. in the `build/` folder).
 
-For local development, add a `bootstrap.json` file to the `public/` folder.
+For local development, add a `bootstrap.json` file to the `public/` folder, e.g.:
+```
+$ cp .github/environments/local.json public/bootstrap.json
+```
 
 See `src/config/ConfigContext.ts` for the shape of the configuration.
 

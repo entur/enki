@@ -1,7 +1,0 @@
-{
-  "projects": {
-    "dev": "ent-enki-dev",
-    "test": "ent-enki-tst",
-    "prod": "ent-enki-prd"
-  }
-}

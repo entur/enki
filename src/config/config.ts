@@ -120,6 +120,10 @@ export interface Config {
    */
   disableGenerateServiceLinksCheckbox?: boolean;
 
+  exportIncludeDatedServiceJourneysDefault?: boolean;
+
+  disableIncludeDatedServiceJourneysCheckbox?: false;
+
   /**
    * Supported line modes
    */
@@ -139,10 +143,16 @@ export interface Config {
    * Provide a way to define custom map provider's details, for example the tile layer or map center/zoom
    */
   mapConfig?: MapConfig;
+
+  /**
+   * Enable line migration feature for moving lines between providers
+   */
+  enableLineMigration?: boolean;
 }
 
 export interface MapConfig {
-  tileLayer?: TileLayerConfig;
+  tileLayers: TileLayer[];
+  defaultTileLayer: string;
   center?: [number, number];
   zoom?: number;
 }
@@ -151,4 +161,16 @@ export interface TileLayerConfig {
   name: string;
   attribution: string;
   url: string;
+}
+/**
+ * Represents a map tile layer configuration.
+ */
+export interface TileLayer {
+  name: string;
+  attribution?: string;
+  url?: string;
+  maxZoom?: number;
+  component?: boolean;
+  componentName?: string;
+  tms?: boolean;
 }

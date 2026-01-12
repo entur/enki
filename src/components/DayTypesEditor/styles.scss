@@ -1,4 +1,4 @@
-@import '@entur/tokens/dist/styles.scss';
+@use '@entur/tokens/dist/styles.scss' as *;
 
 .day-types-modal_new-day-type-button {
   padding: $space-large;

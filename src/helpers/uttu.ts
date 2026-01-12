@@ -1,4 +1,4 @@
-import { isApolloError } from '@apollo/client';
+import { CombinedGraphQLErrors } from '@apollo/client';
 import { sentryCaptureException } from 'store/store';
 import { IntlShape } from 'react-intl';
 import messages, {
@@ -36,8 +36,8 @@ export const getStyledUttuError = (
 export const getInternationalizedUttuError = (intl: IntlShape, e: Error) => {
   let error;
 
-  if (isApolloError(e)) {
-    error = e.graphQLErrors[0];
+  if (CombinedGraphQLErrors.is(e)) {
+    error = e.errors[0];
   } else {
     error = (e as UttuError).response?.errors?.[0];
   }

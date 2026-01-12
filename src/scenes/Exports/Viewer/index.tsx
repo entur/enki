@@ -103,6 +103,20 @@ const ExportsViewer = () => {
                 }
               />
               <ExportItem
+                label={formatMessage({
+                  id: 'viewerIncludeDatedServiceJourneysLabel',
+                })}
+                value={
+                  theExport?.includeDatedServiceJourneys
+                    ? formatMessage({
+                        id: 'viewerIncludeDatedServiceJourneysYes',
+                      })
+                    : formatMessage({
+                        id: 'viewerIncludeDatedServiceJourneysNo',
+                      })
+                }
+              />
+              <ExportItem
                 label={formatMessage({ id: 'viewerStatusLabel' })}
                 value={
                   <div className="export-status">

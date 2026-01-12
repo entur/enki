@@ -1,6 +1,6 @@
 import StopPoint from '../../../model/StopPoint';
 import { Centroid } from '../../../api';
-import { Reducer, useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { JourneyPatternsMapState, StopPointLocation } from '../types';
 
 /**
@@ -17,7 +17,8 @@ export const useMapState = (
   isRouteGeometryEnabled: boolean,
 ) => {
   const [mapState, setMapState] = useReducer<
-    Reducer<JourneyPatternsMapState, Partial<JourneyPatternsMapState>>
+    JourneyPatternsMapState,
+    [Partial<JourneyPatternsMapState>]
   >(
     (
       state: JourneyPatternsMapState,

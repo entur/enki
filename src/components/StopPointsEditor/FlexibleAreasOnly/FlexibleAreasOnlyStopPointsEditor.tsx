@@ -21,21 +21,27 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
 
   const onStopPointUpdate = useCallback(
     (updatedStopPoint: StopPoint) => {
+      const [firstPoint, secondPoint] = pointsInSequence;
       onPointsInSequenceChange([
         {
-          ...updatedStopPoint,
+          ...firstPoint,
+          flexibleStopPlaceRef: updatedStopPoint.flexibleStopPlaceRef,
+          destinationDisplay: updatedStopPoint.destinationDisplay,
+          bookingArrangement: updatedStopPoint.bookingArrangement,
           forAlighting: false,
           forBoarding: true,
         },
         {
-          ...updatedStopPoint,
+          ...secondPoint,
+          flexibleStopPlaceRef: updatedStopPoint.flexibleStopPlaceRef,
+          bookingArrangement: updatedStopPoint.bookingArrangement,
           forAlighting: true,
           forBoarding: false,
           destinationDisplay: undefined,
         },
       ]);
     },
-    [onPointsInSequenceChange],
+    [onPointsInSequenceChange, pointsInSequence],
   );
 
   return (

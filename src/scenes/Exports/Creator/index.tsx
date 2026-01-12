@@ -28,7 +28,10 @@ const ExportsCreator = () => {
   const [isSaving, setSaving] = useState<boolean>(false);
   const config = useConfig();
   const [theExport, setTheExport] = useState<Export>(
-    newExport(config.exportGenerateServiceLinksDefault),
+    newExport(
+      config.exportGenerateServiceLinksDefault,
+      config.exportIncludeDatedServiceJourneysDefault,
+    ),
   );
   const { hideExportDryRun } = useConfig();
 
@@ -135,6 +138,32 @@ const ExportsCreator = () => {
               placement="right"
               content={formatMessage({
                 id: 'exportCreatorGenerateServiceLinksFormLabelTooltip',
+              })}
+            >
+              <span className="question-icon">
+                <QuestionIcon />
+              </span>
+            </Tooltip>
+          </div>
+        </>
+        <>
+          <div className="export-include-dated-service-journeys">
+            <Checkbox
+              value="1"
+              disabled={config.disableIncludeDatedServiceJourneysCheckbox}
+              checked={theExport.includeDatedServiceJourneys}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onFieldChange('includeDatedServiceJourneys', e.target.checked)
+              }
+            >
+              {formatMessage({
+                id: 'exportCreatorIncludeDatedServiceJourneysFormLabel',
+              })}
+            </Checkbox>
+            <Tooltip
+              placement="right"
+              content={formatMessage({
+                id: 'exportCreatorIncludeDatedServiceJourneysFormLabelTooltip',
               })}
             >
               <span className="question-icon">

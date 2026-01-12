@@ -11,6 +11,7 @@ it('returns true when valid', () => {
       name: 'Test export',
       dryRun: true,
       generateServiceLinks: true,
+      includeDatedServiceJourneys: false,
     }),
   ).toBe(true);
 });

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Provider from '../model/Provider';
 import { UttuQuery } from '../api';
 import { getUserContextQuery } from '../api/uttu/queries';
+import { ACTIVE_PROVIDER, ACTIVE_MAP_BASELAYER } from '../actions/constants';
 
 export interface UserContext {
   preferredName: string;
@@ -9,14 +10,16 @@ export interface UserContext {
   providers: Provider[];
   activeProviderCode?: string | null;
   loaded: boolean;
+  activeMapBaseLayer?: string | null;
 }
 
 const initialState: UserContext = {
   isAdmin: false,
   preferredName: '',
   providers: [],
-  activeProviderCode: window.localStorage.getItem('ACTIVE_PROVIDER'),
+  activeProviderCode: window.localStorage.getItem(ACTIVE_PROVIDER),
   loaded: false,
+  activeMapBaseLayer: window.localStorage.getItem(ACTIVE_MAP_BASELAYER),
 };
 
 export const userContextSlice = createSlice({
@@ -27,6 +30,19 @@ export const userContextSlice = createSlice({
       return {
         ...state,
         activeProviderCode: action.payload,
+      };
+    },
+    /**
+     * Updates the active base map layer in the Redux state.
+     *
+     * @param state - The current Redux state.
+     * @param action - Contains the new base layer name as `payload`.
+     * @returns A new state object with the updated `activeMapBaseLayer` value.
+     */
+    setActiveMapBaseLayer: (state, action) => {
+      return {
+        ...state,
+        activeMapBaseLayer: action.payload,
       };
     },
   },
@@ -42,7 +58,8 @@ export const userContextSlice = createSlice({
 
 export default userContextSlice.reducer;
 
-export const { setActiveProviderCode } = userContextSlice.actions;
+export const { setActiveProviderCode, setActiveMapBaseLayer } =
+  userContextSlice.actions;
 
 export interface FetchUserContextArgs {
   uttuApiUrl?: string;

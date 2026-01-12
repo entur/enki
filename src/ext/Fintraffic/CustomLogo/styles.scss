@@ -1,4 +1,4 @@
-@import '@fintraffic/fds-coreui-css/dist/tokens';
+@use '@fintraffic/fds-coreui-css/dist/tokens' as *;
 
 .custom-logo-wrapper {
   cursor: pointer;

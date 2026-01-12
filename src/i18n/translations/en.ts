@@ -76,6 +76,10 @@ export const messages: MessagesKey = {
   exportCreatorGenerateServiceLinksFormLabel: 'Generate service links',
   exportCreatorGenerateServiceLinksFormLabelTooltip:
     'Will generate service links geometry between stops',
+  exportCreatorIncludeDatedServiceJourneysFormLabel:
+    'Generate DatedServiceJourneys',
+  exportCreatorIncludeDatedServiceJourneysFormLabelTooltip:
+    'Will generate DatedServiceJourneys',
   exportCreatorFromDateFormLabel: 'From date *',
   exportCreatorHeader: 'Create export',
   exportCreatorDescription:
@@ -116,6 +120,9 @@ export const messages: MessagesKey = {
   viewerGenerateServiceLinksLabel: 'Generate service links',
   viewerGenerateServiceLinksNo: 'No',
   viewerGenerateServiceLinksYes: 'Yes',
+  viewerIncludeDatedServiceJourneysLabel: 'Generate DatedServiceJourneys',
+  viewerIncludeDatedServiceJourneysNo: 'No',
+  viewerIncludeDatedServiceJourneysYes: 'Yes',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE:
     'No valid flexible lines in data space',
   failed: 'Failed',
@@ -569,6 +576,7 @@ export const messages: MessagesKey = {
   tram: 'Tram',
   water: 'Water',
   taxi: 'Taxi',
+  snowAndIce: 'Snow and ice',
   domesticFlight: 'Domestic flight',
   helicopterService: 'Helicopter service',
   internationalFlight: 'International flight',
@@ -606,6 +614,7 @@ export const messages: MessagesKey = {
   charterTaxi: 'Taxi',
   communalTaxi: 'Taxi on regular route',
   waterTaxi: 'Water taxi',
+  snowCoach: 'Snow coach',
   timeUnitPickerYearsLabel: 'Years',
   timeUnitPickerMonthsLabel: 'Months',
   timeUnitPickerDaysLabel: 'Days',

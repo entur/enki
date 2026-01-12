@@ -1,4 +1,4 @@
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider } from '@apollo/client/testing/react';
 import '@testing-library/jest-dom';
 import { STOP_PLACE_BY_QUAY_REF_QUERY } from 'api/uttu/queries';
 import {

@@ -1,6 +1,6 @@
-import { MessagesKey } from '../translationKeys';
+import { MessagesKey } from 'i18n/translationKeys';
 
-export const messages = {
+export const messages: MessagesKey = {
   appLoadingMessage: 'Ladataan tarjoajia ja organisaatioita...',
   exportsLoadExportByIdErrorHeader: 'Lataa vienti',
   exportsLoadExportByIdErrorMessage:
@@ -75,6 +75,9 @@ export const messages = {
   exportCreatorGenerateServiceLinksFormLabel: 'Luo pysäkkigeometria',
   exportCreatorGenerateServiceLinksFormLabelTooltip:
     'Luo pysäkkejä yhdistävän geometrian',
+  exportCreatorIncludeDatedServiceJourneysFormLabel: 'Luo DatedServiceJourneys',
+  exportCreatorIncludeDatedServiceJourneysFormLabelTooltip:
+    'Luo DatedServiceJourneys',
   exportCreatorFromDateFormLabel: 'Alkaen päivämäärä *',
   exportCreatorHeader: 'Luo vienti',
   exportCreatorDescription:
@@ -115,6 +118,9 @@ export const messages = {
   viewerGenerateServiceLinksLabel: 'Luo pysäkkigeometria',
   viewerGenerateServiceLinksNo: 'Ei',
   viewerGenerateServiceLinksYes: 'Kyllä',
+  viewerIncludeDatedServiceJourneysLabel: 'Luo DatedServiceJourneys',
+  viewerIncludeDatedServiceJourneysNo: 'Ei',
+  viewerIncludeDatedServiceJourneysYes: 'Kyllä',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE:
     'Ei kelvollisia kutsuliikenteitä tietotilassa',
   failed: 'Epäonnistui',
@@ -571,6 +577,7 @@ export const messages = {
   tram: 'Raitiovaunu',
   water: 'Vesi',
   taxi: 'Taksi',
+  snowAndIce: 'Lumi ja jää',
   domesticFlight: 'Kotimaan lento',
   helicopterService: 'Helikopteripalvelu',
   internationalFlight: 'Kansainvälinen lento',
@@ -608,6 +615,7 @@ export const messages = {
   charterTaxi: 'Taksi',
   communalTaxi: 'Reittitaksi',
   waterTaxi: 'Vesitaksi',
+  snowCoach: 'Telaketjuajoneuvo',
   timeUnitPickerYearsLabel: 'Vuodet',
   timeUnitPickerMonthsLabel: 'Kuukaudet',
   timeUnitPickerDaysLabel: 'Päivät',

@@ -1,4 +1,6 @@
-@import '@entur/tokens/dist/styles.scss';
+@use '@entur/tokens/dist/styles.scss' as *;
+@use './base/base.scss' as *;
+
 @import '@entur/typography/dist/styles.css';
 @import '@entur/dropdown/dist/styles.css';
 @import '@entur/a11y/dist/styles.css';
@@ -14,7 +16,6 @@
 @import '@entur/loader/dist/styles.css';
 @import '@entur/modal/dist/styles.css';
 @import '@entur/grid/dist/styles.css';
-@import './base/base.scss';
 
 .form-section {
   margin-bottom: 30px;

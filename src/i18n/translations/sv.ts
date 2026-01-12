@@ -1,4 +1,6 @@
-export const messages = {
+import { MessagesKey } from 'i18n/translationKeys';
+
+export const messages: MessagesKey = {
   appLoadingMessage: 'Läser in dataleverantörer och organisationer...',
   exportsLoadExportByIdErrorHeader: 'Hämta export',
   exportsLoadExportByIdErrorMessage:
@@ -77,6 +79,10 @@ export const messages = {
   exportCreatorGenerateServiceLinksFormLabel: 'Generera service links',
   exportCreatorGenerateServiceLinksFormLabelTooltip:
     'Genererar service links geometri mallan hållplatser',
+  exportCreatorIncludeDatedServiceJourneysFormLabel:
+    'Generera DatedServiceJourneys',
+  exportCreatorIncludeDatedServiceJourneysFormLabelTooltip:
+    'Genererar DatedServiceJourneys',
   exportCreatorFromDateFormLabel: 'Från datum *',
   exportCreatorHeader: 'Skapa export',
   exportCreatorDescription: 'Exportera data till resesökmotor',
@@ -115,6 +121,9 @@ export const messages = {
   viewerGenerateServiceLinksLabel: 'Generera service links',
   viewerGenerateServiceLinksNo: 'Nej',
   viewerGenerateServiceLinksYes: 'Ja',
+  viewerIncludeDatedServiceJourneysLabel: 'Generera DatedServiceJourneys',
+  viewerIncludeDatedServiceJourneysNo: 'Nej',
+  viewerIncludeDatedServiceJourneysYes: 'Ja',
   NO_VALID_FLEXIBLE_LINES_IN_DATA_SPACE: 'Inga giltiga linjer i data',
   failed: 'Misslyckades',
   in_progress: 'Pågår',
@@ -346,11 +355,11 @@ export const messages = {
   editorJourneyPatternsTabLabel: 'Journey patterns',
   newJourneyPatternModalTitle: 'Nytt journey pattern',
   newJourneyPatternModalSubTitle: 'Fyll i namn och tryck därefter på Skapa',
-  newJourneyPatternModalUniqueName: 'Journey pattern måste ha ett unikt namn',
   newJourneyPatternModalCancel: 'Avbryt',
   newJourneyPatternModalCreate: 'Skapa',
   newJourneyPatternModalLabel: 'Namn *',
   newJourneyPatternModalPlaceholder: 'Ex. "Lokal linje"',
+  newJourneyPatternModalUniqueName: 'Journey pattern måste ha ett unikt namn',
   editorLoadingLineText: 'Läser in linje',
   editorLoadingNetworkAndStopsText: 'Läser in nätverk och hållplatser',
   editorSaveButtonText: 'Spara',
@@ -565,6 +574,7 @@ export const messages = {
   tram: 'Spårvagn',
   water: 'Vattentransport',
   taxi: 'Taxi',
+  snowAndIce: 'Snö och is',
   domesticFlight: 'Inrikesflyg',
   helicopterService: 'Helikopter',
   internationalFlight: 'Internationellt flyg',
@@ -602,6 +612,7 @@ export const messages = {
   charterTaxi: 'Taxi',
   communalTaxi: 'Planerad taxi',
   waterTaxi: 'Båttaxi',
+  snowCoach: 'Bandfordon',
   timeUnitPickerYearsLabel: 'År',
   timeUnitPickerMonthsLabel: 'Månader',
   timeUnitPickerDaysLabel: 'Dagar',
@@ -698,4 +709,6 @@ export const messages = {
   copyInstance: 'en kopia',
   journeyPatternDuplicateNameValidationError:
     'Journey pattern måste ha ett unikt namn',
+  landingPageNotLoggedIn: 'Inte inloggad',
+  landingPageLoginButtonText: 'Logga in',
 };

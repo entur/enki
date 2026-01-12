@@ -3,7 +3,7 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import usePristine from 'hooks/usePristine';
 import { MessagesKey } from 'i18n/translationKeys';
 import StopPoint from 'model/StopPoint';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 
 type Props = {
@@ -29,7 +29,7 @@ export const useOnFrontTextChange = (
 };
 
 export const FrontTextTextField = ({
-  value,
+  value = '',
   onChange,
   disabled = false,
   frontTextError,
