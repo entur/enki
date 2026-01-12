@@ -592,6 +592,7 @@ export const messages = {
   weekdaysSunday: 'Неделя',
   userMenuMenuItemTextFinnish: 'Фински',
   userMenuMenuItemTextSwedish: 'Шведски',
+  userMenuMenuItemTextBulgarian: 'Български',
   taxi: 'Такси',
   snowAndIce: 'Сняг и лед',
   charterTaxi: 'Такси',

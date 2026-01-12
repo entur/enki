@@ -63,6 +63,7 @@ export const messages: MessagesKey = {
   userMenuMenuItemTextNorwegian: 'Norsk',
   userMenuMenuItemTextSwedish: 'Svenska',
   userMenuMenuItemTextFinnish: 'Suomi',
+  userMenuMenuItemTextBulgarian: 'Български',
   languagePickerAriaLabel: 'Välj språk',
   navBarDataProvider: 'Välj dataleverantör',
   redirectTitle: 'Ändringar är inte sparade!',

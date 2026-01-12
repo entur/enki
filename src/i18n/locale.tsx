@@ -61,8 +61,8 @@ export const getLanguagePickerLocaleMessageKey = (
       return 'userMenuMenuItemTextNorwegian';
     case 'fi':
       return 'userMenuMenuItemTextFinnish';
-    /*case 'bg':
-      return 'userMenuMenuItemTextBulgarian';*/
+    case 'bg':
+      return 'userMenuMenuItemTextBulgarian';
     default:
       return 'userMenuMenuItemTextNorwegian';
   }
