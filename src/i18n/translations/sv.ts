@@ -709,6 +709,4 @@ export const messages: MessagesKey = {
   copyInstance: 'en kopia',
   journeyPatternDuplicateNameValidationError:
     'Journey pattern måste ha ett unikt namn',
-  landingPageNotLoggedIn: 'Inte inloggad',
-  landingPageLoginButtonText: 'Logga in',
 };
