@@ -316,6 +316,10 @@ export const messages = {
   editorGeneralTabLabel: 'Общи',
   stepperAbout: 'Общи',
   exportCreatorGenerateServiceLinksFormLabel: 'Генерирай връзки между услугите',
+  exportCreatorIncludeDatedServiceJourneysFormLabel:
+    'Генерирай DatedServiceJourneys',
+  exportCreatorIncludeDatedServiceJourneysFormLabelTooltip:
+    'Ще генерира DatedServiceJourneys',
   viewerGenerateServiceLinksLabel: 'Генерирай връзки между услугите',
   helicopterService: 'Хеликоптерна услуга',
   hideNonSelectedQuays: 'Скрий неизбрани платформи/сектори',
@@ -589,6 +593,7 @@ export const messages = {
   userMenuMenuItemTextFinnish: 'Фински',
   userMenuMenuItemTextSwedish: 'Шведски',
   taxi: 'Такси',
+  snowAndIce: 'Сняг и лед',
   charterTaxi: 'Такси',
   communalTaxi: 'Такси по фиксиран маршрут',
   telecabin: 'Кабинков лифт',
@@ -647,6 +652,7 @@ export const messages = {
     'беше успешно създадена и запазена. Можете да я прегледате или редактирате в списъка с специализирани линии . Не забравяйте да извършите извличане, включващо линията, за да стане видима при търсене на пътувания.',
   water: 'Воден',
   waterTaxi: 'Водно такси',
+  snowCoach: 'Снегоход',
   weekdaysWednesday: 'Сряда',
   dayTypeEditorWeekdays: 'Работни дни за наличност',
   exportCreatorGenerateServiceLinksFormLabelTooltip:
@@ -661,6 +667,9 @@ export const messages = {
   exportsDryRunYes: 'Да',
   viewerDryRunYes: 'Да',
   viewerGenerateServiceLinksYes: 'Да',
+  viewerIncludeDatedServiceJourneysLabel: 'Генерирай DatedServiceJourneys',
+  viewerIncludeDatedServiceJourneysNo: 'Не',
+  viewerIncludeDatedServiceJourneysYes: 'Да',
   editorDeleteConfirmationDialogConfirmButtonText: 'Да',
   dayTypeInUse: 'Да',
   tableDeleteConfirmDialogConfirmButtonText: 'Да',
