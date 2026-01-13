@@ -1,6 +1,6 @@
 import { SET_SAVED_CHANGES } from 'actions/constants';
 import { EditorActionTypes } from 'actions/editor';
-import { AnyAction } from 'redux';
+import { UnknownAction } from 'redux';
 
 const initialState: EditorState = {
   isSaved: true,
@@ -12,7 +12,7 @@ export type EditorState = {
 
 function editor(
   state: EditorState = initialState,
-  action: AnyAction,
+  action: UnknownAction,
 ): EditorState {
   switch (action.type) {
     case SET_SAVED_CHANGES:

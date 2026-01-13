@@ -1,16 +1,17 @@
 import { RECEIVE_ORGANISATIONS } from 'actions/constants';
+import { OrganisationsAction } from 'actions/organisations';
 import { Organisation } from 'model/Organisation';
-import { AnyAction } from 'redux';
+import { UnknownAction } from 'redux';
 
 export type OrganisationState = Organisation[] | null;
 
 const organisationsReducer = (
   state: OrganisationState = null,
-  action: AnyAction,
+  action: UnknownAction,
 ) => {
   switch (action.type) {
     case RECEIVE_ORGANISATIONS:
-      return [...action.organisations];
+      return [...(action as OrganisationsAction).organisations];
 
     default:
       return state;

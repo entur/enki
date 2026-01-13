@@ -8,16 +8,40 @@ import { Export, toPayload } from 'model/Export';
 import { IntlShape } from 'react-intl';
 import { RECEIVE_EXPORT, RECEIVE_EXPORTS, REQUEST_EXPORTS } from './constants';
 
-const requestExportsActionCreator = () => ({
+// Action type definitions
+export type RequestExportsAction = {
+  type: typeof REQUEST_EXPORTS;
+};
+
+export type ReceiveExportsAction = {
+  type: typeof RECEIVE_EXPORTS;
+  exports: Export[];
+};
+
+export type ReceiveExportAction = {
+  type: typeof RECEIVE_EXPORT;
+  export: Export;
+};
+
+export type ExportsAction =
+  | RequestExportsAction
+  | ReceiveExportsAction
+  | ReceiveExportAction;
+
+const requestExportsActionCreator = (): RequestExportsAction => ({
   type: REQUEST_EXPORTS,
 });
 
-const receiveExportsActionCreator = (exports: Export[]) => ({
+const receiveExportsActionCreator = (
+  exports: Export[],
+): ReceiveExportsAction => ({
   type: RECEIVE_EXPORTS,
   exports,
 });
 
-const receiveExportActionCreator = (receivedExport: Export) => ({
+const receiveExportActionCreator = (
+  receivedExport: Export,
+): ReceiveExportAction => ({
   type: RECEIVE_EXPORT,
   export: receivedExport,
 });

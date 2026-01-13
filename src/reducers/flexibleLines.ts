@@ -2,9 +2,12 @@ import {
   RECEIVE_FLEXIBLE_LINE,
   RECEIVE_FLEXIBLE_LINES,
 } from 'actions/constants';
-import { ReceiveFlexibleLineAction } from 'actions/flexibleLines';
+import {
+  ReceiveFlexibleLineAction,
+  ReceiveFlexibleLinesAction,
+} from 'actions/flexibleLines';
 import JourneyPattern from 'model/JourneyPattern';
-import { AnyAction } from 'redux';
+import { UnknownAction } from 'redux';
 import FlexibleLine from '../model/FlexibleLine';
 import { createUuid } from '../helpers/generators';
 
@@ -12,37 +15,37 @@ export type FlexibleLinesState = FlexibleLine[] | null;
 
 const flexibleLines = (
   lines: FlexibleLinesState = null,
-  action: AnyAction,
+  action: UnknownAction,
 ): FlexibleLinesState => {
   switch (action.type) {
     case RECEIVE_FLEXIBLE_LINES:
-      return action.lines;
+      return (action as ReceiveFlexibleLinesAction).lines;
 
-    case RECEIVE_FLEXIBLE_LINE:
+    case RECEIVE_FLEXIBLE_LINE: {
+      const typedAction = action as ReceiveFlexibleLineAction;
       const newJourneyPatterns: JourneyPattern[] =
-        (action as ReceiveFlexibleLineAction).line?.journeyPatterns?.map(
-          (jp) => ({
-            ...jp,
-            pointsInSequence: jp.pointsInSequence.map((pis) => ({
-              ...pis,
-              key: createUuid(),
-              flexibleStopPlaceRef: pis.flexibleStopPlace?.id,
-            })),
-          }),
-        ) ?? [];
+        typedAction.line?.journeyPatterns?.map((jp) => ({
+          ...jp,
+          pointsInSequence: jp.pointsInSequence.map((pis) => ({
+            ...pis,
+            key: createUuid(),
+            flexibleStopPlaceRef: pis.flexibleStopPlace?.id,
+          })),
+        })) ?? [];
 
       const newFlexibleLine: FlexibleLine = {
-        ...action.line,
-        networkRef: action.line.network?.id,
-        brandingRef: action.line.branding?.id,
+        ...typedAction.line,
+        networkRef: typedAction.line.network?.id,
+        brandingRef: typedAction.line.branding?.id,
         journeyPatterns: newJourneyPatterns,
       };
 
       return (
-        lines?.map((l) => (l.id === action.line.id ? newFlexibleLine : l)) ?? [
-          newFlexibleLine,
-        ]
+        lines?.map((l) =>
+          l.id === typedAction.line.id ? newFlexibleLine : l,
+        ) ?? [newFlexibleLine]
       );
+    }
 
     default:
       return lines;

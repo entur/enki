@@ -10,12 +10,29 @@ import { UttuError, getStyledUttuError } from 'helpers/uttu';
 import { Branding } from 'model/Branding';
 import { RECEIVE_BRANDING, RECEIVE_BRANDINGS } from './constants';
 
-const receiveBrandingsActionCreator = (brandings: Branding[]) => ({
+// Action type definitions
+export type ReceiveBrandingsAction = {
+  type: typeof RECEIVE_BRANDINGS;
+  brandings: Branding[];
+};
+
+export type ReceiveBrandingAction = {
+  type: typeof RECEIVE_BRANDING;
+  branding: Branding;
+};
+
+export type BrandingsAction = ReceiveBrandingsAction | ReceiveBrandingAction;
+
+const receiveBrandingsActionCreator = (
+  brandings: Branding[],
+): ReceiveBrandingsAction => ({
   type: RECEIVE_BRANDINGS,
   brandings,
 });
 
-const receiveBrandingActionCreator = (branding: Branding) => ({
+const receiveBrandingActionCreator = (
+  branding: Branding,
+): ReceiveBrandingAction => ({
   type: RECEIVE_BRANDING,
   branding,
 });

@@ -1,7 +1,11 @@
 import { SHOW_NOTIFICATION } from 'actions/constants';
-import { NotificationDuration, NotificationTypes } from 'actions/notification';
+import {
+  NotificationAction,
+  NotificationDuration,
+  NotificationTypes,
+} from 'actions/notification';
 import { createUuid } from 'helpers/generators';
-import { AnyAction } from 'redux';
+import { UnknownAction } from 'redux';
 
 export type Notification = {
   key?: string;
@@ -24,19 +28,21 @@ const defaultNotification: Notification = {
 
 const notificationReducer = (
   state: NotificationState = null,
-  action: AnyAction,
+  action: UnknownAction,
 ) => {
   switch (action.type) {
-    case SHOW_NOTIFICATION:
+    case SHOW_NOTIFICATION: {
+      const typedAction = action as NotificationAction;
       return {
         ...defaultNotification,
-        title: action.payload.title,
-        message: action.payload.message,
-        dismissAfter: action.payload.duration,
-        type: action.payload.type,
+        title: typedAction.payload.title,
+        message: typedAction.payload.message,
+        dismissAfter: typedAction.payload.duration,
+        type: typedAction.payload.type,
         key: createUuid(),
-        showModal: action.payload.showModal,
+        showModal: typedAction.payload.showModal,
       };
+    }
     default:
       return state;
   }

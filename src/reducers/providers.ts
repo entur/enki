@@ -2,8 +2,9 @@ import {
   FAILED_RECEIVING_PROVIDERS,
   RECEIVE_PROVIDERS,
 } from 'actions/constants';
+import { ReceiveProvidersAction } from 'actions/providers';
 import Provider from 'model/Provider';
-import { AnyAction } from 'redux';
+import { UnknownAction } from 'redux';
 
 export type ProvidersState = {
   providers: Provider[] | null;
@@ -20,13 +21,14 @@ export const initialState = {
 
 const providersReducer = (
   state: ProvidersState = initialState,
-  action: AnyAction,
+  action: UnknownAction,
 ): ProvidersState => {
   switch (action.type) {
     case RECEIVE_PROVIDERS: {
+      const typedAction = action as ReceiveProvidersAction;
       return {
         ...state,
-        providers: [...action.payload.providers],
+        providers: [...typedAction.payload.providers],
       };
     }
 

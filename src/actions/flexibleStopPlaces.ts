@@ -23,24 +23,51 @@ import {
   REQUEST_FLEXIBLE_STOP_PLACES,
 } from './constants';
 
-const requestFlexibleStopPlacesActionCreator = () => ({
-  type: REQUEST_FLEXIBLE_STOP_PLACES,
-});
+// Action type definitions
+export type RequestFlexibleStopPlacesAction = {
+  type: typeof REQUEST_FLEXIBLE_STOP_PLACES;
+};
+
+export type ReceiveFlexibleStopPlacesAction = {
+  type: typeof RECEIVE_FLEXIBLE_STOP_PLACES;
+  stopPlaces: FlexibleStopPlace[];
+};
+
+export type RequestFlexibleStopPlaceAction = {
+  type: typeof REQUEST_FLEXIBLE_STOP_PLACE;
+};
+
+export type ReceiveFlexibleStopPlaceAction = {
+  type: typeof RECEIVE_FLEXIBLE_STOP_PLACE;
+  stopPlace: FlexibleStopPlace;
+};
+
+export type FlexibleStopPlacesAction =
+  | RequestFlexibleStopPlacesAction
+  | ReceiveFlexibleStopPlacesAction
+  | RequestFlexibleStopPlaceAction
+  | ReceiveFlexibleStopPlaceAction;
+
+const requestFlexibleStopPlacesActionCreator =
+  (): RequestFlexibleStopPlacesAction => ({
+    type: REQUEST_FLEXIBLE_STOP_PLACES,
+  });
 
 const receiveFlexibleStopPlacesActionCreator = (
   stopPlaces: FlexibleStopPlace[],
-) => ({
+): ReceiveFlexibleStopPlacesAction => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACES,
   stopPlaces,
 });
 
-const requestFlexibleStopPlaceActionCreator = () => ({
-  type: REQUEST_FLEXIBLE_STOP_PLACE,
-});
+const requestFlexibleStopPlaceActionCreator =
+  (): RequestFlexibleStopPlaceAction => ({
+    type: REQUEST_FLEXIBLE_STOP_PLACE,
+  });
 
 const receiveFlexibleStopPlaceActionCreator = (
   stopPlace: FlexibleStopPlace,
-) => ({
+): ReceiveFlexibleStopPlaceAction => ({
   type: RECEIVE_FLEXIBLE_STOP_PLACE,
   stopPlace,
 });
