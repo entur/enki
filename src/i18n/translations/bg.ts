@@ -484,6 +484,7 @@ export const messages = {
     'Само на спирки в полигона',
   generalOperator: 'Оператор',
   linesOperatorTableHeader: 'Оператор',
+  linesBrandingTableHeader: 'Марка',
   generalOperatorFormGroupTitle: 'Оператор *',
   quayOrder: 'Подредба',
   serviceJourneyPassingTimes: 'Времена на преминаване',
