@@ -28,7 +28,8 @@ const Networks = () => {
   const [selectedNetwork, setSelectedNetwork] = useState<Network | undefined>(
     undefined,
   );
-  const { formatMessage } = useIntl();
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const activeProviderCode = useAppSelector(
     (state) => state.userContext.activeProviderCode,
   );
@@ -37,8 +38,8 @@ const Networks = () => {
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(loadNetworks());
-  }, [dispatch, activeProviderCode]);
+    dispatch(loadNetworks(intl));
+  }, [dispatch, activeProviderCode, intl]);
 
   const handleOnRowClick = useCallback(
     (id: string) => {
@@ -151,12 +152,12 @@ const Networks = () => {
                 <SuccessButton
                   key="yes"
                   onClick={() => {
-                    dispatch(deleteNetworkById(selectedNetwork?.id))
+                    dispatch(deleteNetworkById(selectedNetwork?.id, intl))
                       .then(() => {
                         setSelectedNetwork(undefined);
                         setShowDeleteDialogue(false);
                       })
-                      .then(() => dispatch(loadNetworks()));
+                      .then(() => dispatch(loadNetworks(intl)));
                   }}
                 >
                   {formatMessage({ id: 'yes' })}

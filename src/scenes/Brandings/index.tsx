@@ -27,7 +27,8 @@ const Brandings = () => {
   const [selectedBranding, setSelectedBranding] = useState<
     Branding | undefined
   >(undefined);
-  const { formatMessage } = useIntl();
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const activeProviderCode = useAppSelector(
     (state) => state.userContext.activeProviderCode,
   );
@@ -36,8 +37,8 @@ const Brandings = () => {
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(loadBrandings());
-  }, [dispatch, activeProviderCode]);
+    dispatch(loadBrandings(intl));
+  }, [dispatch, activeProviderCode, intl]);
 
   const handleOnRowClick = useCallback(
     (id: string) => {
@@ -148,12 +149,12 @@ const Brandings = () => {
                 <SuccessButton
                   key="yes"
                   onClick={() => {
-                    dispatch(deleteBrandingById(selectedBranding?.id))
+                    dispatch(deleteBrandingById(selectedBranding?.id, intl))
                       .then(() => {
                         setSelectedBranding(undefined);
                         setShowDeleteDialogue(false);
                       })
-                      .then(() => dispatch(loadBrandings()));
+                      .then(() => dispatch(loadBrandings(intl)));
                   }}
                 >
                   {formatMessage({ id: 'yes' })}

@@ -69,9 +69,11 @@ const NetworkEditor = () => {
 
   const dispatchLoadNetwork = useCallback(() => {
     if (params.id) {
-      dispatch(loadNetworkById(params.id)).catch(() => navigate('/networks'));
+      dispatch(loadNetworkById(params.id, intl)).catch(() =>
+        navigate('/networks'),
+      );
     }
-  }, [dispatch, params.id, history]);
+  }, [dispatch, params.id, intl, navigate]);
 
   useEffect(() => {
     dispatchLoadFlexibleLines();
@@ -87,8 +89,8 @@ const NetworkEditor = () => {
   const handleOnSaveClick = () => {
     if (network.name && network.authorityRef) {
       setSaving(true);
-      dispatch(saveNetwork(network))
-        .then(() => dispatch(loadNetworks()))
+      dispatch(saveNetwork(network, intl))
+        .then(() => dispatch(loadNetworks(intl)))
         .then(() => navigate('/networks'))
         .finally(() => setSaving(false));
     }
@@ -105,7 +107,9 @@ const NetworkEditor = () => {
   const handleDelete = () => {
     setDeleteDialogOpen(false);
     setDeleting(true);
-    dispatch(deleteNetworkById(network?.id)).then(() => navigate('/networks'));
+    dispatch(deleteNetworkById(network?.id, intl)).then(() =>
+      navigate('/networks'),
+    );
   };
 
   const authorities = filterAuthorities(organisations ?? []);
