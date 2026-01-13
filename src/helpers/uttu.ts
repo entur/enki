@@ -1,5 +1,4 @@
 import { CombinedGraphQLErrors } from '@apollo/client';
-import { sentryCaptureException } from 'store/store';
 import { IntlShape } from 'react-intl';
 import messages, {
   CombinedUttuCode,
@@ -50,14 +49,8 @@ export const getInternationalizedUttuError = (intl: IntlShape, e: Error) => {
 
     const errorMessage = messages[messageCode] ?? messages[UttuCode.UNKNOWN];
 
-    if (!messages[messageCode]) {
-      sentryCaptureException(e);
-    }
-
     return intl.formatMessage({ id: errorMessage });
   }
-
-  sentryCaptureException(e);
 
   return intl.formatMessage({ id: messages[UttuCode.UNKNOWN] });
 };

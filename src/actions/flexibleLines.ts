@@ -14,7 +14,7 @@ import {
   getFlexibleLinesQuery,
   getlineByIdQuery,
 } from 'api/uttu/queries';
-import { RootState, sentryCaptureException } from 'store/store';
+import { RootState } from 'store/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
 import { Dispatch } from 'react';
@@ -77,7 +77,6 @@ export const loadFlexibleLines =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -114,7 +113,6 @@ export const loadFlexibleLineById =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -163,7 +161,6 @@ export const saveFlexibleLine =
           ),
         ),
       );
-      sentryCaptureException(e);
       throw e;
     }
   };
@@ -202,6 +199,5 @@ export const deleteLine =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
