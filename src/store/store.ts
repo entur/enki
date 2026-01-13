@@ -5,21 +5,11 @@ import {
   combineReducers,
   ReducersMapObject,
 } from '@reduxjs/toolkit';
-import * as Sentry from '@sentry/react';
 import auth from 'auth/authSlice';
 import config from 'config/configSlice';
 import intl from 'i18n/intlSlice';
 import reducers from 'reducers';
 import userContext from '../auth/userContextSlice';
-
-export const sentryCaptureException = (e: any) =>
-  import.meta.env.NODE_ENV === 'production'
-    ? Sentry.captureException(e)
-    : console.error({ e });
-
-const sentryReduxEnhancer = Sentry.createReduxEnhancer({
-  // Optionally pass options listed below
-});
 
 const {
   notification,
@@ -56,8 +46,6 @@ export const store = configureStore({
       immutableCheck: import.meta.env.NODE_ENV !== 'production',
       serializableCheck: false,
     }),
-  enhancers: (getDefaultEnhancers) =>
-    getDefaultEnhancers().concat(sentryReduxEnhancer),
 });
 
 const asyncReducers: Record<string, any> = {};

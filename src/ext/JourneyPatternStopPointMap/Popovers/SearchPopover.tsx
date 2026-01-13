@@ -14,7 +14,6 @@ import { FocusedMarker, JourneyPatternsStopPlacesState } from '../types';
 import { useConfig } from '../../../config/ConfigContext';
 import { useAuth } from '../../../auth/auth';
 import { getStopPlacesQuery } from '../../../api/uttu/queries';
-import { sentryCaptureException } from '../../../store/store';
 
 interface SearchPopoverProps {
   searchedStopPlaces: StopPlace[];
@@ -66,8 +65,8 @@ const SearchPopover = memo(
               );
               const newStopPlacesState = getStopPlacesState(data?.stopPlaces);
               onSearchedStopPlacesFetched(newStopPlacesState);
-            } catch (e) {
-              sentryCaptureException(e);
+            } catch {
+              // Error intentionally ignored - search failure is non-critical
             }
           });
         },

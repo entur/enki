@@ -5,7 +5,7 @@ import {
 import { UttuQuery } from 'api';
 import { deleteNetwork, networkMutation } from 'api/uttu/mutations';
 import { getNetworkByIdQuery, getNetworksQuery } from 'api/uttu/queries';
-import { AppThunk, sentryCaptureException } from 'store/store';
+import { AppThunk } from 'store/store';
 import { UttuError, getStyledUttuError } from 'helpers/uttu';
 import { Network } from 'model/Network';
 import { RECEIVE_NETWORK, RECEIVE_NETWORKS } from './constants';
@@ -42,7 +42,6 @@ export const loadNetworks = (): AppThunk => async (dispatch, getState) => {
         ),
       ),
     );
-    sentryCaptureException(e);
   }
 };
 
@@ -69,7 +68,6 @@ export const loadNetworkById =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -102,7 +100,6 @@ export const saveNetwork =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -134,6 +131,5 @@ export const deleteNetworkById =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };

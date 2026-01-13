@@ -4,7 +4,6 @@ import { fetchConfig } from 'config/fetchConfig';
 import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
 
-import * as Sentry from '@sentry/react';
 import { AuthProvider, useAuth } from 'auth/auth';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { store } from 'store/store';
@@ -19,22 +18,6 @@ import {
   ComponentToggleProvider,
   ToggleFlags,
 } from '@entur/react-component-toggle';
-
-const initSentry = (dsn?: string) => {
-  if (dsn) {
-    Sentry.init({
-      dsn: dsn,
-      integrations: [Sentry.browserTracingIntegration()],
-
-      // We recommend adjusting this value in production, or using tracesSampler
-      // for finer control
-      tracesSampleRate: 1.0,
-
-      release: import.meta.env.REACT_APP_VERSION,
-      attachStacktrace: true,
-    });
-  }
-};
 
 const AuthenticatedApp = () => {
   const dispatch = useAppDispatch();
@@ -76,40 +59,36 @@ const renderIndex = async () => {
   const root = ReactDOM.createRoot(container!);
   const config = await fetchConfig();
 
-  initSentry(config.sentryDSN);
-
   root.render(
-    <Sentry.ErrorBoundary>
-      <ConfigContext.Provider value={config}>
-        <ComponentToggleProvider
-          flags={(config.sandboxFeatures || {}) as ToggleFlags}
-          maxFeatureDepth={2}
-          importFn={(featurePathComponents) => {
-            if (featurePathComponents.length === 1) {
-              return import(`./ext/${featurePathComponents[0]}/index.ts`);
-            } else if (featurePathComponents.length === 2) {
-              return import(
-                `./ext/${featurePathComponents[0]}/${featurePathComponents[1]}/index.ts`
-              );
-            } else {
-              throw new Error('Max feature depth is 2');
-            }
-          }}
-        >
-          <Provider store={store}>
-            <ComponentToggle feature={`${config.extPath}/CustomStyle`} />
-            <ComponentToggle
-              feature={`${config.extPath}/CustomIntlProvider`}
-              renderFallback={() => <EnkiApp />}
-            >
-              <AuthProvider>
-                <AuthenticatedApp />
-              </AuthProvider>
-            </ComponentToggle>
-          </Provider>
-        </ComponentToggleProvider>
-      </ConfigContext.Provider>
-    </Sentry.ErrorBoundary>,
+    <ConfigContext.Provider value={config}>
+      <ComponentToggleProvider
+        flags={(config.sandboxFeatures || {}) as ToggleFlags}
+        maxFeatureDepth={2}
+        importFn={(featurePathComponents) => {
+          if (featurePathComponents.length === 1) {
+            return import(`./ext/${featurePathComponents[0]}/index.ts`);
+          } else if (featurePathComponents.length === 2) {
+            return import(
+              `./ext/${featurePathComponents[0]}/${featurePathComponents[1]}/index.ts`
+            );
+          } else {
+            throw new Error('Max feature depth is 2');
+          }
+        }}
+      >
+        <Provider store={store}>
+          <ComponentToggle feature={`${config.extPath}/CustomStyle`} />
+          <ComponentToggle
+            feature={`${config.extPath}/CustomIntlProvider`}
+            renderFallback={() => <EnkiApp />}
+          >
+            <AuthProvider>
+              <AuthenticatedApp />
+            </AuthProvider>
+          </ComponentToggle>
+        </Provider>
+      </ComponentToggleProvider>
+    </ConfigContext.Provider>,
   );
 };
 

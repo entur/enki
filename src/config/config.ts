@@ -70,12 +70,6 @@ export interface Config {
   supportedFlexibleLineTypes?: FlexibleLineType[];
 
   /**
-   * Optional DSN for sentry configuration. If not present, Sentry will not be configured
-   * {@see https://docs.sentry.io/product/sentry-basics/concepts/dsn-explainer/}
-   */
-  sentryDSN?: string;
-
-  /**
    * Default locale to use for translations and formatting
    */
   defaultLocale?: Locale;

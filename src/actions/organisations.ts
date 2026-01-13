@@ -1,6 +1,6 @@
 import { UttuQuery } from 'api';
 import { getOrganisationsQuery } from 'api/uttu/queries';
-import { AppThunk, sentryCaptureException } from 'store/store';
+import { AppThunk } from 'store/store';
 import { OrganisationState } from 'reducers/organisations';
 import { RECEIVE_ORGANISATIONS } from './constants';
 
@@ -30,7 +30,7 @@ export const getOrganisations = (): AppThunk => async (dispatch, getState) => {
       await getState().auth.getAccessToken(),
     );
     dispatch(receiveOrganisations(organisations));
-  } catch (e) {
-    sentryCaptureException(e);
+  } catch {
+    // Error intentionally ignored - organisations are non-critical
   }
 };

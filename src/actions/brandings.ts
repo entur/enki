@@ -5,7 +5,7 @@ import {
 import { UttuQuery } from 'api';
 import { deleteBranding, brandingMutation } from 'api/uttu/mutations';
 import { getBrandingByIdQuery, getBrandingsQuery } from 'api/uttu/queries';
-import { AppThunk, sentryCaptureException } from 'store/store';
+import { AppThunk } from 'store/store';
 import { UttuError, getStyledUttuError } from 'helpers/uttu';
 import { Branding } from 'model/Branding';
 import { RECEIVE_BRANDING, RECEIVE_BRANDINGS } from './constants';
@@ -42,7 +42,6 @@ export const loadBrandings = (): AppThunk => async (dispatch, getState) => {
         ),
       ),
     );
-    sentryCaptureException(e);
   }
 };
 
@@ -69,7 +68,6 @@ export const loadBrandingById =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -102,7 +100,6 @@ export const saveBranding =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -134,6 +131,5 @@ export const deleteBrandingById =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
