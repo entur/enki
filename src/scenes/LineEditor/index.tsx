@@ -133,7 +133,11 @@ export default () => {
           <LineEditorStepper
             steps={FIXED_LINE_STEPS.map((step) => formatMessage({ id: step }))}
             isValidStepIndex={(i: number) =>
-              getMaxAllowedStepIndex(line!, intl) >= i
+              getMaxAllowedStepIndex(
+                line!,
+                intl,
+                config.optionalPublicCodeOnLine,
+              ) >= i
             }
             currentStepIsValid={(i) =>
               currentStepIsValid(
