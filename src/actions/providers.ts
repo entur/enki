@@ -9,10 +9,27 @@ import { showErrorNotification } from './notification';
 import { IntlShape } from 'react-intl';
 import { FAILED_RECEIVING_PROVIDERS, RECEIVE_PROVIDERS } from './constants';
 
+// Type definitions for providers actions
+export type ReceiveProvidersAction = {
+  type: typeof RECEIVE_PROVIDERS;
+  payload: {
+    providers: Provider[];
+    activeCode?: string | null;
+  };
+};
+
+export type FailedReceivingProvidersAction = {
+  type: typeof FAILED_RECEIVING_PROVIDERS;
+};
+
+export type ProvidersAction =
+  | ReceiveProvidersAction
+  | FailedReceivingProvidersAction;
+
 const receiveProviders = (
   providers: Provider[],
   activeCode?: string | null,
-) => ({
+): ReceiveProvidersAction => ({
   type: RECEIVE_PROVIDERS,
   payload: {
     providers,
@@ -20,7 +37,9 @@ const receiveProviders = (
   },
 });
 
-const failedReceivingProviders = { type: FAILED_RECEIVING_PROVIDERS };
+const failedReceivingProviders: FailedReceivingProvidersAction = {
+  type: FAILED_RECEIVING_PROVIDERS,
+};
 
 export const getProviders = (): AppThunk => async (dispatch, getState) => {
   return UttuQuery(
