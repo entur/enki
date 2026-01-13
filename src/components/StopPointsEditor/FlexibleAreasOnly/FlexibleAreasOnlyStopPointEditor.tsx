@@ -72,6 +72,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             value={stopPoint.destinationDisplay?.frontText}
             onChange={onFrontTextChange}
             spoilPristine={spoilPristine}
+            isFirst={true}
             {...getErrorFeedback(
               frontTextError ? formatMessage({ id: frontTextError }) : '',
               !frontTextError,
