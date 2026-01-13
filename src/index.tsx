@@ -2,6 +2,7 @@ import { Apollo } from 'api';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
 import { fetchConfig } from 'config/fetchConfig';
 import ReactDOM from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import App from 'scenes/App';
 
 import { AuthProvider, useAuth } from 'auth/auth';
@@ -76,17 +77,19 @@ const renderIndex = async () => {
           }
         }}
       >
-        <Provider store={store}>
-          <ComponentToggle feature={`${config.extPath}/CustomStyle`} />
-          <ComponentToggle
-            feature={`${config.extPath}/CustomIntlProvider`}
-            renderFallback={() => <EnkiApp />}
-          >
-            <AuthProvider>
-              <AuthenticatedApp />
-            </AuthProvider>
-          </ComponentToggle>
-        </Provider>
+        <HelmetProvider>
+          <Provider store={store}>
+            <ComponentToggle feature={`${config.extPath}/CustomStyle`} />
+            <ComponentToggle
+              feature={`${config.extPath}/CustomIntlProvider`}
+              renderFallback={() => <EnkiApp />}
+            >
+              <AuthProvider>
+                <AuthenticatedApp />
+              </AuthProvider>
+            </ComponentToggle>
+          </Provider>
+        </HelmetProvider>
       </ComponentToggleProvider>
     </ConfigContext.Provider>,
   );
