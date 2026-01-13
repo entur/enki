@@ -56,7 +56,7 @@ Configuration is loaded from `/bootstrap.json` at runtime (not compile time). Se
 ### State Management
 
 Redux Toolkit with the following structure:
-- **Store**: `src/store/store.ts` - Configures store with Redux Toolkit, Sentry integration, and dynamic reducer injection
+- **Store**: `src/store/store.ts` - Configures store with Redux Toolkit and dynamic reducer injection
 - **Reducers**: `src/reducers/` - Contains domain-specific reducers (providers, exports, networks, brandings, flexibleLines, flexibleStopPlaces, editor, notification)
 - **Slices**: Authentication (`auth/authSlice.ts`), config (`config/configSlice.ts`), internationalization (`i18n/intlSlice.ts`), and user context (`auth/userContextSlice.ts`)
 - **Hooks**: Use `useAppDispatch` and `useAppSelector` from `src/store/hooks.ts` for type-safe Redux access
@@ -81,7 +81,7 @@ Redux Toolkit with the following structure:
 
 ### Application Structure
 
-- **Entry point**: `src/index.tsx` - Bootstraps app with config loading, Sentry, component toggle system
+- **Entry point**: `src/index.tsx` - Bootstraps app with config loading and component toggle system
 - **Main app**: `src/scenes/App/` - Contains routing, navbar, provider selection
 - **Scenes**: `src/scenes/` - Page-level components organized by feature:
   - `Providers/` - Provider management and line migration

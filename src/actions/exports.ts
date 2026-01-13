@@ -2,7 +2,7 @@ import { showErrorNotification } from 'actions/notification';
 import { UttuQuery } from 'api';
 import { exportMutation } from 'api/uttu/mutations';
 import { getExportByIdQuery, getExportsQuery } from 'api/uttu/queries';
-import { AppThunk, sentryCaptureException } from 'store/store';
+import { AppThunk } from 'store/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { Export, toPayload } from 'model/Export';
 import { IntlShape } from 'react-intl';
@@ -79,7 +79,6 @@ export const loadExports =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -112,7 +111,6 @@ export const loadExportById =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -146,6 +144,5 @@ export const saveExport =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };

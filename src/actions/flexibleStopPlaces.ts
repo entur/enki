@@ -11,7 +11,7 @@ import {
   getFlexibleStopPlaceByIdQuery,
   getFlexibleStopPlacesQuery,
 } from 'api/uttu/queries';
-import { RootState, sentryCaptureException } from 'store/store';
+import { RootState } from 'store/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { Dispatch } from 'react';
@@ -104,7 +104,6 @@ export const loadFlexibleStopPlaces =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -139,7 +138,6 @@ export const loadFlexibleStopPlaceById =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -183,7 +181,6 @@ export const saveFlexibleStopPlace =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
 
@@ -224,6 +221,5 @@ export const deleteFlexibleStopPlaceById =
           ),
         ),
       );
-      sentryCaptureException(e);
     }
   };
