@@ -4,7 +4,11 @@ import {
   REQUEST_FLEXIBLE_STOP_PLACE,
   REQUEST_FLEXIBLE_STOP_PLACES,
 } from 'actions/constants';
-import { AnyAction } from 'redux';
+import {
+  ReceiveFlexibleStopPlaceAction,
+  ReceiveFlexibleStopPlacesAction,
+} from 'actions/flexibleStopPlaces';
+import { UnknownAction } from 'redux';
 import FlexibleStopPlace, {
   mapFlexibleAreasToArea,
 } from '../model/FlexibleStopPlace';
@@ -13,7 +17,7 @@ export type FlexibleStopPlacesState = FlexibleStopPlace[] | null;
 
 const flexibleStopPlaces = (
   stopPlaces: FlexibleStopPlacesState = null,
-  action: AnyAction,
+  action: UnknownAction,
 ): FlexibleStopPlacesState => {
   switch (action.type) {
     case REQUEST_FLEXIBLE_STOP_PLACES:
@@ -23,18 +27,20 @@ const flexibleStopPlaces = (
       return stopPlaces;
 
     case RECEIVE_FLEXIBLE_STOP_PLACES:
-      return action.stopPlaces.map((sp: FlexibleStopPlace) =>
-        mapFlexibleAreasToArea(sp),
+      return (action as ReceiveFlexibleStopPlacesAction).stopPlaces.map(
+        (sp: FlexibleStopPlace) => mapFlexibleAreasToArea(sp),
       );
 
-    case RECEIVE_FLEXIBLE_STOP_PLACE:
+    case RECEIVE_FLEXIBLE_STOP_PLACE: {
+      const typedAction = action as ReceiveFlexibleStopPlaceAction;
       return (
         stopPlaces
           ? stopPlaces.map((sp) =>
-              sp.id === action.stopPlace.id ? action.stopPlace : sp,
+              sp.id === typedAction.stopPlace.id ? typedAction.stopPlace : sp,
             )
-          : [action.stopPlace]
+          : [typedAction.stopPlace]
       ).map((sp) => mapFlexibleAreasToArea(sp));
+    }
 
     default:
       return stopPlaces;
