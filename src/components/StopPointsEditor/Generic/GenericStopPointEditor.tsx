@@ -90,6 +90,7 @@ export const GenericStopPointEditor = ({
             disabled={isLast}
             spoilPristine={spoilPristine}
             frontTextError={frontTextError}
+            isFirst={isFirst}
           />
 
           <BoardingTypeSelect
