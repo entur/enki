@@ -115,6 +115,25 @@ export const messages = {
   bookingNoteRequiredFeedback: 'Изисква се бележка за резервация.',
   bookingTimeSelectionTitle: 'Време за резервация',
   branding: 'брандинг',
+  brandingsLoadBrandingsErrorHeader: 'Зареждане на марки',
+  brandingsLoadBrandingsErrorMessage:
+    'Възникна грешка при зареждане на марките: {details}',
+  brandingsLoadBrandingByIdErrorHeader: 'Зареждане на марка',
+  brandingsLoadBrandingByIdErrorMessage:
+    'Възникна грешка при зареждане на марката: {details}',
+  brandingsSaveBrandingSuccessHeader: 'Запазване на марка',
+  brandingsSaveBrandingSuccessMessage: 'Марката беше запазена.',
+  brandingsSaveBrandingErrorHeader: 'Запазване на марка',
+  brandingsSaveBrandingErrorMessage:
+    'Възникна грешка при запазване на марката: {details}',
+  brandingsDeleteBrandingSuccessHeader: 'Изтриване на марка',
+  brandingsDeleteBrandingSuccessMessage: 'Марката беше изтрита.',
+  brandingsDeleteBrandingErrorHeader: 'Изтриване на марка',
+  brandingsDeleteBrandingErrorMessage:
+    'Възникна грешка при изтриване на марката: {details}',
+  editorSavingBrandingLoadingText: 'Запазване на марката...',
+  editorDeletingBrandingLoadingText: 'Изтриване на марката...',
+  editorLoadingBrandingText: 'Зареждане на марката...',
   brandingsDropdownLabelText: 'Брандинг',
   navBarBrandingsMenuItemLabel: 'Брандинги',
   brandingsHeaderText: 'Брандинги',
@@ -501,6 +520,22 @@ export const messages = {
   linesPrivateCodeTableHeaderLabel: 'Вътрешен код',
   editorNetworkPrivateCodeLabelText: 'Вътрешен код',
   networksPrivateCodeTableHeaderLabel: 'Вътрешен код',
+  networksLoadNetworksErrorHeader: 'Зареждане на мрежи',
+  networksLoadNetworksErrorMessage:
+    'Възникна грешка при зареждане на мрежите: {details}',
+  networksLoadNetworkByIdErrorHeader: 'Зареждане на мрежа',
+  networksLoadNetworkByIdErrorMessage:
+    'Възникна грешка при зареждане на мрежата: {details}',
+  networksSaveNetworkSuccessHeader: 'Запазване на мрежа',
+  networksSaveNetworkSuccessMessage: 'Мрежата беше запазена.',
+  networksSaveNetworkErrorHeader: 'Запазване на мрежа',
+  networksSaveNetworkErrorMessage:
+    'Възникна грешка при запазване на мрежата: {details}',
+  networksDeleteNetworkSuccessHeader: 'Изтриване на мрежа',
+  networksDeleteNetworkSuccessMessage: 'Мрежата беше изтрита.',
+  networksDeleteNetworkErrorHeader: 'Изтриване на мрежа',
+  networksDeleteNetworkErrorMessage:
+    'Възникна грешка при изтриване на мрежата: {details}',
   editorPrivateCodeFormLabelText: 'Вътрешен код',
   stopPlacesPrivateCodeTableHeaderLabelText: 'Вътрешен код',
   generalPrivateCodeLabelTooltip:

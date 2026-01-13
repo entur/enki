@@ -472,6 +472,22 @@ export const messages: MessagesKey = {
   networksNameTableHeaderLabel: 'Namn',
   networksNoNetworksFoundText: 'Inga nätverk hittades',
   networksPrivateCodeTableHeaderLabel: 'Privat kod',
+  networksLoadNetworksErrorHeader: 'Ladda nätverk',
+  networksLoadNetworksErrorMessage:
+    'Ett fel uppstod vid laddning av nätverken: {details}',
+  networksLoadNetworkByIdErrorHeader: 'Ladda nätverk',
+  networksLoadNetworkByIdErrorMessage:
+    'Ett fel uppstod vid laddning av nätverket: {details}',
+  networksSaveNetworkSuccessHeader: 'Spara nätverk',
+  networksSaveNetworkSuccessMessage: 'Nätverket sparades.',
+  networksSaveNetworkErrorHeader: 'Spara nätverk',
+  networksSaveNetworkErrorMessage:
+    'Ett fel uppstod vid sparande av nätverket: {details}',
+  networksDeleteNetworkSuccessHeader: 'Ta bort nätverk',
+  networksDeleteNetworkSuccessMessage: 'Nätverket togs bort.',
+  networksDeleteNetworkErrorHeader: 'Ta bort nätverk',
+  networksDeleteNetworkErrorMessage:
+    'Ett fel uppstod vid borttagning av nätverket: {details}',
   branding: 'varumärke',
   brandingsHeaderText: 'Varumärken',
   brandingsLoadingBrandingsText: 'Laddar varumärken...',
@@ -500,6 +516,25 @@ export const messages: MessagesKey = {
   editorDeleteBrandingConfirmationDialogMessage:
     'Är du säker på att du vill ta bort detta varumärke?',
   brandingsDropdownLabelText: 'Varumärke',
+  brandingsLoadBrandingsErrorHeader: 'Ladda varumärken',
+  brandingsLoadBrandingsErrorMessage:
+    'Ett fel uppstod vid laddning av varumärken: {details}',
+  brandingsLoadBrandingByIdErrorHeader: 'Ladda varumärke',
+  brandingsLoadBrandingByIdErrorMessage:
+    'Ett fel uppstod vid laddning av varumärket: {details}',
+  brandingsSaveBrandingSuccessHeader: 'Spara varumärke',
+  brandingsSaveBrandingSuccessMessage: 'Varumärket sparades.',
+  brandingsSaveBrandingErrorHeader: 'Spara varumärke',
+  brandingsSaveBrandingErrorMessage:
+    'Ett fel uppstod vid sparande av varumärket: {details}',
+  brandingsDeleteBrandingSuccessHeader: 'Ta bort varumärke',
+  brandingsDeleteBrandingSuccessMessage: 'Varumärket togs bort.',
+  brandingsDeleteBrandingErrorHeader: 'Ta bort varumärke',
+  brandingsDeleteBrandingErrorMessage:
+    'Ett fel uppstod vid borttagning av varumärket: {details}',
+  editorSavingBrandingLoadingText: 'Sparar varumärket...',
+  editorDeletingBrandingLoadingText: 'Tar bort varumärket...',
+  editorLoadingBrandingText: 'Laddar varumärket...',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Skapa flexibel hållplats',
   editorDescription:
     'Fyll i lista med koordinater i GeoJSON-formatet, eller klicka i kartan för att skapa en polygon.',

@@ -471,6 +471,22 @@ export const messages = {
   networksNameTableHeaderLabel: 'Navn',
   networksNoNetworksFoundText: 'Ingen nettverk ble funnet',
   networksPrivateCodeTableHeaderLabel: 'Privat kode',
+  networksLoadNetworksErrorHeader: 'Laste nettverk',
+  networksLoadNetworksErrorMessage:
+    'En feil oppstod under lastingen av nettverkene: {details}',
+  networksLoadNetworkByIdErrorHeader: 'Laste nettverk',
+  networksLoadNetworkByIdErrorMessage:
+    'En feil oppstod under lastingen av nettverket: {details}',
+  networksSaveNetworkSuccessHeader: 'Lagre nettverk',
+  networksSaveNetworkSuccessMessage: 'Nettverket ble lagret.',
+  networksSaveNetworkErrorHeader: 'Lagre nettverk',
+  networksSaveNetworkErrorMessage:
+    'En feil oppstod under lagringen av nettverket: {details}',
+  networksDeleteNetworkSuccessHeader: 'Slette nettverk',
+  networksDeleteNetworkSuccessMessage: 'Nettverket ble slettet.',
+  networksDeleteNetworkErrorHeader: 'Slette nettverk',
+  networksDeleteNetworkErrorMessage:
+    'En feil oppstod under slettingen av nettverket: {details}',
   branding: 'merkevare',
   brandingsHeaderText: 'Merkevarer',
   brandingsLoadingBrandingsText: 'Laster inn merkevarer...',
@@ -499,6 +515,25 @@ export const messages = {
   editorDeleteBrandingConfirmationDialogMessage:
     'Er du sikker på at du ønsker å slette denne merkevaren?',
   brandingsDropdownLabelText: 'Merkevare',
+  brandingsLoadBrandingsErrorHeader: 'Laste merkevarer',
+  brandingsLoadBrandingsErrorMessage:
+    'En feil oppstod under lastingen av merkevarene: {details}',
+  brandingsLoadBrandingByIdErrorHeader: 'Laste merkevare',
+  brandingsLoadBrandingByIdErrorMessage:
+    'En feil oppstod under lastingen av merkevaren: {details}',
+  brandingsSaveBrandingSuccessHeader: 'Lagre merkevare',
+  brandingsSaveBrandingSuccessMessage: 'Merkevaren ble lagret.',
+  brandingsSaveBrandingErrorHeader: 'Lagre merkevare',
+  brandingsSaveBrandingErrorMessage:
+    'En feil oppstod under lagringen av merkevaren: {details}',
+  brandingsDeleteBrandingSuccessHeader: 'Slette merkevare',
+  brandingsDeleteBrandingSuccessMessage: 'Merkevaren ble slettet.',
+  brandingsDeleteBrandingErrorHeader: 'Slette merkevare',
+  brandingsDeleteBrandingErrorMessage:
+    'En feil oppstod under slettingen av merkevaren: {details}',
+  editorSavingBrandingLoadingText: 'Lagrer merkevaren...',
+  editorDeletingBrandingLoadingText: 'Sletter merkevaren...',
+  editorLoadingBrandingText: 'Laster inn merkevaren...',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Opprett fleksibelt stoppested',
   editorDescription:
     'Fyll inn liste med koordinater på GeoJSON-format, eller klikk i kartet for å opprette polygon.',
