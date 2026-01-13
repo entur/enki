@@ -1,16 +1,18 @@
 import { UttuQuery } from 'api';
 import { getOrganisationsQuery } from 'api/uttu/queries';
+import { Organisation } from 'model/Organisation';
 import { AppThunk, sentryCaptureException } from 'store/store';
-import { OrganisationState } from 'reducers/organisations';
 import { RECEIVE_ORGANISATIONS } from './constants';
 
 export type ReceiveOrganisations = {
   type: typeof RECEIVE_ORGANISATIONS;
-  organisations: OrganisationState;
+  organisations: Organisation[];
 };
 
+export type OrganisationsAction = ReceiveOrganisations;
+
 export const receiveOrganisations = (
-  organisations: OrganisationState,
+  organisations: Organisation[],
 ): ReceiveOrganisations => ({
   type: RECEIVE_ORGANISATIONS,
   organisations,
