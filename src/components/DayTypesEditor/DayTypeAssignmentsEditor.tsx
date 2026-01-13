@@ -1,9 +1,5 @@
 import { IconButton, TertiaryButton } from '@entur/button';
-import {
-  DatePicker,
-  nativeDateToDateValue,
-  timeOrDateValueToNativeDate,
-} from '@entur/datepicker';
+import { DatePicker, timeOrDateValueToNativeDate } from '@entur/datepicker';
 import { Switch } from '@entur/form';
 import { AddIcon, DeleteIcon } from '@entur/icons';
 import { DataCell, Table, TableBody, TableRow } from '@entur/table';
@@ -13,11 +9,7 @@ import useUniqueKeys from 'hooks/useUniqueKeys';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { useIntl } from 'react-intl';
-import {
-  getCurrentDate,
-  calendarDateToISO,
-  parseISOToCalendarDate,
-} from '../../utils/dates';
+import { getCurrentDate, parseISOToCalendarDate } from '../../utils/dates';
 import './styles.scss';
 
 type Props = {
@@ -73,6 +65,12 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
     return `${y}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
   };
 
+  // Safely parse ISO string to CalendarDate for DatePicker, falling back to today
+  const safeParseDate = (isoString: string | null | undefined) => {
+    const parsed = parseISOToCalendarDate(isoString);
+    return parsed ?? getCurrentDate();
+  };
+
   return (
     <>
       <div className="day-type-assignments-editor">
@@ -83,9 +81,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                 <DataCell>
                   <DatePicker
                     label={formatMessage({ id: 'dayTypeEditorFromDate' })}
-                    selectedDate={nativeDateToDateValue(
-                      new Date(dta.operatingPeriod.fromDate),
-                    )}
+                    selectedDate={safeParseDate(dta.operatingPeriod.fromDate)}
                     onChange={(date) => {
                       changeDay(
                         {
@@ -111,9 +107,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                       ),
                       false,
                     )}
-                    selectedDate={nativeDateToDateValue(
-                      new Date(dta.operatingPeriod.toDate),
-                    )}
+                    selectedDate={safeParseDate(dta.operatingPeriod.toDate)}
                     onChange={(date) => {
                       changeDay(
                         {
