@@ -13,9 +13,12 @@ import useUniqueKeys from 'hooks/useUniqueKeys';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { useIntl } from 'react-intl';
-import { getCurrentDate, calendarDateToISO } from '../../utils/dates';
+import {
+  getCurrentDate,
+  calendarDateToISO,
+  parseISOToCalendarDate,
+} from '../../utils/dates';
 import './styles.scss';
-import { parseDate } from '@internationalized/date';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
@@ -48,8 +51,15 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
     onChange(replaceElement(dayTypeAssignments, index, updated));
   };
 
-  const isNotBefore = (toDate: string, fromDate: string): boolean =>
-    parseDate(toDate).compare(parseDate(fromDate)) >= 0;
+  const isNotBefore = (toDate: string, fromDate: string): boolean => {
+    const to = parseISOToCalendarDate(toDate);
+    const from = parseISOToCalendarDate(fromDate);
+    // If either date can't be parsed, skip validation (return true = no error)
+    if (!to || !from) {
+      return true;
+    }
+    return to.compare(from) >= 0;
+  };
 
   if (dayTypeAssignments.length === 0) addNewDayTypeAssignment();
 
