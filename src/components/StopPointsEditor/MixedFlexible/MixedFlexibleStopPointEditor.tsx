@@ -182,6 +182,7 @@ export const MixedFlexibleStopPointEditor = ({
             disabled={isLast}
             spoilPristine={spoilPristine}
             frontTextError={frontTextError}
+            isFirst={isFirst}
           />
 
           <BoardingTypeSelect
