@@ -1,6 +1,6 @@
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../../auth/auth';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import React from 'react';
 import { Shortcut } from './Shortcut/types';
 import Footer from './Footer/Footer';
