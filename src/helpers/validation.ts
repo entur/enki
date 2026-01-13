@@ -37,8 +37,12 @@ export const validLine = (
       validJourneyPattern(jp) && validServiceJourneys(jp.serviceJourneys, intl),
   );
 
-export const getMaxAllowedStepIndex = (line: Line, intl: IntlShape) => {
-  if (!aboutLineStepIsValid(line)) return 0;
+export const getMaxAllowedStepIndex = (
+  line: Line,
+  intl: IntlShape,
+  optionalPublicCode?: boolean,
+) => {
+  if (!aboutLineStepIsValid(line, optionalPublicCode)) return 0;
   else if (line.journeyPatterns!.some((jp) => !validJourneyPattern(jp)))
     return 1;
   else if (
