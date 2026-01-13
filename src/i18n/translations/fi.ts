@@ -550,6 +550,11 @@ export const messages: MessagesKey = {
   editorDescriptionFormLabelText: 'Kuvaus',
   editorEditHeader: 'Muokkaa joustavaa pysäkkiä',
   errorCoordinates: 'Koordinaatit ovat virheellisessä muodossa',
+  errorCoordinatesEmpty: 'Koordinaatteja ei annettu',
+  errorCoordinatesSelfIntersecting:
+    'Monikulmion reunat risteävät. Säädä muotoa niin, etteivät reunat risteä.',
+  errorCoordinatesSelfIntersectingCount:
+    'Monikulmiossa on {count} itseristeystä',
   editorLoadingDependenciesText: 'Ladataan riippuvuuksia',
   editorLoadingStopPlaceText: 'Ladataan pysäkkiä',
   editorNameFormLabelText: 'Nimi *',

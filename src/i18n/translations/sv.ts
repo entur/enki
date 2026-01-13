@@ -548,6 +548,11 @@ export const messages: MessagesKey = {
   editorDescriptionFormLabelText: 'Beskrivning',
   editorEditHeader: 'Redigera flexibel hållplats',
   errorCoordinates: 'Koordinaterna är inte i rätt format',
+  errorCoordinatesEmpty: 'Inga koordinater angivna',
+  errorCoordinatesSelfIntersecting:
+    'Polygonkanterna korsar varandra. Justera formen så att inga kanter korsar.',
+  errorCoordinatesSelfIntersectingCount:
+    'Polygonen har {count} självkorsning(ar)',
   editorLoadingDependenciesText: 'Läser in avhengigheter',
   editorLoadingStopPlaceText: 'Läser in hållplatsen',
   editorNameFormLabelText: 'Namn *',

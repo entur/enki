@@ -551,6 +551,11 @@ export const messages: MessagesKey = {
   editorDescriptionFormLabelText: 'Description',
   editorEditHeader: 'Edit flexible stop place',
   errorCoordinates: 'The coordinates are in an invalid format',
+  errorCoordinatesEmpty: 'No coordinates provided',
+  errorCoordinatesSelfIntersecting:
+    'The polygon edges cross each other. Please adjust the shape so no edges intersect.',
+  errorCoordinatesSelfIntersectingCount:
+    'The polygon has {count} self-intersection(s)',
   editorLoadingDependenciesText: 'Loading dependencies',
   editorLoadingStopPlaceText: 'Loading stop place',
   editorNameFormLabelText: 'Name *',
