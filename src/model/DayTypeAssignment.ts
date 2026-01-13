@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { getCurrentDate } from '../utils/dates';
 import OperatingPeriod from './OperatingPeriod';
 import VersionedType from './VersionedType';
 
@@ -11,8 +11,8 @@ export type DayTypeAssignment = VersionedType & {
 export const newDayTypeAssignment = (): DayTypeAssignment => ({
   isAvailable: true,
   operatingPeriod: {
-    fromDate: moment().format('YYYY-MM-DD'),
-    toDate: moment().format('YYYY-MM-DD'),
+    fromDate: getCurrentDate().toString(),
+    toDate: getCurrentDate().toString(),
   },
 });
 

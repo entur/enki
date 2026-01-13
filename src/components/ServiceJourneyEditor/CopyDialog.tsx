@@ -7,16 +7,19 @@ import {
 import { FeedbackText, Switch, TextField } from '@entur/form';
 import { Modal } from '@entur/modal';
 import { Label } from '@entur/typography';
+import {
+  CalendarDateTime,
+  fromDate,
+  getLocalTimeZone,
+  now,
+  parseTime,
+  Time,
+  toCalendarDate,
+  ZonedDateTime,
+} from '@internationalized/date';
 import { TimeValue } from '@react-types/datepicker';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import DurationPicker from 'components/DurationPicker';
-import {
-  addDays,
-  addMinutes,
-  differenceInCalendarDays,
-  differenceInMinutes,
-  Duration,
-} from 'date-fns';
 import * as duration from 'duration-fns';
 import { createUuid } from 'helpers/generators';
 import { isAfter, isBefore } from 'helpers/validation';
@@ -42,7 +45,7 @@ const toDate = (date: string): Date => {
   const dateObj = new Date();
   dateObj.setHours(parseInt(hours));
   dateObj.setMinutes(parseInt(minutes));
-  dateObj.setSeconds(parseInt(seconds));
+  dateObj.setSeconds(parseInt(seconds || '0'));
   dateObj.setMilliseconds(0);
   return dateObj;
 };
@@ -55,11 +58,16 @@ const offsetPassingTime = (
   dayOffsetKey: string,
 ) => {
   if (!oldTime) return undefined;
-  const newTime = addMinutes(toDate(oldTime), offset);
-  const offsetDays = differenceInCalendarDays(newTime, toDate(oldTime));
+  const oldTimeAsDate = fromDate(toDate(oldTime), getLocalTimeZone());
+  const newTimeAsDate = fromDate(toDate(oldTime), getLocalTimeZone()).add({
+    minutes: offset,
+  });
+  const offsetDays =
+    newTimeAsDate.calendar.toJulianDay(newTimeAsDate) -
+    oldTimeAsDate.calendar.toJulianDay(oldTimeAsDate);
 
   return {
-    [timeKey]: newTime.toTimeString().split(' ')[0],
+    [timeKey]: newTimeAsDate.toDate().toTimeString().split(' ')[0],
     [dayOffsetKey]: oldDayOffset + offsetDays,
   };
 };
@@ -97,6 +105,10 @@ const offsetPassingTimes = (
   );
 };
 
+const addDays = (time: Time, days: number) => {
+  return now(getLocalTimeZone()).set(time).add({ days });
+};
+
 export const copyServiceJourney = (
   serviceJourney: ServiceJourney,
   newServiceJourneys: ServiceJourney[],
@@ -105,57 +117,56 @@ export const copyServiceJourney = (
   dayOffset: number,
   untilTime: string,
   untilDayOffset: number,
-  repeatDuration: Duration,
+  repeatDuration: duration.Duration,
 ): ServiceJourney[] => {
-  const departure = addDays(toDate(departureTime), dayOffset);
+  const departure = parseTime(departureTime);
+  const until = parseTime(untilTime);
 
-  if (isAfter(departureTime, dayOffset, untilTime, untilDayOffset)) {
+  // Compare times including day offset
+  const departureDateTime = addDays(departure, dayOffset);
+  const untilDateTime = addDays(until, untilDayOffset);
+
+  if (departureDateTime.compare(untilDateTime) >= 0) {
     return newServiceJourneys;
-  } else {
-    const lastActualDeparture = addDays(
-      toDate(serviceJourney.passingTimes[0].departureTime!),
-      serviceJourney.passingTimes[0].departureDayOffset!,
-    );
-
-    const { id, passingTimes, dayTypesRefs, ...copyableServiceJourney } =
-      serviceJourney;
-
-    const newPassingTimes = offsetPassingTimes(
-      passingTimes.map(({ id, ...pt }) => pt),
-      differenceInMinutes(departure, lastActualDeparture),
-    );
-
-    const newServiceJourney = {
-      ...cloneDeep(copyableServiceJourney),
-      id: `new_${createUuid()}`,
-      name: nameTemplate.replace(
-        '<% time %>',
-        `${departureTime.slice(0, -3)} +${dayOffset}`,
-      ),
-      dayTypesRefs,
-      passingTimes: newPassingTimes,
-    };
-    newServiceJourneys.push(newServiceJourney);
-    const nextDeparture = addMinutes(
-      departure,
-      duration.toMinutes(repeatDuration),
-    );
-    const nextDepartureTime = nextDeparture?.toTimeString().split(' ')[0];
-    const nextDayOffset = differenceInCalendarDays(
-      nextDeparture,
-      toDate(departureTime),
-    );
-    return copyServiceJourney(
-      newServiceJourney,
-      newServiceJourneys,
-      nameTemplate,
-      nextDepartureTime,
-      nextDayOffset,
-      untilTime,
-      untilDayOffset,
-      repeatDuration,
-    );
   }
+
+  const { id, passingTimes, dayTypesRefs, ...copyableServiceJourney } =
+    serviceJourney;
+
+  const minutesOffset = duration.toMinutes(repeatDuration);
+
+  const newPassingTimes = offsetPassingTimes(
+    passingTimes.map(({ id, ...pt }) => pt),
+    minutesOffset,
+  );
+
+  const newServiceJourney = {
+    ...cloneDeep(copyableServiceJourney),
+    id: `new_${createUuid()}`,
+    name: nameTemplate.replace(
+      '<% number %>',
+      (newServiceJourneys.length + 1).toString(),
+    ),
+    dayTypesRefs,
+    passingTimes: newPassingTimes,
+  };
+  newServiceJourneys.push(newServiceJourney);
+
+  // Calculate next departure time
+  const nextDeparture = departure.add({ minutes: minutesOffset });
+  const nextDayOffset =
+    dayOffset + (nextDeparture.hour < departure.hour ? 1 : 0);
+
+  return copyServiceJourney(
+    newServiceJourney,
+    newServiceJourneys,
+    nameTemplate,
+    nextDeparture.toString(),
+    nextDayOffset,
+    untilTime,
+    untilDayOffset,
+    repeatDuration,
+  );
 };
 
 export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
@@ -165,7 +176,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
     serviceJourney.passingTimes[0].departureDayOffset || 0;
 
   const [nameTemplate, setNameTemplate] = useState<string>(
-    `${serviceJourney.name || 'New'} (<% time %>)`,
+    `${serviceJourney.name || 'New'} (<% number %>)`,
   );
   const [initialDepartureTime, setInitialDepartureTime] =
     useState<string>(defaultDepartureTime);

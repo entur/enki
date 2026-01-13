@@ -1,10 +1,3 @@
-import {
-  addDays,
-  getDay,
-  isAfter as isDateAfter,
-  isEqual as isDateEqual,
-  parseISO,
-} from 'date-fns';
 import { isBlank, objectValuesAreEmpty } from 'helpers/forms';
 import { MessagesKey } from 'i18n/translationKeys';
 import BookingArrangement from 'model/BookingArrangement';
@@ -15,8 +8,23 @@ import Line from 'model/Line';
 import PassingTime from 'model/PassingTime';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
-import moment from 'moment';
 import { IntlShape } from 'react-intl';
+import {
+  parseTime,
+  Time,
+  CalendarDateTime,
+  parseDate,
+  getDayOfWeek,
+} from '@internationalized/date';
+import { getCurrentDateTime } from 'utils/dates';
+
+const addDays = (time: Time, days: number): CalendarDateTime =>
+  getCurrentDateTime()
+    .set({
+      hour: time.hour,
+      minute: time.minute,
+    })
+    .add({ days });
 
 export const validLine = (
   line: Line,
@@ -272,13 +280,16 @@ export const isBefore = (
   nextDayOffset: number | undefined,
 ) => {
   if (!passingTime || !nextPassingTime) return false;
-  const date = moment(passingTime, 'HH:mm:ss').add(dayOffset ?? 0, 'days');
-  const nextDate = moment(nextPassingTime, 'HH:mm:ss').add(
-    nextDayOffset ?? 0,
-    'days',
-  );
 
-  return date < nextDate;
+  try {
+    const time = parseTime(passingTime);
+    const nextTime = parseTime(nextPassingTime);
+    const date = addDays(time, dayOffset ?? 0);
+    const nextDate = addDays(nextTime, nextDayOffset ?? 0);
+    return date.compare(nextDate) < 0;
+  } catch (e) {
+    return false;
+  }
 };
 
 export const isAfter = (
@@ -288,13 +299,16 @@ export const isAfter = (
   nextDayOffset: number | undefined,
 ) => {
   if (!passingTime || !nextPassingTime) return false;
-  const date = moment(passingTime, 'HH:mm:ss').add(dayOffset ?? 0, 'days');
-  const nextDate = moment(nextPassingTime, 'HH:mm:ss').add(
-    nextDayOffset ?? 0,
-    'days',
-  );
 
-  return date > nextDate;
+  try {
+    const time = parseTime(passingTime);
+    const nextTime = parseTime(nextPassingTime);
+    const date = addDays(time, dayOffset ?? 0);
+    const nextDate = addDays(nextTime, nextDayOffset ?? 0);
+    return date.compare(nextDate) > 0;
+  } catch (e) {
+    return false;
+  }
 };
 
 const hasAtleastOneFieldSet = (passingTime: PassingTime) => {
@@ -489,14 +503,16 @@ export const validateDayType = (dayType: DayType) => {
     dayType.daysOfWeek?.map((dow) => WEEKDAYS.indexOf(dow)) || [];
 
   return dayType.dayTypeAssignments.every((dta) => {
-    let from = parseISO(dta.operatingPeriod.fromDate);
-    const to = parseISO(dta.operatingPeriod.toDate);
+    let from = parseDate(dta.operatingPeriod.fromDate);
+    const to = parseDate(dta.operatingPeriod.toDate);
 
-    while (isDateEqual(to, from) || isDateAfter(to, from)) {
-      if (daysOfWeek.includes(getDay(from))) {
+    // Loop while from <= to
+    while (from.compare(to) <= 0) {
+      // getDayOfWeek with 'en-US' locale returns Sunday=0, matching WEEKDAYS array
+      if (daysOfWeek.includes(getDayOfWeek(from, 'en-US'))) {
         return true;
       }
-      from = addDays(from, 1);
+      from = from.add({ days: 1 });
     }
 
     return false;
