@@ -10,12 +10,30 @@ import { UttuError, getStyledUttuError } from 'helpers/uttu';
 import { Network } from 'model/Network';
 import { RECEIVE_NETWORK, RECEIVE_NETWORKS } from './constants';
 
-const receiveNetworksActionCreator = (networks: Network[]) => ({
+// Action type definitions
+export type ReceiveNetworksAction = {
+  type: typeof RECEIVE_NETWORKS;
+  networks: Network[];
+};
+
+export type ReceiveNetworkAction = {
+  type: typeof RECEIVE_NETWORK;
+  network: Network;
+};
+
+export type NetworksAction = ReceiveNetworksAction | ReceiveNetworkAction;
+
+// Action creators
+const receiveNetworksActionCreator = (
+  networks: Network[],
+): ReceiveNetworksAction => ({
   type: RECEIVE_NETWORKS,
   networks,
 });
 
-const receiveNetworkActionCreator = (network: Network) => ({
+const receiveNetworkActionCreator = (
+  network: Network,
+): ReceiveNetworkAction => ({
   type: RECEIVE_NETWORK,
   network,
 });
