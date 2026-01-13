@@ -5,9 +5,10 @@ import {
 import { UttuQuery } from 'api';
 import { deleteNetwork, networkMutation } from 'api/uttu/mutations';
 import { getNetworkByIdQuery, getNetworksQuery } from 'api/uttu/queries';
-import { AppThunk } from 'store/store';
-import { UttuError, getStyledUttuError } from 'helpers/uttu';
+import { getInternationalizedUttuError } from 'helpers/uttu';
 import { Network } from 'model/Network';
+import { IntlShape } from 'react-intl';
+import { AppThunk } from 'store/store';
 import { RECEIVE_NETWORK, RECEIVE_NETWORKS } from './constants';
 
 // Action type definitions
@@ -38,33 +39,34 @@ const receiveNetworkActionCreator = (
   network,
 });
 
-export const loadNetworks = (): AppThunk => async (dispatch, getState) => {
-  try {
-    const data = await UttuQuery(
-      getState().config.uttuApiUrl,
-      getState().userContext.activeProviderCode ?? '',
-      getNetworksQuery,
-      {},
-      await getState().auth.getAccessToken(),
-    );
-    dispatch(receiveNetworksActionCreator(data.networks));
-    return data.networks;
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        'Laste nettverk',
-        getStyledUttuError(
-          e as UttuError,
-          'En feil oppstod under lastingen av nettverkene',
-          'Prøv igjen senere.',
+export const loadNetworks =
+  (intl: IntlShape): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const data = await UttuQuery(
+        getState().config.uttuApiUrl,
+        getState().userContext.activeProviderCode ?? '',
+        getNetworksQuery,
+        {},
+        await getState().auth.getAccessToken(),
+      );
+      dispatch(receiveNetworksActionCreator(data.networks));
+      return data.networks;
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage({ id: 'networksLoadNetworksErrorHeader' }),
+          intl.formatMessage(
+            { id: 'networksLoadNetworksErrorMessage' },
+            { details: getInternationalizedUttuError(intl, e as Error) },
+          ),
         ),
-      ),
-    );
-  }
-};
+      );
+    }
+  };
 
 export const loadNetworkById =
-  (id: string): AppThunk =>
+  (id: string, intl: IntlShape): AppThunk =>
   async (dispatch, getState) => {
     try {
       const data = await UttuQuery(
@@ -78,11 +80,10 @@ export const loadNetworkById =
     } catch (e) {
       dispatch(
         showErrorNotification(
-          'Laste nettverk',
-          getStyledUttuError(
-            e as UttuError,
-            'En feil oppstod under lastingen av nettverket',
-            'Prøv igjen senere.',
+          intl.formatMessage({ id: 'networksLoadNetworkByIdErrorHeader' }),
+          intl.formatMessage(
+            { id: 'networksLoadNetworkByIdErrorMessage' },
+            { details: getInternationalizedUttuError(intl, e as Error) },
           ),
         ),
       );
@@ -90,7 +91,7 @@ export const loadNetworkById =
   };
 
 export const saveNetwork =
-  (network: Network, showConfirm = true): AppThunk =>
+  (network: Network, intl: IntlShape, showConfirm = true): AppThunk =>
   async (dispatch, getState) => {
     try {
       await UttuQuery(
@@ -104,17 +105,19 @@ export const saveNetwork =
       );
       if (showConfirm) {
         dispatch(
-          showSuccessNotification('Lagre nettverk', 'Nettverket ble lagret.'),
+          showSuccessNotification(
+            intl.formatMessage({ id: 'networksSaveNetworkSuccessHeader' }),
+            intl.formatMessage({ id: 'networksSaveNetworkSuccessMessage' }),
+          ),
         );
       }
     } catch (e) {
       dispatch(
         showErrorNotification(
-          'Lagre nettverk',
-          getStyledUttuError(
-            e as UttuError,
-            'En feil oppstod under lagringen av nettverket',
-            'Prøv igjen senere.',
+          intl.formatMessage({ id: 'networksSaveNetworkErrorHeader' }),
+          intl.formatMessage(
+            { id: 'networksSaveNetworkErrorMessage' },
+            { details: getInternationalizedUttuError(intl, e as Error) },
           ),
         ),
       );
@@ -122,7 +125,7 @@ export const saveNetwork =
   };
 
 export const deleteNetworkById =
-  (id: string | undefined): AppThunk =>
+  (id: string | undefined, intl: IntlShape): AppThunk =>
   async (dispatch, getState) => {
     if (!id) return;
 
@@ -137,15 +140,18 @@ export const deleteNetworkById =
         await getState().auth.getAccessToken(),
       );
       dispatch(
-        showSuccessNotification('Slette nettverk', 'Nettverket ble slettet.'),
+        showSuccessNotification(
+          intl.formatMessage({ id: 'networksDeleteNetworkSuccessHeader' }),
+          intl.formatMessage({ id: 'networksDeleteNetworkSuccessMessage' }),
+        ),
       );
     } catch (e) {
       dispatch(
         showErrorNotification(
-          'Slette nettverk',
-          getStyledUttuError(
-            e as UttuError,
-            'En feil oppstod under slettingen av nettverket',
+          intl.formatMessage({ id: 'networksDeleteNetworkErrorHeader' }),
+          intl.formatMessage(
+            { id: 'networksDeleteNetworkErrorMessage' },
+            { details: getInternationalizedUttuError(intl, e as Error) },
           ),
         ),
       );
