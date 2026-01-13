@@ -1,5 +1,5 @@
 import {
-  AnyAction,
+  UnknownAction,
   ThunkAction,
   configureStore,
   combineReducers,
@@ -82,5 +82,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
-  AnyAction
+  UnknownAction
 >;
