@@ -14,13 +14,26 @@ export enum NotificationDuration {
   VERY_LONG = 10000,
 }
 
+export type ShowNotificationAction = {
+  type: typeof SHOW_NOTIFICATION;
+  payload: {
+    message: string;
+    title: string;
+    type: NotificationTypes;
+    duration: NotificationDuration;
+    showModal: boolean;
+  };
+};
+
+export type NotificationAction = ShowNotificationAction;
+
 export const showNotification = (
   title: string,
   message: string,
   type: NotificationTypes,
   duration: NotificationDuration,
   showModal?: boolean,
-) => ({
+): ShowNotificationAction => ({
   type: SHOW_NOTIFICATION,
   payload: {
     message,
