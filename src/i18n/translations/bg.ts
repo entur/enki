@@ -16,7 +16,7 @@ export const messages = {
     'Добавете поне две фиксирани спирки или гъвкави зони.',
   stopPlaceAddAreaButtonLabel: 'Добави зона',
   dayTypeEditorAddDayTypeAssignment: 'Добави дата',
-  dayTypesModalAddNewButtonLabel: 'Добави тип ден',
+  dayTypesModalAddNewButtonLabel: 'Добави календар',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Добави маршрутна схема',
   addNoticeTooltip: 'Добави бележка',
   editorAddStopPoint: 'Добави спирка',
@@ -137,7 +137,7 @@ export const messages = {
   copyJourneyPatternDialogCancelButtonText: 'Отказ',
   copyServiceJourneyDialogIntervalLabel: 'Избери интервал',
   navBarDataProvider: 'Избери доставчик на данни',
-  dayTypesEditorSelectLabel: 'Изберете тип ден за услугата',
+  dayTypesEditorSelectLabel: 'Изберете календар за услугата',
   flexibleStopPlaceRefAndQuayRefBothValues:
     'Изберете спирка или платформа, но не и двете.',
   newServiceJourneyModalJourneyPatternLabel: 'Избери маршрутна схема',
@@ -196,7 +196,7 @@ export const messages = {
   editorDeleteNetworkConfirmationDialogTitle: 'Изтрий мрежа',
   editorDeleteNetworkConfirmDialogTitle: 'Изтрий мрежа',
   deleteNoticeTooltip: 'Изтрий бележка',
-  deleteSelectedDayTypesButtonLabel: 'Изтрий избраните типове дни',
+  deleteSelectedDayTypesButtonLabel: 'Изтрий избраните календари',
   serviceJourneyDeleteTitle: 'Изтрий услуга',
   flexibleStopPlacesDeleteStopPlaceErrorHeader: 'Изтрий спирка',
   flexibleStopPlacesDeleteStopPlaceSuccessHeader: 'Изтрий спирка',
@@ -237,8 +237,8 @@ export const messages = {
   newServiceJourneyModalPlaceholder: 'Напр. "планински маршрут уикенд"',
   editorEdit: 'Редактирай',
   editorEditBrandingHeaderText: 'Редактирай брандинг',
-  dayTypesModalTitle: 'Редактирай типове дни',
-  dayTypesEditButton: 'Редактирай типове дни',
+  dayTypesModalTitle: 'Редактирай календари',
+  dayTypesEditButton: 'Редактирай календари',
   editorEditHeader: 'Редактирай спирка по желание',
   editorEditLineHeader: 'Редактирай линия',
   editorEditNetworkHeaderText: 'Редактирай мрежа',
@@ -259,7 +259,7 @@ export const messages = {
   passingTimesInfo: 'Въведете времена на преминаване за спирките.',
   uttuErrorENTITY_IS_REFERENCED:
     'Обектът не може да бъде изтрит, защото данните се използват за други събития {noOfLines, number} other {noOfLines, plural, one {entity has a reference} other {entities have references}} to it.',
-  deleteDayTypesErrorTitle: 'Грешка при изтриване на типове дни',
+  deleteDayTypesErrorTitle: 'Грешка при изтриване на календари',
   saveProviderError: 'Грешка при запазване на превозвач',
   viewerHeader: 'Извличане',
   exportCreatorDescription:
@@ -626,7 +626,7 @@ export const messages = {
   viewerToDateLabel: 'Крайна дата',
   exportCreatorToDateFormLabel: 'Крайна дата *',
   dayTypeEditorNameFieldLabelTooltip:
-    'За идентифициране на типовете дни в Nplan',
+    'За идентифициране на календарите в Nplan',
   bookingLabel:
     'За улесняване на резервацията препоръчваме да попълните телефон, URL и бележка.',
   validateFormErrorExportFromDateIsAfterToDate:
