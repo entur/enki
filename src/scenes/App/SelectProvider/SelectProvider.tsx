@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { setActiveProviderCode } from '../../../auth/userContextSlice';
 import { sortProviders } from '../../../model/Provider';
 import { Dropdown } from '@entur/dropdown';
@@ -13,7 +12,7 @@ export const SelectProvider = () => {
     (state) => state.userContext,
   );
   const { formatMessage } = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleActiveProviderChange = (providerCode: string | undefined) => {
     const provider = providers?.find((p) => p.code === providerCode);

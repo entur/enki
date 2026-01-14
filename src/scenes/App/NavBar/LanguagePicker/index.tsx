@@ -3,14 +3,14 @@ import { CheckIcon, DownArrowIcon, UpArrowIcon } from '@entur/icons';
 import { updateLocale } from 'i18n/intlSlice';
 import { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { useConfig } from 'config/ConfigContext';
+import { useAppDispatch } from 'store/hooks';
 import FlagIcon from 'components/FlagIcon';
 import { getLanguagePickerLocaleMessageKey, Locale } from 'i18n';
 
 const LanguagePicker = () => {
   const [toggled, setToggle] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { formatMessage, locale: selectedLocale } = useIntl();
   const { supportedLocales } = useConfig();
 

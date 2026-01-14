@@ -66,7 +66,9 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export type AppThunk<ReturnType = void> = ThunkAction<
+// AppThunk type for async thunk action creators
+// Default return type is Promise<void> since most thunks are async functions
+export type AppThunk<ReturnType = Promise<void>> = ThunkAction<
   ReturnType,
   RootState,
   unknown,

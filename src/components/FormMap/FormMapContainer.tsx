@@ -3,9 +3,8 @@ import { MapContainer, LayersControl, ZoomControl } from 'react-leaflet';
 import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 import { DynamicTileLayer } from './DynamicTileLayer';
-import { useDispatch } from 'react-redux';
 import { setActiveMapBaseLayer } from '../../auth/userContextSlice';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ACTIVE_MAP_BASELAYER } from '../../actions/constants';
 import {
   DEFAULT_OSM_TILE,
@@ -28,7 +27,7 @@ const FormMapContainer = ({
   const activeMapBaseLayer = useAppSelector(
     (state) => state.userContext.activeMapBaseLayer,
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const defaultTileLayers = [DEFAULT_OSM_TILE];
   const center = mapConfig?.center || DEFAULT_CENTER;
   const zoom = mapConfig?.zoom || DEFAULT_ZOOM_LEVEL;

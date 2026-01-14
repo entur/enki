@@ -1,7 +1,7 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from './store';
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
-type DispatchFunc = () => AppDispatch;
-export const useAppDispatch: DispatchFunc = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+// Using .withTypes() for proper TypeScript support with thunks (React Redux v9.1.0+)
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();

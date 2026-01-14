@@ -7,7 +7,7 @@ import { FdsNavigationComponent } from '../../Fds/FdsNavigationComponent';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Locale } from '../../../../i18n';
 import { updateLocale } from '../../../../i18n/intlSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../../store/hooks';
 
 interface NavbarProps {
   items: FdsNavigationItem[];
@@ -26,7 +26,7 @@ const Navbar = ({
   children,
   isSelectedItemStatic,
 }: NavbarProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState<

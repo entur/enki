@@ -14,8 +14,8 @@ import usePristine from 'hooks/usePristine';
 import { Export, ExportLineAssociation, newExport } from 'model/Export';
 import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../store/hooks';
 import './styles.scss';
 import { exportIsValid } from './validateForm';
 import { useConfig } from '../../../config/ConfigContext';
@@ -35,7 +35,7 @@ const ExportsCreator = () => {
   );
   const { hideExportDryRun } = useConfig();
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const namePristine = usePristine(theExport.name, saveClicked);
 
