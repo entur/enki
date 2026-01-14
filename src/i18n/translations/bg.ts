@@ -705,4 +705,39 @@ export const messages = {
   passingTimesEditorError: 'Необходими са валидни времена на преминаване.',
   noProvidersDescriptionText:
     'За да инсталирате Nplan се изисква поне един превозвач',
+
+  // Day Types - Navigation
+  navBarDayTypesMenuItemLabel: 'Типове дни',
+
+  // Day Types - List page
+  dayTypesHeaderText: 'Типове дни',
+  dayTypesCreateDayTypeButtonLabel: 'Създай тип ден',
+  dayTypesLoadingText: 'Зареждане на типове дни...',
+  dayTypesNameTableHeader: 'Име',
+  dayTypesWeekdaysTableHeader: 'Дни от седмицата',
+  dayTypesInUseTableHeader: 'В употреба',
+  dayTypesNoDayTypesFoundText: 'Не са намерени типове дни.',
+  dayTypesDeleteConfirmDialogTitle: 'Изтрий тип ден',
+  dayTypesDeleteConfirmDialogMessage:
+    'Сигурни ли сте, че искате да изтриете този тип ден?',
+
+  // Day Types - Editor page
+  dayTypesCreateDayTypeHeader: 'Създай тип ден',
+  dayTypesEditDayTypeHeader: 'Редактирай тип ден',
+  dayTypesEditorDescription:
+    'Типовете дни определят кога услугите са достъпни. Изберете дни от седмицата и периоди за наличност на услугата.',
+  dayTypesSavingDayTypeText: 'Запазване на тип ден...',
+  dayTypesDeletingDayTypeText: 'Изтриване на тип ден...',
+  dayTypesLoadingDayTypeText: 'Зареждане на тип ден...',
+  dayType: 'тип ден',
+
+  // Day Types - Notifications
+  dayTypesLoadDayTypesErrorTitle: 'Зареждане на типове дни',
+  dayTypesLoadDayTypeErrorTitle: 'Зареждане на тип ден',
+  dayTypesSaveDayTypeSuccessTitle: 'Запазване на тип ден',
+  dayTypesSaveDayTypeSuccessMessage: 'Типът ден беше запазен.',
+  dayTypesSaveDayTypeErrorTitle: 'Запазване на тип ден',
+  dayTypesDeleteDayTypeSuccessTitle: 'Изтриване на тип ден',
+  dayTypesDeleteDayTypeSuccessMessage: 'Типът ден беше изтрит.',
+  dayTypesDeleteDayTypeErrorTitle: 'Изтриване на тип ден',
 };

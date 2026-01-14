@@ -710,4 +710,39 @@ export const messages: MessagesKey = {
   copyInstance: 'en kopia',
   journeyPatternDuplicateNameValidationError:
     'Journey pattern måste ha ett unikt namn',
+
+  // Day Types - Navigation
+  navBarDayTypesMenuItemLabel: 'Dagtyper',
+
+  // Day Types - List page
+  dayTypesHeaderText: 'Dagtyper',
+  dayTypesCreateDayTypeButtonLabel: 'Skapa dagtyp',
+  dayTypesLoadingText: 'Laddar dagtyper...',
+  dayTypesNameTableHeader: 'Namn',
+  dayTypesWeekdaysTableHeader: 'Veckodagar',
+  dayTypesInUseTableHeader: 'Används',
+  dayTypesNoDayTypesFoundText: 'Inga dagtyper hittades.',
+  dayTypesDeleteConfirmDialogTitle: 'Ta bort dagtyp',
+  dayTypesDeleteConfirmDialogMessage:
+    'Är du säker på att du vill ta bort denna dagtyp?',
+
+  // Day Types - Editor page
+  dayTypesCreateDayTypeHeader: 'Skapa dagtyp',
+  dayTypesEditDayTypeHeader: 'Redigera dagtyp',
+  dayTypesEditorDescription:
+    'Dagtyper definierar när tjänster är tillgängliga. Välj veckodagar och datumintervall för tjänstens tillgänglighet.',
+  dayTypesSavingDayTypeText: 'Sparar dagtyp...',
+  dayTypesDeletingDayTypeText: 'Tar bort dagtyp...',
+  dayTypesLoadingDayTypeText: 'Laddar dagtyp...',
+  dayType: 'dagtyp',
+
+  // Day Types - Notifications
+  dayTypesLoadDayTypesErrorTitle: 'Ladda dagtyper',
+  dayTypesLoadDayTypeErrorTitle: 'Ladda dagtyp',
+  dayTypesSaveDayTypeSuccessTitle: 'Spara dagtyp',
+  dayTypesSaveDayTypeSuccessMessage: 'Dagtypen sparades.',
+  dayTypesSaveDayTypeErrorTitle: 'Spara dagtyp',
+  dayTypesDeleteDayTypeSuccessTitle: 'Ta bort dagtyp',
+  dayTypesDeleteDayTypeSuccessMessage: 'Dagtypen togs bort.',
+  dayTypesDeleteDayTypeErrorTitle: 'Ta bort dagtyp',
 };

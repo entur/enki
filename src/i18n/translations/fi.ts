@@ -716,4 +716,39 @@ export const messages: MessagesKey = {
   copyInstance: 'kopio',
   journeyPatternDuplicateNameValidationError:
     'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
+
+  // Day Types - Navigation
+  navBarDayTypesMenuItemLabel: 'Päivätyypit',
+
+  // Day Types - List page
+  dayTypesHeaderText: 'Päivätyypit',
+  dayTypesCreateDayTypeButtonLabel: 'Luo päivätyyppi',
+  dayTypesLoadingText: 'Ladataan päivätyyppejä...',
+  dayTypesNameTableHeader: 'Nimi',
+  dayTypesWeekdaysTableHeader: 'Viikonpäivät',
+  dayTypesInUseTableHeader: 'Käytössä',
+  dayTypesNoDayTypesFoundText: 'Päivätyyppejä ei löytynyt.',
+  dayTypesDeleteConfirmDialogTitle: 'Poista päivätyyppi',
+  dayTypesDeleteConfirmDialogMessage:
+    'Haluatko varmasti poistaa tämän päivätyypin?',
+
+  // Day Types - Editor page
+  dayTypesCreateDayTypeHeader: 'Luo päivätyyppi',
+  dayTypesEditDayTypeHeader: 'Muokkaa päivätyyppiä',
+  dayTypesEditorDescription:
+    'Päivätyypit määrittävät milloin palvelut ovat saatavilla. Valitse viikonpäivät ja päivämäärävälit palvelun saatavuudelle.',
+  dayTypesSavingDayTypeText: 'Tallennetaan päivätyyppiä...',
+  dayTypesDeletingDayTypeText: 'Poistetaan päivätyyppiä...',
+  dayTypesLoadingDayTypeText: 'Ladataan päivätyyppiä...',
+  dayType: 'päivätyyppi',
+
+  // Day Types - Notifications
+  dayTypesLoadDayTypesErrorTitle: 'Lataa päivätyypit',
+  dayTypesLoadDayTypeErrorTitle: 'Lataa päivätyyppi',
+  dayTypesSaveDayTypeSuccessTitle: 'Tallenna päivätyyppi',
+  dayTypesSaveDayTypeSuccessMessage: 'Päivätyyppi tallennettiin.',
+  dayTypesSaveDayTypeErrorTitle: 'Tallenna päivätyyppi',
+  dayTypesDeleteDayTypeSuccessTitle: 'Poista päivätyyppi',
+  dayTypesDeleteDayTypeSuccessMessage: 'Päivätyyppi poistettiin.',
+  dayTypesDeleteDayTypeErrorTitle: 'Poista päivätyyppi',
 };

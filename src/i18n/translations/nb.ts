@@ -710,4 +710,39 @@ export const messages = {
   copyInstance: 'en kopi',
   journeyPatternDuplicateNameValidationError:
     'Journey patternet må ha et unikt navn',
+
+  // Day Types - Navigation
+  navBarDayTypesMenuItemLabel: 'Dagtyper',
+
+  // Day Types - List page
+  dayTypesHeaderText: 'Dagtyper',
+  dayTypesCreateDayTypeButtonLabel: 'Opprett dagtype',
+  dayTypesLoadingText: 'Laster dagtyper...',
+  dayTypesNameTableHeader: 'Navn',
+  dayTypesWeekdaysTableHeader: 'Ukedager',
+  dayTypesInUseTableHeader: 'I bruk',
+  dayTypesNoDayTypesFoundText: 'Ingen dagtyper funnet.',
+  dayTypesDeleteConfirmDialogTitle: 'Slett dagtype',
+  dayTypesDeleteConfirmDialogMessage:
+    'Er du sikker på at du vil slette denne dagtypen?',
+
+  // Day Types - Editor page
+  dayTypesCreateDayTypeHeader: 'Opprett dagtype',
+  dayTypesEditDayTypeHeader: 'Rediger dagtype',
+  dayTypesEditorDescription:
+    'Dagtyper definerer når tjenester er tilgjengelige. Velg ukedager og datoperioder for tjenestens tilgjengelighet.',
+  dayTypesSavingDayTypeText: 'Lagrer dagtype...',
+  dayTypesDeletingDayTypeText: 'Sletter dagtype...',
+  dayTypesLoadingDayTypeText: 'Laster dagtype...',
+  dayType: 'dagtype',
+
+  // Day Types - Notifications
+  dayTypesLoadDayTypesErrorTitle: 'Laste dagtyper',
+  dayTypesLoadDayTypeErrorTitle: 'Laste dagtype',
+  dayTypesSaveDayTypeSuccessTitle: 'Lagre dagtype',
+  dayTypesSaveDayTypeSuccessMessage: 'Dagtypen ble lagret.',
+  dayTypesSaveDayTypeErrorTitle: 'Lagre dagtype',
+  dayTypesDeleteDayTypeSuccessTitle: 'Slette dagtype',
+  dayTypesDeleteDayTypeSuccessMessage: 'Dagtypen ble slettet.',
+  dayTypesDeleteDayTypeErrorTitle: 'Slette dagtype',
 };
