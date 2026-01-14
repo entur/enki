@@ -12,9 +12,8 @@ import usePristine from 'hooks/usePristine';
 import Provider from 'model/Provider';
 import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams, Link } from 'react-router-dom';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import './styles.scss';
 import { RootState } from '../../../store/store';
 import { fetchUserContext } from '../../../auth/userContextSlice';
@@ -49,7 +48,7 @@ const ProviderEditor = () => {
 
   const namePristine = usePristine(provider.name, saveClicked);
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const onFieldChange = (field: keyof Provider, value: string) => {
     setProvider({ ...provider, [field]: value });

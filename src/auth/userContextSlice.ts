@@ -2,7 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Provider from '../model/Provider';
 import { UttuQuery } from '../api';
 import { getUserContextQuery } from '../api/uttu/queries';
-import { ACTIVE_PROVIDER, ACTIVE_MAP_BASELAYER } from '../actions/constants';
+
+// Local storage keys
+export const ACTIVE_PROVIDER = 'ACTIVE_PROVIDER';
+export const ACTIVE_MAP_BASELAYER = 'ACTIVE_MAP_BASELAYER';
 
 export interface UserContext {
   preferredName: string;

@@ -14,9 +14,8 @@ import Loading from 'components/Loading';
 import { Branding } from 'model/Branding';
 import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
 import './styles.scss';
@@ -33,7 +32,7 @@ const Brandings = () => {
   );
   const organisations = useAppSelector((state) => state.organisations);
   const brandings = useAppSelector((state) => state.brandings);
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(loadBrandings());

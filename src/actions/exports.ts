@@ -6,50 +6,19 @@ import { AppThunk } from 'store/store';
 import { getInternationalizedUttuError } from 'helpers/uttu';
 import { Export, toPayload } from 'model/Export';
 import { IntlShape } from 'react-intl';
-import { RECEIVE_EXPORT, RECEIVE_EXPORTS, REQUEST_EXPORTS } from './constants';
+import {
+  requestExports,
+  receiveExports,
+  receiveExport,
+} from '../reducers/exportsSlice';
 
-// Action type definitions
-export type RequestExportsAction = {
-  type: typeof REQUEST_EXPORTS;
-};
-
-export type ReceiveExportsAction = {
-  type: typeof RECEIVE_EXPORTS;
-  exports: Export[];
-};
-
-export type ReceiveExportAction = {
-  type: typeof RECEIVE_EXPORT;
-  export: Export;
-};
-
-export type ExportsAction =
-  | RequestExportsAction
-  | ReceiveExportsAction
-  | ReceiveExportAction;
-
-const requestExportsActionCreator = (): RequestExportsAction => ({
-  type: REQUEST_EXPORTS,
-});
-
-const receiveExportsActionCreator = (
-  exports: Export[],
-): ReceiveExportsAction => ({
-  type: RECEIVE_EXPORTS,
-  exports,
-});
-
-const receiveExportActionCreator = (
-  receivedExport: Export,
-): ReceiveExportAction => ({
-  type: RECEIVE_EXPORT,
-  export: receivedExport,
-});
+// Re-export actions from slice
+export { requestExports, receiveExports, receiveExport };
 
 export const loadExports =
   (intl: IntlShape): AppThunk =>
   async (dispatch, getState) => {
-    dispatch(requestExportsActionCreator());
+    dispatch(requestExports());
 
     const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
@@ -64,7 +33,7 @@ export const loadExports =
         },
         await getState().auth.getAccessToken(),
       );
-      dispatch(receiveExportsActionCreator(data.exports));
+      dispatch(receiveExports(data.exports));
     } catch (e) {
       dispatch(
         showErrorNotification(
@@ -96,7 +65,7 @@ export const loadExportById =
         { id },
         await getState().auth.getAccessToken(),
       );
-      dispatch(receiveExportActionCreator(data.export));
+      dispatch(receiveExport(data.export));
     } catch (e) {
       dispatch(
         showErrorNotification(

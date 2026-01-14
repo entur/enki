@@ -18,10 +18,9 @@ import usePristine from 'hooks/usePristine';
 import { Branding } from 'model/Branding';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import './styles.scss';
 
 const getCurrentBrandingSelector = (params: Params) => (state: GlobalState) =>
@@ -48,7 +47,7 @@ const BrandingEditor = () => {
 
   const namePristine = usePristine(branding.name, saveClicked);
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const onFieldChange = (field: keyof Branding, value: string) => {
     setBranding({ ...branding, [field]: value });

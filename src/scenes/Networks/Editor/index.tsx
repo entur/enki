@@ -22,10 +22,9 @@ import { Network } from 'model/Network';
 import { filterAuthorities } from 'model/Organisation';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import './styles.scss';
 
 const getCurrentNetworkSelector = (params: Params) => (state: GlobalState) =>
@@ -56,7 +55,7 @@ const NetworkEditor = () => {
   const namePristine = usePristine(network.name, saveClicked);
   const authorityPristine = usePristine(network.authorityRef, saveClicked);
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const dispatchLoadFlexibleLines = useCallback(
     () => dispatch(loadFlexibleLines(intl)),

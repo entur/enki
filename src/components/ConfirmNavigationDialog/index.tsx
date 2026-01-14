@@ -1,8 +1,8 @@
 import { PrimaryButton, SecondaryButton } from '@entur/button';
 import { setSavedChanges } from 'actions/editor';
 import ConfirmDialog from 'components/ConfirmDialog';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'store/hooks';
 
 type NavigateConfirmProps = {
   hideDialog: () => void;
@@ -14,7 +14,7 @@ type NavigateConfirmProps = {
 };
 
 const NavigateConfirmBox = (props: NavigateConfirmProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 

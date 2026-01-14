@@ -8,35 +8,10 @@ import { getNetworkByIdQuery, getNetworksQuery } from 'api/uttu/queries';
 import { AppThunk } from 'store/store';
 import { UttuError, getStyledUttuError } from 'helpers/uttu';
 import { Network } from 'model/Network';
-import { RECEIVE_NETWORK, RECEIVE_NETWORKS } from './constants';
+import { receiveNetworks, receiveNetwork } from '../reducers/networksSlice';
 
-// Action type definitions
-export type ReceiveNetworksAction = {
-  type: typeof RECEIVE_NETWORKS;
-  networks: Network[];
-};
-
-export type ReceiveNetworkAction = {
-  type: typeof RECEIVE_NETWORK;
-  network: Network;
-};
-
-export type NetworksAction = ReceiveNetworksAction | ReceiveNetworkAction;
-
-// Action creators
-const receiveNetworksActionCreator = (
-  networks: Network[],
-): ReceiveNetworksAction => ({
-  type: RECEIVE_NETWORKS,
-  networks,
-});
-
-const receiveNetworkActionCreator = (
-  network: Network,
-): ReceiveNetworkAction => ({
-  type: RECEIVE_NETWORK,
-  network,
-});
+// Re-export actions from slice
+export { receiveNetworks, receiveNetwork };
 
 export const loadNetworks = (): AppThunk => async (dispatch, getState) => {
   try {
@@ -47,7 +22,7 @@ export const loadNetworks = (): AppThunk => async (dispatch, getState) => {
       {},
       await getState().auth.getAccessToken(),
     );
-    dispatch(receiveNetworksActionCreator(data.networks));
+    dispatch(receiveNetworks(data.networks));
     return data.networks;
   } catch (e) {
     dispatch(
@@ -74,7 +49,7 @@ export const loadNetworkById =
         { id },
         await getState().auth.getAccessToken(),
       );
-      dispatch(receiveNetworkActionCreator(data.network));
+      dispatch(receiveNetwork(data.network));
     } catch (e) {
       dispatch(
         showErrorNotification(

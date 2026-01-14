@@ -15,9 +15,8 @@ import Line, { lineToPayload } from 'model/Line';
 import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
 import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Navigate, useMatch, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import LineEditorSteps from './LineEditorSteps';
 import { FIXED_LINE_STEPS } from './constants';
 import { useLine, useUttuErrors } from './hooks';
@@ -34,7 +33,7 @@ export default () => {
   const [isDeleting, setDeleting] = useState(false);
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
   const organisations = useAppSelector((state) => state.organisations);
   const editor = useAppSelector((state) => state.editor);
 

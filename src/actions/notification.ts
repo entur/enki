@@ -1,66 +1,31 @@
-import { SHOW_NOTIFICATION } from './constants';
+import {
+  showNotification,
+  NotificationDuration,
+  NotificationTypes,
+} from '../reducers/notificationSlice';
 
-export enum NotificationTypes {
-  SUCCESS = 'success',
-  ERROR = 'error',
-  WARNING = 'warning',
-  INFO = 'info',
-}
+// Re-export enums and base action
+export { NotificationDuration, NotificationTypes, showNotification };
 
-/* Values are in ms */
-export enum NotificationDuration {
-  SHORT = 2000,
-  LONG = 5000,
-  VERY_LONG = 10000,
-}
-
-export type ShowNotificationAction = {
-  type: typeof SHOW_NOTIFICATION;
-  payload: {
-    message: string;
-    title: string;
-    type: NotificationTypes;
-    duration: NotificationDuration;
-    showModal: boolean;
-  };
-};
-
-export type NotificationAction = ShowNotificationAction;
-
-export const showNotification = (
-  title: string,
-  message: string,
-  type: NotificationTypes,
-  duration: NotificationDuration,
-  showModal?: boolean,
-): ShowNotificationAction => ({
-  type: SHOW_NOTIFICATION,
-  payload: {
-    message,
-    title,
-    type,
-    duration,
-    showModal: showModal ?? false,
-  },
-});
-
+// Helper action creators
 export const showSuccessNotification = (
   title: string,
   message: string,
   showModal?: boolean,
 ) =>
-  showNotification(
+  showNotification({
     title,
     message,
-    NotificationTypes.SUCCESS,
-    NotificationDuration.LONG,
-    showModal,
-  );
+    type: NotificationTypes.SUCCESS,
+    duration: NotificationDuration.LONG,
+    showModal: showModal ?? false,
+  });
 
 export const showErrorNotification = (title: string, message: string) =>
-  showNotification(
+  showNotification({
     title,
     message,
-    NotificationTypes.ERROR,
-    NotificationDuration.VERY_LONG,
-  );
+    type: NotificationTypes.ERROR,
+    duration: NotificationDuration.VERY_LONG,
+    showModal: false,
+  });

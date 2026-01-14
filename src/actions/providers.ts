@@ -5,41 +5,15 @@ import { AppThunk } from 'store/store';
 import { UttuError, getStyledUttuError } from 'helpers/uttu';
 import Provider from 'model/Provider';
 import { showErrorNotification } from './notification';
+import {
+  receiveProviders,
+  failedReceivingProviders,
+} from '../reducers/providersSlice';
 
 import { IntlShape } from 'react-intl';
-import { FAILED_RECEIVING_PROVIDERS, RECEIVE_PROVIDERS } from './constants';
 
-// Type definitions for providers actions
-export type ReceiveProvidersAction = {
-  type: typeof RECEIVE_PROVIDERS;
-  payload: {
-    providers: Provider[];
-    activeCode?: string | null;
-  };
-};
-
-export type FailedReceivingProvidersAction = {
-  type: typeof FAILED_RECEIVING_PROVIDERS;
-};
-
-export type ProvidersAction =
-  | ReceiveProvidersAction
-  | FailedReceivingProvidersAction;
-
-const receiveProviders = (
-  providers: Provider[],
-  activeCode?: string | null,
-): ReceiveProvidersAction => ({
-  type: RECEIVE_PROVIDERS,
-  payload: {
-    providers,
-    activeCode,
-  },
-});
-
-const failedReceivingProviders: FailedReceivingProvidersAction = {
-  type: FAILED_RECEIVING_PROVIDERS,
-};
+// Re-export actions from slice
+export { receiveProviders, failedReceivingProviders };
 
 export const getProviders = (): AppThunk => async (dispatch, getState) => {
   return UttuQuery(
@@ -53,8 +27,8 @@ export const getProviders = (): AppThunk => async (dispatch, getState) => {
       dispatch(receiveProviders(data.providers));
       return Promise.resolve();
     })
-    .catch((e) => {
-      dispatch(failedReceivingProviders);
+    .catch(() => {
+      dispatch(failedReceivingProviders());
       return Promise.reject();
     });
 };
