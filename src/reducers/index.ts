@@ -11,6 +11,7 @@ import networks, { NetworksState } from './networksSlice';
 import organisations, { OrganisationState } from './organisationsSlice';
 import providers, { ProvidersState } from './providersSlice';
 import brandings, { BrandingsState } from './brandingsSlice';
+import dayTypes, { DayTypesState } from './dayTypesSlice';
 
 export type GlobalState = {
   notification: NotificationState;
@@ -20,6 +21,7 @@ export type GlobalState = {
   exports: ExportsState;
   networks: NetworksState;
   brandings: BrandingsState;
+  dayTypes: DayTypesState;
   flexibleLines: FlexibleLinesState;
   flexibleStopPlaces: FlexibleStopPlacesState;
   editor: EditorState;
@@ -33,6 +35,7 @@ const reducers = {
   exports,
   networks,
   brandings,
+  dayTypes,
   flexibleLines,
   flexibleStopPlaces,
   editor,
