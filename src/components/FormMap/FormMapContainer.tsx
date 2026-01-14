@@ -3,9 +3,11 @@ import { MapContainer, LayersControl, ZoomControl } from 'react-leaflet';
 import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 import { DynamicTileLayer } from './DynamicTileLayer';
-import { setActiveMapBaseLayer } from '../../auth/userContextSlice';
+import {
+  setActiveMapBaseLayer,
+  ACTIVE_MAP_BASELAYER,
+} from '../../auth/userContextSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { ACTIVE_MAP_BASELAYER } from '../../actions/constants';
 import {
   DEFAULT_OSM_TILE,
   DEFAULT_CENTER,

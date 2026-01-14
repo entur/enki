@@ -1,7 +1,7 @@
 import { usePrevious } from 'helpers/hooks';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Notification as NotificationType } from 'reducers/notification';
+import { Notification as NotificationType } from 'reducers/notificationSlice';
 
 import { GlobalState } from 'reducers';
 import NotificationStack from './NotificationStack';

@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useIntl } from 'react-intl';
-import { setActiveProviderCode } from '../../../auth/userContextSlice';
+import {
+  setActiveProviderCode,
+  ACTIVE_PROVIDER,
+} from '../../../auth/userContextSlice';
 import { sortProviders } from '../../../model/Provider';
 import { Dropdown } from '@entur/dropdown';
-import { ACTIVE_PROVIDER } from '../../../actions/constants';
 
 export const SelectProvider = () => {
   const navigate = useNavigate();

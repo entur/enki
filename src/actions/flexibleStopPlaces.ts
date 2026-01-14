@@ -17,65 +17,24 @@ import FlexibleStopPlace from 'model/FlexibleStopPlace';
 import { Dispatch } from 'react';
 import { IntlShape } from 'react-intl';
 import {
-  RECEIVE_FLEXIBLE_STOP_PLACE,
-  RECEIVE_FLEXIBLE_STOP_PLACES,
-  REQUEST_FLEXIBLE_STOP_PLACE,
-  REQUEST_FLEXIBLE_STOP_PLACES,
-} from './constants';
+  requestFlexibleStopPlaces,
+  receiveFlexibleStopPlaces,
+  requestFlexibleStopPlace,
+  receiveFlexibleStopPlace,
+} from '../reducers/flexibleStopPlacesSlice';
 
-// Action type definitions
-export type RequestFlexibleStopPlacesAction = {
-  type: typeof REQUEST_FLEXIBLE_STOP_PLACES;
+// Re-export actions from slice
+export {
+  requestFlexibleStopPlaces,
+  receiveFlexibleStopPlaces,
+  requestFlexibleStopPlace,
+  receiveFlexibleStopPlace,
 };
-
-export type ReceiveFlexibleStopPlacesAction = {
-  type: typeof RECEIVE_FLEXIBLE_STOP_PLACES;
-  stopPlaces: FlexibleStopPlace[];
-};
-
-export type RequestFlexibleStopPlaceAction = {
-  type: typeof REQUEST_FLEXIBLE_STOP_PLACE;
-};
-
-export type ReceiveFlexibleStopPlaceAction = {
-  type: typeof RECEIVE_FLEXIBLE_STOP_PLACE;
-  stopPlace: FlexibleStopPlace;
-};
-
-export type FlexibleStopPlacesAction =
-  | RequestFlexibleStopPlacesAction
-  | ReceiveFlexibleStopPlacesAction
-  | RequestFlexibleStopPlaceAction
-  | ReceiveFlexibleStopPlaceAction;
-
-const requestFlexibleStopPlacesActionCreator =
-  (): RequestFlexibleStopPlacesAction => ({
-    type: REQUEST_FLEXIBLE_STOP_PLACES,
-  });
-
-const receiveFlexibleStopPlacesActionCreator = (
-  stopPlaces: FlexibleStopPlace[],
-): ReceiveFlexibleStopPlacesAction => ({
-  type: RECEIVE_FLEXIBLE_STOP_PLACES,
-  stopPlaces,
-});
-
-const requestFlexibleStopPlaceActionCreator =
-  (): RequestFlexibleStopPlaceAction => ({
-    type: REQUEST_FLEXIBLE_STOP_PLACE,
-  });
-
-const receiveFlexibleStopPlaceActionCreator = (
-  stopPlace: FlexibleStopPlace,
-): ReceiveFlexibleStopPlaceAction => ({
-  type: RECEIVE_FLEXIBLE_STOP_PLACE,
-  stopPlace,
-});
 
 export const loadFlexibleStopPlaces =
   (intl: IntlShape) =>
   async (dispatch: Dispatch<any>, getState: () => RootState) => {
-    dispatch(requestFlexibleStopPlacesActionCreator());
+    dispatch(requestFlexibleStopPlaces());
 
     const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
@@ -89,7 +48,7 @@ export const loadFlexibleStopPlaces =
         await getState().auth.getAccessToken(),
       );
       const flexibleStopPlaces = data.flexibleStopPlaces;
-      dispatch(receiveFlexibleStopPlacesActionCreator(flexibleStopPlaces));
+      dispatch(receiveFlexibleStopPlaces(flexibleStopPlaces));
     } catch (e) {
       dispatch(
         showErrorNotification(
@@ -110,7 +69,7 @@ export const loadFlexibleStopPlaces =
 export const loadFlexibleStopPlaceById =
   (id: string, intl: IntlShape) =>
   async (dispatch: Dispatch<any>, getState: () => RootState) => {
-    dispatch(requestFlexibleStopPlaceActionCreator());
+    dispatch(requestFlexibleStopPlace());
 
     const activeProvider = getState().userContext.activeProviderCode ?? '';
     const uttuApiUrl = getState().config.uttuApiUrl;
@@ -123,7 +82,7 @@ export const loadFlexibleStopPlaceById =
         { id },
         await getState().auth.getAccessToken(),
       );
-      dispatch(receiveFlexibleStopPlaceActionCreator(data.flexibleStopPlace));
+      dispatch(receiveFlexibleStopPlace(data.flexibleStopPlace));
     } catch (e) {
       dispatch(
         showErrorNotification(

@@ -8,34 +8,10 @@ import { getBrandingByIdQuery, getBrandingsQuery } from 'api/uttu/queries';
 import { AppThunk } from 'store/store';
 import { UttuError, getStyledUttuError } from 'helpers/uttu';
 import { Branding } from 'model/Branding';
-import { RECEIVE_BRANDING, RECEIVE_BRANDINGS } from './constants';
+import { receiveBrandings, receiveBranding } from '../reducers/brandingsSlice';
 
-// Action type definitions
-export type ReceiveBrandingsAction = {
-  type: typeof RECEIVE_BRANDINGS;
-  brandings: Branding[];
-};
-
-export type ReceiveBrandingAction = {
-  type: typeof RECEIVE_BRANDING;
-  branding: Branding;
-};
-
-export type BrandingsAction = ReceiveBrandingsAction | ReceiveBrandingAction;
-
-const receiveBrandingsActionCreator = (
-  brandings: Branding[],
-): ReceiveBrandingsAction => ({
-  type: RECEIVE_BRANDINGS,
-  brandings,
-});
-
-const receiveBrandingActionCreator = (
-  branding: Branding,
-): ReceiveBrandingAction => ({
-  type: RECEIVE_BRANDING,
-  branding,
-});
+// Re-export actions from slice
+export { receiveBrandings, receiveBranding };
 
 export const loadBrandings = (): AppThunk => async (dispatch, getState) => {
   try {
@@ -46,7 +22,7 @@ export const loadBrandings = (): AppThunk => async (dispatch, getState) => {
       {},
       await getState().auth.getAccessToken(),
     );
-    dispatch(receiveBrandingsActionCreator(data.brandings));
+    dispatch(receiveBrandings(data.brandings));
     return data.brandings;
   } catch (e) {
     dispatch(
@@ -73,7 +49,7 @@ export const loadBrandingById =
         { id },
         await getState().auth.getAccessToken(),
       );
-      dispatch(receiveBrandingActionCreator(data.branding));
+      dispatch(receiveBranding(data.branding));
     } catch (e) {
       dispatch(
         showErrorNotification(

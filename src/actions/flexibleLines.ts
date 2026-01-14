@@ -19,35 +19,13 @@ import { getInternationalizedUttuError } from 'helpers/uttu';
 import FlexibleLine, { flexibleLineToPayload } from 'model/FlexibleLine';
 import { Dispatch } from 'react';
 import { IntlShape } from 'react-intl';
-import { RECEIVE_FLEXIBLE_LINE, RECEIVE_FLEXIBLE_LINES } from './constants';
+import {
+  receiveFlexibleLines,
+  receiveFlexibleLine,
+} from '../reducers/flexibleLinesSlice';
 
-export type ReceiveFlexibleLinesAction = {
-  type: typeof RECEIVE_FLEXIBLE_LINES;
-  lines: FlexibleLine[];
-};
-
-export type ReceiveFlexibleLineAction = {
-  type: typeof RECEIVE_FLEXIBLE_LINE;
-  line: FlexibleLine;
-};
-
-export type FlexibleLinesAction =
-  | ReceiveFlexibleLineAction
-  | ReceiveFlexibleLinesAction;
-
-const receiveFlexibleLinesActionCreator = (
-  lines: FlexibleLine[],
-): ReceiveFlexibleLinesAction => ({
-  type: RECEIVE_FLEXIBLE_LINES,
-  lines,
-});
-
-const receiveFlexibleLineActionCreator = (
-  line: FlexibleLine,
-): ReceiveFlexibleLineAction => ({
-  type: RECEIVE_FLEXIBLE_LINE,
-  line,
-});
+// Re-export actions from slice
+export { receiveFlexibleLines, receiveFlexibleLine };
 
 export const loadFlexibleLines =
   (intl: IntlShape) =>
@@ -62,7 +40,7 @@ export const loadFlexibleLines =
         {},
         await getState().auth.getAccessToken(),
       );
-      dispatch(receiveFlexibleLinesActionCreator(flexibleLines));
+      dispatch(receiveFlexibleLines(flexibleLines));
     } catch (e) {
       dispatch(
         showErrorNotification(
@@ -100,7 +78,7 @@ export const loadFlexibleLineById =
         await getState().auth.getAccessToken(),
       );
 
-      dispatch(receiveFlexibleLineActionCreator(flexibleLine ?? line ?? {}));
+      dispatch(receiveFlexibleLine(flexibleLine ?? line ?? {}));
     } catch (e) {
       dispatch(
         showErrorNotification(

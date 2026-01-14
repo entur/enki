@@ -1,5 +1,4 @@
-import { NotificationDuration } from 'actions/notification';
-import { Notification } from 'reducers/notification';
+import { Notification, NotificationDuration } from 'reducers/notificationSlice';
 import StackedNotification from './StackedNotification';
 import ModalNote from './StackedNotification/Note/ModalNote';
 

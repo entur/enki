@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { NotificationDuration, NotificationTypes } from 'actions/notification';
-import { Notification } from 'reducers/notification';
+import {
+  Notification,
+  NotificationDuration,
+  NotificationTypes,
+} from 'reducers/notificationSlice';
 import Note from './Note';
 
 type Props = Notification & {
