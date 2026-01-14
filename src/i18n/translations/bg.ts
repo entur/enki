@@ -707,37 +707,37 @@ export const messages = {
     'За да инсталирате Nplan се изисква поне един превозвач',
 
   // Day Types - Navigation
-  navBarDayTypesMenuItemLabel: 'Типове дни',
+  navBarDayTypesMenuItemLabel: 'Календари',
 
   // Day Types - List page
-  dayTypesHeaderText: 'Типове дни',
-  dayTypesCreateDayTypeButtonLabel: 'Създай тип ден',
-  dayTypesLoadingText: 'Зареждане на типове дни...',
+  dayTypesHeaderText: 'Календари',
+  dayTypesCreateDayTypeButtonLabel: 'Създай календар',
+  dayTypesLoadingText: 'Зареждане на календари...',
   dayTypesNameTableHeader: 'Име',
   dayTypesWeekdaysTableHeader: 'Дни от седмицата',
   dayTypesInUseTableHeader: 'В употреба',
-  dayTypesNoDayTypesFoundText: 'Не са намерени типове дни.',
-  dayTypesDeleteConfirmDialogTitle: 'Изтрий тип ден',
+  dayTypesNoDayTypesFoundText: 'Не са намерени календари.',
+  dayTypesDeleteConfirmDialogTitle: 'Изтрий календар',
   dayTypesDeleteConfirmDialogMessage:
-    'Сигурни ли сте, че искате да изтриете този тип ден?',
+    'Сигурни ли сте, че искате да изтриете този календар?',
 
   // Day Types - Editor page
-  dayTypesCreateDayTypeHeader: 'Създай тип ден',
-  dayTypesEditDayTypeHeader: 'Редактирай тип ден',
+  dayTypesCreateDayTypeHeader: 'Създай календар',
+  dayTypesEditDayTypeHeader: 'Редактирай календар',
   dayTypesEditorDescription:
-    'Типовете дни определят кога услугите са достъпни. Изберете дни от седмицата и периоди за наличност на услугата.',
-  dayTypesSavingDayTypeText: 'Запазване на тип ден...',
-  dayTypesDeletingDayTypeText: 'Изтриване на тип ден...',
-  dayTypesLoadingDayTypeText: 'Зареждане на тип ден...',
-  dayType: 'тип ден',
+    'Календарите определят кога услугите са достъпни. Изберете дни от седмицата и периоди за наличност на услугата.',
+  dayTypesSavingDayTypeText: 'Запазване на календар...',
+  dayTypesDeletingDayTypeText: 'Изтриване на календар...',
+  dayTypesLoadingDayTypeText: 'Зареждане на календар...',
+  dayType: 'календар',
 
   // Day Types - Notifications
-  dayTypesLoadDayTypesErrorTitle: 'Зареждане на типове дни',
-  dayTypesLoadDayTypeErrorTitle: 'Зареждане на тип ден',
-  dayTypesSaveDayTypeSuccessTitle: 'Запазване на тип ден',
-  dayTypesSaveDayTypeSuccessMessage: 'Типът ден беше запазен.',
-  dayTypesSaveDayTypeErrorTitle: 'Запазване на тип ден',
-  dayTypesDeleteDayTypeSuccessTitle: 'Изтриване на тип ден',
-  dayTypesDeleteDayTypeSuccessMessage: 'Типът ден беше изтрит.',
-  dayTypesDeleteDayTypeErrorTitle: 'Изтриване на тип ден',
+  dayTypesLoadDayTypesErrorTitle: 'Зареждане на календари',
+  dayTypesLoadDayTypeErrorTitle: 'Зареждане на календар',
+  dayTypesSaveDayTypeSuccessTitle: 'Запазване на календар',
+  dayTypesSaveDayTypeSuccessMessage: 'Календарът беше запазен.',
+  dayTypesSaveDayTypeErrorTitle: 'Запазване на календар',
+  dayTypesDeleteDayTypeSuccessTitle: 'Изтриване на календар',
+  dayTypesDeleteDayTypeSuccessMessage: 'Календарът беше изтрит.',
+  dayTypesDeleteDayTypeErrorTitle: 'Изтриване на календар',
 };

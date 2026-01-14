@@ -718,37 +718,37 @@ export const messages: MessagesKey = {
     'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
 
   // Day Types - Navigation
-  navBarDayTypesMenuItemLabel: 'Päivätyypit',
+  navBarDayTypesMenuItemLabel: 'Kalenterit',
 
   // Day Types - List page
-  dayTypesHeaderText: 'Päivätyypit',
-  dayTypesCreateDayTypeButtonLabel: 'Luo päivätyyppi',
-  dayTypesLoadingText: 'Ladataan päivätyyppejä...',
+  dayTypesHeaderText: 'Kalenterit',
+  dayTypesCreateDayTypeButtonLabel: 'Luo kalenteri',
+  dayTypesLoadingText: 'Ladataan kalentereita...',
   dayTypesNameTableHeader: 'Nimi',
   dayTypesWeekdaysTableHeader: 'Viikonpäivät',
   dayTypesInUseTableHeader: 'Käytössä',
-  dayTypesNoDayTypesFoundText: 'Päivätyyppejä ei löytynyt.',
-  dayTypesDeleteConfirmDialogTitle: 'Poista päivätyyppi',
+  dayTypesNoDayTypesFoundText: 'Kalentereita ei löytynyt.',
+  dayTypesDeleteConfirmDialogTitle: 'Poista kalenteri',
   dayTypesDeleteConfirmDialogMessage:
-    'Haluatko varmasti poistaa tämän päivätyypin?',
+    'Haluatko varmasti poistaa tämän kalenterin?',
 
   // Day Types - Editor page
-  dayTypesCreateDayTypeHeader: 'Luo päivätyyppi',
-  dayTypesEditDayTypeHeader: 'Muokkaa päivätyyppiä',
+  dayTypesCreateDayTypeHeader: 'Luo kalenteri',
+  dayTypesEditDayTypeHeader: 'Muokkaa kalenteria',
   dayTypesEditorDescription:
-    'Päivätyypit määrittävät milloin palvelut ovat saatavilla. Valitse viikonpäivät ja päivämäärävälit palvelun saatavuudelle.',
-  dayTypesSavingDayTypeText: 'Tallennetaan päivätyyppiä...',
-  dayTypesDeletingDayTypeText: 'Poistetaan päivätyyppiä...',
-  dayTypesLoadingDayTypeText: 'Ladataan päivätyyppiä...',
-  dayType: 'päivätyyppi',
+    'Kalenterit määrittävät milloin palvelut ovat saatavilla. Valitse viikonpäivät ja päivämäärävälit palvelun saatavuudelle.',
+  dayTypesSavingDayTypeText: 'Tallennetaan kalenteria...',
+  dayTypesDeletingDayTypeText: 'Poistetaan kalenteria...',
+  dayTypesLoadingDayTypeText: 'Ladataan kalenteria...',
+  dayType: 'kalenteri',
 
   // Day Types - Notifications
-  dayTypesLoadDayTypesErrorTitle: 'Lataa päivätyypit',
-  dayTypesLoadDayTypeErrorTitle: 'Lataa päivätyyppi',
-  dayTypesSaveDayTypeSuccessTitle: 'Tallenna päivätyyppi',
-  dayTypesSaveDayTypeSuccessMessage: 'Päivätyyppi tallennettiin.',
-  dayTypesSaveDayTypeErrorTitle: 'Tallenna päivätyyppi',
-  dayTypesDeleteDayTypeSuccessTitle: 'Poista päivätyyppi',
-  dayTypesDeleteDayTypeSuccessMessage: 'Päivätyyppi poistettiin.',
-  dayTypesDeleteDayTypeErrorTitle: 'Poista päivätyyppi',
+  dayTypesLoadDayTypesErrorTitle: 'Lataa kalenterit',
+  dayTypesLoadDayTypeErrorTitle: 'Lataa kalenteri',
+  dayTypesSaveDayTypeSuccessTitle: 'Tallenna kalenteri',
+  dayTypesSaveDayTypeSuccessMessage: 'Kalenteri tallennettiin.',
+  dayTypesSaveDayTypeErrorTitle: 'Tallenna kalenteri',
+  dayTypesDeleteDayTypeSuccessTitle: 'Poista kalenteri',
+  dayTypesDeleteDayTypeSuccessMessage: 'Kalenteri poistettiin.',
+  dayTypesDeleteDayTypeErrorTitle: 'Poista kalenteri',
 };

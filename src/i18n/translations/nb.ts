@@ -712,37 +712,37 @@ export const messages = {
     'Journey patternet må ha et unikt navn',
 
   // Day Types - Navigation
-  navBarDayTypesMenuItemLabel: 'Dagtyper',
+  navBarDayTypesMenuItemLabel: 'Kalendere',
 
   // Day Types - List page
-  dayTypesHeaderText: 'Dagtyper',
-  dayTypesCreateDayTypeButtonLabel: 'Opprett dagtype',
-  dayTypesLoadingText: 'Laster dagtyper...',
+  dayTypesHeaderText: 'Kalendere',
+  dayTypesCreateDayTypeButtonLabel: 'Opprett kalender',
+  dayTypesLoadingText: 'Laster kalendere...',
   dayTypesNameTableHeader: 'Navn',
   dayTypesWeekdaysTableHeader: 'Ukedager',
   dayTypesInUseTableHeader: 'I bruk',
-  dayTypesNoDayTypesFoundText: 'Ingen dagtyper funnet.',
-  dayTypesDeleteConfirmDialogTitle: 'Slett dagtype',
+  dayTypesNoDayTypesFoundText: 'Ingen kalendere funnet.',
+  dayTypesDeleteConfirmDialogTitle: 'Slett kalender',
   dayTypesDeleteConfirmDialogMessage:
-    'Er du sikker på at du vil slette denne dagtypen?',
+    'Er du sikker på at du vil slette denne kalenderen?',
 
   // Day Types - Editor page
-  dayTypesCreateDayTypeHeader: 'Opprett dagtype',
-  dayTypesEditDayTypeHeader: 'Rediger dagtype',
+  dayTypesCreateDayTypeHeader: 'Opprett kalender',
+  dayTypesEditDayTypeHeader: 'Rediger kalender',
   dayTypesEditorDescription:
-    'Dagtyper definerer når tjenester er tilgjengelige. Velg ukedager og datoperioder for tjenestens tilgjengelighet.',
-  dayTypesSavingDayTypeText: 'Lagrer dagtype...',
-  dayTypesDeletingDayTypeText: 'Sletter dagtype...',
-  dayTypesLoadingDayTypeText: 'Laster dagtype...',
-  dayType: 'dagtype',
+    'Kalendere definerer når tjenester er tilgjengelige. Velg ukedager og datoperioder for tjenestens tilgjengelighet.',
+  dayTypesSavingDayTypeText: 'Lagrer kalender...',
+  dayTypesDeletingDayTypeText: 'Sletter kalender...',
+  dayTypesLoadingDayTypeText: 'Laster kalender...',
+  dayType: 'kalender',
 
   // Day Types - Notifications
-  dayTypesLoadDayTypesErrorTitle: 'Laste dagtyper',
-  dayTypesLoadDayTypeErrorTitle: 'Laste dagtype',
-  dayTypesSaveDayTypeSuccessTitle: 'Lagre dagtype',
-  dayTypesSaveDayTypeSuccessMessage: 'Dagtypen ble lagret.',
-  dayTypesSaveDayTypeErrorTitle: 'Lagre dagtype',
-  dayTypesDeleteDayTypeSuccessTitle: 'Slette dagtype',
-  dayTypesDeleteDayTypeSuccessMessage: 'Dagtypen ble slettet.',
-  dayTypesDeleteDayTypeErrorTitle: 'Slette dagtype',
+  dayTypesLoadDayTypesErrorTitle: 'Laste kalendere',
+  dayTypesLoadDayTypeErrorTitle: 'Laste kalender',
+  dayTypesSaveDayTypeSuccessTitle: 'Lagre kalender',
+  dayTypesSaveDayTypeSuccessMessage: 'Kalenderen ble lagret.',
+  dayTypesSaveDayTypeErrorTitle: 'Lagre kalender',
+  dayTypesDeleteDayTypeSuccessTitle: 'Slette kalender',
+  dayTypesDeleteDayTypeSuccessMessage: 'Kalenderen ble slettet.',
+  dayTypesDeleteDayTypeErrorTitle: 'Slette kalender',
 };

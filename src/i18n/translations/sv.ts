@@ -712,37 +712,37 @@ export const messages: MessagesKey = {
     'Journey pattern måste ha ett unikt namn',
 
   // Day Types - Navigation
-  navBarDayTypesMenuItemLabel: 'Dagtyper',
+  navBarDayTypesMenuItemLabel: 'Kalendrar',
 
   // Day Types - List page
-  dayTypesHeaderText: 'Dagtyper',
-  dayTypesCreateDayTypeButtonLabel: 'Skapa dagtyp',
-  dayTypesLoadingText: 'Laddar dagtyper...',
+  dayTypesHeaderText: 'Kalendrar',
+  dayTypesCreateDayTypeButtonLabel: 'Skapa kalender',
+  dayTypesLoadingText: 'Laddar kalendrar...',
   dayTypesNameTableHeader: 'Namn',
   dayTypesWeekdaysTableHeader: 'Veckodagar',
   dayTypesInUseTableHeader: 'Används',
-  dayTypesNoDayTypesFoundText: 'Inga dagtyper hittades.',
-  dayTypesDeleteConfirmDialogTitle: 'Ta bort dagtyp',
+  dayTypesNoDayTypesFoundText: 'Inga kalendrar hittades.',
+  dayTypesDeleteConfirmDialogTitle: 'Ta bort kalender',
   dayTypesDeleteConfirmDialogMessage:
-    'Är du säker på att du vill ta bort denna dagtyp?',
+    'Är du säker på att du vill ta bort denna kalender?',
 
   // Day Types - Editor page
-  dayTypesCreateDayTypeHeader: 'Skapa dagtyp',
-  dayTypesEditDayTypeHeader: 'Redigera dagtyp',
+  dayTypesCreateDayTypeHeader: 'Skapa kalender',
+  dayTypesEditDayTypeHeader: 'Redigera kalender',
   dayTypesEditorDescription:
-    'Dagtyper definierar när tjänster är tillgängliga. Välj veckodagar och datumintervall för tjänstens tillgänglighet.',
-  dayTypesSavingDayTypeText: 'Sparar dagtyp...',
-  dayTypesDeletingDayTypeText: 'Tar bort dagtyp...',
-  dayTypesLoadingDayTypeText: 'Laddar dagtyp...',
-  dayType: 'dagtyp',
+    'Kalendrar definierar när tjänster är tillgängliga. Välj veckodagar och datumintervall för tjänstens tillgänglighet.',
+  dayTypesSavingDayTypeText: 'Sparar kalender...',
+  dayTypesDeletingDayTypeText: 'Tar bort kalender...',
+  dayTypesLoadingDayTypeText: 'Laddar kalender...',
+  dayType: 'kalender',
 
   // Day Types - Notifications
-  dayTypesLoadDayTypesErrorTitle: 'Ladda dagtyper',
-  dayTypesLoadDayTypeErrorTitle: 'Ladda dagtyp',
-  dayTypesSaveDayTypeSuccessTitle: 'Spara dagtyp',
-  dayTypesSaveDayTypeSuccessMessage: 'Dagtypen sparades.',
-  dayTypesSaveDayTypeErrorTitle: 'Spara dagtyp',
-  dayTypesDeleteDayTypeSuccessTitle: 'Ta bort dagtyp',
-  dayTypesDeleteDayTypeSuccessMessage: 'Dagtypen togs bort.',
-  dayTypesDeleteDayTypeErrorTitle: 'Ta bort dagtyp',
+  dayTypesLoadDayTypesErrorTitle: 'Ladda kalendrar',
+  dayTypesLoadDayTypeErrorTitle: 'Ladda kalender',
+  dayTypesSaveDayTypeSuccessTitle: 'Spara kalender',
+  dayTypesSaveDayTypeSuccessMessage: 'Kalendern sparades.',
+  dayTypesSaveDayTypeErrorTitle: 'Spara kalender',
+  dayTypesDeleteDayTypeSuccessTitle: 'Ta bort kalender',
+  dayTypesDeleteDayTypeSuccessMessage: 'Kalendern togs bort.',
+  dayTypesDeleteDayTypeErrorTitle: 'Ta bort kalender',
 };
