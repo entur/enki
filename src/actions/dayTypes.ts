@@ -100,7 +100,7 @@ export const deleteDayTypeById =
       await UttuQuery(
         getState().config.uttuApiUrl,
         getState().userContext.activeProviderCode ?? '',
-        DELETE_DAY_TYPE,
+        print(DELETE_DAY_TYPE),
         { id },
         await getState().auth.getAccessToken(),
       );
