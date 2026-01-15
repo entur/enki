@@ -103,12 +103,12 @@ export default (props: Props) => {
 
   const handleOnUnitChange = (unit: string, value: number) => {
     const newDuration = {
-      seconds: unit === 'seconds' ? value : parsedDuration?.seconds,
-      minutes: unit === 'minutes' ? value : parsedDuration?.minutes,
-      hours: unit === 'hours' ? value : parsedDuration?.hours,
-      days: unit === 'days' ? value : parsedDuration?.days,
-      months: unit === 'months' ? value : parsedDuration?.months,
-      years: unit === 'years' ? value : parsedDuration?.years,
+      seconds: unit === 'seconds' ? value : (parsedDuration?.seconds ?? 0),
+      minutes: unit === 'minutes' ? value : (parsedDuration?.minutes ?? 0),
+      hours: unit === 'hours' ? value : (parsedDuration?.hours ?? 0),
+      days: unit === 'days' ? value : (parsedDuration?.days ?? 0),
+      months: unit === 'months' ? value : (parsedDuration?.months ?? 0),
+      years: unit === 'years' ? value : (parsedDuration?.years ?? 0),
     };
 
     onChange(
