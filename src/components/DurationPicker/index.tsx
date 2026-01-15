@@ -114,7 +114,7 @@ export default (props: Props) => {
     onChange(
       resetOnZero && Object.values(newDuration).every((val) => val === 0)
         ? undefined
-        : JSON.stringify(newDuration),
+        : durationLib.toString(newDuration),
     );
   };
 
