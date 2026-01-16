@@ -6,6 +6,7 @@ import ClusterMarker from './ClusterMarker';
 import Quays from './Quay/Quays';
 import StopPlaceMarker from './StopPlaceMarker';
 import { JourneyPatternsMapState, MapSpecs } from './types';
+import { getSelectedQuayIds } from './helpers';
 
 interface MarkersProps {
   mapSpecsState: MapSpecs;
@@ -29,22 +30,55 @@ const Markers = ({
   onStopPointAddedOrDeleted,
 }: MarkersProps) => {
   // Below goes production of the map markers and clusters:
-  const points = useMemo(() => {
-    return stopPlaces.map((stopPlace) => ({
-      type: 'Feature',
-      properties: { cluster: false, stopPlace },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          stopPlace.quays[0].centroid.location.longitude,
-          stopPlace.quays[0].centroid.location.latitude,
-        ],
-      },
-    }));
-  }, [stopPlaces]);
 
+  // First, identify which stop places have selected quays
+  const selectedStopPlaceIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const stopPlace of stopPlaces) {
+      const selectedQuayIds = getSelectedQuayIds(
+        stopPlace.quays,
+        mapState.quayStopPointSequenceIndexes,
+      );
+      if (selectedQuayIds.length > 0) {
+        ids.add(stopPlace.id);
+      }
+    }
+    return ids;
+  }, [stopPlaces, mapState.quayStopPointSequenceIndexes]);
+
+  // Separate stop places into selected (never clustered) and non-selected (clustered)
+  const { nonSelectedPoints, selectedStopPlaces } = useMemo(() => {
+    const nonSelected: Array<{
+      type: string;
+      properties: { cluster: boolean; stopPlace: StopPlace };
+      geometry: { type: string; coordinates: number[] };
+    }> = [];
+    const selected: StopPlace[] = [];
+
+    for (const stopPlace of stopPlaces) {
+      if (selectedStopPlaceIds.has(stopPlace.id)) {
+        selected.push(stopPlace);
+      } else {
+        nonSelected.push({
+          type: 'Feature',
+          properties: { cluster: false, stopPlace },
+          geometry: {
+            type: 'Point',
+            coordinates: [
+              stopPlace.quays[0].centroid.location.longitude,
+              stopPlace.quays[0].centroid.location.latitude,
+            ],
+          },
+        });
+      }
+    }
+
+    return { nonSelectedPoints: nonSelected, selectedStopPlaces: selected };
+  }, [stopPlaces, selectedStopPlaceIds]);
+
+  // Only cluster non-selected stop places; selected ones are rendered separately
   const { clusters } = useSupercluster({
-    points: points as Array<
+    points: nonSelectedPoints as Array<
       Supercluster.PointFeature<{ cluster: boolean; stopPlace: StopPlace }>
     >,
     bounds: mapSpecsState.bounds,
@@ -98,7 +132,8 @@ const Markers = ({
   );
 
   const markers = useMemo(() => {
-    const totalPointCount = points.length;
+    const totalPointCount =
+      nonSelectedPoints.length + selectedStopPlaces.length;
     return clusters.map((cluster) => {
       const [longitude, latitude] = cluster.geometry.coordinates;
       // the point may be either a cluster or a single stop point
@@ -146,6 +181,8 @@ const Markers = ({
     });
   }, [
     clusters,
+    nonSelectedPoints.length,
+    selectedStopPlaces.length,
     mapState.showQuaysState,
     mapState.focusedMarker,
     mapState.hideNonSelectedQuaysState,
