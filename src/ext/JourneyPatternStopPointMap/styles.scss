@@ -70,6 +70,10 @@
   z-index: 300 !important;
 }
 
+.leaflet-div-icon.selected-quay-marker {
+  z-index: 400 !important;
+}
+
 .cluster-marker {
   z-index: 300 !important;
   color: #fff;
