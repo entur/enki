@@ -512,6 +512,11 @@ export const messages = {
   editorDescriptionFormLabelText: 'Beskrivelse',
   editorEditHeader: 'Rediger fleksibelt stoppested',
   errorCoordinates: 'Koordinatene er ikke på rett format',
+  errorCoordinatesEmpty: 'Ingen koordinater oppgitt',
+  errorCoordinatesSelfIntersecting:
+    'Polygonkantene krysser hverandre. Juster formen slik at ingen kanter krysser.',
+  errorCoordinatesSelfIntersectingCount:
+    'Polygonet har {count} selvkryssing(er)',
   editorLoadingDependenciesText: 'Laster inn avhengigheter',
   editorLoadingStopPlaceText: 'Laster inn stoppestedet',
   editorNameFormLabelText: 'Navn *',
