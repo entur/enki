@@ -134,7 +134,9 @@ const Markers = ({
   const markers = useMemo(() => {
     const totalPointCount =
       nonSelectedPoints.length + selectedStopPlaces.length;
-    return clusters.map((cluster) => {
+
+    // Layer 1: Render clustered non-selected stop places
+    const clusteredMarkers = clusters.map((cluster) => {
       const [longitude, latitude] = cluster.geometry.coordinates;
       // the point may be either a cluster or a single stop point
       const { cluster: isCluster, point_count: pointCount } =
@@ -179,10 +181,34 @@ const Markers = ({
         />
       );
     });
+
+    // Layer 2: Render selected stop places (always as individual markers, never clustered)
+    const selectedMarkers = selectedStopPlaces.map((stopPlace) => {
+      // Selected stop places always show quays since they have selected quays
+      return (
+        <Quays
+          key={'selected-quays-wrapper-for-' + stopPlace.id}
+          stopPlace={stopPlace}
+          stopPointSequenceIndexes={mapState.quayStopPointSequenceIndexes}
+          hideNonSelectedQuaysState={
+            mapState.hideNonSelectedQuaysState[stopPlace.id]
+          }
+          deleteStopPoint={deleteStopPoint}
+          addStopPoint={addStopPoint}
+          hideNonSelectedQuays={hideNonSelectedQuays}
+          showQuays={showQuays}
+          focusedMarker={mapState.focusedMarker}
+          clearFocusedMarker={clearFocusedMarker}
+        />
+      );
+    });
+
+    // Combine: clustered first, selected on top
+    return [...clusteredMarkers, ...selectedMarkers];
   }, [
     clusters,
+    selectedStopPlaces,
     nonSelectedPoints.length,
-    selectedStopPlaces.length,
     mapState.showQuaysState,
     mapState.focusedMarker,
     mapState.hideNonSelectedQuaysState,
