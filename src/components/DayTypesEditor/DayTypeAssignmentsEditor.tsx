@@ -65,6 +65,14 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
     return `${y}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
   };
 
+  // Check if date has a valid 4-digit year (1000-9999)
+  // Used to prevent state updates while user is still typing the year
+  const hasValidYear = (date: Date | null | undefined): boolean => {
+    if (!date) return false;
+    const year = date.getFullYear();
+    return year >= 1000 && year <= 9999;
+  };
+
   // Safely parse ISO string to CalendarDate for DatePicker, falling back to today
   const safeParseDate = (isoString: string | null | undefined) => {
     const parsed = parseISOToCalendarDate(isoString);
@@ -83,15 +91,17 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                     label={formatMessage({ id: 'dayTypeEditorFromDate' })}
                     selectedDate={safeParseDate(dta.operatingPeriod.fromDate)}
                     onChange={(date) => {
-                      changeDay(
-                        {
-                          ...dta.operatingPeriod,
-                          fromDate: dateJsToIso(
-                            timeOrDateValueToNativeDate(date!),
-                          ),
-                        },
-                        index,
-                      );
+                      const nativeDate = timeOrDateValueToNativeDate(date!);
+                      // Only update state if year is complete (4 digits)
+                      if (hasValidYear(nativeDate)) {
+                        changeDay(
+                          {
+                            ...dta.operatingPeriod,
+                            fromDate: dateJsToIso(nativeDate),
+                          },
+                          index,
+                        );
+                      }
                     }}
                   />
                 </DataCell>
@@ -109,15 +119,17 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
                     )}
                     selectedDate={safeParseDate(dta.operatingPeriod.toDate)}
                     onChange={(date) => {
-                      changeDay(
-                        {
-                          ...dta.operatingPeriod,
-                          toDate: dateJsToIso(
-                            timeOrDateValueToNativeDate(date!),
-                          ),
-                        },
-                        index,
-                      );
+                      const nativeDate = timeOrDateValueToNativeDate(date!);
+                      // Only update state if year is complete (4 digits)
+                      if (hasValidYear(nativeDate)) {
+                        changeDay(
+                          {
+                            ...dta.operatingPeriod,
+                            toDate: dateJsToIso(nativeDate),
+                          },
+                          index,
+                        );
+                      }
                     }}
                   />
                 </DataCell>
