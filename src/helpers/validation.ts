@@ -13,10 +13,9 @@ import {
   parseTime,
   Time,
   CalendarDateTime,
-  parseDate,
   getDayOfWeek,
 } from '@internationalized/date';
-import { getCurrentDateTime } from 'utils/dates';
+import { getCurrentDateTime, parseISOToCalendarDate } from 'utils/dates';
 
 const addDays = (time: Time, days: number): CalendarDateTime =>
   getCurrentDateTime()
@@ -507,8 +506,13 @@ export const validateDayType = (dayType: DayType) => {
     dayType.daysOfWeek?.map((dow) => WEEKDAYS.indexOf(dow)) || [];
 
   return dayType.dayTypeAssignments.every((dta) => {
-    let from = parseDate(dta.operatingPeriod.fromDate);
-    const to = parseDate(dta.operatingPeriod.toDate);
+    let from = parseISOToCalendarDate(dta.operatingPeriod.fromDate);
+    const to = parseISOToCalendarDate(dta.operatingPeriod.toDate);
+
+    // If dates can't be parsed (e.g., during year editing), treat as invalid
+    if (!from || !to) {
+      return false;
+    }
 
     // Loop while from <= to
     while (from.compare(to) <= 0) {

@@ -16,8 +16,9 @@ export function parseISOToCalendarDate(
   if (!isoString) return null;
   try {
     return parseDate(isoString);
-  } catch (e) {
-    console.error('Failed to parse ISO string to CalendarDate:', e);
+  } catch {
+    // Silently return null for invalid date strings - this is expected
+    // behavior during date field editing (e.g., "202-01-13" while typing)
     return null;
   }
 }
@@ -28,8 +29,9 @@ export function parseISOToCalendarDateTime(
   if (!isoString) return null;
   try {
     return parseDateTime(isoString);
-  } catch (e) {
-    console.error('Failed to parse ISO string to CalendarDateTime:', e);
+  } catch {
+    // Silently return null for invalid datetime strings - this is expected
+    // behavior during datetime field editing
     return null;
   }
 }
