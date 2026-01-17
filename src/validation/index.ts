@@ -17,3 +17,6 @@ export { validateDayType, validateDayTypes } from './dayType';
 
 // Booking arrangement validation
 export { validateBookingArrangement } from './bookingArrangement';
+
+// Passing time validation
+export { validateTimes } from './passingTime';
