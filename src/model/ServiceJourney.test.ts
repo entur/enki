@@ -10,6 +10,7 @@ import {
   createTime,
   resetIdCounters,
 } from 'test/factories';
+import { BOOKING_METHOD, PURCHASE_WHEN } from './enums';
 
 describe('serviceJourneyToPayload', () => {
   beforeEach(() => {
@@ -334,8 +335,8 @@ describe('serviceJourneyToPayload', () => {
       const sj = createServiceJourney({
         bookingArrangement: {
           bookingContact: { phone: '12345678' },
-          bookingMethods: ['callOffice'],
-          bookWhen: 'untilPreviousDay',
+          bookingMethods: [BOOKING_METHOD.CALL_OFFICE],
+          bookWhen: PURCHASE_WHEN.UNTIL_PREVIOUS_DAY,
           latestBookingTime: createTime(12, 0),
         },
       });
@@ -344,8 +345,8 @@ describe('serviceJourneyToPayload', () => {
 
       expect(result.bookingArrangement).toEqual({
         bookingContact: { phone: '12345678' },
-        bookingMethods: ['callOffice'],
-        bookWhen: 'untilPreviousDay',
+        bookingMethods: [BOOKING_METHOD.CALL_OFFICE],
+        bookWhen: PURCHASE_WHEN.UNTIL_PREVIOUS_DAY,
         latestBookingTime: createTime(12, 0),
       });
     });
@@ -390,7 +391,7 @@ describe('serviceJourneyToPayload', () => {
         publicCode: 'PUB',
         operatorRef: 'TST:Operator:1',
         bookingArrangement: {
-          bookingMethods: ['callOffice'],
+          bookingMethods: [BOOKING_METHOD.CALL_OFFICE],
         },
         passingTimes: [
           createPassingTime({
@@ -415,7 +416,7 @@ describe('serviceJourneyToPayload', () => {
       expect(result.publicCode).toBe('PUB');
       expect(result.operatorRef).toBe('TST:Operator:1');
       expect(result.bookingArrangement).toEqual({
-        bookingMethods: ['callOffice'],
+        bookingMethods: [BOOKING_METHOD.CALL_OFFICE],
       });
       expect(result.passingTimes).toHaveLength(2);
       expect(result.dayTypesRefs).toEqual(['TST:DayType:1']);

@@ -14,6 +14,7 @@ import {
   createFlexibleStopPointSequence,
   resetIdCounters,
 } from 'test/factories';
+import { DIRECTION_TYPE } from './enums';
 
 describe('journeyPatternToPayload', () => {
   beforeEach(() => {
@@ -395,12 +396,12 @@ describe('journeyPatternToPayload', () => {
 
     it('preserves directionType property', () => {
       const jp = createJourneyPattern({
-        directionType: 'inbound',
+        directionType: DIRECTION_TYPE.INBOUND,
       });
 
       const result = journeyPatternToPayload(jp);
 
-      expect(result.directionType).toBe('inbound');
+      expect(result.directionType).toBe(DIRECTION_TYPE.INBOUND);
     });
 
     it('preserves null values for optional properties', () => {
@@ -453,7 +454,7 @@ describe('journeyPatternToPayload', () => {
         name: 'Full Journey Pattern',
         description: 'Complete test pattern',
         privateCode: 'PRIV',
-        directionType: 'outbound',
+        directionType: DIRECTION_TYPE.OUTBOUND,
         pointsInSequence: createStopPointSequence(3),
         serviceJourneys: [createServiceJourneyWithPassingTimes(3)],
         notices: [{ text: 'Important notice' }],
@@ -465,7 +466,7 @@ describe('journeyPatternToPayload', () => {
       expect(result.name).toBe('Full Journey Pattern');
       expect(result.description).toBe('Complete test pattern');
       expect(result.privateCode).toBe('PRIV');
-      expect(result.directionType).toBe('outbound');
+      expect(result.directionType).toBe(DIRECTION_TYPE.OUTBOUND);
       expect(result.pointsInSequence).toHaveLength(3);
       expect(result.serviceJourneys).toHaveLength(1);
       expect(result.notices).toEqual([{ text: 'Important notice' }]);

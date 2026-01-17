@@ -12,6 +12,17 @@ import {
   resetIdCounters,
 } from 'test/factories';
 import { Branding } from './Branding';
+import { BOOKING_METHOD, PURCHASE_WHEN, PURCHASE_MOMENT } from './enums';
+import BookingArrangement from './BookingArrangement';
+
+// Type helper for flexible line payload which includes flexible-line specific fields
+// The lineToPayload return type doesn't include these fields but they are preserved at runtime
+type FlexibleLinePayload = ReturnType<typeof flexibleLineToPayload> & {
+  flexibleLineType?: FlexibleLineType;
+  bookingArrangement?: BookingArrangement | null;
+  network?: unknown;
+  branding?: unknown;
+};
 
 describe('flexibleLineToPayload', () => {
   beforeEach(() => {
@@ -47,7 +58,7 @@ describe('flexibleLineToPayload', () => {
         FlexibleLineType.FLEXIBLE_AREAS_ONLY,
       );
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.flexibleLineType).toBe(
         FlexibleLineType.FLEXIBLE_AREAS_ONLY,
@@ -59,7 +70,7 @@ describe('flexibleLineToPayload', () => {
         FlexibleLineType.CORRIDOR_SERVICE,
       );
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.flexibleLineType).toBe(FlexibleLineType.CORRIDOR_SERVICE);
     });
@@ -69,7 +80,7 @@ describe('flexibleLineToPayload', () => {
         FlexibleLineType.MAIN_ROUTE_WITH_FLEXIBLE_ENDS,
       );
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.flexibleLineType).toBe(
         FlexibleLineType.MAIN_ROUTE_WITH_FLEXIBLE_ENDS,
@@ -81,7 +92,7 @@ describe('flexibleLineToPayload', () => {
         FlexibleLineType.HAIL_AND_RIDE_SECTIONS,
       );
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.flexibleLineType).toBe(
         FlexibleLineType.HAIL_AND_RIDE_SECTIONS,
@@ -93,7 +104,7 @@ describe('flexibleLineToPayload', () => {
         FlexibleLineType.FIXED_STOP_AREA_WIDE,
       );
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.flexibleLineType).toBe(
         FlexibleLineType.FIXED_STOP_AREA_WIDE,
@@ -103,7 +114,7 @@ describe('flexibleLineToPayload', () => {
     it('preserves MIXED_FLEXIBLE type', () => {
       const line = createFlexibleLineWithType(FlexibleLineType.MIXED_FLEXIBLE);
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.flexibleLineType).toBe(FlexibleLineType.MIXED_FLEXIBLE);
     });
@@ -113,7 +124,7 @@ describe('flexibleLineToPayload', () => {
         FlexibleLineType.MIXED_FLEXIBLE_AND_FIXED,
       );
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.flexibleLineType).toBe(
         FlexibleLineType.MIXED_FLEXIBLE_AND_FIXED,
@@ -123,7 +134,7 @@ describe('flexibleLineToPayload', () => {
     it('preserves FIXED type', () => {
       const line = createFlexibleLineWithType(FlexibleLineType.FIXED);
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.flexibleLineType).toBe(FlexibleLineType.FIXED);
     });
@@ -133,7 +144,7 @@ describe('flexibleLineToPayload', () => {
     it('preserves booking arrangement', () => {
       const line = createFlexibleLineWithBooking();
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.bookingArrangement).toBeDefined();
       expect(result.bookingArrangement?.bookingMethods).toBeDefined();
@@ -144,7 +155,7 @@ describe('flexibleLineToPayload', () => {
         bookingArrangement: null,
       });
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.bookingArrangement).toBeNull();
     });
@@ -156,9 +167,9 @@ describe('flexibleLineToPayload', () => {
           email: 'test@example.com',
           url: 'https://booking.example.com',
         },
-        bookingMethods: ['callOffice', 'online'],
-        bookWhen: 'untilPreviousDay',
-        buyWhen: ['onReservation'],
+        bookingMethods: [BOOKING_METHOD.CALL_OFFICE, BOOKING_METHOD.ONLINE],
+        bookWhen: PURCHASE_WHEN.UNTIL_PREVIOUS_DAY,
+        buyWhen: [PURCHASE_MOMENT.ON_RESERVATION],
         latestBookingTime: '12:00:00',
         minimumBookingPeriod: 'P1D',
         bookingNote: 'Book 24 hours in advance',
@@ -167,7 +178,7 @@ describe('flexibleLineToPayload', () => {
         bookingArrangement,
       });
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.bookingArrangement).toEqual(bookingArrangement);
     });
@@ -177,7 +188,7 @@ describe('flexibleLineToPayload', () => {
     it('removes network object from output', () => {
       const line = createFlexibleLineWithNetwork();
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.network).toBeUndefined();
       expect(result.networkRef).toBe(line.networkRef);
@@ -193,7 +204,7 @@ describe('flexibleLineToPayload', () => {
         brandingRef: branding.id,
       });
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.branding).toBeUndefined();
       expect(result.brandingRef).toBe('TST:Branding:1');
@@ -345,7 +356,7 @@ describe('flexibleLineToPayload', () => {
     it('handles minimal flexible line', () => {
       const line = createEmptyFlexibleLine();
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.flexibleLineType).toBe(
         FlexibleLineType.FLEXIBLE_AREAS_ONLY,
@@ -378,7 +389,7 @@ describe('flexibleLineToPayload', () => {
         notices: [{ text: 'Booking required' }],
       });
 
-      const result = flexibleLineToPayload(line);
+      const result = flexibleLineToPayload(line) as FlexibleLinePayload;
 
       expect(result.id).toBe('TST:FlexibleLine:full');
       expect(result.name).toBe('Full Flexible Line');

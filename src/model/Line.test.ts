@@ -11,6 +11,13 @@ import {
 } from 'test/factories';
 import { Branding } from './Branding';
 
+// Type helper for line payload which includes properties removed during transformation
+// The lineToPayload return type doesn't include these fields but we check they're removed
+type LinePayload = ReturnType<typeof lineToPayload> & {
+  network?: unknown;
+  branding?: unknown;
+};
+
 describe('lineToPayload', () => {
   beforeEach(() => {
     resetIdCounters();
@@ -20,7 +27,7 @@ describe('lineToPayload', () => {
     it('removes network object from output', () => {
       const line = createLineWithNetwork();
 
-      const result = lineToPayload(line);
+      const result = lineToPayload(line) as LinePayload;
 
       expect(result.network).toBeUndefined();
       expect(result.networkRef).toBe(line.networkRef);
@@ -38,7 +45,7 @@ describe('lineToPayload', () => {
         brandingRef: branding.id,
       });
 
-      const result = lineToPayload(line);
+      const result = lineToPayload(line) as LinePayload;
 
       expect(result.branding).toBeUndefined();
       expect(result.brandingRef).toBe('TST:Branding:1');
@@ -57,7 +64,7 @@ describe('lineToPayload', () => {
         brandingRef: branding.id,
       });
 
-      const result = lineToPayload(line);
+      const result = lineToPayload(line) as LinePayload;
 
       expect(result.network).toBeUndefined();
       expect(result.branding).toBeUndefined();
@@ -377,7 +384,7 @@ describe('lineToPayload', () => {
         notices: [{ text: 'Important notice' }],
       });
 
-      const result = lineToPayload(line);
+      const result = lineToPayload(line) as LinePayload;
 
       expect(result.id).toBe('TST:Line:full');
       expect(result.name).toBe('Full Test Line');
