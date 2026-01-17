@@ -2388,4 +2388,1178 @@ describe('validation', () => {
       });
     });
   });
+
+  describe('getMaxAllowedStepIndex', () => {
+    describe('step 0: aboutLineStepIsValid check', () => {
+      it('returns 0 when line name is blank', () => {
+        const line = createLine({
+          name: '',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
+      });
+
+      it('returns 0 when publicCode is blank and optionalPublicCode is false', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
+        expect(getMaxAllowedStepIndex(line, mockIntl, false)).toBe(0);
+      });
+
+      it('allows empty publicCode when optionalPublicCode is true', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl, true)).toBe(3);
+      });
+
+      it('returns 0 when operatorRef is missing', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: '',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
+      });
+
+      it('returns 0 when networkRef is missing', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: '',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
+      });
+
+      it('returns 0 when transportMode is missing', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: null as any,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
+      });
+
+      it('returns 0 when transportSubmode is missing', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: undefined,
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
+      });
+    });
+
+    describe('step 1: journey pattern validation', () => {
+      it('returns 1 when journey pattern has blank name', () => {
+        const jp = createJourneyPattern({ name: '' });
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
+      });
+
+      it('returns 1 when journey pattern has no stop points', () => {
+        const jp = createJourneyPattern({ pointsInSequence: [] });
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
+      });
+
+      it('returns 1 when journey pattern has only 1 stop point', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [createFirstStopPoint()],
+        });
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
+      });
+
+      it('returns 1 when any journey pattern is invalid (multiple patterns)', () => {
+        const validJp = createJourneyPattern();
+        const invalidJp = createJourneyPattern({ name: '' });
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [validJp, invalidJp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
+      });
+
+      it('returns 1 when first stop has invalid boarding settings', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFirstStopPoint(undefined, { forBoarding: false }),
+            createLastStopPoint(),
+          ],
+        });
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
+      });
+    });
+
+    describe('step 2: service journey validation', () => {
+      it('returns 2 when service journey has no name', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: '',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(2);
+      });
+
+      it('returns 2 when service journey has no passing times', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: [],
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(2);
+      });
+
+      it('returns 2 when service journey has no day types', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourney({
+            dayTypes: [],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(2);
+      });
+
+      it('returns 2 when any service journey is invalid in any pattern', () => {
+        const jp1 = createJourneyPattern();
+        jp1.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const jp2 = createJourneyPattern({ name: 'Second Pattern' });
+        jp2.serviceJourneys = [
+          createServiceJourney({
+            name: '', // Invalid
+            dayTypes: [createDayType()],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp1, jp2],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(2);
+      });
+    });
+
+    describe('step 3: all validations pass', () => {
+      it('returns 3 when all validations pass', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(3);
+      });
+
+      it('returns 3 with multiple valid journey patterns', () => {
+        const jp1 = createJourneyPattern();
+        jp1.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const jp2 = createJourneyPattern({ name: 'Return Route' });
+        jp2.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: 'Evening',
+            passingTimes: createPassingTimeSequence(3),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp1, jp2],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(3);
+      });
+
+      it('returns 3 with weekend day types', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourney({
+            dayTypes: [createWeekendDayType()],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Weekend Express',
+          publicCode: 'W1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'expressBus',
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(3);
+      });
+    });
+  });
+
+  describe('getMaxAllowedFlexibleLineStepIndex', () => {
+    describe('step 0: aboutFlexibleLineStepIsValid check', () => {
+      it('returns 0 when flexible line name is blank', () => {
+        const line = createFlexibleLine({
+          name: '',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [createFlexibleJourneyPattern(2)],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(0);
+      });
+
+      it('returns 0 when flexibleLineType is missing', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: null as any,
+          journeyPatterns: [createFlexibleJourneyPattern(2)],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(0);
+      });
+
+      it('returns 0 when publicCode is blank and optionalPublicCode is false', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [createFlexibleJourneyPattern(2)],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(0);
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl, false)).toBe(
+          0,
+        );
+      });
+
+      it('allows empty publicCode when optionalPublicCode is true', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl, true)).toBe(
+          3,
+        );
+      });
+    });
+
+    describe('step 1: flexible journey pattern validation', () => {
+      it('returns 1 when journey pattern has blank name', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          name: '',
+          pointsInSequence: stops,
+        });
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(1);
+      });
+
+      it('returns 1 when flexible stop has no flexibleStopPlaceRef', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFlexibleStopPoint({
+              flexibleStopPlaceRef: null,
+              destinationDisplay: { frontText: 'Destination' },
+            }),
+            createFlexibleStopPoint(),
+          ],
+        });
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(1);
+      });
+
+      it('uses validJourneyPattern for non-FLEXIBLE_AREAS_ONLY types', () => {
+        const jp = createJourneyPattern({ name: '' }); // Invalid due to blank name
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(1);
+      });
+    });
+
+    describe('step 2: service journey validation', () => {
+      it('returns 2 when service journey has no name', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: '',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(2);
+      });
+
+      it('returns 2 when service journey has no day types', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourney({
+            dayTypes: [],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(2);
+      });
+    });
+
+    describe('step 3: all validations pass', () => {
+      it('returns 3 when all validations pass for FLEXIBLE_AREAS_ONLY', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(3);
+      });
+
+      it('returns 3 when all validations pass for CORRIDOR_SERVICE', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(getMaxAllowedFlexibleLineStepIndex(line, mockIntl)).toBe(3);
+      });
+    });
+  });
+
+  describe('currentStepIsValid', () => {
+    describe('step 0: aboutLineStepIsValid', () => {
+      it('returns true when line about step is valid', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(currentStepIsValid(0, line, mockIntl)).toBe(true);
+      });
+
+      it('returns false when line name is blank', () => {
+        const line = createLine({
+          name: '',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(currentStepIsValid(0, line, mockIntl)).toBe(false);
+      });
+
+      it('respects optionalPublicCode parameter', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(currentStepIsValid(0, line, mockIntl, false)).toBe(false);
+        expect(currentStepIsValid(0, line, mockIntl, true)).toBe(true);
+      });
+    });
+
+    describe('step 1: journey patterns validation', () => {
+      it('returns true when all journey patterns are valid', () => {
+        const jp1 = createJourneyPattern();
+        const jp2 = createJourneyPattern({ name: 'Second Route' });
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp1, jp2],
+        });
+        expect(currentStepIsValid(1, line, mockIntl)).toBe(true);
+      });
+
+      it('returns false when any journey pattern has blank name', () => {
+        const jp1 = createJourneyPattern();
+        const jp2 = createJourneyPattern({ name: '' });
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp1, jp2],
+        });
+        expect(currentStepIsValid(1, line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when journey pattern has insufficient stop points', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [createFirstStopPoint()],
+        });
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(currentStepIsValid(1, line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('step 2: service journeys validation', () => {
+      it('returns true when all service journeys are valid', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(currentStepIsValid(2, line, mockIntl)).toBe(true);
+      });
+
+      it('returns false when service journey has blank name', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: '',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(currentStepIsValid(2, line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when service journey has no day types', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourney({
+            dayTypes: [],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(currentStepIsValid(2, line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when service journey has invalid passing times', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: [
+              createFirstStopPassingTime('10:00:00'),
+              createLastStopPassingTime('09:00:00'), // Before first
+            ],
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(currentStepIsValid(2, line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('step 3: always valid', () => {
+      it('returns true for step 3 regardless of line state', () => {
+        const line = createEmptyLine();
+        expect(currentStepIsValid(3, line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for step 3 with fully valid line', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [jp],
+        });
+        expect(currentStepIsValid(3, line, mockIntl)).toBe(true);
+      });
+    });
+
+    describe('invalid step numbers', () => {
+      it('returns false for negative step numbers', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(currentStepIsValid(-1, line, mockIntl)).toBe(false);
+      });
+
+      it('returns false for step numbers greater than 3', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          journeyPatterns: [createJourneyPattern()],
+        });
+        expect(currentStepIsValid(4, line, mockIntl)).toBe(false);
+        expect(currentStepIsValid(100, line, mockIntl)).toBe(false);
+      });
+    });
+  });
+
+  describe('currentFlexibleLineStepIsValid', () => {
+    describe('step 0: aboutFlexibleLineStepIsValid', () => {
+      it('returns true when flexible line about step is valid', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [createFlexibleJourneyPattern(2)],
+        });
+        expect(currentFlexibleLineStepIsValid(0, line, mockIntl)).toBe(true);
+      });
+
+      it('returns false when flexible line name is blank', () => {
+        const line = createFlexibleLine({
+          name: '',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [createFlexibleJourneyPattern(2)],
+        });
+        expect(currentFlexibleLineStepIsValid(0, line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when flexibleLineType is missing', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: null as any,
+          journeyPatterns: [createFlexibleJourneyPattern(2)],
+        });
+        expect(currentFlexibleLineStepIsValid(0, line, mockIntl)).toBe(false);
+      });
+
+      it('respects optionalPublicCode parameter', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [createFlexibleJourneyPattern(2)],
+        });
+        expect(currentFlexibleLineStepIsValid(0, line, mockIntl, false)).toBe(
+          false,
+        );
+        expect(currentFlexibleLineStepIsValid(0, line, mockIntl, true)).toBe(
+          true,
+        );
+      });
+    });
+
+    describe('step 1: flexible journey patterns validation', () => {
+      it('returns true when all flexible journey patterns are valid', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(1, line, mockIntl)).toBe(true);
+      });
+
+      it('returns false when journey pattern has blank name', () => {
+        // Create valid flexible stops with frontText on first stop but blank name
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          name: '',
+          pointsInSequence: stops,
+        });
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(1, line, mockIntl)).toBe(false);
+      });
+
+      it('validates using flexible validation for FLEXIBLE_AREAS_ONLY type', () => {
+        // Flexible areas only requires flexibleStopPlaceRef on all stops
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFlexibleStopPoint({
+              flexibleStopPlaceRef: null, // Invalid for flexible areas
+              destinationDisplay: { frontText: 'Dest' },
+            }),
+            createFlexibleStopPoint(),
+          ],
+        });
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(1, line, mockIntl)).toBe(false);
+      });
+
+      it('validates using standard validation for non-FLEXIBLE_AREAS_ONLY types', () => {
+        const jp = createJourneyPattern(); // Standard journey pattern
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(1, line, mockIntl)).toBe(true);
+      });
+    });
+
+    describe('step 2: service journeys validation', () => {
+      it('returns true when all service journeys are valid', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(2, line, mockIntl)).toBe(true);
+      });
+
+      it('returns false when service journey has blank name', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: '',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(2, line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when service journey has no day types', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourney({
+            dayTypes: [],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(2, line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('step 3: always valid', () => {
+      it('returns true for step 3 regardless of line state', () => {
+        const line = createEmptyFlexibleLine();
+        expect(currentFlexibleLineStepIsValid(3, line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for step 3 with fully valid flexible line', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(3, line, mockIntl)).toBe(true);
+      });
+    });
+
+    describe('invalid step numbers', () => {
+      it('returns false for negative step numbers', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [createFlexibleJourneyPattern(2)],
+        });
+        expect(currentFlexibleLineStepIsValid(-1, line, mockIntl)).toBe(false);
+      });
+
+      it('returns false for step numbers greater than 3', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [createFlexibleJourneyPattern(2)],
+        });
+        expect(currentFlexibleLineStepIsValid(4, line, mockIntl)).toBe(false);
+        expect(currentFlexibleLineStepIsValid(100, line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('different flexible line types', () => {
+      it('validates CORRIDOR_SERVICE correctly', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(0, line, mockIntl)).toBe(true);
+        expect(currentFlexibleLineStepIsValid(1, line, mockIntl)).toBe(true);
+        expect(currentFlexibleLineStepIsValid(2, line, mockIntl)).toBe(true);
+        expect(currentFlexibleLineStepIsValid(3, line, mockIntl)).toBe(true);
+      });
+
+      it('validates MIXED_FLEXIBLE correctly', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Mixed',
+          publicCode: 'MIX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.MIXED_FLEXIBLE,
+          journeyPatterns: [jp],
+        });
+        expect(currentFlexibleLineStepIsValid(0, line, mockIntl)).toBe(true);
+        expect(currentFlexibleLineStepIsValid(1, line, mockIntl)).toBe(true);
+        expect(currentFlexibleLineStepIsValid(2, line, mockIntl)).toBe(true);
+      });
+    });
+  });
 });
