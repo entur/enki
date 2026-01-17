@@ -1,3 +1,4 @@
+import { Branding } from 'model/Branding';
 import Line from 'model/Line';
 import { Network } from 'model/Network';
 import { VEHICLE_MODE } from 'model/enums';
@@ -44,6 +45,22 @@ export const createNetwork = (overrides?: DeepPartial<Network>): Network => {
     description: 'A test network',
     privateCode: undefined,
     authorityRef: 'TST:Authority:1',
+  };
+
+  return deepMerge(defaults, overrides);
+};
+
+/**
+ * Create a Branding for testing
+ */
+export const createBranding = (overrides?: DeepPartial<Branding>): Branding => {
+  const defaults: Branding = {
+    id: createTestId('Branding'),
+    name: 'Test Branding',
+    shortName: 'TB',
+    description: 'A test branding',
+    url: undefined,
+    imageUrl: undefined,
   };
 
   return deepMerge(defaults, overrides);
