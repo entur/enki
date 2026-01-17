@@ -27,7 +27,12 @@ import {
   createServiceJourney,
   createServiceJourneyWithPassingTimes,
   createServiceJourneyWithDayTypes,
+  createJourneyPattern,
+  createFlexibleJourneyPattern,
+  createEmptyJourneyPattern,
+  createMinimalJourneyPattern,
 } from 'test/factories';
+import { FlexibleLineType } from 'model/FlexibleLine';
 import { DAY_OF_WEEK } from 'model/enums';
 import BookingArrangement from 'model/BookingArrangement';
 import {
@@ -1414,6 +1419,342 @@ describe('validation', () => {
           }),
         ];
         expect(validServiceJourneys(sjs, mockIntl)).toBe(true);
+      });
+    });
+  });
+
+  describe('validJourneyPattern', () => {
+    describe('undefined/null input handling', () => {
+      it('returns false when journeyPattern is undefined', () => {
+        expect(validJourneyPattern(undefined)).toBe(false);
+      });
+
+      it('returns false when journeyPattern is null', () => {
+        expect(validJourneyPattern(null as any)).toBe(false);
+      });
+    });
+
+    describe('name validation', () => {
+      it('returns false when name is blank/empty', () => {
+        const jp = createJourneyPattern({ name: '' });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('returns false when name is whitespace only', () => {
+        const jp = createJourneyPattern({ name: '   ' });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('returns false when name is null', () => {
+        const jp = createJourneyPattern({ name: null as any });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('returns true when name is provided', () => {
+        const jp = createJourneyPattern({ name: 'Route A' });
+        expect(validJourneyPattern(jp)).toBe(true);
+      });
+    });
+
+    describe('stop points validation', () => {
+      it('returns false when pointsInSequence is null/empty (coerced to empty array)', () => {
+        // Note: validation uses ?? [] to coerce null/undefined to empty array
+        // Factory's deepMerge skips undefined, so we test with null
+        const jp = createJourneyPattern({
+          pointsInSequence: null as any,
+        });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('returns false when pointsInSequence is empty array', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [],
+        });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('returns false when only 1 stop point (need at least 2)', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [createFirstStopPoint()],
+        });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('returns false when stop points have validation errors', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFirstStopPoint(undefined, {
+              quayRef: null,
+              flexibleStopPlaceRef: null, // Invalid: no stop place ref
+            }),
+            createLastStopPoint(),
+          ],
+        });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('returns true when stop points are valid', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: createStopPointSequence(3),
+        });
+        expect(validJourneyPattern(jp)).toBe(true);
+      });
+    });
+
+    describe('combined validation', () => {
+      it('returns true for default journey pattern from factory', () => {
+        const jp = createJourneyPattern();
+        expect(validJourneyPattern(jp)).toBe(true);
+      });
+
+      it('returns true for minimal journey pattern (2 stops)', () => {
+        const jp = createMinimalJourneyPattern();
+        expect(validJourneyPattern(jp)).toBe(true);
+      });
+
+      it('returns false for empty journey pattern', () => {
+        const jp = createEmptyJourneyPattern();
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('returns false when both name and stop points are invalid', () => {
+        const jp = createJourneyPattern({
+          name: '',
+          pointsInSequence: [],
+        });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('validates journey pattern with many stops', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: createStopPointSequence(10),
+        });
+        expect(validJourneyPattern(jp)).toBe(true);
+      });
+
+      it('validates journey pattern with first stop boarding errors', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFirstStopPoint(undefined, {
+              forBoarding: false, // Invalid: first stop must allow boarding
+            }),
+            createLastStopPoint(),
+          ],
+        });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+
+      it('validates journey pattern with last stop alighting errors', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFirstStopPoint(),
+            createLastStopPoint(undefined, {
+              forAlighting: false, // Invalid: last stop must allow alighting
+            }),
+          ],
+        });
+        expect(validJourneyPattern(jp)).toBe(false);
+      });
+    });
+  });
+
+  describe('validFlexibleLineJourneyPattern', () => {
+    describe('FLEXIBLE_AREAS_ONLY type', () => {
+      it('returns false when journeyPattern is undefined', () => {
+        expect(
+          validFlexibleLineJourneyPattern(
+            undefined,
+            FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          ),
+        ).toBe(false);
+      });
+
+      it('returns false when name is blank', () => {
+        const jp = createFlexibleJourneyPattern(3, { name: '' });
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          ),
+        ).toBe(false);
+      });
+
+      it('returns false when flexible stop point has no flexibleStopPlaceRef', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFlexibleStopPoint({
+              flexibleStopPlaceRef: null, // Invalid
+              destinationDisplay: { frontText: 'Destination' },
+            }),
+            createFlexibleStopPoint(),
+          ],
+        });
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          ),
+        ).toBe(false);
+      });
+
+      it('returns false when first flexible stop has no frontText', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFlexibleStopPoint({
+              destinationDisplay: { frontText: '' }, // Invalid: first stop needs frontText
+            }),
+            createFlexibleStopPoint(),
+          ],
+        });
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          ),
+        ).toBe(false);
+      });
+
+      it('returns true for valid flexible journey pattern', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFlexibleStopPoint({
+              destinationDisplay: { frontText: 'Flexible Area' },
+            }),
+            createFlexibleStopPoint(),
+          ],
+        });
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          ),
+        ).toBe(true);
+      });
+
+      it('returns true with multiple flexible stops', () => {
+        // Create flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(4);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Multi-stop Flexible' },
+        };
+
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          ),
+        ).toBe(true);
+      });
+    });
+
+    describe('non-FLEXIBLE_AREAS_ONLY types (falls back to validJourneyPattern)', () => {
+      it('uses standard validation for CORRIDOR_SERVICE', () => {
+        const jp = createJourneyPattern();
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.CORRIDOR_SERVICE,
+          ),
+        ).toBe(true);
+      });
+
+      it('uses standard validation for MAIN_ROUTE_WITH_FLEXIBLE_ENDS', () => {
+        const jp = createJourneyPattern();
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.MAIN_ROUTE_WITH_FLEXIBLE_ENDS,
+          ),
+        ).toBe(true);
+      });
+
+      it('uses standard validation for HAIL_AND_RIDE_SECTIONS', () => {
+        const jp = createJourneyPattern();
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.HAIL_AND_RIDE_SECTIONS,
+          ),
+        ).toBe(true);
+      });
+
+      it('uses standard validation for FIXED_STOP_AREA_WIDE', () => {
+        const jp = createJourneyPattern();
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.FIXED_STOP_AREA_WIDE,
+          ),
+        ).toBe(true);
+      });
+
+      it('uses standard validation for MIXED_FLEXIBLE', () => {
+        const jp = createJourneyPattern();
+        expect(
+          validFlexibleLineJourneyPattern(jp, FlexibleLineType.MIXED_FLEXIBLE),
+        ).toBe(true);
+      });
+
+      it('uses standard validation for MIXED_FLEXIBLE_AND_FIXED', () => {
+        const jp = createJourneyPattern();
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.MIXED_FLEXIBLE_AND_FIXED,
+          ),
+        ).toBe(true);
+      });
+
+      it('uses standard validation for FIXED', () => {
+        const jp = createJourneyPattern();
+        expect(
+          validFlexibleLineJourneyPattern(jp, FlexibleLineType.FIXED),
+        ).toBe(true);
+      });
+
+      it('returns false for invalid pattern with non-FLEXIBLE_AREAS_ONLY type', () => {
+        const jp = createJourneyPattern({ name: '' });
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.CORRIDOR_SERVICE,
+          ),
+        ).toBe(false);
+      });
+    });
+
+    describe('undefined flexibleLineType', () => {
+      it('uses standard validation when flexibleLineType is undefined', () => {
+        const jp = createJourneyPattern();
+        expect(validFlexibleLineJourneyPattern(jp, undefined)).toBe(true);
+      });
+
+      it('returns false for invalid pattern when flexibleLineType is undefined', () => {
+        const jp = createJourneyPattern({ name: '' });
+        expect(validFlexibleLineJourneyPattern(jp, undefined)).toBe(false);
+      });
+    });
+
+    describe('mixed stop types (quay and flexible)', () => {
+      it('validates journey pattern with mixed stop types for non-FLEXIBLE_AREAS_ONLY', () => {
+        // Mixed stop patterns are valid for corridor service etc.
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFirstStopPoint(), // Quay-based
+            createFlexibleStopPoint(), // Flexible
+            createLastStopPoint(), // Quay-based
+          ],
+        });
+        expect(
+          validFlexibleLineJourneyPattern(
+            jp,
+            FlexibleLineType.CORRIDOR_SERVICE,
+          ),
+        ).toBe(true);
       });
     });
   });
