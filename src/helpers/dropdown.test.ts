@@ -9,15 +9,16 @@ import {
 } from './dropdown';
 import {
   VEHICLE_MODE,
-  VEHICLE_SUBMODE,
   vehicleModeMessages,
   vehicleSubmodeMessages,
+  VEHICLE_SUBMODE_LINK,
 } from '../model/enums';
 import { FlexibleLineType } from 'model/FlexibleLine';
+import { FormatMessage } from 'i18n';
 
 // Mock formatMessage function for i18n-dependent tests
-const mockFormatMessage = (descriptor: { id: string }) =>
-  `translated_${descriptor.id}`;
+const mockFormatMessage = (({ id }: { id: string }) =>
+  `translated_${id}`) as FormatMessage;
 
 describe('dropdown', () => {
   describe('getInit', () => {
@@ -130,17 +131,20 @@ describe('dropdown', () => {
 
   describe('mapVehicleSubmodeAndLabelToItems', () => {
     it('should map vehicle submodes with translated labels', () => {
-      const submodes: VEHICLE_SUBMODE[] = ['localBus', 'expressBus'];
+      // Use actual submodes from VEHICLE_SUBMODE_LINK for BUS mode
+      const busSubmodes = VEHICLE_SUBMODE_LINK[VEHICLE_MODE.BUS];
       const result = mapVehicleSubmodeAndLabelToItems(
-        submodes,
+        busSubmodes,
         mockFormatMessage,
       );
 
-      expect(result).toHaveLength(2);
+      expect(result.length).toBe(busSubmodes.length);
+      // Check that localBus is mapped correctly
       expect(result).toContainEqual({
         value: 'localBus',
         label: `translated_${vehicleSubmodeMessages['localBus']}`,
       });
+      // Check that expressBus is mapped correctly
       expect(result).toContainEqual({
         value: 'expressBus',
         label: `translated_${vehicleSubmodeMessages['expressBus']}`,
