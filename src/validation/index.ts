@@ -20,3 +20,19 @@ export { validateBookingArrangement } from './bookingArrangement';
 
 // Passing time validation
 export { validateTimes } from './passingTime';
+
+// Line validation
+export {
+  validLine,
+  validFlexibleLine,
+  aboutLineStepIsValid,
+  aboutFlexibleLineStepIsValid,
+  validJourneyPattern,
+  validFlexibleLineJourneyPattern,
+  validServiceJourneys,
+  validateServiceJourney,
+  getMaxAllowedStepIndex,
+  getMaxAllowedFlexibleLineStepIndex,
+  currentStepIsValid,
+  currentFlexibleLineStepIsValid,
+} from './line';

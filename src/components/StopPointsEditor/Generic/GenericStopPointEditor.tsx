@@ -4,7 +4,7 @@ import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/c
 import ConfirmDialog from 'components/ConfirmDialog';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { validateStopPoint } from 'helpers/validation';
+import { validateStopPoint } from 'validation';
 import usePristine from 'hooks/usePristine';
 import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
