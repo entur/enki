@@ -113,10 +113,7 @@ describe('validateJourneyPatternName', () => {
     });
 
     it('should handle existing names with only whitespace', () => {
-      const result = validateJourneyPatternName('Route A', [
-        '   ',
-        'Route B',
-      ]);
+      const result = validateJourneyPatternName('Route A', ['   ', 'Route B']);
       expect(result.duplicateName).toBeUndefined();
     });
   });

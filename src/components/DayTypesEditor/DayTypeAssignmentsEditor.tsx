@@ -10,36 +10,17 @@ import DayTypeAssignment from 'model/DayTypeAssignment';
 import OperatingPeriod from 'model/OperatingPeriod';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { getCurrentDate, parseISOToCalendarDate } from '../../utils/dates';
+import {
+  getCurrentDate,
+  hasValidYear,
+  isNotBefore,
+  safeParseDateWithFallback,
+} from '../../utils/dates';
 import './styles.scss';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
   onChange: (dayTypeAssignment: DayTypeAssignment[]) => void;
-};
-
-// Check if CalendarDate has a valid 4-digit year (1000-9999)
-// Used to determine when to sync local date state back to parent ISO string state
-const hasValidYear = (date: CalendarDate | null): boolean => {
-  if (!date) return false;
-  return date.year >= 1000 && date.year <= 9999;
-};
-
-// Safely parse ISO string to CalendarDate, falling back to today
-const safeParseDate = (isoString: string | null | undefined): CalendarDate => {
-  const parsed = parseISOToCalendarDate(isoString);
-  return parsed ?? getCurrentDate();
-};
-
-// Validation: check if toDate is not before fromDate
-const isNotBefore = (toDate: string, fromDate: string): boolean => {
-  const to = parseISOToCalendarDate(toDate);
-  const from = parseISOToCalendarDate(fromDate);
-  // If either date can't be parsed, skip validation (return true = no error)
-  if (!to || !from) {
-    return true;
-  }
-  return to.compare(from) >= 0;
 };
 
 /**
@@ -68,15 +49,15 @@ const DayTypeAssignmentRow = ({
 
   // Local state for DatePicker values - allows showing partial year input
   const [localFromDate, setLocalFromDate] = useState<CalendarDate>(() =>
-    safeParseDate(dta.operatingPeriod.fromDate),
+    safeParseDateWithFallback(dta.operatingPeriod.fromDate),
   );
   const [localToDate, setLocalToDate] = useState<CalendarDate>(() =>
-    safeParseDate(dta.operatingPeriod.toDate),
+    safeParseDateWithFallback(dta.operatingPeriod.toDate),
   );
 
   // Sync local state when parent props change (e.g., external reset or undo)
   useEffect(() => {
-    const parsedFrom = safeParseDate(dta.operatingPeriod.fromDate);
+    const parsedFrom = safeParseDateWithFallback(dta.operatingPeriod.fromDate);
     // Only sync if the parent has a different valid date
     if (
       hasValidYear(parsedFrom) &&
@@ -87,7 +68,7 @@ const DayTypeAssignmentRow = ({
   }, [dta.operatingPeriod.fromDate]);
 
   useEffect(() => {
-    const parsedTo = safeParseDate(dta.operatingPeriod.toDate);
+    const parsedTo = safeParseDateWithFallback(dta.operatingPeriod.toDate);
     // Only sync if the parent has a different valid date
     if (
       hasValidYear(parsedTo) &&
