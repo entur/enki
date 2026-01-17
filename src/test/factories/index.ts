@@ -8,9 +8,9 @@ export * from './bookingArrangement';
 export * from './dayType';
 export * from './stopPoint';
 
-// Phase 3: Composite entities (to be added)
-// export * from './serviceJourney';
-// export * from './journeyPattern';
-// export * from './line';
-// export * from './flexibleLine';
-// export * from './export';
+// Phase 3: Composite entity factories
+export * from './serviceJourney';
+export * from './journeyPattern';
+export * from './line';
+export * from './flexibleLine';
+export * from './export';
