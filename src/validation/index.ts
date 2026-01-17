@@ -11,3 +11,6 @@ export {
   validateFlexibleAreasOnlyStopPoints,
 } from './stopPoint';
 export type { StopPointsFormError } from './stopPoint';
+
+// Day type validation
+export { validateDayType, validateDayTypes } from './dayType';
