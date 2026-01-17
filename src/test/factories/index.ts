@@ -2,14 +2,13 @@
 export * from './types';
 export * from './utils';
 
-// Domain factories will be added in subsequent phases:
-// Phase 2: Leaf entities
-// export * from './passingTime';
-// export * from './stopPoint';
-// export * from './dayType';
-// export * from './bookingArrangement';
+// Phase 2: Leaf entity factories
+export * from './passingTime';
+export * from './bookingArrangement';
+export * from './dayType';
+export * from './stopPoint';
 
-// Phase 3: Composite entities
+// Phase 3: Composite entities (to be added)
 // export * from './serviceJourney';
 // export * from './journeyPattern';
 // export * from './line';
