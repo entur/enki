@@ -24,6 +24,9 @@ import {
   createOperatingPeriod,
   createBookingArrangement,
   createMinimalBookingArrangement,
+  createServiceJourney,
+  createServiceJourneyWithPassingTimes,
+  createServiceJourneyWithDayTypes,
 } from 'test/factories';
 import { DAY_OF_WEEK } from 'model/enums';
 import BookingArrangement from 'model/BookingArrangement';
@@ -1077,6 +1080,340 @@ describe('validation', () => {
           minimumBookingPeriod: 'PT30M',
         };
         expect(validateBookingArrangement(bookingArrangement)).toBe(true);
+      });
+    });
+  });
+
+  describe('validateServiceJourney', () => {
+    describe('name validation', () => {
+      it('returns false when name is null', () => {
+        // Note: Using null since deepMerge skips undefined values
+        const sj = createServiceJourneyWithDayTypes({
+          name: null as any,
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns false when name is empty string', () => {
+        const sj = createServiceJourneyWithDayTypes({
+          name: '',
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns false when name is whitespace only', () => {
+        const sj = createServiceJourneyWithDayTypes({
+          name: '   ',
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns true when name is provided', () => {
+        const sj = createServiceJourneyWithDayTypes({
+          name: 'Morning Express',
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(true);
+      });
+    });
+
+    describe('passing times validation', () => {
+      it('returns false when passingTimes is undefined', () => {
+        const sj = createServiceJourneyWithDayTypes({
+          passingTimes: undefined,
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns false when passingTimes is empty', () => {
+        const sj = createServiceJourneyWithDayTypes({
+          passingTimes: [],
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns false when only one passing time (need at least 2)', () => {
+        const sj = createServiceJourneyWithDayTypes({
+          passingTimes: [createFirstStopPassingTime('09:00:00')],
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns false when passing times have invalid ordering', () => {
+        const sj = createServiceJourneyWithDayTypes({
+          passingTimes: [
+            createFirstStopPassingTime('10:00:00'),
+            createLastStopPassingTime('09:00:00'), // Before first
+          ],
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns true when passing times are valid', () => {
+        const sj = createServiceJourneyWithDayTypes({
+          passingTimes: createPassingTimeSequence(3),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(true);
+      });
+    });
+
+    describe('dayTypes validation', () => {
+      it('returns false when dayTypes is undefined', () => {
+        const sj = createServiceJourney({
+          dayTypes: undefined,
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns false when dayTypes is empty array', () => {
+        const sj = createServiceJourney({
+          dayTypes: [],
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns false when first dayType has empty daysOfWeek', () => {
+        const sj = createServiceJourney({
+          dayTypes: [createDayType({ daysOfWeek: [] })],
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns false when first dayType has null daysOfWeek', () => {
+        // Note: Using null since deepMerge skips undefined values
+        const sj = createServiceJourney({
+          dayTypes: [createDayType({ daysOfWeek: null as any })],
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns false when dayType has invalid date range', () => {
+        const sj = createServiceJourney({
+          dayTypes: [
+            createDayType({
+              dayTypeAssignments: [
+                createDayTypeAssignment({
+                  operatingPeriod: {
+                    fromDate: 'invalid-date',
+                    toDate: '2024-12-31',
+                  },
+                }),
+              ],
+            }),
+          ],
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns true when dayType is valid with daysOfWeek set', () => {
+        const sj = createServiceJourneyWithDayTypes({
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(true);
+      });
+
+      it('returns true when multiple dayTypes are valid', () => {
+        const sj = createServiceJourney({
+          dayTypes: [createDayType(), createWeekendDayType()],
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(true);
+      });
+    });
+
+    describe('validDayTimes check (first dayType daysOfWeek)', () => {
+      it('returns false when first dayType has no daysOfWeek but subsequent ones do', () => {
+        // The validation checks specifically dayTypes?.[0]?.daysOfWeek?.length
+        // So even if second dayType has daysOfWeek, first must have them
+        const sj = createServiceJourney({
+          dayTypes: [
+            createDayType({ daysOfWeek: [] }),
+            createDayType(), // Has valid daysOfWeek
+          ],
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('returns true when first dayType has daysOfWeek', () => {
+        const sj = createServiceJourney({
+          dayTypes: [createDayType()], // Has weekday daysOfWeek by default
+          passingTimes: createPassingTimeSequence(2),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(true);
+      });
+    });
+
+    describe('combined validation', () => {
+      it('returns true for fully valid service journey', () => {
+        const sj = createServiceJourneyWithPassingTimes(4);
+        sj.dayTypes = [createDayType()];
+        expect(validateServiceJourney(sj, mockIntl)).toBe(true);
+      });
+
+      it('returns false when multiple validation rules fail', () => {
+        const sj = createServiceJourney({
+          name: '',
+          dayTypes: [],
+          passingTimes: [],
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(false);
+      });
+
+      it('validates with weekend day type', () => {
+        const sj = createServiceJourney({
+          name: 'Weekend Service',
+          dayTypes: [createWeekendDayType()],
+          passingTimes: createPassingTimeSequence(3),
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(true);
+      });
+
+      it('validates overnight service journey', () => {
+        const sj = createServiceJourney({
+          name: 'Night Service',
+          dayTypes: [createDayType()],
+          passingTimes: [
+            createFirstStopPassingTime('23:00:00'),
+            createPassingTime({
+              arrivalTime: '00:30:00',
+              departureTime: '00:35:00',
+              arrivalDayOffset: 1,
+              departureDayOffset: 1,
+            }),
+            createPassingTime({
+              arrivalTime: '01:00:00',
+              arrivalDayOffset: 1,
+              departureTime: null,
+            }),
+          ],
+        });
+        expect(validateServiceJourney(sj, mockIntl)).toBe(true);
+      });
+    });
+  });
+
+  describe('validServiceJourneys', () => {
+    describe('undefined/empty input handling', () => {
+      it('returns false when serviceJourneys is undefined', () => {
+        expect(validServiceJourneys(undefined, mockIntl)).toBe(false);
+      });
+
+      it('returns true when serviceJourneys is empty array (vacuous truth)', () => {
+        // Note: empty array passes because [].every() returns true
+        // This is similar to validateDayTypes behavior
+        expect(validServiceJourneys([], mockIntl)).toBe(true);
+      });
+    });
+
+    describe('array validation', () => {
+      it('returns true when all service journeys are valid', () => {
+        const sjs = [
+          createServiceJourneyWithDayTypes({
+            name: 'Morning',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+          createServiceJourneyWithDayTypes({
+            name: 'Afternoon',
+            passingTimes: createPassingTimeSequence(3),
+          }),
+        ];
+        expect(validServiceJourneys(sjs, mockIntl)).toBe(true);
+      });
+
+      it('returns false when any service journey is invalid', () => {
+        const sjs = [
+          createServiceJourneyWithDayTypes({
+            name: 'Valid Journey',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+          createServiceJourneyWithDayTypes({
+            name: '', // Invalid: empty name
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        expect(validServiceJourneys(sjs, mockIntl)).toBe(false);
+      });
+
+      it('returns false when first service journey is invalid', () => {
+        const sjs = [
+          createServiceJourneyWithDayTypes({
+            name: '',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+          createServiceJourneyWithDayTypes({
+            name: 'Valid',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        expect(validServiceJourneys(sjs, mockIntl)).toBe(false);
+      });
+
+      it('returns false when last service journey is invalid', () => {
+        const sjs = [
+          createServiceJourneyWithDayTypes({
+            name: 'Valid',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+          createServiceJourneyWithDayTypes({
+            name: 'Also Valid',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+          createServiceJourney({
+            name: 'Invalid - no dayTypes',
+            dayTypes: [],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        expect(validServiceJourneys(sjs, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('single service journey', () => {
+      it('returns true for single valid service journey', () => {
+        const sjs = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        expect(validServiceJourneys(sjs, mockIntl)).toBe(true);
+      });
+
+      it('returns false for single invalid service journey', () => {
+        const sjs = [
+          createServiceJourney({
+            name: 'Missing Day Types',
+            dayTypes: [],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        expect(validServiceJourneys(sjs, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('mixed day types', () => {
+      it('validates journeys with different day types', () => {
+        const sjs = [
+          createServiceJourney({
+            name: 'Weekday Service',
+            dayTypes: [createDayType()], // Mon-Fri
+            passingTimes: createPassingTimeSequence(3),
+          }),
+          createServiceJourney({
+            name: 'Weekend Service',
+            dayTypes: [createWeekendDayType()], // Sat-Sun
+            passingTimes: createPassingTimeSequence(3),
+          }),
+        ];
+        expect(validServiceJourneys(sjs, mockIntl)).toBe(true);
       });
     });
   });
