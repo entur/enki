@@ -31,9 +31,16 @@ import {
   createFlexibleJourneyPattern,
   createEmptyJourneyPattern,
   createMinimalJourneyPattern,
+  createLine,
+  createLineWithNetwork,
+  createFlexibleLine,
+  createFlexibleLineWithNetwork,
+  createFlexibleLineWithType,
+  createEmptyLine,
+  createEmptyFlexibleLine,
 } from 'test/factories';
 import { FlexibleLineType } from 'model/FlexibleLine';
-import { DAY_OF_WEEK } from 'model/enums';
+import { DAY_OF_WEEK, VEHICLE_MODE } from 'model/enums';
 import BookingArrangement from 'model/BookingArrangement';
 import {
   // Time helpers
@@ -1755,6 +1762,629 @@ describe('validation', () => {
             FlexibleLineType.CORRIDOR_SERVICE,
           ),
         ).toBe(true);
+      });
+    });
+  });
+
+  describe('aboutLineStepIsValid', () => {
+    describe('name validation', () => {
+      it('returns false when name is blank', () => {
+        const line = createLine({
+          name: '',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when name is null', () => {
+        const line = createLine({
+          name: null as any,
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when name is whitespace only', () => {
+        const line = createLine({
+          name: '   ',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+    });
+
+    describe('publicCode validation', () => {
+      it('returns false when publicCode is blank and optionalPublicCode is false', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+        expect(aboutLineStepIsValid(line, false)).toBe(false);
+      });
+
+      it('returns true when publicCode is blank but optionalPublicCode is true', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line, true)).toBe(true);
+      });
+
+      it('returns true when publicCode is null but optionalPublicCode is true', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: null as any,
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line, true)).toBe(true);
+      });
+
+      it('returns true when publicCode is provided', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(true);
+      });
+    });
+
+    describe('operatorRef validation', () => {
+      it('returns false when operatorRef is blank', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: '',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when operatorRef is undefined', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: undefined,
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+    });
+
+    describe('networkRef validation', () => {
+      it('returns false when networkRef is blank', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: '',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when networkRef is undefined', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: undefined,
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+    });
+
+    describe('transportMode validation', () => {
+      it('returns false when transportMode is blank', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: '' as any,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when transportMode is null', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: null as any,
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+
+      it('validates with various transport modes', () => {
+        const modes = [
+          VEHICLE_MODE.BUS,
+          VEHICLE_MODE.TRAM,
+          VEHICLE_MODE.RAIL,
+          VEHICLE_MODE.METRO,
+          VEHICLE_MODE.WATER,
+          VEHICLE_MODE.AIR,
+          VEHICLE_MODE.COACH,
+        ];
+
+        modes.forEach((mode) => {
+          const line = createLine({
+            name: 'Test Line',
+            publicCode: '42',
+            operatorRef: 'TST:Operator:1',
+            networkRef: 'TST:Network:1',
+            transportMode: mode,
+            transportSubmode: 'localBus',
+          });
+          expect(aboutLineStepIsValid(line)).toBe(true);
+        });
+      });
+    });
+
+    describe('transportSubmode validation', () => {
+      it('returns false when transportSubmode is blank', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: '' as any,
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when transportSubmode is undefined', () => {
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: undefined,
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+
+      it('validates with various transport submodes', () => {
+        const submodes = [
+          'localBus',
+          'regionalBus',
+          'expressBus',
+          'localTram',
+          'local',
+        ];
+
+        submodes.forEach((submode) => {
+          const line = createLine({
+            name: 'Test Line',
+            publicCode: '42',
+            operatorRef: 'TST:Operator:1',
+            networkRef: 'TST:Network:1',
+            transportMode: VEHICLE_MODE.BUS,
+            transportSubmode: submode as any,
+          });
+          expect(aboutLineStepIsValid(line)).toBe(true);
+        });
+      });
+    });
+
+    describe('combined validation', () => {
+      it('returns true for fully valid line', () => {
+        const line = createLine({
+          name: 'Express 42',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'expressBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns false when multiple fields are invalid', () => {
+        const line = createLine({
+          name: '',
+          publicCode: '',
+          operatorRef: '',
+          networkRef: '',
+          transportMode: undefined as any,
+          transportSubmode: undefined,
+        });
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+
+      it('validates line with network reference from factory', () => {
+        const line = createLineWithNetwork({
+          transportSubmode: 'localBus',
+        });
+        // createLineWithNetwork sets networkRef automatically
+        expect(aboutLineStepIsValid(line)).toBe(false); // Still needs operatorRef
+      });
+
+      it('validates line with all required fields', () => {
+        const line = createLineWithNetwork({
+          operatorRef: 'TST:Operator:1',
+          transportSubmode: 'localBus',
+        });
+        expect(aboutLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns false for empty line', () => {
+        const line = createEmptyLine();
+        expect(aboutLineStepIsValid(line)).toBe(false);
+      });
+    });
+  });
+
+  describe('aboutFlexibleLineStepIsValid', () => {
+    describe('inherits aboutLineStepIsValid checks', () => {
+      it('returns false when name is blank', () => {
+        const line = createFlexibleLine({
+          name: '',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when publicCode is blank and optionalPublicCode is false', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+        expect(aboutFlexibleLineStepIsValid(line, true)).toBe(true);
+      });
+
+      it('returns false when operatorRef is blank', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: '',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when networkRef is blank', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: '',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when transportMode is null', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: null as any,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when transportSubmode is blank', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: undefined,
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+    });
+
+    describe('flexibleLineType validation (unique to flexible lines)', () => {
+      it('returns false when flexibleLineType is blank', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: '' as any,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false when flexibleLineType is null', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: null as any,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns true for FLEXIBLE_AREAS_ONLY type', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns true for CORRIDOR_SERVICE type', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns true for MAIN_ROUTE_WITH_FLEXIBLE_ENDS type', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.MAIN_ROUTE_WITH_FLEXIBLE_ENDS,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns true for HAIL_AND_RIDE_SECTIONS type', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.HAIL_AND_RIDE_SECTIONS,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns true for MIXED_FLEXIBLE type', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.MIXED_FLEXIBLE,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns true for FIXED_STOP_AREA_WIDE type', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FIXED_STOP_AREA_WIDE,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns true for MIXED_FLEXIBLE_AND_FIXED type', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.MIXED_FLEXIBLE_AND_FIXED,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns true for FIXED type', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FIXED,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+    });
+
+    describe('combined validation', () => {
+      it('returns true for fully valid flexible line', () => {
+        const line = createFlexibleLine({
+          name: 'Flex Express',
+          publicCode: 'FLEX42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'demandAndResponseBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns false when multiple fields are invalid', () => {
+        const line = createFlexibleLine({
+          name: '',
+          publicCode: '',
+          operatorRef: '',
+          networkRef: '',
+          transportMode: undefined as any,
+          transportSubmode: undefined,
+          flexibleLineType: undefined as any,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false even with valid flexibleLineType but invalid base fields', () => {
+        const line = createFlexibleLine({
+          name: '',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+
+      it('returns false for valid base fields but missing flexibleLineType', () => {
+        const line = createFlexibleLine({
+          name: 'Valid Name',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: null as any,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+
+      it('validates flexible line with network reference from factory', () => {
+        const line = createFlexibleLineWithNetwork({
+          operatorRef: 'TST:Operator:1',
+          transportSubmode: 'localBus',
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('validates using createFlexibleLineWithType factory', () => {
+        const line = createFlexibleLineWithType(
+          FlexibleLineType.CORRIDOR_SERVICE,
+          {
+            operatorRef: 'TST:Operator:1',
+            networkRef: 'TST:Network:1',
+            transportSubmode: 'localBus',
+          },
+        );
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
+      });
+
+      it('returns false for empty flexible line', () => {
+        const line = createEmptyFlexibleLine();
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
+      });
+    });
+
+    describe('optionalPublicCode parameter', () => {
+      it('allows empty publicCode when optionalPublicCode is true', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line, true)).toBe(true);
+      });
+
+      it('requires publicCode when optionalPublicCode is false', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line, false)).toBe(false);
+      });
+
+      it('defaults to requiring publicCode when optionalPublicCode is not specified', () => {
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus',
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        });
+        expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
       });
     });
   });
