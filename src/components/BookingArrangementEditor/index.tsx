@@ -5,7 +5,7 @@ import { Modal } from '@entur/modal';
 import { Heading3, Heading4, Paragraph } from '@entur/typography';
 import classNames from 'classnames';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { validateBookingArrangement } from 'helpers/validation';
+import { validateBookingArrangement } from 'validation';
 import usePristine from 'hooks/usePristine';
 import cloneDeep from 'lodash.clonedeep';
 import BookingArrangement from 'model/BookingArrangement';

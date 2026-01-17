@@ -10,7 +10,7 @@ import {
   currentStepIsValid,
   getMaxAllowedStepIndex,
   validLine,
-} from 'helpers/validation';
+} from 'validation';
 import Line, { lineToPayload } from 'model/Line';
 import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
 import { useCallback, useEffect, useState } from 'react';

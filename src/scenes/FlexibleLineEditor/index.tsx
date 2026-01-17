@@ -9,7 +9,7 @@ import {
   currentFlexibleLineStepIsValid,
   getMaxAllowedFlexibleLineStepIndex,
   validFlexibleLine,
-} from 'helpers/validation';
+} from 'validation';
 import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
 import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
 import { useEffect, useState } from 'react';

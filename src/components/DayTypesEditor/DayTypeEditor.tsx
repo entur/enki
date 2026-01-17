@@ -8,7 +8,7 @@ import { Heading4 } from '@entur/typography';
 import { DELETE_DAY_TYPE, MUTATE_DAY_TYPE } from 'api/uttu/mutations';
 import WeekdayPicker from 'components/WeekdayPicker';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { validateDayType } from 'helpers/validation';
+import { validateDayType } from 'validation';
 import usePristine from 'hooks/usePristine';
 import DayType, { dayTypeToPayload } from 'model/DayType';
 import { newDayTypeAssignment } from 'model/DayTypeAssignment';
