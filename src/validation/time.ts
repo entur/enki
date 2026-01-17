@@ -9,6 +9,8 @@ const addDays = (time: Time, days: number): CalendarDateTime =>
     .set({
       hour: time.hour,
       minute: time.minute,
+      second: 0,
+      millisecond: 0,
     })
     .add({ days });
 
