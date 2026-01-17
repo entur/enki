@@ -14,3 +14,6 @@ export type { StopPointsFormError } from './stopPoint';
 
 // Day type validation
 export { validateDayType, validateDayTypes } from './dayType';
+
+// Booking arrangement validation
+export { validateBookingArrangement } from './bookingArrangement';
