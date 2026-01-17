@@ -5,8 +5,11 @@ import {
   calendarDateToISO,
   getCurrentDate,
   getCurrentDateTime,
+  hasValidYear,
+  isNotBefore,
   parseISOToCalendarDate,
   parseISOToCalendarDateTime,
+  safeParseDateWithFallback,
 } from './dates';
 
 describe('dates', () => {
@@ -259,6 +262,125 @@ describe('dates', () => {
       expect(result.hour).toBe(23);
       expect(result.minute).toBe(59);
       expect(result.second).toBe(59);
+    });
+  });
+
+  describe('hasValidYear', () => {
+    it('should return true for valid 4-digit year', () => {
+      const date = new CalendarDate(2024, 6, 15);
+      expect(hasValidYear(date)).toBe(true);
+    });
+
+    it('should return true for minimum valid year (1000)', () => {
+      const date = new CalendarDate(1000, 1, 1);
+      expect(hasValidYear(date)).toBe(true);
+    });
+
+    it('should return true for maximum valid year (9999)', () => {
+      const date = new CalendarDate(9999, 12, 31);
+      expect(hasValidYear(date)).toBe(true);
+    });
+
+    it('should return false for null', () => {
+      expect(hasValidYear(null)).toBe(false);
+    });
+
+    it('should return false for 3-digit year', () => {
+      const date = new CalendarDate(999, 1, 1);
+      expect(hasValidYear(date)).toBe(false);
+    });
+
+    // Note: CalendarDate library clamps years above 9999 to 9999,
+    // so we can't test 5-digit years - they become valid 4-digit years
+  });
+
+  describe('isNotBefore', () => {
+    it('should return true when toDate equals fromDate', () => {
+      expect(isNotBefore('2024-06-15', '2024-06-15')).toBe(true);
+    });
+
+    it('should return true when toDate is after fromDate', () => {
+      expect(isNotBefore('2024-06-20', '2024-06-15')).toBe(true);
+    });
+
+    it('should return false when toDate is before fromDate', () => {
+      expect(isNotBefore('2024-06-10', '2024-06-15')).toBe(false);
+    });
+
+    it('should return true for null toDate (skip validation)', () => {
+      expect(isNotBefore(null, '2024-06-15')).toBe(true);
+    });
+
+    it('should return true for null fromDate (skip validation)', () => {
+      expect(isNotBefore('2024-06-15', null)).toBe(true);
+    });
+
+    it('should return true for undefined dates (skip validation)', () => {
+      expect(isNotBefore(undefined, undefined)).toBe(true);
+    });
+
+    it('should return true for invalid date strings (skip validation)', () => {
+      expect(isNotBefore('invalid', '2024-06-15')).toBe(true);
+    });
+
+    it('should handle cross-year comparison', () => {
+      expect(isNotBefore('2025-01-01', '2024-12-31')).toBe(true);
+      expect(isNotBefore('2024-12-31', '2025-01-01')).toBe(false);
+    });
+  });
+
+  describe('safeParseDateWithFallback', () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date('2024-06-15T12:00:00'));
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('should parse valid ISO date string', () => {
+      const result = safeParseDateWithFallback('2024-03-20');
+      expect(result.year).toBe(2024);
+      expect(result.month).toBe(3);
+      expect(result.day).toBe(20);
+    });
+
+    it('should return current date for null input', () => {
+      const result = safeParseDateWithFallback(null);
+      expect(result.year).toBe(2024);
+      expect(result.month).toBe(6);
+      expect(result.day).toBe(15);
+    });
+
+    it('should return current date for undefined input', () => {
+      const result = safeParseDateWithFallback(undefined);
+      expect(result.year).toBe(2024);
+      expect(result.month).toBe(6);
+      expect(result.day).toBe(15);
+    });
+
+    it('should return current date for invalid date string', () => {
+      const result = safeParseDateWithFallback('invalid');
+      expect(result.year).toBe(2024);
+      expect(result.month).toBe(6);
+      expect(result.day).toBe(15);
+    });
+
+    it('should return provided fallback when parsing fails', () => {
+      const fallback = new CalendarDate(2000, 1, 1);
+      const result = safeParseDateWithFallback(null, fallback);
+      expect(result.year).toBe(2000);
+      expect(result.month).toBe(1);
+      expect(result.day).toBe(1);
+    });
+
+    it('should return provided fallback for invalid date', () => {
+      const fallback = new CalendarDate(2000, 1, 1);
+      const result = safeParseDateWithFallback('invalid', fallback);
+      expect(result.year).toBe(2000);
+      expect(result.month).toBe(1);
+      expect(result.day).toBe(1);
     });
   });
 });

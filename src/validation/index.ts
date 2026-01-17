@@ -36,3 +36,10 @@ export {
   currentStepIsValid,
   currentFlexibleLineStepIsValid,
 } from './line';
+
+// Journey pattern name validation
+export {
+  validateJourneyPatternName,
+  getJourneyPatternNames,
+} from './journeyPatternName';
+export type { JourneyPatternNameValidationError } from './journeyPatternName';
