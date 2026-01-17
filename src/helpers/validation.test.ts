@@ -40,7 +40,7 @@ import {
   createEmptyFlexibleLine,
 } from 'test/factories';
 import { FlexibleLineType } from 'model/FlexibleLine';
-import { DAY_OF_WEEK, VEHICLE_MODE } from 'model/enums';
+import { DAY_OF_WEEK, VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 import BookingArrangement from 'model/BookingArrangement';
 import {
   // Time helpers
@@ -1775,7 +1775,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
       });
@@ -1787,7 +1787,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
       });
@@ -1799,7 +1799,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
       });
@@ -1813,7 +1813,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
         expect(aboutLineStepIsValid(line, false)).toBe(false);
@@ -1826,7 +1826,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line, true)).toBe(true);
       });
@@ -1838,7 +1838,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line, true)).toBe(true);
       });
@@ -1850,7 +1850,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(true);
       });
@@ -1864,7 +1864,7 @@ describe('validation', () => {
           operatorRef: '',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
       });
@@ -1876,7 +1876,7 @@ describe('validation', () => {
           operatorRef: undefined,
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
       });
@@ -1890,7 +1890,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: '',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
       });
@@ -1902,7 +1902,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: undefined,
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
       });
@@ -1916,7 +1916,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: '' as any,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
       });
@@ -1928,7 +1928,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: null as any,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(false);
       });
@@ -1951,7 +1951,7 @@ describe('validation', () => {
             operatorRef: 'TST:Operator:1',
             networkRef: 'TST:Network:1',
             transportMode: mode,
-            transportSubmode: 'localBus',
+            transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           });
           expect(aboutLineStepIsValid(line)).toBe(true);
         });
@@ -2014,7 +2014,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'expressBus',
+          transportSubmode: 'expressBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(true);
       });
@@ -2033,7 +2033,7 @@ describe('validation', () => {
 
       it('validates line with network reference from factory', () => {
         const line = createLineWithNetwork({
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         // createLineWithNetwork sets networkRef automatically
         expect(aboutLineStepIsValid(line)).toBe(false); // Still needs operatorRef
@@ -2042,7 +2042,7 @@ describe('validation', () => {
       it('validates line with all required fields', () => {
         const line = createLineWithNetwork({
           operatorRef: 'TST:Operator:1',
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutLineStepIsValid(line)).toBe(true);
       });
@@ -2063,7 +2063,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2076,7 +2076,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2090,7 +2090,7 @@ describe('validation', () => {
           operatorRef: '',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2103,7 +2103,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: '',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2116,7 +2116,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: null as any,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2144,7 +2144,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: '' as any,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2157,7 +2157,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: null as any,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2170,7 +2170,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2183,7 +2183,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2196,7 +2196,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.MAIN_ROUTE_WITH_FLEXIBLE_ENDS,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2209,7 +2209,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.HAIL_AND_RIDE_SECTIONS,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2222,7 +2222,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.MIXED_FLEXIBLE,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2235,7 +2235,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FIXED_STOP_AREA_WIDE,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2248,7 +2248,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.MIXED_FLEXIBLE_AND_FIXED,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2261,7 +2261,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FIXED,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2276,7 +2276,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'demandAndResponseBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2302,7 +2302,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2315,7 +2315,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: null as any,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2324,7 +2324,7 @@ describe('validation', () => {
       it('validates flexible line with network reference from factory', () => {
         const line = createFlexibleLineWithNetwork({
           operatorRef: 'TST:Operator:1',
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
       });
@@ -2335,7 +2335,7 @@ describe('validation', () => {
           {
             operatorRef: 'TST:Operator:1',
             networkRef: 'TST:Network:1',
-            transportSubmode: 'localBus',
+            transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           },
         );
         expect(aboutFlexibleLineStepIsValid(line)).toBe(true);
@@ -2355,7 +2355,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line, true)).toBe(true);
@@ -2368,7 +2368,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line, false)).toBe(false);
@@ -2381,7 +2381,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
         });
         expect(aboutFlexibleLineStepIsValid(line)).toBe(false);
@@ -2398,7 +2398,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
@@ -2411,7 +2411,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
@@ -2431,7 +2431,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl, true)).toBe(3);
@@ -2444,7 +2444,7 @@ describe('validation', () => {
           operatorRef: '',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
@@ -2457,7 +2457,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: '',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
@@ -2470,7 +2470,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: null as any,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(0);
@@ -2499,7 +2499,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
@@ -2513,7 +2513,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
@@ -2529,7 +2529,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
@@ -2544,7 +2544,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [validJp, invalidJp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
@@ -2563,7 +2563,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(1);
@@ -2585,7 +2585,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(2);
@@ -2604,7 +2604,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(2);
@@ -2624,7 +2624,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(2);
@@ -2651,7 +2651,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp1, jp2],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(2);
@@ -2672,7 +2672,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(3);
@@ -2698,7 +2698,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp1, jp2],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(3);
@@ -2718,7 +2718,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'expressBus',
+          transportSubmode: 'expressBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(getMaxAllowedStepIndex(line, mockIntl)).toBe(3);
@@ -2735,7 +2735,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [createFlexibleJourneyPattern(2)],
         });
@@ -2749,7 +2749,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: null as any,
           journeyPatterns: [createFlexibleJourneyPattern(2)],
         });
@@ -2763,7 +2763,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [createFlexibleJourneyPattern(2)],
         });
@@ -2794,7 +2794,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -2822,7 +2822,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -2845,7 +2845,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -2860,7 +2860,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
           journeyPatterns: [jp],
         });
@@ -2891,7 +2891,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -2920,7 +2920,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -2950,7 +2950,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -2970,7 +2970,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
           journeyPatterns: [jp],
         });
@@ -2988,7 +2988,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(currentStepIsValid(0, line, mockIntl)).toBe(true);
@@ -3001,7 +3001,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(currentStepIsValid(0, line, mockIntl)).toBe(false);
@@ -3014,7 +3014,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(currentStepIsValid(0, line, mockIntl, false)).toBe(false);
@@ -3032,7 +3032,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp1, jp2],
         });
         expect(currentStepIsValid(1, line, mockIntl)).toBe(true);
@@ -3047,7 +3047,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp1, jp2],
         });
         expect(currentStepIsValid(1, line, mockIntl)).toBe(false);
@@ -3063,7 +3063,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(currentStepIsValid(1, line, mockIntl)).toBe(false);
@@ -3084,7 +3084,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(currentStepIsValid(2, line, mockIntl)).toBe(true);
@@ -3104,7 +3104,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(currentStepIsValid(2, line, mockIntl)).toBe(false);
@@ -3124,7 +3124,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(currentStepIsValid(2, line, mockIntl)).toBe(false);
@@ -3146,7 +3146,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(currentStepIsValid(2, line, mockIntl)).toBe(false);
@@ -3172,7 +3172,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [jp],
         });
         expect(currentStepIsValid(3, line, mockIntl)).toBe(true);
@@ -3187,7 +3187,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(currentStepIsValid(-1, line, mockIntl)).toBe(false);
@@ -3200,7 +3200,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           journeyPatterns: [createJourneyPattern()],
         });
         expect(currentStepIsValid(4, line, mockIntl)).toBe(false);
@@ -3218,7 +3218,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [createFlexibleJourneyPattern(2)],
         });
@@ -3232,7 +3232,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [createFlexibleJourneyPattern(2)],
         });
@@ -3246,7 +3246,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: null as any,
           journeyPatterns: [createFlexibleJourneyPattern(2)],
         });
@@ -3260,7 +3260,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [createFlexibleJourneyPattern(2)],
         });
@@ -3290,7 +3290,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -3314,7 +3314,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -3338,7 +3338,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -3353,7 +3353,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
           journeyPatterns: [jp],
         });
@@ -3383,7 +3383,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -3412,7 +3412,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -3441,7 +3441,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -3476,7 +3476,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [jp],
         });
@@ -3492,7 +3492,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [createFlexibleJourneyPattern(2)],
         });
@@ -3506,7 +3506,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
           journeyPatterns: [createFlexibleJourneyPattern(2)],
         });
@@ -3529,7 +3529,7 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
           journeyPatterns: [jp],
         });
@@ -3552,13 +3552,1204 @@ describe('validation', () => {
           operatorRef: 'TST:Operator:1',
           networkRef: 'TST:Network:1',
           transportMode: VEHICLE_MODE.BUS,
-          transportSubmode: 'localBus',
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
           flexibleLineType: FlexibleLineType.MIXED_FLEXIBLE,
           journeyPatterns: [jp],
         });
         expect(currentFlexibleLineStepIsValid(0, line, mockIntl)).toBe(true);
         expect(currentFlexibleLineStepIsValid(1, line, mockIntl)).toBe(true);
         expect(currentFlexibleLineStepIsValid(2, line, mockIntl)).toBe(true);
+      });
+    });
+  });
+
+  // ==========================================================================
+  // Phase 11: Top-Level Validators (Integration Tests)
+  // ==========================================================================
+
+  describe('validLine (integration tests)', () => {
+    describe('returns true for fully valid lines', () => {
+      it('returns true for minimal valid line', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for line with multiple journey patterns', () => {
+        const jp1 = createJourneyPattern({ name: 'Outbound' });
+        jp1.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: 'Morning',
+            passingTimes: createPassingTimeSequence(3),
+          }),
+        ];
+        const jp2 = createJourneyPattern({ name: 'Return' });
+        jp2.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: 'Evening',
+            passingTimes: createPassingTimeSequence(3),
+          }),
+        ];
+        const line = createLine({
+          name: 'Express Route',
+          publicCode: 'EX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'expressBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp1, jp2],
+        });
+        expect(validLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for line with multiple service journeys per pattern', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: 'Morning',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+          createServiceJourneyWithDayTypes({
+            name: 'Afternoon',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+          createServiceJourneyWithDayTypes({
+            name: 'Evening',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'City Loop',
+          publicCode: 'CL',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for line with weekend day types', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourney({
+            dayTypes: [createWeekendDayType()],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Weekend Express',
+          publicCode: 'WE',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'expressBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for line with many stop points', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: createStopPointSequence(10),
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(10),
+          }),
+        ];
+        const line = createLine({
+          name: 'Long Route',
+          publicCode: 'LR',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for line with different transport modes', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const tramLine = createLine({
+          name: 'Tram Line',
+          publicCode: 'T1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.TRAM,
+          transportSubmode: 'localTram' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(tramLine, mockIntl)).toBe(true);
+
+        const railLine = createLine({
+          name: 'Rail Line',
+          publicCode: 'R1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.RAIL,
+          transportSubmode: 'local' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(railLine, mockIntl)).toBe(true);
+      });
+    });
+
+    describe('returns false when aboutLineStepIsValid fails', () => {
+      it('returns false when line name is blank', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: '',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when publicCode is blank (default)', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when operatorRef is missing', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: '',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when networkRef is missing', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: '',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when transportMode is null', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: null as any,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when transportSubmode is missing', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: undefined,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('returns false when journey pattern validation fails', () => {
+      it('returns false when journey pattern has blank name', () => {
+        const jp = createJourneyPattern({ name: '' });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when journey pattern has no stop points', () => {
+        const jp = createJourneyPattern({ pointsInSequence: [] });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when journey pattern has only one stop point', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [createFirstStopPoint()],
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(1),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when first stop point has invalid boarding settings', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFirstStopPoint(undefined, { forBoarding: false }),
+            createLastStopPoint(),
+          ],
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when any journey pattern is invalid (multiple patterns)', () => {
+        const validJp = createJourneyPattern({ name: 'Valid Pattern' });
+        validJp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const invalidJp = createJourneyPattern({ name: '' });
+        invalidJp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [validJp, invalidJp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('returns false when service journey validation fails', () => {
+      it('returns false when service journey has blank name', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: '',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when service journey has no passing times', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: [],
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when service journey has no day types', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourney({
+            dayTypes: [],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when service journey has invalid passing times ordering', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: [
+              createFirstStopPassingTime('10:00:00'),
+              createLastStopPassingTime('09:00:00'), // Before first
+            ],
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when any service journey is invalid (multiple journeys)', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: 'Valid Journey',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+          createServiceJourneyWithDayTypes({
+            name: '', // Invalid
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('optionalPublicCode parameter', () => {
+      it('allows empty publicCode when optionalPublicCode is true', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl, true)).toBe(true);
+      });
+
+      it('requires publicCode when optionalPublicCode is false', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl, false)).toBe(false);
+      });
+
+      it('defaults to requiring publicCode when optionalPublicCode is not specified', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('edge cases', () => {
+      it('returns false for empty line', () => {
+        const line = createEmptyLine();
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+
+      it('throws when journeyPatterns is undefined (direct object construction)', () => {
+        // Note: createLine factory skips undefined values during deep merge,
+        // so we need to construct the line object directly to test this edge case
+        const line = {
+          id: 'test-line-id',
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: undefined,
+        } as any;
+        // The function accesses journeyPatterns! with non-null assertion,
+        // so calling .every() on undefined will throw
+        expect(() => validLine(line, mockIntl)).toThrow();
+      });
+
+      it('returns true when journeyPatterns is empty array', () => {
+        // Empty array means every()/every passes vacuously
+        const line = createLine({
+          name: 'Test Line',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [],
+        });
+        expect(validLine(line, mockIntl)).toBe(true);
+      });
+
+      it('handles line with whitespace-only name', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createLine({
+          name: '   ',
+          publicCode: '42',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          journeyPatterns: [jp],
+        });
+        expect(validLine(line, mockIntl)).toBe(false);
+      });
+    });
+  });
+
+  describe('validFlexibleLine (integration tests)', () => {
+    describe('returns true for fully valid flexible lines', () => {
+      it('returns true for minimal valid FLEXIBLE_AREAS_ONLY line', () => {
+        // Create valid flexible stops with frontText on first stop
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Flex Service',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for valid CORRIDOR_SERVICE line', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Corridor Service',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for valid MIXED_FLEXIBLE line', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Mixed Flexible',
+          publicCode: 'MIX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.MIXED_FLEXIBLE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for valid HAIL_AND_RIDE_SECTIONS line', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Hail and Ride',
+          publicCode: 'HR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.HAIL_AND_RIDE_SECTIONS,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for valid FIXED_STOP_AREA_WIDE line', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Fixed Stop Area',
+          publicCode: 'FSA1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.FIXED_STOP_AREA_WIDE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for flexible line with multiple journey patterns', () => {
+        const jp1 = createJourneyPattern({ name: 'Route A' });
+        jp1.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const jp2 = createJourneyPattern({ name: 'Route B' });
+        jp2.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(3),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Multi-Route Flex',
+          publicCode: 'MRF1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp1, jp2],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(true);
+      });
+
+      it('returns true for flexible line with weekend day types', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourney({
+            dayTypes: [createWeekendDayType()],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Weekend Flex',
+          publicCode: 'WF1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(true);
+      });
+    });
+
+    describe('returns false when aboutFlexibleLineStepIsValid fails', () => {
+      it('returns false when line name is blank', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: '',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when flexibleLineType is missing', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: null as any,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when operatorRef is missing', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: '',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when publicCode is blank (default)', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('returns false when FLEXIBLE_AREAS_ONLY journey pattern validation fails', () => {
+      it('returns false when journey pattern has blank name', () => {
+        const stops = createFlexibleStopPointSequence(2);
+        stops[0] = {
+          ...stops[0],
+          destinationDisplay: { frontText: 'Destination' },
+        };
+        const jp = createJourneyPattern({
+          name: '',
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when flexible stop has no flexibleStopPlaceRef', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [
+            createFlexibleStopPoint({
+              flexibleStopPlaceRef: null,
+              destinationDisplay: { frontText: 'Destination' },
+            }),
+            createFlexibleStopPoint(),
+          ],
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when first flexible stop has no frontText', () => {
+        const stops = createFlexibleStopPointSequence(2);
+        // First stop has no frontText
+        const jp = createJourneyPattern({
+          pointsInSequence: stops,
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Flexible',
+          publicCode: 'FLEX1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('returns false when non-FLEXIBLE_AREAS_ONLY journey pattern validation fails', () => {
+      it('returns false when journey pattern has blank name', () => {
+        const jp = createJourneyPattern({ name: '' });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when journey pattern has no stop points', () => {
+        const jp = createJourneyPattern({ pointsInSequence: [] });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when journey pattern has only one stop point', () => {
+        const jp = createJourneyPattern({
+          pointsInSequence: [createFirstStopPoint()],
+        });
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(1),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('returns false when service journey validation fails', () => {
+      it('returns false when service journey has blank name', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            name: '',
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when service journey has no day types', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourney({
+            dayTypes: [],
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns false when service journey has invalid passing times', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: [
+              createFirstStopPassingTime('10:00:00'),
+              createLastStopPassingTime('09:00:00'), // Before first
+            ],
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('optionalPublicCode parameter', () => {
+      it('allows empty publicCode when optionalPublicCode is true', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl, true)).toBe(true);
+      });
+
+      it('requires publicCode when optionalPublicCode is false', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: '',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl, false)).toBe(false);
+      });
+    });
+
+    describe('edge cases', () => {
+      it('returns false for empty flexible line', () => {
+        const line = createEmptyFlexibleLine();
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+
+      it('returns true when journeyPatterns is empty array', () => {
+        // Empty array means every() passes vacuously
+        const line = createFlexibleLine({
+          name: 'Test Corridor',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(true);
+      });
+
+      it('handles flexible line with whitespace-only name', () => {
+        const jp = createJourneyPattern();
+        jp.serviceJourneys = [
+          createServiceJourneyWithDayTypes({
+            passingTimes: createPassingTimeSequence(2),
+          }),
+        ];
+        const line = createFlexibleLine({
+          name: '   ',
+          publicCode: 'CORR1',
+          operatorRef: 'TST:Operator:1',
+          networkRef: 'TST:Network:1',
+          transportMode: VEHICLE_MODE.BUS,
+          transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+          flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+          journeyPatterns: [jp],
+        });
+        expect(validFlexibleLine(line, mockIntl)).toBe(false);
+      });
+    });
+
+    describe('all FlexibleLineType values', () => {
+      // Test that all FlexibleLineType values work correctly
+      const flexibleLineTypes = [
+        FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+        FlexibleLineType.CORRIDOR_SERVICE,
+        FlexibleLineType.MAIN_ROUTE_WITH_FLEXIBLE_ENDS,
+        FlexibleLineType.HAIL_AND_RIDE_SECTIONS,
+        FlexibleLineType.MIXED_FLEXIBLE,
+        FlexibleLineType.FIXED_STOP_AREA_WIDE,
+        FlexibleLineType.MIXED_FLEXIBLE_AND_FIXED,
+        FlexibleLineType.FIXED,
+      ];
+
+      flexibleLineTypes.forEach((type) => {
+        it(`validates ${type} type correctly`, () => {
+          let jp;
+          if (type === FlexibleLineType.FLEXIBLE_AREAS_ONLY) {
+            // FLEXIBLE_AREAS_ONLY requires flexible stops with frontText
+            const stops = createFlexibleStopPointSequence(2);
+            stops[0] = {
+              ...stops[0],
+              destinationDisplay: { frontText: 'Destination' },
+            };
+            jp = createJourneyPattern({
+              pointsInSequence: stops,
+            });
+          } else {
+            // Other types use standard journey patterns
+            jp = createJourneyPattern();
+          }
+          jp.serviceJourneys = [
+            createServiceJourneyWithDayTypes({
+              passingTimes: createPassingTimeSequence(2),
+            }),
+          ];
+          const line = createFlexibleLine({
+            name: `Test ${type}`,
+            publicCode: 'TEST1',
+            operatorRef: 'TST:Operator:1',
+            networkRef: 'TST:Network:1',
+            transportMode: VEHICLE_MODE.BUS,
+            transportSubmode: 'localBus' as VEHICLE_SUBMODE,
+            flexibleLineType: type,
+            journeyPatterns: [jp],
+          });
+          expect(validFlexibleLine(line, mockIntl)).toBe(true);
+        });
       });
     });
   });
