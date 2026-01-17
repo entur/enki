@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createUuid } from 'helpers/generators';
+import { normalizeFlexibleLineFromApi } from 'helpers/flexibleLines';
 import FlexibleLine from 'model/FlexibleLine';
-import JourneyPattern from 'model/JourneyPattern';
 
 export type FlexibleLinesState = FlexibleLine[] | null;
 
@@ -12,26 +11,12 @@ export const flexibleLinesSlice = createSlice({
     receiveFlexibleLines: (_state, action: PayloadAction<FlexibleLine[]>) =>
       action.payload,
     receiveFlexibleLine: (state, action: PayloadAction<FlexibleLine>) => {
-      const line = action.payload;
-      const newJourneyPatterns: JourneyPattern[] =
-        line?.journeyPatterns?.map((jp) => ({
-          ...jp,
-          pointsInSequence: jp.pointsInSequence.map((pis) => ({
-            ...pis,
-            key: createUuid(),
-            flexibleStopPlaceRef: pis.flexibleStopPlace?.id,
-          })),
-        })) ?? [];
+      const normalizedLine = normalizeFlexibleLineFromApi(action.payload);
 
-      const newFlexibleLine: FlexibleLine = {
-        ...line,
-        networkRef: line.network?.id,
-        brandingRef: line.branding?.id,
-        journeyPatterns: newJourneyPatterns,
-      };
-
-      if (!state) return [newFlexibleLine];
-      return state.map((l) => (l.id === line.id ? newFlexibleLine : l));
+      if (!state) return [normalizedLine];
+      return state.map((l) =>
+        l.id === normalizedLine.id ? normalizedLine : l,
+      );
     },
   },
 });
