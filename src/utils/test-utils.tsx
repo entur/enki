@@ -59,3 +59,6 @@ export { default as userEvent } from '@testing-library/user-event';
 export { customRender as render };
 
 export { fireEvent, getAllByRole, getByText, screen, waitFor };
+
+// Re-export test data factories for convenient access
+export * from 'test/factories';
