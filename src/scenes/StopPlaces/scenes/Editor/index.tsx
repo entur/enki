@@ -1,22 +1,15 @@
 import { SmallAlertBox } from '@entur/alert';
-import {
-  NegativeButton,
-  PrimaryButton,
-  SecondaryButton,
-  SuccessButton,
-} from '@entur/button';
-import { ExpandablePanel } from '@entur/expand';
+import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { TextArea, TextField } from '@entur/form';
 import { GridContainer, GridItem } from '@entur/grid';
-import { MapIcon } from '@entur/icons';
 import { Paragraph } from '@entur/typography';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
+import { replaceElement, removeElementByIndex } from 'helpers/arrays';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { createUuid } from 'helpers/generators';
 import usePristine from 'hooks/usePristine';
 import { LeafletMouseEvent } from 'leaflet';
 import GeoJSON, {
@@ -29,7 +22,7 @@ import { GEOMETRY_TYPE } from 'model/enums';
 import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
-import { CoordinatesInputField } from './components/CoordinatesInputField';
+import FlexibleAreaPanel from './components/FlexibleAreaPanel';
 import PolygonMap from './components/PolygonMap';
 import { StopPlaceTypeDropdown } from './components/StopPlaceTypeDropdown';
 import { useFlexibleStopPlace } from './hooks/useFlexibleStopPlace';
@@ -135,6 +128,46 @@ const FlexibleStopPlaceEditor = () => {
       polygonCoordinates[currentAreaIndex],
     );
     changeCoordinates(newCoordinates);
+  };
+
+  const createAreaKeyValuesHandler = (index: number) => {
+    return (keyValues: KeyValues[]) => {
+      const updatedArea = {
+        ...flexibleStopPlace?.flexibleAreas?.[index],
+        keyValues,
+      };
+      setFlexibleStopPlace({
+        ...flexibleStopPlace,
+        flexibleAreas: replaceElement(
+          flexibleStopPlace?.flexibleAreas ?? [],
+          index,
+          updatedArea,
+        ),
+      });
+    };
+  };
+
+  const createAreaToggleHandler = (index: number) => {
+    return () => {
+      if (currentAreaIndex === index) {
+        setCurrentAreaIndex(currentAreaIndex > 0 ? currentAreaIndex - 1 : 0);
+      } else {
+        setCurrentAreaIndex(index);
+      }
+    };
+  };
+
+  const createAreaRemoveHandler = (index: number) => {
+    return () => {
+      setFlexibleStopPlace((current) => ({
+        ...current,
+        flexibleAreas: removeElementByIndex(
+          current?.flexibleAreas ?? [],
+          index,
+        ),
+      }));
+      setCurrentAreaIndex(currentAreaIndex > 0 ? currentAreaIndex - 1 : 0);
+    };
   };
 
   const isDeleteDisabled: boolean =
@@ -274,79 +307,21 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 {flexibleStopPlace.flexibleAreas?.map((area, index) => (
-                  <ExpandablePanel
-                    key={createUuid()}
-                    title={`${formatMessage({
-                      id: 'stopPlaceAreaLabelPrefix',
-                    })} ${index + 1}`}
-                    open={currentAreaIndex === index}
-                    onToggle={
-                      currentAreaIndex === index
-                        ? () =>
-                            setCurrentAreaIndex(
-                              currentAreaIndex > 0 ? currentAreaIndex - 1 : 0,
-                            )
-                        : () => setCurrentAreaIndex(index)
+                  <FlexibleAreaPanel
+                    key={area.id ?? `area-${index}`}
+                    area={area}
+                    index={index}
+                    isOpen={currentAreaIndex === index}
+                    canDelete={
+                      (flexibleStopPlace.flexibleAreas?.length ?? 0) >= 2
                     }
-                  >
-                    <div className="stop-place-form">
-                      <StopPlaceTypeDropdown
-                        label={formatMessage({ id: 'flexibleStopAreaType' })}
-                        keyValues={area.keyValues}
-                        keyValuesUpdate={(keyValues) => {
-                          setFlexibleStopPlace({
-                            ...flexibleStopPlace,
-                            flexibleAreas: flexibleStopPlace.flexibleAreas?.map(
-                              (localArea, localIndex) => {
-                                if (localIndex === index) {
-                                  return {
-                                    ...localArea,
-                                    keyValues,
-                                  };
-                                } else {
-                                  return localArea;
-                                }
-                              },
-                            ),
-                          });
-                        }}
-                      />
-
-                      <CoordinatesInputField
-                        coordinates={area.polygon?.coordinates ?? []}
-                        changeCoordinates={changeCoordinates}
-                      />
-
-                      <PrimaryButton
-                        className="draw-polygon-button"
-                        onClick={handleDrawPolygonClick}
-                      >
-                        {formatMessage({ id: 'editorDrawPolygonButtonText' })}
-                        <MapIcon />
-                      </PrimaryButton>
-
-                      <SecondaryButton
-                        disabled={
-                          (flexibleStopPlace.flexibleAreas?.length ?? 0) < 2
-                        }
-                        onClick={() => {
-                          setFlexibleStopPlace((current) => ({
-                            ...current,
-                            flexibleAreas: (
-                              current?.flexibleAreas ?? []
-                            ).filter((_, i) => i !== index),
-                          }));
-                          setCurrentAreaIndex(
-                            currentAreaIndex > 0 ? currentAreaIndex - 1 : 0,
-                          );
-                        }}
-                      >
-                        {formatMessage({
-                          id: 'stopPlaceRemoveAreaButtonLabel',
-                        })}
-                      </SecondaryButton>
-                    </div>
-                  </ExpandablePanel>
+                    onToggle={createAreaToggleHandler(index)}
+                    onKeyValuesUpdate={createAreaKeyValuesHandler(index)}
+                    onRemove={createAreaRemoveHandler(index)}
+                    onDrawPolygonClick={handleDrawPolygonClick}
+                    coordinates={area.polygon?.coordinates ?? []}
+                    onCoordinatesChange={changeCoordinates}
+                  />
                 ))}
 
                 <SecondaryButton
