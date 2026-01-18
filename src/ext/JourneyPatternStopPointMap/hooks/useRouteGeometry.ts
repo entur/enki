@@ -19,12 +19,14 @@ import StopPoint from '../../../model/StopPoint';
  * @param quayLocationsIndex
  * @param setMapState
  * @param mode
+ * @param enabled
  */
 export const useRouteGeometry = (
   pointsInSequence: StopPoint[],
   quayLocationsIndex: Record<string, Centroid>,
   setMapState: (state: Partial<JourneyPatternsMapState>) => void,
   mode: VEHICLE_MODE,
+  enabled: boolean = true,
 ) => {
   const serviceLinksIndex = useRef<Record<string, number[][]>>({});
   const activeProvider =
@@ -52,6 +54,9 @@ export const useRouteGeometry = (
   };
 
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
     const fetchRouteGeometryPromises = getRouteGeometryFetchPromises(
       pointsInSequence,
       quayLocationsIndex,
@@ -86,5 +91,5 @@ export const useRouteGeometry = (
         );
       setMapState({ stopPointLocationSequence });
     });
-  }, [pointsInSequence, serviceLinksIndex, quayLocationsIndex]);
+  }, [pointsInSequence, serviceLinksIndex, quayLocationsIndex, enabled]);
 };
