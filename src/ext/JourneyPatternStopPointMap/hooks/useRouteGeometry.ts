@@ -58,17 +58,19 @@ export const useRouteGeometry = (
       fetchRouteGeometry,
       serviceLinksIndex.current,
       mode,
-    );
+    ).filter((promise): promise is Promise<any> => promise !== undefined);
     const newServiceLinkRefs: Record<string, number[][]> = {};
 
     Promise.all(fetchRouteGeometryPromises).then((serviceLinkResponses) => {
       serviceLinkResponses.forEach((data) => {
-        if (!data) {
-          return;
-        }
         const serviceLink = data?.serviceLink as ServiceLink;
-        newServiceLinkRefs[serviceLink.serviceLinkRef] =
-          serviceLink.routeGeometry.coordinates;
+        if (
+          serviceLink?.serviceLinkRef &&
+          serviceLink?.routeGeometry?.coordinates
+        ) {
+          newServiceLinkRefs[serviceLink.serviceLinkRef] =
+            serviceLink.routeGeometry.coordinates;
+        }
       });
 
       serviceLinksIndex.current = {
