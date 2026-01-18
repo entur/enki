@@ -86,8 +86,8 @@ export default ({ onChange }: Props) => {
   useEffect(() => {
     if (data) {
       setLines([
-        ...data?.lines.map(mapLine),
-        ...data?.flexibleLines.map(mapLine),
+        ...data.lines.map(mapLine),
+        ...data.flexibleLines.map(mapLine),
       ]);
     }
   }, [data]);
