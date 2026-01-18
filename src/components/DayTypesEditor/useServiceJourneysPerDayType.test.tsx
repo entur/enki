@@ -90,7 +90,6 @@ describe('useServiceJourneysPerDayType', () => {
     return ({ children }: { children: ReactNode }) => (
       <MockedProvider
         mocks={mocks}
-        addTypename={false}
         defaultOptions={{
           watchQuery: { fetchPolicy: 'no-cache' },
           query: { fetchPolicy: 'no-cache' },

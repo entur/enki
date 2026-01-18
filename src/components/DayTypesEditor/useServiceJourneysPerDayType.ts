@@ -39,9 +39,9 @@ export const useServiceJourneysPerDayType = (dayTypes: DayType[]) => {
 
     const subscription = observable.subscribe({
       next: ({ data }) => {
-        if (data) {
+        if (data?.dayTypesByIds) {
           setServiceJourneysPerDayType((current) =>
-            mergeServiceJourneyCounts(current, data.dayTypesByIds),
+            mergeServiceJourneyCounts(current, data.dayTypesByIds as DayType[]),
           );
         }
       },
