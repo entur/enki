@@ -91,16 +91,15 @@ const JourneyPatternStopPointMap = memo(
       !!isRouteGeometryEnabled,
     );
 
-    if (isRouteGeometryEnabled) {
-      // Handling service links data;
-      // If route geometry is enabled, this is where the needed coordinates are set up
-      useRouteGeometry(
-        pointsInSequence,
-        totalQuayLocationsIndex,
-        setMapState,
-        transportMode,
-      );
-    }
+    // Handling service links data;
+    // If route geometry is enabled, this is where the needed coordinates are set up
+    useRouteGeometry(
+      pointsInSequence,
+      totalQuayLocationsIndex,
+      setMapState,
+      transportMode,
+      !!isRouteGeometryEnabled,
+    );
 
     // Zoom into location of a focused marker:
     useMapZoomIntoLocation(mapState.focusedMarker?.marker.location);
