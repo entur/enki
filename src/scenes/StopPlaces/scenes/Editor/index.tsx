@@ -15,6 +15,7 @@ import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
+import { replaceElement, removeElementByIndex } from 'helpers/arrays';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { createUuid } from 'helpers/generators';
 import usePristine from 'hooks/usePristine';
@@ -30,6 +31,7 @@ import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import { CoordinatesInputField } from './components/CoordinatesInputField';
+import FlexibleAreaPanel from './components/FlexibleAreaPanel';
 import PolygonMap from './components/PolygonMap';
 import { StopPlaceTypeDropdown } from './components/StopPlaceTypeDropdown';
 import { useFlexibleStopPlace } from './hooks/useFlexibleStopPlace';
@@ -135,6 +137,46 @@ const FlexibleStopPlaceEditor = () => {
       polygonCoordinates[currentAreaIndex],
     );
     changeCoordinates(newCoordinates);
+  };
+
+  const createAreaKeyValuesHandler = (index: number) => {
+    return (keyValues: KeyValues[]) => {
+      const updatedArea = {
+        ...flexibleStopPlace?.flexibleAreas?.[index],
+        keyValues,
+      };
+      setFlexibleStopPlace({
+        ...flexibleStopPlace,
+        flexibleAreas: replaceElement(
+          flexibleStopPlace?.flexibleAreas ?? [],
+          index,
+          updatedArea,
+        ),
+      });
+    };
+  };
+
+  const createAreaToggleHandler = (index: number) => {
+    return () => {
+      if (currentAreaIndex === index) {
+        setCurrentAreaIndex(currentAreaIndex > 0 ? currentAreaIndex - 1 : 0);
+      } else {
+        setCurrentAreaIndex(index);
+      }
+    };
+  };
+
+  const createAreaRemoveHandler = (index: number) => {
+    return () => {
+      setFlexibleStopPlace((current) => ({
+        ...current,
+        flexibleAreas: removeElementByIndex(
+          current?.flexibleAreas ?? [],
+          index,
+        ),
+      }));
+      setCurrentAreaIndex(currentAreaIndex > 0 ? currentAreaIndex - 1 : 0);
+    };
   };
 
   const isDeleteDisabled: boolean =
