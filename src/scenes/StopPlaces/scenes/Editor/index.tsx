@@ -316,79 +316,21 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 {flexibleStopPlace.flexibleAreas?.map((area, index) => (
-                  <ExpandablePanel
-                    key={createUuid()}
-                    title={`${formatMessage({
-                      id: 'stopPlaceAreaLabelPrefix',
-                    })} ${index + 1}`}
-                    open={currentAreaIndex === index}
-                    onToggle={
-                      currentAreaIndex === index
-                        ? () =>
-                            setCurrentAreaIndex(
-                              currentAreaIndex > 0 ? currentAreaIndex - 1 : 0,
-                            )
-                        : () => setCurrentAreaIndex(index)
+                  <FlexibleAreaPanel
+                    key={area.id ?? `area-${index}`}
+                    area={area}
+                    index={index}
+                    isOpen={currentAreaIndex === index}
+                    canDelete={
+                      (flexibleStopPlace.flexibleAreas?.length ?? 0) >= 2
                     }
-                  >
-                    <div className="stop-place-form">
-                      <StopPlaceTypeDropdown
-                        label={formatMessage({ id: 'flexibleStopAreaType' })}
-                        keyValues={area.keyValues}
-                        keyValuesUpdate={(keyValues) => {
-                          setFlexibleStopPlace({
-                            ...flexibleStopPlace,
-                            flexibleAreas: flexibleStopPlace.flexibleAreas?.map(
-                              (localArea, localIndex) => {
-                                if (localIndex === index) {
-                                  return {
-                                    ...localArea,
-                                    keyValues,
-                                  };
-                                } else {
-                                  return localArea;
-                                }
-                              },
-                            ),
-                          });
-                        }}
-                      />
-
-                      <CoordinatesInputField
-                        coordinates={area.polygon?.coordinates ?? []}
-                        changeCoordinates={changeCoordinates}
-                      />
-
-                      <PrimaryButton
-                        className="draw-polygon-button"
-                        onClick={handleDrawPolygonClick}
-                      >
-                        {formatMessage({ id: 'editorDrawPolygonButtonText' })}
-                        <MapIcon />
-                      </PrimaryButton>
-
-                      <SecondaryButton
-                        disabled={
-                          (flexibleStopPlace.flexibleAreas?.length ?? 0) < 2
-                        }
-                        onClick={() => {
-                          setFlexibleStopPlace((current) => ({
-                            ...current,
-                            flexibleAreas: (
-                              current?.flexibleAreas ?? []
-                            ).filter((_, i) => i !== index),
-                          }));
-                          setCurrentAreaIndex(
-                            currentAreaIndex > 0 ? currentAreaIndex - 1 : 0,
-                          );
-                        }}
-                      >
-                        {formatMessage({
-                          id: 'stopPlaceRemoveAreaButtonLabel',
-                        })}
-                      </SecondaryButton>
-                    </div>
-                  </ExpandablePanel>
+                    onToggle={createAreaToggleHandler(index)}
+                    onKeyValuesUpdate={createAreaKeyValuesHandler(index)}
+                    onRemove={createAreaRemoveHandler(index)}
+                    onDrawPolygonClick={handleDrawPolygonClick}
+                    coordinates={area.polygon?.coordinates ?? []}
+                    onCoordinatesChange={changeCoordinates}
+                  />
                 ))}
 
                 <SecondaryButton
