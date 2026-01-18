@@ -1,14 +1,7 @@
 import { SmallAlertBox } from '@entur/alert';
-import {
-  NegativeButton,
-  PrimaryButton,
-  SecondaryButton,
-  SuccessButton,
-} from '@entur/button';
-import { ExpandablePanel } from '@entur/expand';
+import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
 import { TextArea, TextField } from '@entur/form';
 import { GridContainer, GridItem } from '@entur/grid';
-import { MapIcon } from '@entur/icons';
 import { Paragraph } from '@entur/typography';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Loading from 'components/Loading';
@@ -17,7 +10,6 @@ import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { replaceElement, removeElementByIndex } from 'helpers/arrays';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { createUuid } from 'helpers/generators';
 import usePristine from 'hooks/usePristine';
 import { LeafletMouseEvent } from 'leaflet';
 import GeoJSON, {
@@ -30,7 +22,6 @@ import { GEOMETRY_TYPE } from 'model/enums';
 import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
-import { CoordinatesInputField } from './components/CoordinatesInputField';
 import FlexibleAreaPanel from './components/FlexibleAreaPanel';
 import PolygonMap from './components/PolygonMap';
 import { StopPlaceTypeDropdown } from './components/StopPlaceTypeDropdown';
