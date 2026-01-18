@@ -31,20 +31,25 @@ export const useServiceJourneysPerDayType = (dayTypes: DayType[]) => {
   const apolloClient = useApolloClient();
 
   useEffect(() => {
-    const fetchDayTypes = async () => {
-      const { data } = await apolloClient.query<DayTypesByIdsData>({
-        query: GET_DAY_TYPES_BY_IDS,
-        variables: { ids: dayTypes.map((dt) => dt.id) },
-      });
+    const observable = apolloClient.watchQuery<DayTypesByIdsData>({
+      query: GET_DAY_TYPES_BY_IDS,
+      variables: { ids: dayTypes.map((dt) => dt.id) },
+      fetchPolicy: 'network-only',
+    });
 
-      if (data) {
-        setServiceJourneysPerDayType((current) =>
-          mergeServiceJourneyCounts(current, data.dayTypesByIds),
-        );
-      }
+    const subscription = observable.subscribe({
+      next: ({ data }) => {
+        if (data) {
+          setServiceJourneysPerDayType((current) =>
+            mergeServiceJourneyCounts(current, data.dayTypesByIds),
+          );
+        }
+      },
+    });
+
+    return () => {
+      subscription.unsubscribe();
     };
-
-    fetchDayTypes();
   }, [dayTypes, apolloClient, setServiceJourneysPerDayType]);
 
   return serviceJourneysPerDayType;

@@ -90,6 +90,7 @@ describe('useServiceJourneysPerDayType', () => {
     return ({ children }: { children: ReactNode }) => (
       <MockedProvider
         mocks={mocks}
+        addTypename={false}
         defaultOptions={{
           watchQuery: { fetchPolicy: 'no-cache' },
           query: { fetchPolicy: 'no-cache' },
@@ -100,7 +101,7 @@ describe('useServiceJourneysPerDayType', () => {
     );
   };
 
-  it('should return empty object initially', () => {
+  it('should return empty object initially', async () => {
     const dayTypes = [createDayType({ id: 'dt1' })];
     const mocks = [
       {
@@ -116,14 +117,22 @@ describe('useServiceJourneysPerDayType', () => {
       },
     ];
 
-    const { result } = renderHook(
+    const { result, unmount } = renderHook(
       () => useServiceJourneysPerDayType(dayTypes),
       {
         wrapper: createWrapper(mocks),
       },
     );
 
+    // Check initial state is empty before query resolves
     expect(result.current).toEqual({});
+
+    // Wait for query to complete before unmounting to avoid unhandled rejection
+    await waitFor(() => {
+      expect(result.current).toEqual({ dt1: 5 });
+    });
+
+    unmount();
   });
 
   it('should fetch and return service journey counts', async () => {
@@ -148,7 +157,7 @@ describe('useServiceJourneysPerDayType', () => {
       },
     ];
 
-    const { result } = renderHook(
+    const { result, unmount } = renderHook(
       () => useServiceJourneysPerDayType(dayTypes),
       {
         wrapper: createWrapper(mocks),
@@ -161,6 +170,8 @@ describe('useServiceJourneysPerDayType', () => {
         dt2: 12,
       });
     });
+
+    unmount();
   });
 
   it('should handle empty day types array', async () => {
@@ -179,7 +190,7 @@ describe('useServiceJourneysPerDayType', () => {
       },
     ];
 
-    const { result } = renderHook(
+    const { result, unmount } = renderHook(
       () => useServiceJourneysPerDayType(dayTypes),
       {
         wrapper: createWrapper(mocks),
@@ -189,6 +200,8 @@ describe('useServiceJourneysPerDayType', () => {
     await waitFor(() => {
       expect(result.current).toEqual({});
     });
+
+    unmount();
   });
 
   it('should update when day types change', async () => {
@@ -226,7 +239,7 @@ describe('useServiceJourneysPerDayType', () => {
       },
     ];
 
-    const { result, rerender } = renderHook(
+    const { result, rerender, unmount } = renderHook(
       ({ dayTypes }) => useServiceJourneysPerDayType(dayTypes),
       {
         wrapper: createWrapper(mocks),
@@ -243,5 +256,7 @@ describe('useServiceJourneysPerDayType', () => {
     await waitFor(() => {
       expect(result.current).toEqual({ dt1: 5, dt2: 8 });
     });
+
+    unmount();
   });
 });
