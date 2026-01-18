@@ -7,6 +7,23 @@ type DayTypesByIdsData = {
   dayTypesByIds: DayType[];
 };
 
+/**
+ * Merges service journey counts from fetched day types into existing counts.
+ * Extracted to reduce function nesting depth (SonarQube S2004).
+ */
+export const mergeServiceJourneyCounts = (
+  current: Record<string, number>,
+  dayTypes: DayType[],
+): Record<string, number> => {
+  return dayTypes.reduce(
+    (prev, curr) => {
+      prev[curr.id!] = curr.numberOfServiceJourneys!;
+      return prev;
+    },
+    { ...current },
+  );
+};
+
 export const useServiceJourneysPerDayType = (dayTypes: DayType[]) => {
   const [serviceJourneysPerDayType, setServiceJourneysPerDayType] = useState<
     Record<string, number>
@@ -22,13 +39,7 @@ export const useServiceJourneysPerDayType = (dayTypes: DayType[]) => {
 
       if (data) {
         setServiceJourneysPerDayType((current) =>
-          data.dayTypesByIds.reduce(
-            (prev, curr) => {
-              prev[curr.id!] = curr.numberOfServiceJourneys!;
-              return prev;
-            },
-            { ...current },
-          ),
+          mergeServiceJourneyCounts(current, data.dayTypesByIds),
         );
       }
     };
