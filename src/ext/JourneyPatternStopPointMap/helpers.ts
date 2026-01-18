@@ -233,7 +233,7 @@ export const getServiceLinkRef = (quayRefFrom: string, quayRefTo: string) => {
 export const getRouteGeometryFetchPromises = (
   pointsInSequence: StopPoint[],
   quayLocationsIndex: Record<string, Centroid>,
-  fetchRouteGeometryFunction: ({}: {
+  fetchRouteGeometryFunction: (params: {
     quayRefFrom: string;
     quayRefTo: string;
     mode: VEHICLE_MODE;
