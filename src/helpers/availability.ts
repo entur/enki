@@ -72,23 +72,23 @@ export const mergeAvailability = (
 export const getJourneyPatternsAvailability = (
   journeyPatterns?: JourneyPattern[],
 ): Availability => {
-  let availability: Availability | undefined = undefined;
+  const operatingPeriods = (journeyPatterns ?? [])
+    .flatMap((jp) => jp.serviceJourneys)
+    .flatMap((sj) => sj.dayTypes ?? [])
+    .flatMap((dt) => dt.dayTypeAssignments)
+    .map((dta) => dta.operatingPeriod);
 
-  journeyPatterns?.forEach((jp) =>
-    jp.serviceJourneys.forEach((sj) =>
-      sj.dayTypes?.forEach((dt) =>
-        dt.dayTypeAssignments.forEach((dta) => {
-          availability = mergeAvailability(availability, dta.operatingPeriod);
-        }),
-      ),
-    ),
-  );
-
-  if (!availability) {
+  if (operatingPeriods.length === 0) {
     throw new Error('Unable to calculate availability for line');
   }
 
-  return availability;
+  return operatingPeriods.reduce<Availability>(
+    (acc, period) => mergeAvailability(acc, period),
+    {
+      from: parseISOToCalendarDate(operatingPeriods[0].fromDate)!,
+      to: parseISOToCalendarDate(operatingPeriods[0].toDate)!,
+    },
+  );
 };
 
 /**
