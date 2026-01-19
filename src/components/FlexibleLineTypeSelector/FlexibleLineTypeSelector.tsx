@@ -1,4 +1,5 @@
 import { Dropdown } from '@entur/dropdown';
+import { Link } from '@entur/typography';
 import { useConfig } from 'config/ConfigContext';
 import { mapFlexibleLineTypeAndLabelToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -39,13 +40,15 @@ export const FlexibleLineTypeSelector = ({
 
   return (
     <>
-      <div
+      <Link
+        as="button"
+        type="button"
         className="line-type-dropdown-tooltip"
         aria-label={formatMessage({ id: 'drawerAria' })}
         onClick={() => setDrawer(true)}
       >
         {formatMessage({ id: 'typeFormGroupTitleTooltip' })}
-      </div>
+      </Link>
       {
         <Dropdown
           className="flexible-line-type"
