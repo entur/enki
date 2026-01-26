@@ -121,7 +121,7 @@ Importing stylesheets directly must be avoided, because the bundler will preload
 Therefore, stylesheets must be imported using the `url` option, and rendered inside `Helmet`:
 
     import stylesheetUrl from './styles.scss?url';
-    import Helmet from 'react-helmet';
+    import { Helmet } from 'react-helmet-async';
 
     export const SomeComponent: FeatureComponent = () => {
         return (

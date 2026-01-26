@@ -1,5 +1,5 @@
 import stylesURL from './styles.scss?url';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 /**
  * Main point in here is just to import the style overrides
