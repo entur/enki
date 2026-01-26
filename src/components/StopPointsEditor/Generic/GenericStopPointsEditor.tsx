@@ -126,6 +126,10 @@ export const GenericStopPointsEditor = ({
                 }
               />
             ))}
+            <AddButton
+              onClick={() => addStopPoint()}
+              buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
+            />
           </div>
           <ComponentToggle
             feature={'JourneyPatternStopPointMap'}
@@ -141,10 +145,12 @@ export const GenericStopPointsEditor = ({
           />
         </div>
       )}
-      <AddButton
-        onClick={() => addStopPoint()}
-        buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
-      />
+      {!stopPlacesInJourneyPattern && (
+        <AddButton
+          onClick={() => addStopPoint()}
+          buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
+        />
+      )}
     </section>
   );
 };

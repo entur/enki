@@ -18,10 +18,9 @@ import usePristine from 'hooks/usePristine';
 import { Branding } from 'model/Branding';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import './styles.scss';
 
 const getCurrentBrandingSelector = (params: Params) => (state: GlobalState) =>
@@ -48,7 +47,7 @@ const BrandingEditor = () => {
 
   const namePristine = usePristine(branding.name, saveClicked);
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const onFieldChange = (field: keyof Branding, value: string) => {
     setBranding({ ...branding, [field]: value });
@@ -56,9 +55,11 @@ const BrandingEditor = () => {
 
   const dispatchLoadBranding = useCallback(() => {
     if (params.id) {
-      dispatch(loadBrandingById(params.id)).catch(() => navigate('/brandings'));
+      dispatch(loadBrandingById(params.id, intl)).catch(() =>
+        navigate('/brandings'),
+      );
     }
-  }, [dispatch, params.id, history]);
+  }, [dispatch, params.id, intl, navigate]);
 
   useEffect(() => {
     dispatchLoadBranding();
@@ -73,8 +74,8 @@ const BrandingEditor = () => {
   const handleOnSaveClick = () => {
     if (branding.name) {
       setSaving(true);
-      dispatch(saveBranding(branding))
-        .then(() => dispatch(loadBrandings()))
+      dispatch(saveBranding(branding, intl))
+        .then(() => dispatch(loadBrandings(intl)))
         .then(() => navigate('/brandings'))
         .finally(() => setSaving(false));
     }
@@ -84,7 +85,7 @@ const BrandingEditor = () => {
   const handleDelete = () => {
     setDeleteDialogOpen(false);
     setDeleting(true);
-    dispatch(deleteBrandingById(branding?.id)).then(() =>
+    dispatch(deleteBrandingById(branding?.id, intl)).then(() =>
       navigate('/brandings'),
     );
   };

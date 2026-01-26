@@ -14,9 +14,8 @@ import Loading from 'components/Loading';
 import { Branding } from 'model/Branding';
 import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
 import './styles.scss';
@@ -27,17 +26,18 @@ const Brandings = () => {
   const [selectedBranding, setSelectedBranding] = useState<
     Branding | undefined
   >(undefined);
-  const { formatMessage } = useIntl();
+  const intl = useIntl();
+  const { formatMessage } = intl;
   const activeProviderCode = useAppSelector(
     (state) => state.userContext.activeProviderCode,
   );
   const organisations = useAppSelector((state) => state.organisations);
   const brandings = useAppSelector((state) => state.brandings);
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadBrandings());
-  }, [dispatch, activeProviderCode]);
+    dispatch(loadBrandings(intl));
+  }, [dispatch, activeProviderCode, intl]);
 
   const handleOnRowClick = useCallback(
     (id: string) => {
@@ -148,12 +148,12 @@ const Brandings = () => {
                 <SuccessButton
                   key="yes"
                   onClick={() => {
-                    dispatch(deleteBrandingById(selectedBranding?.id))
+                    dispatch(deleteBrandingById(selectedBranding?.id, intl))
                       .then(() => {
                         setSelectedBranding(undefined);
                         setShowDeleteDialogue(false);
                       })
-                      .then(() => dispatch(loadBrandings()));
+                      .then(() => dispatch(loadBrandings(intl)));
                   }}
                 >
                   {formatMessage({ id: 'yes' })}

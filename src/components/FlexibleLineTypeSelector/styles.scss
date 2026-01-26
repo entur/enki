@@ -4,11 +4,15 @@
   width: 100%;
   position: relative;
   font-size: 14px;
-  cursor: pointer;
   margin-top: $space-large;
 
   &-tooltip {
-    text-decoration: underline;
+    // Reset button styles when Link is rendered as button
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    margin-bottom: $space-small;
   }
 }
 

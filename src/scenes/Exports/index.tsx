@@ -19,7 +19,7 @@ import { EXPORT_STATUS } from 'model/enums';
 import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
-import { ExportsState } from 'reducers/exports';
+import { ExportsState } from 'reducers/exportsSlice';
 import { getIconForStatus } from './icons/icons';
 import './styles.scss';
 

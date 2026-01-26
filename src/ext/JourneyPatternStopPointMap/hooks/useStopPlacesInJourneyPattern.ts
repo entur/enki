@@ -19,12 +19,12 @@ export const useStopPlacesInJourneyPattern = (
     // To avoid updating the state needlessly
     const stopPlacesInJourneyPatternIds = stopPlacesInJourneyPattern
       .map((s) => s.id)
-      .sort()
+      .sort((a, b) => a.localeCompare(b))
       .join(',');
     const stopPlacesInJourneyPatternStateIds =
       stopPlacesInJourneyPatternState.stopPlaces
         .map((s) => s.id)
-        .sort()
+        .sort((a, b) => a.localeCompare(b))
         .join(',');
     if (stopPlacesInJourneyPatternIds === stopPlacesInJourneyPatternStateIds) {
       return;

@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import { PrimaryButton, SecondaryButton } from '@entur/button';
 import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
@@ -11,7 +10,7 @@ import { Heading1, Paragraph } from '@entur/typography';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { getNetworksQuery } from 'api/uttu/queries';
 import { UttuQuery } from 'api';
@@ -85,7 +84,7 @@ const LineMigration = () => {
   const navigate = useNavigate();
   const { formatMessage } = useIntl();
   const { providerId } = useParams<{ providerId: string }>();
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const [selectedLineId, setSelectedLineId] = useState<string>('');
   const [targetProviderId, setTargetProviderId] = useState<string>('');

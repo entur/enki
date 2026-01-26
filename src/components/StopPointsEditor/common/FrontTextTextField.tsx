@@ -12,6 +12,7 @@ type Props = {
   disabled?: boolean;
   frontTextError?: keyof MessagesKey;
   spoilPristine: boolean;
+  isFirst?: boolean;
 };
 
 export const useOnFrontTextChange = (
@@ -34,6 +35,7 @@ export const FrontTextTextField = ({
   disabled = false,
   frontTextError,
   spoilPristine,
+  isFirst = false,
 }: Props) => {
   const { formatMessage } = useIntl();
   const frontTextPristine = usePristine(value, spoilPristine);
@@ -63,7 +65,9 @@ export const FrontTextTextField = ({
   return (
     <TextField
       className="stop-point-info-item"
-      label={formatMessage({ id: 'labelFrontTextRequired' })}
+      label={formatMessage({
+        id: isFirst ? 'labelFrontTextRequired' : 'labelFrontText',
+      })}
       feedback={errorFeedback.feedback}
       variant={errorFeedback.variant}
       labelTooltip={formatMessage({ id: 'frontTextTooltip' })}

@@ -472,6 +472,22 @@ export const messages: MessagesKey = {
   networksNameTableHeaderLabel: 'Nimi',
   networksNoNetworksFoundText: 'Ei verkkoja löytynyt',
   networksPrivateCodeTableHeaderLabel: 'Yksityinen tunnus',
+  networksLoadNetworksErrorHeader: 'Lataa verkot',
+  networksLoadNetworksErrorMessage:
+    'Verkkojen lataamisessa tapahtui virhe: {details}',
+  networksLoadNetworkByIdErrorHeader: 'Lataa verkko',
+  networksLoadNetworkByIdErrorMessage:
+    'Verkon lataamisessa tapahtui virhe: {details}',
+  networksSaveNetworkSuccessHeader: 'Tallenna verkko',
+  networksSaveNetworkSuccessMessage: 'Verkko tallennettiin.',
+  networksSaveNetworkErrorHeader: 'Tallenna verkko',
+  networksSaveNetworkErrorMessage:
+    'Verkon tallentamisessa tapahtui virhe: {details}',
+  networksDeleteNetworkSuccessHeader: 'Poista verkko',
+  networksDeleteNetworkSuccessMessage: 'Verkko poistettiin.',
+  networksDeleteNetworkErrorHeader: 'Poista verkko',
+  networksDeleteNetworkErrorMessage:
+    'Verkon poistamisessa tapahtui virhe: {details}',
   branding: 'brändi',
   brandingsHeaderText: 'Brändit',
   brandingsLoadingBrandingsText: 'Ladataan brändejä...',
@@ -500,6 +516,25 @@ export const messages: MessagesKey = {
   editorDeleteBrandingConfirmationDialogMessage:
     'Oletko varma, että haluat poistaa tämän brändin?',
   brandingsDropdownLabelText: 'Brändi',
+  brandingsLoadBrandingsErrorHeader: 'Lataa brändäykset',
+  brandingsLoadBrandingsErrorMessage:
+    'Brändäysten lataamisessa tapahtui virhe: {details}',
+  brandingsLoadBrandingByIdErrorHeader: 'Lataa brändäys',
+  brandingsLoadBrandingByIdErrorMessage:
+    'Brändäyksen lataamisessa tapahtui virhe: {details}',
+  brandingsSaveBrandingSuccessHeader: 'Tallenna brändäys',
+  brandingsSaveBrandingSuccessMessage: 'Brändäys tallennettiin.',
+  brandingsSaveBrandingErrorHeader: 'Tallenna brändäys',
+  brandingsSaveBrandingErrorMessage:
+    'Brändäyksen tallentamisessa tapahtui virhe: {details}',
+  brandingsDeleteBrandingSuccessHeader: 'Poista brändäys',
+  brandingsDeleteBrandingSuccessMessage: 'Brändäys poistettiin.',
+  brandingsDeleteBrandingErrorHeader: 'Poista brändäys',
+  brandingsDeleteBrandingErrorMessage:
+    'Brändäyksen poistamisessa tapahtui virhe: {details}',
+  editorSavingBrandingLoadingText: 'Tallennetaan brändäystä...',
+  editorDeletingBrandingLoadingText: 'Poistetaan brändäystä...',
+  editorLoadingBrandingText: 'Ladataan brändäystä...',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Luo joustava pysäkki',
   stopPlaceText: 'Joustava pysäkki',
   stopPlace: 'Joustava pysäkki *',

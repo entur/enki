@@ -7,7 +7,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { validateStopPoint } from 'helpers/validation';
+import { validateStopPoint } from 'validation';
 import usePristine from 'hooks/usePristine';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -182,6 +182,7 @@ export const MixedFlexibleStopPointEditor = ({
             disabled={isLast}
             spoilPristine={spoilPristine}
             frontTextError={frontTextError}
+            isFirst={isFirst}
           />
 
           <BoardingTypeSelect

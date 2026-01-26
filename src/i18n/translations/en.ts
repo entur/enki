@@ -472,6 +472,22 @@ export const messages: MessagesKey = {
   networksNameTableHeaderLabel: 'Name',
   networksNoNetworksFoundText: 'No networks found',
   networksPrivateCodeTableHeaderLabel: 'Private code',
+  networksLoadNetworksErrorHeader: 'Load networks',
+  networksLoadNetworksErrorMessage:
+    'An error occurred while loading networks: {details}',
+  networksLoadNetworkByIdErrorHeader: 'Load network',
+  networksLoadNetworkByIdErrorMessage:
+    'An error occurred while loading the network: {details}',
+  networksSaveNetworkSuccessHeader: 'Save network',
+  networksSaveNetworkSuccessMessage: 'The network was saved.',
+  networksSaveNetworkErrorHeader: 'Save network',
+  networksSaveNetworkErrorMessage:
+    'An error occurred while saving the network: {details}',
+  networksDeleteNetworkSuccessHeader: 'Delete network',
+  networksDeleteNetworkSuccessMessage: 'The network was deleted.',
+  networksDeleteNetworkErrorHeader: 'Delete network',
+  networksDeleteNetworkErrorMessage:
+    'An error occurred while deleting the network: {details}',
   branding: 'branding',
   brandingsHeaderText: 'Brandings',
   brandingsLoadingBrandingsText: 'Loading brandings...',
@@ -500,6 +516,25 @@ export const messages: MessagesKey = {
     'Are you sure you want to delete this branding?',
   editorEditBrandingHeaderText: 'Edit branding',
   brandingsDropdownLabelText: 'Branding',
+  brandingsLoadBrandingsErrorHeader: 'Load brandings',
+  brandingsLoadBrandingsErrorMessage:
+    'An error occurred while loading brandings: {details}',
+  brandingsLoadBrandingByIdErrorHeader: 'Load branding',
+  brandingsLoadBrandingByIdErrorMessage:
+    'An error occurred while loading the branding: {details}',
+  brandingsSaveBrandingSuccessHeader: 'Save branding',
+  brandingsSaveBrandingSuccessMessage: 'The branding was saved.',
+  brandingsSaveBrandingErrorHeader: 'Save branding',
+  brandingsSaveBrandingErrorMessage:
+    'An error occurred while saving the branding: {details}',
+  brandingsDeleteBrandingSuccessHeader: 'Delete branding',
+  brandingsDeleteBrandingSuccessMessage: 'The branding was deleted.',
+  brandingsDeleteBrandingErrorHeader: 'Delete branding',
+  brandingsDeleteBrandingErrorMessage:
+    'An error occurred while deleting the branding: {details}',
+  editorSavingBrandingLoadingText: 'Saving branding...',
+  editorDeletingBrandingLoadingText: 'Deleting branding...',
+  editorLoadingBrandingText: 'Loading branding...',
   stopPlacesCreateStopPlaceLinkIconLabelText: 'Create flexible stop place',
   stopPlaceText: 'flexible stop place',
   stopPlace: 'Flexible stop place *',

@@ -9,15 +9,14 @@ import {
   currentFlexibleLineStepIsValid,
   getMaxAllowedFlexibleLineStepIndex,
   validFlexibleLine,
-} from 'helpers/validation';
+} from 'validation';
 import FlexibleLine, { initFlexibleLine } from 'model/FlexibleLine';
 import { filterAuthorities, filterNetexOperators } from 'model/Organisation';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
 import { useLoadDependencies } from './hooks';
 import { FLEXIBLE_LINE_STEPS } from './steps';
@@ -39,7 +38,7 @@ const EditorFrame = () => {
 
   const intl = useIntl();
   const { formatMessage } = intl;
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const flexibleLines = useAppSelector((state) => state.flexibleLines);
   const organisations = useAppSelector((state) => state.organisations);

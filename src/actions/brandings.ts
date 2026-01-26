@@ -5,65 +5,43 @@ import {
 import { UttuQuery } from 'api';
 import { deleteBranding, brandingMutation } from 'api/uttu/mutations';
 import { getBrandingByIdQuery, getBrandingsQuery } from 'api/uttu/queries';
-import { AppThunk } from 'store/store';
-import { UttuError, getStyledUttuError } from 'helpers/uttu';
+import { getInternationalizedUttuError } from 'helpers/uttu';
 import { Branding } from 'model/Branding';
-import { RECEIVE_BRANDING, RECEIVE_BRANDINGS } from './constants';
+import { IntlShape } from 'react-intl';
+import { AppThunk } from 'store/store';
+import { receiveBrandings, receiveBranding } from '../reducers/brandingsSlice';
 
-// Action type definitions
-export type ReceiveBrandingsAction = {
-  type: typeof RECEIVE_BRANDINGS;
-  brandings: Branding[];
-};
+// Re-export actions from slice
+export { receiveBrandings, receiveBranding };
 
-export type ReceiveBrandingAction = {
-  type: typeof RECEIVE_BRANDING;
-  branding: Branding;
-};
-
-export type BrandingsAction = ReceiveBrandingsAction | ReceiveBrandingAction;
-
-const receiveBrandingsActionCreator = (
-  brandings: Branding[],
-): ReceiveBrandingsAction => ({
-  type: RECEIVE_BRANDINGS,
-  brandings,
-});
-
-const receiveBrandingActionCreator = (
-  branding: Branding,
-): ReceiveBrandingAction => ({
-  type: RECEIVE_BRANDING,
-  branding,
-});
-
-export const loadBrandings = (): AppThunk => async (dispatch, getState) => {
-  try {
-    const data = await UttuQuery(
-      getState().config.uttuApiUrl,
-      getState().userContext.activeProviderCode ?? '',
-      getBrandingsQuery,
-      {},
-      await getState().auth.getAccessToken(),
-    );
-    dispatch(receiveBrandingsActionCreator(data.brandings));
-    return data.brandings;
-  } catch (e) {
-    dispatch(
-      showErrorNotification(
-        'Laste merkevarer',
-        getStyledUttuError(
-          e as UttuError,
-          'En feil oppstod under lastingen av merkevarene',
-          'Prøv igjen senere.',
+export const loadBrandings =
+  (intl: IntlShape): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const data = await UttuQuery(
+        getState().config.uttuApiUrl,
+        getState().userContext.activeProviderCode ?? '',
+        getBrandingsQuery,
+        {},
+        await getState().auth.getAccessToken(),
+      );
+      dispatch(receiveBrandings(data.brandings));
+      return data.brandings;
+    } catch (e) {
+      dispatch(
+        showErrorNotification(
+          intl.formatMessage({ id: 'brandingsLoadBrandingsErrorHeader' }),
+          intl.formatMessage(
+            { id: 'brandingsLoadBrandingsErrorMessage' },
+            { details: getInternationalizedUttuError(intl, e as Error) },
+          ),
         ),
-      ),
-    );
-  }
-};
+      );
+    }
+  };
 
 export const loadBrandingById =
-  (id: string): AppThunk =>
+  (id: string, intl: IntlShape): AppThunk =>
   async (dispatch, getState) => {
     try {
       const data = await UttuQuery(
@@ -73,15 +51,14 @@ export const loadBrandingById =
         { id },
         await getState().auth.getAccessToken(),
       );
-      dispatch(receiveBrandingActionCreator(data.branding));
+      dispatch(receiveBranding(data.branding));
     } catch (e) {
       dispatch(
         showErrorNotification(
-          'Laste merkevare',
-          getStyledUttuError(
-            e as UttuError,
-            'En feil oppstod under lastingen av merkevaret',
-            'Prøv igjen senere.',
+          intl.formatMessage({ id: 'brandingsLoadBrandingByIdErrorHeader' }),
+          intl.formatMessage(
+            { id: 'brandingsLoadBrandingByIdErrorMessage' },
+            { details: getInternationalizedUttuError(intl, e as Error) },
           ),
         ),
       );
@@ -89,7 +66,7 @@ export const loadBrandingById =
   };
 
 export const saveBranding =
-  (branding: Branding, showConfirm = true): AppThunk =>
+  (branding: Branding, intl: IntlShape, showConfirm = true): AppThunk =>
   async (dispatch, getState) => {
     try {
       await UttuQuery(
@@ -103,17 +80,19 @@ export const saveBranding =
       );
       if (showConfirm) {
         dispatch(
-          showSuccessNotification('Lagre merkevare', 'Merkevaret ble lagret.'),
+          showSuccessNotification(
+            intl.formatMessage({ id: 'brandingsSaveBrandingSuccessHeader' }),
+            intl.formatMessage({ id: 'brandingsSaveBrandingSuccessMessage' }),
+          ),
         );
       }
     } catch (e) {
       dispatch(
         showErrorNotification(
-          'Lagre merkevare',
-          getStyledUttuError(
-            e as UttuError,
-            'En feil oppstod under lagringen av merkevaret',
-            'Prøv igjen senere.',
+          intl.formatMessage({ id: 'brandingsSaveBrandingErrorHeader' }),
+          intl.formatMessage(
+            { id: 'brandingsSaveBrandingErrorMessage' },
+            { details: getInternationalizedUttuError(intl, e as Error) },
           ),
         ),
       );
@@ -121,7 +100,7 @@ export const saveBranding =
   };
 
 export const deleteBrandingById =
-  (id: string | undefined): AppThunk =>
+  (id: string | undefined, intl: IntlShape): AppThunk =>
   async (dispatch, getState) => {
     if (!id) return;
 
@@ -136,15 +115,18 @@ export const deleteBrandingById =
         await getState().auth.getAccessToken(),
       );
       dispatch(
-        showSuccessNotification('Slette merkevare', 'Merkevaret ble slettet.'),
+        showSuccessNotification(
+          intl.formatMessage({ id: 'brandingsDeleteBrandingSuccessHeader' }),
+          intl.formatMessage({ id: 'brandingsDeleteBrandingSuccessMessage' }),
+        ),
       );
     } catch (e) {
       dispatch(
         showErrorNotification(
-          'Slette merkevare',
-          getStyledUttuError(
-            e as UttuError,
-            'En feil oppstod under slettingen av merkevaret',
+          intl.formatMessage({ id: 'brandingsDeleteBrandingErrorHeader' }),
+          intl.formatMessage(
+            { id: 'brandingsDeleteBrandingErrorMessage' },
+            { details: getInternationalizedUttuError(intl, e as Error) },
           ),
         ),
       );

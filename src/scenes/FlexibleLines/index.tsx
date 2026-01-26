@@ -7,9 +7,8 @@ import LinesTable from 'components/LinesTable';
 import FlexibleLine from 'model/FlexibleLine';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import './styles.scss';
 
 export default () => {
@@ -21,7 +20,7 @@ export default () => {
   const { formatMessage } = intl;
   const lines = useAppSelector((state) => state.flexibleLines);
   const operator = useAppSelector((state) => state.organisations);
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(loadFlexibleLines(intl));

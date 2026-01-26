@@ -2,7 +2,6 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import { getOrganisations } from 'actions/organisations';
@@ -14,7 +13,7 @@ import NavBar from './NavBar';
 
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../auth/auth';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import './styles.scss';
 
 import MarkerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -34,7 +33,7 @@ L.Icon.Default.mergeOptions({
 });
 
 const App = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
   const auth = useAuth();
   const { uttuApiUrl, mapConfig } = useConfig();
 

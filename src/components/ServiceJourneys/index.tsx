@@ -8,7 +8,7 @@ import {
   replaceElement,
 } from 'helpers/arrays';
 import { createUuid } from 'helpers/generators';
-import { isBefore } from 'helpers/validation';
+import { isBefore } from 'validation';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';

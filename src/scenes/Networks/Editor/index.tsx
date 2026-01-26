@@ -22,10 +22,9 @@ import { Network } from 'model/Network';
 import { filterAuthorities } from 'model/Organisation';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import './styles.scss';
 
 const getCurrentNetworkSelector = (params: Params) => (state: GlobalState) =>
@@ -56,7 +55,7 @@ const NetworkEditor = () => {
   const namePristine = usePristine(network.name, saveClicked);
   const authorityPristine = usePristine(network.authorityRef, saveClicked);
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const dispatchLoadFlexibleLines = useCallback(
     () => dispatch(loadFlexibleLines(intl)),
@@ -69,9 +68,11 @@ const NetworkEditor = () => {
 
   const dispatchLoadNetwork = useCallback(() => {
     if (params.id) {
-      dispatch(loadNetworkById(params.id)).catch(() => navigate('/networks'));
+      dispatch(loadNetworkById(params.id, intl)).catch(() =>
+        navigate('/networks'),
+      );
     }
-  }, [dispatch, params.id, history]);
+  }, [dispatch, params.id, intl, navigate]);
 
   useEffect(() => {
     dispatchLoadFlexibleLines();
@@ -87,8 +88,8 @@ const NetworkEditor = () => {
   const handleOnSaveClick = () => {
     if (network.name && network.authorityRef) {
       setSaving(true);
-      dispatch(saveNetwork(network))
-        .then(() => dispatch(loadNetworks()))
+      dispatch(saveNetwork(network, intl))
+        .then(() => dispatch(loadNetworks(intl)))
         .then(() => navigate('/networks'))
         .finally(() => setSaving(false));
     }
@@ -105,7 +106,9 @@ const NetworkEditor = () => {
   const handleDelete = () => {
     setDeleteDialogOpen(false);
     setDeleting(true);
-    dispatch(deleteNetworkById(network?.id)).then(() => navigate('/networks'));
+    dispatch(deleteNetworkById(network?.id, intl)).then(() =>
+      navigate('/networks'),
+    );
   };
 
   const authorities = filterAuthorities(organisations ?? []);

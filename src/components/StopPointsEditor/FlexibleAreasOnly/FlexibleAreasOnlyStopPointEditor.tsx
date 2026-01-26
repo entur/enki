@@ -3,7 +3,7 @@ import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
-import { validateFlexibleAreasOnlyStopPoint } from 'helpers/validation';
+import { validateFlexibleAreasOnlyStopPoint } from 'validation';
 import usePristine from 'hooks/usePristine';
 import { useIntl } from 'react-intl';
 import { useAppSelector } from '../../../store/hooks';
@@ -72,6 +72,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             value={stopPoint.destinationDisplay?.frontText}
             onChange={onFrontTextChange}
             spoilPristine={spoilPristine}
+            isFirst={true}
             {...getErrorFeedback(
               frontTextError ? formatMessage({ id: frontTextError }) : '',
               !frontTextError,

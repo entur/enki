@@ -12,6 +12,19 @@ const QuaySequenceIndexTooltip = ({
   stopPointSequenceIndexes,
   quayId,
 }: QuayIndexTooltipProps) => {
+  const openPopup = () => {
+    if (markerRef && typeof markerRef === 'object' && 'current' in markerRef) {
+      markerRef.current?.openPopup();
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openPopup();
+    }
+  };
+
   return (
     <div
       // This wrapper is important as Tooltip itself doesn't accept onClick,
@@ -19,15 +32,10 @@ const QuaySequenceIndexTooltip = ({
       style={{
         display: 'flex',
       }}
-      onClick={() => {
-        if (
-          markerRef &&
-          typeof markerRef === 'object' &&
-          'current' in markerRef
-        ) {
-          markerRef.current?.openPopup();
-        }
-      }}
+      role="button"
+      tabIndex={0}
+      onClick={openPopup}
+      onKeyDown={handleKeyDown}
     >
       <Tooltip
         interactive={true}
