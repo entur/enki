@@ -55,9 +55,11 @@ const BrandingEditor = () => {
 
   const dispatchLoadBranding = useCallback(() => {
     if (params.id) {
-      dispatch(loadBrandingById(params.id)).catch(() => navigate('/brandings'));
+      dispatch(loadBrandingById(params.id, intl)).catch(() =>
+        navigate('/brandings'),
+      );
     }
-  }, [dispatch, params.id, history]);
+  }, [dispatch, params.id, intl, navigate]);
 
   useEffect(() => {
     dispatchLoadBranding();
@@ -72,8 +74,8 @@ const BrandingEditor = () => {
   const handleOnSaveClick = () => {
     if (branding.name) {
       setSaving(true);
-      dispatch(saveBranding(branding))
-        .then(() => dispatch(loadBrandings()))
+      dispatch(saveBranding(branding, intl))
+        .then(() => dispatch(loadBrandings(intl)))
         .then(() => navigate('/brandings'))
         .finally(() => setSaving(false));
     }
@@ -83,7 +85,7 @@ const BrandingEditor = () => {
   const handleDelete = () => {
     setDeleteDialogOpen(false);
     setDeleting(true);
-    dispatch(deleteBrandingById(branding?.id)).then(() =>
+    dispatch(deleteBrandingById(branding?.id, intl)).then(() =>
       navigate('/brandings'),
     );
   };

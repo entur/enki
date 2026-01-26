@@ -28,13 +28,14 @@ export const useLoadDependencies = () => {
   );
 
   const dispatchLoadNetworks = useCallback(
-    () => dispatch(loadNetworks()).then(() => setNetworksIsLoading(false)),
-    [dispatch],
+    () => dispatch(loadNetworks(intl)).then(() => setNetworksIsLoading(false)),
+    [dispatch, intl],
   );
 
   const dispatchLoadBrandings = useCallback(
-    () => dispatch(loadBrandings()).then(() => setBrandingsIsLoading(false)),
-    [dispatch],
+    () =>
+      dispatch(loadBrandings(intl)).then(() => setBrandingsIsLoading(false)),
+    [dispatch, intl],
   );
 
   const dispatchLoadFlexibleLineById = useCallback(() => {
