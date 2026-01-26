@@ -22,7 +22,7 @@ import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import DurationPicker from 'components/DurationPicker';
 import * as duration from 'duration-fns';
 import { createUuid } from 'helpers/generators';
-import { isAfter, isBefore } from 'helpers/validation';
+import { isAfter, isBefore } from 'validation';
 import cloneDeep from 'lodash.clonedeep';
 import PassingTime from 'model/PassingTime';
 import ServiceJourney from 'model/ServiceJourney';

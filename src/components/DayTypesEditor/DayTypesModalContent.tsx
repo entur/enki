@@ -38,6 +38,14 @@ export const DayTypesModalContent = ({
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<DayTypeFetchError | null>(null);
 
+  const addSelectedId = (id: string) => {
+    setSelectedIds((old) => [...old, id]);
+  };
+
+  const removeSelectedId = (id: string) => {
+    setSelectedIds((old) => old.filter((v) => v !== id));
+  };
+
   const numberOfResults = useMemo(() => dayTypes.length, [dayTypes.length]);
   const pageCount = useMemo(
     () => Math.ceil(numberOfResults / results),
@@ -170,10 +178,8 @@ export const DayTypesModalContent = ({
               selected={selectedIds.includes(dayType.id!)}
               onSelect={(selected) =>
                 selected
-                  ? setSelectedIds((old) => [...old, dayType.id!])
-                  : setSelectedIds((old) => [
-                      ...old.filter((id) => id !== dayType.id!),
-                    ])
+                  ? addSelectedId(dayType.id!)
+                  : removeSelectedId(dayType.id!)
               }
               key={dayType.id}
               numberOfServiceJourneys={serviceJourneysPerDayType[dayType.id!]}

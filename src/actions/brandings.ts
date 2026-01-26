@@ -9,34 +9,10 @@ import { getInternationalizedUttuError } from 'helpers/uttu';
 import { Branding } from 'model/Branding';
 import { IntlShape } from 'react-intl';
 import { AppThunk } from 'store/store';
-import { RECEIVE_BRANDING, RECEIVE_BRANDINGS } from './constants';
+import { receiveBrandings, receiveBranding } from '../reducers/brandingsSlice';
 
-// Action type definitions
-export type ReceiveBrandingsAction = {
-  type: typeof RECEIVE_BRANDINGS;
-  brandings: Branding[];
-};
-
-export type ReceiveBrandingAction = {
-  type: typeof RECEIVE_BRANDING;
-  branding: Branding;
-};
-
-export type BrandingsAction = ReceiveBrandingsAction | ReceiveBrandingAction;
-
-const receiveBrandingsActionCreator = (
-  brandings: Branding[],
-): ReceiveBrandingsAction => ({
-  type: RECEIVE_BRANDINGS,
-  brandings,
-});
-
-const receiveBrandingActionCreator = (
-  branding: Branding,
-): ReceiveBrandingAction => ({
-  type: RECEIVE_BRANDING,
-  branding,
-});
+// Re-export actions from slice
+export { receiveBrandings, receiveBranding };
 
 export const loadBrandings =
   (intl: IntlShape): AppThunk =>
@@ -49,7 +25,7 @@ export const loadBrandings =
         {},
         await getState().auth.getAccessToken(),
       );
-      dispatch(receiveBrandingsActionCreator(data.brandings));
+      dispatch(receiveBrandings(data.brandings));
       return data.brandings;
     } catch (e) {
       dispatch(
@@ -75,7 +51,7 @@ export const loadBrandingById =
         { id },
         await getState().auth.getAccessToken(),
       );
-      dispatch(receiveBrandingActionCreator(data.branding));
+      dispatch(receiveBranding(data.branding));
     } catch (e) {
       dispatch(
         showErrorNotification(

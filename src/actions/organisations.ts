@@ -1,23 +1,10 @@
 import { UttuQuery } from 'api';
 import { getOrganisationsQuery } from 'api/uttu/queries';
-import { Organisation } from 'model/Organisation';
 import { AppThunk } from 'store/store';
+import { receiveOrganisations } from '../reducers/organisationsSlice';
 
-import { RECEIVE_ORGANISATIONS } from './constants';
-
-export type ReceiveOrganisations = {
-  type: typeof RECEIVE_ORGANISATIONS;
-  organisations: Organisation[];
-};
-
-export type OrganisationsAction = ReceiveOrganisations;
-
-export const receiveOrganisations = (
-  organisations: Organisation[],
-): ReceiveOrganisations => ({
-  type: RECEIVE_ORGANISATIONS,
-  organisations,
-});
+// Re-export action from slice
+export { receiveOrganisations };
 
 export const getOrganisations = (): AppThunk => async (dispatch, getState) => {
   try {

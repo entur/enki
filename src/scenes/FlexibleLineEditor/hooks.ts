@@ -3,9 +3,9 @@ import { loadFlexibleStopPlaces } from 'actions/flexibleStopPlaces';
 import { loadNetworks } from 'actions/networks';
 import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import { loadBrandings } from '../../actions/brandings';
+import { useAppDispatch } from '../../store/hooks';
 
 export const useLoadDependencies = () => {
   const params = useParams();
@@ -16,7 +16,7 @@ export const useLoadDependencies = () => {
   const [flexibleStopPlacesIsLoading, setFlexibleStopPlacesIsLoading] =
     useState(true);
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
   const intl = useIntl();
 
   const dispatchLoadFlexibleStopPlaces = useCallback(

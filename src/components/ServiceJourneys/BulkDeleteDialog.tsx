@@ -38,6 +38,12 @@ export default (props: Props) => {
 
   const [filterSearch, setFilterSearch] = React.useState('');
 
+  const filterValidSelectedIds = (filteredJourneys: ServiceJourney[]) => {
+    const validIds = new Set(filteredJourneys.map((item) => item.id));
+    return (previousIds: string[]) =>
+      previousIds.filter((id) => validIds.has(id));
+  };
+
   useEffect(() => {
     const textSearchRegex = new RegExp(
       filterSearch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
@@ -47,9 +53,7 @@ export default (props: Props) => {
       (item) => textSearchRegex.test(item.name!) || filterSearch === '',
     );
     setData(filtered);
-    setSelectedIds((s) =>
-      s.filter((id) => filtered.some((item) => item.id === id)),
-    );
+    setSelectedIds(filterValidSelectedIds(filtered));
   }, [filterSearch, serviceJourneys]);
 
   const add = (id: string) => {

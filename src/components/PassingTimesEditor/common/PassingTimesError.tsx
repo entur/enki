@@ -1,6 +1,6 @@
 import { SmallAlertBox } from '@entur/alert';
 import { ErrorHandling, getErrorFeedback } from 'helpers/errorHandling';
-import { validateTimes } from 'helpers/validation';
+import { validateTimes } from 'validation';
 import PassingTime from 'model/PassingTime';
 import { useMemo } from 'react';
 import { useIntl } from 'react-intl';

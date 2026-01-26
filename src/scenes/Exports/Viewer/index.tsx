@@ -11,10 +11,9 @@ import { download } from 'model/Export';
 import { EXPORT_STATUS } from 'model/enums';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { getIconForSeverity, getIconForStatus } from '../icons/icons';
 import './styles.scss';
 
@@ -41,7 +40,7 @@ const ExportsViewer = () => {
   const { formatMessage } = intl;
   const currentExport = useAppSelector(getCurrentExportSelector(params));
   const [theExport, setTheExport] = useState(currentExport);
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
   const { hideExportDryRun } = useConfig();
 
   const dispatchLoadExport = useCallback(() => {

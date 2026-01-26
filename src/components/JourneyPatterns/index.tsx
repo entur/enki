@@ -2,6 +2,11 @@ import { Accordion, AccordionItem } from '@entur/expand';
 import { Heading1, LeadParagraph } from '@entur/typography';
 import AddButton from 'components/AddButton/AddButton';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
+import {
+  getJourneyPatternNames,
+  JourneyPatternNameValidationError,
+  validateJourneyPatternName as validateJourneyPatternNameUtil,
+} from 'validation';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern, { initJourneyPattern } from 'model/JourneyPattern';
 import { ReactElement, useState } from 'react';
@@ -25,10 +30,8 @@ type Props = {
   ) => ReactElement;
 };
 
-export type JourneyPatternNameValidationError = {
-  duplicateName?: string;
-  emptyName?: string;
-};
+// Re-export for backwards compatibility
+export type { JourneyPatternNameValidationError } from 'validation';
 
 const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -99,25 +102,12 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
   const validateJourneyPatternName = (
     newJourneyPatternName: string | null,
   ): JourneyPatternNameValidationError => {
-    const validationError: JourneyPatternNameValidationError = {};
-    if (!newJourneyPatternName) {
-      validationError.emptyName = formatMessage({ id: 'nameIsRequired' });
-      return validationError;
-    }
-
-    const journeyPatternsNames: string[] = journeyPatterns
-      ? journeyPatterns.map((jp) => jp?.name?.trim() || '')
-      : [];
-    if (
-      newJourneyPatternName &&
-      journeyPatternsNames.includes(newJourneyPatternName.trim())
-    ) {
-      validationError.duplicateName = formatMessage({
-        id: 'journeyPatternDuplicateNameValidationError',
-      });
-    }
-
-    return validationError;
+    return validateJourneyPatternNameUtil(
+      newJourneyPatternName,
+      getJourneyPatternNames(journeyPatterns),
+      formatMessage({ id: 'nameIsRequired' }),
+      formatMessage({ id: 'journeyPatternDuplicateNameValidationError' }),
+    );
   };
 
   return (

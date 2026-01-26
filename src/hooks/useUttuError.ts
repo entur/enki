@@ -3,7 +3,7 @@ import { getInternationalizedUttuError } from 'helpers/uttu';
 import { MessagesKey } from 'i18n/translationKeys';
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 export default (
   headerKey: keyof MessagesKey,
@@ -12,7 +12,7 @@ export default (
   callback?: () => void,
 ) => {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (error) {
       dispatch(

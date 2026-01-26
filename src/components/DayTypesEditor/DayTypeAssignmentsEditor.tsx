@@ -1,9 +1,5 @@
 import { IconButton, TertiaryButton } from '@entur/button';
-import {
-  DatePicker,
-  nativeDateToDateValue,
-  timeOrDateValueToNativeDate,
-} from '@entur/datepicker';
+import { CalendarDate, DatePicker } from '@entur/datepicker';
 import { Switch } from '@entur/form';
 import { AddIcon, DeleteIcon } from '@entur/icons';
 import { DataCell, Table, TableBody, TableRow } from '@entur/table';
@@ -12,14 +8,158 @@ import { getErrorFeedback } from 'helpers/errorHandling';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import DayTypeAssignment from 'model/DayTypeAssignment';
 import OperatingPeriod from 'model/OperatingPeriod';
+import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { getCurrentDate, calendarDateToISO } from '../../utils/dates';
+import {
+  getCurrentDate,
+  hasValidYear,
+  isNotBefore,
+  safeParseDateWithFallback,
+} from '../../utils/dates';
 import './styles.scss';
-import { parseDate } from '@internationalized/date';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
   onChange: (dayTypeAssignment: DayTypeAssignment[]) => void;
+};
+
+/**
+ * Row component that manages local CalendarDate state for DatePickers.
+ * This allows users to see their typed input during year entry, while only
+ * propagating valid 4-digit year dates back to the parent ISO string state.
+ */
+type RowProps = {
+  dta: DayTypeAssignment;
+  index: number;
+  showDelete: boolean;
+  onOperatingPeriodChange: (op: OperatingPeriod, index: number) => void;
+  onIsAvailableChange: (isAvailable: boolean, index: number) => void;
+  onDelete: (index: number) => void;
+};
+
+const DayTypeAssignmentRow = ({
+  dta,
+  index,
+  showDelete,
+  onOperatingPeriodChange,
+  onIsAvailableChange,
+  onDelete,
+}: RowProps) => {
+  const { formatMessage } = useIntl();
+
+  // Local state for DatePicker values - allows showing partial year input
+  const [localFromDate, setLocalFromDate] = useState<CalendarDate>(() =>
+    safeParseDateWithFallback(dta.operatingPeriod.fromDate),
+  );
+  const [localToDate, setLocalToDate] = useState<CalendarDate>(() =>
+    safeParseDateWithFallback(dta.operatingPeriod.toDate),
+  );
+
+  // Sync local state when parent props change (e.g., external reset or undo)
+  useEffect(() => {
+    const parsedFrom = safeParseDateWithFallback(dta.operatingPeriod.fromDate);
+    // Only sync if the parent has a different valid date
+    if (
+      hasValidYear(parsedFrom) &&
+      parsedFrom.toString() !== localFromDate.toString()
+    ) {
+      setLocalFromDate(parsedFrom);
+    }
+  }, [dta.operatingPeriod.fromDate]);
+
+  useEffect(() => {
+    const parsedTo = safeParseDateWithFallback(dta.operatingPeriod.toDate);
+    // Only sync if the parent has a different valid date
+    if (
+      hasValidYear(parsedTo) &&
+      parsedTo.toString() !== localToDate.toString()
+    ) {
+      setLocalToDate(parsedTo);
+    }
+  }, [dta.operatingPeriod.toDate]);
+
+  const handleFromDateChange = (date: CalendarDate | null) => {
+    if (!date) return;
+
+    // Always update local state so user sees their input
+    setLocalFromDate(date);
+
+    // Only propagate to parent when year is complete (4 digits)
+    if (hasValidYear(date)) {
+      onOperatingPeriodChange(
+        {
+          ...dta.operatingPeriod,
+          fromDate: date.toString(),
+        },
+        index,
+      );
+    }
+  };
+
+  const handleToDateChange = (date: CalendarDate | null) => {
+    if (!date) return;
+
+    // Always update local state so user sees their input
+    setLocalToDate(date);
+
+    // Only propagate to parent when year is complete (4 digits)
+    if (hasValidYear(date)) {
+      onOperatingPeriodChange(
+        {
+          ...dta.operatingPeriod,
+          toDate: date.toString(),
+        },
+        index,
+      );
+    }
+  };
+
+  return (
+    <TableRow className="day-type-assignment">
+      <DataCell>
+        <DatePicker
+          label={formatMessage({ id: 'dayTypeEditorFromDate' })}
+          selectedDate={localFromDate}
+          onChange={handleFromDateChange}
+        />
+      </DataCell>
+
+      <DataCell>
+        <DatePicker
+          label={formatMessage({ id: 'dayTypeEditorToDate' })}
+          {...getErrorFeedback(
+            formatMessage({ id: 'dayTypeEditorToDateValidation' }),
+            isNotBefore(
+              dta.operatingPeriod.toDate ?? '',
+              dta.operatingPeriod.fromDate ?? '',
+            ),
+            false,
+          )}
+          selectedDate={localToDate}
+          onChange={handleToDateChange}
+        />
+      </DataCell>
+
+      <DataCell>
+        <Switch
+          checked={dta.isAvailable}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            onIsAvailableChange(e.target.checked, index);
+          }}
+        >
+          {formatMessage({ id: 'dayTypeAssignmentAvailableLabel' })}
+        </Switch>
+      </DataCell>
+
+      <DataCell>
+        {showDelete && (
+          <IconButton onClick={() => onDelete(index)}>
+            <DeleteIcon />
+          </IconButton>
+        )}
+      </DataCell>
+    </TableRow>
+  );
 };
 
 const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
@@ -48,20 +188,13 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
     onChange(replaceElement(dayTypeAssignments, index, updated));
   };
 
-  const isNotBefore = (toDate: string, fromDate: string): boolean =>
-    parseDate(toDate).compare(parseDate(fromDate)) >= 0;
+  const deleteAssignment = (index: number) => {
+    onChange(removeElementByIndex(dayTypeAssignments, index));
+  };
 
   if (dayTypeAssignments.length === 0) addNewDayTypeAssignment();
 
   const uniqueKeys = useUniqueKeys(dayTypeAssignments);
-
-  const dateJsToIso = (date: Date | null | undefined): string => {
-    const dateOrNow = date ?? new Date();
-    const y = dateOrNow?.getFullYear();
-    const m = dateOrNow?.getMonth() + 1;
-    const d = dateOrNow?.getDate();
-    return `${y}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
-  };
 
   return (
     <>
@@ -69,80 +202,15 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
         <Table>
           <TableBody>
             {dayTypeAssignments.map((dta, index) => (
-              <TableRow key={uniqueKeys[index]} className="day-type-assignment">
-                <DataCell>
-                  <DatePicker
-                    label={formatMessage({ id: 'dayTypeEditorFromDate' })}
-                    selectedDate={nativeDateToDateValue(
-                      new Date(dta.operatingPeriod.fromDate),
-                    )}
-                    onChange={(date) => {
-                      changeDay(
-                        {
-                          ...dta.operatingPeriod,
-                          fromDate: dateJsToIso(
-                            timeOrDateValueToNativeDate(date!),
-                          ),
-                        },
-                        index,
-                      );
-                    }}
-                  />
-                </DataCell>
-
-                <DataCell>
-                  <DatePicker
-                    label={formatMessage({ id: 'dayTypeEditorToDate' })}
-                    {...getErrorFeedback(
-                      formatMessage({ id: 'dayTypeEditorToDateValidation' }),
-                      isNotBefore(
-                        dta.operatingPeriod.toDate ?? '',
-                        dta.operatingPeriod.fromDate ?? '',
-                      ),
-                      false,
-                    )}
-                    selectedDate={nativeDateToDateValue(
-                      new Date(dta.operatingPeriod.toDate),
-                    )}
-                    onChange={(date) => {
-                      changeDay(
-                        {
-                          ...dta.operatingPeriod,
-                          toDate: dateJsToIso(
-                            timeOrDateValueToNativeDate(date!),
-                          ),
-                        },
-                        index,
-                      );
-                    }}
-                  />
-                </DataCell>
-
-                <DataCell>
-                  <Switch
-                    checked={dta.isAvailable}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      changeIsAvailable(e.target.checked, index);
-                    }}
-                  >
-                    {formatMessage({ id: 'dayTypeAssignmentAvailableLabel' })}
-                  </Switch>
-                </DataCell>
-
-                <DataCell>
-                  {dayTypeAssignments.length > 1 && (
-                    <IconButton
-                      onClick={() =>
-                        onChange(
-                          removeElementByIndex(dayTypeAssignments, index),
-                        )
-                      }
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  )}
-                </DataCell>
-              </TableRow>
+              <DayTypeAssignmentRow
+                key={uniqueKeys[index]}
+                dta={dta}
+                index={index}
+                showDelete={dayTypeAssignments.length > 1}
+                onOperatingPeriodChange={changeDay}
+                onIsAvailableChange={changeIsAvailable}
+                onDelete={deleteAssignment}
+              />
             ))}
           </TableBody>
         </Table>
