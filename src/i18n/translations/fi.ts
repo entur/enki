@@ -434,6 +434,7 @@ export const messages: MessagesKey = {
   linesNameTableHeaderLabel: 'Nimi',
   linesNoLinesFoundText: 'Ei linjoja löytynyt.',
   linesOperatorTableHeader: 'Operaattori',
+  linesBrandingTableHeader: 'Brändi',
   linesPublicCodeTableHeaderLabel: 'Julkinen tunnus',
   linesPrivateCodeTableHeaderLabel: 'Yksityinen tunnus',
   nameEmpty: 'Nimi vaaditaan.',
