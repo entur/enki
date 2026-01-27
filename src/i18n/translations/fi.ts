@@ -298,9 +298,9 @@ export const messages: MessagesKey = {
   newServiceJourneyModalJourneyPatternLabel: 'Valitse pysäkkiketju',
   serviceJourneysInfo:
     'Luo erilaisia lähtöjä palvelulle eri ajankohdille. Esimerkiksi arkipäiville ja viikonlopulle.',
-  dayTypesEditorSelectLabel: 'Valitse päivätyypit tälle palvelun lähdölle',
-  dayTypesModalTitle: 'Muokkaa päivätyyppejä',
-  dayTypesModalAddNewButtonLabel: 'Lisää päivätyyppi',
+  dayTypesEditorSelectLabel: 'Valitse kalenterit tälle palvelun lähdölle',
+  dayTypesModalTitle: 'Muokkaa kalentereita',
+  dayTypesModalAddNewButtonLabel: 'Lisää kalenteri',
   dayTypesModalIdHeader: 'NeTEx-tunnus',
   dayTypesModalNameHeader: 'Nimi',
   dayTypesModalUsedByHeader: 'Käytössä',
@@ -312,7 +312,7 @@ export const messages: MessagesKey = {
   weekdaysError: 'Täytä saatavuus.',
   dayTypeEditorNameFieldLabel: 'Nimi',
   dayTypeEditorNameFieldLabelTooltip:
-    'Auttaaksesi tunnistamaan päivätyyppi-olentoja Rakeessa',
+    'Auttaaksesi tunnistamaan kalenteri-olentoja Rakeessa',
   dayTypeEditorDateAvailability: 'Palvelun saatavuus',
   dayTypeEditorDateTooltip: 'Määritä palvelun voimassaolo',
   dayTypeEditorAddDayTypeAssignment: 'Lisää päivämäärä',
@@ -322,9 +322,9 @@ export const messages: MessagesKey = {
   dayTypeEditorFromDate: 'Alkaen (sisältyen) *',
   dayTypeEditorToDate: 'Asti (sisältyen) *',
   dayTypeEditorToDateValidation: 'Vähintään yksi päivä alkupäivämäärän jälkeen',
-  dayTypesEditButton: 'Muokkaa päivätyyppejä',
-  deleteDayTypesErrorTitle: 'Virhe päivätyyppien poistossa',
-  deleteSelectedDayTypesButtonLabel: 'Poista valitut päivätyypit',
+  dayTypesEditButton: 'Muokkaa kalentereita',
+  deleteDayTypesErrorTitle: 'Virhe kalentereiden poistossa',
+  deleteSelectedDayTypesButtonLabel: 'Poista valitut kalenterit',
   passingTimesEditorError: 'Tarvitset kelvolliset kulkuajat.',
   editorAddStopPoint: 'Lisää pysäkki',
   editorAddServiceJourneys: 'Luo lisää lähtöjä palvelulle',
@@ -751,4 +751,39 @@ export const messages: MessagesKey = {
   copyInstance: 'kopio',
   journeyPatternDuplicateNameValidationError:
     'Pysäkkiketjulla on oltava ainutlaatuinen nimi',
+
+  // Day Types - Navigation
+  navBarDayTypesMenuItemLabel: 'Kalenterit',
+
+  // Day Types - List page
+  dayTypesHeaderText: 'Kalenterit',
+  dayTypesCreateDayTypeButtonLabel: 'Luo kalenteri',
+  dayTypesLoadingText: 'Ladataan kalentereita...',
+  dayTypesNameTableHeader: 'Nimi',
+  dayTypesWeekdaysTableHeader: 'Viikonpäivät',
+  dayTypesInUseTableHeader: 'Käytössä',
+  dayTypesNoDayTypesFoundText: 'Kalentereita ei löytynyt.',
+  dayTypesDeleteConfirmDialogTitle: 'Poista kalenteri',
+  dayTypesDeleteConfirmDialogMessage:
+    'Haluatko varmasti poistaa tämän kalenterin?',
+
+  // Day Types - Editor page
+  dayTypesCreateDayTypeHeader: 'Luo kalenteri',
+  dayTypesEditDayTypeHeader: 'Muokkaa kalenteria',
+  dayTypesEditorDescription:
+    'Kalenterit määrittävät milloin palvelut ovat saatavilla. Valitse viikonpäivät ja päivämäärävälit palvelun saatavuudelle.',
+  dayTypesSavingDayTypeText: 'Tallennetaan kalenteria...',
+  dayTypesDeletingDayTypeText: 'Poistetaan kalenteria...',
+  dayTypesLoadingDayTypeText: 'Ladataan kalenteria...',
+  dayType: 'kalenteri',
+
+  // Day Types - Notifications
+  dayTypesLoadDayTypesErrorTitle: 'Lataa kalenterit',
+  dayTypesLoadDayTypeErrorTitle: 'Lataa kalenteri',
+  dayTypesSaveDayTypeSuccessTitle: 'Tallenna kalenteri',
+  dayTypesSaveDayTypeSuccessMessage: 'Kalenteri tallennettiin.',
+  dayTypesSaveDayTypeErrorTitle: 'Tallenna kalenteri',
+  dayTypesDeleteDayTypeSuccessTitle: 'Poista kalenteri',
+  dayTypesDeleteDayTypeSuccessMessage: 'Kalenteri poistettiin.',
+  dayTypesDeleteDayTypeErrorTitle: 'Poista kalenteri',
 };

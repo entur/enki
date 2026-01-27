@@ -1,0 +1,37 @@
+.day-type-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  .day-type-form {
+    max-width: 800px;
+  }
+
+  .day-type-form-fields {
+    .form-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-icon {
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+
+    button:last-of-type {
+      margin-left: 30px;
+    }
+  }
+
+  .loader {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
