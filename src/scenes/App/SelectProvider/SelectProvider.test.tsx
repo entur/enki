@@ -2,8 +2,50 @@ import { render, userEvent, waitFor } from '../../../utils/test-utils';
 import { SelectProvider } from './SelectProvider';
 import { MemoryRouter } from 'react-router-dom';
 import { useAppDispatch } from '../../../store/hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchUserContext } from '../../../auth/userContextSlice';
+import { vi } from 'vitest';
+
+// Mock @entur/dropdown due to bug in v8.x where 'refs' is accessed before initialization
+// See: https://github.com/entur/component-library/issues/XXX
+vi.mock('@entur/dropdown', () => ({
+  Dropdown: ({ selectedItem, onChange, items, label }: any) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const itemList = typeof items === 'function' ? items() : items;
+    return (
+      <div className="mock-dropdown">
+        <label>{label}</label>
+        <button
+          role="combobox"
+          aria-expanded={isOpen}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {selectedItem?.label || 'Select...'}
+        </button>
+        <button
+          aria-label="Åpne liste med valg"
+          onClick={() => setIsOpen(!isOpen)}
+        />
+        {isOpen && (
+          <ul role="listbox">
+            {itemList?.map((item: any) => (
+              <li
+                key={item.value}
+                role="option"
+                onClick={() => {
+                  onChange?.(item);
+                  setIsOpen(false);
+                }}
+              >
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  },
+}));
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
