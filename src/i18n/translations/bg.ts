@@ -635,6 +635,11 @@ export const messages = {
   telecabin: 'Кабинков лифт',
   bookingMethodText: 'Текст',
   errorCoordinates: 'Координатите са в невалиден формат',
+  errorCoordinatesEmpty: 'Не са предоставени координати',
+  errorCoordinatesSelfIntersecting:
+    'Ръбовете на полигона се пресичат. Моля, коригирайте формата, така че ръбовете да не се пресичат.',
+  errorCoordinatesSelfIntersectingCount:
+    'Полигонът има {count} самопресичане(я)',
   requiredInputMarker: 'Полетата, маркирани с *, са задължителни',
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'Маршрутната схема трябва да има уникално име',
