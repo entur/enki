@@ -748,4 +748,39 @@ export const messages: MessagesKey = {
   copyInstance: 'copy',
   journeyPatternDuplicateNameValidationError:
     'The journey pattern must have a unique name',
+
+  // Day Types - Navigation
+  navBarDayTypesMenuItemLabel: 'Day Types',
+
+  // Day Types - List page
+  dayTypesHeaderText: 'Day Types',
+  dayTypesCreateDayTypeButtonLabel: 'Create day type',
+  dayTypesLoadingText: 'Loading day types...',
+  dayTypesNameTableHeader: 'Name',
+  dayTypesWeekdaysTableHeader: 'Weekdays',
+  dayTypesInUseTableHeader: 'In use',
+  dayTypesNoDayTypesFoundText: 'No day types found.',
+  dayTypesDeleteConfirmDialogTitle: 'Delete day type',
+  dayTypesDeleteConfirmDialogMessage:
+    'Are you sure you want to delete this day type?',
+
+  // Day Types - Editor page
+  dayTypesCreateDayTypeHeader: 'Create day type',
+  dayTypesEditDayTypeHeader: 'Edit day type',
+  dayTypesEditorDescription:
+    'Day types define when services are available. Select weekdays and date ranges for the service availability.',
+  dayTypesSavingDayTypeText: 'Saving day type...',
+  dayTypesDeletingDayTypeText: 'Deleting day type...',
+  dayTypesLoadingDayTypeText: 'Loading day type...',
+  dayType: 'day type',
+
+  // Day Types - Notifications
+  dayTypesLoadDayTypesErrorTitle: 'Load day types',
+  dayTypesLoadDayTypeErrorTitle: 'Load day type',
+  dayTypesSaveDayTypeSuccessTitle: 'Save day type',
+  dayTypesSaveDayTypeSuccessMessage: 'Day type was saved.',
+  dayTypesSaveDayTypeErrorTitle: 'Save day type',
+  dayTypesDeleteDayTypeSuccessTitle: 'Delete day type',
+  dayTypesDeleteDayTypeSuccessMessage: 'Day type was deleted.',
+  dayTypesDeleteDayTypeErrorTitle: 'Delete day type',
 };

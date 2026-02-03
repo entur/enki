@@ -297,9 +297,9 @@ export const messages = {
   newServiceJourneyModalJourneyPatternLabel: 'Velg journey pattern',
   serviceJourneysInfo:
     'Du kan opprette ulike Service Journeys for ulike åpningstider. For eksempel ett for hverdag og ett for helg.',
-  dayTypesEditorSelectLabel: 'Velg day types for denne turen',
-  dayTypesModalTitle: 'Rediger day types',
-  dayTypesModalAddNewButtonLabel: 'Legg til day type',
+  dayTypesEditorSelectLabel: 'Velg kalendere for denne turen',
+  dayTypesModalTitle: 'Rediger kalendere',
+  dayTypesModalAddNewButtonLabel: 'Legg til kalender',
   dayTypesModalIdHeader: 'NeTEx ID',
   dayTypesModalNameHeader: 'Navn',
   dayTypesModalUsedByHeader: 'I bruk',
@@ -311,7 +311,7 @@ export const messages = {
   weekdaysError: 'Du må fylle ut tilgjengeligheten.',
   dayTypeEditorNameFieldLabel: 'Navn',
   dayTypeEditorNameFieldLabelTooltip:
-    'For identifisering av day type entiteter i Nplan',
+    'For identifisering av kalender-entiteter i Nplan',
   dayTypeEditorDateAvailability: 'Gyldighet for tilbudet',
   dayTypeEditorDateTooltip: 'Legg til dato for når tilbudet er tilgjengelig',
   dayTypeEditorAddDayTypeAssignment: 'Legg til dato',
@@ -321,9 +321,9 @@ export const messages = {
   dayTypeEditorFromDate: 'Fra og med *',
   dayTypeEditorToDate: 'Til og med *',
   dayTypeEditorToDateValidation: 'Minimum en dag etter fra-dato',
-  dayTypesEditButton: 'Rediger day types',
-  deleteDayTypesErrorTitle: 'Feil ved sletting av day types',
-  deleteSelectedDayTypesButtonLabel: 'Slett markerte day types',
+  dayTypesEditButton: 'Rediger kalendere',
+  deleteDayTypesErrorTitle: 'Feil ved sletting av kalendere',
+  deleteSelectedDayTypesButtonLabel: 'Slett markerte kalendere',
   passingTimesEditorError: 'Du må ha gyldige passeringstider.',
   editorAddStopPoint: 'Legg til stopp',
   editorAddServiceJourneys: 'Legg til flere Service Journeys',
@@ -745,4 +745,39 @@ export const messages = {
   copyInstance: 'en kopi',
   journeyPatternDuplicateNameValidationError:
     'Journey patternet må ha et unikt navn',
+
+  // Day Types - Navigation
+  navBarDayTypesMenuItemLabel: 'Kalendere',
+
+  // Day Types - List page
+  dayTypesHeaderText: 'Kalendere',
+  dayTypesCreateDayTypeButtonLabel: 'Opprett kalender',
+  dayTypesLoadingText: 'Laster kalendere...',
+  dayTypesNameTableHeader: 'Navn',
+  dayTypesWeekdaysTableHeader: 'Ukedager',
+  dayTypesInUseTableHeader: 'I bruk',
+  dayTypesNoDayTypesFoundText: 'Ingen kalendere funnet.',
+  dayTypesDeleteConfirmDialogTitle: 'Slett kalender',
+  dayTypesDeleteConfirmDialogMessage:
+    'Er du sikker på at du vil slette denne kalenderen?',
+
+  // Day Types - Editor page
+  dayTypesCreateDayTypeHeader: 'Opprett kalender',
+  dayTypesEditDayTypeHeader: 'Rediger kalender',
+  dayTypesEditorDescription:
+    'Kalendere definerer når tjenester er tilgjengelige. Velg ukedager og datoperioder for tjenestens tilgjengelighet.',
+  dayTypesSavingDayTypeText: 'Lagrer kalender...',
+  dayTypesDeletingDayTypeText: 'Sletter kalender...',
+  dayTypesLoadingDayTypeText: 'Laster kalender...',
+  dayType: 'kalender',
+
+  // Day Types - Notifications
+  dayTypesLoadDayTypesErrorTitle: 'Laste kalendere',
+  dayTypesLoadDayTypeErrorTitle: 'Laste kalender',
+  dayTypesSaveDayTypeSuccessTitle: 'Lagre kalender',
+  dayTypesSaveDayTypeSuccessMessage: 'Kalenderen ble lagret.',
+  dayTypesSaveDayTypeErrorTitle: 'Lagre kalender',
+  dayTypesDeleteDayTypeSuccessTitle: 'Slette kalender',
+  dayTypesDeleteDayTypeSuccessMessage: 'Kalenderen ble slettet.',
+  dayTypesDeleteDayTypeErrorTitle: 'Slette kalender',
 };
