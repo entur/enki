@@ -5,7 +5,7 @@ import { Tooltip } from '@entur/tooltip';
 import { Heading4 } from '@entur/typography';
 import DayTypeAssignmentsEditor from 'components/DayTypesEditor/DayTypeAssignmentsEditor';
 import WeekdayPicker from 'components/WeekdayPicker';
-import { validateDayType } from 'helpers/validation';
+import { validateDayType } from 'validation';
 import DayType from 'model/DayType';
 import { newDayTypeAssignment } from 'model/DayTypeAssignment';
 import React, { useEffect, useMemo } from 'react';
