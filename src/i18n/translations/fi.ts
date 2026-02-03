@@ -554,7 +554,7 @@ export const messages: MessagesKey = {
   errorCoordinatesSelfIntersecting:
     'Monikulmion reunat risteävät. Säädä muotoa niin, etteivät reunat risteä.',
   errorCoordinatesSelfIntersectingCount:
-    'Monikulmiossa on {count} itseristeystä',
+    'Monikulmiossa on {count} kpl risteäviä reunoja',
   editorLoadingDependenciesText: 'Ladataan riippuvuuksia',
   editorLoadingStopPlaceText: 'Ladataan pysäkkiä',
   editorNameFormLabelText: 'Nimi *',
