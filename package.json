@@ -23,7 +23,7 @@
     "@entur/button": "4.0.2",
     "@entur/chip": "0.10.4",
     "@entur/datepicker": "11.5.4",
-    "@entur/dropdown": "8.0.6",
+    "@entur/dropdown": "8.0.7-beta.0",
     "@entur/expand": "3.7.3",
     "@entur/form": "9.2.4",
     "@entur/grid": "0.3.72",
