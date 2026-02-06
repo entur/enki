@@ -1,4 +1,4 @@
-import { Alert, Button, Stepper, Step, StepButton } from '@mui/material';
+import { Alert, Box, Button, Stepper, Step, StepButton } from '@mui/material';
 import ConfirmDialog from 'components/ConfirmDialog';
 import ConfirmNavigationDialog from 'components/ConfirmNavigationDialog';
 import OverlayLoader from 'components/OverlayLoader';
@@ -89,7 +89,7 @@ export default ({
           </Step>
         ))}
       </Stepper>
-      <div>
+      <Box sx={{ mt: 3 }}>
         <OverlayLoader
           isLoading={isSaving || isDeleting}
           text={
@@ -98,7 +98,7 @@ export default ({
               : formatMessage({ id: 'editorDeleteLineLoadingText' })
           }
         >
-          <div>{children(activeStepperIndex)}</div>
+          <Box>{children(activeStepperIndex)}</Box>
           <>
             {otherStepsHasError && spoilPristine && isEdit && (
               <Alert severity="error" sx={{ width: 'fit-content', mt: 6 }}>
@@ -122,7 +122,7 @@ export default ({
             }}
           />
         </OverlayLoader>
-      </div>
+      </Box>
       {showConfirm && (
         <ConfirmNavigationDialog
           hideDialog={() => setShowConfirm(false)}

@@ -1,4 +1,4 @@
-import { Autocomplete, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -136,15 +136,16 @@ export default <T extends Line>({
   const modeItems = getModeItems();
 
   return (
-    <div>
+    <Box>
       <Typography variant="h1">
         {' '}
         {formatMessage({ id: 'editorAbout' })}
       </Typography>
       <RequiredInputMarker />
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ mt: 2 }}>
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
+            fullWidth
             label={formatMessage({ id: 'generalNameFormGroupTitle' })}
             value={line.name}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -163,6 +164,7 @@ export default <T extends Line>({
 
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
+            fullWidth
             label={formatMessage({ id: 'generalDescriptionFormGroupTitle' })}
             value={line.description ?? ''}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -176,6 +178,7 @@ export default <T extends Line>({
 
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
+            fullWidth
             label={formatMessage(
               { id: 'generalPublicCodeFormGroupTitle' },
               {
@@ -200,6 +203,7 @@ export default <T extends Line>({
 
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
+            fullWidth
             label={formatMessage({ id: 'generalPrivateCodeFormGroupTitle' })}
             type="text"
             value={line.privateCode ?? ''}
@@ -405,6 +409,6 @@ export default <T extends Line>({
           }}
         />
       )}
-    </div>
+    </Box>
   );
 };

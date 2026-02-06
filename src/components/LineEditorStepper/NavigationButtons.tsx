@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -23,7 +23,7 @@ const NavigationButtons = (props: Props) => {
 
   return (
     <>
-      <div>
+      <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
         {!props.editMode && props.firstStep && (
           <Button variant="outlined" onClick={props.onCancel}>
             {formatMessage({ id: 'navigationCancel' })}
@@ -75,12 +75,13 @@ const NavigationButtons = (props: Props) => {
           <Button
             variant="contained"
             color="error"
+            sx={{ ml: 'auto !important' }}
             onClick={() => setDeleteDialogOpen(true)}
           >
             {formatMessage({ id: 'editorDeleteButtonText' })}
           </Button>
         )}
-      </div>
+      </Stack>
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
         title={formatMessage({ id: 'editorDeleteLineConfirmationDialogTitle' })}
