@@ -4,6 +4,7 @@ import {
   Button,
   ButtonGroup,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   Typography,
@@ -74,7 +75,7 @@ const BookingArrangementEditor = ({
   );
 
   return (
-    <div>
+    <Box>
       <Box sx={{ mt: trim ? 0 : 4, pl: trim ? 0 : 4, pr: 4, pb: 4 }}>
         {trim && (
           <Typography variant="h4">
@@ -128,29 +129,25 @@ const BookingArrangementEditor = ({
           />
 
           {bookingArrangementFeedback?.feedback && (
-            <Box sx={{ mt: 4 }}>
-              <Alert severity="error">
-                {bookingArrangementFeedback.feedback}
-              </Alert>
-            </Box>
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {bookingArrangementFeedback.feedback}
+            </Alert>
           )}
-          <Box sx={{ mt: 4 }}>
-            <ButtonGroup>
-              <Button
-                onClick={saveChanges}
-                variant="contained"
-                disabled={!!bookingArrangementFeedback?.feedback}
-              >
-                {formatMessage({ id: 'bookingInfoSaveButtonText' })}
-              </Button>
-              <Button onClick={cancel} variant="contained" color="error">
-                {formatMessage({ id: 'bookingInfoCancelButtonText' })}
-              </Button>
-            </ButtonGroup>
-          </Box>
         </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={saveChanges}
+            variant="contained"
+            disabled={!!bookingArrangementFeedback?.feedback}
+          >
+            {formatMessage({ id: 'bookingInfoSaveButtonText' })}
+          </Button>
+          <Button onClick={cancel} variant="contained" color="error">
+            {formatMessage({ id: 'bookingInfoCancelButtonText' })}
+          </Button>
+        </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 

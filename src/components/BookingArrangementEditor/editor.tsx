@@ -132,8 +132,8 @@ export default (props: Props) => {
       <Typography variant="subtitle1">
         {formatMessage({ id: 'bookingInfoText' })}
       </Typography>
-      <Typography variant="caption">
-        <i>{formatMessage({ id: 'bookingLabel' })} </i>
+      <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
+        {formatMessage({ id: 'bookingLabel' })}{' '}
       </Typography>
 
       {bookingInfoAttachmentType && bookingInfoAttachmentName && (
@@ -143,6 +143,7 @@ export default (props: Props) => {
               label={bookingInfoAttachmentLabel(bookingInfoAttachmentType)}
               value={bookingInfoAttachmentName}
               disabled
+              fullWidth
             />
           </Grid>
         </Grid>
@@ -153,6 +154,7 @@ export default (props: Props) => {
           <TextField
             label={formatMessage({ id: 'contactFieldsContactPersonTitle' })}
             defaultValue={bookingContact?.contactPerson ?? ''}
+            fullWidth
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onContactChange({
                 ...bookingContact,
@@ -166,6 +168,7 @@ export default (props: Props) => {
           <TextField
             label={formatMessage({ id: 'contactFieldsEmailTitle' })}
             defaultValue={bookingContact?.email ?? ''}
+            fullWidth
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onContactChange({ ...bookingContact, email: e.target.value })
             }
@@ -176,6 +179,7 @@ export default (props: Props) => {
           <TextField
             label={formatMessage({ id: 'contactFieldsPhoneTitle' })}
             defaultValue={bookingContact?.phone ?? ''}
+            fullWidth
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onContactChange({ ...bookingContact, phone: e.target.value })
             }
@@ -186,6 +190,7 @@ export default (props: Props) => {
           <TextField
             label={formatMessage({ id: 'contactFieldsUrlTitle' })}
             value={bookingContact?.url ?? ''}
+            fullWidth
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onContactChange({ ...bookingContact, url: e.target.value })
             }
@@ -207,6 +212,7 @@ export default (props: Props) => {
 
         <Grid size={{ xs: 12, sm: 6 }}>
           <Autocomplete
+            fullWidth
             value={getEnumInit(bookingAccess)}
             options={bookingAccessItems}
             getOptionLabel={(option: NormalizedDropdownItemType) =>
@@ -235,6 +241,7 @@ export default (props: Props) => {
           <TextField
             label={formatMessage({ id: 'contactFieldsFurtherDetailsTitle' })}
             value={bookingContact?.furtherDetails || ''}
+            fullWidth
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onContactChange({
                 ...bookingContact,
@@ -246,35 +253,40 @@ export default (props: Props) => {
       </Grid>
 
       <Box sx={{ mt: 3 }}>
-        <Box sx={{ maxWidth: '48%', minWidth: '20rem', mb: 4 }}>
-          <Autocomplete
-            disabled={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
-            value={getEnumInit(bookWhen)}
-            options={purchaseWhenItems}
-            getOptionLabel={(option: NormalizedDropdownItemType) =>
-              option.label
-            }
-            isOptionEqualToValue={(option, value) =>
-              option.value === value.value
-            }
-            onChange={(_e, item) => {
-              onBookingLimitTypeChange(
-                item?.value ? BOOKING_LIMIT_TYPE.TIME : BOOKING_LIMIT_TYPE.NONE,
-              );
-              onChange({
-                ...bookingArrangement,
-                bookWhen: item?.value as PURCHASE_WHEN,
-              });
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={formatMessage({ id: 'bookingTimeSelectionTitle' })}
-                placeholder={formatMessage({ id: 'defaultOption' })}
-              />
-            )}
-          />
-        </Box>
+        <Grid container spacing={3} sx={{ mb: 2 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <Autocomplete
+              fullWidth
+              disabled={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
+              value={getEnumInit(bookWhen)}
+              options={purchaseWhenItems}
+              getOptionLabel={(option: NormalizedDropdownItemType) =>
+                option.label
+              }
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              onChange={(_e, item) => {
+                onBookingLimitTypeChange(
+                  item?.value
+                    ? BOOKING_LIMIT_TYPE.TIME
+                    : BOOKING_LIMIT_TYPE.NONE,
+                );
+                onChange({
+                  ...bookingArrangement,
+                  bookWhen: item?.value as PURCHASE_WHEN,
+                });
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={formatMessage({ id: 'bookingTimeSelectionTitle' })}
+                  placeholder={formatMessage({ id: 'defaultOption' })}
+                />
+              )}
+            />
+          </Grid>
+        </Grid>
 
         <FormControl component="fieldset" sx={{ mt: 3 }}>
           <FormLabel>

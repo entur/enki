@@ -249,6 +249,11 @@ export const messages: MessagesKey = {
   flexibleLineType_fixed: 'Fixed',
   flexibleLineType_flexibleAreasOnly: 'Flexible areas only',
   flexibleLineType_mixedFlexible: 'Mixed flexible',
+  flexibleLineType_corridorService: 'Corridor service',
+  flexibleLineType_mainRouteWithFlexibleEnds: 'Main route with flexible ends',
+  flexibleLineType_hailAndRideSections: 'Hail and ride sections',
+  flexibleLineType_fixedStopAreaWide: 'Fixed stop area wide',
+  flexibleLineType_mixedFlexibleAndFixed: 'Mixed flexible and fixed',
   flexibleLineTypeDrawer_fixed:
     'Fixed route at fixed times, has to be booked beforehand for the bus to drive.',
   flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
@@ -261,6 +266,10 @@ export const messages: MessagesKey = {
     'The route is defined, but along selected streches there is the possibility for boarding/alighting at any time.',
   flexibleLineTypeDrawer_mixedFlexible:
     'A mix of pre-defined stops and flexible areas, with time windows and fixed times for boarding and alighting.',
+  flexibleLineTypeDrawer_corridorService:
+    'The service operates along a defined corridor, where passengers can be picked up and dropped off along the route.',
+  flexibleLineTypeDrawer_mixedFlexibleAndFixed:
+    'A combination of fixed stops and flexible areas, where some stops are fixed and others are flexible.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Add journey pattern',
   journeyPatternsUnsavedChanges: 'You have unsaved changes.',
   journeyPatternsSaveAndContinue: 'Save and continue',
@@ -788,4 +797,7 @@ export const messages: MessagesKey = {
   dayTypesDeleteDayTypeSuccessTitle: 'Delete day type',
   dayTypesDeleteDayTypeSuccessMessage: 'Day type was deleted.',
   dayTypesDeleteDayTypeErrorTitle: 'Delete day type',
+
+  // Duration
+  'duration.hours': '{hours} hours',
 };
