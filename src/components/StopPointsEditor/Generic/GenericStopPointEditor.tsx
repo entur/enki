@@ -114,26 +114,35 @@ export const GenericStopPointEditor = ({
           />
         </Box>
 
-        <ComponentToggle<SandboxFeatures, StopPointButtonGroupProps>
-          feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
-          renderFallback={() => (
-            <DeleteButton
-              thin={true}
-              disabled={!canDelete}
-              onClick={() => {
-                onDeleteDialogOpen(true);
-              }}
-              title={formatMessage({ id: 'editorDeleteButtonText' })}
-            />
-          )}
-          componentProps={{
-            stopPoint,
-            onDeleteDialogOpen,
-            flexibleLineType,
-            onFocusedQuayIdUpdate,
-            canDelete,
+        <Box
+          sx={{
+            flexShrink: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
           }}
-        />
+        >
+          <ComponentToggle<SandboxFeatures, StopPointButtonGroupProps>
+            feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
+            renderFallback={() => (
+              <DeleteButton
+                thin={true}
+                disabled={!canDelete}
+                onClick={() => {
+                  onDeleteDialogOpen(true);
+                }}
+                title={formatMessage({ id: 'editorDeleteButtonText' })}
+              />
+            )}
+            componentProps={{
+              stopPoint,
+              onDeleteDialogOpen,
+              flexibleLineType,
+              onFocusedQuayIdUpdate,
+              canDelete,
+            }}
+          />
+        </Box>
 
         <ConfirmDialog
           isOpen={isDeleteDialogOpen}

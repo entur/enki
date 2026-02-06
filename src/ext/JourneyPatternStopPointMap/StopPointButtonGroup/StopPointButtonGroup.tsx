@@ -1,6 +1,6 @@
 import { FlexibleLineType } from '../../../model/FlexibleLine';
 import DeleteButton from '../../../components/DeleteButton/DeleteButton';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import React from 'react';
 import { useIntl } from 'react-intl';
@@ -22,7 +22,10 @@ export const StopPointButtonGroup: FeatureComponent<
     !flexibleLineType || flexibleLineType === FlexibleLineType.FIXED;
 
   return (
-    <div className={'action-buttons-group'}>
+    <Box
+      className={'action-buttons-group'}
+      sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
+    >
       <DeleteButton
         thin={true}
         disabled={!canDelete}
@@ -47,6 +50,6 @@ export const StopPointButtonGroup: FeatureComponent<
           {formatMessage({ id: 'locateStopPoint' })}
         </Button>
       )}
-    </div>
+    </Box>
   );
 };

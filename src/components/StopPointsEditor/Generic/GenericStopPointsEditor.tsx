@@ -95,9 +95,15 @@ export const GenericStopPointsEditor = ({
       )}
       {stopPlacesInJourneyPattern && (
         <Box sx={{ display: 'flex' }}>
-          <Box sx={isMapEnabled ? { maxWidth: 450, mr: '30px' } : undefined}>
+          <Box
+            sx={
+              isMapEnabled
+                ? { minWidth: 400, flexShrink: 0, mr: '30px' }
+                : undefined
+            }
+          >
             {isMapEnabled && pointsInSequence?.length < 2 && (
-              <Alert sx={{ minWidth: 450, mb: 6 }} severity={'info'}>
+              <Alert sx={{ mb: 6 }} severity={'info'}>
                 {formatMessage({ id: 'stopPointsMapInfo' })}
               </Alert>
             )}
