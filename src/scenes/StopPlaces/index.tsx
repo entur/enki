@@ -104,7 +104,7 @@ const StopPlaces = () => {
         </TableRow>
       ))}
       {stopPlaces.length === 0 && (
-        <TableRow className="row-no-stop-places disabled">
+        <TableRow>
           <TableCell colSpan={3}>
             {formatMessage({ id: 'stopPlacesNoStopPlacesFoundText' })}
           </TableCell>

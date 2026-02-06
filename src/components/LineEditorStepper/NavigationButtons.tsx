@@ -23,7 +23,7 @@ const NavigationButtons = (props: Props) => {
 
   return (
     <>
-      <div className="buttons">
+      <div>
         {!props.editMode && props.firstStep && (
           <Button variant="outlined" onClick={props.onCancel}>
             {formatMessage({ id: 'navigationCancel' })}
@@ -76,7 +76,6 @@ const NavigationButtons = (props: Props) => {
             variant="contained"
             color="error"
             onClick={() => setDeleteDialogOpen(true)}
-            className="delete"
           >
             {formatMessage({ id: 'editorDeleteButtonText' })}
           </Button>

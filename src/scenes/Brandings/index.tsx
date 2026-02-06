@@ -72,7 +72,7 @@ const Brandings = () => {
         </TableRow>
       ))}
       {brandingList.length === 0 && (
-        <TableRow className="row-no-brandings disabled">
+        <TableRow>
           <TableCell colSpan={3}>
             {formatMessage({ id: 'brandingsNoBrandingsFoundText' })}
           </TableCell>

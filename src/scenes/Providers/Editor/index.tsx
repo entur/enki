@@ -89,7 +89,6 @@ const ProviderEditor = () => {
       <>
         {(provider && (
           <OverlayLoader
-            className=""
             isLoading={isSaving}
             text={formatMessage({ id: 'editorSavingProviderLoadingText' })}
           >
@@ -180,7 +179,6 @@ const ProviderEditor = () => {
           </OverlayLoader>
         )) || (
           <Loading
-            className=""
             isLoading={!provider}
             isFullScreen
             children={null}

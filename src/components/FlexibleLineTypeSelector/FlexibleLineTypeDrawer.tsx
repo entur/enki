@@ -18,12 +18,10 @@ const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
         <Typography variant="h6" gutterBottom>
           {title}
         </Typography>
-        <header className="flexible-line-type-drawer">
-          {formatMessage({ id: 'generalDrawer' })}
-        </header>
+        <header>{formatMessage({ id: 'generalDrawer' })}</header>
 
         {supportedFlexibleLineTypes?.map((flexibleLineType) => (
-          <section className="flexible-line-type-drawer" key={flexibleLineType}>
+          <section key={flexibleLineType}>
             <Typography variant="h6">
               {formatMessage({
                 id: `flexibleLineType_${flexibleLineType}` as keyof MessagesKey,

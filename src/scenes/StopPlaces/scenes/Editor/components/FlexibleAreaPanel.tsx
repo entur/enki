@@ -47,7 +47,7 @@ const FlexibleAreaPanel = ({
         <Typography>{`${formatMessage({ id: 'stopPlaceAreaLabelPrefix' })} ${index + 1}`}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <div className="stop-place-form">
+        <div>
           <StopPlaceTypeDropdown
             label={formatMessage({ id: 'flexibleStopAreaType' })}
             keyValues={area.keyValues}
@@ -59,11 +59,7 @@ const FlexibleAreaPanel = ({
             changeCoordinates={onCoordinatesChange}
           />
 
-          <Button
-            variant="contained"
-            className="draw-polygon-button"
-            onClick={onDrawPolygonClick}
-          >
+          <Button variant="contained" onClick={onDrawPolygonClick}>
             {formatMessage({ id: 'editorDrawPolygonButtonText' })}
             <Map />
           </Button>

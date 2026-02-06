@@ -99,7 +99,6 @@ const DayTypeEditor = () => {
 
         {dayType ? (
           <OverlayLoader
-            className=""
             isLoading={isSaving || isDeleting}
             text={
               isSaving
@@ -149,7 +148,6 @@ const DayTypeEditor = () => {
           </OverlayLoader>
         ) : (
           <Loading
-            className=""
             isLoading={!dayType}
             isFullScreen
             children={null}

@@ -67,7 +67,6 @@ const ExportsCreator = () => {
       title={formatMessage({ id: 'exportCreatorHeader' })}
     >
       <OverlayLoader
-        className=""
         isLoading={isSaving}
         text={formatMessage({ id: 'exportCreatorSavingOverlayLoaderText' })}
       >

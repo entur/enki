@@ -106,7 +106,6 @@ const EditorFrame = () => {
     >
       <>
         <Loading
-          className=""
           isLoading={isLoadingDependencies}
           text={formatMessage({ id: 'editorLoadingLineText' })}
         >

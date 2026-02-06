@@ -50,7 +50,6 @@ export const SelectProvider = () => {
     <>
       {providers && (
         <Autocomplete
-          className="provider-wrapper"
           options={items}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.value === value.value}

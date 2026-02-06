@@ -223,18 +223,18 @@ export default ({ onChange }: Props) => {
           </TableCell>
         </TableRow>
       </TableHead>
-      <TableBody style={{ verticalAlign: 'top' }}>
+      <TableBody sx={{ verticalAlign: 'top' }}>
         {!loading &&
           !error &&
           sortedData.map((line: ExportableLine) => (
             <TableRow
               key={line.id}
-              style={{
+              sx={{
                 opacity: line.status === 'negative' ? 0.5 : 1,
                 color: line.status === 'negative' ? '#888' : 'inherit',
               }}
             >
-              <TableCell padding="checkbox" style={{ padding: '.5rem 1rem' }}>
+              <TableCell padding="checkbox" sx={{ padding: '.5rem 1rem' }}>
                 <Checkbox
                   name={line.id}
                   checked={line.selected}
@@ -247,7 +247,7 @@ export default ({ onChange }: Props) => {
                   variant="body2"
                   component="strong"
                   fontWeight="bold"
-                  style={{
+                  sx={{
                     color: line.status === 'negative' ? '#888' : 'inherit',
                   }}
                 >
@@ -257,7 +257,7 @@ export default ({ onChange }: Props) => {
                 <Typography
                   variant="caption"
                   component="span"
-                  style={{
+                  sx={{
                     color: line.status === 'negative' ? '#888' : 'inherit',
                   }}
                 >

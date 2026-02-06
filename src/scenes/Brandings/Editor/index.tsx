@@ -106,7 +106,6 @@ const BrandingEditor = () => {
 
         {branding ? (
           <OverlayLoader
-            className=""
             isLoading={isSaving || isDeleting}
             text={
               isSaving
@@ -211,7 +210,6 @@ const BrandingEditor = () => {
           </OverlayLoader>
         ) : (
           <Loading
-            className=""
             isLoading={!branding}
             isFullScreen
             children={null}

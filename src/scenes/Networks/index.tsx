@@ -80,7 +80,7 @@ const Networks = () => {
         </TableRow>
       ))}
       {networkList.length === 0 && (
-        <TableRow className="row-no-networks disabled">
+        <TableRow>
           <TableCell colSpan={3}>
             {formatMessage({ id: 'networksNoNetworksFoundText' })}
           </TableCell>

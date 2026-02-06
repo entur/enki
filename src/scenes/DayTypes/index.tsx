@@ -124,7 +124,7 @@ const DayTypes = () => {
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow className="row-no-day-types disabled">
+                  <TableRow>
                     <TableCell colSpan={4}>
                       {formatMessage({ id: 'dayTypesNoDayTypesFoundText' })}
                     </TableCell>

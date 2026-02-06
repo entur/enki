@@ -91,7 +91,6 @@ export default ({
       </Stepper>
       <div>
         <OverlayLoader
-          className=""
           isLoading={isSaving || isDeleting}
           text={
             isSaving
@@ -136,7 +135,6 @@ export default ({
       )}
       {authoritiesMissing && (
         <ConfirmDialog
-          className="authority-missing-modal"
           isOpen={true}
           title={formatMessage({ id: 'networkAuthorityMissing' })}
           message={formatMessage({ id: 'networkAuthorityMissingDetails' })}

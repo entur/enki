@@ -76,7 +76,7 @@ export default (props: Props) => {
       <DialogContent>
         <TextField
           label={formatMessage({ id: 'bulkDeleteDialogFilterSearchLabel' })}
-          style={{ width: '15rem' }}
+          sx={{ width: '15rem' }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -90,7 +90,7 @@ export default (props: Props) => {
           variant="outlined"
           size="small"
         />
-        <Table size="small" style={{ marginTop: '1rem' }}>
+        <Table size="small" sx={{ marginTop: '1rem' }}>
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox">

@@ -71,7 +71,7 @@ export default (props: Props) => {
 
 const renderNoLinesFound = (noLinesFoundText: string) => {
   return (
-    <TableRow className="row-no-lines disabled">
+    <TableRow>
       <TableCell colSpan={3}>{noLinesFoundText}</TableCell>
     </TableRow>
   );
@@ -79,9 +79,9 @@ const renderNoLinesFound = (noLinesFoundText: string) => {
 
 const renderLoading = (loadingText: string) => {
   return (
-    <TableRow className="disabled">
+    <TableRow>
       <TableCell colSpan={3}>
-        <Loading className="" text={loadingText} children={null} />
+        <Loading text={loadingText} children={null} />
       </TableCell>
     </TableRow>
   );

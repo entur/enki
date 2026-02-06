@@ -31,7 +31,7 @@ export default ({ value, onChange, disabled = false }: Props) => {
   return (
     <Autocomplete
       disabled={disabled}
-      style={{ minWidth: '120px' }}
+      sx={{ minWidth: '120px' }}
       options={options}
       getOptionLabel={(option) => option.label}
       isOptionEqualToValue={(option, val) => option.value === val.value}

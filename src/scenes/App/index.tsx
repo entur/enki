@@ -82,7 +82,7 @@ const App = () => {
   }
 
   return (
-    <div className="app">
+    <div>
       <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
       <ComponentToggle feature="MatomoTracker" />
       <ComponentToggle feature="CookieInformation" />
@@ -94,7 +94,6 @@ const App = () => {
             <Box className="app-root">
               <Box className="app-content">
                 <Loading
-                  className="app-loader"
                   text={formatMessage({ id: 'appLoadingMessage' })}
                   isLoading={
                     !userContext.providers ||

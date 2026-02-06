@@ -34,7 +34,7 @@ export const LandingPage = () => {
   );
 
   return (
-    <div className="app">
+    <div>
       <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
       <AppBar position="fixed">
         <Toolbar

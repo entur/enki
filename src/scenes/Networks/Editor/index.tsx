@@ -132,7 +132,6 @@ const NetworkEditor = () => {
 
         {network && lines ? (
           <OverlayLoader
-            className=""
             isLoading={isSaving || isDeleting}
             text={
               isSaving
@@ -256,7 +255,6 @@ const NetworkEditor = () => {
           </OverlayLoader>
         ) : (
           <Loading
-            className=""
             isLoading={!network}
             isFullScreen
             children={null}

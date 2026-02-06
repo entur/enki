@@ -10,7 +10,7 @@ const AddButton = (props: Props) => (
   <div style={{ display: 'flex', alignItems: 'baseline', marginTop: '3rem' }}>
     <IconButton
       onClick={props.onClick}
-      style={{ marginRight: '1rem' }}
+      sx={{ marginRight: '1rem' }}
       color="primary"
     >
       <Add />

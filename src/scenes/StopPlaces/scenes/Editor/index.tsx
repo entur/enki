@@ -230,7 +230,6 @@ const FlexibleStopPlaceEditor = () => {
         </Grid>
         {flexibleStopPlace && !isLoading ? (
           <OverlayLoader
-            className=""
             isLoading={isSaving || isDeleting}
             text={
               isSaving
@@ -399,7 +398,6 @@ const FlexibleStopPlaceEditor = () => {
         ) : (
           <Loading
             children={null}
-            className=""
             text={
               flexibleStopPlace
                 ? formatMessage({ id: 'editorLoadingStopPlaceText' })
