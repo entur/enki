@@ -33,6 +33,7 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
             onFieldChange({ ...journeyPattern, name: e.target.value })
           }
           variant="outlined"
+          fullWidth
         />
       </Grid>
 
@@ -47,6 +48,7 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
             })
           }
           variant="outlined"
+          fullWidth
         />
       </Grid>
 
@@ -64,6 +66,7 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
               })
             }
             variant="outlined"
+            fullWidth
           />
         </Tooltip>
       </Grid>

@@ -77,7 +77,7 @@ export const BoardingTypeSelect = ({
     boardingDropDownItems.find((item) => item.value === boardingType) || null;
   return (
     <Autocomplete
-      sx={{ width: 260 }}
+      fullWidth
       value={selectedItem}
       onChange={(_event, newValue: NormalizedDropdownItemType | null) =>
         onChange(newValue?.value as BoardingType)
@@ -88,6 +88,7 @@ export const BoardingTypeSelect = ({
       renderInput={(params) => (
         <TextField
           {...params}
+          fullWidth
           label={formatMessage({ id: 'labelBoarding' })}
           placeholder={formatMessage({ id: 'defaultOption' })}
           error={!!error}

@@ -89,6 +89,7 @@ const ServiceJourneyEditor = (props: Props) => {
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
+              fullWidth
               label={formatMessage({ id: 'generalNameLabel' })}
               {...getMuiErrorProps(
                 formatMessage({ id: 'nameIsRequired' }),
@@ -105,6 +106,7 @@ const ServiceJourneyEditor = (props: Props) => {
 
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
+              fullWidth
               label={formatMessage({ id: 'generalDescription' })}
               value={description || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -117,6 +119,7 @@ const ServiceJourneyEditor = (props: Props) => {
           <Grid size={{ xs: 12, sm: 6 }}>
             <Tooltip title={formatMessage({ id: 'generalPublicCodeTooltip' })}>
               <TextField
+                fullWidth
                 label={formatMessage({ id: 'generalPublicCode' })}
                 value={publicCode || ''}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -130,6 +133,7 @@ const ServiceJourneyEditor = (props: Props) => {
           <Grid size={{ xs: 12, sm: 6 }}>
             <Tooltip title={formatMessage({ id: 'generalPrivateCodeTooltip' })}>
               <TextField
+                fullWidth
                 label={formatMessage({ id: 'generalPrivateCode' })}
                 value={privateCode || ''}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

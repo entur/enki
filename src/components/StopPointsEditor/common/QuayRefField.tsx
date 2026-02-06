@@ -84,7 +84,7 @@ export const QuayRefField = ({
 
   return (
     <TextField
-      sx={{ width: 260 }}
+      fullWidth
       label={formatMessage({ id: 'labelQuayRef' })}
       error={hasError}
       helperText={helperText}

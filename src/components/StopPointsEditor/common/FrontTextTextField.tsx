@@ -65,7 +65,7 @@ export const FrontTextTextField = ({
   return (
     <Tooltip title={formatMessage({ id: 'frontTextTooltip' })} placement="top">
       <TextField
-        sx={{ width: 260 }}
+        fullWidth
         label={formatMessage({
           id: isFirst ? 'labelFrontTextRequired' : 'labelFrontText',
         })}
