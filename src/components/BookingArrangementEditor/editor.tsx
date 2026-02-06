@@ -1,9 +1,5 @@
 import { Chip } from '@mui/material';
-import {
-  TimePicker,
-  nativeDateToTimeValue,
-  timeOrDateValueToNativeDate,
-} from '@entur/datepicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import {
   Autocomplete,
   TextField,
@@ -14,11 +10,9 @@ import {
   RadioGroup,
 } from '@mui/material';
 import { Typography } from '@mui/material';
-import { TimeValue } from '@react-types/datepicker';
-import { CalendarDateTime } from '@internationalized/date';
 import DurationPicker from 'components/DurationPicker';
 import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
-import { getCurrentDateTime } from '../../utils/dates';
+
 import { addOrRemove } from 'helpers/arrays';
 import {
   getEnumInit,
@@ -50,7 +44,7 @@ type Props = {
 
 export default (props: Props) => {
   const intl = useIntl();
-  const { formatMessage, locale } = intl;
+  const { formatMessage } = intl;
   const {
     bookingArrangement,
     onChange,
@@ -70,15 +64,12 @@ export default (props: Props) => {
     minimumBookingPeriod,
   } = bookingArrangement;
 
-  let latestbookingTimeAsDate: CalendarDateTime | undefined = undefined;
+  let latestbookingTimeAsDate: Date | null = null;
   if (latestBookingTime && latestBookingTime !== '') {
-    const currentDateTime = getCurrentDateTime();
     const [hours, minutes] = latestBookingTime.split(':').map(Number);
-    latestbookingTimeAsDate = currentDateTime.copy();
-    latestbookingTimeAsDate.set({
-      hour: hours,
-      minute: minutes,
-    });
+    const d = new Date();
+    d.setHours(hours, minutes, 0, 0);
+    latestbookingTimeAsDate = d;
   }
 
   const onContactChange = (contact: Contact) =>
@@ -287,16 +278,13 @@ export default (props: Props) => {
 
             <TimePicker
               label=""
-              locale={locale}
               disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-              selectedTime={
-                latestbookingTimeAsDate ? latestbookingTimeAsDate : null
-              }
-              onChange={(date: TimeValue | null) => {
+              value={latestbookingTimeAsDate}
+              onChange={(date: Date | null) => {
                 let formattedDate;
 
                 if (date != null) {
-                  formattedDate = `${date.hour}:${date.minute}`;
+                  formattedDate = `${date.getHours()}:${date.getMinutes()}`;
                 }
 
                 onLatestBookingTimeChange(formattedDate);

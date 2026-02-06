@@ -1,13 +1,11 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 .error-icon {
-  color: $colors-validation-lava;
+  color: #d31b1b;
 }
 
 .success-icon {
-  color: $colors-validation-mint;
+  color: #1a8e60;
 }
 
 .exlamation-icon {
-  color: $colors-validation-canary;
+  color: #ffca28;
 }

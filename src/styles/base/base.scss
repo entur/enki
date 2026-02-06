@@ -1,5 +1,3 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 body {
   margin: 0;
   padding: 0;
@@ -15,27 +13,27 @@ h1 {
   font-size: 34px;
   font-weight: 600;
   line-height: 42px;
-  color: $colors-brand-blue;
+  color: #181c56;
 }
 
 h2 {
   font-size: 28px;
   font-weight: 600;
   line-height: 36px;
-  color: $colors-brand-blue;
+  color: #181c56;
 }
 
 h3 {
   font-size: 22px;
   font-weight: 600;
   line-height: 30px;
-  color: $colors-brand-blue;
+  color: #181c56;
 }
 h4 {
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
-  color: $colors-brand-blue;
+  color: #181c56;
 }
 
 p {
@@ -74,7 +72,7 @@ small {
 }
 
 .positive {
-  color: $colors-validation-mint;
+  color: #1a8e60;
 }
 
 table {
@@ -90,19 +88,5 @@ table {
   tr.disabled:hover {
     background-color: initial;
     cursor: default;
-  }
-}
-
-.eds-stepper {
-  padding-inline-start: 0;
-
-  .eds-stepper__step {
-    width: 100%;
-  }
-
-  li {
-    flex-grow: 1;
-    line-height: inherit;
-    padding-right: 0.25rem;
   }
 }

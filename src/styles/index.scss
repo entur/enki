@@ -1,21 +1,4 @@
-@use '@entur/tokens/dist/styles.scss' as *;
 @use './base/base.scss' as *;
-
-@import '@entur/typography/dist/styles.css';
-@import '@entur/dropdown/dist/styles.css';
-@import '@entur/a11y/dist/styles.css';
-@import '@entur/icons/dist/styles.css';
-@import '@entur/alert/dist/styles.css';
-@import '@entur/layout/dist/styles.css';
-@import '@entur/expand/dist/styles.css';
-@import '@entur/table/dist/styles.css';
-@import '@entur/datepicker/dist/styles.css';
-@import '@entur/tooltip/dist/styles.css';
-@import '@entur/menu/dist/styles.css';
-@import '@entur/form/dist/styles.css';
-@import '@entur/loader/dist/styles.css';
-@import '@entur/modal/dist/styles.css';
-@import '@entur/grid/dist/styles.css';
 
 .form-section {
   margin-bottom: 30px;
@@ -33,5 +16,5 @@
 }
 
 .input-error {
-  border: solid 1px $colors-brand-coral;
+  border: solid 1px #ff5959;
 }

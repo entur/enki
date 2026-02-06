@@ -2,7 +2,7 @@ import { Quay, StopPlace } from '../../../api';
 import { getMarkerIcon } from '../markerIcons';
 import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
-import { Heading5 } from '@entur/typography';
+import { Typography } from '@mui/material';
 import React, { memo, useRef } from 'react';
 import QuaySequenceIndexTooltip from './QuaySequenceIndexTooltip';
 import QuayPositionChips from './QuayPositionChips';
@@ -58,9 +58,9 @@ const QuayMarker = memo(
       >
         <Popup>
           <section>
-            <Heading5 className={'popup-title'}>
+            <Typography variant="h5" className={'popup-title'}>
               {stopPlace.name.value}
-            </Heading5>
+            </Typography>
             <div className={'popup-id'}>{quay.id}</div>
           </section>
 

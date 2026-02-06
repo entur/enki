@@ -9,22 +9,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import {
-  TimePicker,
-  nativeDateToTimeValue,
-  timeOrDateValueToNativeDate,
-} from '@entur/datepicker';
-import {
-  CalendarDateTime,
   fromDate,
   getLocalTimeZone,
   now,
   parseTime,
   Time,
-  toCalendarDate,
-  ZonedDateTime,
 } from '@internationalized/date';
-import { TimeValue } from '@react-types/datepicker';
 import DayOffsetDropdown from 'components/DayOffsetDropdown';
 import DurationPicker from 'components/DurationPicker';
 import * as duration from 'duration-fns';
@@ -198,7 +190,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
 
   const [multiple, setMultiple] = useState<boolean>(false);
 
-  const { formatMessage, locale } = useIntl();
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     if (
@@ -276,24 +268,18 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           <div className="copy-dialog-inputs">
             <div className="copy-dialog-timepicker">
               <TimePicker
-                locale={locale}
                 label={formatMessage({
                   id: 'copyServiceJourneyDialogDepartureTimeLabel',
                 })}
-                onChange={(date: TimeValue | null) => {
-                  let time;
+                value={toDate(initialDepartureTime)}
+                onChange={(date: Date | null) => {
                   if (date != null) {
-                    time = timeOrDateValueToNativeDate(date)
-                      ?.toTimeString()
-                      .split(' ')[0];
+                    const time = date.toTimeString().split(' ')[0];
                     if (time) {
                       setInitialDepartureTime(time);
                     }
                   }
                 }}
-                selectedTime={nativeDateToTimeValue(
-                  toDate(initialDepartureTime),
-                )}
               />
             </div>
             <DayOffsetDropdown
@@ -341,19 +327,18 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
               <div className="copy-dialog-inputs">
                 <div className="copy-dialog-timepicker">
                   <TimePicker
-                    locale={locale}
                     label={formatMessage({
                       id: 'copyServiceJourneyDialogLatestPossibleDepartureTimelabel',
                     })}
-                    onChange={(date) => {
-                      const time = timeOrDateValueToNativeDate(date!)
-                        ?.toTimeString()
-                        .split(' ')[0];
-                      if (time) {
-                        setUntilTime(time);
+                    value={toDate(untilTime)}
+                    onChange={(date: Date | null) => {
+                      if (date != null) {
+                        const time = date.toTimeString().split(' ')[0];
+                        if (time) {
+                          setUntilTime(time);
+                        }
                       }
                     }}
-                    selectedTime={nativeDateToTimeValue(toDate(untilTime))}
                   />
                 </div>
                 <DayOffsetDropdown

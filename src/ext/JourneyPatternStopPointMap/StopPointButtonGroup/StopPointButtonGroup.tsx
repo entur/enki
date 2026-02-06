@@ -1,7 +1,7 @@
 import { FlexibleLineType } from '../../../model/FlexibleLine';
 import DeleteButton from '../../../components/DeleteButton/DeleteButton';
-import { TertiaryButton } from '@entur/button';
-import { PositionIcon } from '@entur/icons';
+import { Button } from '@mui/material';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { StopPointButtonGroupProps } from './types';
@@ -33,17 +33,19 @@ export const StopPointButtonGroup: FeatureComponent<
       />
 
       {isLocateButtonAvailable && (
-        <TertiaryButton
+        <Button
           id={'locate-button'}
+          variant="text"
           title={formatMessage({ id: 'locateStopPointTooltip' })}
           onClick={() => {
             if (onFocusedQuayIdUpdate) {
               onFocusedQuayIdUpdate(stopPoint.quayRef);
             }
           }}
+          startIcon={<MyLocationIcon />}
         >
-          <PositionIcon inline /> {formatMessage({ id: 'locateStopPoint' })}
-        </TertiaryButton>
+          {formatMessage({ id: 'locateStopPoint' })}
+        </Button>
       )}
     </div>
   );
