@@ -16,7 +16,10 @@ test('should render no notices', () => {
       formatMessage={formatMessage}
     />,
   );
-  expect(screen.getByRole('rowgroup').children).toHaveLength(1);
+  expect(screen.queryAllByRole('textbox')).toHaveLength(0);
+  expect(
+    screen.getByRole('button', { name: /addNoticeTooltip/ }),
+  ).toBeInTheDocument();
 });
 
 test('should render single notices', () => {
@@ -27,7 +30,7 @@ test('should render single notices', () => {
       formatMessage={formatMessage}
     />,
   );
-  expect(screen.getByRole('rowgroup').children).toHaveLength(2);
+  expect(screen.getAllByRole('textbox')).toHaveLength(1);
   expect(screen.getAllByDisplayValue('This a notice')).toHaveLength(1);
 });
 
@@ -39,7 +42,7 @@ test('should render multiple notices', () => {
       formatMessage={formatMessage}
     />,
   );
-  expect(screen.getByRole('rowgroup').children).toHaveLength(3);
+  expect(screen.getAllByRole('textbox')).toHaveLength(2);
   expect(screen.getAllByDisplayValue('This a notice')).toHaveLength(1);
   expect(screen.getAllByDisplayValue('This is another notice')).toHaveLength(1);
 });
