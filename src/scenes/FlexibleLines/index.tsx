@@ -44,9 +44,9 @@ export default () => {
         variant="outlined"
         component={Link}
         to="/flexible-lines/create"
+        startIcon={<Add />}
         sx={{ alignSelf: 'flex-start' }}
       >
-        <Add />
         {formatMessage({ id: 'linesCreateFlexibleLineIconButtonLabel' })}
       </Button>
 

@@ -75,7 +75,6 @@ const ExportsViewer = () => {
       <Loading
         text={formatMessage({ id: 'viewerLoadingText' })}
         isLoading={!theExport}
-        className=""
       >
         {() => (
           <Box>
@@ -135,6 +134,7 @@ const ExportsViewer = () => {
                 </Typography>
                 <Button
                   variant="contained"
+                  startIcon={<Download />}
                   onClick={async (event: React.MouseEvent<HTMLElement>) => {
                     event.stopPropagation();
                     download(
@@ -145,7 +145,6 @@ const ExportsViewer = () => {
                     );
                   }}
                 >
-                  <Download />
                   {formatMessage({ id: 'viewerDownloadLinkText' })}
                 </Button>
               </Box>

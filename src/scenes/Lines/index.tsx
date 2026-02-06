@@ -9,10 +9,10 @@ import { Button, Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
 import { GET_LINES } from 'api/uttu/queries';
+import LinesTable from 'components/LinesTable';
+import Loading from 'components/Loading';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import Line from 'model/Line';
-
-import LinesTable from 'components/LinesTable';
 import useUttuError from 'hooks/useUttuError';
 import { useAppSelector } from '../../store/hooks';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
@@ -68,18 +68,23 @@ export default () => {
         variant="outlined"
         component={Link}
         to="/lines/create"
+        startIcon={<Add />}
         sx={{ alignSelf: 'flex-start' }}
       >
-        <Add />
         {formatMessage({ id: 'linesCreateLineIconButtonLabel' })}
       </Button>
 
-      <LinesTable
-        lines={done ? data && data.lines : undefined}
-        organisations={organisations!}
-        onRowClick={handleOnRowClick}
-        onDeleteRowClick={setLineSelectedForDeletion}
-      />
+      <Loading
+        isLoading={!done}
+        text={formatMessage({ id: 'linesLoadingText' })}
+      >
+        <LinesTable
+          lines={data?.lines ?? []}
+          organisations={organisations!}
+          onRowClick={handleOnRowClick}
+          onDeleteRowClick={setLineSelectedForDeletion}
+        />
+      </Loading>
 
       <DeleteConfirmationDialog
         visible={!!lineSelectedForDeletion}

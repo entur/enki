@@ -77,7 +77,7 @@ const Exports = () => {
           </TableRow>
         ))
       ) : (
-        <TableRow className="row-no-exports disabled">
+        <TableRow>
           <TableCell colSpan={6}>
             {formatMessage({ id: 'exportsNoExportsFoundText' })}
           </TableCell>
@@ -85,13 +85,12 @@ const Exports = () => {
       );
     } else {
       return (
-        <TableRow className="disabled">
+        <TableRow>
           <TableCell colSpan={6}>
             <Loading
               text={formatMessage({ id: 'exportsLoadingExportsText' })}
               isLoading={!exports}
               children={null}
-              className=""
             />
           </TableCell>
         </TableRow>
@@ -109,9 +108,9 @@ const Exports = () => {
         variant="outlined"
         component={Link}
         to="/exports/create"
+        startIcon={<Add />}
         sx={{ alignSelf: 'flex-start' }}
       >
-        <Add />
         {formatMessage({ id: 'exportsCreateExportButtonLabel' })}
       </Button>
 
