@@ -238,7 +238,7 @@ const JourneyPatternEditor = ({
             </Button>,
             <Button
               variant="contained"
-              color="success"
+              color="error"
               key={1}
               onClick={onDelete}
             >

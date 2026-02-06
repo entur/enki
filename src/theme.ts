@@ -89,7 +89,8 @@ const theme = createTheme({
     divider: enturColors.grey60,
   },
   typography: {
-    fontFamily: '"Nationale", serif',
+    fontFamily:
+      '"Nationale", Arial, "Gotham Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
     h1: {
       fontSize: '34px',
       fontWeight: 600,

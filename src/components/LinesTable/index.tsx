@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
 } from '@mui/material';
@@ -51,18 +52,20 @@ export default (props: Props) => {
   };
 
   return (
-    <Table sx={{ mt: 2.5 }}>
-      <TableHead>
-        <TableRow>
-          <TableCell>{nameTableHeader}</TableCell>
-          <TableCell>{publicCodeTableHeader}</TableCell>
-          <TableCell>{privateCodeTableHeader}</TableCell>
-          <TableCell>{operatorTableHeader}</TableCell>
-          <TableCell>{''}</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>{renderTableBody()}</TableBody>
-    </Table>
+    <TableContainer>
+      <Table sx={{ mt: 2.5 }}>
+        <TableHead>
+          <TableRow>
+            <TableCell>{nameTableHeader}</TableCell>
+            <TableCell>{publicCodeTableHeader}</TableCell>
+            <TableCell>{privateCodeTableHeader}</TableCell>
+            <TableCell>{operatorTableHeader}</TableCell>
+            <TableCell>{''}</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{renderTableBody()}</TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

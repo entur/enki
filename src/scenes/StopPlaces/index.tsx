@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -133,32 +134,34 @@ const StopPlaces = () => {
       >
         {() => (
           <>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ width: '50%' }}>
-                    {formatMessage({
-                      id: 'stopPlacesNameTableHeaderLabelText',
-                    })}
-                  </TableCell>
-                  <TableCell sx={{ width: '25%' }}>
-                    {formatMessage({ id: 'flexibleStopAreaType' })}
-                  </TableCell>
-                  <TableCell sx={{ width: '25%' }}>
-                    {formatMessage({
-                      id: 'stopPlacesPrivateCodeTableHeaderLabelText',
-                    })}
-                  </TableCell>
-                  <TableCell>
-                    {formatMessage({
-                      id: 'stopPlacesNumberOfAreasTableHeaderLabelText',
-                    })}
-                  </TableCell>
-                  <TableCell>{''}</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>{renderTableRows(stopPlaces!)}</TableBody>
-            </Table>
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ width: '50%' }}>
+                      {formatMessage({
+                        id: 'stopPlacesNameTableHeaderLabelText',
+                      })}
+                    </TableCell>
+                    <TableCell sx={{ width: '25%' }}>
+                      {formatMessage({ id: 'flexibleStopAreaType' })}
+                    </TableCell>
+                    <TableCell sx={{ width: '25%' }}>
+                      {formatMessage({
+                        id: 'stopPlacesPrivateCodeTableHeaderLabelText',
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {formatMessage({
+                        id: 'stopPlacesNumberOfAreasTableHeaderLabelText',
+                      })}
+                    </TableCell>
+                    <TableCell>{''}</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>{renderTableRows(stopPlaces!)}</TableBody>
+              </Table>
+            </TableContainer>
             {showDeleteDialogue && selectedStopPlace && (
               <ConfirmDialog
                 isOpen
@@ -185,7 +188,7 @@ const StopPlaces = () => {
                   </Button>,
                   <Button
                     variant="contained"
-                    color="success"
+                    color="error"
                     key="yes"
                     onClick={() => {
                       dispatch(

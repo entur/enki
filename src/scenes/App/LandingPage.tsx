@@ -6,7 +6,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 import { useConfig } from '../../config/ConfigContext';
 import { ComponentToggle } from '@entur/react-component-toggle';
 import logo from 'static/img/logo.png';
@@ -15,7 +16,6 @@ export const LandingPage = () => {
   const { formatMessage } = useIntl();
   const { extPath } = useConfig();
   const auth = useAuth();
-  const theme = useTheme();
 
   const DefaultLogo = () => (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -36,13 +36,7 @@ export const LandingPage = () => {
   return (
     <div className="app">
       <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
-      <AppBar
-        position="fixed"
-        sx={{
-          backgroundColor: theme.palette.primary.main,
-          color: theme.palette.primary.contrastText,
-        }}
-      >
+      <AppBar position="fixed">
         <Toolbar
           sx={{
             display: 'flex',
@@ -57,19 +51,19 @@ export const LandingPage = () => {
         </Toolbar>
       </AppBar>
       <Toolbar sx={{ minHeight: '64px' }} />
-      <Box className="app-root">
-        <Box className="app-content">
-          <h1>{formatMessage({ id: 'landingPageNotLoggedIn' })}</h1>
-          <p>
-            <Button
-              variant="contained"
-              onClick={() => auth.login(window.location.href)}
-            >
-              {formatMessage({ id: 'landingPageLoginButtonText' })}
-            </Button>
-          </p>
-        </Box>
-      </Box>
+      <Container maxWidth="sm">
+        <Stack spacing={3} sx={{ mt: 4, alignItems: 'center' }}>
+          <Typography variant="h1">
+            {formatMessage({ id: 'landingPageNotLoggedIn' })}
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={() => auth.login(window.location.href)}
+          >
+            {formatMessage({ id: 'landingPageLoginButtonText' })}
+          </Button>
+        </Stack>
+      </Container>
     </div>
   );
 };

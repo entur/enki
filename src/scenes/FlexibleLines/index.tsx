@@ -83,7 +83,7 @@ export default () => {
             </Button>,
             <Button
               variant="contained"
-              color="success"
+              color="error"
               key="yes"
               onClick={() => {
                 dispatch(deleteLine(selectedLine, intl))

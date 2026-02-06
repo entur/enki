@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -76,60 +77,62 @@ const DayTypes = () => {
         isLoading={!dayTypes}
       >
         <>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  {formatMessage({ id: 'dayTypesNameTableHeader' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({ id: 'dayTypesWeekdaysTableHeader' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({ id: 'dayTypesInUseTableHeader' })}
-                </TableCell>
-                <TableCell>{''}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {dayTypes && dayTypes.length > 0 ? (
-                dayTypes.map((dt) => (
-                  <TableRow
-                    key={dt.id}
-                    onClick={() => handleOnRowClick(dt.id!)}
-                    title={dt.name}
-                  >
-                    <TableCell>
-                      {dt.name || formatMessage({ id: 'dayTypeNoName' })}
-                    </TableCell>
-                    <TableCell>{formatWeekdays(dt.daysOfWeek)}</TableCell>
-                    <TableCell>
-                      {(dt.numberOfServiceJourneys ?? 0) > 0
-                        ? formatMessage({ id: 'dayTypeInUse' })
-                        : formatMessage({ id: 'dayTypeNotInUse' })}
-                    </TableCell>
-                    <TableCell sx={{ width: 50, textAlign: 'right' }}>
-                      <DeleteButton
-                        onClick={() => {
-                          setSelectedDayType(dt);
-                          setShowDeleteDialogue(true);
-                        }}
-                        title=""
-                        thin
-                        disabled={(dt.numberOfServiceJourneys ?? 0) > 0}
-                      />
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    {formatMessage({ id: 'dayTypesNameTableHeader' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'dayTypesWeekdaysTableHeader' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'dayTypesInUseTableHeader' })}
+                  </TableCell>
+                  <TableCell>{''}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {dayTypes && dayTypes.length > 0 ? (
+                  dayTypes.map((dt) => (
+                    <TableRow
+                      key={dt.id}
+                      onClick={() => handleOnRowClick(dt.id!)}
+                      title={dt.name}
+                    >
+                      <TableCell>
+                        {dt.name || formatMessage({ id: 'dayTypeNoName' })}
+                      </TableCell>
+                      <TableCell>{formatWeekdays(dt.daysOfWeek)}</TableCell>
+                      <TableCell>
+                        {(dt.numberOfServiceJourneys ?? 0) > 0
+                          ? formatMessage({ id: 'dayTypeInUse' })
+                          : formatMessage({ id: 'dayTypeNotInUse' })}
+                      </TableCell>
+                      <TableCell sx={{ width: 50, textAlign: 'right' }}>
+                        <DeleteButton
+                          onClick={() => {
+                            setSelectedDayType(dt);
+                            setShowDeleteDialogue(true);
+                          }}
+                          title=""
+                          thin
+                          disabled={(dt.numberOfServiceJourneys ?? 0) > 0}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow className="row-no-day-types disabled">
+                    <TableCell colSpan={4}>
+                      {formatMessage({ id: 'dayTypesNoDayTypesFoundText' })}
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow className="row-no-day-types disabled">
-                  <TableCell colSpan={4}>
-                    {formatMessage({ id: 'dayTypesNoDayTypesFoundText' })}
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
           {showDeleteDialogue && selectedDayType && (
             <ConfirmDialog
               isOpen
@@ -156,7 +159,7 @@ const DayTypes = () => {
                 </Button>,
                 <Button
                   variant="contained"
-                  color="success"
+                  color="error"
                   key="yes"
                   onClick={() => {
                     dispatch(deleteDayTypeById(selectedDayType?.id, intl))

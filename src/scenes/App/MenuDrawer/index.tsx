@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import Drawer from '@mui/material/Drawer';
@@ -12,15 +12,20 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import LockOutlined from '@mui/icons-material/LockOutlined';
+import Logout from '@mui/icons-material/Logout';
 import { useTheme } from '@mui/material/styles';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
+import { useAuth } from '../../../auth/auth';
 import { useAppSelector } from '../../../store/hooks';
 import { useConfig } from '../../../config/ConfigContext';
 import { ComponentToggle } from '@entur/react-component-toggle';
+import LanguagePickerMenu from '../Header/LanguagePickerMenu';
 import logo from 'static/img/logo.png';
 
 const DRAWER_WIDTH = 300;
@@ -84,16 +89,25 @@ interface MenuDrawerProps {
 const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
   const { formatMessage } = useIntl();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const auth = useAuth();
   const active = useAppSelector(
     (state) => state.userContext.activeProviderCode,
   );
   const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
+  const preferredName = useAppSelector(
+    (state) => state.userContext.preferredName,
+  );
   const { extPath } = useConfig();
   const [redirect, setRedirect] = useState<RedirectType>({
     showConfirm: false,
     path: '',
   });
   const [flexibleOpen, setFlexibleOpen] = useState(true);
+
+  const handleLogout = useCallback(() => {
+    auth.logout({ returnTo: window.location.origin });
+  }, [auth]);
 
   return (
     <>
@@ -106,7 +120,9 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
         slotProps={{
           paper: {
             sx: {
-              width: DRAWER_WIDTH,
+              width: isMobile ? '100%' : DRAWER_WIDTH,
+              display: 'flex',
+              flexDirection: 'column',
             },
           },
         }}
@@ -218,6 +234,35 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
           feature={`${extPath}/Navbar`}
           renderFallback={() => <></>}
         />
+
+        {/* Push footer to bottom */}
+        <Box sx={{ flexGrow: 1 }} />
+        <Divider />
+
+        {/* Language picker + user / logout */}
+        <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+              {preferredName || 'Unknown'}
+            </Typography>
+            <LanguagePickerMenu />
+          </Box>
+          <Button
+            startIcon={<Logout />}
+            onClick={handleLogout}
+            size="small"
+            fullWidth
+            sx={{ justifyContent: 'flex-start' }}
+          >
+            {formatMessage({ id: 'userMenuLogoutLinkText' })}
+          </Button>
+        </Box>
       </Drawer>
 
       {redirect.showConfirm && (

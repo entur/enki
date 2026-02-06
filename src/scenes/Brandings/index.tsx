@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -101,33 +102,37 @@ const Brandings = () => {
         isLoading={!brandings || !organisations}
       >
         <>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  {formatMessage({ id: 'brandingsNameTableHeaderLabel' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({ id: 'brandingsShortNameTableHeaderLabel' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({
-                    id: 'brandingsDescriptionTableHeaderLabel',
-                  })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({ id: 'brandingsUrlTableHeaderLabel' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({ id: 'brandingsImageUrlTableHeaderLabel' })}
-                </TableCell>
-                <TableCell>{''}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <RenderTableRows brandingList={brandings!} />
-            </TableBody>
-          </Table>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    {formatMessage({ id: 'brandingsNameTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'brandingsShortNameTableHeaderLabel',
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'brandingsDescriptionTableHeaderLabel',
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'brandingsUrlTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'brandingsImageUrlTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>{''}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <RenderTableRows brandingList={brandings!} />
+              </TableBody>
+            </Table>
+          </TableContainer>
           {showDeleteDialogue && selectedBranding && (
             <ConfirmDialog
               isOpen
@@ -154,7 +159,7 @@ const Brandings = () => {
                 </Button>,
                 <Button
                   variant="contained"
-                  color="success"
+                  color="error"
                   key="yes"
                   onClick={() => {
                     dispatch(deleteBrandingById(selectedBranding?.id, intl))

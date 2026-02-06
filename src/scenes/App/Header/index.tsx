@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Popover from '@mui/material/Popover';
 import Button from '@mui/material/Button';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Menu from '@mui/icons-material/Menu';
 import PersonOutline from '@mui/icons-material/PersonOutline';
 import Logout from '@mui/icons-material/Logout';
@@ -28,6 +29,7 @@ const Header = () => {
   const { formatMessage } = useIntl();
   const auth = useAuth();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { extPath } = useConfig();
   const preferredName = useAppSelector(
     (state) => state.userContext.preferredName,
@@ -93,48 +95,83 @@ const Header = () => {
             />
           </Link>
 
-          {/* Center: Provider selector */}
-          {providers && providers.length > 0 && !noSelectedProvider && (
-            <Box sx={{ mx: 3, minWidth: 240, maxWidth: 360, flex: '0 1 auto' }}>
-              <SelectProvider />
-            </Box>
-          )}
+          {/* Center: Provider selector (hidden on mobile) */}
+          {!isMobile &&
+            providers &&
+            providers.length > 0 &&
+            !noSelectedProvider && (
+              <Box
+                sx={{
+                  mx: 3,
+                  minWidth: 240,
+                  maxWidth: 360,
+                  flex: '0 1 auto',
+                  '& .MuiOutlinedInput-root': {
+                    color: 'white',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'rgba(255,255,255,0.5)',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'rgba(255,255,255,0.7)',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'white',
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: 'rgba(255,255,255,0.7)',
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: 'white',
+                  },
+                  '& .MuiSvgIcon-root': {
+                    color: 'white',
+                  },
+                }}
+              >
+                <SelectProvider />
+              </Box>
+            )}
 
           <Box sx={{ flex: 1 }} />
 
           {/* Right: Language picker, User menu, Hamburger */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-            <LanguagePickerMenu />
+            {!isMobile && (
+              <>
+                <LanguagePickerMenu />
 
-            <IconButton
-              color="inherit"
-              onClick={(e) => setUserAnchorEl(e.currentTarget)}
-              aria-label={preferredName || 'User'}
-            >
-              <PersonOutline />
-            </IconButton>
-            <Popover
-              open={Boolean(userAnchorEl)}
-              anchorEl={userAnchorEl}
-              onClose={() => setUserAnchorEl(null)}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            >
-              <Box sx={{ p: 2, minWidth: 180 }}>
-                <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-                  {preferredName || 'Unknown'}
-                </Typography>
-                <Button
-                  startIcon={<Logout />}
-                  onClick={handleLogout}
-                  size="small"
-                  fullWidth
-                  sx={{ justifyContent: 'flex-start' }}
+                <IconButton
+                  color="inherit"
+                  onClick={(e) => setUserAnchorEl(e.currentTarget)}
+                  aria-label={preferredName || 'User'}
                 >
-                  {formatMessage({ id: 'userMenuLogoutLinkText' })}
-                </Button>
-              </Box>
-            </Popover>
+                  <PersonOutline />
+                </IconButton>
+                <Popover
+                  open={Boolean(userAnchorEl)}
+                  anchorEl={userAnchorEl}
+                  onClose={() => setUserAnchorEl(null)}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                  <Box sx={{ p: 2, minWidth: 180 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+                      {preferredName || 'Unknown'}
+                    </Typography>
+                    <Button
+                      startIcon={<Logout />}
+                      onClick={handleLogout}
+                      size="small"
+                      fullWidth
+                      sx={{ justifyContent: 'flex-start' }}
+                    >
+                      {formatMessage({ id: 'userMenuLogoutLinkText' })}
+                    </Button>
+                  </Box>
+                </Popover>
+              </>
+            )}
 
             <IconButton
               color="inherit"

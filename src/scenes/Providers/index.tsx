@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -117,30 +118,34 @@ const Providers = () => {
         isLoading={!providers}
       >
         <>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  {formatMessage({ id: 'providersNameTableHeaderLabel' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({ id: 'providersCodeTableHeaderLabel' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({ id: 'providersCodespaceXmlnsHeaderLabel' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({
-                    id: 'providersCodespaceXmlnsUrlHeaderLabel',
-                  })}
-                </TableCell>
-                {isLineMigrationEnabled && <TableCell>Actions</TableCell>}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <RenderTableRows providerList={providers} />
-            </TableBody>
-          </Table>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    {formatMessage({ id: 'providersNameTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'providersCodeTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'providersCodespaceXmlnsHeaderLabel',
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'providersCodespaceXmlnsUrlHeaderLabel',
+                    })}
+                  </TableCell>
+                  {isLineMigrationEnabled && <TableCell>Actions</TableCell>}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <RenderTableRows providerList={providers} />
+              </TableBody>
+            </Table>
+          </TableContainer>
         </>
       </Loading>
     </Stack>

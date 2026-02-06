@@ -10,7 +10,7 @@
 }
 .notification.active {
   right: 1rem;
-  z-index: 1001;
+  z-index: 1500;
 }
 
 .notification-close {
@@ -35,19 +35,19 @@
   box-sizing: content-box;
 
   .warning {
-    color: #ffc107;
+    color: #ffca28;
   }
 
   .success {
-    color: #4caf50;
+    color: #1a8e60;
   }
 
   .error {
-    color: #f44336;
+    color: #d31b1b;
   }
 
   .info {
-    color: #2196f3;
+    color: #0082b9;
   }
 
   .notification-bar-label {
@@ -73,20 +73,20 @@
   display: inline-block;
 }
 .notification-error {
-  background: #fde8e8;
-  border-bottom: 3px solid #e74c3c;
+  background: #ffcece;
+  border-bottom: 3px solid #d31b1b;
 }
 .notification-warning {
-  background-color: #e3f2fd;
-  border-bottom: 3px solid #ffc107;
+  background-color: #fff4cd;
+  border-bottom: 3px solid #ffca28;
 }
 .notification-success {
-  background-color: #e8f5e9;
-  border-bottom: 3px solid #4caf50;
+  background-color: #d0f1e3;
+  border-bottom: 3px solid #1a8e60;
 }
 .notification-info {
-  background-color: #e3f2fd;
-  border-bottom: 3px solid #181c56;
+  background-color: #e1eff8;
+  border-bottom: 3px solid #0082b9;
 }
 .notification-default {
   position: fixed;

@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -109,28 +110,32 @@ const Networks = () => {
         isLoading={!networks || !organisations}
       >
         <>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  {formatMessage({ id: 'networksNameTableHeaderLabel' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({ id: 'networksPrivateCodeTableHeaderLabel' })}
-                </TableCell>
-                <TableCell>
-                  {formatMessage({ id: 'networksAuthorityTableHeaderLabel' })}
-                </TableCell>
-                <TableCell>{''}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <RenderTableRows
-                networkList={networks!}
-                organisationList={organisations!}
-              />
-            </TableBody>
-          </Table>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    {formatMessage({ id: 'networksNameTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'networksPrivateCodeTableHeaderLabel',
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'networksAuthorityTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>{''}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <RenderTableRows
+                  networkList={networks!}
+                  organisationList={organisations!}
+                />
+              </TableBody>
+            </Table>
+          </TableContainer>
           {showDeleteDialogue && selectedNetwork && (
             <ConfirmDialog
               isOpen
@@ -157,7 +162,7 @@ const Networks = () => {
                 </Button>,
                 <Button
                   variant="contained"
-                  color="success"
+                  color="error"
                   key="yes"
                   onClick={() => {
                     dispatch(deleteNetworkById(selectedNetwork?.id, intl))

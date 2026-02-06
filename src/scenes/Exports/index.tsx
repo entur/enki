@@ -6,6 +6,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -114,30 +115,32 @@ const Exports = () => {
         {formatMessage({ id: 'exportsCreateExportButtonLabel' })}
       </Button>
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              {formatMessage({ id: 'exportsTableHeaderLabelName' })}
-            </TableCell>
-            <TableCell>
-              {formatMessage({ id: 'exportsTableHeaderLabelStatus' })}
-            </TableCell>
-            <TableCell>
-              {formatMessage({ id: 'exportsTableHeaderLabelCreated' })}
-            </TableCell>
-            <TableCell>
-              {formatMessage({ id: 'exportsTableHeaderLabelDownload' })}
-            </TableCell>
-            {!hideExportDryRun && (
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
               <TableCell>
-                {formatMessage({ id: 'exportsTableHeaderLabelDryrun' })}
+                {formatMessage({ id: 'exportsTableHeaderLabelName' })}
               </TableCell>
-            )}
-          </TableRow>
-        </TableHead>
-        <TableBody>{renderTableRows()}</TableBody>
-      </Table>
+              <TableCell>
+                {formatMessage({ id: 'exportsTableHeaderLabelStatus' })}
+              </TableCell>
+              <TableCell>
+                {formatMessage({ id: 'exportsTableHeaderLabelCreated' })}
+              </TableCell>
+              <TableCell>
+                {formatMessage({ id: 'exportsTableHeaderLabelDownload' })}
+              </TableCell>
+              {!hideExportDryRun && (
+                <TableCell>
+                  {formatMessage({ id: 'exportsTableHeaderLabelDryrun' })}
+                </TableCell>
+              )}
+            </TableRow>
+          </TableHead>
+          <TableBody>{renderTableRows()}</TableBody>
+        </Table>
+      </TableContainer>
     </Stack>
   );
 };

@@ -100,7 +100,7 @@ const NavigationButtons = (props: Props) => {
           </Button>,
           <Button
             variant="contained"
-            color="success"
+            color="error"
             key={1}
             onClick={() => {
               props.onDelete();
