@@ -45,13 +45,7 @@ const CopyDialog = ({
   }, [nameTemplate]);
 
   return (
-    <Dialog
-      open={open}
-      onClose={onDismiss}
-      maxWidth="sm"
-      fullWidth
-      className="copy-dialog"
-    >
+    <Dialog open={open} onClose={onDismiss} maxWidth="sm" fullWidth>
       <DialogTitle>
         {formatMessage({ id: 'copyJourneyPatternDialogTitle' })}
       </DialogTitle>
@@ -60,14 +54,13 @@ const CopyDialog = ({
           label={formatMessage({
             id: 'copyJourneyPatternDialogNameTemplateLabel',
           })}
-          className="copy-dialog-wide-element"
+          sx={{ mt: 1, maxWidth: 340 }}
           value={nameTemplate}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setNameTemplate(e.target.value)
           }
           variant="outlined"
           fullWidth
-          sx={{ mt: 1 }}
         />
         {validationError.duplicateName && (
           <Typography color="error" variant="body2" sx={{ mt: 1 }}>

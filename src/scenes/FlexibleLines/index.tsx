@@ -1,5 +1,6 @@
 import Add from '@mui/icons-material/Add';
 import { Button, Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { deleteLine, loadFlexibleLines } from 'actions/flexibleLines';
 import ConfirmDialog from 'components/ConfirmDialog';
 import LinesTable from 'components/LinesTable';
@@ -8,7 +9,6 @@ import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import './styles.scss';
 
 export default () => {
   const [showDeleteDialogue, setShowDeleteDialogue] = useState<boolean>(false);
@@ -35,22 +35,20 @@ export default () => {
   };
 
   return (
-    <div className="flexible-lines">
+    <Stack spacing={3} sx={{ flex: 1 }}>
       <Typography variant="h1">
         {formatMessage({ id: 'flexibleLinesHeader' })}
       </Typography>
 
-      <section className="buttons">
-        <Button
-          variant="outlined"
-          component={Link}
-          to="/flexible-lines/create"
-          className="new-flexible-line-button"
-        >
-          <Add />
-          {formatMessage({ id: 'linesCreateFlexibleLineIconButtonLabel' })}
-        </Button>
-      </section>
+      <Button
+        variant="outlined"
+        component={Link}
+        to="/flexible-lines/create"
+        sx={{ alignSelf: 'flex-start' }}
+      >
+        <Add />
+        {formatMessage({ id: 'linesCreateFlexibleLineIconButtonLabel' })}
+      </Button>
 
       <LinesTable
         lines={lines!}
@@ -101,6 +99,6 @@ export default () => {
           ]}
         />
       )}
-    </div>
+    </Stack>
   );
 };

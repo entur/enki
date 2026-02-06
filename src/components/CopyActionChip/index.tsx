@@ -1,7 +1,6 @@
 import ContentCopy from '@mui/icons-material/ContentCopy';
 import { Chip } from '@mui/material';
 import React from 'react';
-import './styles.scss';
 
 type Props = {
   onClick: () => void;
@@ -18,6 +17,12 @@ const CopyButton = (props: Props) => (
     onClick={(event: React.MouseEvent) => {
       props.onClick();
       event.stopPropagation();
+    }}
+    sx={{
+      m: props.thin ? 0 : 'auto 0 auto auto',
+      px: 0.5,
+      minWidth: 'fit-content',
+      width: props.thin ? 'fit-content' : undefined,
     }}
   />
 );

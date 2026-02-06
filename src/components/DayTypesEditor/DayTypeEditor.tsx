@@ -62,7 +62,6 @@ export const DayTypeEditor = ({
       >
         <TextField
           label={formatMessage({ id: 'dayTypeEditorNameFieldLabel' })}
-          className="form-section"
           value={mutableDayType.name || ''}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setMutableDayType({
@@ -91,7 +90,7 @@ export const DayTypeEditor = ({
           title={formatMessage({ id: 'dayTypeEditorDateTooltip' })}
           placement="right"
         >
-          <span className="question-icon">
+          <span style={{ marginLeft: '0.25rem', cursor: 'help' }}>
             <HelpOutline />
           </span>
         </Tooltip>

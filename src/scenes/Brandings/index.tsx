@@ -8,6 +8,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { deleteBrandingById, loadBrandings } from 'actions/brandings';
 import Loading from 'components/Loading';
 import { Branding } from 'model/Branding';
@@ -17,7 +18,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
-import './styles.scss';
 
 const Brandings = () => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const Brandings = () => {
           <TableCell>{b.description}</TableCell>
           <TableCell>{b.url}</TableCell>
           <TableCell>{b.imageUrl}</TableCell>
-          <TableCell className="delete-row-cell">
+          <TableCell sx={{ width: 50, textAlign: 'right' }}>
             <DeleteButton
               onClick={() => {
                 setSelectedBranding(b);
@@ -81,16 +81,16 @@ const Brandings = () => {
   );
 
   return (
-    <div className="brandings">
+    <Stack spacing={3} sx={{ flex: 1 }}>
       <Typography variant="h1">
         {formatMessage({ id: 'brandingsHeaderText' })}
       </Typography>
 
       <Button
         variant="outlined"
-        className="create"
         component={Link}
         to="/brandings/create"
+        sx={{ alignSelf: 'flex-start' }}
       >
         <Add />
         {formatMessage({ id: 'editorCreateBrandingHeaderText' })}
@@ -172,7 +172,7 @@ const Brandings = () => {
           )}
         </>
       </Loading>
-    </div>
+    </Stack>
   );
 };
 

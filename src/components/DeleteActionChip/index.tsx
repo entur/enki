@@ -1,7 +1,6 @@
 import Delete from '@mui/icons-material/Delete';
 import { Chip } from '@mui/material';
 import React from 'react';
-import './DeleteButton.scss';
 
 type Props = {
   onClick: () => void;
@@ -18,6 +17,12 @@ const DeleteButton = (props: Props) => (
     onClick={(event: React.MouseEvent) => {
       props.onClick();
       event.stopPropagation();
+    }}
+    sx={{
+      m: props.thin ? 0 : 'auto 0 auto auto',
+      px: 0.5,
+      minWidth: 'fit-content',
+      width: props.thin ? 'fit-content' : undefined,
     }}
   />
 );

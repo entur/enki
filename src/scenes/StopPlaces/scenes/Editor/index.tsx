@@ -25,7 +25,8 @@ import { StopPlaceTypeDropdown } from './components/StopPlaceTypeDropdown';
 import { useFlexibleStopPlace } from './hooks/useFlexibleStopPlace';
 import { useHandleDelete } from './hooks/useHandleDelete';
 import { useHandleOnSaveClick } from './hooks/useHandleOnSaveClick';
-import './styles.scss';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import { transformToMapCoordinates } from './utils/transformToMapCoordinates';
 import { validateFlexibleStopPlace } from './utils/validateForm';
 import FormMap from '../../../../components/FormMap';
@@ -203,7 +204,7 @@ const FlexibleStopPlaceEditor = () => {
           : formatMessage({ id: 'editorCreateHeader' })
       }
     >
-      <div className="stop-place-editor">
+      <>
         <Typography variant="body1">
           {formatMessage({ id: 'editorDescription' })}
         </Typography>
@@ -237,8 +238,8 @@ const FlexibleStopPlaceEditor = () => {
                 : formatMessage({ id: 'editorDeletingOverlayLoaderText' })
             }
           >
-            <div className="stop-place-form-container">
-              <div className="stop-place-form">
+            <Stack direction="row" spacing={2}>
+              <Stack spacing={2} sx={{ maxWidth: 450 }}>
                 <RequiredInputMarker />
 
                 <TextField
@@ -332,7 +333,12 @@ const FlexibleStopPlaceEditor = () => {
                   {formatMessage({ id: 'stopPlaceAddAreaButtonLabel' })}
                 </Button>
 
-                <div className="buttons">
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent="space-between"
+                  sx={{ mt: 4 }}
+                >
                   {params.id && (
                     <Button
                       variant="contained"
@@ -358,10 +364,17 @@ const FlexibleStopPlaceEditor = () => {
                           { details: formatMessage({ id: 'stopPlaceText' }) },
                         )}
                   </Button>
-                </div>
-              </div>
+                </Stack>
+              </Stack>
 
-              <div className="stop-place-flexible-area">
+              <Box
+                sx={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  zIndex: 0,
+                }}
+              >
                 <FormMap undo={handleUndoClick}>
                   <PolygonMap
                     addCoordinate={handleMapOnClick}
@@ -380,8 +393,8 @@ const FlexibleStopPlaceEditor = () => {
                     }
                   />
                 </FormMap>
-              </div>
-            </div>
+              </Box>
+            </Stack>
           </OverlayLoader>
         ) : (
           <Loading
@@ -422,7 +435,7 @@ const FlexibleStopPlaceEditor = () => {
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />
-      </div>
+      </>
     </Page>
   );
 };

@@ -20,7 +20,8 @@ import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../store/hooks';
-import './styles.scss';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import { exportIsValid } from './validateForm';
 import { useConfig } from '../../../config/ConfigContext';
 
@@ -62,7 +63,6 @@ const ExportsCreator = () => {
 
   return (
     <Page
-      className="export-editor"
       backButtonTitle={formatMessage({ id: 'navBarExportsMenuItemLabel' })}
       title={formatMessage({ id: 'exportCreatorHeader' })}
     >
@@ -76,7 +76,7 @@ const ExportsCreator = () => {
         </Typography>
         <RequiredInputMarker />
         <TextField
-          className="export-name"
+          sx={{ my: 3, maxWidth: '30rem' }}
           label={formatMessage({ id: 'exportCreatorNameFormLabel' })}
           variant="outlined"
           {...getMuiErrorProps(
@@ -90,7 +90,7 @@ const ExportsCreator = () => {
           }
         />
 
-        <div className="export-lines-table">
+        <Box sx={{ mb: 4 }}>
           <Typography variant="h4">
             {formatMessage({ id: 'exportCreatorLinesForExportHeader' })}
           </Typography>
@@ -99,10 +99,10 @@ const ExportsCreator = () => {
               onFieldChange('lineAssociations', lines);
             }}
           />
-        </div>
+        </Box>
         <>
           {!hideExportDryRun && (
-            <div className="export-dry-run">
+            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -121,15 +121,15 @@ const ExportsCreator = () => {
                   id: 'exportCreatorDryRunFormLabelTooltip',
                 })}
               >
-                <span className="question-icon">
+                <span style={{ marginLeft: '1rem', cursor: 'help' }}>
                   <HelpOutline />
                 </span>
               </Tooltip>
-            </div>
+            </Box>
           )}
         </>
         <>
-          <div className="export-generate-service-links">
+          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -151,14 +151,14 @@ const ExportsCreator = () => {
                 id: 'exportCreatorGenerateServiceLinksFormLabelTooltip',
               })}
             >
-              <span className="question-icon">
+              <span style={{ marginLeft: '1rem', cursor: 'help' }}>
                 <HelpOutline />
               </span>
             </Tooltip>
-          </div>
+          </Box>
         </>
         <>
-          <div className="export-include-dated-service-journeys">
+          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -183,16 +183,16 @@ const ExportsCreator = () => {
                 id: 'exportCreatorIncludeDatedServiceJourneysFormLabelTooltip',
               })}
             >
-              <span className="question-icon">
+              <span style={{ marginLeft: '1rem', cursor: 'help' }}>
                 <HelpOutline />
               </span>
             </Tooltip>
-          </div>
+          </Box>
         </>
         <Button
           variant="contained"
           color="success"
-          className="export-save"
+          sx={{ mt: 6 }}
           onClick={handleOnSaveClick}
         >
           {formatMessage({ id: 'exportCreatorSaveButtonLabelText' })}

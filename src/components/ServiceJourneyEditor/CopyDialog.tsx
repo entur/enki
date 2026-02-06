@@ -239,34 +239,27 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onDismiss}
-      maxWidth="sm"
-      fullWidth
-      className="copy-dialog"
-    >
+    <Dialog open={open} onClose={onDismiss} maxWidth="sm" fullWidth>
       <DialogTitle>
         {formatMessage({ id: 'copyServiceJourneyDialogTitle' })}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ pl: 6 }}>
         <TextField
           label={formatMessage({
             id: 'copyServiceJourneyDialogNameTemplateLabel',
           })}
-          className="copy-dialog-wide-element"
+          sx={{ mt: 1, maxWidth: 340 }}
           value={nameTemplate}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setNameTemplate(e.target.value)
           }
           variant="outlined"
           fullWidth
-          sx={{ mt: 1 }}
         />
 
-        <div className="copy-dialog-section">
-          <div className="copy-dialog-inputs">
-            <div className="copy-dialog-timepicker">
+        <div style={{ marginTop: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+            <div style={{ width: 200, marginRight: '1rem' }}>
               <TimePicker
                 label={formatMessage({
                   id: 'copyServiceJourneyDialogDepartureTimeLabel',
@@ -288,7 +281,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
             />
           </div>
         </div>
-        <div className="copy-dialog-section">
+        <div style={{ marginTop: '1.5rem' }}>
           <FormControlLabel
             control={
               <Switch
@@ -303,14 +296,13 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         </div>
         {multiple && (
           <>
-            <div className="copy-dialog-section">
+            <div style={{ marginTop: '1.5rem' }}>
               <Typography variant="body2" sx={{ mb: 1 }}>
                 {formatMessage({
                   id: 'copyServiceJourneyDialogIntervalLabel',
                 })}
               </Typography>
               <DurationPicker
-                className="copy-dialog-wide-element"
                 onChange={(newRepeatDuration) => {
                   setRepeatDuration(newRepeatDuration!);
                 }}
@@ -323,9 +315,9 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                 showYears={false}
               />
             </div>
-            <div className="copy-dialog-section">
-              <div className="copy-dialog-inputs">
-                <div className="copy-dialog-timepicker">
+            <div style={{ marginTop: '1.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+                <div style={{ width: 200, marginRight: '1rem' }}>
                   <TimePicker
                     label={formatMessage({
                       id: 'copyServiceJourneyDialogLatestPossibleDepartureTimelabel',

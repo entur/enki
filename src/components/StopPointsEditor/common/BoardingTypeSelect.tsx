@@ -77,7 +77,7 @@ export const BoardingTypeSelect = ({
     boardingDropDownItems.find((item) => item.value === boardingType) || null;
   return (
     <Autocomplete
-      className="stop-point-info-item"
+      sx={{ width: 260 }}
       value={selectedItem}
       onChange={(_event, newValue: NormalizedDropdownItemType | null) =>
         onChange(newValue?.value as BoardingType)

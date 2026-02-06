@@ -19,7 +19,7 @@ import { useIntl } from 'react-intl';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import './styles.scss';
+import Stack from '@mui/material/Stack';
 
 const getCurrentBrandingSelector = (params: Params) => (state: GlobalState) =>
   state.brandings?.find((branding) => branding.id === params.id);
@@ -99,7 +99,7 @@ const BrandingEditor = () => {
           : formatMessage({ id: 'editorCreateBrandingHeaderText' })
       }
     >
-      <div className="branding-editor">
+      <>
         <Typography variant="body1">
           {formatMessage({ id: 'editorBrandingDescription' })}
         </Typography>
@@ -114,12 +114,11 @@ const BrandingEditor = () => {
                 : formatMessage({ id: 'editorDeletingBrandingLoadingText' })
             }
           >
-            <div className="branding-form">
+            <Stack spacing={3} sx={{ maxWidth: 450 }}>
               <RequiredInputMarker />
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({ id: 'editorBrandingNameLabelText' })}
                 {...getMuiErrorProps(
                   formatMessage({ id: 'editorBrandingValidationName' }),
@@ -136,7 +135,6 @@ const BrandingEditor = () => {
                 variant="outlined"
                 multiline
                 rows={4}
-                className="form-section"
                 label={formatMessage({
                   id: 'editorBrandingDescriptionLabelText',
                 })}
@@ -148,7 +146,6 @@ const BrandingEditor = () => {
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({
                   id: 'editorBrandingShortNameLabelText',
                 })}
@@ -160,7 +157,6 @@ const BrandingEditor = () => {
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({
                   id: 'editorBrandingUrlLabelText',
                 })}
@@ -172,7 +168,6 @@ const BrandingEditor = () => {
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({
                   id: 'editorBrandingImageUrlLabelText',
                 })}
@@ -182,7 +177,12 @@ const BrandingEditor = () => {
                 }
               />
 
-              <div className="buttons">
+              <Stack
+                direction="row"
+                spacing={2}
+                justifyContent="flex-end"
+                sx={{ mt: 4 }}
+              >
                 {params.id && (
                   <Button
                     variant="contained"
@@ -206,8 +206,8 @@ const BrandingEditor = () => {
                         { details: formatMessage({ id: 'branding' }) },
                       )}
                 </Button>
-              </div>
-            </div>
+              </Stack>
+            </Stack>
           </OverlayLoader>
         ) : (
           <Loading
@@ -254,7 +254,7 @@ const BrandingEditor = () => {
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />
-      </div>
+      </>
     </Page>
   );
 };

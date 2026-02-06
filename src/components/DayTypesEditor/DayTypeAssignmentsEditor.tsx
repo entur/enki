@@ -19,7 +19,6 @@ import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { getCurrentDate, isNotBefore } from '../../utils/dates';
 import { parseISO, format, isValid } from 'date-fns';
-import './styles.scss';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
@@ -121,7 +120,7 @@ const DayTypeAssignmentRow = ({
   );
 
   return (
-    <TableRow className="day-type-assignment">
+    <TableRow>
       <TableCell>
         <DatePicker
           label={formatMessage({ id: 'dayTypeEditorFromDate' })}
@@ -207,7 +206,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
   return (
     <>
-      <div className="day-type-assignments-editor">
+      <div>
         <Table>
           <TableBody>
             {dayTypeAssignments.map((dta, index) => (

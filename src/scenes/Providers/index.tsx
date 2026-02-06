@@ -8,13 +8,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import Loading from 'components/Loading';
 import Provider, { sortProviders } from 'model/Provider';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import './styles.scss';
 import { getProviders } from '../../actions/providers';
 import { useConfig } from 'config/ConfigContext';
 
@@ -73,10 +73,11 @@ const Providers = () => {
           <TableCell>{n.codespace?.xmlns}</TableCell>
           <TableCell>{n.codespace?.xmlnsUrl}</TableCell>
           {isLineMigrationEnabled && (
-            <TableCell className="action-cell">
+            <TableCell sx={{ width: 150, minWidth: 150 }}>
               <Button
                 variant="outlined"
                 size="small"
+                sx={{ whiteSpace: 'nowrap' }}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
                   handleMigrateClick(n.code!, event)
                 }
@@ -91,7 +92,7 @@ const Providers = () => {
   );
 
   return (
-    <div className="providers">
+    <Stack spacing={3} sx={{ flex: 1 }}>
       <Typography variant="h1">
         {formatMessage({ id: 'providersHeaderText' })}
       </Typography>
@@ -103,9 +104,9 @@ const Providers = () => {
 
       <Button
         variant="outlined"
-        className="create"
         component={Link}
         to="/providers/create"
+        sx={{ alignSelf: 'flex-start' }}
       >
         <Add />
         {formatMessage({ id: 'createProviderHeaderText' })}
@@ -142,7 +143,7 @@ const Providers = () => {
           </Table>
         </>
       </Loading>
-    </div>
+    </Stack>
   );
 };
 

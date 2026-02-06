@@ -99,37 +99,31 @@ export const fintrafficTheme = createTheme({
       fontSize: '42px',
       fontWeight: 700,
       lineHeight: '110%',
-      color: fdsColors.brandBlack,
     },
     h2: {
       fontSize: '32px',
       fontWeight: 700,
       lineHeight: '110%',
-      color: fdsColors.brandBlack,
     },
     h3: {
       fontSize: '28px',
       fontWeight: 700,
       lineHeight: '110%',
-      color: fdsColors.brandBlack,
     },
     h4: {
       fontSize: '24px',
       fontWeight: 700,
       lineHeight: '110%',
-      color: fdsColors.brandBlack,
     },
     h5: {
       fontSize: '18px',
       fontWeight: 700,
       lineHeight: '110%',
-      color: fdsColors.brandBlack,
     },
     h6: {
       fontSize: '16px',
       fontWeight: 700,
       lineHeight: '110%',
-      color: fdsColors.brandBlack,
     },
     body1: {
       fontSize: '16px',
@@ -313,6 +307,20 @@ export const fintrafficTheme = createTheme({
               color: fdsColors.brandWhite,
             },
           },
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: fdsColors.brandBlack,
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          minHeight: 64,
         },
       },
     },

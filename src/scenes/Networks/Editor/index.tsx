@@ -22,7 +22,7 @@ import { useIntl } from 'react-intl';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import './styles.scss';
+import Stack from '@mui/material/Stack';
 
 const getCurrentNetworkSelector = (params: Params) => (state: GlobalState) =>
   state.networks?.find((network) => network.id === params.id);
@@ -125,7 +125,7 @@ const NetworkEditor = () => {
           : formatMessage({ id: 'editorCreateNetworkHeaderText' })
       }
     >
-      <div className="network-editor">
+      <>
         <Typography variant="body1">
           {formatMessage({ id: 'editorNetworkDescription' })}
         </Typography>
@@ -140,12 +140,11 @@ const NetworkEditor = () => {
                 : formatMessage({ id: 'editorDeletingNetworkLoadingText' })
             }
           >
-            <div className="network-form">
+            <Stack spacing={3} sx={{ maxWidth: 450 }}>
               <RequiredInputMarker />
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({ id: 'editorNetworkNameLabelText' })}
                 {...getMuiErrorProps(
                   formatMessage({ id: 'editorNetworkValidationName' }),
@@ -162,7 +161,6 @@ const NetworkEditor = () => {
                 variant="outlined"
                 multiline
                 rows={4}
-                className="form-section"
                 label={formatMessage({
                   id: 'editorNetworkDescriptionLabelText',
                 })}
@@ -174,7 +172,6 @@ const NetworkEditor = () => {
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({
                   id: 'editorNetworkPrivateCodeLabelText',
                 })}
@@ -185,7 +182,6 @@ const NetworkEditor = () => {
               />
 
               <Autocomplete
-                className="form-section"
                 value={
                   authorities.find((v) => v.id === network.authorityRef)
                     ? {
@@ -226,7 +222,12 @@ const NetworkEditor = () => {
                   />
                 )}
               />
-              <div className="buttons">
+              <Stack
+                direction="row"
+                spacing={2}
+                justifyContent="flex-end"
+                sx={{ mt: 4 }}
+              >
                 {params.id && (
                   <Button
                     variant="contained"
@@ -250,8 +251,8 @@ const NetworkEditor = () => {
                         { details: formatMessage({ id: 'network' }) },
                       )}
                 </Button>
-              </div>
-            </div>
+              </Stack>
+            </Stack>
           </OverlayLoader>
         ) : (
           <Loading
@@ -296,7 +297,7 @@ const NetworkEditor = () => {
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />
-      </div>
+      </>
     </Page>
   );
 };

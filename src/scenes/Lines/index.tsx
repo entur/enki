@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Add from '@mui/icons-material/Add';
 import { Button, Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
 
 import { GET_LINES } from 'api/uttu/queries';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
@@ -58,7 +59,7 @@ export default () => {
   const done = !loading && networkStatus !== NetworkStatus.refetch;
 
   return (
-    <div className="lines">
+    <Stack spacing={3} sx={{ flex: 1 }}>
       <Typography variant="h1">
         {formatMessage({ id: 'linesHeader' })}
       </Typography>
@@ -67,7 +68,7 @@ export default () => {
         variant="outlined"
         component={Link}
         to="/lines/create"
-        className="new-line-button"
+        sx={{ alignSelf: 'flex-start' }}
       >
         <Add />
         {formatMessage({ id: 'linesCreateLineIconButtonLabel' })}
@@ -85,6 +86,6 @@ export default () => {
         onDismiss={dismissDeleteLine}
         onConfirm={confirmDeleteLine}
       />
-    </div>
+    </Stack>
   );
 };

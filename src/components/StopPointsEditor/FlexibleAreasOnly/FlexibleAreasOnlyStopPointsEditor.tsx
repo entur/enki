@@ -52,7 +52,7 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
       <Typography variant="body1">
         {formatMessage({ id: 'stopPointsInfoFlexibleAreaOnly' })}
       </Typography>
-      <div className="stop-point-editor">
+      <div>
         {pointsInSequence[0] && (
           <FlexibleAreasOnlyStopPointEditor
             stopPoint={pointsInSequence[0]}

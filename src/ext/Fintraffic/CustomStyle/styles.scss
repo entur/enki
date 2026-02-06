@@ -9,17 +9,6 @@ body {
   padding: 0rem 2rem 0rem 1px;
 }
 
-// Navigation
-
-.navbar-wrapper {
-  background-color: black !important;
-}
-
-.navbar-wrapper .bottom-chips {
-  position: relative;
-  margin-top: 2rem;
-}
-
 // Create line
 
 .required-input {
@@ -225,14 +214,4 @@ section .notices {
 
 .branding-form .form-section {
   margin-bottom: 3rem;
-}
-
-// User preference
-
-.user-preference {
-  margin: 15px auto 30px;
-
-  .provider-wrapper {
-    margin-top: 2.25rem !important;
-  }
 }

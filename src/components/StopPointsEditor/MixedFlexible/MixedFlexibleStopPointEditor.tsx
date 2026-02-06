@@ -94,9 +94,15 @@ export const MixedFlexibleStopPointEditor = ({
   }, [stopPoint.key]);
 
   return (
-    <div className="stop-point">
-      <div className="stop-point-element">
-        <div className="stop-point-key-info stop-point-key-info--flexible">
+    <div style={{ borderBottom: '2px solid #d9d9d9' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '1.5rem',
+        }}
+      >
+        <div style={{ minWidth: 'fit-content', display: 'flex' }}>
           <StopPointOrder
             order={order}
             isLast={isLast}
@@ -127,7 +133,13 @@ export const MixedFlexibleStopPointEditor = ({
               onChange(newStopPoint);
             }}
           >
-            <div className="radio-buttons">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
               <FormControlLabel
                 value={StopPlaceMode.FLEXIBLE}
                 control={<Radio />}
@@ -141,10 +153,19 @@ export const MixedFlexibleStopPointEditor = ({
             </div>
           </RadioGroup>
         </div>
-        <div className="stop-point-info">
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            maxWidth: '50rem',
+            flexBasis: '100%',
+            marginLeft: '1rem',
+            marginRight: '1rem',
+          }}
+        >
           {selectMode === StopPlaceMode.FLEXIBLE && (
             <Autocomplete
-              className="stop-point-dropdown"
               value={
                 mapToItems(flexibleStopPlaces || []).find(
                   (item) => item.value === stopPoint.flexibleStopPlaceRef,

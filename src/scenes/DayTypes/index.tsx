@@ -8,6 +8,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { deleteDayTypeById, loadDayTypes } from 'actions/dayTypes';
 import Loading from 'components/Loading';
 import DayType from 'model/DayType';
@@ -17,7 +18,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
-import './styles.scss';
 
 const DayTypes = () => {
   const navigate = useNavigate();
@@ -56,16 +56,16 @@ const DayTypes = () => {
   };
 
   return (
-    <div className="day-types">
+    <Stack spacing={3} sx={{ flex: 1 }}>
       <Typography variant="h1">
         {formatMessage({ id: 'dayTypesHeaderText' })}
       </Typography>
 
       <Button
         variant="outlined"
-        className="create"
         component={Link}
         to="/day-types/create"
+        sx={{ alignSelf: 'flex-start' }}
       >
         <Add />
         {formatMessage({ id: 'dayTypesCreateDayTypeButtonLabel' })}
@@ -108,7 +108,7 @@ const DayTypes = () => {
                         ? formatMessage({ id: 'dayTypeInUse' })
                         : formatMessage({ id: 'dayTypeNotInUse' })}
                     </TableCell>
-                    <TableCell className="delete-row-cell">
+                    <TableCell sx={{ width: 50, textAlign: 'right' }}>
                       <DeleteButton
                         onClick={() => {
                           setSelectedDayType(dt);
@@ -174,7 +174,7 @@ const DayTypes = () => {
           )}
         </>
       </Loading>
-    </div>
+    </Stack>
   );
 };
 

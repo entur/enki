@@ -1,91 +1,12 @@
-.app {
-  .navbar-and-routes {
-    display: flex;
-
-    .header-and-routes {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-
-      .routes {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        margin: 30px;
-      }
-    }
-  }
-
-  .entur-tab-headers-list {
-    margin-bottom: 40px;
-  }
-
-  .loader {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+.app-root {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 64px);
+  overflow: hidden;
 }
 
-.get-started {
-  max-width: 54rem;
-  .tagline {
-    margin: 0;
-  }
-
-  .color-blue {
-    color: #393d79;
-  }
-
-  .lead {
-    font-size: 20px;
-    line-height: 32px;
-    color: #181c56;
-  }
-
-  header {
-    margin-bottom: 80px;
-  }
-
-  section:not(:last-child) {
-    margin-bottom: 64px;
-  }
-  .point {
-    margin: 0 0 24px 0;
-  }
-
-  .stop-place-button {
-    margin-left: 16px;
-  }
-
-  .platform-id-text {
-    margin-top: 256px;
-  }
-}
-
-.home {
-  max-width: 900px;
-  .cards {
-    display: grid;
-    grid-gap: 1.5rem;
-    column-gap: 1.5rem;
-    grid-template-columns: 1fr 1fr 1fr;
-
-    .eds-navigation-card {
-      height: 100%;
-      width: 100%;
-    }
-
-    .card-link {
-      text-decoration: inherit;
-      color: inherit;
-    }
-  }
-
-  .bus-icon {
-    g {
-      fill: #181c56;
-    }
-  }
+.app-content {
+  flex: 1;
+  overflow: auto;
+  padding: 24px 32px;
 }

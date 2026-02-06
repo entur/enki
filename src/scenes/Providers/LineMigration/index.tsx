@@ -11,6 +11,9 @@ import {
   Typography,
 } from '@mui/material';
 
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
@@ -23,7 +26,6 @@ import { Network } from 'model/Network';
 import Provider from 'model/Provider';
 import { mapToItems, getInit } from 'helpers/dropdown';
 import { getProviders } from '../../../actions/providers';
-import './styles.scss';
 
 // String version of the lines query for UttuQuery
 const getLinesQuery = `
@@ -260,7 +262,7 @@ const LineMigration = () => {
       backButtonTitle={formatMessage({ id: 'navBarProvidersMenuItemLabel' })}
       title="Line Migration"
     >
-      <div className="line-migration">
+      <Stack spacing={3} sx={{ maxWidth: 800 }}>
         <Typography variant="h1">
           Migrate Line from {currentProvider?.name}
         </Typography>
@@ -271,193 +273,184 @@ const LineMigration = () => {
         </Typography>
 
         <OverlayLoader isLoading={migrating} text="Migrating line...">
-          <div className="migration-form">
-            <div className="form-section">
-              <Autocomplete
-                className="form-section"
-                value={getInit(
-                  lines.map((line) => ({
-                    id: line.id,
-                    name:
-                      line.publicCode || line.privateCode
-                        ? `${line.name} (${line.publicCode || line.privateCode})`
-                        : line.name,
-                  })),
-                  selectedLineId,
-                )}
-                onChange={(_event, newValue) =>
-                  setSelectedLineId(newValue?.value ?? '')
-                }
-                options={mapToItems(
-                  lines.map((line) => ({
-                    id: line.id,
-                    name:
-                      line.publicCode || line.privateCode
-                        ? `${line.name} (${line.publicCode || line.privateCode})`
-                        : line.name,
-                  })),
-                )}
-                getOptionLabel={(option) => option.label}
-                isOptionEqualToValue={(option, value) =>
-                  option.value === value.value
-                }
-                noOptionsText="No lines found"
-                disabled={linesLoading}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Source Line"
-                    placeholder="Select a line to migrate"
-                  />
-                )}
-              />
-            </div>
+          <Stack spacing={3}>
+            <Autocomplete
+              value={getInit(
+                lines.map((line) => ({
+                  id: line.id,
+                  name:
+                    line.publicCode || line.privateCode
+                      ? `${line.name} (${line.publicCode || line.privateCode})`
+                      : line.name,
+                })),
+                selectedLineId,
+              )}
+              onChange={(_event, newValue) =>
+                setSelectedLineId(newValue?.value ?? '')
+              }
+              options={mapToItems(
+                lines.map((line) => ({
+                  id: line.id,
+                  name:
+                    line.publicCode || line.privateCode
+                      ? `${line.name} (${line.publicCode || line.privateCode})`
+                      : line.name,
+                })),
+              )}
+              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              noOptionsText="No lines found"
+              disabled={linesLoading}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Source Line"
+                  placeholder="Select a line to migrate"
+                />
+              )}
+            />
 
-            <div className="form-section">
-              <Autocomplete
-                className="form-section"
-                value={getInit(
-                  availableProviders.map((provider) => ({
-                    id: provider.code,
-                    name: `${provider.name} (${provider.code})`,
-                  })),
-                  targetProviderId,
-                )}
-                onChange={(_event, newValue) =>
-                  setTargetProviderId(newValue?.value ?? '')
-                }
-                options={mapToItems(
-                  availableProviders.map((provider) => ({
-                    id: provider.code,
-                    name: `${provider.name} (${provider.code})`,
-                  })),
-                )}
-                getOptionLabel={(option) => option.label}
-                isOptionEqualToValue={(option, value) =>
-                  option.value === value.value
-                }
-                noOptionsText="No providers found"
-                disabled={!allProviders.length}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Target Provider"
-                    placeholder="Select target provider"
-                  />
-                )}
-              />
-            </div>
+            <Autocomplete
+              value={getInit(
+                availableProviders.map((provider) => ({
+                  id: provider.code,
+                  name: `${provider.name} (${provider.code})`,
+                })),
+                targetProviderId,
+              )}
+              onChange={(_event, newValue) =>
+                setTargetProviderId(newValue?.value ?? '')
+              }
+              options={mapToItems(
+                availableProviders.map((provider) => ({
+                  id: provider.code,
+                  name: `${provider.name} (${provider.code})`,
+                })),
+              )}
+              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              noOptionsText="No providers found"
+              disabled={!allProviders.length}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Target Provider"
+                  placeholder="Select target provider"
+                />
+              )}
+            />
 
-            <div className="form-section">
-              <Autocomplete
-                className="form-section"
-                value={getInit(
-                  networks.map((network) => ({
-                    id: network.id,
-                    name: network.privateCode
-                      ? `${network.name} (${network.privateCode})`
-                      : network.name,
-                  })),
-                  targetNetworkId,
-                )}
-                onChange={(_event, newValue) =>
-                  setTargetNetworkId(newValue?.value ?? '')
-                }
-                options={mapToItems(
-                  networks.map((network) => ({
-                    id: network.id,
-                    name: network.privateCode
-                      ? `${network.name} (${network.privateCode})`
-                      : network.name,
-                  })),
-                )}
-                getOptionLabel={(option) => option.label}
-                isOptionEqualToValue={(option, value) =>
-                  option.value === value.value
-                }
-                noOptionsText="No networks found"
-                disabled={!targetProviderId || networksLoading}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Target Network"
-                    placeholder="Select target network"
-                  />
-                )}
-              />
-              {targetProviderId &&
-                !networksLoading &&
-                networks.length === 0 && (
-                  <Typography variant="body1">
-                    No networks found for the selected provider.
-                  </Typography>
-                )}
-            </div>
+            <Autocomplete
+              value={getInit(
+                networks.map((network) => ({
+                  id: network.id,
+                  name: network.privateCode
+                    ? `${network.name} (${network.privateCode})`
+                    : network.name,
+                })),
+                targetNetworkId,
+              )}
+              onChange={(_event, newValue) =>
+                setTargetNetworkId(newValue?.value ?? '')
+              }
+              options={mapToItems(
+                networks.map((network) => ({
+                  id: network.id,
+                  name: network.privateCode
+                    ? `${network.name} (${network.privateCode})`
+                    : network.name,
+                })),
+              )}
+              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              noOptionsText="No networks found"
+              disabled={!targetProviderId || networksLoading}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Target Network"
+                  placeholder="Select target network"
+                />
+              )}
+            />
+            {targetProviderId && !networksLoading && networks.length === 0 && (
+              <Typography variant="body1">
+                No networks found for the selected provider.
+              </Typography>
+            )}
 
-            <div className="form-section">
-              <Autocomplete
-                className="form-section"
-                disableClearable
-                value={
-                  getInit(
-                    [
-                      { id: 'RENAME', name: 'Rename conflicting entities' },
-                      { id: 'FAIL', name: 'Fail on conflicts' },
-                      { id: 'SKIP', name: 'Skip conflicting entities' },
-                    ],
-                    conflictResolution,
-                  )!
-                }
-                onChange={(_event, newValue) =>
-                  setConflictResolution(
-                    (newValue?.value ?? 'RENAME') as 'FAIL' | 'RENAME' | 'SKIP',
-                  )
-                }
-                options={mapToItems([
-                  { id: 'RENAME', name: 'Rename conflicting entities' },
-                  { id: 'FAIL', name: 'Fail on conflicts' },
-                  { id: 'SKIP', name: 'Skip conflicting entities' },
-                ])}
-                getOptionLabel={(option) => option.label}
-                isOptionEqualToValue={(option, value) =>
-                  option.value === value.value
-                }
-                noOptionsText="No options found"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Conflict Resolution Strategy"
-                    placeholder="Select conflict resolution strategy"
-                  />
-                )}
-              />
-            </div>
+            <Autocomplete
+              disableClearable
+              value={
+                getInit(
+                  [
+                    { id: 'RENAME', name: 'Rename conflicting entities' },
+                    { id: 'FAIL', name: 'Fail on conflicts' },
+                    { id: 'SKIP', name: 'Skip conflicting entities' },
+                  ],
+                  conflictResolution,
+                )!
+              }
+              onChange={(_event, newValue) =>
+                setConflictResolution(
+                  (newValue?.value ?? 'RENAME') as 'FAIL' | 'RENAME' | 'SKIP',
+                )
+              }
+              options={mapToItems([
+                { id: 'RENAME', name: 'Rename conflicting entities' },
+                { id: 'FAIL', name: 'Fail on conflicts' },
+                { id: 'SKIP', name: 'Skip conflicting entities' },
+              ])}
+              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              noOptionsText="No options found"
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Conflict Resolution Strategy"
+                  placeholder="Select conflict resolution strategy"
+                />
+              )}
+            />
 
-            <div className="form-section">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={includeDayTypes}
-                    onChange={(e) => setIncludeDayTypes(e.target.checked)}
-                  />
-                }
-                label="Include Day Types in migration"
-              />
-            </div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={includeDayTypes}
+                  onChange={(e) => setIncludeDayTypes(e.target.checked)}
+                />
+              }
+              label="Include Day Types in migration"
+            />
 
-            <div className="form-section">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={dryRun}
-                    onChange={(e) => setDryRun(e.target.checked)}
-                  />
-                }
-                label="Dry run (preview only)"
-              />
-            </div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={dryRun}
+                  onChange={(e) => setDryRun(e.target.checked)}
+                />
+              }
+              label="Dry run (preview only)"
+            />
 
-            <div className="buttons">
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                mt: 3,
+                pt: 2,
+                borderTop: '1px solid',
+                borderColor: 'divider',
+              }}
+            >
               <Button variant="outlined" onClick={() => navigate('/providers')}>
                 Cancel
               </Button>
@@ -468,12 +461,21 @@ const LineMigration = () => {
               >
                 {dryRun ? 'Preview Migration' : 'Migrate Line'}
               </Button>
-            </div>
-          </div>
+            </Stack>
+          </Stack>
         </OverlayLoader>
 
         {migrationResult && (
-          <div className="migration-result">
+          <Box
+            sx={{
+              mt: 4,
+              p: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+              borderRadius: 1,
+              bgcolor: 'grey.50',
+            }}
+          >
             <Typography variant="h1">Migration Result</Typography>
             {migrationResult.success ? (
               <div>
@@ -519,9 +521,9 @@ const LineMigration = () => {
                   ))}
                 </div>
               )}
-          </div>
+          </Box>
         )}
-      </div>
+      </Stack>
     </Page>
   );
 };

@@ -11,7 +11,6 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Notice from 'model/Notice';
-import './styles.scss';
 import { FormatMessage } from 'i18n';
 type Props = {
   notices?: Notice[];
@@ -41,21 +40,20 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
   };
 
   return (
-    <section className="notices">
+    <section>
       <Typography variant="h4">
         {formatMessage({ id: 'noticesHeader' })}
       </Typography>
       <Table>
         <TableBody>
           {notices?.map((notice, i) => (
-            <TableRow key={'' + i} hover className="notices-row">
-              <TableCell className="notices-editable-cell">
+            <TableRow key={'' + i} hover>
+              <TableCell sx={{ width: '90%' }}>
                 <TextField
                   multiline
                   rows={2}
                   label=""
                   onBlur={() => notice.text === '' && removeNotice(i)}
-                  className="notices-text-area"
                   value={notice.text}
                   onChange={(e: any) => updateNotice(i, e.target.value)}
                   fullWidth
@@ -66,10 +64,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
                   placement="bottom"
                   title={formatMessage({ id: 'deleteNoticeTooltip' })}
                 >
-                  <IconButton
-                    className="notices-icon-button"
-                    onClick={() => removeNotice(i)}
-                  >
+                  <IconButton onClick={() => removeNotice(i)}>
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
@@ -83,10 +78,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
                 placement="bottom"
                 title={formatMessage({ id: 'addNoticeTooltip' })}
               >
-                <IconButton
-                  className="notices-icon-button"
-                  onClick={() => addNotice()}
-                >
+                <IconButton onClick={() => addNotice()}>
                   <AddIcon />
                 </IconButton>
               </Tooltip>

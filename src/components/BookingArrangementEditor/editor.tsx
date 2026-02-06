@@ -33,7 +33,8 @@ import {
 import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
-import './styles.scss';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -127,7 +128,7 @@ export default (props: Props) => {
   const purchaseWhenItems = mapEnumToItems(PURCHASE_WHEN);
 
   return (
-    <div className="booking-editor">
+    <Box>
       <Typography variant="subtitle1">
         {formatMessage({ id: 'bookingInfoText' })}
       </Typography>
@@ -136,120 +137,146 @@ export default (props: Props) => {
       </Typography>
 
       {bookingInfoAttachmentType && bookingInfoAttachmentName && (
-        <section className="booking-contact-info">
-          <TextField
-            label={bookingInfoAttachmentLabel(bookingInfoAttachmentType)}
-            value={bookingInfoAttachmentName}
-            disabled
-          />
-        </section>
+        <Grid container spacing={3} sx={{ mt: 1 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              label={bookingInfoAttachmentLabel(bookingInfoAttachmentType)}
+              value={bookingInfoAttachmentName}
+              disabled
+            />
+          </Grid>
+        </Grid>
       )}
 
-      <section className="booking-contact-info">
-        <TextField
-          label={formatMessage({ id: 'contactFieldsContactPersonTitle' })}
-          defaultValue={bookingContact?.contactPerson ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({
-              ...bookingContact,
-              contactPerson: e.target.value,
-            })
-          }
-        />
+      <Grid container spacing={3} sx={{ mt: 1 }}>
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsContactPersonTitle' })}
+            defaultValue={bookingContact?.contactPerson ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({
+                ...bookingContact,
+                contactPerson: e.target.value,
+              })
+            }
+          />
+        </Grid>
 
-        <TextField
-          label={formatMessage({ id: 'contactFieldsEmailTitle' })}
-          defaultValue={bookingContact?.email ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({ ...bookingContact, email: e.target.value })
-          }
-        />
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsEmailTitle' })}
+            defaultValue={bookingContact?.email ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({ ...bookingContact, email: e.target.value })
+            }
+          />
+        </Grid>
 
-        <TextField
-          label={formatMessage({ id: 'contactFieldsPhoneTitle' })}
-          defaultValue={bookingContact?.phone ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({ ...bookingContact, phone: e.target.value })
-          }
-        />
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsPhoneTitle' })}
+            defaultValue={bookingContact?.phone ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({ ...bookingContact, phone: e.target.value })
+            }
+          />
+        </Grid>
 
-        <TextField
-          label={formatMessage({ id: 'contactFieldsUrlTitle' })}
-          value={bookingContact?.url ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({ ...bookingContact, url: e.target.value })
-          }
-        />
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsUrlTitle' })}
+            value={bookingContact?.url ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({ ...bookingContact, url: e.target.value })
+            }
+          />
+        </Grid>
 
-        <TextField
-          multiline
-          rows={4}
-          label={formatMessage({ id: 'bookingNoteFieldTitle' })}
-          style={{ width: '100%' }}
-          value={bookingNote ?? ''}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            onChange({ ...bookingArrangement, bookingNote: e.target.value })
-          }
-        />
+        <Grid size={{ xs: 12 }}>
+          <TextField
+            multiline
+            rows={4}
+            label={formatMessage({ id: 'bookingNoteFieldTitle' })}
+            fullWidth
+            value={bookingNote ?? ''}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              onChange({ ...bookingArrangement, bookingNote: e.target.value })
+            }
+          />
+        </Grid>
 
-        <Autocomplete
-          value={getEnumInit(bookingAccess)}
-          options={bookingAccessItems}
-          getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
-          isOptionEqualToValue={(option, value) => option.value === value.value}
-          onChange={(_e, item) =>
-            onChange({
-              ...bookingArrangement,
-              bookingAccess: item?.value as BOOKING_ACCESS,
-            })
-          }
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label={formatMessage({ id: 'bookingAccessSelectionTitle' })}
-              placeholder={formatMessage({ id: 'defaultOption' })}
-            />
-          )}
-        />
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <Autocomplete
+            value={getEnumInit(bookingAccess)}
+            options={bookingAccessItems}
+            getOptionLabel={(option: NormalizedDropdownItemType) =>
+              option.label
+            }
+            isOptionEqualToValue={(option, value) =>
+              option.value === value.value
+            }
+            onChange={(_e, item) =>
+              onChange({
+                ...bookingArrangement,
+                bookingAccess: item?.value as BOOKING_ACCESS,
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={formatMessage({ id: 'bookingAccessSelectionTitle' })}
+                placeholder={formatMessage({ id: 'defaultOption' })}
+              />
+            )}
+          />
+        </Grid>
 
-        <TextField
-          label={formatMessage({ id: 'contactFieldsFurtherDetailsTitle' })}
-          value={bookingContact?.furtherDetails || ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({
-              ...bookingContact,
-              furtherDetails: e.target.value,
-            })
-          }
-        />
-      </section>
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsFurtherDetailsTitle' })}
+            value={bookingContact?.furtherDetails || ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({
+                ...bookingContact,
+                furtherDetails: e.target.value,
+              })
+            }
+          />
+        </Grid>
+      </Grid>
 
-      <section className="booking-time-info">
-        <Autocomplete
-          disabled={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
-          value={getEnumInit(bookWhen)}
-          options={purchaseWhenItems}
-          getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
-          isOptionEqualToValue={(option, value) => option.value === value.value}
-          onChange={(_e, item) => {
-            onBookingLimitTypeChange(
-              item?.value ? BOOKING_LIMIT_TYPE.TIME : BOOKING_LIMIT_TYPE.NONE,
-            );
-            onChange({
-              ...bookingArrangement,
-              bookWhen: item?.value as PURCHASE_WHEN,
-            });
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label={formatMessage({ id: 'bookingTimeSelectionTitle' })}
-              placeholder={formatMessage({ id: 'defaultOption' })}
-            />
-          )}
-        />
+      <Box sx={{ mt: 3 }}>
+        <Box sx={{ maxWidth: '48%', minWidth: '20rem', mb: 4 }}>
+          <Autocomplete
+            disabled={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
+            value={getEnumInit(bookWhen)}
+            options={purchaseWhenItems}
+            getOptionLabel={(option: NormalizedDropdownItemType) =>
+              option.label
+            }
+            isOptionEqualToValue={(option, value) =>
+              option.value === value.value
+            }
+            onChange={(_e, item) => {
+              onBookingLimitTypeChange(
+                item?.value ? BOOKING_LIMIT_TYPE.TIME : BOOKING_LIMIT_TYPE.NONE,
+              );
+              onChange({
+                ...bookingArrangement,
+                bookWhen: item?.value as PURCHASE_WHEN,
+              });
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={formatMessage({ id: 'bookingTimeSelectionTitle' })}
+                placeholder={formatMessage({ id: 'defaultOption' })}
+              />
+            )}
+          />
+        </Box>
 
-        <FormControl component="fieldset">
+        <FormControl component="fieldset" sx={{ mt: 3 }}>
           <FormLabel>
             {formatMessage({ id: 'bookingLimitFieldsHeaderLabel' })}
           </FormLabel>
@@ -313,11 +340,11 @@ export default (props: Props) => {
           </RadioGroup>
         </FormControl>
 
-        <FormControl component="fieldset">
+        <FormControl component="fieldset" sx={{ mt: 3 }}>
           <FormLabel>
             {formatMessage({ id: 'bookingMethodSelectionTitle' })}
           </FormLabel>
-          <div className="filter-chip-list">
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {Object.values(BOOKING_METHOD).map((v) => (
               <Chip
                 key={v}
@@ -327,14 +354,14 @@ export default (props: Props) => {
                 onClick={() => onBookingMethodChange(v)}
               />
             ))}
-          </div>
+          </Box>
         </FormControl>
 
-        <FormControl component="fieldset">
+        <FormControl component="fieldset" sx={{ mt: 3 }}>
           <FormLabel>
             {formatMessage({ id: 'paymentSelectionTitle' })}
           </FormLabel>
-          <div className="filter-chip-list">
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {Object.values(PURCHASE_MOMENT).map((v) => (
               <Chip
                 key={v}
@@ -344,9 +371,9 @@ export default (props: Props) => {
                 onClick={() => onPurchaseMomentChange(v)}
               />
             ))}
-          </div>
+          </Box>
         </FormControl>
-      </section>
-    </div>
+      </Box>
+    </Box>
   );
 };

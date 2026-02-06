@@ -2,7 +2,6 @@ import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import DayType from 'model/DayType';
 import { useIntl } from 'react-intl';
 import { DayTypesModalContent } from './DayTypesModalContent';
-import './styles.scss';
 
 export const DayTypesModal = ({
   open,
@@ -17,13 +16,7 @@ export const DayTypesModal = ({
 }) => {
   const { formatMessage } = useIntl();
   return (
-    <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
-      maxWidth="lg"
-      fullWidth
-      className="copy-dialog"
-    >
+    <Dialog open={open} onClose={() => setOpen(false)} maxWidth="lg" fullWidth>
       <DialogTitle>{formatMessage({ id: 'dayTypesModalTitle' })}</DialogTitle>
       <DialogContent>
         <DayTypesModalContent

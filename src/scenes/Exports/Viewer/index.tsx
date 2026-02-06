@@ -14,7 +14,8 @@ import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { getIconForSeverity, getIconForStatus } from '../icons/icons';
-import './styles.scss';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 
 const ExportItem = ({
   label,
@@ -23,12 +24,12 @@ const ExportItem = ({
   label: string;
   value: string | ReactElement;
 }) => (
-  <div className="export-item">
+  <Box sx={{ minWidth: '10rem', mr: 1.5, mb: 1.5 }}>
     <Typography variant="body2" component="label">
       {label}
     </Typography>
-    <div className="value">{value}</div>
-  </div>
+    <div>{value}</div>
+  </Box>
 );
 
 const getCurrentExportSelector = (params: Params) => (state: GlobalState) =>
@@ -68,7 +69,6 @@ const ExportsViewer = () => {
 
   return (
     <Page
-      className="export-viewer"
       title={formatMessage({ id: 'viewerHeader' })}
       backButtonTitle={formatMessage({ id: 'navBarExportsMenuItemLabel' })}
     >
@@ -78,8 +78,8 @@ const ExportsViewer = () => {
         className=""
       >
         {() => (
-          <div className="export-view">
-            <div className="export-items">
+          <Box>
+            <Box sx={{ my: 2 }}>
               <ExportItem
                 label={formatMessage({ id: 'viewerNameLabel' })}
                 value={theExport!.name}
@@ -119,17 +119,17 @@ const ExportsViewer = () => {
               <ExportItem
                 label={formatMessage({ id: 'viewerStatusLabel' })}
                 value={
-                  <div className="export-status">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     {getIconForStatus(theExport!.exportStatus)}
                     {theExport!.exportStatus &&
                       formatMessage({ id: theExport!.exportStatus })}
-                  </div>
+                  </Box>
                 }
               />
-            </div>
+            </Box>
 
             {theExport!.exportStatus === EXPORT_STATUS.SUCCESS && (
-              <div className="export-download">
+              <Box sx={{ display: 'flex', flexDirection: 'column', mt: 2 }}>
                 <Typography variant="body2" component="label">
                   {formatMessage({ id: 'viewerDownloadLabel' })}
                 </Typography>
@@ -148,30 +148,32 @@ const ExportsViewer = () => {
                   <Download />
                   {formatMessage({ id: 'viewerDownloadLinkText' })}
                 </Button>
-              </div>
+              </Box>
             )}
             {(theExport?.messages ?? []).length > 0 && (
               <>
                 <Typography variant="body2" component="label">
                   {formatMessage({ id: 'viewerMessagesLabel' })}
                 </Typography>
-                <div className="value messages">
+                <Box>
                   {(theExport?.messages ?? []).map((m, i) => (
-                    <div key={i} className="message">
-                      <div className="icon">
+                    <Box key={i} sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Box
+                        sx={{ display: 'flex', alignItems: 'center', mr: 1 }}
+                      >
                         {getIconForSeverity(m.severity)}
-                      </div>
+                      </Box>
                       <div>
                         {m?.message && isOfUttuMessage(m.message)
                           ? formatMessage({ id: uttuMessages[m.message] })
                           : m.message}
                       </div>
-                    </div>
+                    </Box>
                   ))}
-                </div>
+                </Box>
               </>
             )}
-          </div>
+          </Box>
         )}
       </Loading>
     </Page>

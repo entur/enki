@@ -36,11 +36,26 @@ export const FlexibleAreasOnlyStopPointEditor = ({
   );
 
   return (
-    <div className="stop-point">
-      <div className="stop-point-element">
-        <div className="stop-point-info">
+    <div style={{ borderBottom: '2px solid #d9d9d9' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '1.5rem',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            maxWidth: '50rem',
+            flexBasis: '100%',
+            marginLeft: '1rem',
+            marginRight: '1rem',
+          }}
+        >
           <Autocomplete
-            className="stop-point-dropdown"
             value={
               mapToItems(flexibleStopPlaces || []).find(
                 (item) => item.value === stopPoint.flexibleStopPlaceRef,

@@ -37,11 +37,10 @@ export const DayTypeForm = ({
   }, [isValid, onValidationChange]);
 
   return (
-    <div className="day-type-form-fields">
+    <div>
       <TextField
         variant="outlined"
         label={formatMessage({ id: 'dayTypeEditorNameFieldLabel' })}
-        className="form-section"
         value={dayType.name || ''}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onChange({
@@ -71,7 +70,7 @@ export const DayTypeForm = ({
           title={formatMessage({ id: 'dayTypeEditorDateTooltip' })}
           placement="right"
         >
-          <span className="question-icon">
+          <span style={{ marginLeft: '0.25rem', cursor: 'help' }}>
             <HelpOutline />
           </span>
         </Tooltip>

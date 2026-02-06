@@ -8,8 +8,10 @@ import { getOrganisations } from 'actions/organisations';
 import Loading from 'components/Loading';
 import Notifications from 'components/Notification';
 import ScrollToTop from 'components/ScrollToTop';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
 import Routes from './Routes';
-import NavBar from './NavBar';
+import Header from './Header';
 
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../auth/auth';
@@ -86,10 +88,11 @@ const App = () => {
       <ComponentToggle feature="CookieInformation" />
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <div>
-            <div className="navbar-and-routes">
-              <NavBar />
-              <div className="header-and-routes">
+          <>
+            <Header />
+            <Toolbar sx={{ minHeight: '64px' }} />
+            <Box className="app-root">
+              <Box className="app-content">
                 <Loading
                   className="app-loader"
                   text={formatMessage({ id: 'appLoadingMessage' })}
@@ -101,10 +104,10 @@ const App = () => {
                 >
                   <Routes />
                 </Loading>
-              </div>
-            </div>
+              </Box>
+            </Box>
             <Notifications />
-          </div>
+          </>
         </ScrollToTop>
       </BrowserRouter>
     </div>

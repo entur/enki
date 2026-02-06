@@ -10,6 +10,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { loadExports } from 'actions/exports';
 import { useAuth } from 'auth/auth';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
@@ -22,7 +23,6 @@ import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 import { ExportsState } from 'reducers/exportsSlice';
 import { getIconForStatus } from './icons/icons';
-import './styles.scss';
 
 const Exports = () => {
   const navigate = useNavigate();
@@ -99,7 +99,7 @@ const Exports = () => {
   };
 
   return (
-    <div className="exports">
+    <Stack spacing={3} sx={{ flex: 1 }}>
       <Typography variant="h1">
         {formatMessage({ id: 'exportsHeader' })}
       </Typography>
@@ -108,7 +108,7 @@ const Exports = () => {
         variant="outlined"
         component={Link}
         to="/exports/create"
-        className="create"
+        sx={{ alignSelf: 'flex-start' }}
       >
         <Add />
         {formatMessage({ id: 'exportsCreateExportButtonLabel' })}
@@ -138,7 +138,7 @@ const Exports = () => {
         </TableHead>
         <TableBody>{renderTableRows()}</TableBody>
       </Table>
-    </div>
+    </Stack>
   );
 };
 

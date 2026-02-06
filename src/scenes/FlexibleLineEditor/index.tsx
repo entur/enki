@@ -20,7 +20,6 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import FlexibleLineEditorSteps from './FlexibleLineEditorSteps';
 import { useLoadDependencies } from './hooks';
 import { FLEXIBLE_LINE_STEPS } from './steps';
-import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 
 const EditorFrame = () => {

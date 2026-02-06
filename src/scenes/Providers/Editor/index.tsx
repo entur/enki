@@ -13,7 +13,7 @@ import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Params, useNavigate, useParams, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import './styles.scss';
+import Stack from '@mui/material/Stack';
 import { RootState } from '../../../store/store';
 import { fetchUserContext } from '../../../auth/userContextSlice';
 import { useAuth } from '../../../auth/auth';
@@ -86,19 +86,18 @@ const ProviderEditor = () => {
           : formatMessage({ id: 'editorCreateProviderHeaderText' })
       }
     >
-      <div className="provider-editor">
+      <>
         {(provider && (
           <OverlayLoader
             className=""
             isLoading={isSaving}
             text={formatMessage({ id: 'editorSavingProviderLoadingText' })}
           >
-            <div className="provider-form">
+            <Stack spacing={3} sx={{ maxWidth: 450 }}>
               <RequiredInputMarker />
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({ id: 'editorProviderNameLabelText' })}
                 {...getMuiErrorProps(
                   formatMessage({ id: 'editorProviderValidationField' }),
@@ -113,7 +112,6 @@ const ProviderEditor = () => {
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({ id: 'editorProviderCodeLabelText' })}
                 value={provider.code ?? ''}
                 disabled={!!params.id}
@@ -137,7 +135,6 @@ const ProviderEditor = () => {
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({
                   id: 'editorProviderCodespaceXmlnsLabelText',
                 })}
@@ -147,7 +144,6 @@ const ProviderEditor = () => {
 
               <TextField
                 variant="outlined"
-                className="form-section"
                 label={formatMessage({
                   id: 'editorProviderCodespaceXmlnsUrlLabelText',
                 })}
@@ -155,7 +151,7 @@ const ProviderEditor = () => {
                 value={provider.codespace?.xmlnsUrl ?? ''}
               />
 
-              <div className="buttons">
+              <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
                 <Button
                   variant="contained"
                   color="success"
@@ -179,8 +175,8 @@ const ProviderEditor = () => {
                     Migrate Lines
                   </Button>
                 )}
-              </div>
-            </div>
+              </Stack>
+            </Stack>
           </OverlayLoader>
         )) || (
           <Loading
@@ -191,7 +187,7 @@ const ProviderEditor = () => {
             text={formatMessage({ id: 'editorLoadingProviderText' })}
           />
         )}
-      </div>
+      </>
     </Page>
   );
 };

@@ -5,7 +5,6 @@ import { useIntl } from 'react-intl';
 import { StopPointsEditorProps } from '..';
 import { GenericStopPointEditor } from './GenericStopPointEditor';
 import { useConfig } from '../../../config/ConfigContext';
-import '../styles.scss';
 import { useCallback, useEffect, useState } from 'react';
 import { StopPlace, UttuQuery } from '../../../api';
 import { getStopPlacesQuery } from '../../../api/uttu/queries';
@@ -95,12 +94,14 @@ export const GenericStopPointsEditor = ({
         </Typography>
       )}
       {stopPlacesInJourneyPattern && (
-        <div className={'stop-point-editor-container'}>
+        <div style={{ display: 'flex' }}>
           <div
-            className={`stop-point-editor ${isMapEnabled ? 'stop-point-editor-width-limit' : ''}`}
+            style={
+              isMapEnabled ? { maxWidth: 450, marginRight: 30 } : undefined
+            }
           >
             {isMapEnabled && pointsInSequence?.length < 2 && (
-              <Alert className={'stop-point-number-alert'} severity={'info'}>
+              <Alert sx={{ minWidth: 450, mb: 6 }} severity={'info'}>
                 {formatMessage({ id: 'stopPointsMapInfo' })}
               </Alert>
             )}

@@ -8,7 +8,6 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import classNames from 'classnames';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateBookingArrangement } from 'validation';
 import usePristine from 'hooks/usePristine';
@@ -75,10 +74,8 @@ const BookingArrangementEditor = ({
   );
 
   return (
-    <div className="booking">
-      <section
-        className={classNames('booking-info', { 'booking-info-trim': trim })}
-      >
+    <div>
+      <Box sx={{ mt: trim ? 0 : 4, pl: trim ? 0 : 4, pr: 4, pb: 4 }}>
         {trim && (
           <Typography variant="h4">
             {formatMessage({ id: 'bookingInfoHeader' })}
@@ -95,7 +92,7 @@ const BookingArrangementEditor = ({
           </>
         )}
         {bookingArrangement ? (
-          <ButtonGroup className="booking-info-buttons">
+          <ButtonGroup sx={{ mt: 2 }}>
             <Button variant="outlined" onClick={() => setshowModal(true)}>
               {formatMessage({ id: 'bookingInfoShowEditButtonText' })}
             </Button>
@@ -108,13 +105,13 @@ const BookingArrangementEditor = ({
             </Button>
           </ButtonGroup>
         ) : (
-          <ButtonGroup className="booking-info-buttons">
+          <ButtonGroup sx={{ mt: 2 }}>
             <Button variant="outlined" onClick={() => setshowModal(true)}>
               {formatMessage({ id: 'bookingInfoAddButtonText' })}
             </Button>
           </ButtonGroup>
         )}
-      </section>
+      </Box>
 
       <Dialog open={showModal} onClose={cancel} maxWidth="lg" fullWidth>
         <DialogTitle>{formatMessage({ id: 'bookingInfoHeader' })}</DialogTitle>
@@ -131,13 +128,13 @@ const BookingArrangementEditor = ({
           />
 
           {bookingArrangementFeedback?.feedback && (
-            <div className="booking-modal-buttons">
+            <Box sx={{ mt: 4 }}>
               <Alert severity="error">
                 {bookingArrangementFeedback.feedback}
               </Alert>
-            </div>
+            </Box>
           )}
-          <div className="booking-modal-buttons">
+          <Box sx={{ mt: 4 }}>
             <ButtonGroup>
               <Button
                 onClick={saveChanges}
@@ -150,7 +147,7 @@ const BookingArrangementEditor = ({
                 {formatMessage({ id: 'bookingInfoCancelButtonText' })}
               </Button>
             </ButtonGroup>
-          </div>
+          </Box>
         </DialogContent>
       </Dialog>
     </div>

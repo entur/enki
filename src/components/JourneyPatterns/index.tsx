@@ -16,7 +16,6 @@ import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern, { initJourneyPattern } from 'model/JourneyPattern';
 import { ReactElement, useState } from 'react';
 import { useIntl } from 'react-intl';
-import './styles.scss';
 import StopPoint from '../../model/StopPoint';
 import { createUuid } from '../../helpers/generators';
 import NewJourneyPatternModal from './NewJourneyPatternModal';
@@ -124,7 +123,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
         validateJourneyPatternName={validateJourneyPatternName}
       />
 
-      <div className="journey-patterns-editor">
+      <div>
         <Typography variant="h1">
           {formatMessage({ id: 'editorJourneyPatternsTabLabel' })}
         </Typography>

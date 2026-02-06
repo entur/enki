@@ -94,31 +94,26 @@ const theme = createTheme({
       fontSize: '34px',
       fontWeight: 600,
       lineHeight: '42px',
-      color: enturColors.brandBlue,
     },
     h2: {
       fontSize: '28px',
       fontWeight: 600,
       lineHeight: '36px',
-      color: enturColors.brandBlue,
     },
     h3: {
       fontSize: '22px',
       fontWeight: 600,
       lineHeight: '30px',
-      color: enturColors.brandBlue,
     },
     h4: {
       fontSize: '16px',
       fontWeight: 600,
       lineHeight: '24px',
-      color: enturColors.brandBlue,
     },
     h5: {
       fontSize: '14px',
       fontWeight: 600,
       lineHeight: '22px',
-      color: enturColors.brandBlue,
     },
     body1: {
       fontSize: '16px',
@@ -157,6 +152,44 @@ const theme = createTheme({
     MuiTextField: {
       defaultProps: {
         variant: 'outlined',
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: enturColors.brandBlue,
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#ffffff',
+        },
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: enturColors.grey90,
+            cursor: 'pointer',
+          },
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          fontWeight: 600,
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          minHeight: 64,
+        },
       },
     },
     MuiCssBaseline: {

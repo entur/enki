@@ -14,7 +14,6 @@ import DeleteButton from 'components/DeleteButton/DeleteButton';
 import Loading from 'components/Loading';
 
 import { Organisation } from 'model/Organisation';
-import './styles.scss';
 
 export type Props = {
   lines?: Line[];
@@ -52,7 +51,7 @@ export default (props: Props) => {
   };
 
   return (
-    <Table className="lines-table">
+    <Table sx={{ mt: 2.5 }}>
       <TableHead>
         <TableRow>
           <TableCell>{nameTableHeader}</TableCell>
@@ -97,7 +96,7 @@ const renderTableRows = (props: Props) => {
         {organisations?.find((op) => op.id === line.operatorRef)?.name?.value ??
           '-'}
       </TableCell>
-      <TableCell className="delete-row-cell">
+      <TableCell sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <DeleteButton onClick={() => onDeleteRowClick(line)} title="" thin />
       </TableCell>
     </TableRow>

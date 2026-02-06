@@ -2,7 +2,6 @@ import { Chip, FormHelperText } from '@mui/material';
 import usePristine from 'hooks/usePristine';
 import { DAY_OF_WEEK } from 'model/enums';
 import { useIntl } from 'react-intl';
-import './styles.scss';
 
 type Props = {
   days: DAY_OF_WEEK[];
@@ -25,8 +24,8 @@ const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
   const showError = !isValid && !weekdayPristine;
 
   return (
-    <div className="weekday-picker">
-      <div className="checkboxes">
+    <div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
         <Chip
           label={formatMessage({ id: 'weekdaysMonday' })}
           variant={days.includes(DAY_OF_WEEK.MONDAY) ? 'filled' : 'outlined'}

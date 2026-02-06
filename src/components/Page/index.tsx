@@ -1,8 +1,8 @@
 import ArrowBack from '@mui/icons-material/ArrowBack';
+import Box from '@mui/material/Box';
 import { Button, Typography } from '@mui/material';
 import { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './styles.scss';
 
 type Props = {
   title?: string;
@@ -17,29 +17,27 @@ const Page = ({
   backButtonTitle,
   onBackButtonClick,
   children,
-  className = '',
 }: Props) => {
   const navigate = useNavigate();
   return (
-    <div className={`page ${className}`}>
-      <div className="back-button">
-        <Button
-          variant="text"
-          onClick={() =>
-            onBackButtonClick ? onBackButtonClick() : navigate(-1)
-          }
-        >
-          <>
-            <ArrowBack />
-            {backButtonTitle && <div>{backButtonTitle}</div>}
-          </>
-        </Button>
-      </div>
-      <div className="page-content">
-        {title && <Typography variant="h1">{title}</Typography>}
+    <Box>
+      <Button
+        variant="text"
+        startIcon={<ArrowBack />}
+        onClick={() => (onBackButtonClick ? onBackButtonClick() : navigate(-1))}
+        sx={{ mb: 2 }}
+      >
+        {backButtonTitle}
+      </Button>
+      <Box sx={{ mx: 6, my: 3 }}>
+        {title && (
+          <Typography variant="h1" sx={{ mb: 3 }}>
+            {title}
+          </Typography>
+        )}
         {children}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

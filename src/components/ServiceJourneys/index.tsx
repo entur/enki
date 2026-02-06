@@ -22,7 +22,7 @@ import { Fragment, ReactElement, useState } from 'react';
 import { useIntl } from 'react-intl';
 import BulkDeleteDialog from './BulkDeleteDialog';
 import NewServiceJourneyDialog from './NewServiceJourneyDialog';
-import './styles.scss';
+import Box from '@mui/material/Box';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
@@ -257,7 +257,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
         />
       )}
 
-      <div className="service-journeys-editor">
+      <Box>
         <Typography variant="h1">
           {formatMessage({ id: 'editorServiceJourneys' })}
         </Typography>
@@ -299,7 +299,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
           onClick={() => setShowNewServiceJourneyDialog(true)}
           buttonTitle={formatMessage({ id: 'editorAddServiceJourneys' })}
         />
-      </div>
+      </Box>
     </>
   );
 };

@@ -84,7 +84,7 @@ export const QuayRefField = ({
 
   return (
     <TextField
-      className="stop-point-info-item"
+      sx={{ width: 260 }}
       label={formatMessage({ id: 'labelQuayRef' })}
       error={hasError}
       helperText={helperText}

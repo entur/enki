@@ -16,7 +16,7 @@ import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { DayTypeForm } from './DayTypeForm';
-import './styles.scss';
+import Stack from '@mui/material/Stack';
 
 const getCurrentDayTypeSelector = (params: Params) => (state: GlobalState) =>
   state.dayTypes?.find((dt) => dt.id === params.id);
@@ -92,7 +92,7 @@ const DayTypeEditor = () => {
           : formatMessage({ id: 'dayTypesCreateDayTypeHeader' })
       }
     >
-      <div className="day-type-editor">
+      <>
         <Typography variant="body1">
           {formatMessage({ id: 'dayTypesEditorDescription' })}
         </Typography>
@@ -107,14 +107,19 @@ const DayTypeEditor = () => {
                 : formatMessage({ id: 'dayTypesDeletingDayTypeText' })
             }
           >
-            <div className="day-type-form">
+            <Stack spacing={3} sx={{ maxWidth: 800 }}>
               <DayTypeForm
                 dayType={dayType}
                 onChange={setDayType}
                 onValidationChange={setIsValid}
               />
 
-              <div className="buttons">
+              <Stack
+                direction="row"
+                spacing={2}
+                justifyContent="flex-end"
+                sx={{ mt: 4 }}
+              >
                 {params.id && (
                   <Button
                     variant="contained"
@@ -139,8 +144,8 @@ const DayTypeEditor = () => {
                         { details: formatMessage({ id: 'dayType' }) },
                       )}
                 </Button>
-              </div>
-            </div>
+              </Stack>
+            </Stack>
           </OverlayLoader>
         ) : (
           <Loading
@@ -177,7 +182,7 @@ const DayTypeEditor = () => {
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />
-      </div>
+      </>
     </Page>
   );
 };

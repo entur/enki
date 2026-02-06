@@ -1,9 +1,7 @@
 import { Button, TextField, Autocomplete } from '@mui/material';
 import { NormalizedDropdownItemType } from 'helpers/dropdown';
-import cx from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
-import './styles.scss';
 
 export enum TimeUnitPickerPosition {
   ABOVE = 'above',
@@ -53,8 +51,7 @@ export default (props: Props) => {
     disabled = false,
   } = props;
 
-  const classNames = cx(className, 'time-unit-picker');
-  const containerClassNames = cx('pickers-container', position);
+  const classNames = className || '';
 
   const { formatMessage } = useIntl();
 
@@ -92,7 +89,7 @@ export default (props: Props) => {
   });
 
   return (
-    <div className={classNames}>
+    <div className={classNames} style={{ position: 'relative' }}>
       <div ref={triggerEl}>
         <TextField
           label=""
@@ -102,8 +99,19 @@ export default (props: Props) => {
       </div>
 
       {isOpen && (
-        <div className={containerClassNames} ref={pickerEl}>
-          <div className="pickers">
+        <div
+          style={{
+            position: 'absolute',
+            zIndex: 100,
+            width: 400,
+            padding: 25,
+            backgroundColor: '#ebebf1',
+            textAlign: 'center',
+            ...(position === 'above' ? { bottom: 60 } : { marginTop: 15 }),
+          }}
+          ref={pickerEl}
+        >
+          <div>
             {showYears && (
               <Picker
                 label={formatMessage({ id: 'timeUnitPickerYearsLabel' })}
@@ -159,7 +167,14 @@ export default (props: Props) => {
             )}
           </div>
 
-          <div className="buttons">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: 35,
+              gap: 12,
+            }}
+          >
             {onReset && (
               <Button
                 variant="contained"
@@ -201,7 +216,7 @@ const Picker = ({ label, value, onChange, nrOfOptions }: PickerProps) => {
   }));
 
   return (
-    <div className="picker">
+    <div style={{ marginBottom: 20, fontWeight: 500 }}>
       <Autocomplete
         options={options}
         getOptionLabel={(option: NormalizedDropdownItemType) => option.label}

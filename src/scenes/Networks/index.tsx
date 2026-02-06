@@ -8,6 +8,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { deleteNetworkById, loadNetworks } from 'actions/networks';
 import Loading from 'components/Loading';
 import { Network } from 'model/Network';
@@ -18,7 +19,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
-import './styles.scss';
 
 const Networks = () => {
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ const Networks = () => {
             {organisationList.find((o) => o.id === n.authorityRef)?.name
               ?.value ?? '-'}
           </TableCell>
-          <TableCell className="delete-row-cell">
+          <TableCell sx={{ width: 50, textAlign: 'right' }}>
             <DeleteButton
               onClick={() => {
                 setSelectedNetwork(n);
@@ -89,16 +89,16 @@ const Networks = () => {
   );
 
   return (
-    <div className="networks">
+    <Stack spacing={3} sx={{ flex: 1 }}>
       <Typography variant="h1">
         {formatMessage({ id: 'networksHeaderText' })}
       </Typography>
 
       <Button
         variant="outlined"
-        className="create"
         component={Link}
         to="/networks/create"
+        sx={{ alignSelf: 'flex-start' }}
       >
         <Add />
         {formatMessage({ id: 'editorCreateNetworkHeaderText' })}
@@ -175,7 +175,7 @@ const Networks = () => {
           )}
         </>
       </Loading>
-    </div>
+    </Stack>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import {
   deleteFlexibleStopPlaceById,
   loadFlexibleStopPlaces,
@@ -25,7 +26,6 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
 import { findFlexibleStopAreaType } from './findFlexibleStopAreaType';
-import './styles.scss';
 
 const StopPlaces = () => {
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ const StopPlaces = () => {
           </TableCell>
           <TableCell>{sp.privateCode}</TableCell>
           <TableCell>{sp.flexibleAreas?.length ?? 0}</TableCell>
-          <TableCell className="delete-row-cell">
+          <TableCell sx={{ width: 50, textAlign: 'right' }}>
             <DeleteButton
               onClick={() => {
                 setSelectedStopPlace(sp);
@@ -113,7 +113,7 @@ const StopPlaces = () => {
   );
 
   return (
-    <div className="stop-places">
+    <Stack spacing={3} sx={{ flex: 1 }}>
       <Typography variant="h1">
         {formatMessage({ id: 'stopPlacesHeader' })}
       </Typography>
@@ -122,7 +122,7 @@ const StopPlaces = () => {
         variant="outlined"
         component={Link}
         to="/stop-places/create"
-        className="new-stopplace-button"
+        sx={{ alignSelf: 'flex-start' }}
       >
         <Add />
         {formatMessage({ id: 'stopPlacesCreateStopPlaceLinkIconLabelText' })}
@@ -136,15 +136,15 @@ const StopPlaces = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell sx={{ width: '50%' }}>
                     {formatMessage({
                       id: 'stopPlacesNameTableHeaderLabelText',
                     })}
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ width: '25%' }}>
                     {formatMessage({ id: 'flexibleStopAreaType' })}
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ width: '25%' }}>
                     {formatMessage({
                       id: 'stopPlacesPrivateCodeTableHeaderLabelText',
                     })}
@@ -209,7 +209,7 @@ const StopPlaces = () => {
           </>
         )}
       </Loading>
-    </div>
+    </Stack>
   );
 };
 

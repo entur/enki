@@ -19,7 +19,7 @@ import { VEHICLE_MODE, vehicleModeMessages } from 'model/enums';
 import { ChangeEvent, useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import VehicleSubModeDropdown from './VehicleSubModeDropdown';
-import './styles.scss';
+import Grid from '@mui/material/Grid';
 import { Branding } from '../../model/Branding';
 import { useConfig } from '../../config/ConfigContext';
 import { MessagesKey } from '../../i18n/translationKeys';
@@ -136,168 +136,89 @@ export default <T extends Line>({
   const modeItems = getModeItems();
 
   return (
-    <div className="lines-editor-general">
+    <div>
       <Typography variant="h1">
         {' '}
         {formatMessage({ id: 'editorAbout' })}
       </Typography>
       <RequiredInputMarker />
-      <section className="inputs">
-        <TextField
-          label={formatMessage({ id: 'generalNameFormGroupTitle' })}
-          value={line.name}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange<Line>({
-              ...(line as Line),
-              name: e.target.value,
-            })
-          }
-          {...getMuiErrorProps(
-            formatMessage({ id: 'nameEmpty' }),
-            !isBlank(line.name),
-            namePristine,
-          )}
-        />
+      <Grid container spacing={3}>
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'generalNameFormGroupTitle' })}
+            value={line.name}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange<Line>({
+                ...(line as Line),
+                name: e.target.value,
+              })
+            }
+            {...getMuiErrorProps(
+              formatMessage({ id: 'nameEmpty' }),
+              !isBlank(line.name),
+              namePristine,
+            )}
+          />
+        </Grid>
 
-        <TextField
-          label={formatMessage({ id: 'generalDescriptionFormGroupTitle' })}
-          value={line.description ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange<Line>({
-              ...(line as Line),
-              description: e.target.value || null,
-            })
-          }
-        />
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'generalDescriptionFormGroupTitle' })}
+            value={line.description ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange<Line>({
+                ...(line as Line),
+                description: e.target.value || null,
+              })
+            }
+          />
+        </Grid>
 
-        <TextField
-          label={formatMessage(
-            { id: 'generalPublicCodeFormGroupTitle' },
-            {
-              requiredMarker: !config.optionalPublicCodeOnLine ? '*' : '',
-            },
-          )}
-          type="text"
-          value={line.publicCode}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange<Line>({
-              ...(line as Line),
-              publicCode: e.target.value,
-            })
-          }
-          {...getMuiErrorProps(
-            formatMessage({ id: 'publicCodeEmpty' }),
-            !isBlank(line.publicCode) || !!config.optionalPublicCodeOnLine,
-            publicCodePristine,
-          )}
-        />
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage(
+              { id: 'generalPublicCodeFormGroupTitle' },
+              {
+                requiredMarker: !config.optionalPublicCodeOnLine ? '*' : '',
+              },
+            )}
+            type="text"
+            value={line.publicCode}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange<Line>({
+                ...(line as Line),
+                publicCode: e.target.value,
+              })
+            }
+            {...getMuiErrorProps(
+              formatMessage({ id: 'publicCodeEmpty' }),
+              !isBlank(line.publicCode) || !!config.optionalPublicCodeOnLine,
+              publicCodePristine,
+            )}
+          />
+        </Grid>
 
-        <TextField
-          label={formatMessage({ id: 'generalPrivateCodeFormGroupTitle' })}
-          type="text"
-          value={line.privateCode ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange<Line>({
-              ...(line as Line),
-              privateCode: e.target.value || null,
-            })
-          }
-        />
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'generalPrivateCodeFormGroupTitle' })}
+            type="text"
+            value={line.privateCode ?? ''}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange<Line>({
+                ...(line as Line),
+                privateCode: e.target.value || null,
+              })
+            }
+          />
+        </Grid>
 
-        <Autocomplete
-          value={
-            operatorItems.find((item) => item.value === line.operatorRef) ||
-            null
-          }
-          options={operatorItems}
-          getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
-          isOptionEqualToValue={(option, value) => option.value === value.value}
-          onChange={(_e, element) =>
-            onChange<Line>({
-              ...(line as Line),
-              operatorRef: element?.value,
-            })
-          }
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label={formatMessage({ id: 'generalOperatorFormGroupTitle' })}
-              placeholder={formatMessage({ id: 'defaultOption' })}
-              {...getMuiErrorProps(
-                formatMessage({ id: 'operatorRefEmpty' }),
-                !isBlank(line.operatorRef),
-                operatorPristine,
-              )}
-            />
-          )}
-        />
-
-        <Autocomplete
-          value={
-            networkItems.find((item) => item.value === line.networkRef) || null
-          }
-          options={networkItems}
-          getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
-          isOptionEqualToValue={(option, value) => option.value === value.value}
-          onChange={(_e, element) =>
-            onChange<Line>({
-              ...(line as Line),
-              networkRef: element?.value,
-            })
-          }
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label={formatMessage({ id: 'generalNetworkFormGroupTitle' })}
-              placeholder={formatMessage({ id: 'defaultOption' })}
-              {...getMuiErrorProps(
-                formatMessage({ id: 'networkRefEmpty' }),
-                !isBlank(line.networkRef),
-                networkPristine,
-              )}
-            />
-          )}
-        />
-
-        <Autocomplete
-          value={
-            brandingItems.find((item) => item.value === line.brandingRef) ||
-            null
-          }
-          options={brandingItems}
-          getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
-          isOptionEqualToValue={(option, value) => option.value === value.value}
-          onChange={(_e, element) =>
-            onChange<Line>({
-              ...(line as Line),
-              brandingRef: element?.value,
-            })
-          }
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label={formatMessage({ id: 'brandingsDropdownLabelText' })}
-            />
-          )}
-        />
-
-        {isFlexibleLine && (
-          <section className="line-type-dropdown">
-            <FlexibleLineTypeSelector
-              flexibleLineType={flexibleLineType}
-              onChange={onFlexibleLineTypeChange}
-              spoilPristine={spoilPristine}
-            />
-          </section>
-        )}
-
-        <section className="transport-mode-dropdowns">
+        <Grid size={{ xs: 12, sm: 6 }}>
           <Autocomplete
             value={
-              modeItems.find((item) => item.value === line.transportMode) ||
+              operatorItems.find((item) => item.value === line.operatorRef) ||
               null
             }
-            options={modeItems}
+            options={operatorItems}
             getOptionLabel={(option: NormalizedDropdownItemType) =>
               option.label
             }
@@ -307,39 +228,149 @@ export default <T extends Line>({
             onChange={(_e, element) =>
               onChange<Line>({
                 ...(line as Line),
-                transportMode: element?.value as VEHICLE_MODE,
-                transportSubmode: undefined,
+                operatorRef: element?.value,
               })
             }
             renderInput={(params) => (
               <TextField
                 {...params}
-                label={formatMessage({ id: 'transportModeTitle' })}
+                label={formatMessage({ id: 'generalOperatorFormGroupTitle' })}
                 placeholder={formatMessage({ id: 'defaultOption' })}
                 {...getMuiErrorProps(
-                  formatMessage({ id: 'transportModeEmpty' }),
-                  !isBlank(line.transportMode),
-                  modePristine,
+                  formatMessage({ id: 'operatorRefEmpty' }),
+                  !isBlank(line.operatorRef),
+                  operatorPristine,
                 )}
               />
             )}
           />
+        </Grid>
 
-          {line.transportMode && (
-            <VehicleSubModeDropdown
-              transportMode={line.transportMode}
-              transportSubmode={line.transportSubmode}
-              submodeChange={(submode) =>
-                onChange<Line>({
-                  ...(line as Line),
-                  transportSubmode: submode,
-                })
-              }
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <Autocomplete
+            value={
+              networkItems.find((item) => item.value === line.networkRef) ||
+              null
+            }
+            options={networkItems}
+            getOptionLabel={(option: NormalizedDropdownItemType) =>
+              option.label
+            }
+            isOptionEqualToValue={(option, value) =>
+              option.value === value.value
+            }
+            onChange={(_e, element) =>
+              onChange<Line>({
+                ...(line as Line),
+                networkRef: element?.value,
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={formatMessage({ id: 'generalNetworkFormGroupTitle' })}
+                placeholder={formatMessage({ id: 'defaultOption' })}
+                {...getMuiErrorProps(
+                  formatMessage({ id: 'networkRefEmpty' }),
+                  !isBlank(line.networkRef),
+                  networkPristine,
+                )}
+              />
+            )}
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <Autocomplete
+            value={
+              brandingItems.find((item) => item.value === line.brandingRef) ||
+              null
+            }
+            options={brandingItems}
+            getOptionLabel={(option: NormalizedDropdownItemType) =>
+              option.label
+            }
+            isOptionEqualToValue={(option, value) =>
+              option.value === value.value
+            }
+            onChange={(_e, element) =>
+              onChange<Line>({
+                ...(line as Line),
+                brandingRef: element?.value,
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={formatMessage({ id: 'brandingsDropdownLabelText' })}
+              />
+            )}
+          />
+        </Grid>
+
+        {isFlexibleLine && (
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <FlexibleLineTypeSelector
+              flexibleLineType={flexibleLineType}
+              onChange={onFlexibleLineTypeChange}
               spoilPristine={spoilPristine}
             />
+          </Grid>
+        )}
+
+        <Grid container size={{ xs: 12 }} spacing={3}>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <Autocomplete
+              value={
+                modeItems.find((item) => item.value === line.transportMode) ||
+                null
+              }
+              options={modeItems}
+              getOptionLabel={(option: NormalizedDropdownItemType) =>
+                option.label
+              }
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              onChange={(_e, element) =>
+                onChange<Line>({
+                  ...(line as Line),
+                  transportMode: element?.value as VEHICLE_MODE,
+                  transportSubmode: undefined,
+                })
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={formatMessage({ id: 'transportModeTitle' })}
+                  placeholder={formatMessage({ id: 'defaultOption' })}
+                  {...getMuiErrorProps(
+                    formatMessage({ id: 'transportModeEmpty' }),
+                    !isBlank(line.transportMode),
+                    modePristine,
+                  )}
+                />
+              )}
+            />
+          </Grid>
+
+          {line.transportMode && (
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <VehicleSubModeDropdown
+                transportMode={line.transportMode}
+                transportSubmode={line.transportSubmode}
+                submodeChange={(submode) =>
+                  onChange<Line>({
+                    ...(line as Line),
+                    transportSubmode: submode,
+                  })
+                }
+                spoilPristine={spoilPristine}
+              />
+            </Grid>
           )}
-        </section>
-      </section>
+        </Grid>
+      </Grid>
 
       <Notices
         notices={line.notices}

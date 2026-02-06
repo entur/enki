@@ -9,7 +9,6 @@ import { MessagesKey } from 'i18n/translationKeys';
 import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import FlexibleLineTypeDrawer from './FlexibleLineTypeDrawer';
-import './styles.scss';
 
 interface Props {
   flexibleLineType: FlexibleLineType | undefined;
@@ -54,14 +53,13 @@ export const FlexibleLineTypeSelector = ({
       <Link
         component="button"
         type="button"
-        className="line-type-dropdown-tooltip"
+        sx={{ mb: 0.75 }}
         aria-label={formatMessage({ id: 'drawerAria' })}
         onClick={() => setDrawer(true)}
       >
         {formatMessage({ id: 'typeFormGroupTitleTooltip' })}
       </Link>
       <Autocomplete
-        className="flexible-line-type"
         options={items}
         getOptionLabel={(option) => option.label}
         isOptionEqualToValue={(option, val) => option.value === val.value}

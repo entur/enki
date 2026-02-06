@@ -6,7 +6,6 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import NavigationButtons from './NavigationButtons';
-import './styles.scss';
 
 type Props = {
   steps: string[];
@@ -90,7 +89,7 @@ export default ({
           </Step>
         ))}
       </Stepper>
-      <div className="line-editor">
+      <div>
         <OverlayLoader
           className=""
           isLoading={isSaving || isDeleting}
@@ -100,14 +99,10 @@ export default ({
               : formatMessage({ id: 'editorDeleteLineLoadingText' })
           }
         >
-          <div className="editor-pages">{children(activeStepperIndex)}</div>
+          <div>{children(activeStepperIndex)}</div>
           <>
             {otherStepsHasError && spoilPristine && isEdit && (
-              <Alert
-                className="step-errors"
-                severity="error"
-                sx={{ width: 'fit-content' }}
-              >
+              <Alert severity="error" sx={{ width: 'fit-content', mt: 6 }}>
                 {formatMessage({ id: 'fixErrorsInTheFollowingSteps' })}
                 {invalidSteps.join(', ')}
               </Alert>

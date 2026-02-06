@@ -95,7 +95,7 @@ export const DayTypesModalContent = ({
           <strong>{error.title}</strong> {error.message}
         </Alert>
       )}
-      <div className="day-types-modal_new-day-type-button">
+      <div>
         <ButtonGroup>
           <Button variant="outlined" onClick={() => addNewDayType()}>
             {formatMessage({ id: 'dayTypesModalAddNewButtonLabel' })}

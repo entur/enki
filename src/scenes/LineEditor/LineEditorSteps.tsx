@@ -24,7 +24,7 @@ const LineEditorSteps = (props: Props) => {
     <>
       {props.activeStep === 0 && (
         <>
-          <section className="general-line-info">
+          <section>
             <General
               line={props.line}
               operators={props.operators}

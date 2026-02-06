@@ -9,7 +9,6 @@ import StopPoint from 'model/StopPoint';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import General from './General';
-import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 import { VEHICLE_MODE } from '../../model/enums';
 import ServiceJourney from '../../model/ServiceJourney';
@@ -183,7 +182,7 @@ const JourneyPatternEditor = ({
   const StopPointsEditor = useStopPointsEditor(flexibleLineType);
 
   return (
-    <div className="journey-pattern-editor">
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <div style={{ width: '100%' }}>
         <section>
           <RequiredInputMarker />
@@ -211,16 +210,14 @@ const JourneyPatternEditor = ({
           swapStopPoints={swapStopPoints}
         />
       </div>
-      <div className="journey-pattern-editor-action-chips">
+      <div style={{ display: 'flex', gap: '1rem' }}>
         {onDelete && (
           <DeleteActionChip
-            className="journey-pattern-editor-action-chip"
             onClick={() => setShowDeleteDialog(true)}
             title={formatMessage({ id: 'editorDeleteButtonText' })}
           />
         )}
         <CopyActionChip
-          className="journey-pattern-editor-action-chip"
           title={formatMessage({ id: 'editorCopyButtonText' })}
           onClick={() => setShowCopyDialog(true)}
         />
