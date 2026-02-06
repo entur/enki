@@ -95,17 +95,15 @@ const Header = () => {
             />
           </Link>
 
-          {/* Center: Provider selector (hidden on mobile) */}
-          {!isMobile &&
-            providers &&
-            providers.length > 0 &&
-            !noSelectedProvider && (
+          <Box sx={{ flex: 1 }} />
+
+          {/* Right: Provider selector, Language picker, User menu, Hamburger */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+            {!noSelectedProvider && providers && providers.length > 0 && (
               <Box
                 sx={{
-                  mx: 3,
-                  minWidth: 240,
-                  maxWidth: 360,
-                  flex: '0 1 auto',
+                  minWidth: 180,
+                  maxWidth: 280,
                   '& .MuiOutlinedInput-root': {
                     color: 'white',
                     '& .MuiOutlinedInput-notchedOutline': {
@@ -133,10 +131,6 @@ const Header = () => {
               </Box>
             )}
 
-          <Box sx={{ flex: 1 }} />
-
-          {/* Right: Language picker, User menu, Hamburger */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             {!isMobile && (
               <>
                 <LanguagePickerMenu />

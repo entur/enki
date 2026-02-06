@@ -50,6 +50,7 @@ export const SelectProvider = () => {
     <>
       {providers && (
         <Autocomplete
+          size="small"
           options={items}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.value === value.value}
@@ -63,6 +64,7 @@ export const SelectProvider = () => {
           renderInput={(params) => (
             <TextField
               {...params}
+              size="small"
               label={formatMessage({ id: 'navBarDataProvider' })}
             />
           )}
