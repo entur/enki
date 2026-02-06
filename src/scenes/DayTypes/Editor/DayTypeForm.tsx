@@ -1,8 +1,5 @@
-import { SmallAlertBox } from '@entur/alert';
-import { TextField } from '@entur/form';
-import { QuestionIcon } from '@entur/icons';
-import { Tooltip } from '@entur/tooltip';
-import { Heading4 } from '@entur/typography';
+import HelpOutline from '@mui/icons-material/HelpOutline';
+import { Alert, TextField, Tooltip, Typography } from '@mui/material';
 import DayTypeAssignmentsEditor from 'components/DayTypesEditor/DayTypeAssignmentsEditor';
 import WeekdayPicker from 'components/WeekdayPicker';
 import { validateDayType } from 'validation';
@@ -29,7 +26,6 @@ export const DayTypeForm = ({
     dayType.dayTypeAssignments && dayType.dayTypeAssignments.length > 0;
 
   const isValid = useMemo(() => {
-    // Must have at least one weekday and one assignment to be valid
     if (!hasWeekdays || !hasAssignments) {
       return false;
     }
@@ -43,10 +39,8 @@ export const DayTypeForm = ({
   return (
     <div className="day-type-form-fields">
       <TextField
+        variant="outlined"
         label={formatMessage({ id: 'dayTypeEditorNameFieldLabel' })}
-        labelTooltip={formatMessage({
-          id: 'dayTypeEditorNameFieldLabelTooltip',
-        })}
         className="form-section"
         value={dayType.name || ''}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -57,7 +51,9 @@ export const DayTypeForm = ({
         }
       />
 
-      <Heading4>{formatMessage({ id: 'dayTypeEditorWeekdays' })}</Heading4>
+      <Typography variant="h4">
+        {formatMessage({ id: 'dayTypeEditorWeekdays' })}
+      </Typography>
       <WeekdayPicker
         days={dayType.daysOfWeek ?? []}
         onChange={(daysOfWeek) => {
@@ -69,17 +65,17 @@ export const DayTypeForm = ({
         spoilPristine={false}
       />
 
-      <Heading4>
+      <Typography variant="h4">
         {formatMessage({ id: 'dayTypeEditorDateAvailability' })}
         <Tooltip
-          content={formatMessage({ id: 'dayTypeEditorDateTooltip' })}
+          title={formatMessage({ id: 'dayTypeEditorDateTooltip' })}
           placement="right"
         >
           <span className="question-icon">
-            <QuestionIcon />
+            <HelpOutline />
           </span>
         </Tooltip>
-      </Heading4>
+      </Typography>
 
       <DayTypeAssignmentsEditor
         dayTypeAssignments={
@@ -94,9 +90,9 @@ export const DayTypeForm = ({
       />
 
       {!isValid && hasWeekdays && hasAssignments && (
-        <SmallAlertBox variant="error">
+        <Alert severity="error">
           {formatMessage({ id: 'dayTypesValidationError' })}
-        </SmallAlertBox>
+        </Alert>
       )}
     </div>
   );

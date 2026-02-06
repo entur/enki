@@ -1,8 +1,6 @@
-@use '../../../../../../node_modules/@entur/tokens/dist/styles' as *;
-
 .user-menu {
   font-size: 16px;
-  color: $colors-brand-white;
+  color: #ffffff;
   display: flex;
   align-items: center;
 
@@ -25,8 +23,8 @@
   }
 
   .menu-item {
-    border-bottom: 2px solid $colors-greys-grey10;
-    border-right: 2px solid $colors-greys-grey10;
+    border-bottom: 2px solid #1a1a1a;
+    border-right: 2px solid #1a1a1a;
 
     .eds-checkbox-icon {
       margin-right: 0;

@@ -1,10 +1,9 @@
-@import '@entur/chip/dist/styles.css';
 .weekday-picker {
   .checkboxes {
     display: flex;
     flex-wrap: wrap;
 
-    .eds-filter-chip {
+    .MuiChip-root {
       margin-right: 7px;
       margin-bottom: 7px;
 

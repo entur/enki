@@ -1,5 +1,11 @@
-import { NormalizedDropdownItemType } from '@entur/dropdown';
 import { FlexibleLineType } from 'model/FlexibleLine';
+
+export type NormalizedDropdownItemType<ValueType = string> = {
+  value: ValueType;
+  label: string;
+  icons?: React.ComponentType<any>[];
+  itemKey?: string;
+};
 import { MessagesKey } from '../i18n/translationKeys';
 import {
   VEHICLE_MODE,

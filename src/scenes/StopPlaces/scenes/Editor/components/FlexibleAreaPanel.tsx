@@ -1,6 +1,12 @@
-import { SecondaryButton, PrimaryButton } from '@entur/button';
-import { ExpandablePanel } from '@entur/expand';
-import { MapIcon } from '@entur/icons';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Typography,
+} from '@mui/material';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Map from '@mui/icons-material/Map';
 import FlexibleArea from 'model/FlexibleArea';
 import { KeyValues } from 'model/KeyValues';
 import { useIntl } from 'react-intl';
@@ -36,36 +42,38 @@ const FlexibleAreaPanel = ({
   const { formatMessage } = useIntl();
 
   return (
-    <ExpandablePanel
-      title={`${formatMessage({ id: 'stopPlaceAreaLabelPrefix' })} ${index + 1}`}
-      open={isOpen}
-      onToggle={onToggle}
-    >
-      <div className="stop-place-form">
-        <StopPlaceTypeDropdown
-          label={formatMessage({ id: 'flexibleStopAreaType' })}
-          keyValues={area.keyValues}
-          keyValuesUpdate={onKeyValuesUpdate}
-        />
+    <Accordion expanded={isOpen} onChange={onToggle}>
+      <AccordionSummary expandIcon={<ExpandMore />}>
+        <Typography>{`${formatMessage({ id: 'stopPlaceAreaLabelPrefix' })} ${index + 1}`}</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <div className="stop-place-form">
+          <StopPlaceTypeDropdown
+            label={formatMessage({ id: 'flexibleStopAreaType' })}
+            keyValues={area.keyValues}
+            keyValuesUpdate={onKeyValuesUpdate}
+          />
 
-        <CoordinatesInputField
-          coordinates={coordinates}
-          changeCoordinates={onCoordinatesChange}
-        />
+          <CoordinatesInputField
+            coordinates={coordinates}
+            changeCoordinates={onCoordinatesChange}
+          />
 
-        <PrimaryButton
-          className="draw-polygon-button"
-          onClick={onDrawPolygonClick}
-        >
-          {formatMessage({ id: 'editorDrawPolygonButtonText' })}
-          <MapIcon />
-        </PrimaryButton>
+          <Button
+            variant="contained"
+            className="draw-polygon-button"
+            onClick={onDrawPolygonClick}
+          >
+            {formatMessage({ id: 'editorDrawPolygonButtonText' })}
+            <Map />
+          </Button>
 
-        <SecondaryButton disabled={!canDelete} onClick={onRemove}>
-          {formatMessage({ id: 'stopPlaceRemoveAreaButtonLabel' })}
-        </SecondaryButton>
-      </div>
-    </ExpandablePanel>
+          <Button variant="outlined" disabled={!canDelete} onClick={onRemove}>
+            {formatMessage({ id: 'stopPlaceRemoveAreaButtonLabel' })}
+          </Button>
+        </div>
+      </AccordionDetails>
+    </Accordion>
   );
 };
 

@@ -1,14 +1,13 @@
-import { SecondaryButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
+import Add from '@mui/icons-material/Add';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { Heading1, Paragraph } from '@entur/typography';
+  Typography,
+} from '@mui/material';
 import Loading from 'components/Loading';
 import Provider, { sortProviders } from 'model/Provider';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -40,7 +39,7 @@ const Providers = () => {
 
   const handleMigrateClick = useCallback(
     (providerId: string, event: React.MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation(); // Prevent row click
+      event.stopPropagation();
       navigate(`/providers/${providerId}/migrate-line`);
     },
     [navigate],
@@ -69,21 +68,22 @@ const Providers = () => {
           onClick={() => handleOnRowClick(n.code!)}
           title={n.name}
         >
-          <DataCell>{n.name}</DataCell>
-          <DataCell>{n.code}</DataCell>
-          <DataCell>{n.codespace?.xmlns}</DataCell>
-          <DataCell>{n.codespace?.xmlnsUrl}</DataCell>
+          <TableCell>{n.name}</TableCell>
+          <TableCell>{n.code}</TableCell>
+          <TableCell>{n.codespace?.xmlns}</TableCell>
+          <TableCell>{n.codespace?.xmlnsUrl}</TableCell>
           {isLineMigrationEnabled && (
-            <DataCell className="action-cell">
-              <SecondaryButton
+            <TableCell className="action-cell">
+              <Button
+                variant="outlined"
                 size="small"
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
                   handleMigrateClick(n.code!, event)
                 }
               >
                 Migrate Lines
-              </SecondaryButton>
-            </DataCell>
+              </Button>
+            </TableCell>
           )}
         </TableRow>
       ))}
@@ -92,17 +92,24 @@ const Providers = () => {
 
   return (
     <div className="providers">
-      <Heading1>{formatMessage({ id: 'providersHeaderText' })}</Heading1>
+      <Typography variant="h1">
+        {formatMessage({ id: 'providersHeaderText' })}
+      </Typography>
       {providers.length === 0 && (
-        <Paragraph>
+        <Typography variant="body1">
           {formatMessage({ id: 'noProvidersDescriptionText' })}
-        </Paragraph>
+        </Typography>
       )}
 
-      <SecondaryButton className="create" as={Link} to="/providers/create">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        className="create"
+        component={Link}
+        to="/providers/create"
+      >
+        <Add />
         {formatMessage({ id: 'createProviderHeaderText' })}
-      </SecondaryButton>
+      </Button>
 
       <Loading
         text={formatMessage({ id: 'providersLoading' })}
@@ -112,21 +119,21 @@ const Providers = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <HeaderCell>
+                <TableCell>
                   {formatMessage({ id: 'providersNameTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({ id: 'providersCodeTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({ id: 'providersCodespaceXmlnsHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({
                     id: 'providersCodespaceXmlnsUrlHeaderLabel',
                   })}
-                </HeaderCell>
-                {isLineMigrationEnabled && <HeaderCell>Actions</HeaderCell>}
+                </TableCell>
+                {isLineMigrationEnabled && <TableCell>Actions</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>

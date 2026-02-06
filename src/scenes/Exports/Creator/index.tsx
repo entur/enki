@@ -1,14 +1,18 @@
-import { SuccessButton } from '@entur/button';
-import { Checkbox, TextField } from '@entur/form';
-import { QuestionIcon } from '@entur/icons';
-import { Tooltip } from '@entur/tooltip';
-import { Heading4, LeadParagraph } from '@entur/typography';
+import HelpOutline from '@mui/icons-material/HelpOutline';
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { saveExport } from 'actions/exports';
 import LinesForExport from 'components/LinesForExport';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import { Export, ExportLineAssociation, newExport } from 'model/Export';
@@ -67,14 +71,15 @@ const ExportsCreator = () => {
         isLoading={isSaving}
         text={formatMessage({ id: 'exportCreatorSavingOverlayLoaderText' })}
       >
-        <LeadParagraph>
+        <Typography variant="subtitle1">
           {formatMessage({ id: 'exportCreatorDescription' })}
-        </LeadParagraph>
+        </Typography>
         <RequiredInputMarker />
         <TextField
           className="export-name"
           label={formatMessage({ id: 'exportCreatorNameFormLabel' })}
-          {...getErrorFeedback(
+          variant="outlined"
+          {...getMuiErrorProps(
             formatMessage({ id: 'validateFormErrorExportNameIsEmpty' }),
             !isBlank(theExport.name),
             namePristine,
@@ -86,9 +91,9 @@ const ExportsCreator = () => {
         />
 
         <div className="export-lines-table">
-          <Heading4>
+          <Typography variant="h4">
             {formatMessage({ id: 'exportCreatorLinesForExportHeader' })}
-          </Heading4>
+          </Typography>
           <LinesForExport
             onChange={(lines) => {
               onFieldChange('lineAssociations', lines);
@@ -98,23 +103,26 @@ const ExportsCreator = () => {
         <>
           {!hideExportDryRun && (
             <div className="export-dry-run">
-              <Checkbox
-                value="1"
-                checked={theExport.dryRun}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onFieldChange('dryRun', e.target.checked)
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="1"
+                    checked={theExport.dryRun}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      onFieldChange('dryRun', e.target.checked)
+                    }
+                  />
                 }
-              >
-                {formatMessage({ id: 'exportCreatorDryRunFormLabel' })}
-              </Checkbox>
+                label={formatMessage({ id: 'exportCreatorDryRunFormLabel' })}
+              />
               <Tooltip
                 placement="right"
-                content={formatMessage({
+                title={formatMessage({
                   id: 'exportCreatorDryRunFormLabelTooltip',
                 })}
               >
                 <span className="question-icon">
-                  <QuestionIcon />
+                  <HelpOutline />
                 </span>
               </Tooltip>
             </div>
@@ -122,59 +130,73 @@ const ExportsCreator = () => {
         </>
         <>
           <div className="export-generate-service-links">
-            <Checkbox
-              value="1"
-              disabled={config.disableGenerateServiceLinksCheckbox}
-              checked={theExport.generateServiceLinks}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onFieldChange('generateServiceLinks', e.target.checked)
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="1"
+                  disabled={config.disableGenerateServiceLinksCheckbox}
+                  checked={theExport.generateServiceLinks}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange('generateServiceLinks', e.target.checked)
+                  }
+                />
               }
-            >
-              {formatMessage({
+              label={formatMessage({
                 id: 'exportCreatorGenerateServiceLinksFormLabel',
               })}
-            </Checkbox>
+            />
             <Tooltip
               placement="right"
-              content={formatMessage({
+              title={formatMessage({
                 id: 'exportCreatorGenerateServiceLinksFormLabelTooltip',
               })}
             >
               <span className="question-icon">
-                <QuestionIcon />
+                <HelpOutline />
               </span>
             </Tooltip>
           </div>
         </>
         <>
           <div className="export-include-dated-service-journeys">
-            <Checkbox
-              value="1"
-              disabled={config.disableIncludeDatedServiceJourneysCheckbox}
-              checked={theExport.includeDatedServiceJourneys}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onFieldChange('includeDatedServiceJourneys', e.target.checked)
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="1"
+                  disabled={config.disableIncludeDatedServiceJourneysCheckbox}
+                  checked={theExport.includeDatedServiceJourneys}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    onFieldChange(
+                      'includeDatedServiceJourneys',
+                      e.target.checked,
+                    )
+                  }
+                />
               }
-            >
-              {formatMessage({
+              label={formatMessage({
                 id: 'exportCreatorIncludeDatedServiceJourneysFormLabel',
               })}
-            </Checkbox>
+            />
             <Tooltip
               placement="right"
-              content={formatMessage({
+              title={formatMessage({
                 id: 'exportCreatorIncludeDatedServiceJourneysFormLabelTooltip',
               })}
             >
               <span className="question-icon">
-                <QuestionIcon />
+                <HelpOutline />
               </span>
             </Tooltip>
           </div>
         </>
-        <SuccessButton className="export-save" onClick={handleOnSaveClick}>
+        <Button
+          variant="contained"
+          color="success"
+          className="export-save"
+          onClick={handleOnSaveClick}
+        >
           {formatMessage({ id: 'exportCreatorSaveButtonLabelText' })}
-        </SuccessButton>
+        </Button>
       </OverlayLoader>
     </Page>
   );

@@ -4,9 +4,8 @@ import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { SecondaryButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
-import { Heading1 } from '@entur/typography';
+import Add from '@mui/icons-material/Add';
+import { Button, Typography } from '@mui/material';
 
 import { GET_LINES } from 'api/uttu/queries';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
@@ -60,12 +59,19 @@ export default () => {
 
   return (
     <div className="lines">
-      <Heading1>{formatMessage({ id: 'linesHeader' })}</Heading1>
+      <Typography variant="h1">
+        {formatMessage({ id: 'linesHeader' })}
+      </Typography>
 
-      <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        component={Link}
+        to="/lines/create"
+        className="new-line-button"
+      >
+        <Add />
         {formatMessage({ id: 'linesCreateLineIconButtonLabel' })}
-      </SecondaryButton>
+      </Button>
 
       <LinesTable
         lines={done ? data && data.lines : undefined}

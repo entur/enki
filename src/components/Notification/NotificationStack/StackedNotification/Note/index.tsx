@@ -1,11 +1,9 @@
-import { VariantType } from '@entur/form';
-import {
-  CheckIcon,
-  CloseIcon,
-  ValidationErrorIcon,
-  ValidationInfoIcon,
-  WarningIcon,
-} from '@entur/icons';
+import Check from '@mui/icons-material/Check';
+import Close from '@mui/icons-material/Close';
+import Error from '@mui/icons-material/Error';
+import Info from '@mui/icons-material/Info';
+import Warning from '@mui/icons-material/Warning';
+import { VariantType } from 'helpers/errorHandling';
 import cx from 'classnames';
 import { useEffect } from 'react';
 import '../../../styles.scss';
@@ -45,25 +43,25 @@ const Note = ({
     if (type === 'success') {
       return (
         <span className="notification-icon success">
-          <CheckIcon />
+          <Check />
         </span>
       );
     } else if (type === 'error') {
       return (
         <span className="notification-icon error">
-          <ValidationErrorIcon />
+          <Error />
         </span>
       );
     } else if (type === 'warning') {
       return (
         <span className="notification-icon warning">
-          <WarningIcon />
+          <Warning />
         </span>
       );
     } else if (type === 'info') {
       return (
         <span className="notification-icon info">
-          <ValidationInfoIcon />
+          <Info />
         </span>
       );
     } else {
@@ -90,7 +88,7 @@ const Note = ({
   return (
     <div className={wrapperClassNames} style={topOffset}>
       <div className="notification-close">
-        <CloseIcon onClick={onCloseClicked} />
+        <Close onClick={onCloseClicked} style={{ cursor: 'pointer' }} />
       </div>
       <div className="notification-bar-wrapper">
         <div className="notification-bar-title">

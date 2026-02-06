@@ -1,6 +1,4 @@
-import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { TextArea, TextField } from '@entur/form';
-import { Paragraph } from '@entur/typography';
+import { Button, TextField, Typography } from '@mui/material';
 import {
   deleteBrandingById,
   loadBrandingById,
@@ -12,7 +10,7 @@ import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import { Branding } from 'model/Branding';
@@ -102,9 +100,9 @@ const BrandingEditor = () => {
       }
     >
       <div className="branding-editor">
-        <Paragraph>
+        <Typography variant="body1">
           {formatMessage({ id: 'editorBrandingDescription' })}
-        </Paragraph>
+        </Typography>
 
         {branding ? (
           <OverlayLoader
@@ -120,9 +118,10 @@ const BrandingEditor = () => {
               <RequiredInputMarker />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({ id: 'editorBrandingNameLabelText' })}
-                {...getErrorFeedback(
+                {...getMuiErrorProps(
                   formatMessage({ id: 'editorBrandingValidationName' }),
                   !isBlank(branding.name),
                   namePristine,
@@ -133,7 +132,10 @@ const BrandingEditor = () => {
                 }
               />
 
-              <TextArea
+              <TextField
+                variant="outlined"
+                multiline
+                rows={4}
                 className="form-section"
                 label={formatMessage({
                   id: 'editorBrandingDescriptionLabelText',
@@ -145,6 +147,7 @@ const BrandingEditor = () => {
               />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({
                   id: 'editorBrandingShortNameLabelText',
@@ -156,6 +159,7 @@ const BrandingEditor = () => {
               />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({
                   id: 'editorBrandingUrlLabelText',
@@ -167,6 +171,7 @@ const BrandingEditor = () => {
               />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({
                   id: 'editorBrandingImageUrlLabelText',
@@ -179,22 +184,28 @@ const BrandingEditor = () => {
 
               <div className="buttons">
                 {params.id && (
-                  <NegativeButton
+                  <Button
+                    variant="contained"
+                    color="error"
                     onClick={() => setDeleteDialogOpen(true)}
                     disabled={isDeleteDisabled}
                   >
                     {formatMessage({ id: 'editorDeleteButtonText' })}
-                  </NegativeButton>
+                  </Button>
                 )}
 
-                <SuccessButton onClick={handleOnSaveClick}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleOnSaveClick}
+                >
                   {params.id
                     ? formatMessage({ id: 'editorSaveButtonText' })
                     : formatMessage(
                         { id: 'editorDetailedCreate' },
                         { details: formatMessage({ id: 'branding' }) },
                       )}
-                </SuccessButton>
+                </Button>
               </div>
             </div>
           </OverlayLoader>
@@ -221,16 +232,25 @@ const BrandingEditor = () => {
             id: 'editorDeleteBrandingConfirmDialogMessage',
           })}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setDeleteDialogOpen(false)}
+            >
               {formatMessage({
                 id: 'editorDeleteBrandingConfirmDialogCancelText',
               })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={handleDelete}>
+            </Button>,
+            <Button
+              variant="contained"
+              color="success"
+              key={1}
+              onClick={handleDelete}
+            >
               {formatMessage({
                 id: 'editorDeleteBrandingConfirmDialogConfirmText',
               })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />

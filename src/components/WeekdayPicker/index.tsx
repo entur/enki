@@ -1,6 +1,4 @@
-import { FilterChip } from '@entur/chip';
-import { FeedbackText } from '@entur/form';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { Chip, FormHelperText } from '@mui/material';
 import usePristine from 'hooks/usePristine';
 import { DAY_OF_WEEK } from 'model/enums';
 import { useIntl } from 'react-intl';
@@ -23,66 +21,60 @@ export const toggleDay = (
 const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
   const { formatMessage } = useIntl();
   const weekdayPristine = usePristine(days, spoilPristine);
-  const { feedback, variant } = getErrorFeedback(
-    formatMessage({ id: 'weekdaysError' }),
-    days.length !== 0,
-    weekdayPristine,
-  );
+  const isValid = days.length !== 0;
+  const showError = !isValid && !weekdayPristine;
 
   return (
     <div className="weekday-picker">
       <div className="checkboxes">
-        <FilterChip
-          checked={days.includes(DAY_OF_WEEK.MONDAY)}
-          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.MONDAY))}
-          value="M"
-        >
-          {formatMessage({ id: 'weekdaysMonday' })}
-        </FilterChip>
-        <FilterChip
-          checked={days.includes(DAY_OF_WEEK.TUESDAY)}
-          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.TUESDAY))}
-          value="T"
-        >
-          {formatMessage({ id: 'weekdaysTuesday' })}
-        </FilterChip>
-        <FilterChip
-          checked={days.includes(DAY_OF_WEEK.WEDNESDAY)}
-          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.WEDNESDAY))}
-          value="O"
-        >
-          {formatMessage({ id: 'weekdaysWednesday' })}
-        </FilterChip>
-        <FilterChip
-          checked={days.includes(DAY_OF_WEEK.THURSDAY)}
-          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.THURSDAY))}
-          value="T"
-        >
-          {formatMessage({ id: 'weekdaysThursday' })}
-        </FilterChip>
-        <FilterChip
-          checked={days.includes(DAY_OF_WEEK.FRIDAY)}
-          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.FRIDAY))}
-          value="F"
-        >
-          {formatMessage({ id: 'weekdaysFriday' })}
-        </FilterChip>
-        <FilterChip
-          checked={days.includes(DAY_OF_WEEK.SATURDAY)}
-          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.SATURDAY))}
-          value="L"
-        >
-          {formatMessage({ id: 'weekdaysSaturday' })}
-        </FilterChip>
-        <FilterChip
-          checked={days.includes(DAY_OF_WEEK.SUNDAY)}
-          onChange={() => onChange(toggleDay(days, DAY_OF_WEEK.SUNDAY))}
-          value="S"
-        >
-          {formatMessage({ id: 'weekdaysSunday' })}
-        </FilterChip>
+        <Chip
+          label={formatMessage({ id: 'weekdaysMonday' })}
+          variant={days.includes(DAY_OF_WEEK.MONDAY) ? 'filled' : 'outlined'}
+          color={days.includes(DAY_OF_WEEK.MONDAY) ? 'primary' : 'default'}
+          onClick={() => onChange(toggleDay(days, DAY_OF_WEEK.MONDAY))}
+        />
+        <Chip
+          label={formatMessage({ id: 'weekdaysTuesday' })}
+          variant={days.includes(DAY_OF_WEEK.TUESDAY) ? 'filled' : 'outlined'}
+          color={days.includes(DAY_OF_WEEK.TUESDAY) ? 'primary' : 'default'}
+          onClick={() => onChange(toggleDay(days, DAY_OF_WEEK.TUESDAY))}
+        />
+        <Chip
+          label={formatMessage({ id: 'weekdaysWednesday' })}
+          variant={days.includes(DAY_OF_WEEK.WEDNESDAY) ? 'filled' : 'outlined'}
+          color={days.includes(DAY_OF_WEEK.WEDNESDAY) ? 'primary' : 'default'}
+          onClick={() => onChange(toggleDay(days, DAY_OF_WEEK.WEDNESDAY))}
+        />
+        <Chip
+          label={formatMessage({ id: 'weekdaysThursday' })}
+          variant={days.includes(DAY_OF_WEEK.THURSDAY) ? 'filled' : 'outlined'}
+          color={days.includes(DAY_OF_WEEK.THURSDAY) ? 'primary' : 'default'}
+          onClick={() => onChange(toggleDay(days, DAY_OF_WEEK.THURSDAY))}
+        />
+        <Chip
+          label={formatMessage({ id: 'weekdaysFriday' })}
+          variant={days.includes(DAY_OF_WEEK.FRIDAY) ? 'filled' : 'outlined'}
+          color={days.includes(DAY_OF_WEEK.FRIDAY) ? 'primary' : 'default'}
+          onClick={() => onChange(toggleDay(days, DAY_OF_WEEK.FRIDAY))}
+        />
+        <Chip
+          label={formatMessage({ id: 'weekdaysSaturday' })}
+          variant={days.includes(DAY_OF_WEEK.SATURDAY) ? 'filled' : 'outlined'}
+          color={days.includes(DAY_OF_WEEK.SATURDAY) ? 'primary' : 'default'}
+          onClick={() => onChange(toggleDay(days, DAY_OF_WEEK.SATURDAY))}
+        />
+        <Chip
+          label={formatMessage({ id: 'weekdaysSunday' })}
+          variant={days.includes(DAY_OF_WEEK.SUNDAY) ? 'filled' : 'outlined'}
+          color={days.includes(DAY_OF_WEEK.SUNDAY) ? 'primary' : 'default'}
+          onClick={() => onChange(toggleDay(days, DAY_OF_WEEK.SUNDAY))}
+        />
       </div>
-      <FeedbackText variant={variant!}>{feedback}</FeedbackText>
+      {showError && (
+        <FormHelperText error>
+          {formatMessage({ id: 'weekdaysError' })}
+        </FormHelperText>
+      )}
     </div>
   );
 };

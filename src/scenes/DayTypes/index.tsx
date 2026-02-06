@@ -1,14 +1,13 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
+import Add from '@mui/icons-material/Add';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { Heading1 } from '@entur/typography';
+  Typography,
+} from '@mui/material';
 import { deleteDayTypeById, loadDayTypes } from 'actions/dayTypes';
 import Loading from 'components/Loading';
 import DayType from 'model/DayType';
@@ -58,12 +57,19 @@ const DayTypes = () => {
 
   return (
     <div className="day-types">
-      <Heading1>{formatMessage({ id: 'dayTypesHeaderText' })}</Heading1>
+      <Typography variant="h1">
+        {formatMessage({ id: 'dayTypesHeaderText' })}
+      </Typography>
 
-      <SecondaryButton className="create" as={Link} to="/day-types/create">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        className="create"
+        component={Link}
+        to="/day-types/create"
+      >
+        <Add />
         {formatMessage({ id: 'dayTypesCreateDayTypeButtonLabel' })}
-      </SecondaryButton>
+      </Button>
 
       <Loading
         text={formatMessage({ id: 'dayTypesLoadingText' })}
@@ -73,16 +79,16 @@ const DayTypes = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <HeaderCell>
+                <TableCell>
                   {formatMessage({ id: 'dayTypesNameTableHeader' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({ id: 'dayTypesWeekdaysTableHeader' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({ id: 'dayTypesInUseTableHeader' })}
-                </HeaderCell>
-                <HeaderCell>{''}</HeaderCell>
+                </TableCell>
+                <TableCell>{''}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -93,16 +99,16 @@ const DayTypes = () => {
                     onClick={() => handleOnRowClick(dt.id!)}
                     title={dt.name}
                   >
-                    <DataCell>
+                    <TableCell>
                       {dt.name || formatMessage({ id: 'dayTypeNoName' })}
-                    </DataCell>
-                    <DataCell>{formatWeekdays(dt.daysOfWeek)}</DataCell>
-                    <DataCell>
+                    </TableCell>
+                    <TableCell>{formatWeekdays(dt.daysOfWeek)}</TableCell>
+                    <TableCell>
                       {(dt.numberOfServiceJourneys ?? 0) > 0
                         ? formatMessage({ id: 'dayTypeInUse' })
                         : formatMessage({ id: 'dayTypeNotInUse' })}
-                    </DataCell>
-                    <DataCell className="delete-row-cell">
+                    </TableCell>
+                    <TableCell className="delete-row-cell">
                       <DeleteButton
                         onClick={() => {
                           setSelectedDayType(dt);
@@ -112,14 +118,14 @@ const DayTypes = () => {
                         thin
                         disabled={(dt.numberOfServiceJourneys ?? 0) > 0}
                       />
-                    </DataCell>
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow className="row-no-day-types disabled">
-                  <DataCell colSpan={4}>
+                  <TableCell colSpan={4}>
                     {formatMessage({ id: 'dayTypesNoDayTypesFoundText' })}
-                  </DataCell>
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
@@ -138,7 +144,8 @@ const DayTypes = () => {
                 id: 'dayTypesDeleteConfirmDialogMessage',
               })}
               buttons={[
-                <SecondaryButton
+                <Button
+                  variant="outlined"
                   key="no"
                   onClick={() => {
                     setSelectedDayType(undefined);
@@ -146,8 +153,10 @@ const DayTypes = () => {
                   }}
                 >
                   {formatMessage({ id: 'no' })}
-                </SecondaryButton>,
-                <SuccessButton
+                </Button>,
+                <Button
+                  variant="contained"
+                  color="success"
                   key="yes"
                   onClick={() => {
                     dispatch(deleteDayTypeById(selectedDayType?.id, intl))
@@ -159,7 +168,7 @@ const DayTypes = () => {
                   }}
                 >
                   {formatMessage({ id: 'yes' })}
-                </SuccessButton>,
+                </Button>,
               ]}
             />
           )}

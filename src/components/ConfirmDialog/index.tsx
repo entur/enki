@@ -1,5 +1,10 @@
-import { Modal } from '@entur/modal';
-import { Paragraph } from '@entur/typography';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from '@mui/material';
 import React, { ReactElement } from 'react';
 
 import './styles.scss';
@@ -21,16 +26,21 @@ const ConfirmDialog = ({
   className,
 }: Props): ReactElement => {
   return (
-    <Modal
+    <Dialog
       className={className}
       open={isOpen}
-      title={title}
-      onDismiss={onDismiss}
-      size="medium"
+      onClose={onDismiss}
+      maxWidth="sm"
+      fullWidth
     >
-      <Paragraph>{message}</Paragraph>
-      <div className="confirm-dialog-buttons">{buttons}</div>
-    </Modal>
+      <DialogTitle>{title}</DialogTitle>
+      <DialogContent>
+        <Typography variant="body1">{message}</Typography>
+      </DialogContent>
+      <DialogActions className="confirm-dialog-buttons">
+        {buttons}
+      </DialogActions>
+    </Dialog>
   );
 };
 

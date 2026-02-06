@@ -1,4 +1,4 @@
-import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
+import { Autocomplete, TextField } from '@mui/material';
 import { KeyValues } from 'model/KeyValues';
 import {
   FLEXIBLE_STOP_AREA_TYPE,
@@ -20,31 +20,23 @@ export const StopPlaceTypeDropdown = ({
   const { formatMessage } = useIntl();
 
   return (
-    <Dropdown
-      clearable
-      labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-      label={label}
-      items={Object.values(FLEXIBLE_STOP_AREA_TYPE).map((v) => ({
-        value: v,
-        label: formatMessage({
-          id: flexibleStopAreaTypeMessages[v],
-        }),
-      }))}
-      selectedItem={{
-        value:
-          keyValues?.find((v) => v.key === 'FlexibleStopAreaType')?.values[0] ||
-          '',
-        label: keyValues?.find((v) => v.key === 'FlexibleStopAreaType')
-          ?.values[0]
-          ? formatMessage({
-              id: flexibleStopAreaTypeMessages[
+    <Autocomplete
+      value={
+        keyValues?.find((v) => v.key === 'FlexibleStopAreaType')?.values[0]
+          ? {
+              value:
                 keyValues?.find((v) => v.key === 'FlexibleStopAreaType')
-                  ?.values[0]! as FLEXIBLE_STOP_AREA_TYPE
-              ],
-            })
-          : '',
-      }}
-      onChange={(selectedItem: NormalizedDropdownItemType | null) => {
+                  ?.values[0] || '',
+              label: formatMessage({
+                id: flexibleStopAreaTypeMessages[
+                  keyValues?.find((v) => v.key === 'FlexibleStopAreaType')
+                    ?.values[0]! as FLEXIBLE_STOP_AREA_TYPE
+                ],
+              }),
+            }
+          : null
+      }
+      onChange={(_event, selectedItem) => {
         if (selectedItem) {
           keyValuesUpdate([
             {
@@ -56,6 +48,15 @@ export const StopPlaceTypeDropdown = ({
           keyValuesUpdate([]);
         }
       }}
+      options={Object.values(FLEXIBLE_STOP_AREA_TYPE).map((v) => ({
+        value: v,
+        label: formatMessage({
+          id: flexibleStopAreaTypeMessages[v],
+        }),
+      }))}
+      getOptionLabel={(option) => option.label}
+      isOptionEqualToValue={(option, value) => option.value === value.value}
+      renderInput={(params) => <TextField {...params} label={label} />}
     />
   );
 };

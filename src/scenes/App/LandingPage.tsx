@@ -2,9 +2,9 @@ import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../auth/auth';
 import React from 'react';
-import { Contrast } from '@entur/layout';
-import { SideNavigation } from '@entur/menu';
-import { PrimaryButton } from '@entur/button';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import Button from '@mui/material/Button';
 import LanguagePicker from './NavBar/LanguagePicker';
 import Logo from './NavBar/Logo';
 import { useConfig } from '../../config/ConfigContext';
@@ -19,24 +19,27 @@ export const LandingPage = () => {
       <Helmet defaultTitle={formatMessage({ id: 'appTitle' })} />
       <div>
         <div className="navbar-and-routes">
-          <Contrast as="nav" className="navbar-wrapper">
-            <SideNavigation className="side-navigation">
+          <Box component="nav" className="navbar-wrapper">
+            <List className="side-navigation">
               <ComponentToggle
                 feature={`${extPath}/CustomLogo`}
                 renderFallback={() => <Logo />}
               />
-            </SideNavigation>
+            </List>
             <div className="bottom-chips">
               <LanguagePicker />
             </div>
-          </Contrast>
+          </Box>
           <div className="header-and-routes">
             <div className="routes">
               <h1>{formatMessage({ id: 'landingPageNotLoggedIn' })}</h1>
               <p>
-                <PrimaryButton onClick={() => auth.login(window.location.href)}>
+                <Button
+                  variant="contained"
+                  onClick={() => auth.login(window.location.href)}
+                >
                   {formatMessage({ id: 'landingPageLoginButtonText' })}
-                </PrimaryButton>
+                </Button>
               </p>
             </div>
           </div>

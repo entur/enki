@@ -1,6 +1,5 @@
-import { SecondarySquareButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
-import { Paragraph } from '@entur/typography';
+import Add from '@mui/icons-material/Add';
+import { IconButton, Typography } from '@mui/material';
 
 type Props = {
   onClick: () => void;
@@ -9,13 +8,14 @@ type Props = {
 
 const AddButton = (props: Props) => (
   <div style={{ display: 'flex', alignItems: 'baseline', marginTop: '3rem' }}>
-    <SecondarySquareButton
+    <IconButton
       onClick={props.onClick}
       style={{ marginRight: '1rem' }}
+      color="primary"
     >
-      <AddIcon />
-    </SecondarySquareButton>
-    <Paragraph>{props.buttonTitle}</Paragraph>
+      <Add />
+    </IconButton>
+    <Typography variant="body1">{props.buttonTitle}</Typography>
   </div>
 );
 

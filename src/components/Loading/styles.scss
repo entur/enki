@@ -1,10 +1,8 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 .loader {
   display: none;
   min-width: 100px;
   text-align: center;
-  color: $colors-brand-blue;
+  color: #181c56;
 
   &.visible {
     display: flex;

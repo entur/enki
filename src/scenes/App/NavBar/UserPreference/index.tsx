@@ -1,6 +1,6 @@
 import UserMenu from './UserMenu';
 import { SelectProvider } from '../../SelectProvider/SelectProvider';
-import { Contrast } from '@entur/layout';
+import Box from '@mui/material/Box';
 import './styles.scss';
 import { useNoSelectedProvider } from '../../useNoSelectedProvider';
 import Provider from '../../../../model/Provider';
@@ -16,9 +16,9 @@ const UserPreference = ({ providers }: UserPreferenceProps) => {
     <div className="user-preference">
       <UserMenu />
       {providers && providers.length > 0 && !noSelectedProvider && (
-        <Contrast>
+        <Box>
           <SelectProvider />
-        </Contrast>
+        </Box>
       )}
     </div>
   );

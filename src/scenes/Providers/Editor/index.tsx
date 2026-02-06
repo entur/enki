@@ -1,12 +1,11 @@
-import { SuccessButton, SecondaryButton } from '@entur/button';
-import { TextField } from '@entur/form';
+import { Button, TextField } from '@mui/material';
 import { saveProvider } from 'actions/providers';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useConfig } from 'config/ConfigContext';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import Provider from 'model/Provider';
@@ -98,9 +97,10 @@ const ProviderEditor = () => {
               <RequiredInputMarker />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({ id: 'editorProviderNameLabelText' })}
-                {...getErrorFeedback(
+                {...getMuiErrorProps(
                   formatMessage({ id: 'editorProviderValidationField' }),
                   !isBlank(provider.name),
                   namePristine,
@@ -112,6 +112,7 @@ const ProviderEditor = () => {
               />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({ id: 'editorProviderCodeLabelText' })}
                 value={provider.code ?? ''}
@@ -127,7 +128,7 @@ const ProviderEditor = () => {
                     },
                   });
                 }}
-                {...getErrorFeedback(
+                {...getMuiErrorProps(
                   formatMessage({ id: 'editorProviderValidationField' }),
                   !isBlank(provider.code),
                   namePristine,
@@ -135,6 +136,7 @@ const ProviderEditor = () => {
               />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({
                   id: 'editorProviderCodespaceXmlnsLabelText',
@@ -144,6 +146,7 @@ const ProviderEditor = () => {
               />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({
                   id: 'editorProviderCodespaceXmlnsUrlLabelText',
@@ -153,7 +156,9 @@ const ProviderEditor = () => {
               />
 
               <div className="buttons">
-                <SuccessButton
+                <Button
+                  variant="contained"
+                  color="success"
                   disabled={!validProvider}
                   onClick={handleOnSaveClick}
                 >
@@ -163,15 +168,16 @@ const ProviderEditor = () => {
                         { id: 'editorDetailedCreate' },
                         { details: formatMessage({ id: 'provider' }) },
                       )}
-                </SuccessButton>
+                </Button>
 
                 {params.id && (
-                  <SecondaryButton
-                    as={Link}
+                  <Button
+                    variant="outlined"
+                    component={Link}
                     to={`/providers/${params.id}/migrate-line`}
                   >
                     Migrate Lines
-                  </SecondaryButton>
+                  </Button>
                 )}
               </div>
             </div>

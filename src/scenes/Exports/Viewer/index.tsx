@@ -1,6 +1,5 @@
-import { PrimaryButton } from '@entur/button';
-import { DownloadIcon } from '@entur/icons';
-import { Label } from '@entur/typography';
+import Download from '@mui/icons-material/Download';
+import { Button, Typography } from '@mui/material';
 import { loadExportById } from 'actions/exports';
 import { useAuth } from 'auth/auth';
 import Loading from 'components/Loading';
@@ -25,7 +24,9 @@ const ExportItem = ({
   value: string | ReactElement;
 }) => (
   <div className="export-item">
-    <Label>{label}</Label>
+    <Typography variant="body2" component="label">
+      {label}
+    </Typography>
     <div className="value">{value}</div>
   </div>
 );
@@ -129,8 +130,11 @@ const ExportsViewer = () => {
 
             {theExport!.exportStatus === EXPORT_STATUS.SUCCESS && (
               <div className="export-download">
-                <Label>{formatMessage({ id: 'viewerDownloadLabel' })}</Label>
-                <PrimaryButton
+                <Typography variant="body2" component="label">
+                  {formatMessage({ id: 'viewerDownloadLabel' })}
+                </Typography>
+                <Button
+                  variant="contained"
                   onClick={async (event: React.MouseEvent<HTMLElement>) => {
                     event.stopPropagation();
                     download(
@@ -141,14 +145,16 @@ const ExportsViewer = () => {
                     );
                   }}
                 >
-                  <DownloadIcon />
+                  <Download />
                   {formatMessage({ id: 'viewerDownloadLinkText' })}
-                </PrimaryButton>
+                </Button>
               </div>
             )}
             {(theExport?.messages ?? []).length > 0 && (
               <>
-                <Label>{formatMessage({ id: 'viewerMessagesLabel' })}</Label>
+                <Typography variant="body2" component="label">
+                  {formatMessage({ id: 'viewerMessagesLabel' })}
+                </Typography>
                 <div className="value messages">
                   {(theExport?.messages ?? []).map((m, i) => (
                     <div key={i} className="message">

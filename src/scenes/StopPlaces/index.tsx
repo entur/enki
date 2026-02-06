@@ -1,14 +1,13 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
+import Add from '@mui/icons-material/Add';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { Heading1 } from '@entur/typography';
+  Typography,
+} from '@mui/material';
 import {
   deleteFlexibleStopPlaceById,
   loadFlexibleStopPlaces,
@@ -85,13 +84,13 @@ const StopPlaces = () => {
           onClick={() => handleOnRowClick(sp.id!)}
           title={sp.description}
         >
-          <DataCell>{sp.name}</DataCell>
-          <DataCell>
+          <TableCell>{sp.name}</TableCell>
+          <TableCell>
             {formatMessage({ id: getStopAreaTypeMessageKey(sp) })}
-          </DataCell>
-          <DataCell>{sp.privateCode}</DataCell>
-          <DataCell>{sp.flexibleAreas?.length ?? 0}</DataCell>
-          <DataCell className="delete-row-cell">
+          </TableCell>
+          <TableCell>{sp.privateCode}</TableCell>
+          <TableCell>{sp.flexibleAreas?.length ?? 0}</TableCell>
+          <TableCell className="delete-row-cell">
             <DeleteButton
               onClick={() => {
                 setSelectedStopPlace(sp);
@@ -100,14 +99,14 @@ const StopPlaces = () => {
               title=""
               thin
             />
-          </DataCell>
+          </TableCell>
         </TableRow>
       ))}
       {stopPlaces.length === 0 && (
         <TableRow className="row-no-stop-places disabled">
-          <DataCell colSpan={3}>
+          <TableCell colSpan={3}>
             {formatMessage({ id: 'stopPlacesNoStopPlacesFoundText' })}
-          </DataCell>
+          </TableCell>
         </TableRow>
       )}
     </>
@@ -115,16 +114,19 @@ const StopPlaces = () => {
 
   return (
     <div className="stop-places">
-      <Heading1>{formatMessage({ id: 'stopPlacesHeader' })}</Heading1>
+      <Typography variant="h1">
+        {formatMessage({ id: 'stopPlacesHeader' })}
+      </Typography>
 
-      <SecondaryButton
-        as={Link}
+      <Button
+        variant="outlined"
+        component={Link}
         to="/stop-places/create"
         className="new-stopplace-button"
       >
-        <AddIcon />
+        <Add />
         {formatMessage({ id: 'stopPlacesCreateStopPlaceLinkIconLabelText' })}
-      </SecondaryButton>
+      </Button>
       <Loading
         text={formatMessage({ id: 'stopPlacesLoadingStopPlacesText' })}
         isLoading={!stopPlaces}
@@ -134,25 +136,25 @@ const StopPlaces = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <HeaderCell>
+                  <TableCell>
                     {formatMessage({
                       id: 'stopPlacesNameTableHeaderLabelText',
                     })}
-                  </HeaderCell>
-                  <HeaderCell>
+                  </TableCell>
+                  <TableCell>
                     {formatMessage({ id: 'flexibleStopAreaType' })}
-                  </HeaderCell>
-                  <HeaderCell>
+                  </TableCell>
+                  <TableCell>
                     {formatMessage({
                       id: 'stopPlacesPrivateCodeTableHeaderLabelText',
                     })}
-                  </HeaderCell>
-                  <HeaderCell>
+                  </TableCell>
+                  <TableCell>
                     {formatMessage({
                       id: 'stopPlacesNumberOfAreasTableHeaderLabelText',
                     })}
-                  </HeaderCell>
-                  <HeaderCell>{''}</HeaderCell>
+                  </TableCell>
+                  <TableCell>{''}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>{renderTableRows(stopPlaces!)}</TableBody>
@@ -171,7 +173,8 @@ const StopPlaces = () => {
                   id: 'editorDeleteStopPlaceConfirmationDialogMessage',
                 })}
                 buttons={[
-                  <SecondaryButton
+                  <Button
+                    variant="outlined"
                     key="no"
                     onClick={() => {
                       setSelectedStopPlace(undefined);
@@ -179,8 +182,10 @@ const StopPlaces = () => {
                     }}
                   >
                     {formatMessage({ id: 'no' })}
-                  </SecondaryButton>,
-                  <SuccessButton
+                  </Button>,
+                  <Button
+                    variant="contained"
+                    color="success"
                     key="yes"
                     onClick={() => {
                       dispatch(
@@ -197,7 +202,7 @@ const StopPlaces = () => {
                     }}
                   >
                     {formatMessage({ id: 'yes' })}
-                  </SuccessButton>,
+                  </Button>,
                 ]}
               />
             )}

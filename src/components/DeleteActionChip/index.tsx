@@ -1,5 +1,5 @@
-import { ActionChip } from '@entur/chip';
-import { DeleteIcon } from '@entur/icons';
+import Delete from '@mui/icons-material/Delete';
+import { Chip } from '@mui/material';
 import React from 'react';
 import './DeleteButton.scss';
 
@@ -11,15 +11,15 @@ type Props = {
 };
 
 const DeleteButton = (props: Props) => (
-  <ActionChip
+  <Chip
     className={props.className}
+    label={props.title}
+    icon={<Delete />}
     onClick={(event: React.MouseEvent) => {
       props.onClick();
       event.stopPropagation();
     }}
-  >
-    <DeleteIcon inline /> {props.title}
-  </ActionChip>
+  />
 );
 
 export default DeleteButton;

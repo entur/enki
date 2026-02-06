@@ -1,13 +1,12 @@
 import { useIntl } from 'react-intl';
 
 import {
-  DataCell,
-  HeaderCell,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableRow,
-} from '@entur/table';
+} from '@mui/material';
 
 import Line from 'model/Line';
 
@@ -56,11 +55,11 @@ export default (props: Props) => {
     <Table className="lines-table">
       <TableHead>
         <TableRow>
-          <HeaderCell>{nameTableHeader}</HeaderCell>
-          <HeaderCell>{publicCodeTableHeader}</HeaderCell>
-          <HeaderCell>{privateCodeTableHeader}</HeaderCell>
-          <HeaderCell>{operatorTableHeader}</HeaderCell>
-          <HeaderCell>{''}</HeaderCell>
+          <TableCell>{nameTableHeader}</TableCell>
+          <TableCell>{publicCodeTableHeader}</TableCell>
+          <TableCell>{privateCodeTableHeader}</TableCell>
+          <TableCell>{operatorTableHeader}</TableCell>
+          <TableCell>{''}</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>{renderTableBody()}</TableBody>
@@ -71,7 +70,7 @@ export default (props: Props) => {
 const renderNoLinesFound = (noLinesFoundText: string) => {
   return (
     <TableRow className="row-no-lines disabled">
-      <DataCell colSpan={3}>{noLinesFoundText}</DataCell>
+      <TableCell colSpan={3}>{noLinesFoundText}</TableCell>
     </TableRow>
   );
 };
@@ -79,9 +78,9 @@ const renderNoLinesFound = (noLinesFoundText: string) => {
 const renderLoading = (loadingText: string) => {
   return (
     <TableRow className="disabled">
-      <DataCell colSpan={3}>
+      <TableCell colSpan={3}>
         <Loading className="" text={loadingText} children={null} />
-      </DataCell>
+      </TableCell>
     </TableRow>
   );
 };
@@ -91,16 +90,16 @@ const renderTableRows = (props: Props) => {
 
   return lines?.map((line) => (
     <TableRow key={line.id} onClick={() => onRowClick(line)}>
-      <DataCell title={line.description || undefined}>{line.name}</DataCell>
-      <DataCell>{line.publicCode}</DataCell>
-      <DataCell>{line.privateCode}</DataCell>
-      <DataCell>
+      <TableCell title={line.description || undefined}>{line.name}</TableCell>
+      <TableCell>{line.publicCode}</TableCell>
+      <TableCell>{line.privateCode}</TableCell>
+      <TableCell>
         {organisations?.find((op) => op.id === line.operatorRef)?.name?.value ??
           '-'}
-      </DataCell>
-      <DataCell className="delete-row-cell">
+      </TableCell>
+      <TableCell className="delete-row-cell">
         <DeleteButton onClick={() => onDeleteRowClick(line)} title="" thin />
-      </DataCell>
+      </TableCell>
     </TableRow>
   ));
 };

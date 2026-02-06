@@ -1,6 +1,5 @@
-import { TertiaryButton } from '@entur/button';
-import { BackArrowIcon } from '@entur/icons';
-import { Heading1 } from '@entur/typography';
+import ArrowBack from '@mui/icons-material/ArrowBack';
+import { Button, Typography } from '@mui/material';
 import { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles.scss';
@@ -24,19 +23,20 @@ const Page = ({
   return (
     <div className={`page ${className}`}>
       <div className="back-button">
-        <TertiaryButton
+        <Button
+          variant="text"
           onClick={() =>
             onBackButtonClick ? onBackButtonClick() : navigate(-1)
           }
         >
           <>
-            <BackArrowIcon />
+            <ArrowBack />
             {backButtonTitle && <div>{backButtonTitle}</div>}
           </>
-        </TertiaryButton>
+        </Button>
       </div>
       <div className="page-content">
-        {title && <Heading1>{title}</Heading1>}
+        {title && <Typography variant="h1">{title}</Typography>}
         {children}
       </div>
     </div>

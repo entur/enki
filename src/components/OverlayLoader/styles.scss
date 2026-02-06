@@ -1,5 +1,3 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 .overlay-loader {
   position: relative;
 
@@ -13,7 +11,7 @@
   }
 
   .overlay {
-    background-color: $colors-brand-white;
+    background-color: #ffffff;
     opacity: 1;
 
     &.seeThrough {

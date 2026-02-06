@@ -1,7 +1,4 @@
-import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { TextArea, TextField } from '@entur/form';
-import { Paragraph } from '@entur/typography';
+import { Autocomplete, Button, TextField, Typography } from '@mui/material';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
   deleteNetworkById,
@@ -15,7 +12,7 @@ import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { mapToItems } from 'helpers/dropdown';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import { Network } from 'model/Network';
@@ -129,9 +126,9 @@ const NetworkEditor = () => {
       }
     >
       <div className="network-editor">
-        <Paragraph>
+        <Typography variant="body1">
           {formatMessage({ id: 'editorNetworkDescription' })}
-        </Paragraph>
+        </Typography>
 
         {network && lines ? (
           <OverlayLoader
@@ -147,9 +144,10 @@ const NetworkEditor = () => {
               <RequiredInputMarker />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({ id: 'editorNetworkNameLabelText' })}
-                {...getErrorFeedback(
+                {...getMuiErrorProps(
                   formatMessage({ id: 'editorNetworkValidationName' }),
                   !isBlank(network.name),
                   namePristine,
@@ -160,18 +158,22 @@ const NetworkEditor = () => {
                 }
               />
 
-              <TextArea
+              <TextField
+                variant="outlined"
+                multiline
+                rows={4}
                 className="form-section"
                 label={formatMessage({
                   id: 'editorNetworkDescriptionLabelText',
                 })}
                 value={network.description}
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                  onFieldChange('description', e.target.value)
-                }
+                onChange={(
+                  e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+                ) => onFieldChange('description', e.target.value)}
               />
 
               <TextField
+                variant="outlined"
                 className="form-section"
                 label={formatMessage({
                   id: 'editorNetworkPrivateCodeLabelText',
@@ -182,54 +184,72 @@ const NetworkEditor = () => {
                 }
               />
 
-              <Dropdown
+              <Autocomplete
                 className="form-section"
-                selectedItem={{
-                  value: authorities.find((v) => v.id === network.authorityRef)
-                    ?.id,
-                  label:
-                    authorities.find((v) => v.id === network.authorityRef)?.name
-                      .value ?? '',
-                }}
-                items={() =>
-                  mapToItems(
-                    authorities.map((v) => ({ ...v, name: v.name.value })),
-                  )
+                value={
+                  authorities.find((v) => v.id === network.authorityRef)
+                    ? {
+                        value:
+                          authorities.find((v) => v.id === network.authorityRef)
+                            ?.id ?? '',
+                        label:
+                          authorities.find((v) => v.id === network.authorityRef)
+                            ?.name.value ?? '',
+                      }
+                    : null
                 }
-                placeholder={formatMessage({ id: 'defaultOption' })}
-                clearable
-                labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-                label={formatMessage({ id: 'editorNetworkAuthorityLabelText' })}
-                noMatchesText={formatMessage({
-                  id: 'dropdownNoMatchesText',
-                })}
-                onChange={(organisation) =>
-                  handleAuthoritySelectionChange(organisation?.value ?? '')
+                onChange={(_event, newValue) =>
+                  handleAuthoritySelectionChange(newValue?.value ?? '')
                 }
-                {...getErrorFeedback(
-                  formatMessage({ id: 'editorNetworkValidationAuthority' }),
-                  !isBlank(network.authorityRef),
-                  authorityPristine,
+                options={mapToItems(
+                  authorities.map((v) => ({ ...v, name: v.name.value })),
+                )}
+                getOptionLabel={(option) => option.label}
+                isOptionEqualToValue={(option, value) =>
+                  option.value === value.value
+                }
+                noOptionsText={formatMessage({ id: 'dropdownNoMatchesText' })}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={formatMessage({
+                      id: 'editorNetworkAuthorityLabelText',
+                    })}
+                    placeholder={formatMessage({ id: 'defaultOption' })}
+                    {...getMuiErrorProps(
+                      formatMessage({
+                        id: 'editorNetworkValidationAuthority',
+                      }),
+                      !isBlank(network.authorityRef),
+                      authorityPristine,
+                    )}
+                  />
                 )}
               />
               <div className="buttons">
                 {params.id && (
-                  <NegativeButton
+                  <Button
+                    variant="contained"
+                    color="error"
                     onClick={() => setDeleteDialogOpen(true)}
                     disabled={isDeleteDisabled}
                   >
                     {formatMessage({ id: 'editorDeleteButtonText' })}
-                  </NegativeButton>
+                  </Button>
                 )}
 
-                <SuccessButton onClick={handleOnSaveClick}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleOnSaveClick}
+                >
                   {params.id
                     ? formatMessage({ id: 'editorSaveButtonText' })
                     : formatMessage(
                         { id: 'editorDetailedCreate' },
                         { details: formatMessage({ id: 'network' }) },
                       )}
-                </SuccessButton>
+                </Button>
               </div>
             </div>
           </OverlayLoader>
@@ -254,16 +274,25 @@ const NetworkEditor = () => {
             id: 'editorDeleteNetworkConfirmDialogMessage',
           })}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setDeleteDialogOpen(false)}
+            >
               {formatMessage({
                 id: 'editorDeleteNetworkConfirmDialogCancelText',
               })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={handleDelete}>
+            </Button>,
+            <Button
+              variant="contained"
+              color="success"
+              key={1}
+              onClick={handleDelete}
+            >
               {formatMessage({
                 id: 'editorDeleteNetworkConfirmDialogConfirmText',
               })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />

@@ -1,8 +1,13 @@
 import { Apollo } from 'api';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
 import { fetchConfig } from 'config/fetchConfig';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
+import theme from './theme';
 
 import { AuthProvider, useAuth } from 'auth/auth';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
@@ -76,17 +81,22 @@ const renderIndex = async () => {
           }
         }}
       >
-        <Provider store={store}>
-          <ComponentToggle feature={`${config.extPath}/CustomStyle`} />
-          <ComponentToggle
-            feature={`${config.extPath}/CustomIntlProvider`}
-            renderFallback={() => <EnkiApp />}
-          >
-            <AuthProvider>
-              <AuthenticatedApp />
-            </AuthProvider>
-          </ComponentToggle>
-        </Provider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Provider store={store}>
+              <ComponentToggle feature={`${config.extPath}/CustomStyle`} />
+              <ComponentToggle
+                feature={`${config.extPath}/CustomIntlProvider`}
+                renderFallback={() => <EnkiApp />}
+              >
+                <AuthProvider>
+                  <AuthenticatedApp />
+                </AuthProvider>
+              </ComponentToggle>
+            </Provider>
+          </LocalizationProvider>
+        </ThemeProvider>
       </ComponentToggleProvider>
     </ConfigContext.Provider>,
   );

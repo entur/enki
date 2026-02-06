@@ -1,5 +1,4 @@
-import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { Paragraph } from '@entur/typography';
+import { Button, Typography } from '@mui/material';
 import {
   deleteDayTypeById,
   loadDayTypeById,
@@ -94,9 +93,9 @@ const DayTypeEditor = () => {
       }
     >
       <div className="day-type-editor">
-        <Paragraph>
+        <Typography variant="body1">
           {formatMessage({ id: 'dayTypesEditorDescription' })}
-        </Paragraph>
+        </Typography>
 
         {dayType ? (
           <OverlayLoader
@@ -117,22 +116,29 @@ const DayTypeEditor = () => {
 
               <div className="buttons">
                 {params.id && (
-                  <NegativeButton
+                  <Button
+                    variant="contained"
+                    color="error"
                     onClick={() => setDeleteDialogOpen(true)}
                     disabled={isDeleteDisabled}
                   >
                     {formatMessage({ id: 'editorDeleteButtonText' })}
-                  </NegativeButton>
+                  </Button>
                 )}
 
-                <SuccessButton onClick={handleOnSaveClick} disabled={!isValid}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleOnSaveClick}
+                  disabled={!isValid}
+                >
                   {params.id
                     ? formatMessage({ id: 'editorSaveButtonText' })
                     : formatMessage(
                         { id: 'editorDetailedCreate' },
                         { details: formatMessage({ id: 'dayType' }) },
                       )}
-                </SuccessButton>
+                </Button>
               </div>
             </div>
           </OverlayLoader>
@@ -153,12 +159,21 @@ const DayTypeEditor = () => {
             id: 'dayTypesDeleteConfirmDialogMessage',
           })}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setDeleteDialogOpen(false)}
+            >
               {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={handleDelete}>
+            </Button>,
+            <Button
+              variant="contained"
+              color="success"
+              key={1}
+              onClick={handleDelete}
+            >
               {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />

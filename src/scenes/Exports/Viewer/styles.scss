@@ -1,5 +1,3 @@
-@use '../../../../node_modules/@entur/tokens/dist/styles' as *;
-
 .export-viewer {
   flex: 1;
   display: flex;
@@ -13,12 +11,12 @@
 
   .export-view {
     .export-items {
-      margin: $space-extra-large 0;
+      margin: 2rem 0;
 
       .export-item {
         min-width: 10rem;
-        margin-right: $space-large;
-        margin-bottom: $space-large;
+        margin-right: 1.5rem;
+        margin-bottom: 1.5rem;
 
         .export-status {
           display: flex;
@@ -33,7 +31,7 @@
     .export-download {
       display: flex;
       flex-direction: column;
-      margin-top: $space-extra-large;
+      margin-top: 2rem;
       button {
         max-width: fit-content;
         cursor: pointer;

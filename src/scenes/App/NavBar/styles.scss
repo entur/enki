@@ -1,9 +1,7 @@
-@use '../../../../node_modules/@entur/tokens/dist/styles' as *;
-
 .navbar-wrapper {
   left: 0;
   top: 0;
-  background-color: $colors-brand-blue;
+  background-color: #181c56;
   min-height: 100vh;
   position: relative;
 
@@ -23,4 +21,5 @@
   min-width: 310px;
   display: flex;
   flex-direction: column;
+  color: #ffffff;
 }

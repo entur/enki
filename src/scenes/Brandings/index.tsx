@@ -1,14 +1,13 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
+import Add from '@mui/icons-material/Add';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { Heading1 } from '@entur/typography';
+  Typography,
+} from '@mui/material';
 import { deleteBrandingById, loadBrandings } from 'actions/brandings';
 import Loading from 'components/Loading';
 import { Branding } from 'model/Branding';
@@ -43,7 +42,7 @@ const Brandings = () => {
     (id: string) => {
       navigate(`/brandings/edit/${id}`);
     },
-    [history],
+    [navigate],
   );
 
   const RenderTableRows = ({ brandingList }: { brandingList: Branding[] }) => (
@@ -54,12 +53,12 @@ const Brandings = () => {
           onClick={() => handleOnRowClick(b.id!)}
           title={b.description}
         >
-          <DataCell>{b.name}</DataCell>
-          <DataCell>{b.shortName}</DataCell>
-          <DataCell>{b.description}</DataCell>
-          <DataCell>{b.url}</DataCell>
-          <DataCell>{b.imageUrl}</DataCell>
-          <DataCell className="delete-row-cell">
+          <TableCell>{b.name}</TableCell>
+          <TableCell>{b.shortName}</TableCell>
+          <TableCell>{b.description}</TableCell>
+          <TableCell>{b.url}</TableCell>
+          <TableCell>{b.imageUrl}</TableCell>
+          <TableCell className="delete-row-cell">
             <DeleteButton
               onClick={() => {
                 setSelectedBranding(b);
@@ -68,14 +67,14 @@ const Brandings = () => {
               title=""
               thin
             />
-          </DataCell>
+          </TableCell>
         </TableRow>
       ))}
       {brandingList.length === 0 && (
         <TableRow className="row-no-brandings disabled">
-          <DataCell colSpan={3}>
+          <TableCell colSpan={3}>
             {formatMessage({ id: 'brandingsNoBrandingsFoundText' })}
-          </DataCell>
+          </TableCell>
         </TableRow>
       )}
     </>
@@ -83,12 +82,19 @@ const Brandings = () => {
 
   return (
     <div className="brandings">
-      <Heading1>{formatMessage({ id: 'brandingsHeaderText' })}</Heading1>
+      <Typography variant="h1">
+        {formatMessage({ id: 'brandingsHeaderText' })}
+      </Typography>
 
-      <SecondaryButton className="create" as={Link} to="/brandings/create">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        className="create"
+        component={Link}
+        to="/brandings/create"
+      >
+        <Add />
         {formatMessage({ id: 'editorCreateBrandingHeaderText' })}
-      </SecondaryButton>
+      </Button>
 
       <Loading
         text={formatMessage({ id: 'brandingsLoadingBrandingsText' })}
@@ -98,24 +104,24 @@ const Brandings = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <HeaderCell>
+                <TableCell>
                   {formatMessage({ id: 'brandingsNameTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({ id: 'brandingsShortNameTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({
                     id: 'brandingsDescriptionTableHeaderLabel',
                   })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({ id: 'brandingsUrlTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({ id: 'brandingsImageUrlTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>{''}</HeaderCell>
+                </TableCell>
+                <TableCell>{''}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -136,7 +142,8 @@ const Brandings = () => {
                 id: 'editorDeleteBrandingConfirmationDialogMessage',
               })}
               buttons={[
-                <SecondaryButton
+                <Button
+                  variant="outlined"
                   key="no"
                   onClick={() => {
                     setSelectedBranding(undefined);
@@ -144,8 +151,10 @@ const Brandings = () => {
                   }}
                 >
                   {formatMessage({ id: 'no' })}
-                </SecondaryButton>,
-                <SuccessButton
+                </Button>,
+                <Button
+                  variant="contained"
+                  color="success"
                   key="yes"
                   onClick={() => {
                     dispatch(deleteBrandingById(selectedBranding?.id, intl))
@@ -157,7 +166,7 @@ const Brandings = () => {
                   }}
                 >
                   {formatMessage({ id: 'yes' })}
-                </SuccessButton>,
+                </Button>,
               ]}
             />
           )}

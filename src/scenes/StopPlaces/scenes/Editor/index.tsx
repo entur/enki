@@ -1,15 +1,12 @@
-import { SmallAlertBox } from '@entur/alert';
-import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { TextArea, TextField } from '@entur/form';
-import { GridContainer, GridItem } from '@entur/grid';
-import { Paragraph } from '@entur/typography';
+import { Alert, Button, TextField, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { replaceElement, removeElementByIndex } from 'helpers/arrays';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import usePristine from 'hooks/usePristine';
 import { LeafletMouseEvent } from 'leaflet';
 import GeoJSON, {
@@ -83,14 +80,11 @@ const FlexibleStopPlaceEditor = () => {
   );
 
   const handleMapOnClick = (e: LeafletMouseEvent) => {
-    // Convert coordinate from map to geojson long-lat order
     const newCoordinate: Coordinate = [e.latlng.lng, e.latlng.lat];
-
     const newCoordinates = addCoordinate(
       polygonCoordinates[currentAreaIndex],
       newCoordinate,
     );
-
     changePolygon({
       type: GEOMETRY_TYPE.POLYGON,
       coordinates: newCoordinates,
@@ -180,13 +174,13 @@ const FlexibleStopPlaceEditor = () => {
           flexibleStopPlace?.id,
       );
 
-  const nameError = getErrorFeedback(
+  const nameError = getMuiErrorProps(
     errors.name ? formatMessage({ id: errors.name }) : '',
     !errors.name,
     namePristine,
   );
 
-  const stopPlaceTypeError = getErrorFeedback(
+  const stopPlaceTypeError = getMuiErrorProps(
     errors.flexibleStopPlaceType
       ? formatMessage({ id: errors.flexibleStopPlaceType })
       : '',
@@ -194,7 +188,7 @@ const FlexibleStopPlaceEditor = () => {
     stopPlaceTypePristine,
   );
 
-  const areaError = getErrorFeedback(
+  const areaError = getMuiErrorProps(
     errors.flexibleArea ? formatMessage({ id: errors.flexibleArea }) : '',
     !errors.flexibleArea,
     areasPristine,
@@ -210,35 +204,29 @@ const FlexibleStopPlaceEditor = () => {
       }
     >
       <div className="stop-place-editor">
-        <Paragraph>{formatMessage({ id: 'editorDescription' })}</Paragraph>
+        <Typography variant="body1">
+          {formatMessage({ id: 'editorDescription' })}
+        </Typography>
 
-        <Paragraph>
-          <GridContainer spacing="medium" rowSpacing="large">
-            {nameError.feedback && (
-              <GridItem small={12}>
-                <SmallAlertBox variant="error">
-                  {nameError.feedback}
-                </SmallAlertBox>
-              </GridItem>
-            )}
+        <Grid container spacing={2}>
+          {nameError.helperText && (
+            <Grid size={{ xs: 12 }}>
+              <Alert severity="error">{nameError.helperText}</Alert>
+            </Grid>
+          )}
 
-            {stopPlaceTypeError.feedback && (
-              <GridItem small={12}>
-                <SmallAlertBox variant="error">
-                  {stopPlaceTypeError.feedback}
-                </SmallAlertBox>
-              </GridItem>
-            )}
+          {stopPlaceTypeError.helperText && (
+            <Grid size={{ xs: 12 }}>
+              <Alert severity="error">{stopPlaceTypeError.helperText}</Alert>
+            </Grid>
+          )}
 
-            {areaError.feedback && (
-              <GridItem small={12}>
-                <SmallAlertBox variant="error">
-                  {areaError.feedback}
-                </SmallAlertBox>
-              </GridItem>
-            )}
-          </GridContainer>
-        </Paragraph>
+          {areaError.helperText && (
+            <Grid size={{ xs: 12 }}>
+              <Alert severity="error">{areaError.helperText}</Alert>
+            </Grid>
+          )}
+        </Grid>
         {flexibleStopPlace && !isLoading ? (
           <OverlayLoader
             className=""
@@ -254,8 +242,9 @@ const FlexibleStopPlaceEditor = () => {
                 <RequiredInputMarker />
 
                 <TextField
+                  variant="outlined"
                   label={formatMessage({ id: 'editorNameFormLabelText' })}
-                  {...getErrorFeedback(
+                  {...getMuiErrorProps(
                     errors.name ? formatMessage({ id: errors.name }) : '',
                     !errors.name,
                     namePristine,
@@ -269,7 +258,10 @@ const FlexibleStopPlaceEditor = () => {
                   }
                 />
 
-                <TextArea
+                <TextField
+                  variant="outlined"
+                  multiline
+                  rows={4}
                   label={formatMessage({
                     id: 'editorDescriptionFormLabelText',
                   })}
@@ -283,6 +275,7 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <TextField
+                  variant="outlined"
                   label={formatMessage({
                     id: 'editorPrivateCodeFormLabelText',
                   })}
@@ -324,7 +317,8 @@ const FlexibleStopPlaceEditor = () => {
                   />
                 ))}
 
-                <SecondaryButton
+                <Button
+                  variant="outlined"
                   onClick={() => {
                     setFlexibleStopPlace((current) => ({
                       ...current,
@@ -336,19 +330,25 @@ const FlexibleStopPlaceEditor = () => {
                   }}
                 >
                   {formatMessage({ id: 'stopPlaceAddAreaButtonLabel' })}
-                </SecondaryButton>
+                </Button>
 
                 <div className="buttons">
                   {params.id && (
-                    <NegativeButton
+                    <Button
+                      variant="contained"
+                      color="error"
                       onClick={() => setDeleteDialogOpen(true)}
                       disabled={isDeleteDisabled}
                     >
                       {formatMessage({ id: 'editorDeleteButtonText' })}
-                    </NegativeButton>
+                    </Button>
                   )}
 
-                  <SuccessButton onClick={handleOnSaveClick}>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={handleOnSaveClick}
+                  >
                     {params.id
                       ? formatMessage({ id: 'editorSaveButtonText' })
                       : formatMessage(
@@ -357,7 +357,7 @@ const FlexibleStopPlaceEditor = () => {
                           },
                           { details: formatMessage({ id: 'stopPlaceText' }) },
                         )}
-                  </SuccessButton>
+                  </Button>
                 </div>
               </div>
 
@@ -400,16 +400,25 @@ const FlexibleStopPlaceEditor = () => {
           title={formatMessage({ id: 'editorDeleteStopPlaceDialogTitle' })}
           message={formatMessage({ id: 'editorDeleteStopPlaceDialogMessage' })}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setDeleteDialogOpen(false)}
+            >
               {formatMessage({
                 id: 'editorDeleteStopPlaceDialogCancelButtonText',
               })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={handleDelete}>
+            </Button>,
+            <Button
+              variant="contained"
+              color="success"
+              key={1}
+              onClick={handleDelete}
+            >
               {formatMessage({
                 id: 'editorDeleteStopPlaceDialogConfirmButtonText',
               })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />

@@ -1,13 +1,13 @@
-import { Label } from '@entur/typography';
+import { Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import './styles.scss';
 
 const RequiredInputMarker = () => {
   const { formatMessage } = useIntl();
   return (
-    <Label className="required-input">
+    <Typography variant="caption" className="required-input">
       <i> {formatMessage({ id: 'requiredInputMarker' })} </i>
-    </Label>
+    </Typography>
   );
 };
 

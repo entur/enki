@@ -1,6 +1,5 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
-import { Heading1 } from '@entur/typography';
+import Add from '@mui/icons-material/Add';
+import { Button, Typography } from '@mui/material';
 import { deleteLine, loadFlexibleLines } from 'actions/flexibleLines';
 import ConfirmDialog from 'components/ConfirmDialog';
 import LinesTable from 'components/LinesTable';
@@ -37,17 +36,20 @@ export default () => {
 
   return (
     <div className="flexible-lines">
-      <Heading1>{formatMessage({ id: 'flexibleLinesHeader' })}</Heading1>
+      <Typography variant="h1">
+        {formatMessage({ id: 'flexibleLinesHeader' })}
+      </Typography>
 
       <section className="buttons">
-        <SecondaryButton
-          as={Link}
+        <Button
+          variant="outlined"
+          component={Link}
           to="/flexible-lines/create"
           className="new-flexible-line-button"
         >
-          <AddIcon />
+          <Add />
           {formatMessage({ id: 'linesCreateFlexibleLineIconButtonLabel' })}
-        </SecondaryButton>
+        </Button>
       </section>
 
       <LinesTable
@@ -71,7 +73,8 @@ export default () => {
             id: 'editorDeleteLineConfirmationDialogMessage',
           })}
           buttons={[
-            <SecondaryButton
+            <Button
+              variant="outlined"
               key="no"
               onClick={() => {
                 setSelectedLine(undefined);
@@ -79,8 +82,10 @@ export default () => {
               }}
             >
               {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton
+            </Button>,
+            <Button
+              variant="contained"
+              color="success"
               key="yes"
               onClick={() => {
                 dispatch(deleteLine(selectedLine, intl))
@@ -92,7 +97,7 @@ export default () => {
               }}
             >
               {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
+            </Button>,
           ]}
         />
       )}

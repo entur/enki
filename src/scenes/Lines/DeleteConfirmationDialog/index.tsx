@@ -1,4 +1,4 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { Button } from '@mui/material';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { useIntl } from 'react-intl';
 
@@ -22,12 +22,17 @@ export default (props: Props) => {
         id: 'editorDeleteLineConfirmationDialogMessage',
       })}
       buttons={[
-        <SecondaryButton key="no" onClick={onDismiss}>
+        <Button variant="outlined" key="no" onClick={onDismiss}>
           {formatMessage({ id: 'no' })}
-        </SecondaryButton>,
-        <SuccessButton key="yes" onClick={onConfirm}>
+        </Button>,
+        <Button
+          variant="contained"
+          color="success"
+          key="yes"
+          onClick={onConfirm}
+        >
           {formatMessage({ id: 'yes' })}
-        </SuccessButton>,
+        </Button>,
       ]}
     />
   );

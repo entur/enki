@@ -1,14 +1,13 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
+import Add from '@mui/icons-material/Add';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { Heading1 } from '@entur/typography';
+  Typography,
+} from '@mui/material';
 import { deleteNetworkById, loadNetworks } from 'actions/networks';
 import Loading from 'components/Loading';
 import { Network } from 'model/Network';
@@ -44,7 +43,7 @@ const Networks = () => {
     (id: string) => {
       navigate(`/networks/edit/${id}`);
     },
-    [history],
+    [navigate],
   );
 
   const RenderTableRows = ({
@@ -61,13 +60,13 @@ const Networks = () => {
           onClick={() => handleOnRowClick(n.id!)}
           title={n.description}
         >
-          <DataCell>{n.name}</DataCell>
-          <DataCell>{n.privateCode}</DataCell>
-          <DataCell>
+          <TableCell>{n.name}</TableCell>
+          <TableCell>{n.privateCode}</TableCell>
+          <TableCell>
             {organisationList.find((o) => o.id === n.authorityRef)?.name
               ?.value ?? '-'}
-          </DataCell>
-          <DataCell className="delete-row-cell">
+          </TableCell>
+          <TableCell className="delete-row-cell">
             <DeleteButton
               onClick={() => {
                 setSelectedNetwork(n);
@@ -76,14 +75,14 @@ const Networks = () => {
               title=""
               thin
             />
-          </DataCell>
+          </TableCell>
         </TableRow>
       ))}
       {networkList.length === 0 && (
         <TableRow className="row-no-networks disabled">
-          <DataCell colSpan={3}>
+          <TableCell colSpan={3}>
             {formatMessage({ id: 'networksNoNetworksFoundText' })}
-          </DataCell>
+          </TableCell>
         </TableRow>
       )}
     </>
@@ -91,12 +90,19 @@ const Networks = () => {
 
   return (
     <div className="networks">
-      <Heading1>{formatMessage({ id: 'networksHeaderText' })}</Heading1>
+      <Typography variant="h1">
+        {formatMessage({ id: 'networksHeaderText' })}
+      </Typography>
 
-      <SecondaryButton className="create" as={Link} to="/networks/create">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        className="create"
+        component={Link}
+        to="/networks/create"
+      >
+        <Add />
         {formatMessage({ id: 'editorCreateNetworkHeaderText' })}
-      </SecondaryButton>
+      </Button>
 
       <Loading
         text={formatMessage({ id: 'networksLoadingNetworksText' })}
@@ -106,16 +112,16 @@ const Networks = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <HeaderCell>
+                <TableCell>
                   {formatMessage({ id: 'networksNameTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({ id: 'networksPrivateCodeTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
+                </TableCell>
+                <TableCell>
                   {formatMessage({ id: 'networksAuthorityTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>{''}</HeaderCell>
+                </TableCell>
+                <TableCell>{''}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -139,7 +145,8 @@ const Networks = () => {
                 id: 'editorDeleteNetworkConfirmationDialogMessage',
               })}
               buttons={[
-                <SecondaryButton
+                <Button
+                  variant="outlined"
                   key="no"
                   onClick={() => {
                     setSelectedNetwork(undefined);
@@ -147,8 +154,10 @@ const Networks = () => {
                   }}
                 >
                   {formatMessage({ id: 'no' })}
-                </SecondaryButton>,
-                <SuccessButton
+                </Button>,
+                <Button
+                  variant="contained"
+                  color="success"
                   key="yes"
                   onClick={() => {
                     dispatch(deleteNetworkById(selectedNetwork?.id, intl))
@@ -160,7 +169,7 @@ const Networks = () => {
                   }}
                 >
                   {formatMessage({ id: 'yes' })}
-                </SuccessButton>,
+                </Button>,
               ]}
             />
           )}

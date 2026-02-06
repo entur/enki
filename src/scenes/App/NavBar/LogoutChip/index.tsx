@@ -1,5 +1,5 @@
-import { ActionChip } from '@entur/chip';
-import { BackArrowIcon } from '@entur/icons';
+import Chip from '@mui/material/Chip';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../../../auth/auth';
 import './styles.scss';
@@ -9,13 +9,13 @@ const LogoutChip = () => {
   const { formatMessage } = useIntl();
 
   return (
-    <ActionChip
+    <Chip
       onClick={() => auth.logout({ returnTo: window.location.origin })}
       className="logout"
-    >
-      <BackArrowIcon />
-      {formatMessage({ id: 'userMenuLogoutLinkText' })}
-    </ActionChip>
+      icon={<ArrowBack />}
+      label={formatMessage({ id: 'userMenuLogoutLinkText' })}
+      clickable
+    />
   );
 };
 

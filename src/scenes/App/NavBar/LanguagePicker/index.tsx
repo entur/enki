@@ -1,5 +1,7 @@
-import { FloatingButton } from '@entur/button';
-import { CheckIcon, DownArrowIcon, UpArrowIcon } from '@entur/icons';
+import Button from '@mui/material/Button';
+import Check from '@mui/icons-material/Check';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import { updateLocale } from 'i18n/intlSlice';
 import { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -24,7 +26,7 @@ const LanguagePicker = () => {
   const arrowIcon = useMemo(
     () => (
       <div className="language-picker__icon-container__arrow">
-        {toggled ? <UpArrowIcon /> : <DownArrowIcon />}
+        {toggled ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
       </div>
     ),
     [toggled],
@@ -35,7 +37,7 @@ const LanguagePicker = () => {
       if (locale === selectedLocale)
         return (
           <div className="language-picker__icon-container language-picker__icon-container__check">
-            <CheckIcon />
+            <Check />
           </div>
         );
     },
@@ -56,7 +58,7 @@ const LanguagePicker = () => {
       {toggled && (
         <div className="language-picker__dropdown">
           {(supportedLocales || Locale).map((locale: Locale) => (
-            <FloatingButton
+            <Button
               key={locale}
               className="language-picker__item"
               onClick={() => handleChangeLocale(locale)}
@@ -70,11 +72,11 @@ const LanguagePicker = () => {
                 })}
               </span>
               {checkIcon(locale)}
-            </FloatingButton>
+            </Button>
           ))}
         </div>
       )}
-      <FloatingButton
+      <Button
         onClick={() => setToggle(!toggled)}
         aria-label={formatMessage({ id: 'languagePickerAriaLabel' })}
         className="language-picker"
@@ -85,7 +87,7 @@ const LanguagePicker = () => {
           id: getLanguagePickerLocaleMessageKey(selectedLocale as Locale),
         })}
         {arrowIcon}
-      </FloatingButton>
+      </Button>
     </div>
   );
 };

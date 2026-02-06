@@ -1,7 +1,5 @@
-@import '../../../../../node_modules/@entur/tokens/dist/styles';
-
 .language-picker-wrapper {
-  margin-bottom: $space-small;
+  margin-bottom: 8px;
   .language-picker {
     cursor: pointer;
     display: flex;
@@ -47,15 +45,15 @@
     }
 
     &__item {
-      background: $colors-greys-grey40;
-      border-bottom: 1px solid $colors-greys-grey20;
+      background: #646464;
+      border-bottom: 1px solid #333333;
       border-radius: 0;
       justify-content: flex-start;
       min-height: 2.25rem;
       width: 8.25rem;
 
       &:first-child {
-        border-bottom: 1px solid $colors-greys-grey20;
+        border-bottom: 1px solid #333333;
         border-radius: 0;
         border-top-left-radius: 0.5rem;
         border-top-right-radius: 0.5rem;

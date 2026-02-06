@@ -1,10 +1,12 @@
-import { ClosedLockIcon } from '@entur/icons';
-import { Contrast } from '@entur/layout';
-import {
-  SideNavigation,
-  SideNavigationGroup,
-  SideNavigationItem,
-} from '@entur/menu';
+import LockOutlined from '@mui/icons-material/LockOutlined';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import NavigateConfirmBox from 'components/ConfirmNavigationDialog';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -51,16 +53,20 @@ const NavBarItem = ({
   const location = useLocation();
 
   return (
-    <SideNavigationItem
+    <ListItemButton
       onClick={handleOnClick}
-      active={isActive(location.pathname, path)}
-      as={Link}
+      selected={isActive(location.pathname, path)}
+      component={Link}
       to={path}
       className={className}
-      icon={icon}
     >
-      {text}
-    </SideNavigationItem>
+      {icon && (
+        <ListItemIcon sx={{ color: 'inherit', minWidth: 36 }}>
+          {icon}
+        </ListItemIcon>
+      )}
+      <ListItemText primary={text} />
+    </ListItemButton>
   );
 };
 
@@ -74,13 +80,14 @@ const NavBar = () => {
     showConfirm: false,
     path: '',
   });
+  const [flexibleOpen, setFlexibleOpen] = useState(true);
   const { extPath } = useConfig();
 
   const isAdmin = useAppSelector((state) => state.userContext.isAdmin);
 
   return (
-    <Contrast as="nav" className="navbar-wrapper">
-      <SideNavigation className="side-navigation">
+    <Box component="nav" className="navbar-wrapper">
+      <List className="side-navigation">
         <Link to={'/'}>
           <ComponentToggle
             feature={`${extPath}/CustomLogo`}
@@ -98,13 +105,16 @@ const NavBar = () => {
               setRedirect={setRedirect}
             />
 
-            <SideNavigationGroup
-              defaultOpen
-              title={formatMessage({
-                id: 'navBarFlexibleOffersSubMenuHeaderLabel',
-              })}
-            >
-              <SideNavigation>
+            <ListItemButton onClick={() => setFlexibleOpen(!flexibleOpen)}>
+              <ListItemText
+                primary={formatMessage({
+                  id: 'navBarFlexibleOffersSubMenuHeaderLabel',
+                })}
+              />
+              {flexibleOpen ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={flexibleOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
                 <NavBarItem
                   text={formatMessage({
                     id: 'navBarFlexibleLinesMenuItemLabel',
@@ -117,8 +127,8 @@ const NavBar = () => {
                   path="/stop-places"
                   setRedirect={setRedirect}
                 />
-              </SideNavigation>
-            </SideNavigationGroup>
+              </List>
+            </Collapse>
 
             <NavBarItem
               text={formatMessage({ id: 'navBarNetworksMenuItemLabel' })}
@@ -145,7 +155,7 @@ const NavBar = () => {
 
         {isAdmin && (
           <NavBarItem
-            icon={<ClosedLockIcon />}
+            icon={<LockOutlined />}
             text={formatMessage({ id: 'navBarProvidersMenuItemLabel' })}
             path="/providers"
             setRedirect={setRedirect}
@@ -156,7 +166,7 @@ const NavBar = () => {
           feature={`${extPath}/Navbar`}
           renderFallback={() => <></>}
         />
-      </SideNavigation>
+      </List>
 
       <div className="bottom-chips">
         <LanguagePicker />
@@ -173,7 +183,7 @@ const NavBar = () => {
           cancelText={formatMessage({ id: 'redirectNo' })}
         />
       )}
-    </Contrast>
+    </Box>
   );
 };
 

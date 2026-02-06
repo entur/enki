@@ -1,5 +1,3 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 .page {
   .back-button {
     button {
@@ -19,6 +17,6 @@
   }
 
   .page-content {
-    margin: $space-extra-large4 $space-extra-large9;
+    margin: 3rem 6rem;
   }
 }

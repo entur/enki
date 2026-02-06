@@ -32,16 +32,14 @@ describe('SelectProvider', () => {
       </Wrapper>,
     );
 
-    // Wait for the dropdown to be rendered with the provider data
+    // Wait for the autocomplete input to be rendered with the provider data
     await waitFor(() => {
       expect(container.getByRole('combobox')).toBeInTheDocument();
     });
 
-    // Open the dropdown
-    const toggleButton = container.getByRole('button', {
-      name: /Åpne liste med valg/i,
-    });
-    await user.click(toggleButton);
+    // Open the dropdown by clicking the input
+    const input = container.getByRole('combobox');
+    await user.click(input);
 
     // Wait for the dropdown list to appear
     await waitFor(async () => {
@@ -52,11 +50,9 @@ describe('SelectProvider', () => {
     // Click on the provider option
     await user.click(await container.findByText('Test provider'));
 
-    // Check if the selected item is displayed in the dropdown
+    // Check if the selected item is displayed in the input
     await waitFor(() => {
-      expect(container.getByRole('combobox')).toHaveTextContent(
-        'Test provider',
-      );
+      expect(container.getByRole('combobox')).toHaveValue('Test provider');
     });
   });
 });

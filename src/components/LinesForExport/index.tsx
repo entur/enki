@@ -1,21 +1,20 @@
 import { useQuery } from '@apollo/client/react';
-import { Checkbox } from '@entur/form';
 import {
-  DataCell,
-  HeaderCell,
+  Checkbox,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableRow,
-  useSortableData,
-} from '@entur/table';
-import { SmallText, StrongText } from '@entur/typography';
+  TableSortLabel,
+  Typography,
+} from '@mui/material';
 import { GET_LINES_FOR_EXPORT } from 'api/uttu/queries';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import { ExportLineAssociation } from 'model/Export';
 import FlexibleLine from 'model/FlexibleLine';
 import Line from 'model/Line';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { getCurrentDate, CalendarDate } from '../../utils/dates';
 import { getLocale } from 'i18n/getLocale';
@@ -74,8 +73,13 @@ const mapStatusToTextWithUndefined = (status: Status): string => {
   return mapStatusToText(status);
 };
 
+type SortKey = 'name' | 'status' | 'to';
+type SortDirection = 'asc' | 'desc';
+
 export default ({ onChange }: Props) => {
   const [lines, setLines] = useState<ExportableLine[]>([]);
+  const [sortKey, setSortKey] = useState<SortKey | null>(null);
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const { loading, data, error, refetch } =
     useQuery<LinesData>(GET_LINES_FOR_EXPORT);
 
@@ -103,8 +107,37 @@ export default ({ onChange }: Props) => {
     // eslint-disable-next-line
   }, [lines]);
 
-  const { sortedData, getSortableHeaderProps, getSortableTableProps } =
-    useSortableData<ExportableLine>(lines);
+  const sortedData = useMemo(() => {
+    if (!sortKey) return lines;
+    const key = sortKey;
+    const sorted = [...lines].sort((a, b) => {
+      const aVal = a[key];
+      const bVal = b[key];
+      if (aVal == null && bVal == null) return 0;
+      if (aVal == null) return 1;
+      if (bVal == null) return -1;
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        return sortDirection === 'asc'
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+      if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+      if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+    return sorted;
+  }, [lines, sortKey, sortDirection]);
+
+  const handleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortKey(key);
+      setSortDirection('asc');
+    }
+  };
+
+  const isSorted = (key: SortKey) => sortKey === key;
 
   const selectableLines = lines.filter((line) => line.status !== 'negative');
 
@@ -144,46 +177,50 @@ export default ({ onChange }: Props) => {
   };
 
   return (
-    <Table spacing="small" {...getSortableTableProps}>
+    <Table size="small">
       <TableHead>
         <TableRow>
-          <HeaderCell padding="checkbox">
+          <TableCell padding="checkbox">
             <Checkbox
               name="all"
-              checked={isSomeSelected ? 'indeterminate' : isEverythingSelected}
+              checked={isEverythingSelected}
+              indeterminate={isSomeSelected}
               onChange={handleAllOrNothingChange}
             />
-          </HeaderCell>
-          <HeaderCell
-            {
-              // @ts-ignore
-              ...getSortableHeaderProps({ name: 'name' })
-            }
-          >
-            {formatMessage({
-              id: 'exportCreatorLinesForExportTableLineHeader',
-            })}
-          </HeaderCell>
-          <HeaderCell
-            {
-              // @ts-ignore
-              ...getSortableHeaderProps({ name: 'status' })
-            }
-          >
-            {formatMessage({
-              id: 'exportCreatorLinesForExportTableStatusHeader',
-            })}
-          </HeaderCell>
-          <HeaderCell
-            {
-              // @ts-ignore
-              ...getSortableHeaderProps({ name: 'to' })
-            }
-          >
-            {formatMessage({
-              id: 'exportCreatorLinesForExportTableAvailabilityHeader',
-            })}
-          </HeaderCell>
+          </TableCell>
+          <TableCell>
+            <TableSortLabel
+              active={isSorted('name')}
+              direction={isSorted('name') ? sortDirection : 'asc'}
+              onClick={() => handleSort('name')}
+            >
+              {formatMessage({
+                id: 'exportCreatorLinesForExportTableLineHeader',
+              })}
+            </TableSortLabel>
+          </TableCell>
+          <TableCell>
+            <TableSortLabel
+              active={isSorted('status')}
+              direction={isSorted('status') ? sortDirection : 'asc'}
+              onClick={() => handleSort('status')}
+            >
+              {formatMessage({
+                id: 'exportCreatorLinesForExportTableStatusHeader',
+              })}
+            </TableSortLabel>
+          </TableCell>
+          <TableCell>
+            <TableSortLabel
+              active={isSorted('to')}
+              direction={isSorted('to') ? sortDirection : 'asc'}
+              onClick={() => handleSort('to')}
+            >
+              {formatMessage({
+                id: 'exportCreatorLinesForExportTableAvailabilityHeader',
+              })}
+            </TableSortLabel>
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody style={{ verticalAlign: 'top' }}>
@@ -197,35 +234,38 @@ export default ({ onChange }: Props) => {
                 color: line.status === 'negative' ? '#888' : 'inherit',
               }}
             >
-              <DataCell padding="checkbox" style={{ padding: '.5rem 1rem' }}>
+              <TableCell padding="checkbox" style={{ padding: '.5rem 1rem' }}>
                 <Checkbox
                   name={line.id}
                   checked={line.selected}
                   disabled={line.status === 'negative'}
                   onChange={() => handleRegularChange(line.id)}
                 />
-              </DataCell>
-              <DataCell>
-                <StrongText
+              </TableCell>
+              <TableCell>
+                <Typography
+                  variant="body2"
+                  component="strong"
+                  fontWeight="bold"
                   style={{
                     color: line.status === 'negative' ? '#888' : 'inherit',
                   }}
                 >
                   {line.name}
-                </StrongText>
+                </Typography>
                 <br />
-                <SmallText
+                <Typography
+                  variant="caption"
+                  component="span"
                   style={{
                     color: line.status === 'negative' ? '#888' : 'inherit',
                   }}
                 >
                   {line.id}
-                </SmallText>
-              </DataCell>
-              <DataCell status={line.status}>
-                {mapStatusToTextWithUndefined(line.status)}
-              </DataCell>
-              <DataCell>{`${new DateFormatter(getLocale().toString()).format(line.from.toDate(getLocalTimeZone()))} - ${new DateFormatter(getLocale().toString()).format(line.to.toDate(getLocalTimeZone()))}`}</DataCell>
+                </Typography>
+              </TableCell>
+              <TableCell>{mapStatusToTextWithUndefined(line.status)}</TableCell>
+              <TableCell>{`${new DateFormatter(getLocale().toString()).format(line.from.toDate(getLocalTimeZone()))} - ${new DateFormatter(getLocale().toString()).format(line.to.toDate(getLocalTimeZone()))}`}</TableCell>
             </TableRow>
           ))}
       </TableBody>

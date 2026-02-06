@@ -1,4 +1,4 @@
-import { UserIcon } from '@entur/icons';
+import PersonOutline from '@mui/icons-material/PersonOutline';
 import './styles.scss';
 import { useAppSelector } from '../../../../../store/hooks';
 
@@ -10,7 +10,7 @@ const UserMenu = () => {
   return (
     <div className="user-menu">
       <div className="user-icon">
-        <UserIcon />
+        <PersonOutline />
       </div>
       <div className="name">{`${preferredName || 'Unknown'}`}</div>
     </div>
