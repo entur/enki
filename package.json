@@ -122,5 +122,10 @@
         "react": "19.2.4"
       }
     }
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
