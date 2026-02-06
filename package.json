@@ -20,24 +20,7 @@
     "@azure/msal-react": "3.0.25",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@entur/a11y": "0.2.106",
-    "@entur/alert": "0.18.5",
-    "@entur/button": "4.0.2",
-    "@entur/chip": "0.10.5",
-    "@entur/datepicker": "11.5.5",
-    "@entur/dropdown": "8.0.7",
-    "@entur/expand": "3.7.3",
-    "@entur/form": "9.2.5",
-    "@entur/grid": "0.3.72",
-    "@entur/icons": "8.4.2",
-    "@entur/layout": "3.4.0",
-    "@entur/menu": "6.1.0",
-    "@entur/modal": "1.8.5",
     "@entur/react-component-toggle": "1.0.0",
-    "@entur/table": "4.10.5",
-    "@entur/tokens": "3.22.1",
-    "@entur/tooltip": "5.3.5",
-    "@entur/typography": "2.1.3",
     "@fintraffic/fds-coreui-css": "0.1.3",
     "@internationalized/date": "3.11.0",
     "@lit-labs/react": "2.1.3",
@@ -91,9 +74,7 @@
     "@types/react": "19.2.13",
     "@types/react-dom": "19.2.3",
     "@types/react-helmet": "6.1.11",
-    "@types/react-intl-redux": "0.1.19",
     "@types/react-leaflet": "3.0.0",
-    "@types/react-modal": "3.16.3",
     "@types/supercluster": "7.1.3",
     "@types/uuid": "11.0.0",
     "@vitejs/plugin-react": "5.1.3",
@@ -136,24 +117,6 @@
     ]
   },
   "overrides": {
-    "@reach/dialog": {
-      "peerDependencies": {
-        "react": "19.2.4",
-        "react-dom": "19.2.4"
-      }
-    },
-    "@reach/portal": {
-      "peerDependencies": {
-        "react": "19.2.4",
-        "react-dom": "19.2.4"
-      }
-    },
-    "@reach/utils": {
-      "peerDependencies": {
-        "react": "19.2.4",
-        "react-dom": "19.2.4"
-      }
-    },
     "@azure/msal-react": {
       "peerDependencies": {
         "react": "19.2.4"

@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-// Entur brand colors from @entur/tokens
+// Entur brand colors
 const enturColors = {
   brandBlue: '#181c56',
   brandLavender: '#aeb7e2',
