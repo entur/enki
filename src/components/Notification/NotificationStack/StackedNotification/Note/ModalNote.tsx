@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -29,9 +30,15 @@ const ModalNote = (props: Props) => {
     <Dialog open={isActive} onClose={handleDismiss} maxWidth="xs" fullWidth>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <div className="notification-modal">
-          <div className="notification-modal-message">{message}</div>
-        </div>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}
+        >
+          <Box sx={{ pb: '2rem' }}>{message}</Box>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button variant="contained" onClick={handleDismiss}>

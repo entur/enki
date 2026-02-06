@@ -7,8 +7,6 @@ import {
 } from '@mui/material';
 import React, { ReactElement } from 'react';
 
-import './styles.scss';
-
 type Props = {
   isOpen: boolean;
   title: string;
@@ -37,7 +35,21 @@ const ConfirmDialog = ({
       <DialogContent>
         <Typography variant="body1">{message}</Typography>
       </DialogContent>
-      <DialogActions className="confirm-dialog-buttons">
+      <DialogActions
+        sx={{
+          display: 'flex',
+          mt: '2rem',
+          maxWidth: '100%',
+          justifyContent: 'space-between',
+          '& button': {
+            width: '100%',
+            maxWidth: '20rem',
+          },
+          '& > :first-of-type': {
+            mr: '2rem',
+          },
+        }}
+      >
         {buttons}
       </DialogActions>
     </Dialog>

@@ -1,9 +1,7 @@
-import cx from 'classnames';
+import { Box } from '@mui/material';
 import { ReactElement } from 'react';
 
 import LoadingIcon from '../icons/Loading';
-
-import './styles.scss';
 
 type Props = {
   isLoading?: boolean;
@@ -24,20 +22,56 @@ const Loading = ({
     return typeof children === 'function' ? children() : children;
   }
 
-  const classNames = cx(
-    'loader',
-    className,
-    { visible: isLoading },
-    { fullscreen: isFullScreen },
-  );
+  if (isFullScreen) {
+    return (
+      <Box
+        className={className}
+        sx={{
+          display: 'block',
+          position: 'fixed',
+          width: '100%',
+          height: '100%',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 2,
+          cursor: 'pointer',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'inline-block',
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            zIndex: 3,
+          }}
+        >
+          <LoadingIcon />
+        </Box>
+        <Box sx={{ mt: '5px', fontSize: '17px', fontWeight: 500 }}>{text}</Box>
+      </Box>
+    );
+  }
 
   return (
-    <div className={classNames}>
-      <div className="spinner">
+    <Box
+      className={className}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: '100px',
+        textAlign: 'center',
+        color: '#181c56',
+      }}
+    >
+      <Box>
         <LoadingIcon />
-      </div>
-      <div className="text">{text}</div>
-    </div>
+      </Box>
+      <Box sx={{ mt: '5px', fontSize: '17px', fontWeight: 500 }}>{text}</Box>
+    </Box>
   );
 };
 
