@@ -1,5 +1,3 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 .stop-point-editor-container {
   display: flex;
 }
@@ -22,12 +20,12 @@
 
 .stop-point-editor {
   .stop-point {
-    border-bottom: 2px solid $colors-greys-grey20;
+    border-bottom: 2px solid #d9d9d9;
 
     .stop-point-element {
       display: flex;
       justify-content: space-between;
-      margin-top: $space-medium;
+      margin-top: 1.5rem;
 
       .stop-point-key-info {
         min-width: fit-content;
@@ -38,9 +36,9 @@
           flex-direction: column;
           justify-content: center;
           // To center better:
-          margin-bottom: $space-small;
+          margin-bottom: 0.75rem;
 
-          .eds-paragraph {
+          .MuiTypography-body1 {
             margin: 0 2rem 0 0.4rem;
           }
 
@@ -74,7 +72,7 @@
         margin-left: 1rem;
         margin-right: 1rem;
 
-        .eds-input-group + .eds-input-group {
+        .MuiFormControl-root + .MuiFormControl-root {
           margin-top: 0;
         }
 

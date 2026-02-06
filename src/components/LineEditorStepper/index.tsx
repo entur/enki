@@ -1,6 +1,4 @@
-import { SmallAlertBox } from '@entur/alert';
-import { PrimaryButton } from '@entur/button';
-import { Stepper } from '@entur/menu';
+import { Alert, Button, Stepper, Step, StepButton } from '@mui/material';
 import ConfirmDialog from 'components/ConfirmDialog';
 import ConfirmNavigationDialog from 'components/ConfirmNavigationDialog';
 import OverlayLoader from 'components/OverlayLoader';
@@ -83,12 +81,15 @@ export default ({
 
   return (
     <>
-      <Stepper
-        interactive
-        steps={steps}
-        activeIndex={activeStepperIndex}
-        onStepClick={(index) => onStepClicked(index)}
-      />
+      <Stepper activeStep={activeStepperIndex} nonLinear>
+        {steps.map((label, index) => (
+          <Step key={label}>
+            <StepButton onClick={() => onStepClicked(index)}>
+              {label}
+            </StepButton>
+          </Step>
+        ))}
+      </Stepper>
       <div className="line-editor">
         <OverlayLoader
           className=""
@@ -102,14 +103,14 @@ export default ({
           <div className="editor-pages">{children(activeStepperIndex)}</div>
           <>
             {otherStepsHasError && spoilPristine && isEdit && (
-              <SmallAlertBox
+              <Alert
                 className="step-errors"
-                variant="error"
-                width="fit-content"
+                severity="error"
+                sx={{ width: 'fit-content' }}
               >
                 {formatMessage({ id: 'fixErrorsInTheFollowingSteps' })}
                 {invalidSteps.join(', ')}
-              </SmallAlertBox>
+              </Alert>
             )}
           </>
           <NavigationButtons
@@ -146,9 +147,9 @@ export default ({
           message={formatMessage({ id: 'networkAuthorityMissingDetails' })}
           onDismiss={() => navigate('/')}
           buttons={[
-            <PrimaryButton key="0" onClick={() => navigate('/')}>
+            <Button variant="contained" key="0" onClick={() => navigate('/')}>
               {formatMessage({ id: 'homePage' })}
-            </PrimaryButton>,
+            </Button>,
           ]}
         />
       )}

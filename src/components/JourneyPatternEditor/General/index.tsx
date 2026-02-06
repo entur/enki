@@ -1,5 +1,5 @@
-import { TextField } from '@entur/form';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { TextField, Tooltip } from '@mui/material';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import JourneyPattern from 'model/JourneyPattern';
@@ -22,7 +22,7 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
     <div className="journey-pattern-inputs">
       <TextField
         label={formatMessage({ id: 'generalNameLabel' })}
-        {...getErrorFeedback(
+        {...getMuiErrorProps(
           formatMessage({ id: 'generalValidationName' }),
           !isBlank(journeyPattern.name),
           namePristine,
@@ -31,6 +31,7 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           onFieldChange({ ...journeyPattern, name: e.target.value })
         }
+        variant="outlined"
       />
 
       <TextField
@@ -42,19 +43,22 @@ const General = ({ journeyPattern, onFieldChange, spoilPristine }: Props) => {
             description: e.target.value || null,
           })
         }
+        variant="outlined"
       />
 
-      <TextField
-        label={formatMessage({ id: 'generalPrivateCodeLabel' })}
-        labelTooltip={formatMessage({ id: 'generalPrivateCodeLabelTooltip' })}
-        value={journeyPattern.privateCode || ''}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          onFieldChange({
-            ...journeyPattern,
-            privateCode: e.target.value || null,
-          })
-        }
-      />
+      <Tooltip title={formatMessage({ id: 'generalPrivateCodeLabelTooltip' })}>
+        <TextField
+          label={formatMessage({ id: 'generalPrivateCodeLabel' })}
+          value={journeyPattern.privateCode || ''}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onFieldChange({
+              ...journeyPattern,
+              privateCode: e.target.value || null,
+            })
+          }
+          variant="outlined"
+        />
+      </Tooltip>
     </div>
   );
 };

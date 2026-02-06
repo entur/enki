@@ -1,14 +1,18 @@
 import { useQuery } from '@apollo/client/react';
-import { SecondaryButton } from '@entur/button';
-import { MultiSelect } from '@entur/dropdown';
+import { Autocomplete, Button, Checkbox, TextField } from '@mui/material';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
 import DayType from 'model/DayType';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { DayTypesModal } from './DayTypesModal';
 
 type DayTypesData = {
   dayTypes: DayType[];
+};
+
+type DayTypeOption = {
+  label: string;
+  value: string;
 };
 
 export const DayTypesEditor = ({
@@ -35,48 +39,69 @@ export const DayTypesEditor = ({
     [refetch],
   );
 
+  const options: DayTypeOption[] = useMemo(
+    () =>
+      allDayTypesData?.dayTypes.map((dt: DayType) => ({
+        label: `${dt.name || dt.id!}`,
+        value: `${dt.id!}`,
+      })) || [],
+    [allDayTypesData],
+  );
+
+  const selectedValues: DayTypeOption[] = useMemo(
+    () =>
+      dayTypes?.map((dt) => ({
+        label: dt.name || dt.id!,
+        value: dt.id!,
+      })) || [],
+    [dayTypes],
+  );
+
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'end' }}>
-        <MultiSelect
+        <Autocomplete
+          multiple
           disabled={loading}
-          clearable
-          style={{ minWidth: '20rem' }}
-          label={formatMessage({ id: 'dayTypesEditorSelectLabel' })}
-          items={() =>
-            allDayTypesData?.dayTypes.map((dt: DayType) => ({
-              label: `${dt.name || dt.id!}`,
-              value: `${dt.id!}`,
-            })) || []
-          }
-          selectedItems={
-            dayTypes?.map((dt) => ({
-              label: dt.name || dt.id!,
-              value: dt.id!,
-            })) || []
-          }
-          labelSelectAll={formatMessage({ id: 'selectAll' })}
-          labelClearAllItems={formatMessage({ id: 'clearAll' })}
-          noMatchesText={formatMessage({
-            id: 'dropdownNoMatchesText',
-          })}
-          onChange={(items: any) => {
-            const selectedIds = items?.map((item: any) => item.value);
+          sx={{ minWidth: '20rem' }}
+          value={selectedValues}
+          onChange={(_event, newValue: DayTypeOption[]) => {
+            const selectedIds = newValue.map((item) => item.value);
             onChange(
               allDayTypesData?.dayTypes.filter((dt) =>
-                selectedIds?.includes(dt.id!),
+                selectedIds.includes(dt.id!),
               ) || [],
             );
           }}
+          options={options}
+          getOptionLabel={(option) => option.label}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          noOptionsText={formatMessage({
+            id: 'dropdownNoMatchesText',
+          })}
+          disableCloseOnSelect
+          renderOption={(props, option, { selected }) => (
+            <li {...props}>
+              <Checkbox checked={selected} sx={{ mr: 1 }} />
+              {option.label}
+            </li>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={formatMessage({ id: 'dayTypesEditorSelectLabel' })}
+            />
+          )}
         />
 
         <div style={{ marginLeft: '1rem' }}>
-          <SecondaryButton
+          <Button
+            variant="outlined"
             onClick={() => onOpenDayTypeModal(true)}
             disabled={loading}
           >
             {formatMessage({ id: 'dayTypesEditButton' })}
-          </SecondaryButton>
+          </Button>
         </div>
       </div>
       <DayTypesModal

@@ -1,10 +1,15 @@
 import { useMutation } from '@apollo/client/react';
-import { SmallAlertBox } from '@entur/alert';
-import { ButtonGroup, TertiaryButton } from '@entur/button';
-import { TextField } from '@entur/form';
-import { DeleteIcon, QuestionIcon, SaveIcon } from '@entur/icons';
-import { Tooltip } from '@entur/tooltip';
-import { Heading4 } from '@entur/typography';
+import {
+  Alert,
+  Button,
+  ButtonGroup,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import Save from '@mui/icons-material/Save';
+import Delete from '@mui/icons-material/Delete';
+import HelpOutline from '@mui/icons-material/HelpOutline';
 import { DELETE_DAY_TYPE, MUTATE_DAY_TYPE } from 'api/uttu/mutations';
 import WeekdayPicker from 'components/WeekdayPicker';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -49,21 +54,27 @@ export const DayTypeEditor = ({
 
   return (
     <div style={{ padding: '1.5rem' }}>
-      <TextField
-        label={formatMessage({ id: 'dayTypeEditorNameFieldLabel' })}
-        labelTooltip={formatMessage({
+      <Tooltip
+        title={formatMessage({
           id: 'dayTypeEditorNameFieldLabelTooltip',
         })}
-        className="form-section"
-        value={mutableDayType.name || ''}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setMutableDayType({
-            ...mutableDayType,
-            name: e.target.value,
-          })
-        }
-      />
-      <Heading4>{formatMessage({ id: 'dayTypeEditorWeekdays' })}</Heading4>
+        placement="top"
+      >
+        <TextField
+          label={formatMessage({ id: 'dayTypeEditorNameFieldLabel' })}
+          className="form-section"
+          value={mutableDayType.name || ''}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setMutableDayType({
+              ...mutableDayType,
+              name: e.target.value,
+            })
+          }
+        />
+      </Tooltip>
+      <Typography variant="h4">
+        {formatMessage({ id: 'dayTypeEditorWeekdays' })}
+      </Typography>
       <WeekdayPicker
         days={mutableDayType.daysOfWeek ?? []}
         onChange={(daysOfWeek) => {
@@ -74,17 +85,17 @@ export const DayTypeEditor = ({
         }}
         spoilPristine={false}
       />
-      <Heading4>
+      <Typography variant="h4">
         {formatMessage({ id: 'dayTypeEditorDateAvailability' })}
         <Tooltip
-          content={formatMessage({ id: 'dayTypeEditorDateTooltip' })}
+          title={formatMessage({ id: 'dayTypeEditorDateTooltip' })}
           placement="right"
         >
           <span className="question-icon">
-            <QuestionIcon />
+            <HelpOutline />
           </span>
         </Tooltip>
-      </Heading4>
+      </Typography>
       <ButtonGroup>
         <DayTypeAssignmentsEditor
           dayTypeAssignments={
@@ -100,31 +111,33 @@ export const DayTypeEditor = ({
           }}
         />
 
-        <TertiaryButton
+        <Button
+          variant="text"
           disabled={!dayTypeIsValid}
           onClick={() => {
             mutateDayType({
               variables: { input: dayTypeToPayload(mutableDayType) },
             });
           }}
+          startIcon={<Save />}
         >
-          <SaveIcon /> Save
-        </TertiaryButton>
+          Save
+        </Button>
         {dayType.id && (
-          <TertiaryButton
+          <Button
+            variant="text"
             disabled={!canDelete}
             onClick={() => {
               deleteDayType({ variables: { id: dayType.id } });
             }}
+            startIcon={<Delete />}
           >
-            <DeleteIcon /> Delete
-          </TertiaryButton>
+            Delete
+          </Button>
         )}
       </ButtonGroup>
       {dayTypesFeedback?.feedback && (
-        <SmallAlertBox variant="error">
-          {dayTypesFeedback.feedback}
-        </SmallAlertBox>
+        <Alert severity="error">{dayTypesFeedback.feedback}</Alert>
       )}
     </div>
   );

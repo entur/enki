@@ -1,8 +1,13 @@
-import { SmallAlertBox } from '@entur/alert';
-import { Button, ButtonGroup } from '@entur/button';
-import { Contrast } from '@entur/layout';
-import { Modal } from '@entur/modal';
-import { Heading3, Heading4, Paragraph } from '@entur/typography';
+import {
+  Alert,
+  Box,
+  Button,
+  ButtonGroup,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from '@mui/material';
 import classNames from 'classnames';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateBookingArrangement } from 'validation';
@@ -75,73 +80,79 @@ const BookingArrangementEditor = ({
         className={classNames('booking-info', { 'booking-info-trim': trim })}
       >
         {trim && (
-          <Heading4>{formatMessage({ id: 'bookingInfoHeader' })}</Heading4>
+          <Typography variant="h4">
+            {formatMessage({ id: 'bookingInfoHeader' })}
+          </Typography>
         )}
         {!trim && (
           <>
-            <Heading3>{formatMessage({ id: 'bookingInfoHeader' })}</Heading3>
-            <Paragraph>
+            <Typography variant="h3">
+              {formatMessage({ id: 'bookingInfoHeader' })}
+            </Typography>
+            <Typography variant="body1">
               {formatMessage({ id: 'bookingInfoHelpText' })}
-            </Paragraph>
+            </Typography>
           </>
         )}
         {bookingArrangement ? (
           <ButtonGroup className="booking-info-buttons">
-            <Button variant="secondary" onClick={() => setshowModal(true)}>
+            <Button variant="outlined" onClick={() => setshowModal(true)}>
               {formatMessage({ id: 'bookingInfoShowEditButtonText' })}
             </Button>
-            <Button variant="negative" onClick={() => onRemove()}>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => onRemove()}
+            >
               {formatMessage({ id: 'bookingInfoRemoveButtonText' })}
             </Button>
           </ButtonGroup>
         ) : (
           <ButtonGroup className="booking-info-buttons">
-            <Button variant="secondary" onClick={() => setshowModal(true)}>
+            <Button variant="outlined" onClick={() => setshowModal(true)}>
               {formatMessage({ id: 'bookingInfoAddButtonText' })}
             </Button>
           </ButtonGroup>
         )}
       </section>
 
-      <Modal
-        title={formatMessage({ id: 'bookingInfoHeader' })}
-        size="large"
-        open={showModal}
-        onDismiss={cancel}
-      >
-        <Editor
-          onChange={(ba) =>
-            setBookingArrangementDraft({
-              ...ba,
-            })
-          }
-          bookingArrangement={bookingArrangementDraft}
-          spoilPristine={spoilPristine}
-          bookingInfoAttachment={bookingInfoAttachment}
-        />
+      <Dialog open={showModal} onClose={cancel} maxWidth="lg" fullWidth>
+        <DialogTitle>{formatMessage({ id: 'bookingInfoHeader' })}</DialogTitle>
+        <DialogContent>
+          <Editor
+            onChange={(ba) =>
+              setBookingArrangementDraft({
+                ...ba,
+              })
+            }
+            bookingArrangement={bookingArrangementDraft}
+            spoilPristine={spoilPristine}
+            bookingInfoAttachment={bookingInfoAttachment}
+          />
 
-        {bookingArrangementFeedback?.feedback && (
+          {bookingArrangementFeedback?.feedback && (
+            <div className="booking-modal-buttons">
+              <Alert severity="error">
+                {bookingArrangementFeedback.feedback}
+              </Alert>
+            </div>
+          )}
           <div className="booking-modal-buttons">
-            <SmallAlertBox variant="error">
-              {bookingArrangementFeedback.feedback}
-            </SmallAlertBox>
+            <ButtonGroup>
+              <Button
+                onClick={saveChanges}
+                variant="contained"
+                disabled={!!bookingArrangementFeedback?.feedback}
+              >
+                {formatMessage({ id: 'bookingInfoSaveButtonText' })}
+              </Button>
+              <Button onClick={cancel} variant="contained" color="error">
+                {formatMessage({ id: 'bookingInfoCancelButtonText' })}
+              </Button>
+            </ButtonGroup>
           </div>
-        )}
-        <div className="booking-modal-buttons">
-          <ButtonGroup>
-            <Button
-              onClick={saveChanges}
-              variant="primary"
-              disabled={!!bookingArrangementFeedback?.feedback}
-            >
-              {formatMessage({ id: 'bookingInfoSaveButtonText' })}
-            </Button>
-            <Button onClick={cancel} variant="negative">
-              {formatMessage({ id: 'bookingInfoCancelButtonText' })}
-            </Button>
-          </ButtonGroup>
-        </div>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
@@ -152,9 +163,9 @@ const withContrast =
     trim ? (
       <Component trim={trim} {...(rest as Props)} />
     ) : (
-      <Contrast>
+      <Box sx={{ bgcolor: 'grey.100', p: 2, borderRadius: 1 }}>
         <Component trim={trim} {...(rest as Props)} />
-      </Contrast>
+      </Box>
     );
 
 export default withContrast(BookingArrangementEditor);

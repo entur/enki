@@ -1,4 +1,4 @@
-import { Heading4, Paragraph } from '@entur/typography';
+import { Typography } from '@mui/material';
 import { changeElementAtIndex } from 'helpers/arrays';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import { useIntl } from 'react-intl';
@@ -16,12 +16,12 @@ export const MixedFlexiblePassingTimesEditor = ({
   const uniqueKeys = useUniqueKeys(passingTimes);
   return (
     <>
-      <Heading4>
+      <Typography variant="h4">
         {formatMessage({ id: 'serviceJourneyMixedFlexiblePassingTimes' })}
-      </Heading4>
-      <Paragraph>
+      </Typography>
+      <Typography variant="body1">
         {formatMessage({ id: 'passingTimesInfoMixedFlexible' })}
-      </Paragraph>
+      </Typography>
       <PassingTimesError
         passingTimes={passingTimes}
         spoilPristine={spoilPristine}

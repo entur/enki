@@ -1,9 +1,15 @@
 import JourneyPattern from '../../model/JourneyPattern';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { FeedbackText, TextField } from '@entur/form';
-import { Button, ButtonGroup } from '@entur/button';
-import { Modal } from '@entur/modal';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { JourneyPatternNameValidationError } from '../JourneyPatterns';
 
 type CopyDialogProps = {
@@ -39,47 +45,55 @@ const CopyDialog = ({
   }, [nameTemplate]);
 
   return (
-    <Modal
+    <Dialog
       open={open}
-      size="medium"
-      title={formatMessage({ id: 'copyJourneyPatternDialogTitle' })}
-      onDismiss={onDismiss}
+      onClose={onDismiss}
+      maxWidth="sm"
+      fullWidth
       className="copy-dialog"
     >
-      <TextField
-        label={formatMessage({
-          id: 'copyJourneyPatternDialogNameTemplateLabel',
-        })}
-        className="copy-dialog-wide-element"
-        value={nameTemplate}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setNameTemplate(e.target.value)
-        }
-      />
-      {validationError.duplicateName && (
-        <FeedbackText variant="error">
-          {validationError.duplicateName}
-        </FeedbackText>
-      )}
-      {validationError.emptyName && (
-        <FeedbackText variant="error">{validationError.emptyName}</FeedbackText>
-      )}
-
-      <div className="copy-dialog-section">
-        <ButtonGroup>
-          <Button variant="negative" onClick={() => onDismiss()}>
-            {formatMessage({ id: 'copyJourneyPatternDialogCancelButtonText' })}
-          </Button>
-          <Button
-            variant="success"
-            onClick={() => save()}
-            disabled={Object.keys(validationError).length > 0}
-          >
-            {formatMessage({ id: 'copyJourneyPatternDialogSaveButtonText' })}
-          </Button>
-        </ButtonGroup>
-      </div>
-    </Modal>
+      <DialogTitle>
+        {formatMessage({ id: 'copyJourneyPatternDialogTitle' })}
+      </DialogTitle>
+      <DialogContent>
+        <TextField
+          label={formatMessage({
+            id: 'copyJourneyPatternDialogNameTemplateLabel',
+          })}
+          className="copy-dialog-wide-element"
+          value={nameTemplate}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setNameTemplate(e.target.value)
+          }
+          variant="outlined"
+          fullWidth
+          sx={{ mt: 1 }}
+        />
+        {validationError.duplicateName && (
+          <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+            {validationError.duplicateName}
+          </Typography>
+        )}
+        {validationError.emptyName && (
+          <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+            {validationError.emptyName}
+          </Typography>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" color="error" onClick={() => onDismiss()}>
+          {formatMessage({ id: 'copyJourneyPatternDialogCancelButtonText' })}
+        </Button>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => save()}
+          disabled={Object.keys(validationError).length > 0}
+        >
+          {formatMessage({ id: 'copyJourneyPatternDialogSaveButtonText' })}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

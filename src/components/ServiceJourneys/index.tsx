@@ -1,6 +1,11 @@
-import { TertiaryButton } from '@entur/button';
-import { Accordion, AccordionItem } from '@entur/expand';
-import { Heading1, Heading3, LeadParagraph } from '@entur/typography';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Typography,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddButton from 'components/AddButton/AddButton';
 import {
   changeElementAtIndex,
@@ -185,37 +190,41 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
     const mappedServiceJourneys = jp.serviceJourneys.map((sj, sjIndex) => ({
       sj,
       render: () => (
-        <AccordionItem
+        <Accordion
           key={keys[jpIndex] + sjIndex}
-          title={sj.name}
-          defaultOpen={
+          defaultExpanded={
             jpIndex === selectedJourneyPatternIndex &&
             (!sj.id || sjIndex === jp.serviceJourneys.length - 1)
           }
         >
-          {children(
-            sj,
-            journeyPatterns[jpIndex].pointsInSequence,
-            updateServiceJourney(
-              sjIndex,
-              journeyPatterns[jpIndex].serviceJourneys,
-              jpIndex,
-            ),
-            jp.serviceJourneys.length > 1
-              ? deleteServiceJourney(
-                  sjIndex,
-                  journeyPatterns[jpIndex].serviceJourneys,
-                  jpIndex,
-                )
-              : undefined,
-            sj.id
-              ? copyServiceJourney(
-                  journeyPatterns[jpIndex].serviceJourneys,
-                  jpIndex,
-                )
-              : undefined,
-          )}
-        </AccordionItem>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            {sj.name}
+          </AccordionSummary>
+          <AccordionDetails>
+            {children(
+              sj,
+              journeyPatterns[jpIndex].pointsInSequence,
+              updateServiceJourney(
+                sjIndex,
+                journeyPatterns[jpIndex].serviceJourneys,
+                jpIndex,
+              ),
+              jp.serviceJourneys.length > 1
+                ? deleteServiceJourney(
+                    sjIndex,
+                    journeyPatterns[jpIndex].serviceJourneys,
+                    jpIndex,
+                  )
+                : undefined,
+              sj.id
+                ? copyServiceJourney(
+                    journeyPatterns[jpIndex].serviceJourneys,
+                    jpIndex,
+                  )
+                : undefined,
+            )}
+          </AccordionDetails>
+        </Accordion>
       ),
     }));
 
@@ -249,10 +258,12 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
       )}
 
       <div className="service-journeys-editor">
-        <Heading1>{formatMessage({ id: 'editorServiceJourneys' })}</Heading1>
-        <LeadParagraph>
+        <Typography variant="h1">
+          {formatMessage({ id: 'editorServiceJourneys' })}
+        </Typography>
+        <Typography variant="body1">
           {formatMessage({ id: 'serviceJourneysInfo' })}
-        </LeadParagraph>
+        </Typography>
         {journeyPatterns.length === 1 &&
         journeyPatterns.flatMap((jp) => jp.serviceJourneys).length === 1
           ? children(
@@ -265,20 +276,23 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
           : journeyPatterns.map((jp, jpIndex) => (
               <Fragment key={keys[jpIndex]}>
                 <ServiceJourneyPerJourneyPatternWrapper>
-                  {journeyPatterns.length > 1 && <Heading3>{jp.name}</Heading3>}
+                  {journeyPatterns.length > 1 && (
+                    <Typography variant="h3">{jp.name}</Typography>
+                  )}
                   {jp.serviceJourneys.length > 1 && (
                     <ServiceJourneyBulkDeleteHeader>
-                      <TertiaryButton
+                      <Button
+                        variant="text"
                         onClick={() => setShowBulkDeleteDialog(jpIndex)}
                       >
                         {formatMessage({
                           id: 'openBulkDeleteDialogButtonLabel',
                         })}
-                      </TertiaryButton>
+                      </Button>
                     </ServiceJourneyBulkDeleteHeader>
                   )}
                 </ServiceJourneyPerJourneyPatternWrapper>
-                <Accordion>{renderServiceJourneys(jp, jpIndex)}</Accordion>
+                {renderServiceJourneys(jp, jpIndex)}
               </Fragment>
             ))}
         <AddButton

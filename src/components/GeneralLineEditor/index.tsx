@@ -1,13 +1,12 @@
-import { Dropdown, SearchableDropdown } from '@entur/dropdown';
-import { TextField } from '@entur/form';
-import { Heading1 } from '@entur/typography';
+import { Autocomplete, TextField, Typography } from '@mui/material';
+import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import { FlexibleLineTypeSelector } from 'components/FlexibleLineTypeSelector/FlexibleLineTypeSelector';
 import Notices from 'components/Notices';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { mapToItems, mapVehicleModeAndLabelToItems } from 'helpers/dropdown';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
@@ -131,9 +130,17 @@ export default <T extends Line>({
 
   const config = useConfig();
 
+  const operatorItems = getOperatorItems();
+  const networkItems = getNetworkItems();
+  const brandingItems = getBrandingItems();
+  const modeItems = getModeItems();
+
   return (
     <div className="lines-editor-general">
-      <Heading1> {formatMessage({ id: 'editorAbout' })}</Heading1>
+      <Typography variant="h1">
+        {' '}
+        {formatMessage({ id: 'editorAbout' })}
+      </Typography>
       <RequiredInputMarker />
       <section className="inputs">
         <TextField
@@ -145,7 +152,7 @@ export default <T extends Line>({
               name: e.target.value,
             })
           }
-          {...getErrorFeedback(
+          {...getMuiErrorProps(
             formatMessage({ id: 'nameEmpty' }),
             !isBlank(line.name),
             namePristine,
@@ -170,9 +177,6 @@ export default <T extends Line>({
               requiredMarker: !config.optionalPublicCodeOnLine ? '*' : '',
             },
           )}
-          labelTooltip={formatMessage({
-            id: 'generalPublicCodeInputLabelTooltip',
-          })}
           type="text"
           value={line.publicCode}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -181,7 +185,7 @@ export default <T extends Line>({
               publicCode: e.target.value,
             })
           }
-          {...getErrorFeedback(
+          {...getMuiErrorProps(
             formatMessage({ id: 'publicCodeEmpty' }),
             !isBlank(line.publicCode) || !!config.optionalPublicCodeOnLine,
             publicCodePristine,
@@ -190,9 +194,6 @@ export default <T extends Line>({
 
         <TextField
           label={formatMessage({ id: 'generalPrivateCodeFormGroupTitle' })}
-          labelTooltip={formatMessage({
-            id: 'generalPrivateCodeInputLabelTooltip',
-          })}
           type="text"
           value={line.privateCode ?? ''}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -203,78 +204,81 @@ export default <T extends Line>({
           }
         />
 
-        <SearchableDropdown<string>
-          selectedItem={
-            getOperatorItems().find(
-              (item) => item.value === line.operatorRef,
-            ) || null
+        <Autocomplete
+          value={
+            operatorItems.find((item) => item.value === line.operatorRef) ||
+            null
           }
-          placeholder={formatMessage({ id: 'defaultOption' })}
-          items={getOperatorItems}
-          clearable
-          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-          label={formatMessage({ id: 'generalOperatorFormGroupTitle' })}
-          noMatchesText={formatMessage({
-            id: 'dropdownNoMatchesText',
-          })}
-          onChange={(element) =>
+          options={operatorItems}
+          getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          onChange={(_e, element) =>
             onChange<Line>({
               ...(line as Line),
               operatorRef: element?.value,
             })
           }
-          {...getErrorFeedback(
-            formatMessage({ id: 'operatorRefEmpty' }),
-            !isBlank(line.operatorRef),
-            operatorPristine,
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={formatMessage({ id: 'generalOperatorFormGroupTitle' })}
+              placeholder={formatMessage({ id: 'defaultOption' })}
+              {...getMuiErrorProps(
+                formatMessage({ id: 'operatorRefEmpty' }),
+                !isBlank(line.operatorRef),
+                operatorPristine,
+              )}
+            />
           )}
         />
 
-        <Dropdown<string>
-          selectedItem={
-            getNetworkItems().find((item) => item.value === line.networkRef) ||
-            null
+        <Autocomplete
+          value={
+            networkItems.find((item) => item.value === line.networkRef) || null
           }
-          placeholder={formatMessage({ id: 'defaultOption' })}
-          items={getNetworkItems}
-          clearable
-          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-          label={formatMessage({ id: 'generalNetworkFormGroupTitle' })}
-          noMatchesText={formatMessage({
-            id: 'dropdownNoMatchesText',
-          })}
-          onChange={(element) =>
+          options={networkItems}
+          getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          onChange={(_e, element) =>
             onChange<Line>({
               ...(line as Line),
               networkRef: element?.value,
             })
           }
-          {...getErrorFeedback(
-            formatMessage({ id: 'networkRefEmpty' }),
-            !isBlank(line.networkRef),
-            networkPristine,
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={formatMessage({ id: 'generalNetworkFormGroupTitle' })}
+              placeholder={formatMessage({ id: 'defaultOption' })}
+              {...getMuiErrorProps(
+                formatMessage({ id: 'networkRefEmpty' }),
+                !isBlank(line.networkRef),
+                networkPristine,
+              )}
+            />
           )}
         />
 
-        <Dropdown<string>
-          items={getBrandingItems}
-          selectedItem={
-            getBrandingItems().find(
-              (item) => item.value === line.brandingRef,
-            ) || null
+        <Autocomplete
+          value={
+            brandingItems.find((item) => item.value === line.brandingRef) ||
+            null
           }
-          clearable
-          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-          onChange={(element) =>
+          options={brandingItems}
+          getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          onChange={(_e, element) =>
             onChange<Line>({
               ...(line as Line),
               brandingRef: element?.value,
             })
           }
-          label={formatMessage({ id: 'brandingsDropdownLabelText' })}
-          noMatchesText={formatMessage({
-            id: 'dropdownNoMatchesText',
-          })}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={formatMessage({ id: 'brandingsDropdownLabelText' })}
+            />
+          )}
         />
 
         {isFlexibleLine && (
@@ -288,28 +292,36 @@ export default <T extends Line>({
         )}
 
         <section className="transport-mode-dropdowns">
-          <Dropdown
-            selectedItem={
-              getModeItems().find(
-                (item) => item.value === line.transportMode,
-              ) || null
+          <Autocomplete
+            value={
+              modeItems.find((item) => item.value === line.transportMode) ||
+              null
             }
-            placeholder={formatMessage({ id: 'defaultOption' })}
-            items={getModeItems}
-            clearable
-            labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-            label={formatMessage({ id: 'transportModeTitle' })}
-            onChange={(element) =>
+            options={modeItems}
+            getOptionLabel={(option: NormalizedDropdownItemType) =>
+              option.label
+            }
+            isOptionEqualToValue={(option, value) =>
+              option.value === value.value
+            }
+            onChange={(_e, element) =>
               onChange<Line>({
                 ...(line as Line),
                 transportMode: element?.value as VEHICLE_MODE,
                 transportSubmode: undefined,
               })
             }
-            {...getErrorFeedback(
-              formatMessage({ id: 'transportModeEmpty' }),
-              !isBlank(line.transportMode),
-              modePristine,
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={formatMessage({ id: 'transportModeTitle' })}
+                placeholder={formatMessage({ id: 'defaultOption' })}
+                {...getMuiErrorProps(
+                  formatMessage({ id: 'transportModeEmpty' }),
+                  !isBlank(line.transportMode),
+                  modePristine,
+                )}
+              />
             )}
           />
 

@@ -1,15 +1,15 @@
-import { IconButton } from '@entur/button';
-import { TextArea } from '@entur/form';
-import { AddIcon, DeleteIcon } from '@entur/icons';
 import {
-  DataCell,
-  EditableCell,
+  IconButton,
+  TextField,
+  Tooltip,
+  Typography,
   Table,
   TableBody,
   TableRow,
-} from '@entur/table';
-import { Tooltip } from '@entur/tooltip';
-import { Heading4 } from '@entur/typography';
+  TableCell,
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Notice from 'model/Notice';
 import './styles.scss';
 import { FormatMessage } from 'i18n';
@@ -42,24 +42,29 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
 
   return (
     <section className="notices">
-      <Heading4>{formatMessage({ id: 'noticesHeader' })}</Heading4>
-      <Table fixed>
+      <Typography variant="h4">
+        {formatMessage({ id: 'noticesHeader' })}
+      </Typography>
+      <Table>
         <TableBody>
           {notices?.map((notice, i) => (
             <TableRow key={'' + i} hover className="notices-row">
-              <EditableCell className="notices-editable-cell">
-                <TextArea
+              <TableCell className="notices-editable-cell">
+                <TextField
+                  multiline
+                  rows={2}
                   label=""
                   onBlur={() => notice.text === '' && removeNotice(i)}
                   className="notices-text-area"
                   value={notice.text}
                   onChange={(e: any) => updateNotice(i, e.target.value)}
+                  fullWidth
                 />
-              </EditableCell>
-              <DataCell align="right">
+              </TableCell>
+              <TableCell align="right">
                 <Tooltip
                   placement="bottom"
-                  content={formatMessage({ id: 'deleteNoticeTooltip' })}
+                  title={formatMessage({ id: 'deleteNoticeTooltip' })}
                 >
                   <IconButton
                     className="notices-icon-button"
@@ -68,15 +73,15 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
-              </DataCell>
+              </TableCell>
             </TableRow>
           ))}
           <TableRow hover onClick={() => addNotice()}>
-            <DataCell>{''}</DataCell>
-            <DataCell align="right">
+            <TableCell>{''}</TableCell>
+            <TableCell align="right">
               <Tooltip
                 placement="bottom"
-                content={formatMessage({ id: 'addNoticeTooltip' })}
+                title={formatMessage({ id: 'addNoticeTooltip' })}
               >
                 <IconButton
                   className="notices-icon-button"
@@ -85,7 +90,7 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
                   <AddIcon />
                 </IconButton>
               </Tooltip>
-            </DataCell>
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

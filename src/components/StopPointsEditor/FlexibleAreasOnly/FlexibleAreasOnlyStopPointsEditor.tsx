@@ -1,4 +1,4 @@
-import { Heading3, Paragraph } from '@entur/typography';
+import { Typography } from '@mui/material';
 import StopPoint from 'model/StopPoint';
 import { useCallback, useEffect } from 'react';
 import { useIntl } from 'react-intl';
@@ -46,12 +46,12 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
 
   return (
     <section style={{ marginTop: '2em' }}>
-      <Heading3>
+      <Typography variant="h3">
         {formatMessage({ id: 'editorStopPointFlexibleAreaOnly' })}
-      </Heading3>
-      <Paragraph>
+      </Typography>
+      <Typography variant="body1">
         {formatMessage({ id: 'stopPointsInfoFlexibleAreaOnly' })}
-      </Paragraph>
+      </Typography>
       <div className="stop-point-editor">
         {pointsInSequence[0] && (
           <FlexibleAreasOnlyStopPointEditor

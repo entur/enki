@@ -1,12 +1,10 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 .time-unit-picker {
   position: relative;
 
   input {
     width: 100%;
-    background: $colors-greys-grey70 url('../../static/icons/Arrowdown.svg')
-      no-repeat right 16px center;
+    background: #e9e9e9 url('../../static/icons/Arrowdown.svg') no-repeat right
+      16px center;
     padding-right: 30px;
     cursor: default;
     user-select: none;
@@ -17,7 +15,7 @@
     z-index: 100;
     width: 400px;
     padding: 25px;
-    background-color: $colors-blues-blue80;
+    background-color: #ebebf1;
     text-align: center;
 
     .picker {
@@ -26,24 +24,6 @@
 
       > div {
         text-transform: capitalize;
-      }
-
-      .entur-form-group {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: auto;
-        min-width: auto;
-        margin-bottom: 0;
-
-        select {
-          width: 75px !important;
-          min-width: 75px;
-          padding-left: 16px;
-          background-position: right 16px center;
-          color: $colors-brand-blue;
-          font-weight: 500;
-        }
       }
     }
 
@@ -70,7 +50,7 @@
         content: '';
         border-style: solid;
         border-width: 6px 6px 0 6px;
-        border-color: $colors-blues-blue80 transparent transparent transparent;
+        border-color: #ebebf1 transparent transparent transparent;
         position: absolute;
         left: 15px;
         bottom: -6px;
@@ -84,7 +64,7 @@
         content: '';
         border-style: solid;
         border-width: 0 6px 6px 6px;
-        border-color: transparent transparent $colors-blues-blue60 transparent;
+        border-color: transparent transparent #babbcf transparent;
         position: absolute;
         left: 15px;
         top: -6px;

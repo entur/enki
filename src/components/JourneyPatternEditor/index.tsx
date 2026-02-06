@@ -1,4 +1,4 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { Button } from '@mui/material';
 import ConfirmDialog from 'components/ConfirmDialog';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useStopPointsEditor } from 'components/StopPointsEditor';
@@ -232,12 +232,21 @@ const JourneyPatternEditor = ({
           title={formatMessage({ id: 'journeyPatternDeleteDialogTitle' })}
           message={formatMessage({ id: 'journeyPatternDeleteDialogMessage' })}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setShowDeleteDialog(false)}
+            >
               {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={onDelete}>
+            </Button>,
+            <Button
+              variant="contained"
+              color="success"
+              key={1}
+              onClick={onDelete}
+            >
               {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setShowDeleteDialog(false)}
         />

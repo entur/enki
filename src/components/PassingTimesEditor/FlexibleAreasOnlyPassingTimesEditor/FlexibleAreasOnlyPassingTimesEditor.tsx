@@ -1,4 +1,4 @@
-import { Heading4, Paragraph } from '@entur/typography';
+import { Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { PassingTimesEditorProps } from '..';
 import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
@@ -13,12 +13,12 @@ export const FlexibleAreasOnlyPassingTimesEditor = ({
   const { formatMessage } = useIntl();
   return (
     <>
-      <Heading4>
+      <Typography variant="h4">
         {formatMessage({ id: 'serviceJourneyBusinessHours' })}
-      </Heading4>
-      <Paragraph>
+      </Typography>
+      <Typography variant="body1">
         {formatMessage({ id: 'passingTimesInfoFlexibleAreasOnly' })}
-      </Paragraph>
+      </Typography>
       <PassingTimesError
         passingTimes={passingTimes}
         spoilPristine={spoilPristine}

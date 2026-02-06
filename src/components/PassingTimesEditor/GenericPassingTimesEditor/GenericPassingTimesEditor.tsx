@@ -1,4 +1,4 @@
-import { Heading4, Paragraph } from '@entur/typography';
+import { Typography } from '@mui/material';
 import { changeElementAtIndex } from 'helpers/arrays';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import { useIntl } from 'react-intl';
@@ -16,8 +16,12 @@ export const GenericPassingTimesEditor = ({
   const uniqueKeys = useUniqueKeys(passingTimes);
   return (
     <>
-      <Heading4>{formatMessage({ id: 'serviceJourneyPassingTimes' })}</Heading4>
-      <Paragraph>{formatMessage({ id: 'passingTimesInfo' })}</Paragraph>
+      <Typography variant="h4">
+        {formatMessage({ id: 'serviceJourneyPassingTimes' })}
+      </Typography>
+      <Typography variant="body1">
+        {formatMessage({ id: 'passingTimesInfo' })}
+      </Typography>
       <PassingTimesError
         passingTimes={passingTimes}
         spoilPristine={spoilPristine}

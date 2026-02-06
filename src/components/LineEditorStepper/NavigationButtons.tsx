@@ -1,9 +1,4 @@
-import {
-  NegativeButton,
-  PrimaryButton,
-  SecondaryButton,
-  SuccessButton,
-} from '@entur/button';
+import { Button } from '@mui/material';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -30,48 +25,61 @@ const NavigationButtons = (props: Props) => {
     <>
       <div className="buttons">
         {!props.editMode && props.firstStep && (
-          <SecondaryButton onClick={props.onCancel}>
+          <Button variant="outlined" onClick={props.onCancel}>
             {formatMessage({ id: 'navigationCancel' })}
-          </SecondaryButton>
+          </Button>
         )}
         {!props.editMode && !props.firstStep && (
-          <SecondaryButton onClick={props.onPrevious}>
+          <Button variant="outlined" onClick={props.onPrevious}>
             {formatMessage({ id: 'navigationPrevious' })}
-          </SecondaryButton>
+          </Button>
         )}
         {props.editMode && !props.lastStep && (
-          <SecondaryButton
+          <Button
+            variant="outlined"
             onClick={props.onNext}
             disabled={!props.currentStepIsValid}
           >
             {formatMessage({ id: 'navigationNext' })}
-          </SecondaryButton>
+          </Button>
         )}
         {!props.editMode && !props.lastStep && (
-          <PrimaryButton
+          <Button
+            variant="contained"
             onClick={props.onNext}
             disabled={!props.currentStepIsValid}
           >
             {formatMessage({ id: 'navigationNext' })}
-          </PrimaryButton>
+          </Button>
         )}
         {props.editMode && (
-          <PrimaryButton onClick={props.onSave} disabled={!props.isValid}>
+          <Button
+            variant="contained"
+            onClick={props.onSave}
+            disabled={!props.isValid}
+          >
             {formatMessage({ id: 'editorSaveButtonText' })}
-          </PrimaryButton>
+          </Button>
         )}
         {!props.editMode && props.lastStep && (
-          <SuccessButton onClick={props.onSave} disabled={!props.isValid}>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={props.onSave}
+            disabled={!props.isValid}
+          >
             {formatMessage({ id: 'editorSaveAndCreateLine' })}
-          </SuccessButton>
+          </Button>
         )}
         {props.editMode && props.firstStep && (
-          <NegativeButton
+          <Button
+            variant="contained"
+            color="error"
             onClick={() => setDeleteDialogOpen(true)}
             className="delete"
           >
             {formatMessage({ id: 'editorDeleteButtonText' })}
-          </NegativeButton>
+          </Button>
         )}
       </div>
       <ConfirmDialog
@@ -81,12 +89,18 @@ const NavigationButtons = (props: Props) => {
           id: 'editorDeleteLineConfirmationDialogMessage',
         })}
         buttons={[
-          <SecondaryButton key={0} onClick={() => setDeleteDialogOpen(false)}>
+          <Button
+            variant="outlined"
+            key={0}
+            onClick={() => setDeleteDialogOpen(false)}
+          >
             {formatMessage({
               id: 'editorDeleteConfirmationDialogCancelButtonText',
             })}
-          </SecondaryButton>,
-          <SuccessButton
+          </Button>,
+          <Button
+            variant="contained"
+            color="success"
             key={1}
             onClick={() => {
               props.onDelete();
@@ -96,7 +110,7 @@ const NavigationButtons = (props: Props) => {
             {formatMessage({
               id: 'editorDeleteConfirmationDialogConfirmButtonText',
             })}
-          </SuccessButton>,
+          </Button>,
         ]}
         onDismiss={() => setDeleteDialogOpen(false)}
       />

@@ -1,6 +1,5 @@
-import { NegativeButton, SuccessButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { TextField } from '@entur/form';
+import { Button, TextField, Autocomplete } from '@mui/material';
+import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import cx from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -95,7 +94,11 @@ export default (props: Props) => {
   return (
     <div className={classNames}>
       <div ref={triggerEl}>
-        <TextField label="" value={textValue} readOnly={true} />
+        <TextField
+          label=""
+          value={textValue}
+          slotProps={{ input: { readOnly: true } }}
+        />
       </div>
 
       {isOpen && (
@@ -158,19 +161,25 @@ export default (props: Props) => {
 
           <div className="buttons">
             {onReset && (
-              <NegativeButton
+              <Button
+                variant="contained"
+                color="error"
                 onClick={() => {
                   onReset();
                   setOpen(false);
                 }}
               >
                 {formatMessage({ id: 'timeUnitPickerResetLabel' })}
-              </NegativeButton>
+              </Button>
             )}
 
-            <SuccessButton onClick={() => setOpen(false)}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => setOpen(false)}
+            >
               {formatMessage({ id: 'timeUnitPickerDoneLabel' })}
-            </SuccessButton>
+            </Button>
           </div>
         </div>
       )}
@@ -193,15 +202,17 @@ const Picker = ({ label, value, onChange, nrOfOptions }: PickerProps) => {
 
   return (
     <div className="picker">
-      <Dropdown
-        items={options}
-        label={label}
-        selectedItem={{
+      <Autocomplete
+        options={options}
+        getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
+        isOptionEqualToValue={(option, val) => option.value === val.value}
+        value={{
           value: `${value}`,
           label: `${value < 10 ? '0' + value : value}`,
         }}
-        onChange={(e) => onChange(parseInt(e?.value || ''))}
-        placeholder={value.toString()}
+        onChange={(_e, item) => onChange(parseInt(item?.value || '0'))}
+        disableClearable
+        renderInput={(params) => <TextField {...params} label={label} />}
       />
     </div>
   );

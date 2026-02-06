@@ -1,4 +1,4 @@
-import { Heading3, Paragraph } from '@entur/typography';
+import { Typography } from '@mui/material';
 import AddButton from 'components/AddButton/AddButton';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import StopPoint from 'model/StopPoint';
@@ -64,10 +64,12 @@ export const MixedFlexibleStopPointsEditor = ({
 
   return (
     <section style={{ marginTop: '2em' }}>
-      <Heading3>{formatMessage({ id: 'editorStopPoints' })}</Heading3>
-      <Paragraph>
+      <Typography variant="h3">
+        {formatMessage({ id: 'editorStopPoints' })}
+      </Typography>
+      <Typography variant="body1">
         {formatMessage({ id: 'stopPointsInfoMixedFlexible' })}
-      </Paragraph>
+      </Typography>
       <div className="stop-point-editor">
         {cleanedPointsInSequence.map((stopPoint, pointIndex) => (
           <MixedFlexibleStopPointEditor

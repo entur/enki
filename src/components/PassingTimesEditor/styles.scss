@@ -1,12 +1,10 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 .passing-times-editor {
   .passing-time {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
     padding: 1rem 0;
-    border-bottom: 2px solid $colors-greys-grey20;
+    border-bottom: 2px solid #d9d9d9;
 
     .time-number {
       min-width: 1.25px;
@@ -25,7 +23,7 @@
       min-width: 150px;
       width: 150px;
 
-      .eds-form-control-wrapper {
+      .MuiInputBase-root {
         height: 2.75rem;
       }
 
@@ -42,7 +40,7 @@
   .flexible-areas-passing-time {
     display: flex;
 
-    .eds-form-control-wrapper {
+    .MuiInputBase-root {
       width: 9.5rem;
     }
 

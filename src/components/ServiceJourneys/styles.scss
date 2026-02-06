@@ -1,5 +1,3 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 .modal {
   display: flex;
   flex-direction: column;
@@ -8,12 +6,12 @@
 }
 
 .modal-content {
-  margin-top: $space-large;
+  margin-top: 1.5rem;
   .modal-input {
-    margin-bottom: $space-extra-large;
+    margin-bottom: 2rem;
   }
 }
 
 .margin-right {
-  margin-right: $space-default;
+  margin-right: 1rem;
 }

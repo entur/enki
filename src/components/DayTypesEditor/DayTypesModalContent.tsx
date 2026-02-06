@@ -1,15 +1,17 @@
 import { useMutation } from '@apollo/client/react';
-import { BannerAlertBox } from '@entur/alert';
-import { ButtonGroup, SecondaryButton } from '@entur/button';
-import { Checkbox } from '@entur/form';
-import { Pagination } from '@entur/menu';
 import {
-  HeaderCell,
+  Alert,
+  Box,
+  Button,
+  ButtonGroup,
+  Checkbox,
+  Pagination,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableRow,
-} from '@entur/table';
+} from '@mui/material';
 import { DELETE_DAY_TYPES } from 'api/uttu/mutations';
 import DayType, { createNewDayType } from 'model/DayType';
 import React, { useCallback, useMemo } from 'react';
@@ -89,67 +91,59 @@ export const DayTypesModalContent = ({
   return (
     <>
       {error && (
-        <BannerAlertBox
-          title={error.title}
-          variant="error"
-          closable
-          onClose={() => setError(null)}
-        >
-          {error.message}
-        </BannerAlertBox>
+        <Alert severity="error" onClose={() => setError(null)}>
+          <strong>{error.title}</strong> {error.message}
+        </Alert>
       )}
       <div className="day-types-modal_new-day-type-button">
         <ButtonGroup>
-          <SecondaryButton onClick={() => addNewDayType()}>
+          <Button variant="outlined" onClick={() => addNewDayType()}>
             {formatMessage({ id: 'dayTypesModalAddNewButtonLabel' })}
-          </SecondaryButton>
-          <SecondaryButton
-            loading={loading}
-            disabled={selectedIds.length === 0}
+          </Button>
+          <Button
+            variant="outlined"
+            disabled={loading || selectedIds.length === 0}
             onClick={() => onDeleteDayTypes(selectedIds)}
           >
             {formatMessage({ id: 'deleteSelectedDayTypesButtonLabel' })}
-          </SecondaryButton>
+          </Button>
         </ButtonGroup>
       </div>
-      <Pagination
-        pageCount={pageCount}
-        currentPage={currentPage}
-        onPageChange={(page) => setPage(page)}
-        resultsPerPage={results}
-        numberOfResults={numberOfResults}
-        onResultsPerPageChange={(e) => setResults(e)}
-      />
+      <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+        <Pagination
+          count={pageCount}
+          page={currentPage}
+          onChange={(_event, page) => setPage(page)}
+        />
+      </Box>
       <Table>
         <TableHead>
           <TableRow>
-            <HeaderCell padding="checkbox">
+            <TableCell padding="checkbox">
               <Checkbox
-                name="all"
-                checked={
+                indeterminate={
                   selectedIds.length > 0 &&
                   selectedIds.length < preparedDayTypes.length
-                    ? 'indeterminate'
-                    : selectedIds.length > 0
                 }
+                checked={selectedIds.length > 0}
                 onChange={() =>
                   selectedIds.length > 0
                     ? setSelectedIds([])
                     : setSelectedIds(preparedDayTypes.map((dt) => dt.id!))
                 }
               />
-            </HeaderCell>
-            <HeaderCell padding="radio">{''}</HeaderCell>
-            <HeaderCell>
+            </TableCell>
+            <TableCell padding="checkbox">{''}</TableCell>
+            <TableCell>
               {formatMessage({ id: 'dayTypesModalIdHeader' })}
-            </HeaderCell>
-            <HeaderCell>
+            </TableCell>
+            <TableCell>
               {formatMessage({ id: 'dayTypesModalNameHeader' })}
-            </HeaderCell>
-            <HeaderCell>
+            </TableCell>
+            <TableCell>
               {formatMessage({ id: 'dayTypesModalUsedByHeader' })}
-            </HeaderCell>
-            <HeaderCell padding="radio">{''}</HeaderCell>
+            </TableCell>
+            <TableCell padding="checkbox">{''}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

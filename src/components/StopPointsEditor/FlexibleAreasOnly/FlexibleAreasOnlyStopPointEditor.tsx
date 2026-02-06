@@ -1,4 +1,5 @@
-import { Dropdown } from '@entur/dropdown';
+import { Autocomplete, TextField } from '@mui/material';
+import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import { mapToItems } from 'helpers/dropdown';
@@ -38,34 +39,41 @@ export const FlexibleAreasOnlyStopPointEditor = ({
     <div className="stop-point">
       <div className="stop-point-element">
         <div className="stop-point-info">
-          <Dropdown<string>
+          <Autocomplete
             className="stop-point-dropdown"
-            selectedItem={
-              mapToItems(
-                flexibleStopPlaces?.filter(
-                  (item) => item.id === stopPoint.flexibleStopPlaceRef,
-                ) || [],
-              ).pop() || null
+            value={
+              mapToItems(flexibleStopPlaces || []).find(
+                (item) => item.value === stopPoint.flexibleStopPlaceRef,
+              ) || null
             }
-            placeholder={formatMessage({ id: 'defaultOption' })}
-            items={mapToItems(flexibleStopPlaces || [])}
-            clearable
-            labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-            label={formatMessage({ id: 'stopPlace' })}
-            onChange={(e) =>
+            onChange={(_event, newValue: NormalizedDropdownItemType | null) =>
               onChange({
                 ...stopPoint,
-                flexibleStopPlaceRef: e?.value,
+                flexibleStopPlaceRef: newValue?.value,
               })
             }
-            noMatchesText={formatMessage({
+            options={mapToItems(flexibleStopPlaces || [])}
+            getOptionLabel={(option) => option.label}
+            isOptionEqualToValue={(option, value) =>
+              option.value === value.value
+            }
+            noOptionsText={formatMessage({
               id: 'dropdownNoMatchesText',
             })}
-            {...getErrorFeedback(
-              stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
-              !stopPlaceError,
-              stopPlacePristine,
-            )}
+            renderInput={(params) => {
+              const hasError = !stopPlacePristine && !!stopPlaceError;
+              return (
+                <TextField
+                  {...params}
+                  label={formatMessage({ id: 'stopPlace' })}
+                  placeholder={formatMessage({ id: 'defaultOption' })}
+                  error={hasError}
+                  helperText={
+                    hasError ? formatMessage({ id: stopPlaceError }) : ''
+                  }
+                />
+              );
+            }}
           />
 
           <FrontTextTextField

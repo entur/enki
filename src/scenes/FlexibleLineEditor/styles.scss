@@ -1,8 +1,6 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 .page-content {
   .line-editor {
-    margin-top: $space-large;
+    margin-top: 24px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -14,7 +12,7 @@
     }
 
     .error-icon {
-      color: $colors-validation-lava;
+      color: #d31b1b;
       vertical-align: middle;
       margin-left: 0.5rem;
     }
@@ -32,7 +30,7 @@
 
   .buttons {
     display: flex;
-    margin-top: $space-extra-large4;
+    margin-top: 48px;
 
     :first-child {
       margin-right: 2rem;

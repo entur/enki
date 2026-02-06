@@ -1,6 +1,12 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { Radio, RadioGroup } from '@entur/form';
+import {
+  Autocomplete,
+  Button,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+} from '@mui/material';
+import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -122,45 +128,56 @@ export const MixedFlexibleStopPointEditor = ({
             }}
           >
             <div className="radio-buttons">
-              <Radio value={StopPlaceMode.FLEXIBLE}>
-                {formatMessage({ id: 'selectCustom' })}
-              </Radio>
-              <Radio value={StopPlaceMode.EXTERNAL}>
-                {formatMessage({ id: 'selectNsr' })}
-              </Radio>
+              <FormControlLabel
+                value={StopPlaceMode.FLEXIBLE}
+                control={<Radio />}
+                label={formatMessage({ id: 'selectCustom' })}
+              />
+              <FormControlLabel
+                value={StopPlaceMode.EXTERNAL}
+                control={<Radio />}
+                label={formatMessage({ id: 'selectNsr' })}
+              />
             </div>
           </RadioGroup>
         </div>
         <div className="stop-point-info">
           {selectMode === StopPlaceMode.FLEXIBLE && (
-            <Dropdown
+            <Autocomplete
               className="stop-point-dropdown"
-              selectedItem={{
-                value: stopPoint.flexibleStopPlaceRef,
-                label:
-                  flexibleStopPlaces?.find(
-                    (item) => item.id === stopPoint.flexibleStopPlaceRef,
-                  )?.name || '',
-              }}
-              placeholder={formatMessage({ id: 'defaultOption' })}
-              items={mapToItems(flexibleStopPlaces || [])}
-              clearable
-              labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-              label={formatMessage({ id: 'stopPlace' })}
-              onChange={(e) =>
+              value={
+                mapToItems(flexibleStopPlaces || []).find(
+                  (item) => item.value === stopPoint.flexibleStopPlaceRef,
+                ) || null
+              }
+              onChange={(_event, newValue: NormalizedDropdownItemType | null) =>
                 onChange({
                   ...stopPoint,
-                  flexibleStopPlaceRef: e?.value,
+                  flexibleStopPlaceRef: newValue?.value,
                 })
               }
-              noMatchesText={formatMessage({
+              options={mapToItems(flexibleStopPlaces || [])}
+              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              noOptionsText={formatMessage({
                 id: 'dropdownNoMatchesText',
               })}
-              {...getErrorFeedback(
-                stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
-                !stopPlaceError,
-                stopPlacePristine,
-              )}
+              renderInput={(params) => {
+                const hasError = !stopPlacePristine && !!stopPlaceError;
+                return (
+                  <TextField
+                    {...params}
+                    label={formatMessage({ id: 'stopPlace' })}
+                    placeholder={formatMessage({ id: 'defaultOption' })}
+                    error={hasError}
+                    helperText={
+                      hasError ? formatMessage({ id: stopPlaceError }) : ''
+                    }
+                  />
+                );
+              }}
             />
           )}
 
@@ -202,15 +219,21 @@ export const MixedFlexibleStopPointEditor = ({
           title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
           message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
           buttons={[
-            <SecondaryButton
+            <Button
               key="no"
+              variant="outlined"
               onClick={() => setDeleteDialogOpen(false)}
             >
               {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton key="yes" onClick={onDelete}>
+            </Button>,
+            <Button
+              key="yes"
+              variant="contained"
+              color="success"
+              onClick={onDelete}
+            >
               {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />

@@ -1,10 +1,12 @@
-import { Checkbox } from '@entur/form';
 import {
-  DataCell,
-  ExpandableRow,
-  ExpandRowButton,
+  Checkbox,
+  Collapse,
+  IconButton,
+  TableCell,
   TableRow,
-} from '@entur/table';
+} from '@mui/material';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import DayType from 'model/DayType';
 import React, { useState } from 'react';
 
@@ -28,7 +30,7 @@ export const DayTypesTableExpRow = ({
   return (
     <>
       <TableRow>
-        <DataCell>
+        <TableCell padding="checkbox">
           <Checkbox
             name={dayType.name}
             checked={selected}
@@ -36,17 +38,23 @@ export const DayTypesTableExpRow = ({
               onSelect(event.target.checked)
             }
           />
-        </DataCell>
-        <DataCell>
-          <ExpandRowButton onClick={() => setopen(!open)} open={open} />
-        </DataCell>
-        <DataCell>{dayType.id}</DataCell>
-        <DataCell>{dayType.name || 'No name'}</DataCell>
-        <DataCell>{numberOfServiceJourneys}</DataCell>
+        </TableCell>
+        <TableCell padding="checkbox">
+          <IconButton size="small" onClick={() => setopen(!open)}>
+            {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+          </IconButton>
+        </TableCell>
+        <TableCell>{dayType.id}</TableCell>
+        <TableCell>{dayType.name || 'No name'}</TableCell>
+        <TableCell>{numberOfServiceJourneys}</TableCell>
       </TableRow>
-      <ExpandableRow colSpan={3} open={open}>
-        {children}
-      </ExpandableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            {children}
+          </Collapse>
+        </TableCell>
+      </TableRow>
     </>
   );
 };

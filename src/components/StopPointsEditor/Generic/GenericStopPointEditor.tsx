@@ -1,4 +1,4 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { Button } from '@mui/material';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -126,15 +126,21 @@ export const GenericStopPointEditor = ({
           title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
           message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
           buttons={[
-            <SecondaryButton
+            <Button
               key="no"
+              variant="outlined"
               onClick={() => setDeleteDialogOpen(false)}
             >
               {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton key="yes" onClick={onDelete}>
+            </Button>,
+            <Button
+              key="yes"
+              variant="contained"
+              color="success"
+              onClick={onDelete}
+            >
               {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />

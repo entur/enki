@@ -1,5 +1,3 @@
-@use '@entur/tokens/dist/styles' as *;
-
 .journey-pattern-inputs {
   display: flex;
   flex-wrap: wrap;
@@ -8,6 +6,6 @@
   > div {
     width: 48%;
     min-width: 20rem;
-    margin-top: $space-large;
+    margin-top: 1.5rem;
   }
 }

@@ -1,5 +1,10 @@
-import { Accordion, AccordionItem } from '@entur/expand';
-import { Heading1, LeadParagraph } from '@entur/typography';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddButton from 'components/AddButton/AddButton';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import {
@@ -120,12 +125,12 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
       />
 
       <div className="journey-patterns-editor">
-        <Heading1>
+        <Typography variant="h1">
           {formatMessage({ id: 'editorJourneyPatternsTabLabel' })}
-        </Heading1>
-        <LeadParagraph>
+        </Typography>
+        <Typography variant="body1">
           {formatMessage({ id: 'editorFillInformation' })}
-        </LeadParagraph>
+        </Typography>
         {journeyPatterns.length === 1 ? (
           children(
             journeyPatterns[0],
@@ -135,24 +140,28 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
             undefined,
           )
         ) : (
-          <Accordion>
+          <>
             {journeyPatterns.map((jp: JourneyPattern, index: number) => (
-              <AccordionItem
-                title={jp.name}
+              <Accordion
                 key={jp.id ?? keys[index]}
-                defaultOpen={!jp.id || index === journeyPatterns.length - 1}
+                defaultExpanded={!jp.id || index === journeyPatterns.length - 1}
               >
-                {children(
-                  jp,
-                  validateJourneyPatternName,
-                  updateJourneyPattern(index),
-                  (name: string) =>
-                    copyJourneyPattern(journeyPatterns, index, name),
-                  deleteJourneyPattern(index),
-                )}
-              </AccordionItem>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  {jp.name}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {children(
+                    jp,
+                    validateJourneyPatternName,
+                    updateJourneyPattern(index),
+                    (name: string) =>
+                      copyJourneyPattern(journeyPatterns, index, name),
+                    deleteJourneyPattern(index),
+                  )}
+                </AccordionDetails>
+              </Accordion>
             ))}
-          </Accordion>
+          </>
         )}
 
         <AddButton

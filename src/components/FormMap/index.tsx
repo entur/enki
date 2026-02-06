@@ -1,6 +1,6 @@
 import './styles.scss';
-import { FloatingButton } from '@entur/button';
-import { UndoIcon } from '@entur/icons';
+import { Fab } from '@mui/material';
+import UndoIcon from '@mui/icons-material/Undo';
 import React from 'react';
 import FormMapContainer from './FormMapContainer';
 
@@ -27,14 +27,14 @@ const FormMap = ({
       </FormMapContainer>
 
       {undo ? (
-        <FloatingButton
+        <Fab
           className="undo-button"
           size="small"
           aria-label="Undo"
           onClick={undo}
         >
           <UndoIcon />
-        </FloatingButton>
+        </Fab>
       ) : (
         ''
       )}

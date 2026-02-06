@@ -1,12 +1,19 @@
-import { Button, ButtonGroup } from '@entur/button';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material';
 import {
   TimePicker,
   nativeDateToTimeValue,
   timeOrDateValueToNativeDate,
 } from '@entur/datepicker';
-import { FeedbackText, Switch, TextField } from '@entur/form';
-import { Modal } from '@entur/modal';
-import { Label } from '@entur/typography';
 import {
   CalendarDateTime,
   fromDate,
@@ -240,125 +247,142 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   };
 
   return (
-    <Modal
+    <Dialog
       open={open}
-      size="medium"
-      title={formatMessage({ id: 'copyServiceJourneyDialogTitle' })}
-      onDismiss={onDismiss}
+      onClose={onDismiss}
+      maxWidth="sm"
+      fullWidth
       className="copy-dialog"
     >
-      <TextField
-        label={formatMessage({
-          id: 'copyServiceJourneyDialogNameTemplateLabel',
-        })}
-        className="copy-dialog-wide-element"
-        value={nameTemplate}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setNameTemplate(e.target.value)
-        }
-      />
+      <DialogTitle>
+        {formatMessage({ id: 'copyServiceJourneyDialogTitle' })}
+      </DialogTitle>
+      <DialogContent>
+        <TextField
+          label={formatMessage({
+            id: 'copyServiceJourneyDialogNameTemplateLabel',
+          })}
+          className="copy-dialog-wide-element"
+          value={nameTemplate}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setNameTemplate(e.target.value)
+          }
+          variant="outlined"
+          fullWidth
+          sx={{ mt: 1 }}
+        />
 
-      <div className="copy-dialog-section">
-        <div className="copy-dialog-inputs">
-          <div className="copy-dialog-timepicker">
-            <TimePicker
-              locale={locale}
-              label={formatMessage({
-                id: 'copyServiceJourneyDialogDepartureTimeLabel',
-              })}
-              onChange={(date: TimeValue | null) => {
-                let time;
-                if (date != null) {
-                  time = timeOrDateValueToNativeDate(date)
-                    ?.toTimeString()
-                    .split(' ')[0];
-                  if (time) {
-                    setInitialDepartureTime(time);
-                  }
-                }
-              }}
-              selectedTime={nativeDateToTimeValue(toDate(initialDepartureTime))}
-            />
-          </div>
-          <DayOffsetDropdown
-            value={initialDayOffset}
-            onChange={(value) => setInitialDayOffset(value!)}
-          />
-        </div>
-      </div>
-      <div className="copy-dialog-section">
-        <Label>
-          {formatMessage({ id: 'copyServiceJourneyDialogMultipleSwitchLabel' })}
-        </Label>
-        <Switch checked={multiple} onChange={() => setMultiple(!multiple)} />
-      </div>
-      {multiple && (
-        <>
-          <div className="copy-dialog-section">
-            <Label>
-              {formatMessage({ id: 'copyServiceJourneyDialogIntervalLabel' })}
-            </Label>
-            <DurationPicker
-              className="copy-dialog-wide-element"
-              onChange={(newRepeatDuration) => {
-                setRepeatDuration(newRepeatDuration!);
-              }}
-              duration={repeatDuration}
-              showSeconds={false}
-              showMinutes
-              showHours
-              showDays={false}
-              showMonths={false}
-              showYears={false}
-            />
-          </div>
-          <div className="copy-dialog-section">
-            <div className="copy-dialog-inputs">
-              <div className="copy-dialog-timepicker">
-                <TimePicker
-                  locale={locale}
-                  label={formatMessage({
-                    id: 'copyServiceJourneyDialogLatestPossibleDepartureTimelabel',
-                  })}
-                  onChange={(date) => {
-                    const time = timeOrDateValueToNativeDate(date!)
+        <div className="copy-dialog-section">
+          <div className="copy-dialog-inputs">
+            <div className="copy-dialog-timepicker">
+              <TimePicker
+                locale={locale}
+                label={formatMessage({
+                  id: 'copyServiceJourneyDialogDepartureTimeLabel',
+                })}
+                onChange={(date: TimeValue | null) => {
+                  let time;
+                  if (date != null) {
+                    time = timeOrDateValueToNativeDate(date)
                       ?.toTimeString()
                       .split(' ')[0];
                     if (time) {
-                      setUntilTime(time);
+                      setInitialDepartureTime(time);
                     }
-                  }}
-                  selectedTime={nativeDateToTimeValue(toDate(untilTime))}
-                />
-              </div>
-              <DayOffsetDropdown
-                value={untilDayOffset}
-                onChange={(value) => setUntilDayOffset(value!)}
+                  }
+                }}
+                selectedTime={nativeDateToTimeValue(
+                  toDate(initialDepartureTime),
+                )}
               />
             </div>
-            {validationError.untilTimeIsNotAfterInitialTime && (
-              <FeedbackText variant="error">
-                {validationError.untilTimeIsNotAfterInitialTime}
-              </FeedbackText>
-            )}
+            <DayOffsetDropdown
+              value={initialDayOffset}
+              onChange={(value) => setInitialDayOffset(value!)}
+            />
           </div>
-        </>
-      )}
-
-      <div className="copy-dialog-section">
-        <ButtonGroup>
-          <Button variant="negative" onClick={() => onDismiss()}>
-            {formatMessage({ id: 'copyServiceJourneyDialogCancelButtonText' })}
-          </Button>
-          <Button
-            variant="success"
-            onClick={() => save()}
-            disabled={Object.keys(validationError).length > 0}
-          >
-            {formatMessage({ id: 'copyServiceJourneyDialogSaveButtonText' })}
-          </Button>
-        </ButtonGroup>
-      </div>
-    </Modal>
+        </div>
+        <div className="copy-dialog-section">
+          <FormControlLabel
+            control={
+              <Switch
+                checked={multiple}
+                onChange={() => setMultiple(!multiple)}
+              />
+            }
+            label={formatMessage({
+              id: 'copyServiceJourneyDialogMultipleSwitchLabel',
+            })}
+          />
+        </div>
+        {multiple && (
+          <>
+            <div className="copy-dialog-section">
+              <Typography variant="body2" sx={{ mb: 1 }}>
+                {formatMessage({
+                  id: 'copyServiceJourneyDialogIntervalLabel',
+                })}
+              </Typography>
+              <DurationPicker
+                className="copy-dialog-wide-element"
+                onChange={(newRepeatDuration) => {
+                  setRepeatDuration(newRepeatDuration!);
+                }}
+                duration={repeatDuration}
+                showSeconds={false}
+                showMinutes
+                showHours
+                showDays={false}
+                showMonths={false}
+                showYears={false}
+              />
+            </div>
+            <div className="copy-dialog-section">
+              <div className="copy-dialog-inputs">
+                <div className="copy-dialog-timepicker">
+                  <TimePicker
+                    locale={locale}
+                    label={formatMessage({
+                      id: 'copyServiceJourneyDialogLatestPossibleDepartureTimelabel',
+                    })}
+                    onChange={(date) => {
+                      const time = timeOrDateValueToNativeDate(date!)
+                        ?.toTimeString()
+                        .split(' ')[0];
+                      if (time) {
+                        setUntilTime(time);
+                      }
+                    }}
+                    selectedTime={nativeDateToTimeValue(toDate(untilTime))}
+                  />
+                </div>
+                <DayOffsetDropdown
+                  value={untilDayOffset}
+                  onChange={(value) => setUntilDayOffset(value!)}
+                />
+              </div>
+              {validationError.untilTimeIsNotAfterInitialTime && (
+                <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                  {validationError.untilTimeIsNotAfterInitialTime}
+                </Typography>
+              )}
+            </div>
+          </>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" color="error" onClick={() => onDismiss()}>
+          {formatMessage({ id: 'copyServiceJourneyDialogCancelButtonText' })}
+        </Button>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => save()}
+          disabled={Object.keys(validationError).length > 0}
+        >
+          {formatMessage({ id: 'copyServiceJourneyDialogSaveButtonText' })}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };

@@ -1,5 +1,5 @@
-import { TextField } from '@entur/form';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { TextField, Tooltip } from '@mui/material';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import usePristine from 'hooks/usePristine';
 import { MessagesKey } from 'i18n/translationKeys';
 import StopPoint from 'model/StopPoint';
@@ -39,7 +39,7 @@ export const FrontTextTextField = ({
 }: Props) => {
   const { formatMessage } = useIntl();
   const frontTextPristine = usePristine(value, spoilPristine);
-  const errorFeedback = getErrorFeedback(
+  const errorProps = getMuiErrorProps(
     frontTextError ? formatMessage({ id: frontTextError }) : '',
     !frontTextError,
     frontTextPristine,
@@ -63,17 +63,17 @@ export const FrontTextTextField = ({
   }, [value, disabled]);
 
   return (
-    <TextField
-      className="stop-point-info-item"
-      label={formatMessage({
-        id: isFirst ? 'labelFrontTextRequired' : 'labelFrontText',
-      })}
-      feedback={errorFeedback.feedback}
-      variant={errorFeedback.variant}
-      labelTooltip={formatMessage({ id: 'frontTextTooltip' })}
-      value={frontTextValue}
-      onChange={onChangeCallback}
-      disabled={disabled}
-    />
+    <Tooltip title={formatMessage({ id: 'frontTextTooltip' })} placement="top">
+      <TextField
+        className="stop-point-info-item"
+        label={formatMessage({
+          id: isFirst ? 'labelFrontTextRequired' : 'labelFrontText',
+        })}
+        {...errorProps}
+        value={frontTextValue}
+        onChange={onChangeCallback}
+        disabled={disabled}
+      />
+    </Tooltip>
   );
 };

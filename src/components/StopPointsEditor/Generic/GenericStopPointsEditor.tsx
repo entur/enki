@@ -1,11 +1,10 @@
-import { Heading3, Paragraph } from '@entur/typography';
+import { Alert, Typography } from '@mui/material';
 import AddButton from 'components/AddButton/AddButton';
 import StopPoint from 'model/StopPoint';
 import { useIntl } from 'react-intl';
 import { StopPointsEditorProps } from '..';
 import { GenericStopPointEditor } from './GenericStopPointEditor';
 import { useConfig } from '../../../config/ConfigContext';
-import { SmallAlertBox } from '@entur/alert';
 import '../styles.scss';
 import { useCallback, useEffect, useState } from 'react';
 import { StopPlace, UttuQuery } from '../../../api';
@@ -87,9 +86,13 @@ export const GenericStopPointsEditor = ({
 
   return (
     <section style={{ marginTop: '2em' }}>
-      <Heading3>{formatMessage({ id: 'editorStopPoints' })}</Heading3>
+      <Typography variant="h3">
+        {formatMessage({ id: 'editorStopPoints' })}
+      </Typography>
       {!isMapEnabled && (
-        <Paragraph>{formatMessage({ id: 'stopPointsInfoFixed' })}</Paragraph>
+        <Typography variant="body1">
+          {formatMessage({ id: 'stopPointsInfoFixed' })}
+        </Typography>
       )}
       {stopPlacesInJourneyPattern && (
         <div className={'stop-point-editor-container'}>
@@ -97,12 +100,9 @@ export const GenericStopPointsEditor = ({
             className={`stop-point-editor ${isMapEnabled ? 'stop-point-editor-width-limit' : ''}`}
           >
             {isMapEnabled && pointsInSequence?.length < 2 && (
-              <SmallAlertBox
-                className={'stop-point-number-alert'}
-                variant={'info'}
-              >
+              <Alert className={'stop-point-number-alert'} severity={'info'}>
                 {formatMessage({ id: 'stopPointsMapInfo' })}
-              </SmallAlertBox>
+              </Alert>
             )}
             {pointsInSequence.map((stopPoint, pointIndex) => (
               <GenericStopPointEditor
