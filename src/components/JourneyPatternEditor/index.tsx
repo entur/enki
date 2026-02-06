@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import ConfirmDialog from 'components/ConfirmDialog';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useStopPointsEditor } from 'components/StopPointsEditor';
@@ -182,8 +182,8 @@ const JourneyPatternEditor = ({
   const StopPointsEditor = useStopPointsEditor(flexibleLineType);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <div style={{ width: '100%' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box sx={{ width: '100%' }}>
         <section>
           <RequiredInputMarker />
           <General
@@ -209,8 +209,8 @@ const JourneyPatternEditor = ({
           initDefaultJourneyPattern={initDefaultJourneyPattern}
           swapStopPoints={swapStopPoints}
         />
-      </div>
-      <div style={{ display: 'flex', gap: '1rem' }}>
+      </Box>
+      <Stack direction="row" spacing={2}>
         {onDelete && (
           <DeleteActionChip
             onClick={() => setShowDeleteDialog(true)}
@@ -221,7 +221,7 @@ const JourneyPatternEditor = ({
           title={formatMessage({ id: 'editorCopyButtonText' })}
           onClick={() => setShowCopyDialog(true)}
         />
-      </div>
+      </Stack>
 
       {showDeleteDialog && onDelete && (
         <ConfirmDialog
@@ -260,7 +260,7 @@ const JourneyPatternEditor = ({
           validateJourneyPatternName={validateJourneyPatternName}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

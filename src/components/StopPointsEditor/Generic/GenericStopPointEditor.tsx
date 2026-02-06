@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -59,15 +59,15 @@ export const GenericStopPointEditor = ({
   }, []);
 
   return (
-    <div style={{ borderBottom: '2px solid #d9d9d9' }}>
-      <div
-        style={{
+    <Box sx={{ borderBottom: '2px solid #d9d9d9' }}>
+      <Box
+        sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          marginTop: '1.5rem',
+          mt: '1.5rem',
         }}
       >
-        <div style={{ minWidth: 'fit-content', display: 'flex' }}>
+        <Box sx={{ minWidth: 'fit-content', display: 'flex' }}>
           <StopPointOrder
             order={order}
             isLast={isLast}
@@ -76,16 +76,15 @@ export const GenericStopPointEditor = ({
               swapStopPoints as (pos1: number, pos2: number) => void
             }
           />
-        </div>
-        <div
-          style={{
+        </Box>
+        <Box
+          sx={{
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'space-between',
             maxWidth: '50rem',
             flexBasis: '100%',
-            marginLeft: '1rem',
-            marginRight: '1rem',
+            mx: '1rem',
           }}
         >
           <QuayRefField
@@ -114,7 +113,7 @@ export const GenericStopPointEditor = ({
             onChange={onBoardingTypeChange}
             error={boardingError}
           />
-        </div>
+        </Box>
 
         <ComponentToggle<SandboxFeatures, StopPointButtonGroupProps>
           feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
@@ -160,10 +159,10 @@ export const GenericStopPointEditor = ({
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />
-      </div>
+      </Box>
 
       {flexibleLineType && (
-        <div>
+        <Box>
           <BookingArrangementEditor
             trim
             bookingArrangement={stopPoint.bookingArrangement}
@@ -185,8 +184,8 @@ export const GenericStopPointEditor = ({
               });
             }}
           />
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };

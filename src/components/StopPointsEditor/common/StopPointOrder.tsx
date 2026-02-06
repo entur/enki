@@ -1,4 +1,4 @@
-import { IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import React from 'react';
 
@@ -16,7 +16,7 @@ const StopPointOrder = ({
   swapStopPoints,
 }: StopPointOrder) => {
   return (
-    <div className={'order'}>
+    <Box className={'order'}>
       {!isFirst && (
         <IconButton
           onClick={() => swapStopPoints(order - 2, order - 1)}
@@ -36,7 +36,7 @@ const StopPointOrder = ({
           <ArrowBack />
         </IconButton>
       )}
-    </div>
+    </Box>
   );
 };
 

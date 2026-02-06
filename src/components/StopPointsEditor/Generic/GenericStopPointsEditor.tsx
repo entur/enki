@@ -1,4 +1,4 @@
-import { Alert, Typography } from '@mui/material';
+import { Alert, Box, Typography } from '@mui/material';
 import AddButton from 'components/AddButton/AddButton';
 import StopPoint from 'model/StopPoint';
 import { useIntl } from 'react-intl';
@@ -84,7 +84,7 @@ export const GenericStopPointsEditor = ({
   );
 
   return (
-    <section style={{ marginTop: '2em' }}>
+    <Box component="section" sx={{ mt: '2em' }}>
       <Typography variant="h3">
         {formatMessage({ id: 'editorStopPoints' })}
       </Typography>
@@ -94,12 +94,8 @@ export const GenericStopPointsEditor = ({
         </Typography>
       )}
       {stopPlacesInJourneyPattern && (
-        <div style={{ display: 'flex' }}>
-          <div
-            style={
-              isMapEnabled ? { maxWidth: 450, marginRight: 30 } : undefined
-            }
-          >
+        <Box sx={{ display: 'flex' }}>
+          <Box sx={isMapEnabled ? { maxWidth: 450, mr: '30px' } : undefined}>
             {isMapEnabled && pointsInSequence?.length < 2 && (
               <Alert sx={{ minWidth: 450, mb: 6 }} severity={'info'}>
                 {formatMessage({ id: 'stopPointsMapInfo' })}
@@ -131,7 +127,7 @@ export const GenericStopPointsEditor = ({
               onClick={() => addStopPoint()}
               buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
             />
-          </div>
+          </Box>
           <ComponentToggle
             feature={'JourneyPatternStopPointMap'}
             componentProps={{
@@ -144,7 +140,7 @@ export const GenericStopPointsEditor = ({
               stopPlacesInJourneyPattern,
             }}
           />
-        </div>
+        </Box>
       )}
       {!stopPlacesInJourneyPattern && (
         <AddButton
@@ -152,6 +148,6 @@ export const GenericStopPointsEditor = ({
           buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
         />
       )}
-    </section>
+    </Box>
   );
 };

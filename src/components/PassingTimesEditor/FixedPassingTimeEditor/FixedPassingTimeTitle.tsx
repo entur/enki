@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { useQuaySearch } from 'api/useQuaySearch';
 import StopPoint from 'model/StopPoint';
 import { ReactElement } from 'react';
@@ -10,7 +11,15 @@ const FixedPassingTimeTitle = ({ stopPoint }: Props): ReactElement => {
   const quayRef = stopPoint.quayRef;
   const { stopPlace } = useQuaySearch(quayRef);
 
-  return <div className="title">{stopPlace?.name.value ?? quayRef}</div>;
+  return (
+    <Typography
+      className="title"
+      variant="body2"
+      sx={{ fontWeight: 500, minWidth: 120, flexShrink: 0 }}
+    >
+      {stopPlace?.name.value ?? quayRef}
+    </Typography>
+  );
 };
 
 export default FixedPassingTimeTitle;
