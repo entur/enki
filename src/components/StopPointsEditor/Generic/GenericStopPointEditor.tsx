@@ -59,7 +59,7 @@ export const GenericStopPointEditor = ({
   }, []);
 
   return (
-    <Box sx={{ borderBottom: '2px solid #d9d9d9' }}>
+    <Box sx={{ borderBottom: '2px solid #d9d9d9', pb: 2 }}>
       <Box
         sx={{
           display: 'flex',
@@ -80,11 +80,10 @@ export const GenericStopPointEditor = ({
         <Box
           sx={{
             display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            maxWidth: '50rem',
-            flexBasis: '100%',
-            mx: '1rem',
+            flexDirection: 'column',
+            gap: 2,
+            flexGrow: 1,
+            mx: 2,
           }}
         >
           <QuayRefField

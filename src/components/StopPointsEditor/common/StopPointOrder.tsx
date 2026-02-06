@@ -1,5 +1,6 @@
 import { Box, IconButton, Typography } from '@mui/material';
-import ArrowBack from '@mui/icons-material/ArrowBack';
+import ArrowUpward from '@mui/icons-material/ArrowUpward';
+import ArrowDownward from '@mui/icons-material/ArrowDownward';
 import React from 'react';
 
 export type StopPointOrder = {
@@ -16,14 +17,22 @@ const StopPointOrder = ({
   swapStopPoints,
 }: StopPointOrder) => {
   return (
-    <Box className={'order'}>
+    <Box
+      className="order"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minWidth: 40,
+      }}
+    >
       {!isFirst && (
         <IconButton
           onClick={() => swapStopPoints(order - 2, order - 1)}
           className={'move-up'}
           size={'small'}
         >
-          <ArrowBack />
+          <ArrowUpward />
         </IconButton>
       )}
       <Typography variant="body1">{order}</Typography>
@@ -33,7 +42,7 @@ const StopPointOrder = ({
           className={'move-down'}
           size={'small'}
         >
-          <ArrowBack />
+          <ArrowDownward />
         </IconButton>
       )}
     </Box>
