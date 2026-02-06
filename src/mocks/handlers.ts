@@ -13,6 +13,57 @@ import {
   quayToStopPlace,
 } from './mockData';
 
+// Add __typename fields to line data so Apollo Client's InMemoryCache
+// can properly normalize and return nested objects like journeyPatterns.
+function addLineTypenames(line: (typeof mockLines)[number]) {
+  return {
+    __typename: 'Line',
+    ...line,
+    notices: line.notices.map((n: Record<string, unknown>) => ({
+      __typename: 'Notice',
+      ...n,
+    })),
+    network: line.network ? { __typename: 'Network', ...line.network } : null,
+    branding: line.branding
+      ? { __typename: 'Branding', ...line.branding }
+      : null,
+    journeyPatterns: line.journeyPatterns.map((jp) => ({
+      __typename: 'JourneyPattern',
+      ...jp,
+      pointsInSequence: jp.pointsInSequence.map((pis) => ({
+        __typename: 'StopPointInJourneyPattern',
+        ...pis,
+        destinationDisplay: pis.destinationDisplay
+          ? { __typename: 'DestinationDisplay', ...pis.destinationDisplay }
+          : null,
+      })),
+      serviceJourneys: jp.serviceJourneys.map((sj) => ({
+        __typename: 'ServiceJourney',
+        ...sj,
+        notices: (sj.notices as Record<string, unknown>[]).map((n) => ({
+          __typename: 'Notice',
+          ...n,
+        })),
+        passingTimes: sj.passingTimes.map((pt) => ({
+          __typename: 'TimetabledPassingTime',
+          ...pt,
+        })),
+        dayTypes: sj.dayTypes.map((dt) => ({
+          __typename: 'DayType',
+          ...dt,
+          dayTypeAssignments: dt.dayTypeAssignments.map((dta) => ({
+            __typename: 'DayTypeAssignment',
+            ...dta,
+            operatingPeriod: dta.operatingPeriod
+              ? { __typename: 'OperatingPeriod', ...dta.operatingPeriod }
+              : null,
+          })),
+        })),
+      })),
+    })),
+  };
+}
+
 export const handlers = [
   // ---------- Bootstrap & config ----------
   http.get('*/bootstrap.json', () => {
@@ -176,14 +227,16 @@ export const handlers = [
   }),
 
   graphql.query('LineEditorQuery', ({ variables }) => {
-    const line = variables.includeLine
+    const rawLine = variables.includeLine
       ? (mockLines.find((l) => l.id === variables.id) ?? null)
       : undefined;
+    const line = rawLine ? addLineTypenames(rawLine) : rawLine;
     return HttpResponse.json({
       data: {
         ...(variables.includeLine ? { line } : {}),
         networks: mockNetworks.map(
           ({ id, name, description, privateCode, authorityRef }) => ({
+            __typename: 'Network' as const,
             id,
             name,
             description,
@@ -193,6 +246,7 @@ export const handlers = [
         ),
         brandings: mockBrandings.map(
           ({ id, name, shortName, description, url, imageUrl }) => ({
+            __typename: 'Branding' as const,
             id,
             name,
             shortName,
