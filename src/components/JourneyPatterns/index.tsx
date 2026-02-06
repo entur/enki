@@ -2,6 +2,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -123,7 +124,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
         validateJourneyPatternName={validateJourneyPatternName}
       />
 
-      <div>
+      <Box>
         <Typography variant="h1">
           {formatMessage({ id: 'editorJourneyPatternsTabLabel' })}
         </Typography>
@@ -167,7 +168,7 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
           onClick={() => setShowModal(true)}
           buttonTitle={formatMessage({ id: 'editorAddJourneyPatterns' })}
         />
-      </div>
+      </Box>
     </>
   );
 };

@@ -26,14 +26,10 @@ export const GenericPassingTimesEditor = ({
         passingTimes={passingTimes}
         spoilPristine={spoilPristine}
       />
-      <Box
-        className="passing-times-editor"
-        sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}
-      >
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
         {passingTimes.map((passingTime, index) => (
           <Box
             key={uniqueKeys[index]}
-            className="passing-time"
             sx={{
               display: 'flex',
               alignItems: 'center',
@@ -45,7 +41,6 @@ export const GenericPassingTimesEditor = ({
             }}
           >
             <Box
-              className="time-number"
               sx={{
                 minWidth: 32,
                 height: 32,

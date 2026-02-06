@@ -201,7 +201,7 @@ const ServiceJourneyEditor = (props: Props) => {
             }}
           />
         )}
-        <Box sx={{ mt: 8 }}>
+        <Box sx={{ mt: 4 }}>
           <DayTypesEditor
             dayTypes={serviceJourney.dayTypes!}
             onChange={(dayTypes) => {
@@ -213,7 +213,7 @@ const ServiceJourneyEditor = (props: Props) => {
           />
         </Box>
 
-        <Box sx={{ mt: 8 }}>
+        <Box sx={{ mt: 4 }}>
           <PassingTimesEditor
             passingTimes={passingTimes ?? []}
             stopPoints={stopPoints}

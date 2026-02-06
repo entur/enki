@@ -3,6 +3,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
+  Divider,
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -275,6 +276,7 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
             )
           : journeyPatterns.map((jp, jpIndex) => (
               <Fragment key={keys[jpIndex]}>
+                {jpIndex > 0 && <Divider sx={{ my: 3 }} />}
                 <ServiceJourneyPerJourneyPatternWrapper>
                   {journeyPatterns.length > 1 && (
                     <Typography variant="h3">{jp.name}</Typography>
@@ -310,6 +312,7 @@ const ServiceJourneyPerJourneyPatternWrapper = ({ children }: any) => (
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      mt: 2,
     }}
   >
     {children}
