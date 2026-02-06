@@ -305,17 +305,17 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
 };
 
 const ServiceJourneyPerJourneyPatternWrapper = ({ children }: any) => (
-  <div
-    style={{
+  <Box
+    sx={{
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
     }}
   >
     {children}
-  </div>
+  </Box>
 );
 
 const ServiceJourneyBulkDeleteHeader = ({ children }: any) => (
-  <div style={{ alignContent: 'flex-end' }}>{children}</div>
+  <Box sx={{ alignContent: 'flex-end' }}>{children}</Box>
 );

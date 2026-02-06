@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, Box, TextField } from '@mui/material';
 import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -36,23 +36,23 @@ export const FlexibleAreasOnlyStopPointEditor = ({
   );
 
   return (
-    <div style={{ borderBottom: '2px solid #d9d9d9' }}>
-      <div
-        style={{
+    <Box sx={{ borderBottom: '2px solid #d9d9d9' }}>
+      <Box
+        sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          marginTop: '1.5rem',
+          mt: '1.5rem',
         }}
       >
-        <div
-          style={{
+        <Box
+          sx={{
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'space-between',
             maxWidth: '50rem',
             flexBasis: '100%',
-            marginLeft: '1rem',
-            marginRight: '1rem',
+            ml: '1rem',
+            mr: '1rem',
           }}
         >
           <Autocomplete
@@ -102,9 +102,9 @@ export const FlexibleAreasOnlyStopPointEditor = ({
               frontTextPristine,
             )}
           />
-        </div>
-      </div>
-      <div>
+        </Box>
+      </Box>
+      <Box>
         <BookingArrangementEditor
           trim
           bookingArrangement={stopPoint.bookingArrangement}
@@ -126,7 +126,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             });
           }}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

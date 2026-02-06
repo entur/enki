@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import StopPoint from 'model/StopPoint';
 import { useCallback, useEffect } from 'react';
 import { useIntl } from 'react-intl';
@@ -45,7 +45,7 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
   );
 
   return (
-    <section style={{ marginTop: '2em' }}>
+    <Box component="section" sx={{ mt: '2em' }}>
       <Typography variant="h3">
         {formatMessage({ id: 'editorStopPointFlexibleAreaOnly' })}
       </Typography>
@@ -61,6 +61,6 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
           />
         )}
       </div>
-    </section>
+    </Box>
   );
 };

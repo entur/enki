@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client/react';
-import { Autocomplete, Button, Checkbox, TextField } from '@mui/material';
+import { Autocomplete, Box, Button, Checkbox, TextField } from '@mui/material';
 import { GET_DAY_TYPES } from 'api/uttu/queries';
 import DayType from 'model/DayType';
 import { useCallback, useMemo, useState } from 'react';
@@ -59,7 +59,7 @@ export const DayTypesEditor = ({
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'end' }}>
+      <Box sx={{ display: 'flex', alignItems: 'end' }}>
         <Autocomplete
           multiple
           disabled={loading}
@@ -94,7 +94,7 @@ export const DayTypesEditor = ({
           )}
         />
 
-        <div style={{ marginLeft: '1rem' }}>
+        <Box sx={{ ml: 2 }}>
           <Button
             variant="outlined"
             onClick={() => onOpenDayTypeModal(true)}
@@ -102,8 +102,8 @@ export const DayTypesEditor = ({
           >
             {formatMessage({ id: 'dayTypesEditButton' })}
           </Button>
-        </div>
-      </div>
+        </Box>
+      </Box>
       <DayTypesModal
         open={openDayTypeModal}
         setOpen={(open: boolean) => onOpenDayTypeModal(open)}

@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import AddButton from 'components/AddButton/AddButton';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import StopPoint from 'model/StopPoint';
@@ -63,7 +63,7 @@ export const MixedFlexibleStopPointsEditor = ({
   }, [pointsInSequence]);
 
   return (
-    <section style={{ marginTop: '2em' }}>
+    <Box component="section" sx={{ mt: '2em' }}>
       <Typography variant="h3">
         {formatMessage({ id: 'editorStopPoints' })}
       </Typography>
@@ -92,6 +92,6 @@ export const MixedFlexibleStopPointsEditor = ({
         onClick={() => addStopPoint()}
         buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}
       />
-    </section>
+    </Box>
   );
 };

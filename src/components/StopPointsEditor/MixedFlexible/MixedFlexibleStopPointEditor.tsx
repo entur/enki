@@ -1,5 +1,6 @@
 import {
   Autocomplete,
+  Box,
   Button,
   FormControlLabel,
   Radio,
@@ -94,15 +95,15 @@ export const MixedFlexibleStopPointEditor = ({
   }, [stopPoint.key]);
 
   return (
-    <div style={{ borderBottom: '2px solid #d9d9d9' }}>
-      <div
-        style={{
+    <Box sx={{ borderBottom: '2px solid #d9d9d9' }}>
+      <Box
+        sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          marginTop: '1.5rem',
+          mt: '1.5rem',
         }}
       >
-        <div style={{ minWidth: 'fit-content', display: 'flex' }}>
+        <Box sx={{ minWidth: 'fit-content', display: 'flex' }}>
           <StopPointOrder
             order={order}
             isLast={isLast}
@@ -133,8 +134,8 @@ export const MixedFlexibleStopPointEditor = ({
               onChange(newStopPoint);
             }}
           >
-            <div
-              style={{
+            <Box
+              sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -150,18 +151,18 @@ export const MixedFlexibleStopPointEditor = ({
                 control={<Radio />}
                 label={formatMessage({ id: 'selectNsr' })}
               />
-            </div>
+            </Box>
           </RadioGroup>
-        </div>
-        <div
-          style={{
+        </Box>
+        <Box
+          sx={{
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'space-between',
             maxWidth: '50rem',
             flexBasis: '100%',
-            marginLeft: '1rem',
-            marginRight: '1rem',
+            ml: '1rem',
+            mr: '1rem',
           }}
         >
           {selectMode === StopPlaceMode.FLEXIBLE && (
@@ -228,7 +229,7 @@ export const MixedFlexibleStopPointEditor = ({
             onChange={onBoardingTypeChange}
             error={boardingError}
           />
-        </div>
+        </Box>
         <DeleteButton
           disabled={!canDelete}
           onClick={() => setDeleteDialogOpen(true)}
@@ -258,8 +259,8 @@ export const MixedFlexibleStopPointEditor = ({
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />
-      </div>
-      <div>
+      </Box>
+      <Box>
         <BookingArrangementEditor
           trim
           bookingArrangement={stopPoint.bookingArrangement}
@@ -281,7 +282,7 @@ export const MixedFlexibleStopPointEditor = ({
             });
           }}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

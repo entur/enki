@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -257,9 +258,9 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           fullWidth
         />
 
-        <div style={{ marginTop: '1.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-            <div style={{ width: 200, marginRight: '1rem' }}>
+        <Box sx={{ mt: '1.5rem' }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+            <Box sx={{ width: 200, mr: 2 }}>
               <TimePicker
                 label={formatMessage({
                   id: 'copyServiceJourneyDialogDepartureTimeLabel',
@@ -274,14 +275,14 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                   }
                 }}
               />
-            </div>
+            </Box>
             <DayOffsetDropdown
               value={initialDayOffset}
               onChange={(value) => setInitialDayOffset(value!)}
             />
-          </div>
-        </div>
-        <div style={{ marginTop: '1.5rem' }}>
+          </Box>
+        </Box>
+        <Box sx={{ mt: '1.5rem' }}>
           <FormControlLabel
             control={
               <Switch
@@ -293,10 +294,10 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
               id: 'copyServiceJourneyDialogMultipleSwitchLabel',
             })}
           />
-        </div>
+        </Box>
         {multiple && (
           <>
-            <div style={{ marginTop: '1.5rem' }}>
+            <Box sx={{ mt: '1.5rem' }}>
               <Typography variant="body2" sx={{ mb: 1 }}>
                 {formatMessage({
                   id: 'copyServiceJourneyDialogIntervalLabel',
@@ -314,10 +315,10 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                 showMonths={false}
                 showYears={false}
               />
-            </div>
-            <div style={{ marginTop: '1.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-                <div style={{ width: 200, marginRight: '1rem' }}>
+            </Box>
+            <Box sx={{ mt: '1.5rem' }}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Box sx={{ width: 200, mr: 2 }}>
                   <TimePicker
                     label={formatMessage({
                       id: 'copyServiceJourneyDialogLatestPossibleDepartureTimelabel',
@@ -332,18 +333,18 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                       }
                     }}
                   />
-                </div>
+                </Box>
                 <DayOffsetDropdown
                   value={untilDayOffset}
                   onChange={(value) => setUntilDayOffset(value!)}
                 />
-              </div>
+              </Box>
               {validationError.untilTimeIsNotAfterInitialTime && (
                 <Typography color="error" variant="body2" sx={{ mt: 1 }}>
                   {validationError.untilTimeIsNotAfterInitialTime}
                 </Typography>
               )}
-            </div>
+            </Box>
           </>
         )}
       </DialogContent>

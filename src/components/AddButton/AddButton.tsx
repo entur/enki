@@ -1,5 +1,5 @@
 import Add from '@mui/icons-material/Add';
-import { IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 
 type Props = {
   onClick: () => void;
@@ -7,7 +7,7 @@ type Props = {
 };
 
 const AddButton = (props: Props) => (
-  <div style={{ display: 'flex', alignItems: 'baseline', marginTop: '3rem' }}>
+  <Box sx={{ display: 'flex', alignItems: 'baseline', mt: '3rem' }}>
     <IconButton
       onClick={props.onClick}
       sx={{ marginRight: '1rem' }}
@@ -16,7 +16,7 @@ const AddButton = (props: Props) => (
       <Add />
     </IconButton>
     <Typography variant="body1">{props.buttonTitle}</Typography>
-  </div>
+  </Box>
 );
 
 export default AddButton;
