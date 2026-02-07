@@ -52,7 +52,7 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
       <Typography variant="body1">
         {formatMessage({ id: 'stopPointsInfoFlexibleAreaOnly' })}
       </Typography>
-      <div>
+      <Box>
         {pointsInSequence[0] && (
           <FlexibleAreasOnlyStopPointEditor
             stopPoint={pointsInSequence[0]}
@@ -60,7 +60,7 @@ export const FlexibleAreasOnlyStopPointsEditor = ({
             onChange={onStopPointUpdate}
           />
         )}
-      </div>
+      </Box>
     </Box>
   );
 };

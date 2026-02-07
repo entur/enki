@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   FormControlLabel,
   IconButton,
@@ -206,7 +207,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
 
   return (
     <>
-      <div>
+      <Box>
         <Table>
           <TableBody>
             {dayTypeAssignments.map((dta, index) => (
@@ -222,7 +223,7 @@ const DayTypeAssignmentsEditor = ({ dayTypeAssignments, onChange }: Props) => {
             ))}
           </TableBody>
         </Table>
-      </div>
+      </Box>
       <Button
         variant="text"
         onClick={() => addNewDayTypeAssignment()}

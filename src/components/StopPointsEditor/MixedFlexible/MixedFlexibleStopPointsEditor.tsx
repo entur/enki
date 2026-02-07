@@ -70,7 +70,7 @@ export const MixedFlexibleStopPointsEditor = ({
       <Typography variant="body1">
         {formatMessage({ id: 'stopPointsInfoMixedFlexible' })}
       </Typography>
-      <div>
+      <Box>
         {cleanedPointsInSequence.map((stopPoint, pointIndex) => (
           <MixedFlexibleStopPointEditor
             key={keys[pointIndex]}
@@ -87,7 +87,7 @@ export const MixedFlexibleStopPointsEditor = ({
             swapStopPoints={swapStopPoints}
           />
         ))}
-      </div>
+      </Box>
       <AddButton
         onClick={() => addStopPoint()}
         buttonTitle={formatMessage({ id: 'editorAddStopPoint' })}

@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { PassingTimesEditorProps } from '..';
 import { TimeWindowPassingTimeEditor } from '../TimeWindowPassingTimeEditor/TimeWindowPassingTimeEditor';
@@ -23,8 +23,8 @@ export const FlexibleAreasOnlyPassingTimesEditor = ({
         passingTimes={passingTimes}
         spoilPristine={spoilPristine}
       />
-      <div className="passing-times-editor">
-        <div className="passing-time">
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+        <Box sx={{ py: 2 }}>
           <TimeWindowPassingTimeEditor
             passingTime={passingTimes[0]}
             stopPoint={stopPoints[0]}
@@ -40,8 +40,8 @@ export const FlexibleAreasOnlyPassingTimesEditor = ({
               ]);
             }}
           />
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 };

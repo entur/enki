@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, Box, TextField } from '@mui/material';
 import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import { mapVehicleSubmodeAndLabelToItems } from 'helpers/dropdown';
 import { getMuiErrorProps } from 'helpers/muiFormHelpers';
@@ -39,7 +39,7 @@ const VehicleSubModeDropdown = (props: Props) => {
   const items = getSubModeItems();
 
   return (
-    <div key={props.transportMode}>
+    <Box key={props.transportMode}>
       <Autocomplete
         value={
           items.find((item) => item.value === props.transportSubmode) || null
@@ -63,7 +63,7 @@ const VehicleSubModeDropdown = (props: Props) => {
           />
         )}
       />
-    </div>
+    </Box>
   );
 };
 

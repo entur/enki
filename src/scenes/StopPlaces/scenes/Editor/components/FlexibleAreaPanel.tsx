@@ -2,6 +2,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Button,
   Typography,
 } from '@mui/material';
@@ -47,7 +48,7 @@ const FlexibleAreaPanel = ({
         <Typography>{`${formatMessage({ id: 'stopPlaceAreaLabelPrefix' })} ${index + 1}`}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <div>
+        <Box>
           <StopPlaceTypeDropdown
             label={formatMessage({ id: 'flexibleStopAreaType' })}
             keyValues={area.keyValues}
@@ -67,7 +68,7 @@ const FlexibleAreaPanel = ({
           <Button variant="outlined" disabled={!canDelete} onClick={onRemove}>
             {formatMessage({ id: 'stopPlaceRemoveAreaButtonLabel' })}
           </Button>
-        </div>
+        </Box>
       </AccordionDetails>
     </Accordion>
   );

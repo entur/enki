@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client/react';
 import {
   Alert,
+  Box,
   Button,
   ButtonGroup,
   TextField,
@@ -53,7 +54,7 @@ export const DayTypeEditor = ({
   );
 
   return (
-    <div style={{ padding: '1.5rem' }}>
+    <Box sx={{ p: 3 }}>
       <Tooltip
         title={formatMessage({
           id: 'dayTypeEditorNameFieldLabelTooltip',
@@ -138,6 +139,6 @@ export const DayTypeEditor = ({
       {dayTypesFeedback?.feedback && (
         <Alert severity="error">{dayTypesFeedback.feedback}</Alert>
       )}
-    </div>
+    </Box>
   );
 };

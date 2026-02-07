@@ -478,7 +478,7 @@ const LineMigration = () => {
           >
             <Typography variant="h1">Migration Result</Typography>
             {migrationResult.success ? (
-              <div>
+              <Box>
                 <Typography variant="body1">
                   Migration completed successfully!
                 </Typography>
@@ -488,7 +488,7 @@ const LineMigration = () => {
                   </Typography>
                 )}
                 {migrationResult.summary && (
-                  <div>
+                  <Box>
                     <Typography variant="body1">
                       Entities migrated:{' '}
                       {migrationResult.summary.entitiesMigrated}
@@ -500,9 +500,9 @@ const LineMigration = () => {
                       Execution time: {migrationResult.summary.executionTimeMs}
                       ms
                     </Typography>
-                  </div>
+                  </Box>
                 )}
-              </div>
+              </Box>
             ) : (
               <Typography variant="body1">
                 Migration failed. Please check the warnings below.
@@ -511,7 +511,7 @@ const LineMigration = () => {
 
             {migrationResult.warnings &&
               migrationResult.warnings.length > 0 && (
-                <div>
+                <Box>
                   <Typography variant="h1">Warnings</Typography>
                   {migrationResult.warnings.map((warning, index) => (
                     <Typography variant="body1" key={index}>
@@ -519,7 +519,7 @@ const LineMigration = () => {
                       {warning.entityId && ` (Entity: ${warning.entityId})`}
                     </Typography>
                   ))}
-                </div>
+                </Box>
               )}
           </Box>
         )}

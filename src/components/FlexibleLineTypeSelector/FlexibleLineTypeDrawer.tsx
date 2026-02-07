@@ -1,4 +1,4 @@
-import { Drawer, Typography } from '@mui/material';
+import { Box, Drawer, Typography } from '@mui/material';
 import { useConfig } from 'config/ConfigContext';
 import { MessagesKey } from 'i18n/translationKeys';
 import { useIntl } from 'react-intl';
@@ -14,7 +14,7 @@ const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
 
   return (
     <Drawer anchor="right" open={open} onClose={onDismiss}>
-      <div style={{ padding: '1.5rem', maxWidth: '400px' }}>
+      <Box sx={{ p: 3, maxWidth: 400 }}>
         <Typography variant="h6" gutterBottom>
           {title}
         </Typography>
@@ -32,7 +32,7 @@ const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
             })}
           </section>
         ))}
-      </div>
+      </Box>
     </Drawer>
   );
 };

@@ -28,7 +28,7 @@ const ExportItem = ({
     <Typography variant="body2" component="label">
       {label}
     </Typography>
-    <div>{value}</div>
+    <Box>{value}</Box>
   </Box>
 );
 
@@ -134,6 +134,7 @@ const ExportsViewer = () => {
                 </Typography>
                 <Button
                   variant="contained"
+                  sx={{ alignSelf: 'flex-start' }}
                   startIcon={<Download />}
                   onClick={async (event: React.MouseEvent<HTMLElement>) => {
                     event.stopPropagation();
@@ -162,11 +163,11 @@ const ExportsViewer = () => {
                       >
                         {getIconForSeverity(m.severity)}
                       </Box>
-                      <div>
+                      <Box>
                         {m?.message && isOfUttuMessage(m.message)
                           ? formatMessage({ id: uttuMessages[m.message] })
                           : m.message}
-                      </div>
+                      </Box>
                     </Box>
                   ))}
                 </Box>

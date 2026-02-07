@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { changeElementAtIndex } from 'helpers/arrays';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import { useIntl } from 'react-intl';
@@ -26,10 +26,36 @@ export const MixedFlexiblePassingTimesEditor = ({
         passingTimes={passingTimes}
         spoilPristine={spoilPristine}
       />
-      <div className="passing-times-editor">
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
         {passingTimes.map((passingTime, index) => (
-          <div key={uniqueKeys[index]} className="passing-time">
-            <div className="time-number">{index + 1}</div>
+          <Box
+            key={uniqueKeys[index]}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              py: 2,
+              borderBottom:
+                index < passingTimes.length - 1 ? '1px solid' : 'none',
+              borderColor: 'divider',
+            }}
+          >
+            <Box
+              sx={{
+                minWidth: 32,
+                height: 32,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '50%',
+                bgcolor: 'action.hover',
+                fontWeight: 'bold',
+                fontSize: '0.875rem',
+                flexShrink: 0,
+              }}
+            >
+              {index + 1}
+            </Box>
             <MixedFlexiblePassingTimeEditor
               passingTime={passingTime}
               stopPoint={stopPoints[index]}
@@ -41,9 +67,9 @@ export const MixedFlexiblePassingTimesEditor = ({
                 );
               }}
             />
-          </div>
+          </Box>
         ))}
-      </div>
+      </Box>
     </>
   );
 };

@@ -95,7 +95,7 @@ export const DayTypesModalContent = ({
           <strong>{error.title}</strong> {error.message}
         </Alert>
       )}
-      <div>
+      <Box>
         <ButtonGroup>
           <Button variant="outlined" onClick={() => addNewDayType()}>
             {formatMessage({ id: 'dayTypesModalAddNewButtonLabel' })}
@@ -108,7 +108,7 @@ export const DayTypesModalContent = ({
             {formatMessage({ id: 'deleteSelectedDayTypesButtonLabel' })}
           </Button>
         </ButtonGroup>
-      </div>
+      </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
         <Pagination
           count={pageCount}
