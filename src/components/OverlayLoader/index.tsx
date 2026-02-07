@@ -28,7 +28,7 @@ const OverlayLoader = ({
               zIndex: 1001,
               width: '100%',
               height: '100%',
-              backgroundColor: '#ffffff',
+              backgroundColor: 'background.default',
               opacity: seeThrough ? 0.9 : 1,
             }}
           />

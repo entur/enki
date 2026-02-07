@@ -64,7 +64,7 @@ const Loading = ({
         flexDirection: 'column',
         minWidth: '100px',
         textAlign: 'center',
-        color: '#181c56',
+        color: 'primary.main',
       }}
     >
       <Box>

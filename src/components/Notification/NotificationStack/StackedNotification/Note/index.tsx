@@ -152,7 +152,7 @@ const Note = ({
           sx={{
             fontSize: '14px',
             fontWeight: 500,
-            color: '#181c56',
+            color: 'primary.main',
             ml: '45px',
             boxSizing: 'content-box',
             mb: '20px',

@@ -36,7 +36,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
   );
 
   return (
-    <Box sx={{ borderBottom: '2px solid #d9d9d9' }}>
+    <Box sx={{ borderBottom: 2, borderColor: 'divider' }}>
       <Box
         sx={{
           display: 'flex',

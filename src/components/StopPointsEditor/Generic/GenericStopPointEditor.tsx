@@ -59,7 +59,7 @@ export const GenericStopPointEditor = ({
   }, []);
 
   return (
-    <Box sx={{ borderBottom: '2px solid #d9d9d9', pb: 2 }}>
+    <Box sx={{ borderBottom: 2, borderColor: 'divider', pb: 2 }}>
       <Box
         sx={{
           display: 'flex',
