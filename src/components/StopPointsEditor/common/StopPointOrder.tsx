@@ -18,7 +18,6 @@ const StopPointOrder = ({
 }: StopPointOrder) => {
   return (
     <Box
-      className="order"
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -29,7 +28,6 @@ const StopPointOrder = ({
       {!isFirst && (
         <IconButton
           onClick={() => swapStopPoints(order - 2, order - 1)}
-          className={'move-up'}
           size={'small'}
         >
           <ArrowUpward />
@@ -39,7 +37,6 @@ const StopPointOrder = ({
       {!isLast && (
         <IconButton
           onClick={() => swapStopPoints(order - 1, order)}
-          className={'move-down'}
           size={'small'}
         >
           <ArrowDownward />

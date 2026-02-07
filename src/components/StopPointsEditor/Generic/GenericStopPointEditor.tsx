@@ -64,7 +64,7 @@ export const GenericStopPointEditor = ({
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          mt: '1.5rem',
+          mt: 3,
         }}
       >
         <Box sx={{ minWidth: 'fit-content', display: 'flex' }}>

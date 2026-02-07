@@ -1,4 +1,4 @@
-import { Chip, FormHelperText } from '@mui/material';
+import { Box, Chip, FormHelperText } from '@mui/material';
 import usePristine from 'hooks/usePristine';
 import { DAY_OF_WEEK } from 'model/enums';
 import { useIntl } from 'react-intl';
@@ -24,8 +24,8 @@ const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
   const showError = !isValid && !weekdayPristine;
 
   return (
-    <div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
+    <Box>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
         <Chip
           label={formatMessage({ id: 'weekdaysMonday' })}
           variant={days.includes(DAY_OF_WEEK.MONDAY) ? 'filled' : 'outlined'}
@@ -68,13 +68,13 @@ const WeekdayPicker = ({ days, onChange, spoilPristine }: Props) => {
           color={days.includes(DAY_OF_WEEK.SUNDAY) ? 'primary' : 'default'}
           onClick={() => onChange(toggleDay(days, DAY_OF_WEEK.SUNDAY))}
         />
-      </div>
+      </Box>
       {showError && (
         <FormHelperText error>
           {formatMessage({ id: 'weekdaysError' })}
         </FormHelperText>
       )}
-    </div>
+    </Box>
   );
 };
 

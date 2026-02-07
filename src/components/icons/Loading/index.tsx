@@ -7,7 +7,6 @@ const Loading = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 100 100"
     preserveAspectRatio="xMidYMid"
-    className="lds-double-ring"
     style={{ background: 'none' }}
     {...props}
   >

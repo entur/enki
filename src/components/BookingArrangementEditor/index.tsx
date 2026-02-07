@@ -135,15 +135,15 @@ const BookingArrangementEditor = ({
           )}
         </DialogContent>
         <DialogActions>
+          <Button onClick={cancel} variant="outlined">
+            {formatMessage({ id: 'bookingInfoCancelButtonText' })}
+          </Button>
           <Button
             onClick={saveChanges}
             variant="contained"
             disabled={!!bookingArrangementFeedback?.feedback}
           >
             {formatMessage({ id: 'bookingInfoSaveButtonText' })}
-          </Button>
-          <Button onClick={cancel} variant="contained" color="error">
-            {formatMessage({ id: 'bookingInfoCancelButtonText' })}
           </Button>
         </DialogActions>
       </Dialog>

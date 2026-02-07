@@ -41,7 +41,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          mt: '1.5rem',
+          mt: 3,
         }}
       >
         <Box

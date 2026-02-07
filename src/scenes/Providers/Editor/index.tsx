@@ -97,6 +97,7 @@ const ProviderEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({ id: 'editorProviderNameLabelText' })}
                 {...getMuiErrorProps(
                   formatMessage({ id: 'editorProviderValidationField' }),
@@ -111,6 +112,7 @@ const ProviderEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({ id: 'editorProviderCodeLabelText' })}
                 value={provider.code ?? ''}
                 disabled={!!params.id}
@@ -134,6 +136,7 @@ const ProviderEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorProviderCodespaceXmlnsLabelText',
                 })}
@@ -143,6 +146,7 @@ const ProviderEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorProviderCodespaceXmlnsUrlLabelText',
                 })}

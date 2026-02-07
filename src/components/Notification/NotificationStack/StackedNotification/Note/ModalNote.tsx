@@ -37,7 +37,7 @@ const ModalNote = (props: Props) => {
             flexDirection: 'column',
           }}
         >
-          <Box sx={{ pb: '2rem' }}>{message}</Box>
+          <Box sx={{ pb: 4 }}>{message}</Box>
         </Box>
       </DialogContent>
       <DialogActions>

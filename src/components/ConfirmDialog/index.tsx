@@ -38,7 +38,7 @@ const ConfirmDialog = ({
       <DialogActions
         sx={{
           display: 'flex',
-          mt: '2rem',
+          mt: 4,
           maxWidth: '100%',
           justifyContent: 'space-between',
           '& button': {
@@ -46,7 +46,7 @@ const ConfirmDialog = ({
             maxWidth: '20rem',
           },
           '& > :first-of-type': {
-            mr: '2rem',
+            mr: 4,
           },
         }}
       >

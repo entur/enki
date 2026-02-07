@@ -21,6 +21,7 @@ export const StopPlaceTypeDropdown = ({
 
   return (
     <Autocomplete
+      fullWidth
       value={
         keyValues?.find((v) => v.key === 'FlexibleStopAreaType')?.values[0]
           ? {

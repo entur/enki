@@ -243,6 +243,7 @@ const FlexibleStopPlaceEditor = () => {
 
                 <TextField
                   variant="outlined"
+                  fullWidth
                   label={formatMessage({ id: 'editorNameFormLabelText' })}
                   {...getMuiErrorProps(
                     errors.name ? formatMessage({ id: errors.name }) : '',
@@ -260,6 +261,7 @@ const FlexibleStopPlaceEditor = () => {
 
                 <TextField
                   variant="outlined"
+                  fullWidth
                   multiline
                   rows={4}
                   label={formatMessage({
@@ -276,6 +278,7 @@ const FlexibleStopPlaceEditor = () => {
 
                 <TextField
                   variant="outlined"
+                  fullWidth
                   label={formatMessage({
                     id: 'editorPrivateCodeFormLabelText',
                   })}

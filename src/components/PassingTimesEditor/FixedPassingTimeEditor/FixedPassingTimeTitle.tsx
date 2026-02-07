@@ -15,7 +15,7 @@ const FixedPassingTimeTitle = ({ stopPoint }: Props): ReactElement => {
     <Typography
       className="title"
       variant="body2"
-      sx={{ fontWeight: 500, minWidth: 120, flexShrink: 0 }}
+      sx={{ minWidth: 120, flexShrink: 0 }}
     >
       {stopPlace?.name.value ?? quayRef}
     </Typography>

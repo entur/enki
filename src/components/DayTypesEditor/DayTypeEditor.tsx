@@ -62,6 +62,7 @@ export const DayTypeEditor = ({
         placement="top"
       >
         <TextField
+          fullWidth
           label={formatMessage({ id: 'dayTypeEditorNameFieldLabel' })}
           value={mutableDayType.name || ''}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -91,9 +92,9 @@ export const DayTypeEditor = ({
           title={formatMessage({ id: 'dayTypeEditorDateTooltip' })}
           placement="right"
         >
-          <span style={{ marginLeft: '0.25rem', cursor: 'help' }}>
+          <Box component="span" sx={{ ml: 0.5, cursor: 'help' }}>
             <HelpOutline />
-          </span>
+          </Box>
         </Tooltip>
       </Typography>
       <ButtonGroup>

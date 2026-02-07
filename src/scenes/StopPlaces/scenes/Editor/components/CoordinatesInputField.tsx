@@ -92,8 +92,9 @@ export const CoordinatesInputField = ({
   return (
     <TextField
       variant="outlined"
+      fullWidth
       multiline
-      rows={12}
+      rows={8}
       label={formatMessage({ id: 'editorCoordinatesFormLabelText' })}
       error={!!errorMessage}
       helperText={errorMessage ?? undefined}

@@ -144,6 +144,7 @@ const NetworkEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({ id: 'editorNetworkNameLabelText' })}
                 {...getMuiErrorProps(
                   formatMessage({ id: 'editorNetworkValidationName' }),
@@ -158,6 +159,7 @@ const NetworkEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 multiline
                 rows={4}
                 label={formatMessage({
@@ -171,6 +173,7 @@ const NetworkEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorNetworkPrivateCodeLabelText',
                 })}

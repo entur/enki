@@ -90,7 +90,7 @@ export default (props: Props) => {
           variant="outlined"
           size="small"
         />
-        <Table size="small" sx={{ marginTop: '1rem' }}>
+        <Table size="small" sx={{ mt: 2 }}>
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox">

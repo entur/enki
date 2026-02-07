@@ -74,7 +74,7 @@ const CopyDialog = ({
         )}
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" color="error" onClick={() => onDismiss()}>
+        <Button variant="outlined" onClick={() => onDismiss()}>
           {formatMessage({ id: 'copyJourneyPatternDialogCancelButtonText' })}
         </Button>
         <Button

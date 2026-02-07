@@ -3,7 +3,7 @@ import Close from '@mui/icons-material/Close';
 import Error from '@mui/icons-material/Error';
 import Info from '@mui/icons-material/Info';
 import Warning from '@mui/icons-material/Warning';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { VariantType } from 'helpers/errorHandling';
 import { useEffect } from 'react';
 
@@ -98,7 +98,8 @@ const Note = ({
         top: '2rem',
         right: isActive ? '1rem' : '-100%',
         width: 'auto',
-        p: '0 1rem',
+        px: 2,
+        py: 0,
         m: 0,
         boxShadow: '0 0 1px 1px rgba(10, 10, 11, 0.125)',
         cursor: 'default',
@@ -134,12 +135,11 @@ const Note = ({
           boxSizing: 'content-box',
         }}
       >
-        <Box
+        <Typography
+          variant="body1"
           sx={{
             display: 'flex',
             alignItems: 'center',
-            fontSize: '16px',
-            fontWeight: 500,
             boxSizing: 'content-box',
           }}
         >
@@ -147,11 +147,10 @@ const Note = ({
           <Box component="span" sx={{ ml: '10px', color: colors.color }}>
             {title}
           </Box>
-        </Box>
-        <Box
+        </Typography>
+        <Typography
+          variant="body2"
           sx={{
-            fontSize: '14px',
-            fontWeight: 500,
             color: 'primary.main',
             ml: '45px',
             boxSizing: 'content-box',
@@ -159,7 +158,7 @@ const Note = ({
           }}
         >
           {message}
-        </Box>
+        </Typography>
       </Box>
     </Box>
   );

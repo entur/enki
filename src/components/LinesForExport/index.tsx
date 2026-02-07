@@ -234,7 +234,7 @@ export default ({ onChange }: Props) => {
                 color: line.status === 'negative' ? '#888' : 'inherit',
               }}
             >
-              <TableCell padding="checkbox" sx={{ padding: '.5rem 1rem' }}>
+              <TableCell padding="checkbox" sx={{ py: 1, px: 2 }}>
                 <Checkbox
                   name={line.id}
                   checked={line.selected}

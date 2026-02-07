@@ -118,6 +118,7 @@ const BrandingEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({ id: 'editorBrandingNameLabelText' })}
                 {...getMuiErrorProps(
                   formatMessage({ id: 'editorBrandingValidationName' }),
@@ -132,6 +133,7 @@ const BrandingEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 multiline
                 rows={4}
                 label={formatMessage({
@@ -145,6 +147,7 @@ const BrandingEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorBrandingShortNameLabelText',
                 })}
@@ -156,6 +159,7 @@ const BrandingEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorBrandingUrlLabelText',
                 })}
@@ -167,6 +171,7 @@ const BrandingEditor = () => {
 
               <TextField
                 variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorBrandingImageUrlLabelText',
                 })}

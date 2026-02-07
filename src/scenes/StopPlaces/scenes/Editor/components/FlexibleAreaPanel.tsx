@@ -2,8 +2,8 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Box,
   Button,
+  Stack,
   Typography,
 } from '@mui/material';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -48,7 +48,7 @@ const FlexibleAreaPanel = ({
         <Typography>{`${formatMessage({ id: 'stopPlaceAreaLabelPrefix' })} ${index + 1}`}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Box>
+        <Stack spacing={2}>
           <StopPlaceTypeDropdown
             label={formatMessage({ id: 'flexibleStopAreaType' })}
             keyValues={area.keyValues}
@@ -60,15 +60,20 @@ const FlexibleAreaPanel = ({
             changeCoordinates={onCoordinatesChange}
           />
 
-          <Button variant="contained" onClick={onDrawPolygonClick}>
-            {formatMessage({ id: 'editorDrawPolygonButtonText' })}
-            <Map />
-          </Button>
+          <Stack direction="row" spacing={1}>
+            <Button
+              variant="contained"
+              endIcon={<Map />}
+              onClick={onDrawPolygonClick}
+            >
+              {formatMessage({ id: 'editorDrawPolygonButtonText' })}
+            </Button>
 
-          <Button variant="outlined" disabled={!canDelete} onClick={onRemove}>
-            {formatMessage({ id: 'stopPlaceRemoveAreaButtonLabel' })}
-          </Button>
-        </Box>
+            <Button variant="outlined" disabled={!canDelete} onClick={onRemove}>
+              {formatMessage({ id: 'stopPlaceRemoveAreaButtonLabel' })}
+            </Button>
+          </Stack>
+        </Stack>
       </AccordionDetails>
     </Accordion>
   );

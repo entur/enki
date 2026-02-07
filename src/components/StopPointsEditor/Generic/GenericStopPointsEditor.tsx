@@ -84,7 +84,7 @@ export const GenericStopPointsEditor = ({
   );
 
   return (
-    <Box component="section" sx={{ mt: '2em' }}>
+    <Box component="section" sx={{ mt: 4 }}>
       <Typography variant="h3">
         {formatMessage({ id: 'editorStopPoints' })}
       </Typography>

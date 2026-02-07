@@ -78,6 +78,7 @@ const ExportsCreator = () => {
           sx={{ my: 3, maxWidth: '30rem' }}
           label={formatMessage({ id: 'exportCreatorNameFormLabel' })}
           variant="outlined"
+          fullWidth
           {...getMuiErrorProps(
             formatMessage({ id: 'validateFormErrorExportNameIsEmpty' }),
             !isBlank(theExport.name),
@@ -120,9 +121,9 @@ const ExportsCreator = () => {
                   id: 'exportCreatorDryRunFormLabelTooltip',
                 })}
               >
-                <span style={{ marginLeft: '1rem', cursor: 'help' }}>
+                <Box component="span" sx={{ ml: 2, cursor: 'help' }}>
                   <HelpOutline />
-                </span>
+                </Box>
               </Tooltip>
             </Box>
           )}
@@ -150,9 +151,9 @@ const ExportsCreator = () => {
                 id: 'exportCreatorGenerateServiceLinksFormLabelTooltip',
               })}
             >
-              <span style={{ marginLeft: '1rem', cursor: 'help' }}>
+              <Box component="span" sx={{ ml: 2, cursor: 'help' }}>
                 <HelpOutline />
-              </span>
+              </Box>
             </Tooltip>
           </Box>
         </>
@@ -182,9 +183,9 @@ const ExportsCreator = () => {
                 id: 'exportCreatorIncludeDatedServiceJourneysFormLabelTooltip',
               })}
             >
-              <span style={{ marginLeft: '1rem', cursor: 'help' }}>
+              <Box component="span" sx={{ ml: 2, cursor: 'help' }}>
                 <HelpOutline />
-              </span>
+              </Box>
             </Tooltip>
           </Box>
         </>

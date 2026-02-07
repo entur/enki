@@ -258,7 +258,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
           fullWidth
         />
 
-        <Box sx={{ mt: '1.5rem' }}>
+        <Box sx={{ mt: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
             <Box sx={{ width: 200, mr: 2 }}>
               <TimePicker
@@ -282,7 +282,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
             />
           </Box>
         </Box>
-        <Box sx={{ mt: '1.5rem' }}>
+        <Box sx={{ mt: 3 }}>
           <FormControlLabel
             control={
               <Switch
@@ -297,7 +297,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         </Box>
         {multiple && (
           <>
-            <Box sx={{ mt: '1.5rem' }}>
+            <Box sx={{ mt: 3 }}>
               <Typography variant="body2" sx={{ mb: 1 }}>
                 {formatMessage({
                   id: 'copyServiceJourneyDialogIntervalLabel',
@@ -316,7 +316,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
                 showYears={false}
               />
             </Box>
-            <Box sx={{ mt: '1.5rem' }}>
+            <Box sx={{ mt: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <Box sx={{ width: 200, mr: 2 }}>
                   <TimePicker
@@ -349,7 +349,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
         )}
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" color="error" onClick={() => onDismiss()}>
+        <Button variant="outlined" onClick={() => onDismiss()}>
           {formatMessage({ id: 'copyServiceJourneyDialogCancelButtonText' })}
         </Button>
         <Button
