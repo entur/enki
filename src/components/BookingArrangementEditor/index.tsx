@@ -2,11 +2,11 @@ import {
   Alert,
   Box,
   Button,
-  ButtonGroup,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Stack,
   Typography,
 } from '@mui/material';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -93,7 +93,7 @@ const BookingArrangementEditor = ({
           </>
         )}
         {bookingArrangement ? (
-          <ButtonGroup sx={{ mt: 2 }}>
+          <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
             <Button variant="outlined" onClick={() => setshowModal(true)}>
               {formatMessage({ id: 'bookingInfoShowEditButtonText' })}
             </Button>
@@ -104,13 +104,13 @@ const BookingArrangementEditor = ({
             >
               {formatMessage({ id: 'bookingInfoRemoveButtonText' })}
             </Button>
-          </ButtonGroup>
+          </Stack>
         ) : (
-          <ButtonGroup sx={{ mt: 2 }}>
+          <Box sx={{ mt: 2 }}>
             <Button variant="outlined" onClick={() => setshowModal(true)}>
               {formatMessage({ id: 'bookingInfoAddButtonText' })}
             </Button>
-          </ButtonGroup>
+          </Box>
         )}
       </Box>
 
