@@ -48,14 +48,13 @@ export const FlexibleAreasOnlyStopPointEditor = ({
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'space-between',
+            gap: 2,
             maxWidth: '50rem',
             flexBasis: '100%',
-            ml: '1rem',
-            mr: '1rem',
           }}
         >
           <Autocomplete
+            sx={{ flex: 1, minWidth: 200 }}
             value={
               mapToItems(flexibleStopPlaces || []).find(
                 (item) => item.value === stopPoint.flexibleStopPlaceRef,
@@ -91,17 +90,19 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             }}
           />
 
-          <FrontTextTextField
-            value={stopPoint.destinationDisplay?.frontText}
-            onChange={onFrontTextChange}
-            spoilPristine={spoilPristine}
-            isFirst={true}
-            {...getErrorFeedback(
-              frontTextError ? formatMessage({ id: frontTextError }) : '',
-              !frontTextError,
-              frontTextPristine,
-            )}
-          />
+          <Box sx={{ flex: 2, minWidth: 200 }}>
+            <FrontTextTextField
+              value={stopPoint.destinationDisplay?.frontText}
+              onChange={onFrontTextChange}
+              spoilPristine={spoilPristine}
+              isFirst={true}
+              {...getErrorFeedback(
+                frontTextError ? formatMessage({ id: frontTextError }) : '',
+                !frontTextError,
+                frontTextPristine,
+              )}
+            />
+          </Box>
         </Box>
       </Box>
       <Box>

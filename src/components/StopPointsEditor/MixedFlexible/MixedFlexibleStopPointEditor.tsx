@@ -158,15 +158,14 @@ export const MixedFlexibleStopPointEditor = ({
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'space-between',
+            gap: 2,
             maxWidth: '50rem',
             flexBasis: '100%',
-            ml: '1rem',
-            mr: '1rem',
           }}
         >
           {selectMode === StopPlaceMode.FLEXIBLE && (
             <Autocomplete
+              sx={{ flex: 1, minWidth: 200 }}
               value={
                 mapToItems(flexibleStopPlaces || []).find(
                   (item) => item.value === stopPoint.flexibleStopPlaceRef,
@@ -215,20 +214,24 @@ export const MixedFlexibleStopPointEditor = ({
             />
           )}
 
-          <FrontTextTextField
-            value={stopPoint.destinationDisplay?.frontText}
-            onChange={onFrontTextChange}
-            disabled={isLast}
-            spoilPristine={spoilPristine}
-            frontTextError={frontTextError}
-            isFirst={isFirst}
-          />
+          <Box sx={{ flex: 1, minWidth: 200 }}>
+            <FrontTextTextField
+              value={stopPoint.destinationDisplay?.frontText}
+              onChange={onFrontTextChange}
+              disabled={isLast}
+              spoilPristine={spoilPristine}
+              frontTextError={frontTextError}
+              isFirst={isFirst}
+            />
+          </Box>
 
-          <BoardingTypeSelect
-            boardingType={selectedBoardingType}
-            onChange={onBoardingTypeChange}
-            error={boardingError}
-          />
+          <Box sx={{ flex: 1, minWidth: 200 }}>
+            <BoardingTypeSelect
+              boardingType={selectedBoardingType}
+              onChange={onBoardingTypeChange}
+              error={boardingError}
+            />
+          </Box>
         </Box>
         <DeleteButton
           disabled={!canDelete}
