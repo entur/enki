@@ -23,7 +23,7 @@ type Props = {
   journeyPattern: JourneyPattern;
   onSave: (journeyPattern: JourneyPattern) => void;
   onDelete?: () => void;
-  onCopy: (jpName: string) => void;
+  onCopy?: (jpName: string) => void;
   spoilPristine: boolean;
   flexibleLineType?: FlexibleLineType;
   transportMode?: VEHICLE_MODE;
@@ -210,18 +210,22 @@ const JourneyPatternEditor = ({
           swapStopPoints={swapStopPoints}
         />
       </Box>
-      <Stack direction="row" spacing={2}>
-        {onDelete && (
-          <DeleteActionChip
-            onClick={() => setShowDeleteDialog(true)}
-            title={formatMessage({ id: 'editorDeleteButtonText' })}
-          />
-        )}
-        <CopyActionChip
-          title={formatMessage({ id: 'editorCopyButtonText' })}
-          onClick={() => setShowCopyDialog(true)}
-        />
-      </Stack>
+      {(onDelete || onCopy) && (
+        <Stack direction="row" spacing={2}>
+          {onDelete && (
+            <DeleteActionChip
+              onClick={() => setShowDeleteDialog(true)}
+              title={formatMessage({ id: 'editorDeleteButtonText' })}
+            />
+          )}
+          {onCopy && (
+            <CopyActionChip
+              title={formatMessage({ id: 'editorCopyButtonText' })}
+              onClick={() => setShowCopyDialog(true)}
+            />
+          )}
+        </Stack>
+      )}
 
       {showDeleteDialog && onDelete && (
         <ConfirmDialog
@@ -248,7 +252,7 @@ const JourneyPatternEditor = ({
           onDismiss={() => setShowDeleteDialog(false)}
         />
       )}
-      {showCopyDialog && (
+      {onCopy && showCopyDialog && (
         <CopyDialog
           open={showCopyDialog}
           journeyPattern={journeyPattern}

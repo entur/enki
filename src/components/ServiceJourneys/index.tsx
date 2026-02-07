@@ -3,11 +3,18 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
-  Divider,
+  IconButton,
+  Paper,
+  Stack,
+  Tooltip,
   Typography,
 } from '@mui/material';
+import ContentCopy from '@mui/icons-material/ContentCopy';
+import Delete from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddButton from 'components/AddButton/AddButton';
+import ConfirmDialog from 'components/ConfirmDialog';
+import CopyDialog from 'components/ServiceJourneyEditor/CopyDialog';
 import {
   changeElementAtIndex,
   removeElementByIndex,
@@ -19,7 +26,7 @@ import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
-import { Fragment, ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useIntl } from 'react-intl';
 import BulkDeleteDialog from './BulkDeleteDialog';
 import NewServiceJourneyDialog from './NewServiceJourneyDialog';
@@ -65,6 +72,14 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
   const [showNewServiceJourneyDialog, setShowNewServiceJourneyDialog] =
     useState<boolean>(false);
   const [showBulkDeleteDialog, setShowBulkDeleteDialog] = useState<number>(-1);
+  const [deleteTarget, setDeleteTarget] = useState<{
+    jpIndex: number;
+    sjIndex: number;
+  } | null>(null);
+  const [copyTarget, setCopyTarget] = useState<{
+    jpIndex: number;
+    sjIndex: number;
+  } | null>(null);
   const { formatMessage } = useIntl();
 
   const [selectedJourneyPatternIndex, setSelectedJourneyPatternIndex] =
@@ -198,8 +213,44 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
             (!sj.id || sjIndex === jp.serviceJourneys.length - 1)
           }
         >
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            {sj.name}
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{
+              '& .MuiAccordionSummary-content': {
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              },
+            }}
+          >
+            <Typography>{sj.name}</Typography>
+            <Stack
+              direction="row"
+              spacing={0.5}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {sj.id && (
+                <Tooltip title={formatMessage({ id: 'editorCopyButtonText' })}>
+                  <IconButton
+                    size="small"
+                    onClick={() => setCopyTarget({ jpIndex, sjIndex })}
+                  >
+                    <ContentCopy fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              )}
+              {jp.serviceJourneys.length > 1 && (
+                <Tooltip
+                  title={formatMessage({ id: 'editorDeleteButtonText' })}
+                >
+                  <IconButton
+                    size="small"
+                    onClick={() => setDeleteTarget({ jpIndex, sjIndex })}
+                  >
+                    <Delete fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </Stack>
           </AccordionSummary>
           <AccordionDetails>
             {children(
@@ -210,19 +261,8 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
                 journeyPatterns[jpIndex].serviceJourneys,
                 jpIndex,
               ),
-              jp.serviceJourneys.length > 1
-                ? deleteServiceJourney(
-                    sjIndex,
-                    journeyPatterns[jpIndex].serviceJourneys,
-                    jpIndex,
-                  )
-                : undefined,
-              sj.id
-                ? copyServiceJourney(
-                    journeyPatterns[jpIndex].serviceJourneys,
-                    jpIndex,
-                  )
-                : undefined,
+              undefined,
+              undefined,
             )}
           </AccordionDetails>
         </Accordion>
@@ -275,8 +315,11 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               copyServiceJourney(journeyPatterns[0].serviceJourneys, 0),
             )
           : journeyPatterns.map((jp, jpIndex) => (
-              <Fragment key={keys[jpIndex]}>
-                {jpIndex > 0 && <Divider sx={{ my: 3 }} />}
+              <Paper
+                variant="outlined"
+                key={keys[jpIndex]}
+                sx={{ p: 2, mt: jpIndex > 0 ? 3 : 0 }}
+              >
                 <ServiceJourneyPerJourneyPatternWrapper>
                   {journeyPatterns.length > 1 && (
                     <Typography variant="h3">{jp.name}</Typography>
@@ -294,14 +337,66 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
                     </ServiceJourneyBulkDeleteHeader>
                   )}
                 </ServiceJourneyPerJourneyPatternWrapper>
-                {renderServiceJourneys(jp, jpIndex)}
-              </Fragment>
+                <Stack spacing={1}>{renderServiceJourneys(jp, jpIndex)}</Stack>
+              </Paper>
             ))}
         <AddButton
           onClick={() => setShowNewServiceJourneyDialog(true)}
           buttonTitle={formatMessage({ id: 'editorAddServiceJourneys' })}
         />
       </Box>
+
+      {deleteTarget !== null && (
+        <ConfirmDialog
+          isOpen={true}
+          title={formatMessage({ id: 'serviceJourneyDeleteTitle' })}
+          message={formatMessage({ id: 'serviceJourneydeleteMessage' })}
+          buttons={[
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setDeleteTarget(null)}
+            >
+              {formatMessage({ id: 'no' })}
+            </Button>,
+            <Button
+              variant="contained"
+              color="error"
+              key={1}
+              onClick={() => {
+                deleteServiceJourney(
+                  deleteTarget.sjIndex,
+                  journeyPatterns[deleteTarget.jpIndex].serviceJourneys,
+                  deleteTarget.jpIndex,
+                )();
+                setDeleteTarget(null);
+              }}
+            >
+              {formatMessage({ id: 'yes' })}
+            </Button>,
+          ]}
+          onDismiss={() => setDeleteTarget(null)}
+        />
+      )}
+
+      {copyTarget !== null && (
+        <CopyDialog
+          open={true}
+          serviceJourney={
+            journeyPatterns[copyTarget.jpIndex].serviceJourneys[
+              copyTarget.sjIndex
+            ]
+          }
+          onSave={(newServiceJourneys) => {
+            copyServiceJourney(
+              journeyPatterns[copyTarget.jpIndex].serviceJourneys,
+              copyTarget.jpIndex,
+            )(newServiceJourneys);
+            setCopyTarget(null);
+          }}
+          onDismiss={() => setCopyTarget(null)}
+        />
+      )}
     </>
   );
 };

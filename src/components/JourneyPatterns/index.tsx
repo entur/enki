@@ -3,10 +3,17 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
+  IconButton,
+  Stack,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ContentCopy from '@mui/icons-material/ContentCopy';
+import Delete from '@mui/icons-material/Delete';
 import AddButton from 'components/AddButton/AddButton';
+import ConfirmDialog from 'components/ConfirmDialog';
 import { removeElementByIndex, replaceElement } from 'helpers/arrays';
 import {
   getJourneyPatternNames,
@@ -20,6 +27,7 @@ import { useIntl } from 'react-intl';
 import StopPoint from '../../model/StopPoint';
 import { createUuid } from '../../helpers/generators';
 import NewJourneyPatternModal from './NewJourneyPatternModal';
+import CopyDialog from '../JourneyPatternEditor/CopyDialog';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
@@ -30,7 +38,7 @@ type Props = {
       newJourneyPatternName: string | null,
     ) => JourneyPatternNameValidationError,
     handleUpdate: (journeyPattern: JourneyPattern) => void,
-    handleCopy: (jpName: string) => void,
+    handleCopy?: (jpName: string) => void,
     handleDelete?: () => void,
   ) => ReactElement;
 };
@@ -40,6 +48,8 @@ export type { JourneyPatternNameValidationError } from 'validation';
 
 const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
+  const [copyIndex, setCopyIndex] = useState<number | null>(null);
   const { formatMessage } = useIntl();
 
   const keys = useUniqueKeys(journeyPatterns);
@@ -146,17 +156,50 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
                 key={jp.id ?? keys[index]}
                 defaultExpanded={!jp.id || index === journeyPatterns.length - 1}
               >
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  {jp.name}
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  sx={{
+                    '& .MuiAccordionSummary-content': {
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    },
+                  }}
+                >
+                  <Typography>{jp.name}</Typography>
+                  <Stack
+                    direction="row"
+                    spacing={0.5}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Tooltip
+                      title={formatMessage({ id: 'editorCopyButtonText' })}
+                    >
+                      <IconButton
+                        size="small"
+                        onClick={() => setCopyIndex(index)}
+                      >
+                        <ContentCopy fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip
+                      title={formatMessage({ id: 'editorDeleteButtonText' })}
+                    >
+                      <IconButton
+                        size="small"
+                        onClick={() => setDeleteIndex(index)}
+                      >
+                        <Delete fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
                 </AccordionSummary>
                 <AccordionDetails>
                   {children(
                     jp,
                     validateJourneyPatternName,
                     updateJourneyPattern(index),
-                    (name: string) =>
-                      copyJourneyPattern(journeyPatterns, index, name),
-                    deleteJourneyPattern(index),
+                    undefined,
+                    undefined,
                   )}
                 </AccordionDetails>
               </Accordion>
@@ -169,6 +212,48 @@ const JourneyPatterns = ({ journeyPatterns, onChange, children }: Props) => {
           buttonTitle={formatMessage({ id: 'editorAddJourneyPatterns' })}
         />
       </Box>
+
+      <ConfirmDialog
+        isOpen={deleteIndex !== null}
+        title={formatMessage({ id: 'journeyPatternDeleteDialogTitle' })}
+        message={formatMessage({ id: 'journeyPatternDeleteDialogMessage' })}
+        buttons={[
+          <Button
+            variant="outlined"
+            key={2}
+            onClick={() => setDeleteIndex(null)}
+          >
+            {formatMessage({ id: 'no' })}
+          </Button>,
+          <Button
+            variant="contained"
+            color="error"
+            key={1}
+            onClick={() => {
+              if (deleteIndex !== null) {
+                deleteJourneyPattern(deleteIndex)();
+                setDeleteIndex(null);
+              }
+            }}
+          >
+            {formatMessage({ id: 'yes' })}
+          </Button>,
+        ]}
+        onDismiss={() => setDeleteIndex(null)}
+      />
+
+      {copyIndex !== null && (
+        <CopyDialog
+          open={copyIndex !== null}
+          journeyPattern={journeyPatterns[copyIndex]}
+          onSave={(name) => {
+            copyJourneyPattern(journeyPatterns, copyIndex, name);
+            setCopyIndex(null);
+          }}
+          onDismiss={() => setCopyIndex(null)}
+          validateJourneyPatternName={validateJourneyPatternName}
+        />
+      )}
     </>
   );
 };
