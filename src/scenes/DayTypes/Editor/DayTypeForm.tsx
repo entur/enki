@@ -1,5 +1,12 @@
 import HelpOutline from '@mui/icons-material/HelpOutline';
-import { Alert, Box, TextField, Tooltip, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import DayTypeAssignmentsEditor from 'components/DayTypesEditor/DayTypeAssignmentsEditor';
 import WeekdayPicker from 'components/WeekdayPicker';
 import { validateDayType } from 'validation';
@@ -37,7 +44,7 @@ export const DayTypeForm = ({
   }, [isValid, onValidationChange]);
 
   return (
-    <Box>
+    <Stack spacing={3}>
       <TextField
         variant="outlined"
         fullWidth
@@ -94,6 +101,6 @@ export const DayTypeForm = ({
           {formatMessage({ id: 'dayTypesValidationError' })}
         </Alert>
       )}
-    </Box>
+    </Stack>
   );
 };

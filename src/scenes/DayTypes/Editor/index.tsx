@@ -92,7 +92,7 @@ const DayTypeEditor = () => {
           : formatMessage({ id: 'dayTypesCreateDayTypeHeader' })
       }
     >
-      <>
+      <Stack spacing={3}>
         <Typography variant="body1">
           {formatMessage({ id: 'dayTypesEditorDescription' })}
         </Typography>
@@ -180,7 +180,7 @@ const DayTypeEditor = () => {
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />
-      </>
+      </Stack>
     </Page>
   );
 };

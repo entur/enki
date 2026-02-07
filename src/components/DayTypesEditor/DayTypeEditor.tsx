@@ -3,7 +3,7 @@ import {
   Alert,
   Box,
   Button,
-  ButtonGroup,
+  Stack,
   TextField,
   Tooltip,
   Typography,
@@ -54,7 +54,7 @@ export const DayTypeEditor = ({
   );
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Stack spacing={3} sx={{ p: 3 }}>
       <Tooltip
         title={formatMessage({
           id: 'dayTypeEditorNameFieldLabelTooltip',
@@ -97,21 +97,21 @@ export const DayTypeEditor = ({
           </Box>
         </Tooltip>
       </Typography>
-      <ButtonGroup>
-        <DayTypeAssignmentsEditor
-          dayTypeAssignments={
-            mutableDayType.dayTypeAssignments?.length
-              ? mutableDayType.dayTypeAssignments
-              : [newDayTypeAssignment()]
-          }
-          onChange={(dayTypeAssignments) => {
-            setMutableDayType({
-              ...mutableDayType,
-              dayTypeAssignments,
-            });
-          }}
-        />
+      <DayTypeAssignmentsEditor
+        dayTypeAssignments={
+          mutableDayType.dayTypeAssignments?.length
+            ? mutableDayType.dayTypeAssignments
+            : [newDayTypeAssignment()]
+        }
+        onChange={(dayTypeAssignments) => {
+          setMutableDayType({
+            ...mutableDayType,
+            dayTypeAssignments,
+          });
+        }}
+      />
 
+      <Stack direction="row" spacing={1}>
         <Button
           variant="text"
           disabled={!dayTypeIsValid}
@@ -136,10 +136,10 @@ export const DayTypeEditor = ({
             Delete
           </Button>
         )}
-      </ButtonGroup>
+      </Stack>
       {dayTypesFeedback?.feedback && (
         <Alert severity="error">{dayTypesFeedback.feedback}</Alert>
       )}
-    </Box>
+    </Stack>
   );
 };
