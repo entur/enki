@@ -77,9 +77,7 @@ export const handlers = [
       optionalPublicCodeOnLine: true,
       sandboxFeatures: {
         JourneyPatternStopPointMap: true,
-        Fintraffic: true,
       },
-      extPath: 'Fintraffic',
     });
   }),
 
