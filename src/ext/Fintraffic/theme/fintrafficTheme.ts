@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material/styles';
-import baseTheme from '../../../theme';
 
 // Fintraffic Design System (FDS) color tokens
 const fdsColors = {
@@ -44,7 +43,6 @@ const fdsColors = {
 };
 
 export const fintrafficTheme = createTheme({
-  ...baseTheme,
   palette: {
     primary: {
       main: fdsColors.brandBlack,
