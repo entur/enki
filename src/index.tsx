@@ -3,12 +3,11 @@ import { ConfigContext, useConfig } from 'config/ConfigContext';
 import { fetchConfig } from 'config/fetchConfig';
 import CssBaseline from '@mui/material/CssBaseline';
 import type { Theme } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
-import defaultTheme from './theme';
 import { AuthProvider, useAuth } from 'auth/auth';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { store } from 'store/store';
@@ -73,7 +72,7 @@ const renderIndex = async () => {
   const root = ReactDOM.createRoot(container!);
   const config = await fetchConfig();
 
-  let theme: Theme = defaultTheme;
+  let theme: Theme = createTheme();
   if (config.extPath) {
     try {
       const mod = await import(`./ext/${config.extPath}/theme/theme.ts`);
