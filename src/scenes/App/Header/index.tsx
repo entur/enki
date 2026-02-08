@@ -21,7 +21,6 @@ import { SelectProvider } from '../SelectProvider/SelectProvider';
 import { useNoSelectedProvider } from '../useNoSelectedProvider';
 import MenuDrawer from '../MenuDrawer';
 import LanguagePickerMenu from './LanguagePickerMenu';
-import logo from 'static/img/logo.png';
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -42,24 +41,10 @@ const Header = () => {
     auth.logout({ returnTo: window.location.origin });
   }, [auth]);
 
-  const Logo = () => (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <img
-        src={logo}
-        alt={formatMessage({ id: 'navBarRootLinkLogoAltText' })}
-        style={{ height: 28, width: 'auto' }}
-      />
-      <Typography
-        variant="h6"
-        sx={{
-          ml: 1,
-          fontWeight: 'bold',
-          color: 'inherit',
-        }}
-      >
-        {formatMessage({ id: 'appTitle' })}
-      </Typography>
-    </Box>
+  const DefaultLogo = () => (
+    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'inherit' }}>
+      {formatMessage({ id: 'appTitle' })}
+    </Typography>
   );
 
   return (
@@ -91,7 +76,7 @@ const Header = () => {
           >
             <ComponentToggle
               feature={`${extPath}/CustomLogo`}
-              renderFallback={() => <Logo />}
+              renderFallback={() => <DefaultLogo />}
             />
           </Link>
 
