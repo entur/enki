@@ -92,7 +92,6 @@ const renderIndex = async () => {
           <CssBaseline />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Provider store={store}>
-              <ComponentToggle feature={`${config.extPath}/CustomStyle`} />
               <ComponentToggle
                 feature={`${config.extPath}/CustomIntlProvider`}
                 renderFallback={() => <EnkiApp />}

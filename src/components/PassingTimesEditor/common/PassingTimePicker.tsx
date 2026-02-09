@@ -27,7 +27,6 @@ export const PassingTimePicker = ({
     <TimePicker
       disabled={disabled}
       label={`${label}${required ? ' *' : ''}`}
-      className="timepicker"
       value={timeValue}
       onChange={(newValue: Date | null) => {
         if (newValue) {

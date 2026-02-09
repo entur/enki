@@ -1,3 +1,4 @@
+import '@fintraffic/fds-coreui-css/dist/fonts-public-sans.css';
 import { createTheme } from '@mui/material/styles';
 
 // Fintraffic Design System (FDS) color tokens
