@@ -19,28 +19,12 @@ import OperatingPeriod from 'model/OperatingPeriod';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { getCurrentDate, isNotBefore } from '../../utils/dates';
-import { parseISO, format, isValid } from 'date-fns';
+import { isValid } from 'date-fns';
+import { parseToNativeDate, toISODateString } from './dateUtils';
 
 type Props = {
   dayTypeAssignments: DayTypeAssignment[];
   onChange: (dayTypeAssignment: DayTypeAssignment[]) => void;
-};
-
-/**
- * Convert ISO date string to native Date, with fallback to today.
- */
-const parseToNativeDate = (isoString: string | null | undefined): Date => {
-  if (!isoString) return new Date();
-  const parsed = parseISO(isoString);
-  return isValid(parsed) ? parsed : new Date();
-};
-
-/**
- * Convert native Date to ISO date string (YYYY-MM-DD).
- */
-const toISODateString = (date: Date | null): string | null => {
-  if (!date || !isValid(date)) return null;
-  return format(date, 'yyyy-MM-dd');
 };
 
 /**

@@ -24,7 +24,7 @@ import { ComponentToggle } from '@entur/react-component-toggle';
 
 const DRAWER_WIDTH = 300;
 
-const isActive = (pathname: string, path: string) =>
+export const isActive = (pathname: string, path: string) =>
   pathname.split('/')[1] === path.split('/')[1];
 
 type RedirectType = {

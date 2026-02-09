@@ -17,7 +17,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const formatDuration = (duration: any, intl: any) => {
+export const formatDuration = (duration: any, intl: any) => {
   const parts = [];
   if (duration.years) {
     parts.push(
