@@ -1,16 +1,14 @@
-import { Autocomplete, Box, TextField } from '@mui/material';
-import { NormalizedDropdownItemType } from 'helpers/dropdown';
-import { mapToItems } from 'helpers/dropdown';
+import { Box } from '@mui/material';
 import { StopPointBookingArrangement } from '../common/StopPointBookingArrangement';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateFlexibleAreasOnlyStopPoint } from 'validation';
 import usePristine from 'hooks/usePristine';
 import { useIntl } from 'react-intl';
-import { useAppSelector } from '../../../store/hooks';
 import {
   FrontTextTextField,
   useOnFrontTextChange,
 } from '../common/FrontTextTextField';
+import { FlexibleStopPlaceSelector } from '../common/FlexibleStopPlaceSelector';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
 
 export const FlexibleAreasOnlyStopPointEditor = ({
@@ -21,14 +19,7 @@ export const FlexibleAreasOnlyStopPointEditor = ({
   const { stopPlace: stopPlaceError, frontText: frontTextError } =
     validateFlexibleAreasOnlyStopPoint(stopPoint);
   const { formatMessage } = useIntl();
-  const flexibleStopPlaces = useAppSelector(
-    (state) => state.flexibleStopPlaces,
-  );
   const onFrontTextChange = useOnFrontTextChange(stopPoint, onChange);
-  const stopPlacePristine = usePristine(
-    stopPoint.flexibleStopPlaceRef,
-    spoilPristine,
-  );
   const frontTextPristine = usePristine(
     stopPoint.destinationDisplay?.frontText,
     spoilPristine,
@@ -52,41 +43,11 @@ export const FlexibleAreasOnlyStopPointEditor = ({
             flexBasis: '100%',
           }}
         >
-          <Autocomplete
-            sx={{ flex: 1, minWidth: 200 }}
-            value={
-              mapToItems(flexibleStopPlaces || []).find(
-                (item) => item.value === stopPoint.flexibleStopPlaceRef,
-              ) || null
-            }
-            onChange={(_event, newValue: NormalizedDropdownItemType | null) =>
-              onChange({
-                ...stopPoint,
-                flexibleStopPlaceRef: newValue?.value,
-              })
-            }
-            options={mapToItems(flexibleStopPlaces || [])}
-            getOptionLabel={(option) => option.label}
-            isOptionEqualToValue={(option, value) =>
-              option.value === value.value
-            }
-            noOptionsText={formatMessage({
-              id: 'dropdownNoMatchesText',
-            })}
-            renderInput={(params) => {
-              const hasError = !stopPlacePristine && !!stopPlaceError;
-              return (
-                <TextField
-                  {...params}
-                  label={formatMessage({ id: 'stopPlace' })}
-                  placeholder={formatMessage({ id: 'defaultOption' })}
-                  error={hasError}
-                  helperText={
-                    hasError ? formatMessage({ id: stopPlaceError }) : ''
-                  }
-                />
-              );
-            }}
+          <FlexibleStopPlaceSelector
+            stopPoint={stopPoint}
+            spoilPristine={spoilPristine}
+            stopPlaceError={stopPlaceError}
+            onChange={onChange}
           />
 
           <Box sx={{ flex: 2, minWidth: 200 }}>

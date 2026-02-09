@@ -1,22 +1,12 @@
-import {
-  Autocomplete,
-  Box,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  TextField,
-} from '@mui/material';
-import { NormalizedDropdownItemType } from 'helpers/dropdown';
+import { Box, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import { DeleteStopPointDialog } from '../common/DeleteStopPointDialog';
 import { StopPointBookingArrangement } from '../common/StopPointBookingArrangement';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
-import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'validation';
 import usePristine from 'hooks/usePristine';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useAppSelector } from '../../../store/hooks';
 import {
   BoardingTypeSelect,
   useOnBoardingTypeChange,
@@ -26,6 +16,7 @@ import {
   FrontTextTextField,
   useOnFrontTextChange,
 } from '../common/FrontTextTextField';
+import { FlexibleStopPlaceSelector } from '../common/FlexibleStopPlaceSelector';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { MixedFlexibleStopPointEditorProps } from '../common/StopPointEditorProps';
 import StopPointOrder from '../common/StopPointOrder';
@@ -52,16 +43,8 @@ export const MixedFlexibleStopPointEditor = ({
     stopPoint.quayRef ? StopPlaceMode.EXTERNAL : StopPlaceMode.FLEXIBLE,
   );
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const flexibleStopPlaces = useAppSelector(
-    (state) => state.flexibleStopPlaces,
-  );
 
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
-
-  const stopPlacePristine = usePristine(
-    stopPoint.flexibleStopPlaceRef,
-    spoilPristine,
-  );
 
   const onQuayRefChange = useOnQuayRefChange(stopPoint, onChange);
   const onFrontTextChange = useOnFrontTextChange(stopPoint, onChange);
@@ -162,41 +145,11 @@ export const MixedFlexibleStopPointEditor = ({
           }}
         >
           {selectMode === StopPlaceMode.FLEXIBLE && (
-            <Autocomplete
-              sx={{ flex: 1, minWidth: 200 }}
-              value={
-                mapToItems(flexibleStopPlaces || []).find(
-                  (item) => item.value === stopPoint.flexibleStopPlaceRef,
-                ) || null
-              }
-              onChange={(_event, newValue: NormalizedDropdownItemType | null) =>
-                onChange({
-                  ...stopPoint,
-                  flexibleStopPlaceRef: newValue?.value,
-                })
-              }
-              options={mapToItems(flexibleStopPlaces || [])}
-              getOptionLabel={(option) => option.label}
-              isOptionEqualToValue={(option, value) =>
-                option.value === value.value
-              }
-              noOptionsText={formatMessage({
-                id: 'dropdownNoMatchesText',
-              })}
-              renderInput={(params) => {
-                const hasError = !stopPlacePristine && !!stopPlaceError;
-                return (
-                  <TextField
-                    {...params}
-                    label={formatMessage({ id: 'stopPlace' })}
-                    placeholder={formatMessage({ id: 'defaultOption' })}
-                    error={hasError}
-                    helperText={
-                      hasError ? formatMessage({ id: stopPlaceError }) : ''
-                    }
-                  />
-                );
-              }}
+            <FlexibleStopPlaceSelector
+              stopPoint={stopPoint}
+              spoilPristine={spoilPristine}
+              stopPlaceError={stopPlaceError}
+              onChange={onChange}
             />
           )}
 
