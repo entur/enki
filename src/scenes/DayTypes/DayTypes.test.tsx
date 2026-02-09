@@ -1,4 +1,4 @@
-import { render, screen } from '../../utils/test-utils';
+import { render, screen, userEvent, waitFor } from '../../utils/test-utils';
 import DayTypes from './index';
 import { mockDayTypes } from '../../mocks/mockData';
 
@@ -68,5 +68,89 @@ describe('DayTypes listing', () => {
     });
     const createLink = screen.getByRole('link');
     expect(createLink).toHaveAttribute('href', '/day-types/create');
+  });
+
+  it('disables delete button for day types that are in use', () => {
+    render(<DayTypes />, {
+      routerProps: { initialEntries: ['/day-types'] },
+      preloadedState,
+    });
+    // All mock day types have numberOfServiceJourneys > 0, so all delete buttons should be disabled
+    const deleteButtons = screen.getAllByRole('button', { name: '' });
+    const deleteButtonsWithIcon = deleteButtons.filter(
+      (btn) => btn.id === 'delete-button',
+    );
+    deleteButtonsWithIcon.forEach((btn) => {
+      expect(btn).toBeDisabled();
+    });
+  });
+
+  describe('delete confirmation dialog', () => {
+    const dayTypesWithDeletable = [
+      ...mockDayTypes,
+      {
+        id: 'TST:DayType:99',
+        changed: '2025-01-15T10:00:00Z',
+        name: 'Unused Day Type',
+        numberOfServiceJourneys: 0,
+        daysOfWeek: ['monday'],
+        dayTypeAssignments: [],
+      },
+    ];
+
+    const deletableState = {
+      ...preloadedState,
+      dayTypes: dayTypesWithDeletable as any,
+    };
+
+    it('opens confirmation dialog when clicking delete on an unused day type', async () => {
+      const user = userEvent.setup();
+      render(<DayTypes />, {
+        routerProps: { initialEntries: ['/day-types'] },
+        preloadedState: deletableState,
+      });
+
+      // Find the enabled delete button (the one for the unused day type)
+      const deleteButtons = screen
+        .getAllByRole('button')
+        .filter(
+          (btn) => btn.id === 'delete-button' && !btn.hasAttribute('disabled'),
+        );
+      expect(deleteButtons.length).toBeGreaterThanOrEqual(1);
+
+      await user.click(deleteButtons[0]);
+
+      await waitFor(() => {
+        expect(screen.getByText('Delete day type')).toBeInTheDocument();
+      });
+      expect(
+        screen.getByText('Are you sure you want to delete this day type?'),
+      ).toBeInTheDocument();
+    });
+
+    it('dismisses dialog when clicking No', async () => {
+      const user = userEvent.setup();
+      render(<DayTypes />, {
+        routerProps: { initialEntries: ['/day-types'] },
+        preloadedState: deletableState,
+      });
+
+      const deleteButtons = screen
+        .getAllByRole('button')
+        .filter(
+          (btn) => btn.id === 'delete-button' && !btn.hasAttribute('disabled'),
+        );
+      await user.click(deleteButtons[0]);
+
+      await waitFor(() => {
+        expect(screen.getByText('Delete day type')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'No' }));
+
+      await waitFor(() => {
+        expect(screen.queryByText('Delete day type')).not.toBeInTheDocument();
+      });
+    });
   });
 });

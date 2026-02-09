@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '../../utils/test-utils';
+import { render, screen, userEvent, waitFor } from '../../utils/test-utils';
 import Networks from './index';
 import { mockNetworks, mockOrganisations } from '../../mocks/mockData';
 
@@ -63,5 +63,52 @@ describe('Networks listing', () => {
     });
     const createLink = screen.getByRole('link');
     expect(createLink).toHaveAttribute('href', '/networks/create');
+  });
+
+  describe('delete confirmation dialog', () => {
+    it('opens confirmation dialog when clicking delete button', async () => {
+      const user = userEvent.setup();
+      render(<Networks />, {
+        routerProps: { initialEntries: ['/networks'] },
+        preloadedState,
+      });
+
+      const deleteButtons = screen
+        .getAllByRole('button')
+        .filter((btn) => btn.id === 'delete-button');
+      expect(deleteButtons.length).toBeGreaterThanOrEqual(1);
+
+      await user.click(deleteButtons[0]);
+
+      await waitFor(() => {
+        expect(screen.getByText('Delete network')).toBeInTheDocument();
+      });
+      expect(
+        screen.getByText('Are you sure you want to delete this network?'),
+      ).toBeInTheDocument();
+    });
+
+    it('dismisses dialog when clicking No', async () => {
+      const user = userEvent.setup();
+      render(<Networks />, {
+        routerProps: { initialEntries: ['/networks'] },
+        preloadedState,
+      });
+
+      const deleteButtons = screen
+        .getAllByRole('button')
+        .filter((btn) => btn.id === 'delete-button');
+      await user.click(deleteButtons[0]);
+
+      await waitFor(() => {
+        expect(screen.getByText('Delete network')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'No' }));
+
+      await waitFor(() => {
+        expect(screen.queryByText('Delete network')).not.toBeInTheDocument();
+      });
+    });
   });
 });

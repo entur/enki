@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '../../utils/test-utils';
+import { render, screen, userEvent, waitFor } from '../../utils/test-utils';
 import StopPlaces from './index';
 
 describe('StopPlaces listing', () => {
@@ -73,5 +73,68 @@ describe('StopPlaces listing', () => {
     });
     const createLink = screen.getByRole('link');
     expect(createLink).toHaveAttribute('href', '/stop-places/create');
+  });
+
+  describe('delete confirmation dialog', () => {
+    it('opens confirmation dialog when clicking delete button', async () => {
+      const user = userEvent.setup();
+      render(<StopPlaces />, {
+        routerProps: { initialEntries: ['/stop-places'] },
+        preloadedState,
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('Oslo Sentrum Sone')).toBeInTheDocument();
+      });
+
+      const deleteButtons = screen
+        .getAllByRole('button')
+        .filter((btn) => btn.id === 'delete-button');
+      expect(deleteButtons.length).toBeGreaterThanOrEqual(1);
+
+      await user.click(deleteButtons[0]);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Delete flexible stop place'),
+        ).toBeInTheDocument();
+      });
+      expect(
+        screen.getByText(
+          'Are you sure you want to delete this flexible stop place?',
+        ),
+      ).toBeInTheDocument();
+    });
+
+    it('dismisses dialog when clicking No', async () => {
+      const user = userEvent.setup();
+      render(<StopPlaces />, {
+        routerProps: { initialEntries: ['/stop-places'] },
+        preloadedState,
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('Oslo Sentrum Sone')).toBeInTheDocument();
+      });
+
+      const deleteButtons = screen
+        .getAllByRole('button')
+        .filter((btn) => btn.id === 'delete-button');
+      await user.click(deleteButtons[0]);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Delete flexible stop place'),
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'No' }));
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText('Delete flexible stop place'),
+        ).not.toBeInTheDocument();
+      });
+    });
   });
 });
