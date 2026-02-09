@@ -23,8 +23,9 @@ test.describe('Networks', () => {
   test('can fill in and save a new network', async ({ page }) => {
     await page.goto('/networks/create');
 
-    // Fill in the name field
+    // Wait for form to load (organisations query must resolve)
     const nameInput = page.getByLabel(/name/i);
+    await expect(nameInput).toBeVisible();
     await nameInput.fill('Test Network');
 
     // Select an authority from the dropdown
@@ -34,8 +35,10 @@ test.describe('Networks', () => {
     await authorityDropdown.click();
     await page.getByRole('option').first().click();
 
-    // Click the save button
-    const saveButton = page.getByRole('button', { name: /save/i });
-    await saveButton.click();
+    // Click the create button
+    const createButton = page.getByRole('button', {
+      name: /create new network/i,
+    });
+    await createButton.click();
   });
 });

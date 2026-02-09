@@ -31,9 +31,13 @@ test.describe('Flexible line editor', () => {
     await page.goto('/flexible-lines/create');
 
     // Verify stepper shows the three steps
-    await expect(page.getByText('General')).toBeVisible();
-    await expect(page.getByText('Journey Patterns')).toBeVisible();
-    await expect(page.getByText('Service Journeys')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'General' })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Journey Patterns' }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Service Journeys' }),
+    ).toBeVisible();
 
     // Verify Step 1 form fields are present
     await expect(page.getByLabel(/name/i).first()).toBeVisible();
@@ -77,13 +81,13 @@ test.describe('Flexible line editor', () => {
     await nameInput.fill('Test Line');
 
     // Click on Step 2 (Journey Patterns)
-    await page.getByText('Journey Patterns').click();
+    await page.getByRole('button', { name: 'Journey Patterns' }).click();
 
     // Click on Step 3 (Service Journeys)
-    await page.getByText('Service Journeys').click();
+    await page.getByRole('button', { name: 'Service Journeys' }).click();
 
     // Navigate back to Step 1
-    await page.getByText('General').click();
+    await page.getByRole('button', { name: 'General' }).click();
     await expect(nameInput).toHaveValue('Test Line');
   });
 });

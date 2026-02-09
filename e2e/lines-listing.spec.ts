@@ -14,8 +14,12 @@ test.describe('Lines listing', () => {
   test('displays mock line data', async ({ page }) => {
     await page.goto('/lines');
     // Verify mock lines appear (Line 201 and Line 202 from mock data)
-    await expect(page.getByText('201')).toBeVisible();
-    await expect(page.getByText('202')).toBeVisible();
+    await expect(
+      page.getByRole('cell', { name: '201', exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('cell', { name: '202', exact: true }),
+    ).toBeVisible();
   });
 
   test('navigates to create line page', async ({ page }) => {

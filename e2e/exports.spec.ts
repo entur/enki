@@ -75,12 +75,16 @@ test.describe('Exports', () => {
   test('shows export status indicators in listing', async ({ page }) => {
     await page.goto('/exports');
 
+    // Wait for the listing to load
+    await expect(
+      page.getByRole('heading', { name: /exports/i }),
+    ).toBeVisible();
+
     // The exports listing should show all three exports with different statuses
-    // Successful export
-    await expect(page.getByText('Mars 2025 eksport')).toBeVisible();
-    // Dry run export
+    await expect(page.getByText('Mars 2025 eksport')).toBeVisible({
+      timeout: 10000,
+    });
     await expect(page.getByText('Test eksport (dry run)')).toBeVisible();
-    // Failed export
     await expect(page.getByText('Feilet eksport')).toBeVisible();
   });
 });
