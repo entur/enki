@@ -14,6 +14,7 @@ import PersonOutline from '@mui/icons-material/PersonOutline';
 import Logout from '@mui/icons-material/Logout';
 import { useTheme } from '@mui/material/styles';
 import { ComponentToggle } from '@entur/react-component-toggle';
+import { DefaultLogo } from '../DefaultLogo';
 import { useAuth } from '../../../auth/auth';
 import { useAppSelector } from '../../../store/hooks';
 import { useConfig } from '../../../config/ConfigContext';
@@ -38,14 +39,8 @@ const Header = () => {
 
   const handleLogout = useCallback(() => {
     setUserAnchorEl(null);
-    auth.logout({ returnTo: window.location.origin });
+    auth.logout({ returnTo: globalThis.location.origin });
   }, [auth]);
-
-  const DefaultLogo = () => (
-    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'inherit' }}>
-      {formatMessage({ id: 'appTitle' })}
-    </Typography>
-  );
 
   return (
     <>
@@ -76,7 +71,9 @@ const Header = () => {
           >
             <ComponentToggle
               feature={`${extPath}/CustomLogo`}
-              renderFallback={() => <DefaultLogo />}
+              renderFallback={() => (
+                <DefaultLogo title={formatMessage({ id: 'appTitle' })} />
+              )}
             />
           </Link>
 

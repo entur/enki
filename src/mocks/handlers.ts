@@ -13,6 +13,42 @@ import {
   quayToStopPlace,
 } from './mockData';
 
+// Helper to add __typename to a DayType and its nested assignments/periods.
+function addDayTypeTypenames(
+  dt: (typeof mockLines)[number]['journeyPatterns'][number]['serviceJourneys'][number]['dayTypes'][number],
+) {
+  return {
+    __typename: 'DayType',
+    ...dt,
+    dayTypeAssignments: dt.dayTypeAssignments.map((dta) => ({
+      __typename: 'DayTypeAssignment',
+      ...dta,
+      operatingPeriod: dta.operatingPeriod
+        ? { __typename: 'OperatingPeriod', ...dta.operatingPeriod }
+        : null,
+    })),
+  };
+}
+
+// Helper to add __typename to a ServiceJourney and its nested entities.
+function addServiceJourneyTypenames(
+  sj: (typeof mockLines)[number]['journeyPatterns'][number]['serviceJourneys'][number],
+) {
+  return {
+    __typename: 'ServiceJourney',
+    ...sj,
+    notices: (sj.notices as Record<string, unknown>[]).map((n) => ({
+      __typename: 'Notice',
+      ...n,
+    })),
+    passingTimes: sj.passingTimes.map((pt) => ({
+      __typename: 'TimetabledPassingTime',
+      ...pt,
+    })),
+    dayTypes: sj.dayTypes.map(addDayTypeTypenames),
+  };
+}
+
 // Add __typename fields to line data so Apollo Client's InMemoryCache
 // can properly normalize and return nested objects like journeyPatterns.
 function addLineTypenames(line: (typeof mockLines)[number]) {
@@ -37,31 +73,29 @@ function addLineTypenames(line: (typeof mockLines)[number]) {
           ? { __typename: 'DestinationDisplay', ...pis.destinationDisplay }
           : null,
       })),
-      serviceJourneys: jp.serviceJourneys.map((sj) => ({
-        __typename: 'ServiceJourney',
-        ...sj,
-        notices: (sj.notices as Record<string, unknown>[]).map((n) => ({
-          __typename: 'Notice',
-          ...n,
-        })),
-        passingTimes: sj.passingTimes.map((pt) => ({
-          __typename: 'TimetabledPassingTime',
-          ...pt,
-        })),
-        dayTypes: sj.dayTypes.map((dt) => ({
-          __typename: 'DayType',
-          ...dt,
-          dayTypeAssignments: dt.dayTypeAssignments.map((dta) => ({
-            __typename: 'DayTypeAssignment',
-            ...dta,
-            operatingPeriod: dta.operatingPeriod
-              ? { __typename: 'OperatingPeriod', ...dta.operatingPeriod }
-              : null,
-          })),
-        })),
+      serviceJourneys: jp.serviceJourneys.map(addServiceJourneyTypenames),
+    })),
+  };
+}
+
+// Helper to map a service journey for export (dayTypes → dayTypeAssignments chain).
+function mapServiceJourneyForExport(sj: { dayTypes: typeof mockDayTypes }) {
+  return {
+    dayTypes: sj.dayTypes.map((dt) => ({
+      dayTypeAssignments: dt.dayTypeAssignments.map((dta) => ({
+        operatingPeriod: dta.operatingPeriod,
       })),
     })),
   };
+}
+
+// Helper to map journey patterns for export responses.
+function mapJourneyPatterns(
+  jps: { serviceJourneys: { dayTypes: typeof mockDayTypes }[] }[],
+) {
+  return jps.map((jp) => ({
+    serviceJourneys: jp.serviceJourneys.map(mapServiceJourneyForExport),
+  }));
 }
 
 export const handlers = [
@@ -356,19 +390,6 @@ export const handlers = [
   }),
 
   graphql.query('GetLinesForExport', () => {
-    const mapJourneyPatterns = (
-      jps: { serviceJourneys: { dayTypes: typeof mockDayTypes }[] }[],
-    ) =>
-      jps.map((jp) => ({
-        serviceJourneys: jp.serviceJourneys.map((sj) => ({
-          dayTypes: sj.dayTypes.map((dt) => ({
-            dayTypeAssignments: dt.dayTypeAssignments.map((dta) => ({
-              operatingPeriod: dta.operatingPeriod,
-            })),
-          })),
-        })),
-      }));
-
     return HttpResponse.json({
       data: {
         lines: mockLines.map((l) => ({

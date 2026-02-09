@@ -40,20 +40,22 @@ export default ({ value, onChange, disabled = false }: Props) => {
         options[0]
       }
       onChange={(_event, newValue) =>
-        onChange(parseInt(newValue?.value || '0'))
+        onChange(Number.parseInt(newValue?.value || '0'))
       }
       disableClearable
       renderInput={(params) => (
         <TextField
           {...params}
           label={formatMessage({ id: 'passingTimesDayOffset' })}
-          InputProps={{
-            ...params.InputProps,
-            startAdornment: (
-              <InputAdornment position="start">
-                <DarkMode fontSize="small" />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              ...params.InputProps,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <DarkMode fontSize="small" />
+                </InputAdornment>
+              ),
+            },
           }}
         />
       )}

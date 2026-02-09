@@ -21,7 +21,6 @@ import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../store/hooks';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import { exportIsValid } from './validateForm';
 import { useConfig } from '../../../config/ConfigContext';
 

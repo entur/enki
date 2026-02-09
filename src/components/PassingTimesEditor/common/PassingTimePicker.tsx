@@ -1,5 +1,4 @@
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { useIntl } from 'react-intl';
 import { toDate } from './toDate';
 
 type Props = {
@@ -22,7 +21,7 @@ export const PassingTimePicker = ({
   const timeValue =
     disabled || !selectedTime || ignoreSelectedTime
       ? null
-      : toDate(selectedTime!) || null;
+      : toDate(selectedTime) || null;
 
   return (
     <TimePicker

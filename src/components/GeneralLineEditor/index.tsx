@@ -1,11 +1,14 @@
 import { Autocomplete, Box, TextField, Typography } from '@mui/material';
-import { NormalizedDropdownItemType } from 'helpers/dropdown';
+import {
+  NormalizedDropdownItemType,
+  mapToItems,
+  mapVehicleModeAndLabelToItems,
+} from 'helpers/dropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import { FlexibleLineTypeSelector } from 'components/FlexibleLineTypeSelector/FlexibleLineTypeSelector';
 import Notices from 'components/Notices';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import { mapToItems, mapVehicleModeAndLabelToItems } from 'helpers/dropdown';
 import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';

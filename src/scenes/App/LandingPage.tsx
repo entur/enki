@@ -9,17 +9,12 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import { useConfig } from '../../config/ConfigContext';
 import { ComponentToggle } from '@entur/react-component-toggle';
+import { DefaultLogo } from './DefaultLogo';
 
 export const LandingPage = () => {
   const { formatMessage } = useIntl();
   const { extPath } = useConfig();
   const auth = useAuth();
-
-  const DefaultLogo = () => (
-    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'inherit' }}>
-      {formatMessage({ id: 'appTitle' })}
-    </Typography>
-  );
 
   return (
     <div>
@@ -34,7 +29,9 @@ export const LandingPage = () => {
         >
           <ComponentToggle
             feature={`${extPath}/CustomLogo`}
-            renderFallback={() => <DefaultLogo />}
+            renderFallback={() => (
+              <DefaultLogo title={formatMessage({ id: 'appTitle' })} />
+            )}
           />
         </Toolbar>
       </AppBar>
@@ -46,7 +43,7 @@ export const LandingPage = () => {
           </Typography>
           <Button
             variant="contained"
-            onClick={() => auth.login(window.location.href)}
+            onClick={() => auth.login(globalThis.location.href)}
           >
             {formatMessage({ id: 'landingPageLoginButtonText' })}
           </Button>

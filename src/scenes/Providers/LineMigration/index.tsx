@@ -514,7 +514,10 @@ const LineMigration = () => {
                 <Box>
                   <Typography variant="h1">Warnings</Typography>
                   {migrationResult.warnings.map((warning, index) => (
-                    <Typography variant="body1" key={index}>
+                    <Typography
+                      variant="body1"
+                      key={`${warning.type}-${warning.entityId ?? ''}-${index}`}
+                    >
                       {warning.type}: {warning.message}
                       {warning.entityId && ` (Entity: ${warning.entityId})`}
                     </Typography>

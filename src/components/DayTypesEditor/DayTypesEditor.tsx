@@ -66,10 +66,10 @@ export const DayTypesEditor = ({
           sx={{ minWidth: '20rem' }}
           value={selectedValues}
           onChange={(_event, newValue: DayTypeOption[]) => {
-            const selectedIds = newValue.map((item) => item.value);
+            const selectedIds = new Set(newValue.map((item) => item.value));
             onChange(
               allDayTypesData?.dayTypes.filter((dt) =>
-                selectedIds.includes(dt.id!),
+                selectedIds.has(dt.id!),
               ) || [],
             );
           }}

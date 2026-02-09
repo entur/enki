@@ -83,7 +83,7 @@ describe('LineEditorStepper', () => {
       expect(screen.getByTestId('step-content-0')).toBeInTheDocument();
     });
 
-    it('calls setNextClicked(true) when step is invalid and Next is clicked', async () => {
+    it('disables Next button when current step is invalid', () => {
       const setNextClicked = vi.fn();
       render(
         <LineEditorStepper
@@ -94,9 +94,8 @@ describe('LineEditorStepper', () => {
         />,
         { routerProps: { initialEntries: ['/lines/create'] } },
       );
-      // Next button is disabled via NavigationButtons, but onNext is passed through
-      // The component calls setNextClicked(true) if step is invalid
-      // We need to test that clicking the step button handles validity
+      expect(screen.getByText('Next')).toBeDisabled();
+      expect(setNextClicked).not.toHaveBeenCalled();
     });
 
     it('shows Save and create on last step', async () => {

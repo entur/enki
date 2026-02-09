@@ -1,2 +1,1 @@
-import { EnturLogo } from './EnturLogo';
-export default EnturLogo;
+export { EnturLogo as default } from './EnturLogo';

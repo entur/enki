@@ -122,9 +122,9 @@ const DayTypeAssignmentRow = ({
           slotProps={{
             textField: {
               error: !toDateIsValid,
-              helperText: !toDateIsValid
-                ? formatMessage({ id: 'dayTypeEditorToDateValidation' })
-                : '',
+              helperText: toDateIsValid
+                ? ''
+                : formatMessage({ id: 'dayTypeEditorToDateValidation' }),
             },
           }}
         />

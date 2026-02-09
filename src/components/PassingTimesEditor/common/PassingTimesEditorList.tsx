@@ -1,5 +1,4 @@
-import { Box, Typography } from '@mui/material';
-import { SxProps } from '@mui/material';
+import { Box, Typography, SxProps } from '@mui/material';
 import { changeElementAtIndex } from 'helpers/arrays';
 import useUniqueKeys from 'hooks/useUniqueKeys';
 import PassingTime from 'model/PassingTime';

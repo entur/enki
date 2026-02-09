@@ -9,7 +9,6 @@ type Props = {
   children: ReactElement;
   backButtonTitle: string;
   onBackButtonClick?: () => void;
-  className?: string;
 };
 
 const Page = ({

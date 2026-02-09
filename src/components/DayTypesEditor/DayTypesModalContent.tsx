@@ -34,7 +34,7 @@ export const DayTypesModalContent = ({
   refetchDayTypes: Function;
 }) => {
   const [currentPage, setPage] = React.useState(1);
-  const [results, setResults] = React.useState(10);
+  const results = 10;
   const [newDayType, setNewDayType] = React.useState<DayType | null>(null);
   const [selectedIds, setSelectedIds] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);

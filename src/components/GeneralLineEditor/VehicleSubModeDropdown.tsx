@@ -1,6 +1,8 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
-import { NormalizedDropdownItemType } from 'helpers/dropdown';
-import { mapVehicleSubmodeAndLabelToItems } from 'helpers/dropdown';
+import {
+  NormalizedDropdownItemType,
+  mapVehicleSubmodeAndLabelToItems,
+} from 'helpers/dropdown';
 import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';

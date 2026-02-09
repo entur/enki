@@ -226,7 +226,7 @@ const Picker = ({ label, value, onChange, nrOfOptions }: PickerProps) => {
           value: `${value}`,
           label: `${value < 10 ? '0' + value : value}`,
         }}
-        onChange={(_e, item) => onChange(parseInt(item?.value || '0'))}
+        onChange={(_e, item) => onChange(Number.parseInt(item?.value || '0'))}
         disableClearable
         renderInput={(params) => <TextField {...params} label={label} />}
       />

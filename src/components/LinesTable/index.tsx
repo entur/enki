@@ -81,7 +81,7 @@ const renderLoading = (loadingText: string) => {
   return (
     <TableRow>
       <TableCell colSpan={3}>
-        <Loading text={loadingText} children={null} />
+        <Loading text={loadingText}>{null}</Loading>
       </TableCell>
     </TableRow>
   );

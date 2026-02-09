@@ -77,12 +77,14 @@ export default (props: Props) => {
         <TextField
           label={formatMessage({ id: 'bulkDeleteDialogFilterSearchLabel' })}
           sx={{ width: '15rem' }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            },
           }}
           value={filterSearch}
           placeholder=""

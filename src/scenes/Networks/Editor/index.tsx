@@ -76,7 +76,7 @@ const NetworkEditor = () => {
   const isDeleteDisabled =
     !network ||
     !lines ||
-    !!lines.find((l) => l.networkRef === network.id) ||
+    lines.some((l) => l.networkRef === network.id) ||
     isDeleting;
 
   return (

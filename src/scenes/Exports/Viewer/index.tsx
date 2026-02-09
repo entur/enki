@@ -15,7 +15,6 @@ import { GlobalState } from 'reducers';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { getIconForSeverity, getIconForStatus } from '../icons/icons';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 
 const ExportItem = ({
   label,
@@ -157,7 +156,10 @@ const ExportsViewer = () => {
                 </Typography>
                 <Box>
                   {(theExport?.messages ?? []).map((m, i) => (
-                    <Box key={i} sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box
+                      key={`${m.severity}-${m.message}-${i}`}
+                      sx={{ display: 'flex', alignItems: 'center' }}
+                    >
                       <Box
                         sx={{ display: 'flex', alignItems: 'center', mr: 1 }}
                       >
