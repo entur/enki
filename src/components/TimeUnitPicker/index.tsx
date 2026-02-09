@@ -1,4 +1,4 @@
-import { Button, TextField, Autocomplete } from '@mui/material';
+import { Button, TextField, Autocomplete, useTheme } from '@mui/material';
 import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -53,6 +53,7 @@ export default (props: Props) => {
 
   const classNames = className || '';
 
+  const theme = useTheme();
   const { formatMessage } = useIntl();
 
   const [isOpen, setOpen] = useState(false);
@@ -105,7 +106,7 @@ export default (props: Props) => {
             zIndex: 100,
             width: 400,
             padding: 25,
-            backgroundColor: '#ebebf1',
+            backgroundColor: theme.palette.grey[100],
             textAlign: 'center',
             ...(position === 'above' ? { bottom: 60 } : { marginTop: 15 }),
           }}

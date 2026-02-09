@@ -231,7 +231,7 @@ export default ({ onChange }: Props) => {
               key={line.id}
               sx={{
                 opacity: line.status === 'negative' ? 0.5 : 1,
-                color: line.status === 'negative' ? '#888' : 'inherit',
+                color: line.status === 'negative' ? 'text.disabled' : 'inherit',
               }}
             >
               <TableCell padding="checkbox" sx={{ py: 1, px: 2 }}>
@@ -248,7 +248,8 @@ export default ({ onChange }: Props) => {
                   component="strong"
                   fontWeight="bold"
                   sx={{
-                    color: line.status === 'negative' ? '#888' : 'inherit',
+                    color:
+                      line.status === 'negative' ? 'text.disabled' : 'inherit',
                   }}
                 >
                   {line.name}
@@ -258,7 +259,8 @@ export default ({ onChange }: Props) => {
                   variant="caption"
                   component="span"
                   sx={{
-                    color: line.status === 'negative' ? '#888' : 'inherit',
+                    color:
+                      line.status === 'negative' ? 'text.disabled' : 'inherit',
                   }}
                 >
                   {line.id}

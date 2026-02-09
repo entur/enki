@@ -3,7 +3,7 @@ import Close from '@mui/icons-material/Close';
 import Error from '@mui/icons-material/Error';
 import Info from '@mui/icons-material/Info';
 import Warning from '@mui/icons-material/Warning';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { VariantType } from 'helpers/errorHandling';
 import { useEffect } from 'react';
 
@@ -18,16 +18,16 @@ type Props = {
   type: VariantType;
 };
 
-const typeColors: Record<
+const paletteKey: Record<
   VariantType,
-  { bg: string; border: string; color: string }
+  'success' | 'error' | 'warning' | 'info'
 > = {
-  success: { bg: '#d0f1e3', border: '#1a8e60', color: '#1a8e60' },
-  error: { bg: '#ffcece', border: '#d31b1b', color: '#d31b1b' },
-  negative: { bg: '#ffcece', border: '#d31b1b', color: '#d31b1b' },
-  warning: { bg: '#fff4cd', border: '#ffca28', color: '#ffca28' },
-  info: { bg: '#e1eff8', border: '#0082b9', color: '#0082b9' },
-  information: { bg: '#e1eff8', border: '#0082b9', color: '#0082b9' },
+  success: 'success',
+  error: 'error',
+  negative: 'error',
+  warning: 'warning',
+  info: 'info',
+  information: 'info',
 };
 
 const Note = ({
@@ -40,6 +40,8 @@ const Note = ({
   dismissAfter,
   onRequestClose,
 }: Props) => {
+  const theme = useTheme();
+
   useEffect(() => {
     const transitionIntervall = 500;
     const dismissTimeout = setTimeout(
@@ -50,9 +52,11 @@ const Note = ({
     // eslint-disable-next-line
   }, [dismissAfter]);
 
+  const key = paletteKey[type] ?? 'info';
+  const palette = theme.palette[key];
+
   const getTypeIcon = (type: VariantType) => {
-    const color = typeColors[type]?.color;
-    const iconSx = { display: 'flex', color };
+    const iconSx = { display: 'flex', color: palette.main };
 
     if (type === 'success') {
       return (
@@ -89,8 +93,6 @@ const Note = ({
     }
   };
 
-  const colors = typeColors[type] ?? typeColors.info;
-
   return (
     <Box
       sx={{
@@ -111,8 +113,8 @@ const Note = ({
         display: 'flex',
         flexDirection: 'column',
         zIndex: isActive ? 1500 : undefined,
-        backgroundColor: colors.bg,
-        borderBottom: `3px solid ${colors.border}`,
+        backgroundColor: palette.light,
+        borderBottom: `3px solid ${palette.main}`,
       }}
       style={topOffset as React.CSSProperties}
     >
@@ -144,14 +146,14 @@ const Note = ({
           }}
         >
           {getTypeIcon(type)}
-          <Box component="span" sx={{ ml: '10px', color: colors.color }}>
+          <Box component="span" sx={{ ml: '10px', color: palette.main }}>
             {title}
           </Box>
         </Typography>
         <Typography
           variant="body2"
           sx={{
-            color: 'primary.main',
+            color: 'text.primary',
             ml: '45px',
             boxSizing: 'content-box',
             mb: '20px',

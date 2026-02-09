@@ -17,7 +17,7 @@ const Loading = (props: SVGProps<SVGSVGElement>) => (
       strokeLinecap="round"
       r="40"
       strokeWidth="4"
-      stroke="#181c56"
+      stroke="currentColor"
       strokeDasharray="62.83185307179586 62.83185307179586"
       transform="rotate(122.5 50 50)"
     >
@@ -39,7 +39,8 @@ const Loading = (props: SVGProps<SVGSVGElement>) => (
       strokeLinecap="round"
       r="35"
       strokeWidth="4"
-      stroke="#ff5959"
+      stroke="currentColor"
+      opacity={0.4}
       strokeDasharray="54.97787143782138 54.97787143782138"
       strokeDashoffset="54.97787143782138"
       transform="rotate(-122.5 50 50)"
