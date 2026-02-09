@@ -9,6 +9,28 @@ import reactComponentToggle from '@entur/rollup-plugin-react-component-toggle';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    (() => {
+      let base = '/';
+      return {
+        name: 'preload-bootstrap',
+        configResolved(config) {
+          base = config.base;
+        },
+        transformIndexHtml: {
+          order: 'pre' as const,
+          handler(_: string, ctx: { server?: unknown }) {
+            if (ctx.server) return [];
+            return [
+              {
+                tag: 'link',
+                attrs: { rel: 'preload', href: `${base}bootstrap.json`, as: 'fetch', crossorigin: 'anonymous' },
+                injectTo: 'head' as const,
+              },
+            ];
+          },
+        },
+      };
+    })(),
     react(),
     viteTsconfigPaths(),
     svgrPlugin(),
