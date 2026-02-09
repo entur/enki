@@ -2,8 +2,6 @@ import { Apollo } from 'api';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
 import { fetchConfig } from 'config/fetchConfig';
 import CssBaseline from '@mui/material/CssBaseline';
-import type { Theme } from '@mui/material/styles';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import ReactDOM from 'react-dom/client';
@@ -22,6 +20,7 @@ import {
   ComponentToggleProvider,
   ToggleFlags,
 } from '@entur/react-component-toggle';
+import { EnkiThemeProvider } from './EnkiThemeProvider';
 
 const AuthenticatedApp = () => {
   const dispatch = useAppDispatch();
@@ -72,16 +71,6 @@ const renderIndex = async () => {
   const root = ReactDOM.createRoot(container!);
   const config = await fetchConfig();
 
-  let theme: Theme = createTheme();
-  if (config.extPath) {
-    try {
-      const mod = await import(`./ext/${config.extPath}/theme/theme.ts`);
-      theme = mod.default;
-    } catch {
-      // No custom theme for this extPath, use default
-    }
-  }
-
   root.render(
     <ConfigContext.Provider value={config}>
       <ComponentToggleProvider
@@ -99,7 +88,7 @@ const renderIndex = async () => {
           }
         }}
       >
-        <ThemeProvider theme={theme}>
+        <EnkiThemeProvider>
           <CssBaseline />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Provider store={store}>
@@ -114,7 +103,7 @@ const renderIndex = async () => {
               </ComponentToggle>
             </Provider>
           </LocalizationProvider>
-        </ThemeProvider>
+        </EnkiThemeProvider>
       </ComponentToggleProvider>
     </ConfigContext.Provider>,
   );

@@ -112,7 +112,6 @@ export const handlers = [
       sandboxFeatures: {
         JourneyPatternStopPointMap: true,
       },
-      extPath: 'Entur',
     });
   }),
 
