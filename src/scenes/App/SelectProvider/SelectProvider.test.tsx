@@ -1,9 +1,10 @@
-import { render, userEvent, waitFor } from '../../../utils/test-utils';
+import { render, userEvent, waitFor, screen } from '../../../utils/test-utils';
 import { SelectProvider } from './SelectProvider';
 import { MemoryRouter } from 'react-router-dom';
 import { useAppDispatch } from '../../../store/hooks';
 import { useEffect } from 'react';
 import { fetchUserContext } from '../../../auth/userContextSlice';
+import { store } from '../../../utils/test-utils';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
@@ -21,10 +22,10 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 describe('SelectProvider', () => {
-  it('should render without crashing', async () => {
+  it('should render and allow selecting a provider', async () => {
     const user = userEvent.setup();
 
-    const container = render(
+    render(
       <Wrapper>
         <MemoryRouter>
           <SelectProvider />
@@ -32,27 +33,28 @@ describe('SelectProvider', () => {
       </Wrapper>,
     );
 
-    // Wait for the autocomplete input to be rendered with the provider data
+    // Wait for fetchUserContext thunk to populate the store with providers
     await waitFor(() => {
-      expect(container.getByRole('combobox')).toBeInTheDocument();
+      expect(store.getState().userContext.providers.length).toBeGreaterThan(0);
     });
+
+    // Now the combobox should be rendered with options available
+    const input = screen.getByRole('combobox');
+    expect(input).toBeInTheDocument();
 
     // Open the dropdown by clicking the input
-    const input = container.getByRole('combobox');
     await user.click(input);
 
-    // Wait for the dropdown list to appear
-    await waitFor(async () => {
-      const providerOption = await container.findByText('Test provider');
-      expect(providerOption).toBeInTheDocument();
-    });
+    // Wait for the provider option to appear in the dropdown
+    const providerOption = await screen.findByText('Test provider');
+    expect(providerOption).toBeInTheDocument();
 
     // Click on the provider option
-    await user.click(await container.findByText('Test provider'));
+    await user.click(providerOption);
 
     // Check if the selected item is displayed in the input
     await waitFor(() => {
-      expect(container.getByRole('combobox')).toHaveValue('Test provider');
+      expect(screen.getByRole('combobox')).toHaveValue('Test provider');
     });
   });
 });

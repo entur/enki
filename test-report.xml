@@ -1,0 +1,1565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="src/actions/brandings.test.ts">
+    <testCase name="branding actions - loadBrandings - dispatches receiveBrandings on success" duration="16" />
+    <testCase name="branding actions - loadBrandings - dispatches error notification on failure" duration="3" />
+    <testCase name="branding actions - loadBrandingById - dispatches receiveBranding on success" duration="13" />
+    <testCase name="branding actions - loadBrandingById - dispatches error notification on failure" duration="1" />
+    <testCase name="branding actions - saveBranding - calls UttuQuery and shows success notification" duration="2" />
+    <testCase name="branding actions - saveBranding - does not show success when showConfirm is false" duration="1" />
+    <testCase name="branding actions - saveBranding - dispatches error notification on failure" duration="3" />
+    <testCase name="branding actions - deleteBrandingById - calls UttuQuery and shows success notification" duration="5" />
+    <testCase name="branding actions - deleteBrandingById - does nothing when id is undefined" duration="3" />
+    <testCase name="branding actions - deleteBrandingById - dispatches error notification on failure" duration="1" />
+  </file>
+  <file path="src/actions/dayTypes.test.ts">
+    <testCase name="dayType actions - loadDayTypes - dispatches receiveDayTypes on success" duration="10" />
+    <testCase name="dayType actions - loadDayTypes - dispatches error notification on failure" duration="3" />
+    <testCase name="dayType actions - loadDayTypeById - dispatches receiveDayType on success" duration="10" />
+    <testCase name="dayType actions - loadDayTypeById - does not dispatch if no results" duration="1" />
+    <testCase name="dayType actions - loadDayTypeById - dispatches error notification on failure" duration="3" />
+    <testCase name="dayType actions - saveDayType - calls UttuQuery and shows success notification" duration="1" />
+    <testCase name="dayType actions - saveDayType - dispatches error notification on failure" duration="1" />
+    <testCase name="dayType actions - deleteDayTypeById - calls UttuQuery and shows success notification" duration="1" />
+    <testCase name="dayType actions - deleteDayTypeById - does nothing when id is undefined" duration="1" />
+    <testCase name="dayType actions - deleteDayTypeById - dispatches error notification on failure" duration="2" />
+  </file>
+  <file path="src/actions/editor.test.ts">
+    <testCase name="editor actions - re-exports setSavedChanges from editorSlice" duration="3" />
+    <testCase name="editor actions - creates correct action for setSavedChanges(true)" duration="2" />
+    <testCase name="editor actions - creates correct action for setSavedChanges(false)" duration="1" />
+  </file>
+  <file path="src/actions/exports.test.ts">
+    <testCase name="export actions - loadExports - dispatches requestExports then receiveExports on success" duration="17" />
+    <testCase name="export actions - loadExports - dispatches error notification on failure" duration="8" />
+    <testCase name="export actions - loadExportById - dispatches receiveExport on success" duration="2" />
+    <testCase name="export actions - loadExportById - dispatches error notification on failure" duration="1" />
+    <testCase name="export actions - saveExport - calls UttuQuery with export mutation" duration="1" />
+    <testCase name="export actions - saveExport - dispatches error notification on failure" duration="1" />
+  </file>
+  <file path="src/actions/flexibleLines.test.ts">
+    <testCase name="flexibleLines actions - loadFlexibleLines - dispatches receiveFlexibleLines on success" duration="20" />
+    <testCase name="flexibleLines actions - loadFlexibleLines - dispatches error notification on failure" duration="9" />
+    <testCase name="flexibleLines actions - loadFlexibleLineById - dispatches receiveFlexibleLine for flexible line" duration="5" />
+    <testCase name="flexibleLines actions - loadFlexibleLineById - dispatches receiveFlexibleLine for fixed line" duration="1" />
+    <testCase name="flexibleLines actions - loadFlexibleLineById - dispatches error notification on failure" duration="1" />
+    <testCase name="flexibleLines actions - saveFlexibleLine - shows success notification for new flexible line" duration="2" />
+    <testCase name="flexibleLines actions - saveFlexibleLine - shows success notification for existing line" duration="1" />
+    <testCase name="flexibleLines actions - saveFlexibleLine - uses lineMutation for non-flexible lines" duration="5" />
+    <testCase name="flexibleLines actions - saveFlexibleLine - dispatches error notification and rethrows on failure" duration="4" />
+    <testCase name="flexibleLines actions - deleteLine - shows success notification on delete" duration="1" />
+    <testCase name="flexibleLines actions - deleteLine - uses deleteline for non-flexible lines" duration="1" />
+    <testCase name="flexibleLines actions - deleteLine - dispatches error notification on failure" duration="1" />
+  </file>
+  <file path="src/actions/flexibleStopPlaces.test.ts">
+    <testCase name="flexibleStopPlaces actions - loadFlexibleStopPlaces - dispatches requestFlexibleStopPlaces then receiveFlexibleStopPlaces" duration="12" />
+    <testCase name="flexibleStopPlaces actions - loadFlexibleStopPlaces - dispatches error notification on failure" duration="3" />
+    <testCase name="flexibleStopPlaces actions - loadFlexibleStopPlaceById - dispatches receiveFlexibleStopPlace on success" duration="5" />
+    <testCase name="flexibleStopPlaces actions - loadFlexibleStopPlaceById - dispatches error notification on failure" duration="2" />
+    <testCase name="flexibleStopPlaces actions - saveFlexibleStopPlace - calls UttuQuery and shows success notification" duration="2" />
+    <testCase name="flexibleStopPlaces actions - saveFlexibleStopPlace - dispatches error notification on failure" duration="1" />
+    <testCase name="flexibleStopPlaces actions - deleteFlexibleStopPlaceById - calls UttuQuery and shows success notification" duration="1" />
+    <testCase name="flexibleStopPlaces actions - deleteFlexibleStopPlaceById - dispatches error notification on failure" duration="1" />
+  </file>
+  <file path="src/actions/networks.test.ts">
+    <testCase name="network actions - loadNetworks - dispatches receiveNetworks on success" duration="26" />
+    <testCase name="network actions - loadNetworks - dispatches error notification on failure" duration="6" />
+    <testCase name="network actions - loadNetworkById - dispatches receiveNetwork on success" duration="2" />
+    <testCase name="network actions - loadNetworkById - dispatches error notification on failure" duration="1" />
+    <testCase name="network actions - saveNetwork - calls UttuQuery with network mutation and shows success notification" duration="2" />
+    <testCase name="network actions - saveNetwork - does not show success notification when showConfirm is false" duration="1" />
+    <testCase name="network actions - saveNetwork - dispatches error notification on failure" duration="1" />
+    <testCase name="network actions - deleteNetworkById - calls UttuQuery and shows success notification" duration="5" />
+    <testCase name="network actions - deleteNetworkById - does nothing when id is undefined" duration="1" />
+    <testCase name="network actions - deleteNetworkById - dispatches error notification on failure" duration="1" />
+  </file>
+  <file path="src/actions/notification.test.ts">
+    <testCase name="notification action creators - showSuccessNotification - creates a success notification action with correct defaults" duration="9" />
+    <testCase name="notification action creators - showSuccessNotification - sets showModal when provided" duration="1" />
+    <testCase name="notification action creators - showSuccessNotification - defaults showModal to false when not provided" duration="1" />
+    <testCase name="notification action creators - showErrorNotification - creates an error notification action" duration="3" />
+  </file>
+  <file path="src/actions/organisations.test.ts">
+    <testCase name="organisation actions - getOrganisations - dispatches receiveOrganisations on success" duration="18" />
+    <testCase name="organisation actions - getOrganisations - does not call UttuQuery if no active provider" duration="1" />
+    <testCase name="organisation actions - getOrganisations - silently handles errors" duration="1" />
+  </file>
+  <file path="src/actions/providers.test.ts">
+    <testCase name="provider actions - getProviders - dispatches receiveProviders on success" duration="21" />
+    <testCase name="provider actions - getProviders - dispatches failedReceivingProviders on failure" duration="1" />
+    <testCase name="provider actions - saveProvider - calls UttuQuery twice (codespace + provider)" duration="2" />
+    <testCase name="provider actions - saveProvider - dispatches error notification on failure" duration="8" />
+  </file>
+  <file path="src/auth/auth.test.tsx">
+    <testCase name="useAuth - isLoading" duration="64" />
+    <testCase name="useAuth - isAuthenticated" duration="4" />
+    <testCase name="useAuth - getAccessToken" duration="4" />
+    <testCase name="useAuth - login" duration="5" />
+    <testCase name="useAuth - logout" duration="5" />
+    <testCase name="useAuth - login redirect" duration="3" />
+  </file>
+  <file path="src/auth/authSlice.test.ts">
+    <testCase name="authSlice - should return initial state" duration="8" />
+    <testCase name="authSlice - updateAuth sets loaded to true and spreads auth payload" duration="1" />
+    <testCase name="authSlice - updateAuth replaces previous auth state" duration="1" />
+  </file>
+  <file path="src/auth/userContextSlice.test.ts">
+    <testCase name="userContextSlice - should return initial state with defaults" duration="8" />
+    <testCase name="userContextSlice - setActiveProviderCode updates the active provider" duration="2" />
+    <testCase name="userContextSlice - setActiveProviderCode can be set to null" duration="2" />
+    <testCase name="userContextSlice - setActiveMapBaseLayer updates the base layer" duration="1" />
+    <testCase name="userContextSlice - setActiveMapBaseLayer preserves other state" duration="1" />
+  </file>
+  <file path="src/components/BookingArrangementEditor/editor.test.tsx">
+    <testCase name="BookingArrangementEditor - renders all contact fields" duration="1480" />
+    <testCase name="BookingArrangementEditor - renders booking info text" duration="489" />
+    <testCase name="BookingArrangementEditor - renders attachment type label and name" duration="535" />
+    <testCase name="BookingArrangementEditor - calls onChange when contact person is typed" duration="783" />
+    <testCase name="BookingArrangementEditor - calls onChange when booking note is typed" duration="623" />
+    <testCase name="BookingArrangementEditor - renders booking limit radio buttons" duration="403" />
+    <testCase name="BookingArrangementEditor - renders booking method chips" duration="436" />
+    <testCase name="BookingArrangementEditor - renders payment chips" duration="479" />
+    <testCase name="BookingArrangementEditor - calls onChange when a booking method chip is clicked" duration="556" />
+    <testCase name="BookingArrangementEditor - renders with pre-filled booking arrangement" duration="536" />
+  </file>
+  <file path="src/components/ConfirmDialog/ConfirmDialog.test.tsx">
+    <testCase name="ConfirmDialog - renders title and message when open" duration="726" />
+    <testCase name="ConfirmDialog - does not render content when closed" duration="12" />
+    <testCase name="ConfirmDialog - renders custom buttons" duration="95" />
+    <testCase name="ConfirmDialog - calls onDismiss when backdrop is clicked" duration="87" />
+    <testCase name="ConfirmDialog - renders with no buttons by default" duration="37" />
+  </file>
+  <file path="src/components/DayTypesEditor/usePreparedDayTypes.test.ts">
+    <testCase name="usePreparedDayTypes - sorts day types by changed date descending (newest first)" duration="47" />
+    <testCase name="usePreparedDayTypes - paginates to the first page with given results per page" duration="6" />
+    <testCase name="usePreparedDayTypes - paginates to the second page" duration="4" />
+    <testCase name="usePreparedDayTypes - returns empty array when page is beyond available data" duration="3" />
+    <testCase name="usePreparedDayTypes - returns empty array for empty input" duration="3" />
+    <testCase name="usePreparedDayTypes - handles single item" duration="3" />
+    <testCase name="usePreparedDayTypes - does not mutate the original array" duration="2" />
+  </file>
+  <file path="src/components/DayTypesEditor/useServiceJourneysPerDayType.test.tsx">
+    <testCase name="mergeServiceJourneyCounts - with empty current state - should create new record from day types" duration="3" />
+    <testCase name="mergeServiceJourneyCounts - with empty current state - should return empty record when day types array is empty" duration="0" />
+    <testCase name="mergeServiceJourneyCounts - with existing state - should merge new counts with existing counts" duration="0" />
+    <testCase name="mergeServiceJourneyCounts - with existing state - should overwrite existing counts for same id" duration="0" />
+    <testCase name="mergeServiceJourneyCounts - with existing state - should not mutate the current state object" duration="1" />
+    <testCase name="useServiceJourneysPerDayType - should return empty object initially" duration="107" />
+    <testCase name="useServiceJourneysPerDayType - should fetch and return service journey counts" duration="59" />
+    <testCase name="useServiceJourneysPerDayType - should handle empty day types array" duration="10" />
+    <testCase name="useServiceJourneysPerDayType - should update when day types change" duration="114" />
+  </file>
+  <file path="src/components/EntityEditorActions.test.tsx">
+    <testCase name="EntityEditorActions - renders save and delete buttons when editing" duration="282" />
+    <testCase name="EntityEditorActions - hides delete button when not editing" duration="19" />
+    <testCase name="EntityEditorActions - shows create button text when not editing" duration="281" />
+    <testCase name="EntityEditorActions - disables delete button when isDeleteDisabled is true" duration="12" />
+    <testCase name="EntityEditorActions - calls onDeleteClick when delete button is clicked" duration="142" />
+    <testCase name="EntityEditorActions - calls onSaveClick when save button is clicked" duration="85" />
+    <testCase name="EntityEditorActions - renders confirm dialog when isDeleteDialogOpen is true" duration="105" />
+    <testCase name="EntityEditorActions - calls onDeleteDialogClose when cancel in dialog is clicked" duration="146" />
+    <testCase name="EntityEditorActions - calls onDeleteConfirm when confirm in dialog is clicked" duration="192" />
+  </file>
+  <file path="src/components/FlexibleLineTypeSelector/FlexibleLineTypeSelector.test.tsx">
+    <testCase name="FlexibleLineTypeSelector - renders the type dropdown" duration="593" />
+    <testCase name="FlexibleLineTypeSelector - renders the help link" duration="75" />
+    <testCase name="FlexibleLineTypeSelector - shows selected flexible line type" duration="105" />
+    <testCase name="FlexibleLineTypeSelector - opens drawer when help link is clicked" duration="566" />
+    <testCase name="FlexibleLineTypeSelector - calls onChange when a type is selected" duration="628" />
+  </file>
+  <file path="src/components/GeneralLineEditor/GeneralLineEditor.test.tsx">
+    <testCase name="GeneralLineEditor - renders name, description, public code, and private code fields" duration="1101" />
+    <testCase name="GeneralLineEditor - renders operator, network, and branding dropdowns" duration="344" />
+    <testCase name="GeneralLineEditor - renders transport mode dropdown" duration="271" />
+    <testCase name="GeneralLineEditor - calls onChange when name is changed" duration="707" />
+    <testCase name="GeneralLineEditor - shows the &quot;About the line&quot; heading" duration="193" />
+    <testCase name="GeneralLineEditor - renders notices section" duration="201" />
+    <testCase name="GeneralLineEditor - does not show flexible line type selector for regular lines" duration="290" />
+  </file>
+  <file path="src/components/JourneyPatternEditor/CopyDialog.test.tsx">
+    <testCase name="CopyDialog - renders dialog with title and pre-filled name" duration="871" />
+    <testCase name="CopyDialog - calls onSave with the name when Create copy is clicked" duration="256" />
+    <testCase name="CopyDialog - calls onDismiss when Cancel is clicked" duration="146" />
+    <testCase name="CopyDialog - disables save button when validation returns errors" duration="81" />
+    <testCase name="CopyDialog - shows duplicate name error message" duration="70" />
+    <testCase name="CopyDialog - shows empty name error when name is cleared" duration="66" />
+    <testCase name="CopyDialog - does not render when closed" duration="7" />
+  </file>
+  <file path="src/components/JourneyPatternEditor/helpers.test.ts">
+    <testCase name="Journey pattern editor - getJourneyPatternWithSwappedStopPoints - should return journey pattern with stop points order swapped" duration="3" />
+  </file>
+  <file path="src/components/LineEditorStepper/NavigationButtons.test.tsx">
+    <testCase name="NavigationButtons - create mode (editMode=false) - shows Cancel on first step" duration="329" />
+    <testCase name="NavigationButtons - create mode (editMode=false) - calls onCancel when Cancel is clicked" duration="386" />
+    <testCase name="NavigationButtons - create mode (editMode=false) - shows Next button on non-last step" duration="14" />
+    <testCase name="NavigationButtons - create mode (editMode=false) - disables Next when current step is not valid" duration="15" />
+    <testCase name="NavigationButtons - create mode (editMode=false) - calls onNext when Next is clicked" duration="107" />
+    <testCase name="NavigationButtons - create mode (editMode=false) - shows Previous on non-first step" duration="19" />
+    <testCase name="NavigationButtons - create mode (editMode=false) - calls onPrevious when Previous is clicked" duration="53" />
+    <testCase name="NavigationButtons - create mode (editMode=false) - shows Save and create on last step" duration="34" />
+    <testCase name="NavigationButtons - create mode (editMode=false) - disables save when not valid on last step" duration="18" />
+    <testCase name="NavigationButtons - create mode (editMode=false) - calls onSave when save is clicked on last step" duration="66" />
+    <testCase name="NavigationButtons - edit mode (editMode=true) - shows Save button" duration="30" />
+    <testCase name="NavigationButtons - edit mode (editMode=true) - disables Save when not valid" duration="13" />
+    <testCase name="NavigationButtons - edit mode (editMode=true) - shows Delete button on first step in edit mode" duration="16" />
+    <testCase name="NavigationButtons - edit mode (editMode=true) - does not show Delete on non-first step" duration="11" />
+    <testCase name="NavigationButtons - edit mode (editMode=true) - opens delete confirmation dialog on Delete click" duration="252" />
+    <testCase name="NavigationButtons - edit mode (editMode=true) - calls onDelete when confirm is clicked in dialog" duration="246" />
+    <testCase name="NavigationButtons - edit mode (editMode=true) - calls setDeleteDialogOpen(false) when cancel is clicked in dialog" duration="192" />
+    <testCase name="NavigationButtons - edit mode (editMode=true) - shows Next (outlined) on non-last step in edit mode" duration="9" />
+  </file>
+  <file path="src/components/LinesForExport/LinesForExport.test.tsx">
+    <testCase name="LinesForExport - renders without crashing" duration="527" />
+    <testCase name="LinesForExport - calls onChange with correct lines when selecting/deselecting all" duration="923" />
+    <testCase name="LinesForExport - calls onChange with correct lines when selecting deselecting single checkbox" duration="361" />
+    <testCase name="LinesForExport - does not allow selection of expired lines" duration="326" />
+  </file>
+  <file path="src/components/Notices/notices.test.jsx">
+    <testCase name="should render no notices" duration="359" />
+    <testCase name="should render single notices" duration="412" />
+    <testCase name="should render multiple notices" duration="313" />
+  </file>
+  <file path="src/components/Notification/Notification.test.tsx">
+    <testCase name="Notification - renders nothing when there is no notification" duration="128" />
+    <testCase name="Notification - renders notification title and message from store" duration="147" />
+    <testCase name="Notification - renders error notification" duration="47" />
+    <testCase name="Notification - dispatches notification and renders it" duration="35" />
+  </file>
+  <file path="src/components/PassingTimesEditor/common/toDate.test.ts">
+    <testCase name="toDate - returns a Date with current date when input is undefined" duration="2" />
+    <testCase name="toDate - returns a Date with current date when input is empty string" duration="1" />
+    <testCase name="toDate - parses hours, minutes and seconds from time string" duration="1" />
+    <testCase name="toDate - parses midnight correctly" duration="1" />
+    <testCase name="toDate - parses single-digit values" duration="0" />
+  </file>
+  <file path="src/components/ServiceJourneyEditor/CopyDialog.test.tsx">
+    <testCase name="copyServiceJourney - should copy correctly" duration="69" />
+  </file>
+  <file path="src/components/ServiceJourneys/BulkDeleteDialog.test.tsx">
+    <testCase name="BulkDeleteDialog - renders dialog with title and all service journeys" duration="956" />
+    <testCase name="BulkDeleteDialog - renders departure times and day offsets" duration="156" />
+    <testCase name="BulkDeleteDialog - has delete button disabled when nothing is selected" duration="154" />
+    <testCase name="BulkDeleteDialog - enables delete button when a row is selected" duration="546" />
+    <testCase name="BulkDeleteDialog - calls onConfirm with selected ids when delete is clicked" duration="414" />
+    <testCase name="BulkDeleteDialog - selects all rows with header checkbox" duration="405" />
+    <testCase name="BulkDeleteDialog - filters service journeys by name" duration="609" />
+    <testCase name="BulkDeleteDialog - calls dismiss when Cancel is clicked" duration="109" />
+    <testCase name="BulkDeleteDialog - does not render when closed" duration="8" />
+  </file>
+  <file path="src/components/ServiceJourneys/NewServiceJourneyDialog.test.tsx">
+    <testCase name="NewServiceJourneyDialog - renders dialog with title and subtitle" duration="998" />
+    <testCase name="NewServiceJourneyDialog - renders name input and journey pattern selector" duration="180" />
+    <testCase name="NewServiceJourneyDialog - shows the selected journey pattern" duration="144" />
+    <testCase name="NewServiceJourneyDialog - calls addNewServiceJourney with name and pattern data on Create" duration="517" />
+    <testCase name="NewServiceJourneyDialog - calls setOpen(false) when Cancel is clicked" duration="187" />
+    <testCase name="NewServiceJourneyDialog - does not render when closed" duration="4" />
+  </file>
+  <file path="src/components/StopPointsEditor/common/QuayRefField.test.tsx">
+    <testCase name="QuayRefField - renders without crashing" duration="1033" />
+  </file>
+  <file path="src/components/WeekdayPicker/index.test.ts">
+    <testCase name="WeekdayPicker utils - toggleDay - should add day if it is not in the array" duration="2" />
+    <testCase name="WeekdayPicker utils - toggleDay - should remove day if it is in the array" duration="0" />
+  </file>
+  <file path="src/config/configSlice.test.ts">
+    <testCase name="configSlice - should return initial state" duration="9" />
+    <testCase name="configSlice - updateConfig sets loaded to true and spreads config" duration="1" />
+    <testCase name="configSlice - updateConfig replaces previous config" duration="1" />
+  </file>
+  <file path="src/config/fetchConfig.test.ts">
+    <testCase name="fetchConfig - should return the default config" duration="77" />
+    <testCase name="fetchConfig - should allow overrides" duration="4" />
+    <testCase name="fetchConfig - should use bootstrap config" duration="4" />
+  </file>
+  <file path="src/ext/JourneyPatternStopPointMap/helpers.test.ts">
+    <testCase name="Journey pattern map - determineQuayToFocus - should find the quay fully matching the search word" duration="4" />
+    <testCase name="Journey pattern map - determineQuayToFocus - should find the quay containing the search word" duration="1" />
+    <testCase name="Journey pattern map - determineQuayToFocus - should find a selected quay if none match or contain the search word" duration="1" />
+    <testCase name="Journey pattern map - determineQuayToFocus - should find the first quay if no other conditions met" duration="1" />
+    <testCase name="Journey pattern map - getSelectedQuayIds - should find selected quay id-s when a stop place has some quays selected" duration="1" />
+    <testCase name="Journey pattern map - getSelectedQuayIds - should return empty array when a stop places has no quays selected" duration="0" />
+    <testCase name="Journey pattern map - getSelectedQuayIds - should return empty array when stopPointSequenceIndexes is empty (journey pattern is empty)" duration="0" />
+    <testCase name="Journey pattern map - onFocusedMarkerNewMapState - should return a state with showQuaysState indicating all quays to be shown for the focused quay marker" duration="1" />
+    <testCase name="Journey pattern map - onFocusedMarkerNewMapState - should return a state with hideNonSelectedQuaysState indicating non-selected quays to be shown for the focused quay marker" duration="0" />
+    <testCase name="Journey pattern map - onFocusedMarkerNewMapState - should return a state with showQuaysState indicating to show a stop place instead of its quays in case there are no selected quays, when focused marker is a stop place" duration="0" />
+    <testCase name="Journey pattern map - onFocusedMarkerNewMapState - should not return anything special if the map is in the right state" duration="0" />
+  </file>
+  <file path="src/helpers/arrays.test.ts">
+    <testCase name="arrays - replaceElement - should replace an element in the given position" duration="5" />
+    <testCase name="arrays - replaceElement - should add element if the index is out of range" duration="1" />
+    <testCase name="arrays - removeElementByIndex - should remove element in given position" duration="1" />
+    <testCase name="arrays - removeElementByIndex - should do nothing if index does not exist" duration="1" />
+    <testCase name="arrays - addToListIfNotExistsOtherwiseRemove - should remove element if it exists in list" duration="1" />
+    <testCase name="arrays - addToListIfNotExistsOtherwiseRemove - should add element if it does not exist in the list" duration="0" />
+    <testCase name="arrays - changeElementAtIndex - should replace an element in the given position" duration="0" />
+    <testCase name="arrays - changeElementAtIndex - should do nothing if the index is out of range" duration="0" />
+  </file>
+  <file path="src/helpers/availability.test.ts">
+    <testCase name="availability - unionAvailability - should return the widest range when left starts earlier" duration="3" />
+    <testCase name="availability - unionAvailability - should return the widest range when right starts earlier" duration="1" />
+    <testCase name="availability - unionAvailability - should handle identical ranges" duration="1" />
+    <testCase name="availability - unionAvailability - should handle non-overlapping ranges" duration="10" />
+    <testCase name="availability - mergeAvailability - should create availability from operating period when none exists" duration="2" />
+    <testCase name="availability - mergeAvailability - should merge with existing availability" duration="1" />
+    <testCase name="availability - mergeAvailability - should throw error for invalid fromDate" duration="2" />
+    <testCase name="availability - mergeAvailability - should throw error for invalid toDate" duration="1" />
+    <testCase name="availability - getJourneyPatternsAvailability - should calculate availability from single journey pattern" duration="2" />
+    <testCase name="availability - getJourneyPatternsAvailability - should merge availability from multiple journey patterns" duration="1" />
+    <testCase name="availability - getJourneyPatternsAvailability - should throw error when no journey patterns provided" duration="0" />
+    <testCase name="availability - getJourneyPatternsAvailability - should throw error when journey patterns have no day type assignments" duration="1" />
+    <testCase name="availability - calculateLineAvailability - should return positive status when available &gt; 121 days" duration="2" />
+    <testCase name="availability - calculateLineAvailability - should return neutral status when available 1-121 days" duration="1" />
+    <testCase name="availability - calculateLineAvailability - should return negative status when no longer available" duration="0" />
+    <testCase name="availability - calculateLineAvailability - should return negative status when available exactly 0 days" duration="2" />
+    <testCase name="availability - calculateLineAvailability - should return neutral status when available exactly 1 day" duration="1" />
+    <testCase name="availability - calculateLineAvailability - should use current date when no reference date provided" duration="48" />
+    <testCase name="availability - mapStatusToText - should return correct text for positive status" duration="0" />
+    <testCase name="availability - mapStatusToText - should return correct text for neutral status" duration="0" />
+    <testCase name="availability - mapStatusToText - should return correct text for negative status" duration="0" />
+  </file>
+  <file path="src/helpers/dates.test.ts">
+    <testCase name="dateToString - should convert a date to formatted string" duration="3" />
+  </file>
+  <file path="src/helpers/dropdown.test.ts">
+    <testCase name="dropdown - getInit - should return matching item as NormalizedDropdownItemType" duration="5" />
+    <testCase name="dropdown - getInit - should return null when init is undefined" duration="1" />
+    <testCase name="dropdown - getInit - should return null when init is null" duration="0" />
+    <testCase name="dropdown - getInit - should return null when no matching item found" duration="0" />
+    <testCase name="dropdown - getInit - should handle items with undefined id and name" duration="1" />
+    <testCase name="dropdown - mapToItems - should map items to NormalizedDropdownItemType array" duration="1" />
+    <testCase name="dropdown - mapToItems - should return empty array for empty input" duration="0" />
+    <testCase name="dropdown - mapToItems - should handle items with undefined id and name" duration="0" />
+    <testCase name="dropdown - getEnumInit - should return NormalizedDropdownItemType for enum value" duration="0" />
+    <testCase name="dropdown - getEnumInit - should return null when init is undefined" duration="0" />
+    <testCase name="dropdown - getEnumInit - should handle string values" duration="0" />
+    <testCase name="dropdown - mapEnumToItems - should map enum values to NormalizedDropdownItemType array" duration="0" />
+    <testCase name="dropdown - mapEnumToItems - should handle empty object" duration="0" />
+    <testCase name="dropdown - mapVehicleModeAndLabelToItems - should map vehicle modes with translated labels" duration="1" />
+    <testCase name="dropdown - mapVehicleSubmodeAndLabelToItems - should map vehicle submodes with translated labels" duration="1" />
+    <testCase name="dropdown - mapVehicleSubmodeAndLabelToItems - should return empty array for empty input" duration="0" />
+    <testCase name="dropdown - mapFlexibleLineTypeAndLabelToItems - should map flexible line types with translated labels" duration="0" />
+    <testCase name="dropdown - mapFlexibleLineTypeAndLabelToItems - should return empty array for empty input" duration="0" />
+  </file>
+  <file path="src/helpers/errorHandling.test.ts">
+    <testCase name="errorHandling - getErrorFeedback - should return undefined variant and feedback when isValid is true and isPristine is true" duration="3" />
+    <testCase name="errorHandling - getErrorFeedback - should return undefined variant and feedback when isValid is false and isPristine is true" duration="1" />
+    <testCase name="errorHandling - getErrorFeedback - should return undefined variant and feedback when isValid is true and isPristine is false" duration="0" />
+    <testCase name="errorHandling - getErrorFeedback - should return error variant and feedback when isValid is false and isPristine is false" duration="1" />
+  </file>
+  <file path="src/helpers/exports.test.ts">
+    <testCase name="exports helpers - sortExportsByDate - should sort exports by date in descending order (newest first)" duration="3" />
+    <testCase name="exports helpers - sortExportsByDate - should return empty array for empty input" duration="1" />
+    <testCase name="exports helpers - sortExportsByDate - should handle single export" duration="0" />
+    <testCase name="exports helpers - sortExportsByDate - should handle exports with same date" duration="12" />
+    <testCase name="exports helpers - sortExportsByDate - should not mutate original array" duration="4" />
+    <testCase name="exports helpers - sortExportsByDate - should sort exports with undefined created to the end" duration="0" />
+    <testCase name="exports helpers - sortExportsByDate - should handle multiple exports with undefined created" duration="1" />
+  </file>
+  <file path="src/helpers/flexibleLines.test.ts">
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should add key to each point in sequence" duration="10" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should extract flexibleStopPlaceRef from nested object" duration="6" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should extract networkRef from nested network object" duration="4" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should extract brandingRef from nested branding object" duration="1" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should handle undefined journey patterns" duration="1" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should handle empty journey patterns array" duration="1" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should handle journey pattern with empty pointsInSequence" duration="1" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should handle undefined network and branding" duration="1" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should not mutate original line object" duration="1" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should preserve all other line properties" duration="3" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should preserve journey pattern properties other than pointsInSequence" duration="1" />
+    <testCase name="flexibleLines helpers - normalizeFlexibleLineFromApi - should preserve stop point properties other than key and flexibleStopPlaceRef" duration="1" />
+  </file>
+  <file path="src/helpers/forms.test.ts">
+    <testCase name="forms - isBlank - should return true for empty string" duration="3" />
+    <testCase name="forms - isBlank - should return false for non empty string" duration="1" />
+    <testCase name="forms - objectIsEmpty - should return true if object is empty" duration="1" />
+    <testCase name="forms - objectIsEmpty - should return false if object is not empty" duration="1" />
+  </file>
+  <file path="src/helpers/generators.test.ts">
+    <testCase name="generators - createUuid - should return a string" duration="3" />
+    <testCase name="generators - createUuid - should return exactly 8 characters" duration="3" />
+    <testCase name="generators - createUuid - should only contain valid hexadecimal characters" duration="1" />
+    <testCase name="generators - createUuid - should generate unique values on subsequent calls" duration="1" />
+    <testCase name="generators - createUuid - should not contain hyphens" duration="1" />
+  </file>
+  <file path="src/helpers/hooks.test.ts">
+    <testCase name="hooks - usePrevious - initial render - should return undefined on first render" duration="36" />
+    <testCase name="hooks - usePrevious - subsequent renders - should return the previous value after a rerender" duration="4" />
+    <testCase name="hooks - usePrevious - subsequent renders - should track multiple sequential updates" duration="8" />
+    <testCase name="hooks - usePrevious - value types - should work with string values" duration="4" />
+    <testCase name="hooks - usePrevious - value types - should work with number values" duration="3" />
+    <testCase name="hooks - usePrevious - value types - should work with boolean values" duration="11" />
+    <testCase name="hooks - usePrevious - value types - should work with object values" duration="2" />
+    <testCase name="hooks - usePrevious - value types - should work with array values" duration="2" />
+    <testCase name="hooks - usePrevious - same value rerenders - should still track the previous reference when value is the same" duration="2" />
+  </file>
+  <file path="src/helpers/muiFormHelpers.test.ts">
+    <testCase name="getMuiErrorProps - returns error=false and empty helperText when field is valid" duration="12" />
+    <testCase name="getMuiErrorProps - returns error=false and empty helperText when field is pristine" duration="1" />
+    <testCase name="getMuiErrorProps - returns error=false and empty helperText when field is valid and pristine" duration="1" />
+    <testCase name="getMuiErrorProps - returns error=true and errorMsg when field is invalid and not pristine" duration="1" />
+    <testCase name="getMuiErrorProps - uses the provided error message string" duration="1" />
+  </file>
+  <file path="src/helpers/url.test.ts">
+    <testCase name="url - getFlexibleLineFromPath - should return the matching FlexibleLine when id matches" duration="3" />
+    <testCase name="url - getFlexibleLineFromPath - should return undefined when no line matches the id" duration="1" />
+    <testCase name="url - getFlexibleLineFromPath - should return undefined for an empty lines array" duration="1" />
+    <testCase name="url - getFlexibleLineFromPath - should return undefined when params.id is undefined" duration="0" />
+    <testCase name="url - getFlexibleLineFromPath - should return the first match when multiple lines have the same id" duration="0" />
+    <testCase name="url - getFlexibleLineFromPath - should handle lines with undefined id" duration="0" />
+  </file>
+  <file path="src/helpers/uttu.messages.test.ts">
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.CONSTRAINT_VIOLATION" duration="3" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.ENTITY_IS_REFERENCED" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.FROM_DATE_AFTER_TO_DATE" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.MINIMUM_POINTS_IN_SEQUENCE" duration="2" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.MISSING_OPERATOR" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.NO_VALID_LINES_IN_DATA_SPACE" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.ORGANISATION_NOT_VALID_OPERATOR" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.NO_EMPTY_NOTICES" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.FLEXIBLE_LINE_REQUIRES_BOOKING" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.INVALID_POLYGON" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuCode values - should return true for UttuCode.UNKNOWN" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - CombinedUttuCode values - should return true for CombinedUttuCode.CONSTRAINT_VIOLATION_LINE_UNIQUE_NAME" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - CombinedUttuCode values - should return true for CombinedUttuCode.CONSTRAINT_VIOLATION_SERVICE_JOURNEY_UNIQUE_NAME" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - CombinedUttuCode values - should return true for CombinedUttuCode.CONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME" duration="2" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuSubCode values (should NOT be included) - should return false for UttuSubCode.FLEXIBLE_STOP_PLACE_UNIQUE_NAME" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuSubCode values (should NOT be included) - should return false for UttuSubCode.LINE_UNIQUE_NAME" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuSubCode values (should NOT be included) - should return false for UttuSubCode.PROVIDER_UNIQUE_CODE" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuSubCode values (should NOT be included) - should return false for UttuSubCode.JOURNEY_PATTERN_UNIQUE_NAME" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuSubCode values (should NOT be included) - should return false for UttuSubCode.NETWORK_UNIQUE_NAME" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuSubCode values (should NOT be included) - should return false for UttuSubCode.SERVICE_JOURNEY_UNIQUE_NAME" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - UttuSubCode values (should NOT be included) - should return false for UttuSubCode.CODESPACE_UNIQUE_XMLNS" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - invalid values - should return false for an empty string" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - invalid values - should return false for an arbitrary string" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - invalid values - should return false for lowercase versions of valid codes" duration="0" />
+    <testCase name="uttu.messages - isOfUttuMessage - invalid values - should return false for partial matches" duration="0" />
+    <testCase name="uttu.messages - UttuCode enum - should have all expected error codes" duration="1" />
+    <testCase name="uttu.messages - UttuCode enum - should have exactly 11 codes" duration="2" />
+    <testCase name="uttu.messages - CombinedUttuCode enum - should have all expected combined codes" duration="0" />
+    <testCase name="uttu.messages - CombinedUttuCode enum - should have exactly 3 codes" duration="0" />
+  </file>
+  <file path="src/helpers/uttu.test.ts">
+    <testCase name="uttu - getUttuError - should extract error message from UttuError" duration="3" />
+    <testCase name="uttu - getUttuError - should return null when response is undefined" duration="1" />
+    <testCase name="uttu - getUttuError - should return null when errors array is empty" duration="1" />
+    <testCase name="uttu - getUttuError - should return null when first error has no message" duration="1" />
+    <testCase name="uttu - getStyledUttuError - should return formatted error with general message prefix" duration="1" />
+    <testCase name="uttu - getStyledUttuError - should return general message with fallback when no error message" duration="0" />
+    <testCase name="uttu - getStyledUttuError - should return general message with empty fallback when no error message and no fallback" duration="0" />
+    <testCase name="uttu - getInternationalizedUttuError - should return translated error for known error code" duration="1" />
+    <testCase name="uttu - getInternationalizedUttuError - should return translated error for combined code (code + subCode)" duration="1" />
+    <testCase name="uttu - getInternationalizedUttuError - should return unknown error message when no extensions" duration="1" />
+    <testCase name="uttu - getInternationalizedUttuError - should return unknown error message when response is undefined" duration="0" />
+    <testCase name="uttu - getInternationalizedUttuError - should handle CombinedGraphQLErrors" duration="1" />
+    <testCase name="uttu - getInternationalizedUttuError - should fall back to UNKNOWN for unmapped error codes" duration="0" />
+  </file>
+  <file path="src/hooks/useEntityEditor.test.tsx">
+    <testCase name="useEntityEditor - create mode (no :id param) - returns default entity when no id param" duration="107" />
+    <testCase name="useEntityEditor - create mode (no :id param) - does not call loadById in create mode" duration="7" />
+    <testCase name="useEntityEditor - create mode (no :id param) - provides intl and formatMessage" duration="5" />
+    <testCase name="useEntityEditor - create mode (no :id param) - starts with isSaving=false and isDeleting=false" duration="6" />
+    <testCase name="useEntityEditor - field changes - updates entity field via onFieldChange" duration="14" />
+    <testCase name="useEntityEditor - field changes - updates entity via setEntity" duration="8" />
+    <testCase name="useEntityEditor - save - sets saveClicked to true when handleSave is called" duration="5" />
+    <testCase name="useEntityEditor - save - does not dispatch save when form is invalid" duration="7" />
+    <testCase name="useEntityEditor - save - dispatches save when form is valid" duration="24" />
+    <testCase name="useEntityEditor - delete dialog - can open and close the delete dialog" duration="6" />
+    <testCase name="useEntityEditor - edit mode (with :id param) - calls loadById when id param is present" duration="16" />
+  </file>
+  <file path="src/hooks/usePristine.test.ts">
+    <testCase name="usePristine - initial state - should return true when value has not changed and spoil is false" duration="31" />
+    <testCase name="usePristine - initial state - should return false when spoil is true even with unchanged value" duration="4" />
+    <testCase name="usePristine - value change detection - should return false after value changes" duration="5" />
+    <testCase name="usePristine - value change detection - should remain true when rerendered with same value" duration="8" />
+    <testCase name="usePristine - one-way state transition - should remain false even if value returns to initial" duration="5" />
+    <testCase name="usePristine - spoil parameter - should return false when spoil changes to true" duration="7" />
+    <testCase name="usePristine - spoil parameter - should return true when spoil changes back to false (if value unchanged)" duration="2" />
+    <testCase name="usePristine - deep equality with objects - should remain true for deeply equal objects" duration="4" />
+    <testCase name="usePristine - deep equality with objects - should return false for different objects" duration="8" />
+    <testCase name="usePristine - deep equality with arrays - should remain true for deeply equal arrays" duration="3" />
+    <testCase name="usePristine - deep equality with arrays - should return false for different arrays" duration="2" />
+  </file>
+  <file path="src/hooks/useRefetchOnLocationChange.test.tsx">
+    <testCase name="useRefetchOnLocationChange - calls refetch on initial render" duration="54" />
+    <testCase name="useRefetchOnLocationChange - calls refetch again when location changes" duration="10" />
+    <testCase name="useRefetchOnLocationChange - does not call refetch again on rerender if refetch ref is stable" duration="7" />
+  </file>
+  <file path="src/hooks/useUniqueKeys.test.tsx">
+    <testCase name="useUniqueKeys - initial state - should return array with length list.length + 1" duration="39" />
+    <testCase name="useUniqueKeys - initial state - should return array of unique UUID strings" duration="4" />
+    <testCase name="useUniqueKeys - initial state - should handle empty list" duration="5" />
+    <testCase name="useUniqueKeys - list additions - should append new UUID when item is added" duration="12" />
+    <testCase name="useUniqueKeys - list additions - should handle multiple consecutive additions" duration="19" />
+    <testCase name="useUniqueKeys - list deletions - should remove UUID corresponding to deleted item" duration="4" />
+    <testCase name="useUniqueKeys - list deletions - should remove first UUID when first item deleted" duration="3" />
+    <testCase name="useUniqueKeys - list deletions - should remove last item UUID when last item deleted" duration="10" />
+    <testCase name="useUniqueKeys - key stability - should maintain same keys when list is unchanged" duration="3" />
+    <testCase name="useUniqueKeys - deep equality with objects - should correctly identify deleted object using deep equality" duration="20" />
+    <testCase name="useUniqueKeys - deep equality with objects - should handle objects with same reference" duration="3" />
+    <testCase name="useUniqueKeys - edge cases - should handle transition from empty to non-empty list" duration="3" />
+    <testCase name="useUniqueKeys - edge cases - should handle transition from non-empty to empty list" duration="3" />
+    <testCase name="useUniqueKeys - edge cases - should handle single item list" duration="3" />
+  </file>
+  <file path="src/hooks/useUttuError.test.tsx">
+    <testCase name="useUttuError - does not dispatch notification when error is undefined" duration="101" />
+    <testCase name="useUttuError - dispatches error notification when error is provided" duration="10" />
+    <testCase name="useUttuError - calls callback when error is provided" duration="6" />
+    <testCase name="useUttuError - does not call callback when error is undefined" duration="4" />
+  </file>
+  <file path="src/i18n/EnkiIntlProvider.test.tsx">
+    <testCase name="EnkiIntlProvider - should render components with correct translations" duration="505" />
+  </file>
+  <file path="src/i18n/getLocale.test.ts">
+    <testCase name="getLocale - should return user defined locale if present" duration="5" />
+    <testCase name="getLocale - should return configured default locale if present" duration="1" />
+    <testCase name="getLocale - should return navigator locale if present" duration="1" />
+    <testCase name="getLocale - should return fallback default if navigator locale is not supported" duration="0" />
+    <testCase name="getLocale - should otherwise return fallback default " duration="0" />
+  </file>
+  <file path="src/i18n/intlSlice.test.ts">
+    <testCase name="intlSlice - should return initial state with a locale" duration="10" />
+    <testCase name="intlSlice - updateLocale sets the locale" duration="2" />
+    <testCase name="intlSlice - updateLocale changes from one locale to another" duration="1" />
+    <testCase name="intlSlice - updateConfiguredLocale resolves locale via getLocale" duration="1" />
+    <testCase name="intlSlice - updateLocale writes to localStorage via prepare callback" duration="1" />
+  </file>
+  <file path="src/model/Contact.test.ts">
+    <testCase name="contactIsEmpty - empty detection - returns true when all fields are undefined" duration="3" />
+    <testCase name="contactIsEmpty - empty detection - returns true when all fields are empty strings" duration="1" />
+    <testCase name="contactIsEmpty - non-empty detection - returns false when name is set" duration="1" />
+    <testCase name="contactIsEmpty - non-empty detection - returns false when description is set" duration="0" />
+    <testCase name="contactIsEmpty - non-empty detection - returns false when privateCode is set" duration="0" />
+    <testCase name="contactIsEmpty - non-empty detection - returns false when contactPerson is set" duration="0" />
+    <testCase name="contactIsEmpty - non-empty detection - returns false when phone is set" duration="0" />
+    <testCase name="contactIsEmpty - non-empty detection - returns false when email is set" duration="0" />
+    <testCase name="contactIsEmpty - non-empty detection - returns false when url is set" duration="0" />
+    <testCase name="contactIsEmpty - non-empty detection - returns false when furtherDetails is set" duration="1" />
+    <testCase name="contactIsEmpty - non-empty detection - returns false when multiple fields are set" duration="0" />
+  </file>
+  <file path="src/model/DayType.test.ts">
+    <testCase name="dayTypeToPayload - property removal - removes numberOfServiceJourneys property" duration="4" />
+    <testCase name="dayTypeToPayload - property removal - handles dayType without numberOfServiceJourneys" duration="1" />
+    <testCase name="dayTypeToPayload - property removal - handles numberOfServiceJourneys with value 0" duration="1" />
+    <testCase name="dayTypeToPayload - property passthrough - preserves id property" duration="1" />
+    <testCase name="dayTypeToPayload - property passthrough - preserves name property" duration="0" />
+    <testCase name="dayTypeToPayload - property passthrough - preserves changed property" duration="0" />
+    <testCase name="dayTypeToPayload - property passthrough - preserves daysOfWeek property" duration="1" />
+    <testCase name="dayTypeToPayload - property passthrough - preserves dayTypeAssignments property" duration="2" />
+    <testCase name="dayTypeToPayload - property passthrough - preserves empty daysOfWeek array" duration="1" />
+    <testCase name="dayTypeToPayload - property passthrough - preserves empty dayTypeAssignments array" duration="0" />
+    <testCase name="dayTypeToPayload - property passthrough - preserves undefined name" duration="0" />
+    <testCase name="dayTypeToPayload - property passthrough - preserves undefined changed" duration="0" />
+    <testCase name="dayTypeToPayload - preset day types - handles weekday day type" duration="5" />
+    <testCase name="dayTypeToPayload - preset day types - handles weekend day type" duration="1" />
+    <testCase name="dayTypeToPayload - preset day types - handles single day type" duration="0" />
+    <testCase name="dayTypeToPayload - edge cases - handles day type with all days" duration="0" />
+    <testCase name="dayTypeToPayload - edge cases - handles day type with multiple assignments" duration="1" />
+    <testCase name="dayTypeToPayload - edge cases - handles minimal day type" duration="0" />
+    <testCase name="dayTypeToPayload - edge cases - handles day type with all properties" duration="1" />
+    <testCase name="dayTypeIsEmpty - empty detection - returns true when both arrays are empty" duration="0" />
+    <testCase name="dayTypeIsEmpty - empty detection - returns false when daysOfWeek has elements" duration="0" />
+    <testCase name="dayTypeIsEmpty - empty detection - returns false when dayTypeAssignments has elements" duration="0" />
+    <testCase name="dayTypeIsEmpty - empty detection - returns false when both arrays have elements" duration="0" />
+    <testCase name="dayTypeIsEmpty - edge cases - handles day type with single day" duration="0" />
+    <testCase name="dayTypeIsEmpty - edge cases - handles day type with single assignment" duration="0" />
+    <testCase name="dayTypeIsEmpty - edge cases - handles weekday day type" duration="0" />
+    <testCase name="dayTypeIsEmpty - edge cases - handles weekend day type" duration="0" />
+  </file>
+  <file path="src/model/DayTypeAssignment.test.ts">
+    <testCase name="newDayTypeAssignment - default values - returns object with isAvailable set to true" duration="5" />
+    <testCase name="newDayTypeAssignment - default values - returns object with operatingPeriod.fromDate as current date string" duration="1" />
+    <testCase name="newDayTypeAssignment - default values - returns object with operatingPeriod.toDate as current date string" duration="1" />
+    <testCase name="newDayTypeAssignment - default values - returns fromDate and toDate with the same value" duration="2" />
+    <testCase name="newDayTypeAssignment - object creation - returns a new object on each call" duration="2" />
+    <testCase name="newDayTypeAssignment - object creation - returns a new operatingPeriod object on each call" duration="1" />
+    <testCase name="newDayTypeAssignment - object creation - does not include id property" duration="1" />
+    <testCase name="newDayTypeAssignment - object creation - does not include date property" duration="1" />
+  </file>
+  <file path="src/model/Export.test.ts">
+    <testCase name="newExport - default values - returns object with empty name" duration="2" />
+    <testCase name="newExport - default values - returns object with dryRun set to false" duration="0" />
+    <testCase name="newExport - default values - returns object with generateServiceLinks defaulting to true" duration="0" />
+    <testCase name="newExport - default values - returns object with includeDatedServiceJourneys defaulting to false" duration="0" />
+    <testCase name="newExport - custom values - respects generateServiceLinks=false" duration="1" />
+    <testCase name="newExport - custom values - respects generateServiceLinks=true explicitly" duration="0" />
+    <testCase name="newExport - custom values - respects includeDatedServiceJourneys=true" duration="0" />
+    <testCase name="newExport - custom values - respects includeDatedServiceJourneys=false explicitly" duration="0" />
+    <testCase name="newExport - custom values - allows combining generateServiceLinks=false with includeDatedServiceJourneys=true" duration="0" />
+    <testCase name="newExport - object creation - does not include id property" duration="3" />
+    <testCase name="newExport - object creation - does not include exportStatus property" duration="0" />
+    <testCase name="newExport - object creation - does not include downloadUrl property" duration="0" />
+    <testCase name="newExport - object creation - does not include messages property" duration="0" />
+    <testCase name="newExport - object creation - returns a new object on each call" duration="1" />
+    <testCase name="toPayload - property removal - removes exportStatus property" duration="0" />
+    <testCase name="toPayload - property removal - removes downloadUrl property" duration="0" />
+    <testCase name="toPayload - property removal - removes messages property" duration="0" />
+    <testCase name="toPayload - property removal - removes all server-generated properties at once" duration="1" />
+    <testCase name="toPayload - property preservation - preserves name property" duration="0" />
+    <testCase name="toPayload - property preservation - preserves dryRun property" duration="0" />
+    <testCase name="toPayload - property preservation - preserves generateServiceLinks property" duration="0" />
+    <testCase name="toPayload - property preservation - preserves includeDatedServiceJourneys property" duration="0" />
+    <testCase name="toPayload - property preservation - preserves id property when present" duration="0" />
+    <testCase name="toPayload - property preservation - preserves lineAssociations property" duration="0" />
+    <testCase name="toPayload - immutability - does not mutate the original object" duration="10" />
+    <testCase name="toPayload - edge cases - handles export with minimal properties" duration="1" />
+  </file>
+  <file path="src/model/FlexibleLine.test.ts">
+    <testCase name="flexibleLineToPayload - delegation to lineToPayload - calls lineToPayload with isFlexible=true" duration="15" />
+    <testCase name="flexibleLineToPayload - delegation to lineToPayload - always passes true for isFlexible parameter" duration="1" />
+    <testCase name="flexibleLineToPayload - flexible line type preservation - preserves FLEXIBLE_AREAS_ONLY type" duration="1" />
+    <testCase name="flexibleLineToPayload - flexible line type preservation - preserves CORRIDOR_SERVICE type" duration="1" />
+    <testCase name="flexibleLineToPayload - flexible line type preservation - preserves MAIN_ROUTE_WITH_FLEXIBLE_ENDS type" duration="1" />
+    <testCase name="flexibleLineToPayload - flexible line type preservation - preserves HAIL_AND_RIDE_SECTIONS type" duration="1" />
+    <testCase name="flexibleLineToPayload - flexible line type preservation - preserves FIXED_STOP_AREA_WIDE type" duration="1" />
+    <testCase name="flexibleLineToPayload - flexible line type preservation - preserves MIXED_FLEXIBLE type" duration="9" />
+    <testCase name="flexibleLineToPayload - flexible line type preservation - preserves MIXED_FLEXIBLE_AND_FIXED type" duration="8" />
+    <testCase name="flexibleLineToPayload - flexible line type preservation - preserves FIXED type" duration="1" />
+    <testCase name="flexibleLineToPayload - booking arrangement handling - preserves booking arrangement" duration="1" />
+    <testCase name="flexibleLineToPayload - booking arrangement handling - preserves null booking arrangement" duration="0" />
+    <testCase name="flexibleLineToPayload - booking arrangement handling - preserves booking arrangement with all fields" duration="1" />
+    <testCase name="flexibleLineToPayload - network and branding object removal (inherited from lineToPayload) - removes network object from output" duration="1" />
+    <testCase name="flexibleLineToPayload - network and branding object removal (inherited from lineToPayload) - removes branding object from output" duration="0" />
+    <testCase name="flexibleLineToPayload - brandingRef handling (inherited from lineToPayload) - preserves existing brandingRef" duration="0" />
+    <testCase name="flexibleLineToPayload - brandingRef handling (inherited from lineToPayload) - defaults to null when brandingRef is undefined" duration="0" />
+    <testCase name="flexibleLineToPayload - notices filtering (inherited from lineToPayload) - preserves notices with text" duration="1" />
+    <testCase name="flexibleLineToPayload - notices filtering (inherited from lineToPayload) - filters out notices with empty text" duration="1" />
+    <testCase name="flexibleLineToPayload - property passthrough - preserves id property" duration="1" />
+    <testCase name="flexibleLineToPayload - property passthrough - preserves name property" duration="1" />
+    <testCase name="flexibleLineToPayload - property passthrough - preserves description property" duration="0" />
+    <testCase name="flexibleLineToPayload - property passthrough - preserves publicCode property" duration="0" />
+    <testCase name="flexibleLineToPayload - property passthrough - preserves transportMode property" duration="0" />
+    <testCase name="flexibleLineToPayload - property passthrough - preserves operatorRef property" duration="0" />
+    <testCase name="flexibleLineToPayload - journeyPatterns transformation - transforms journey patterns with flexible flag" duration="0" />
+    <testCase name="flexibleLineToPayload - journeyPatterns transformation - handles empty journeyPatterns array" duration="0" />
+    <testCase name="flexibleLineToPayload - edge cases - handles minimal flexible line" duration="0" />
+    <testCase name="flexibleLineToPayload - edge cases - handles flexible line with all properties" duration="1" />
+    <testCase name="flexibleLineToPayload - edge cases - does not mutate the original flexible line object" duration="0" />
+  </file>
+  <file path="src/model/FlexibleStopPlace.test.ts">
+    <testCase name="mapFlexibleAreasToArea - when flexibleAreas is empty or undefined - returns original object when flexibleAreas is undefined" duration="4" />
+    <testCase name="mapFlexibleAreasToArea - when flexibleAreas is empty or undefined - returns original object when flexibleAreas is empty array" duration="7" />
+    <testCase name="mapFlexibleAreasToArea - when flexibleAreas has elements - maps first area when flexibleAreas has one element" duration="1" />
+    <testCase name="mapFlexibleAreasToArea - when flexibleAreas has elements - maps first area when flexibleAreas has multiple elements" duration="1" />
+    <testCase name="mapFlexibleAreasToArea - property preservation - preserves name property" duration="0" />
+    <testCase name="mapFlexibleAreasToArea - property preservation - preserves description property" duration="0" />
+    <testCase name="mapFlexibleAreasToArea - property preservation - preserves privateCode property" duration="0" />
+    <testCase name="mapFlexibleAreasToArea - property preservation - preserves transportMode property" duration="0" />
+    <testCase name="mapFlexibleAreasToArea - property preservation - preserves id property" duration="0" />
+    <testCase name="mapFlexibleAreasToArea - property preservation - preserves keyValues property" duration="2" />
+    <testCase name="mapFlexibleAreasToArea - property preservation - preserves flexibleAreas property in returned object" duration="0" />
+    <testCase name="mapFlexibleAreasToArea - immutability - does not mutate the original object when mapping" duration="0" />
+    <testCase name="mapFlexibleAreasToArea - immutability - returns a new object when flexibleAreas has elements" duration="1" />
+    <testCase name="mapFlexibleAreasToArea - edge cases - handles FlexibleStopPlace that already has flexibleArea" duration="0" />
+    <testCase name="mapFlexibleAreasToArea - edge cases - handles minimal FlexibleStopPlace" duration="0" />
+  </file>
+  <file path="src/model/GeoJSON.test.ts">
+    <testCase name="GeoJSON - addCoordinate - basic functionality - should add coordinate to empty array and create closed polygon" duration="3" />
+    <testCase name="GeoJSON - addCoordinate - basic functionality - should add coordinate to array with one point and maintain closure" duration="0" />
+    <testCase name="GeoJSON - addCoordinate - basic functionality - should add coordinate to closed polygon and maintain closure" duration="0" />
+    <testCase name="GeoJSON - addCoordinate - polygon closure invariant - should ensure first and last coordinates are equal" duration="0" />
+    <testCase name="GeoJSON - addCoordinate - polygon closure invariant - should insert new coordinate before the closing coordinate" duration="0" />
+    <testCase name="GeoJSON - addCoordinate - edge cases - should handle coordinates with decimal precision" duration="0" />
+    <testCase name="GeoJSON - addCoordinate - edge cases - should handle zero coordinates" duration="0" />
+    <testCase name="GeoJSON - removeLastCoordinate - basic functionality - should remove second-to-last coordinate from polygon with 3+ points" duration="0" />
+    <testCase name="GeoJSON - removeLastCoordinate - basic functionality - should maintain closure after removal" duration="0" />
+    <testCase name="GeoJSON - removeLastCoordinate - minimum coordinate threshold - should return empty array when coordinates length is 2" duration="0" />
+    <testCase name="GeoJSON - removeLastCoordinate - minimum coordinate threshold - should return empty array when coordinates length is 1" duration="0" />
+    <testCase name="GeoJSON - removeLastCoordinate - minimum coordinate threshold - should return empty array when coordinates array is empty" duration="0" />
+    <testCase name="GeoJSON - removeLastCoordinate - edge cases - should correctly remove from exactly 3 coordinates" duration="0" />
+    <testCase name="GeoJSON - removeLastCoordinate - edge cases - should handle coordinates with decimal values" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - valid coordinate strings - should accept empty array" duration="1" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - valid coordinate strings - should accept single coordinate with integers" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - valid coordinate strings - should accept single coordinate with decimals" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - valid coordinate strings - should accept multiple coordinates" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - valid coordinate strings - should accept coordinates with varying decimal precision" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - valid coordinate strings - should accept coordinates with trailing decimal point" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - whitespace handling - should accept string with spaces" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - whitespace handling - should accept string with newlines" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - whitespace handling - should accept string with tabs" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - whitespace handling - should accept string with mixed whitespace" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject empty string" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject string with only whitespace" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject malformed JSON" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject missing outer brackets" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject missing inner brackets" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject strings with letters" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject negative numbers (regex limitation)" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject coordinates with three values" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject coordinates with single value" duration="0" />
+    <testCase name="GeoJSON - stringIsValidCoordinates - invalid coordinate strings - should reject unclosed brackets" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - isPolygonClosed - returns true for closed polygon" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - isPolygonClosed - returns false for unclosed polygon" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - isPolygonClosed - returns false for empty array" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - isPolygonClosed - returns false for single coordinate" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - ensurePolygonClosed - returns same array for already closed polygon" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - ensurePolygonClosed - appends first coordinate to close polygon" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - ensurePolygonClosed - handles empty array" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - isClockwise - returns false for counter-clockwise polygon" duration="1" />
+    <testCase name="GeoJSON Polygon Validation - isClockwise - returns true for clockwise polygon" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - isClockwise - returns false for too few coordinates" duration="1" />
+    <testCase name="GeoJSON Polygon Validation - ensureCounterClockwise - returns same array for counter-clockwise polygon" duration="1" />
+    <testCase name="GeoJSON Polygon Validation - ensureCounterClockwise - reverses clockwise polygon to counter-clockwise" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - ensureCounterClockwise - maintains closure after reversal" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - detectSelfIntersections - returns 0 for simple polygon" duration="1" />
+    <testCase name="GeoJSON Polygon Validation - detectSelfIntersections - returns positive number for self-intersecting polygon" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - detectSelfIntersections - returns 0 for too few coordinates" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateAndNormalizePolygon - returns valid result for valid polygon" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateAndNormalizePolygon - auto-closes unclosed polygon" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateAndNormalizePolygon - auto-corrects clockwise to counter-clockwise" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateAndNormalizePolygon - returns error for self-intersecting polygon" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateAndNormalizePolygon - returns error for empty coordinates" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateAndNormalizePolygon - returns error for too few coordinates" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateCoordinateInput - returns valid for empty string" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateCoordinateInput - returns format error for invalid JSON" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateCoordinateInput - returns valid for valid JSON coordinates" duration="0" />
+    <testCase name="GeoJSON Polygon Validation - validateCoordinateInput - parses and normalizes coordinates" duration="0" />
+  </file>
+  <file path="src/model/JourneyPattern.test.ts">
+    <testCase name="journeyPatternToPayload - service journey transformation - transforms service journeys using serviceJourneyToPayload" duration="6" />
+    <testCase name="journeyPatternToPayload - service journey transformation - transforms multiple service journeys" duration="2" />
+    <testCase name="journeyPatternToPayload - service journey transformation - handles empty service journeys array" duration="1" />
+    <testCase name="journeyPatternToPayload - service journey transformation - removes new_ prefixed IDs from service journeys" duration="1" />
+    <testCase name="journeyPatternToPayload - service journey transformation - preserves valid service journey IDs" duration="1" />
+    <testCase name="journeyPatternToPayload - points in sequence transformation (regular stops) - transforms stop points using stopPointToPayload when not flexible" duration="2" />
+    <testCase name="journeyPatternToPayload - points in sequence transformation (regular stops) - preserves quayRef for regular stop points" duration="1" />
+    <testCase name="journeyPatternToPayload - points in sequence transformation (regular stops) - preserves forBoarding and forAlighting properties" duration="1" />
+    <testCase name="journeyPatternToPayload - points in sequence transformation (regular stops) - handles empty points in sequence" duration="3" />
+    <testCase name="journeyPatternToPayload - points in sequence transformation (flexible stops) - transforms stop points using flexibleStopPointToPayload when flexible" duration="3" />
+    <testCase name="journeyPatternToPayload - points in sequence transformation (flexible stops) - ensures flexibleStopPlaceRef is present when flexible" duration="0" />
+    <testCase name="journeyPatternToPayload - points in sequence transformation (flexible stops) - adds null flexibleStopPlaceRef when missing in flexible mode" duration="0" />
+    <testCase name="journeyPatternToPayload - points in sequence transformation (flexible stops) - adds null quayRef when missing in flexible mode" duration="0" />
+    <testCase name="journeyPatternToPayload - isFlexible flag propagation - uses stopPointToPayload when isFlexible is false" duration="0" />
+    <testCase name="journeyPatternToPayload - isFlexible flag propagation - uses flexibleStopPointToPayload when isFlexible is true" duration="0" />
+    <testCase name="journeyPatternToPayload - isFlexible flag propagation - defaults to non-flexible when isFlexible is not provided" duration="0" />
+    <testCase name="journeyPatternToPayload - notices filtering - preserves notices with valid text" duration="1" />
+    <testCase name="journeyPatternToPayload - notices filtering - filters out notices with empty text" duration="0" />
+    <testCase name="journeyPatternToPayload - notices filtering - filters out notices without text property" duration="0" />
+    <testCase name="journeyPatternToPayload - notices filtering - filters out null/undefined notices" duration="0" />
+    <testCase name="journeyPatternToPayload - notices filtering - returns empty array when all notices are invalid" duration="0" />
+    <testCase name="journeyPatternToPayload - notices filtering - returns undefined when notices is undefined" duration="0" />
+    <testCase name="journeyPatternToPayload - notices filtering - returns undefined when notices is null" duration="0" />
+    <testCase name="journeyPatternToPayload - property passthrough - preserves id property" duration="0" />
+    <testCase name="journeyPatternToPayload - property passthrough - preserves name property" duration="0" />
+    <testCase name="journeyPatternToPayload - property passthrough - preserves description property" duration="0" />
+    <testCase name="journeyPatternToPayload - property passthrough - preserves privateCode property" duration="0" />
+    <testCase name="journeyPatternToPayload - property passthrough - preserves directionType property" duration="0" />
+    <testCase name="journeyPatternToPayload - property passthrough - preserves null values for optional properties" duration="0" />
+    <testCase name="journeyPatternToPayload - edge cases - handles minimal journey pattern" duration="0" />
+    <testCase name="journeyPatternToPayload - edge cases - handles two-stop journey pattern" duration="6" />
+    <testCase name="journeyPatternToPayload - edge cases - handles single-stop journey pattern" duration="1" />
+    <testCase name="journeyPatternToPayload - edge cases - handles journey pattern with all properties" duration="1" />
+    <testCase name="journeyPatternToPayload - edge cases - handles mixed flexible and quay stop points" duration="1" />
+  </file>
+  <file path="src/model/Line.test.ts">
+    <testCase name="lineToPayload - network and branding object removal - removes network object from output" duration="5" />
+    <testCase name="lineToPayload - network and branding object removal - removes branding object from output" duration="1" />
+    <testCase name="lineToPayload - network and branding object removal - removes both network and branding objects" duration="1" />
+    <testCase name="lineToPayload - brandingRef handling - preserves existing brandingRef" duration="1" />
+    <testCase name="lineToPayload - brandingRef handling - defaults to null when brandingRef is undefined" duration="1" />
+    <testCase name="lineToPayload - brandingRef handling - defaults to null when brandingRef is not provided" duration="0" />
+    <testCase name="lineToPayload - brandingRef handling - preserves empty string brandingRef as falsy value (becomes null)" duration="0" />
+    <testCase name="lineToPayload - journeyPatterns transformation - transforms journey patterns using journeyPatternToPayload" duration="3" />
+    <testCase name="lineToPayload - journeyPatterns transformation - handles empty journeyPatterns array" duration="2" />
+    <testCase name="lineToPayload - journeyPatterns transformation - handles undefined journeyPatterns" duration="0" />
+    <testCase name="lineToPayload - journeyPatterns transformation - passes isFlexible=false by default to journeyPatternToPayload" duration="1" />
+    <testCase name="lineToPayload - journeyPatterns transformation - passes isFlexible=true when specified" duration="1" />
+    <testCase name="lineToPayload - notices filtering - preserves notices with text" duration="1" />
+    <testCase name="lineToPayload - notices filtering - filters out notices with empty text" duration="0" />
+    <testCase name="lineToPayload - notices filtering - filters out notices without text property" duration="0" />
+    <testCase name="lineToPayload - notices filtering - filters out null/undefined notices" duration="0" />
+    <testCase name="lineToPayload - notices filtering - returns empty array when all notices are invalid" duration="0" />
+    <testCase name="lineToPayload - notices filtering - handles undefined notices array" duration="0" />
+    <testCase name="lineToPayload - property passthrough - preserves id property" duration="0" />
+    <testCase name="lineToPayload - property passthrough - preserves name property" duration="0" />
+    <testCase name="lineToPayload - property passthrough - preserves description property" duration="0" />
+    <testCase name="lineToPayload - property passthrough - preserves privateCode property" duration="0" />
+    <testCase name="lineToPayload - property passthrough - preserves publicCode property" duration="0" />
+    <testCase name="lineToPayload - property passthrough - preserves transportMode property" duration="1" />
+    <testCase name="lineToPayload - property passthrough - preserves transportSubmode property" duration="0" />
+    <testCase name="lineToPayload - property passthrough - preserves networkRef property" duration="1" />
+    <testCase name="lineToPayload - property passthrough - preserves operatorRef property" duration="0" />
+    <testCase name="lineToPayload - property passthrough - preserves null values for optional properties" duration="1" />
+    <testCase name="lineToPayload - edge cases - handles minimal line" duration="0" />
+    <testCase name="lineToPayload - edge cases - handles line with all properties" duration="1" />
+    <testCase name="lineToPayload - edge cases - does not mutate the original line object" duration="0" />
+  </file>
+  <file path="src/model/Organisation.test.ts">
+    <testCase name="filterAuthorities - filtering behavior - returns empty array when input is empty" duration="4" />
+    <testCase name="filterAuthorities - filtering behavior - returns empty array when no authorities exist" duration="1" />
+    <testCase name="filterAuthorities - filtering behavior - returns only authorities when mixed types exist" duration="3" />
+    <testCase name="filterAuthorities - filtering behavior - returns all items when all are authorities" duration="1" />
+    <testCase name="filterAuthorities - filtering behavior - preserves organisation properties" duration="1" />
+    <testCase name="filterAuthorities - null/undefined handling - returns undefined when input is undefined" duration="2" />
+    <testCase name="filterAuthorities - null/undefined handling - returns undefined when input is null" duration="0" />
+    <testCase name="filterNetexOperators - filtering behavior - returns empty array when input is empty" duration="0" />
+    <testCase name="filterNetexOperators - filtering behavior - returns empty array when no operators exist" duration="0" />
+    <testCase name="filterNetexOperators - filtering behavior - returns only operators when mixed types exist" duration="1" />
+    <testCase name="filterNetexOperators - filtering behavior - returns all items when all are operators" duration="1" />
+    <testCase name="filterNetexOperators - filtering behavior - preserves organisation properties" duration="1" />
+    <testCase name="filterNetexOperators - null/undefined handling (throws) - throws error when input is undefined" duration="2" />
+    <testCase name="filterNetexOperators - null/undefined handling (throws) - throws error when input is null" duration="1" />
+  </file>
+  <file path="src/model/PassingTime.test.ts">
+    <testCase name="passingTimeToPayload - flexible service (no fixed arrival/departure times) - returns earliest/latest times when no arrival or departure time" duration="4" />
+    <testCase name="passingTimeToPayload - flexible service (no fixed arrival/departure times) - preserves day offsets for flexible times" duration="6" />
+    <testCase name="passingTimeToPayload - flexible service (no fixed arrival/departure times) - handles empty string times as flexible service" duration="1" />
+    <testCase name="passingTimeToPayload - same arrival and departure time - returns departure only when not last stop" duration="1" />
+    <testCase name="passingTimeToPayload - same arrival and departure time - returns arrival only when last stop" duration="1" />
+    <testCase name="passingTimeToPayload - same arrival and departure time - handles same time with day offset" duration="0" />
+    <testCase name="passingTimeToPayload - same arrival and departure time - returns departure at first stop even when times match" duration="0" />
+    <testCase name="passingTimeToPayload - first stop (index 0) - returns departure time only" duration="1" />
+    <testCase name="passingTimeToPayload - first stop (index 0) - handles departure time with day offset" duration="0" />
+    <testCase name="passingTimeToPayload - last stop - returns arrival time only" duration="1" />
+    <testCase name="passingTimeToPayload - last stop - handles overnight journey (arrival next day)" duration="0" />
+    <testCase name="passingTimeToPayload - intermediate stops - returns both arrival and departure times" duration="1" />
+    <testCase name="passingTimeToPayload - intermediate stops - handles different day offsets for arrival and departure" duration="1" />
+    <testCase name="passingTimeToPayload - intermediate stops - handles multiple intermediate stops" duration="1" />
+    <testCase name="passingTimeToPayload - rest properties preservation - preserves id and name properties" duration="0" />
+    <testCase name="passingTimeToPayload - rest properties preservation - preserves notices array" duration="3" />
+    <testCase name="passingTimeToPayload - rest properties preservation - preserves description and privateCode" duration="0" />
+    <testCase name="passingTimeToPayload - edge cases - handles single stop journey (first and last)" duration="0" />
+    <testCase name="passingTimeToPayload - edge cases - handles two-stop journey correctly" duration="0" />
+    <testCase name="passingTimeToPayload - edge cases - handles midnight crossing correctly" duration="0" />
+    <testCase name="passingTimeToPayload - edge cases - handles multi-day journey (day offset &gt; 1)" duration="0" />
+    <testCase name="passingTimeToPayload - edge cases - clears earliestDeparture and latestArrival offsets for fixed-time stops" duration="0" />
+  </file>
+  <file path="src/model/Provider.test.ts">
+    <testCase name="sortProviders - comparison behavior - returns -1 when first provider name is alphabetically before second" duration="3" />
+    <testCase name="sortProviders - comparison behavior - returns 1 when first provider name is alphabetically after second" duration="2" />
+    <testCase name="sortProviders - comparison behavior - returns 0 when provider names are equal" duration="1" />
+    <testCase name="sortProviders - providers without names - returns -1 when first provider has no name" duration="1" />
+    <testCase name="sortProviders - providers without names - returns 1 when second provider has no name" duration="1" />
+    <testCase name="sortProviders - providers without names - returns -1 when both providers have no name" duration="0" />
+    <testCase name="sortProviders - providers without names - treats undefined name same as no name" duration="0" />
+    <testCase name="sortProviders - providers without names - treats empty string name as no name (falsy)" duration="0" />
+    <testCase name="sortProviders - case sensitivity - sorts uppercase before lowercase (case-sensitive)" duration="0" />
+    <testCase name="sortProviders - case sensitivity - sorts lowercase after uppercase" duration="0" />
+    <testCase name="sortProviders - Array.sort integration - sorts an array of providers correctly" duration="1" />
+    <testCase name="sortProviders - Array.sort integration - puts providers without names first" duration="1" />
+    <testCase name="sortProviders - Array.sort integration - handles multiple providers without names" duration="1" />
+    <testCase name="sortProviders - Array.sort integration - preserves other properties when sorting" duration="1" />
+  </file>
+  <file path="src/model/ServiceJourney.test.ts">
+    <testCase name="serviceJourneyToPayload - ID handling - removes id when it starts with new_" duration="3" />
+    <testCase name="serviceJourneyToPayload - ID handling - preserves id when it does not start with new_" duration="1" />
+    <testCase name="serviceJourneyToPayload - ID handling - handles id that contains new_ but does not start with it" duration="0" />
+    <testCase name="serviceJourneyToPayload - ID handling - handles service journey without id property" duration="9" />
+    <testCase name="serviceJourneyToPayload - dayTypes conversion - converts dayTypes array to dayTypesRefs" duration="4" />
+    <testCase name="serviceJourneyToPayload - dayTypes conversion - returns undefined dayTypesRefs when dayTypes is undefined" duration="0" />
+    <testCase name="serviceJourneyToPayload - dayTypes conversion - returns empty dayTypesRefs when dayTypes is empty" duration="0" />
+    <testCase name="serviceJourneyToPayload - dayTypes conversion - extracts ids from dayTypes objects" duration="0" />
+    <testCase name="serviceJourneyToPayload - notices filtering - preserves notices with text" duration="1" />
+    <testCase name="serviceJourneyToPayload - notices filtering - filters out notices with empty text" duration="1" />
+    <testCase name="serviceJourneyToPayload - notices filtering - filters out notices without text property" duration="0" />
+    <testCase name="serviceJourneyToPayload - notices filtering - filters out null/undefined notices" duration="0" />
+    <testCase name="serviceJourneyToPayload - notices filtering - returns empty array when all notices are invalid" duration="0" />
+    <testCase name="serviceJourneyToPayload - notices filtering - handles undefined notices array" duration="0" />
+    <testCase name="serviceJourneyToPayload - passingTimes transformation - transforms passing times using passingTimeToPayload" duration="2" />
+    <testCase name="serviceJourneyToPayload - passingTimes transformation - handles single passing time" duration="1" />
+    <testCase name="serviceJourneyToPayload - passingTimes transformation - handles empty passing times array" duration="0" />
+    <testCase name="serviceJourneyToPayload - passingTimes transformation - preserves passing time index context" duration="1" />
+    <testCase name="serviceJourneyToPayload - property passthrough - preserves name property" duration="1" />
+    <testCase name="serviceJourneyToPayload - property passthrough - preserves description property" duration="1" />
+    <testCase name="serviceJourneyToPayload - property passthrough - preserves privateCode property" duration="0" />
+    <testCase name="serviceJourneyToPayload - property passthrough - preserves publicCode property" duration="0" />
+    <testCase name="serviceJourneyToPayload - property passthrough - preserves operatorRef property" duration="0" />
+    <testCase name="serviceJourneyToPayload - property passthrough - preserves bookingArrangement property" duration="2" />
+    <testCase name="serviceJourneyToPayload - property passthrough - preserves null values for optional properties" duration="1" />
+    <testCase name="serviceJourneyToPayload - edge cases - handles minimal service journey" duration="0" />
+    <testCase name="serviceJourneyToPayload - edge cases - handles service journey with all properties" duration="2" />
+    <testCase name="serviceJourneyToPayload - edge cases - correctly mutates input object when removing new_ id" duration="0" />
+  </file>
+  <file path="src/model/StopPoint.test.ts">
+    <testCase name="stopPointToPayload - property removal - removes flexibleStopPlace property" duration="4" />
+    <testCase name="stopPointToPayload - property removal - removes key property" duration="1" />
+    <testCase name="stopPointToPayload - property removal - removes both flexibleStopPlace and key" duration="4" />
+    <testCase name="stopPointToPayload - property passthrough - preserves id property" duration="1" />
+    <testCase name="stopPointToPayload - property passthrough - preserves quayRef property" duration="0" />
+    <testCase name="stopPointToPayload - property passthrough - preserves flexibleStopPlaceRef property" duration="0" />
+    <testCase name="stopPointToPayload - property passthrough - preserves destinationDisplay property" duration="1" />
+    <testCase name="stopPointToPayload - property passthrough - preserves forBoarding property" duration="0" />
+    <testCase name="stopPointToPayload - property passthrough - preserves forAlighting property" duration="0" />
+    <testCase name="stopPointToPayload - property passthrough - preserves bookingArrangement property" duration="1" />
+    <testCase name="stopPointToPayload - property passthrough - preserves notices property" duration="1" />
+    <testCase name="stopPointToPayload - property passthrough - preserves null values for optional properties" duration="1" />
+    <testCase name="stopPointToPayload - edge cases - handles stop point with only required properties" duration="0" />
+    <testCase name="stopPointToPayload - edge cases - handles stop point with undefined flexibleStopPlace" duration="0" />
+    <testCase name="stopPointToPayload - edge cases - handles stop point with all properties" duration="1" />
+    <testCase name="flexibleStopPointToPayload - property removal - removes flexibleStopPlace property" duration="0" />
+    <testCase name="flexibleStopPointToPayload - property removal - removes key property" duration="0" />
+    <testCase name="flexibleStopPointToPayload - null ref injection - adds null flexibleStopPlaceRef when missing" duration="0" />
+    <testCase name="flexibleStopPointToPayload - null ref injection - adds null quayRef when missing" duration="0" />
+    <testCase name="flexibleStopPointToPayload - null ref injection - adds both null refs when both are missing" duration="0" />
+    <testCase name="flexibleStopPointToPayload - null ref injection - preserves existing flexibleStopPlaceRef when present" duration="3" />
+    <testCase name="flexibleStopPointToPayload - null ref injection - preserves existing quayRef when present" duration="0" />
+    <testCase name="flexibleStopPointToPayload - null ref injection - preserves null flexibleStopPlaceRef when explicitly null" duration="0" />
+    <testCase name="flexibleStopPointToPayload - null ref injection - preserves null quayRef when explicitly null" duration="0" />
+    <testCase name="flexibleStopPointToPayload - property passthrough - preserves id property" duration="0" />
+    <testCase name="flexibleStopPointToPayload - property passthrough - preserves destinationDisplay property" duration="0" />
+    <testCase name="flexibleStopPointToPayload - property passthrough - preserves forBoarding property" duration="0" />
+    <testCase name="flexibleStopPointToPayload - property passthrough - preserves forAlighting property" duration="1" />
+    <testCase name="flexibleStopPointToPayload - property passthrough - preserves bookingArrangement property" duration="0" />
+    <testCase name="flexibleStopPointToPayload - property passthrough - preserves notices property" duration="0" />
+    <testCase name="flexibleStopPointToPayload - stop point type switching scenarios - handles switching from quay to flexible (adds null flexibleStopPlaceRef)" duration="0" />
+    <testCase name="flexibleStopPointToPayload - stop point type switching scenarios - handles switching from flexible to quay (adds null quayRef)" duration="0" />
+    <testCase name="flexibleStopPointToPayload - stop point type switching scenarios - handles mixed stop point with both refs" duration="0" />
+    <testCase name="flexibleStopPointToPayload - edge cases - handles stop point with only required properties" duration="1" />
+    <testCase name="flexibleStopPointToPayload - edge cases - handles stop point with all properties" duration="1" />
+    <testCase name="stopPointToPayload vs flexibleStopPointToPayload - stopPointToPayload does not add null refs" duration="1" />
+    <testCase name="stopPointToPayload vs flexibleStopPointToPayload - flexibleStopPointToPayload adds null refs when missing" duration="0" />
+    <testCase name="stopPointToPayload vs flexibleStopPointToPayload - both remove flexibleStopPlace and key properties" duration="1" />
+  </file>
+  <file path="src/model/enums.test.ts">
+    <testCase name="mapLineModeToStopPlaceMode - undefined handling - returns undefined when transportMode is undefined" duration="8" />
+    <testCase name="mapLineModeToStopPlaceMode - undefined handling - returns undefined when transportMode is undefined with submode" duration="1" />
+    <testCase name="mapLineModeToStopPlaceMode - TAXI mode mapping - returns WATER when TAXI mode with WATER_TAXI submode" duration="1" />
+    <testCase name="mapLineModeToStopPlaceMode - TAXI mode mapping - returns BUS when TAXI mode with CHARTER_TAXI submode" duration="1" />
+    <testCase name="mapLineModeToStopPlaceMode - TAXI mode mapping - returns BUS when TAXI mode with COMMUNAL_TAXI submode" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - TAXI mode mapping - returns BUS when TAXI mode with no submode" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - TAXI mode mapping - returns BUS when TAXI mode with undefined submode" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - COACH mode mapping - returns BUS when COACH mode" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - COACH mode mapping - returns BUS when COACH mode with any submode" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - passthrough modes - returns BUS when transportMode is BUS" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - passthrough modes - returns RAIL when transportMode is RAIL" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - passthrough modes - returns TRAM when transportMode is TRAM" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - passthrough modes - returns WATER when transportMode is WATER" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - passthrough modes - returns METRO when transportMode is METRO" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - passthrough modes - returns AIR when transportMode is AIR" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - passthrough modes - returns CABLEWAY when transportMode is CABLEWAY" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - passthrough modes - returns FUNICULAR when transportMode is FUNICULAR" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - passthrough modes - returns SNOW_AND_ICE when transportMode is SNOW_AND_ICE" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - submodes on passthrough modes - returns WATER when WATER mode with any submode" duration="0" />
+    <testCase name="mapLineModeToStopPlaceMode - submodes on passthrough modes - returns BUS when BUS mode with any submode" duration="0" />
+  </file>
+  <file path="src/reducers/brandingsSlice.test.ts">
+    <testCase name="brandingsSlice - should return initial state" duration="16" />
+    <testCase name="brandingsSlice - receiveBrandings replaces entire state" duration="5" />
+    <testCase name="brandingsSlice - receiveBrandings overwrites existing state" duration="2" />
+    <testCase name="brandingsSlice - receiveBranding updates existing by id" duration="2" />
+    <testCase name="brandingsSlice - receiveBranding returns singleton when state is null" duration="0" />
+    <testCase name="brandingsSlice - receiveBranding leaves non-matching items unchanged" duration="1" />
+  </file>
+  <file path="src/reducers/dayTypesSlice.test.ts">
+    <testCase name="dayTypesSlice - should return initial state" duration="3" />
+    <testCase name="dayTypesSlice - receiveDayTypes replaces entire state" duration="3" />
+    <testCase name="dayTypesSlice - receiveDayTypes overwrites existing state" duration="3" />
+    <testCase name="dayTypesSlice - receiveDayType updates existing by id" duration="2" />
+    <testCase name="dayTypesSlice - receiveDayType returns singleton when state is null" duration="1" />
+    <testCase name="dayTypesSlice - receiveDayType appends when id is not found" duration="4" />
+  </file>
+  <file path="src/reducers/editorSlice.test.ts">
+    <testCase name="editorSlice - should return initial state" duration="11" />
+    <testCase name="editorSlice - setSavedChanges(false) sets isSaved to false" duration="2" />
+    <testCase name="editorSlice - setSavedChanges(true) sets isSaved to true" duration="1" />
+  </file>
+  <file path="src/reducers/exportsSlice.test.ts">
+    <testCase name="exportsSlice - should return initial state" duration="3" />
+    <testCase name="exportsSlice - requestExports resets state to null" duration="6" />
+    <testCase name="exportsSlice - receiveExports sorts by date descending" duration="1" />
+    <testCase name="exportsSlice - receiveExport updates existing by id" duration="2" />
+    <testCase name="exportsSlice - receiveExport returns singleton when state is null" duration="1" />
+    <testCase name="exportsSlice - receiveExport leaves non-matching items unchanged" duration="2" />
+  </file>
+  <file path="src/reducers/flexibleLinesSlice.test.ts">
+    <testCase name="flexibleLinesSlice - should return initial state" duration="3" />
+    <testCase name="flexibleLinesSlice - receiveFlexibleLines replaces entire state" duration="2" />
+    <testCase name="flexibleLinesSlice - receiveFlexibleLine normalizes and returns singleton when state is null" duration="3" />
+    <testCase name="flexibleLinesSlice - receiveFlexibleLine updates existing by id" duration="3" />
+  </file>
+  <file path="src/reducers/flexibleStopPlacesSlice.test.ts">
+    <testCase name="flexibleStopPlacesSlice - should return initial state" duration="3" />
+    <testCase name="flexibleStopPlacesSlice - requestFlexibleStopPlaces resets state to null" duration="2" />
+    <testCase name="flexibleStopPlacesSlice - receiveFlexibleStopPlaces maps flexibleAreas to flexibleArea" duration="8" />
+    <testCase name="flexibleStopPlacesSlice - requestFlexibleStopPlace preserves existing state" duration="1" />
+    <testCase name="flexibleStopPlacesSlice - receiveFlexibleStopPlace updates existing by id" duration="2" />
+    <testCase name="flexibleStopPlacesSlice - receiveFlexibleStopPlace returns singleton when state is null" duration="0" />
+    <testCase name="flexibleStopPlacesSlice - receiveFlexibleStopPlace applies mapFlexibleAreasToArea" duration="0" />
+  </file>
+  <file path="src/reducers/networksSlice.test.ts">
+    <testCase name="networksSlice - should return initial state" duration="3" />
+    <testCase name="networksSlice - receiveNetworks replaces entire state" duration="2" />
+    <testCase name="networksSlice - receiveNetworks overwrites existing state" duration="2" />
+    <testCase name="networksSlice - receiveNetwork updates existing by id" duration="2" />
+    <testCase name="networksSlice - receiveNetwork returns singleton when state is null" duration="1" />
+    <testCase name="networksSlice - receiveNetwork leaves non-matching items unchanged" duration="1" />
+  </file>
+  <file path="src/reducers/notificationSlice.test.ts">
+    <testCase name="notificationSlice - should return initial state" duration="3" />
+    <testCase name="notificationSlice - showNotification sets the notification with a generated key" duration="6" />
+    <testCase name="notificationSlice - showNotification replaces previous notification" duration="4" />
+    <testCase name="notificationSlice - each showNotification generates a unique key" duration="1" />
+  </file>
+  <file path="src/reducers/organisationsSlice.test.ts">
+    <testCase name="organisationsSlice - should return initial state" duration="4" />
+    <testCase name="organisationsSlice - receiveOrganisations replaces entire state" duration="2" />
+    <testCase name="organisationsSlice - receiveOrganisations overwrites existing state" duration="3" />
+  </file>
+  <file path="src/reducers/providersSlice.test.ts">
+    <testCase name="providersSlice - should return initial state" duration="13" />
+    <testCase name="providersSlice - receiveProviders sets providers and clears failure" duration="3" />
+    <testCase name="providersSlice - failedReceivingProviders sets failure to true" duration="1" />
+    <testCase name="providersSlice - receiveProviders after failure clears failure flag" duration="2" />
+  </file>
+  <file path="src/scenes/App/SelectProvider/SelectProvider.test.tsx">
+    <testCase name="SelectProvider - should render and allow selecting a provider" duration="1588" />
+  </file>
+  <file path="src/scenes/Brandings/Brandings.test.tsx">
+    <testCase name="Brandings listing - renders the page header" duration="706" />
+    <testCase name="Brandings listing - renders branding names" duration="73" />
+    <testCase name="Brandings listing - renders short names" duration="49" />
+    <testCase name="Brandings listing - renders URLs" duration="66" />
+    <testCase name="Brandings listing - shows empty state when no brandings" duration="37" />
+    <testCase name="Brandings listing - renders a create button linking to /brandings/create" duration="118" />
+  </file>
+  <file path="src/scenes/DayTypes/DayTypes.test.tsx">
+    <testCase name="DayTypes listing - renders the page header" duration="807" />
+    <testCase name="DayTypes listing - renders day type names" duration="83" />
+    <testCase name="DayTypes listing - renders formatted weekdays" duration="189" />
+    <testCase name="DayTypes listing - marks day types with service journeys as in use" duration="57" />
+    <testCase name="DayTypes listing - shows empty state when no day types" duration="27" />
+    <testCase name="DayTypes listing - renders a create button linking to /day-types/create" duration="124" />
+  </file>
+  <file path="src/scenes/Exports/Creator/validateForm.test.ts">
+    <testCase name="returns false when name is empty" duration="2" />
+    <testCase name="returns true when valid" duration="0" />
+  </file>
+  <file path="src/scenes/Exports/Exports.test.tsx">
+    <testCase name="Exports listing - renders the page header" duration="837" />
+    <testCase name="Exports listing - renders export names after loading from MSW" duration="192" />
+    <testCase name="Exports listing - renders the correct number of data rows" duration="212" />
+    <testCase name="Exports listing - renders a create button linking to /exports/create" duration="74" />
+    <testCase name="Exports listing - shows dry run column by default" duration="196" />
+    <testCase name="Exports listing - hides dry run column when hideExportDryRun is true" duration="155" />
+  </file>
+  <file path="src/scenes/FlexibleLines/FlexibleLines.test.tsx">
+    <testCase name="FlexibleLines listing - renders the page header" duration="846" />
+    <testCase name="FlexibleLines listing - renders flexible line names" duration="64" />
+    <testCase name="FlexibleLines listing - renders public codes" duration="53" />
+    <testCase name="FlexibleLines listing - renders private codes" duration="43" />
+    <testCase name="FlexibleLines listing - resolves operator names from organisations" duration="45" />
+    <testCase name="FlexibleLines listing - renders a create button linking to /flexible-lines/create" duration="114" />
+  </file>
+  <file path="src/scenes/Lines/Lines.test.tsx">
+    <testCase name="Lines listing - renders the page header" duration="791" />
+    <testCase name="Lines listing - renders line names after loading" duration="239" />
+    <testCase name="Lines listing - renders public codes" duration="96" />
+    <testCase name="Lines listing - renders private codes" duration="97" />
+    <testCase name="Lines listing - resolves operator names from organisations" duration="88" />
+    <testCase name="Lines listing - renders a create button linking to /lines/create" duration="102" />
+  </file>
+  <file path="src/scenes/Networks/Networks.test.tsx">
+    <testCase name="Networks listing - renders the page header" duration="712" />
+    <testCase name="Networks listing - renders network names from mock data" duration="79" />
+    <testCase name="Networks listing - renders private codes" duration="49" />
+    <testCase name="Networks listing - resolves authority names from organisations" duration="63" />
+    <testCase name="Networks listing - shows empty state when no networks" duration="27" />
+    <testCase name="Networks listing - renders a create button linking to /networks/create" duration="115" />
+  </file>
+  <file path="src/scenes/StopPlaces/StopPlaces.test.tsx">
+    <testCase name="StopPlaces listing - renders the page header" duration="734" />
+    <testCase name="StopPlaces listing - renders stop place names after loading from MSW" duration="262" />
+    <testCase name="StopPlaces listing - renders private codes" duration="123" />
+    <testCase name="StopPlaces listing - renders number of flexible areas" duration="52" />
+    <testCase name="StopPlaces listing - renders a create button linking to /stop-places/create" duration="77" />
+  </file>
+  <file path="src/scenes/StopPlaces/scenes/Editor/hooks/useHandleDelete.test.tsx">
+    <testCase name="useHandleDelete - with stop place without id does not attempt to save" duration="104" />
+    <testCase name="useHandleDelete - with stop place with id works" duration="13" />
+  </file>
+  <file path="src/scenes/StopPlaces/scenes/Editor/hooks/useHandleOnSaveClick.test.tsx">
+    <testCase name="useHandleOnSaveClick - with errors it should not attempt to save" duration="169" />
+    <testCase name="useHandleOnSaveClick - without errors works" duration="27" />
+  </file>
+  <file path="src/scenes/StopPlaces/scenes/Editor/utils/validateForm.test.ts">
+    <testCase name="validateForm - validateFlexibleStopPlace - name validation - should return name error for undefined name" duration="3" />
+    <testCase name="validateForm - validateFlexibleStopPlace - name validation - should return name error for empty string name" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - name validation - should return name error for whitespace-only name" duration="3" />
+    <testCase name="validateForm - validateFlexibleStopPlace - name validation - should not return name error for valid name" duration="1" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleArea polygon validation - should return flexibleArea error when polygon has no coordinates" duration="1" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleArea polygon validation - should return flexibleArea error when polygon has fewer than 4 coordinates" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleArea polygon validation - should not return flexibleArea error when polygon has exactly 4 coordinates" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleArea polygon validation - should not return flexibleArea error when polygon has more than 4 coordinates" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleArea polygon validation - should return flexibleArea error if any area has insufficient coordinates" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleArea polygon validation - should not return flexibleArea error when flexibleAreas is undefined" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleArea polygon validation - should not return flexibleArea error when flexibleAreas is empty array" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleArea polygon validation - should return flexibleArea error when polygon is undefined" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleStopPlaceType validation - should not return type error when stop place has valid type" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleStopPlaceType validation - should not return type error when all areas have valid type" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleStopPlaceType validation - should return type error when stop place and some areas lack valid type" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - flexibleStopPlaceType validation - should not return type error when no flexibleAreas exist" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - combined validation - should return all errors for completely invalid stop place" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlace - combined validation - should return no errors for fully valid stop place" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlaceType - should return true for valid UnrestrictedRoadNetwork type" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlaceType - should return true for valid UnrestrictedPublicTransportAreas type" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlaceType - should return false for undefined keyValues" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlaceType - should return false for empty keyValues array" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlaceType - should return false when FlexibleStopAreaType key is missing" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlaceType - should return false when values array is empty" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlaceType - should return false when values array has multiple values" duration="0" />
+    <testCase name="validateForm - validateFlexibleStopPlaceType - should return false for invalid type value" duration="1" />
+    <testCase name="validateForm - validateFlexibleStopPlaceType - should return true when FlexibleStopAreaType is among other key values" duration="0" />
+  </file>
+  <file path="src/test/factories/__tests__/compositeFactories.test.ts">
+    <testCase name="Composite Entity Factories - ServiceJourney Factories - createServiceJourney - creates a service journey with defaults" duration="17" />
+    <testCase name="Composite Entity Factories - ServiceJourney Factories - createServiceJourney - accepts overrides" duration="1" />
+    <testCase name="Composite Entity Factories - ServiceJourney Factories - createServiceJourneyWithPassingTimes - creates service journey with matching passing times for stop count" duration="1" />
+    <testCase name="Composite Entity Factories - ServiceJourney Factories - createServiceJourneyWithPassingTimes - uses custom start hour and interval" duration="1" />
+    <testCase name="Composite Entity Factories - ServiceJourney Factories - createServiceJourneyWithDayTypes - creates service journey with day types" duration="2" />
+    <testCase name="Composite Entity Factories - ServiceJourney Factories - createServiceJourneyWithBooking - creates service journey with booking arrangement" duration="1" />
+    <testCase name="Composite Entity Factories - ServiceJourney Factories - createNamedServiceJourney - creates service journey with specific name" duration="0" />
+    <testCase name="Composite Entity Factories - ServiceJourney Factories - createEmptyServiceJourney - creates empty service journey for form initialization" duration="1" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createJourneyPattern - creates a journey pattern with defaults" duration="4" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createJourneyPattern - has matching stop points and passing times count" duration="1" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createJourneyPattern - accepts overrides" duration="0" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createJourneyPatternWithStops - creates journey pattern with specified stop count" duration="1" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createJourneyPatternWithStops - creates journey pattern with multiple service journeys" duration="1" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createJourneyPatternWithServiceJourneys - creates journey pattern with specified service journey count" duration="1" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createFlexibleJourneyPattern - creates journey pattern with flexible stop points" duration="1" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createInboundJourneyPattern - creates inbound journey pattern" duration="1" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createEmptyJourneyPattern - creates empty journey pattern for form initialization" duration="0" />
+    <testCase name="Composite Entity Factories - JourneyPattern Factories - createMinimalJourneyPattern - creates minimal journey pattern with 2 stops" duration="1" />
+    <testCase name="Composite Entity Factories - Line Factories - createLine - creates a line with defaults" duration="1" />
+    <testCase name="Composite Entity Factories - Line Factories - createLine - has fully populated journey pattern hierarchy" duration="1" />
+    <testCase name="Composite Entity Factories - Line Factories - createLine - accepts overrides" duration="3" />
+    <testCase name="Composite Entity Factories - Line Factories - createNetwork - creates a network with defaults" duration="2" />
+    <testCase name="Composite Entity Factories - Line Factories - createLineWithNetwork - creates a line with network attached" duration="2" />
+    <testCase name="Composite Entity Factories - Line Factories - createLineWithJourneyPatterns - creates a line with multiple journey patterns" duration="1" />
+    <testCase name="Composite Entity Factories - Line Factories - createLineWithJourneyPatterns - creates a line with specified stops per pattern" duration="1" />
+    <testCase name="Composite Entity Factories - Line Factories - createLineWithMode - creates a line with specified transport mode" duration="0" />
+    <testCase name="Composite Entity Factories - Line Factories - createRailLine - creates a rail line" duration="1" />
+    <testCase name="Composite Entity Factories - Line Factories - createTramLine - creates a tram line" duration="1" />
+    <testCase name="Composite Entity Factories - Line Factories - createFerryLine - creates a ferry line" duration="1" />
+    <testCase name="Composite Entity Factories - Line Factories - createEmptyLine - creates empty line for form initialization" duration="0" />
+    <testCase name="Composite Entity Factories - Line Factories - createMinimalLine - creates minimal line with 2 stops" duration="1" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createFlexibleLine - creates a flexible line with defaults" duration="1" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createFlexibleLine - has flexible stop points in journey patterns" duration="1" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createFlexibleLine - accepts overrides" duration="4" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createFlexibleLineWithBooking - creates a flexible line with booking arrangement" duration="1" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createFlexibleLineWithNetwork - creates a flexible line with network" duration="1" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createCorridorServiceLine - creates a corridor service line" duration="0" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createMainRouteWithFlexibleEndsLine - creates a main route with flexible ends line" duration="0" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createHailAndRideLine - creates a hail and ride line" duration="0" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createMixedFlexibleLine - creates a mixed flexible line" duration="0" />
+    <testCase name="Composite Entity Factories - FlexibleLine Factories - createEmptyFlexibleLine - creates empty flexible line for form initialization" duration="0" />
+    <testCase name="Composite Entity Factories - Export Factories - createExport - creates an export with defaults" duration="1" />
+    <testCase name="Composite Entity Factories - Export Factories - createExport - accepts overrides" duration="0" />
+    <testCase name="Composite Entity Factories - Export Factories - createExportLineAssociation - creates a line association with generated ref" duration="0" />
+    <testCase name="Composite Entity Factories - Export Factories - createExportLineAssociation - creates a line association with provided ref" duration="0" />
+    <testCase name="Composite Entity Factories - Export Factories - createExportWithLines - creates export with line associations" duration="1" />
+    <testCase name="Composite Entity Factories - Export Factories - createSuccessfulExport - creates a successful export" duration="0" />
+    <testCase name="Composite Entity Factories - Export Factories - createFailedExport - creates a failed export with error message" duration="1" />
+    <testCase name="Composite Entity Factories - Export Factories - createInProgressExport - creates an in-progress export" duration="0" />
+    <testCase name="Composite Entity Factories - Export Factories - createDryRunExport - creates a dry run export" duration="0" />
+    <testCase name="Composite Entity Factories - Export Factories - createExportWithDatedServiceJourneys - creates export with dated service journeys enabled" duration="0" />
+    <testCase name="Composite Entity Factories - Export Factories - Message factories - createErrorMessage creates error message" duration="0" />
+    <testCase name="Composite Entity Factories - Export Factories - Message factories - createWarningMessage creates warning message" duration="7" />
+    <testCase name="Composite Entity Factories - Export Factories - Message factories - createInfoMessage creates info message" duration="3" />
+    <testCase name="Composite Entity Factories - Export Factories - createNewExport - creates new export for form initialization" duration="1" />
+    <testCase name="Composite Entity Factories - Export Factories - createNewExport - accepts custom options" duration="2" />
+    <testCase name="Composite Entity Factories - ID Generation - generates sequential IDs within a session" duration="1" />
+    <testCase name="Composite Entity Factories - ID Generation - resets IDs between tests" duration="1" />
+    <testCase name="Composite Entity Factories - ID Generation - generates IDs independently for different types" duration="1" />
+    <testCase name="Composite Entity Factories - Deep Hierarchy Consistency - creates consistent Line → JourneyPattern → ServiceJourney → PassingTime hierarchy" duration="1" />
+    <testCase name="Composite Entity Factories - Deep Hierarchy Consistency - creates consistent FlexibleLine hierarchy" duration="1" />
+  </file>
+  <file path="src/test/factories/__tests__/leafFactories.test.ts">
+    <testCase name="Leaf Entity Factories - PassingTime Factories - createPassingTime - creates a passing time with default departure" duration="3" />
+    <testCase name="Leaf Entity Factories - PassingTime Factories - createPassingTime - accepts overrides" duration="1" />
+    <testCase name="Leaf Entity Factories - PassingTime Factories - createFirstStopPassingTime - creates departure-only passing time" duration="4" />
+    <testCase name="Leaf Entity Factories - PassingTime Factories - createLastStopPassingTime - creates arrival-only passing time" duration="1" />
+    <testCase name="Leaf Entity Factories - PassingTime Factories - createMiddleStopPassingTime - creates passing time with both arrival and departure" duration="1" />
+    <testCase name="Leaf Entity Factories - PassingTime Factories - createPassingTimeSequence - creates sequence with correct patterns for 3 stops" duration="2" />
+    <testCase name="Leaf Entity Factories - PassingTime Factories - createPassingTimeSequence - uses custom start hour and interval" duration="0" />
+    <testCase name="Leaf Entity Factories - PassingTime Factories - createPassingTimeSequence - handles single stop sequence" duration="1" />
+    <testCase name="Leaf Entity Factories - BookingArrangement Factories - createContact - creates a contact with defaults" duration="1" />
+    <testCase name="Leaf Entity Factories - BookingArrangement Factories - createContact - accepts overrides" duration="0" />
+    <testCase name="Leaf Entity Factories - BookingArrangement Factories - createEmptyContact - creates an empty contact" duration="1" />
+    <testCase name="Leaf Entity Factories - BookingArrangement Factories - createBookingArrangement - creates a booking arrangement with defaults" duration="1" />
+    <testCase name="Leaf Entity Factories - BookingArrangement Factories - createMinimalBookingArrangement - creates a minimal booking arrangement with only phone booking" duration="1" />
+    <testCase name="Leaf Entity Factories - BookingArrangement Factories - createOnlineBookingArrangement - creates an online booking arrangement" duration="0" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createOperatingPeriod - creates operating period from today" duration="1" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createOperatingPeriod - accepts overrides" duration="1" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createDayTypeAssignment - creates available assignment by default" duration="0" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createUnavailableDayTypeAssignment - creates unavailable assignment" duration="0" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createDayType - creates weekday day type by default" duration="1" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createDayType - accepts overrides" duration="0" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createWeekendDayType - creates weekend day type" duration="1" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createSingleDayType - creates day type for a specific day" duration="0" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createExpiredDayType - creates day type with past operating period" duration="0" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createFutureDayType - creates day type with future operating period" duration="0" />
+    <testCase name="Leaf Entity Factories - DayType Factories - createEmptyDayType - creates empty day type for form initialization" duration="0" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createPolygonGeoJSON - creates a valid closed polygon" duration="1" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createFlexibleArea - creates a flexible area with polygon" duration="0" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createFlexibleStopPlace - creates a flexible stop place with area" duration="1" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createQuayStopPoint - creates a quay-based stop point" duration="1" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createQuayStopPoint - uses provided quay ref" duration="1" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createFlexibleStopPoint - creates a flexible stop point" duration="0" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createFirstStopPoint - creates boarding-only stop point" duration="0" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createLastStopPoint - creates alighting-only stop point" duration="0" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createStopPointSequence - creates sequence with correct boarding/alighting flags" duration="1" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createStopPointSequence - uses provided quay refs" duration="0" />
+    <testCase name="Leaf Entity Factories - StopPoint Factories - createFlexibleStopPointSequence - creates flexible stop point sequence" duration="1" />
+  </file>
+  <file path="src/test/factories/__tests__/utils.test.ts">
+    <testCase name="Factory Utilities - createTestId - generates sequential IDs" duration="3" />
+    <testCase name="Factory Utilities - createTestId - maintains separate counters per type" duration="1" />
+    <testCase name="Factory Utilities - createTestId - supports custom authority prefix" duration="0" />
+    <testCase name="Factory Utilities - resetIdCounters - resets all counters" duration="0" />
+    <testCase name="Factory Utilities - createStopPointKey - generates 12-char hex keys" duration="3" />
+    <testCase name="Factory Utilities - createStopPointKey - generates different keys on each call" duration="3" />
+    <testCase name="Factory Utilities - deepMerge - handles undefined source" duration="1" />
+    <testCase name="Factory Utilities - deepMerge - merges primitive values" duration="0" />
+    <testCase name="Factory Utilities - deepMerge - merges nested objects" duration="1" />
+    <testCase name="Factory Utilities - deepMerge - replaces arrays entirely" duration="1" />
+    <testCase name="Factory Utilities - deepMerge - handles null values" duration="0" />
+    <testCase name="Factory Utilities - deepMerge - does not modify target" duration="0" />
+    <testCase name="Factory Utilities - deepMerge - handles deeply nested objects" duration="0" />
+    <testCase name="Factory Utilities - deepMerge - preserves unmentioned keys at all levels" duration="0" />
+    <testCase name="Factory Utilities - createTime - formats time correctly" duration="0" />
+    <testCase name="Factory Utilities - createTime - pads single digit hours and minutes" duration="0" />
+    <testCase name="Factory Utilities - createTime - handles midnight" duration="0" />
+    <testCase name="Factory Utilities - createTime - handles 23:59:59" duration="0" />
+    <testCase name="Factory Utilities - createDate - returns today by default" duration="2" />
+    <testCase name="Factory Utilities - createDate - calculates positive offset dates" duration="1" />
+    <testCase name="Factory Utilities - createDate - calculates negative offset dates" duration="0" />
+    <testCase name="Factory Utilities - createDate - returns ISO format (YYYY-MM-DD)" duration="0" />
+  </file>
+  <file path="src/utils/dates.test.ts">
+    <testCase name="dates - parseISOToCalendarDate - should parse a valid ISO date string" duration="9" />
+    <testCase name="dates - parseISOToCalendarDate - should parse a leap year date" duration="1" />
+    <testCase name="dates - parseISOToCalendarDate - should parse first day of year" duration="1" />
+    <testCase name="dates - parseISOToCalendarDate - should parse last day of year" duration="1" />
+    <testCase name="dates - parseISOToCalendarDate - should return null for null input" duration="0" />
+    <testCase name="dates - parseISOToCalendarDate - should return null for undefined input" duration="0" />
+    <testCase name="dates - parseISOToCalendarDate - should return null for empty string" duration="0" />
+    <testCase name="dates - parseISOToCalendarDate - should return null for invalid date format" duration="0" />
+    <testCase name="dates - parseISOToCalendarDate - should return null for partial date while typing" duration="0" />
+    <testCase name="dates - parseISOToCalendarDate - should return null for invalid month" duration="1" />
+    <testCase name="dates - parseISOToCalendarDate - should return null for invalid day" duration="0" />
+    <testCase name="dates - parseISOToCalendarDate - should return null for invalid leap year date" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should parse a valid ISO datetime string" duration="1" />
+    <testCase name="dates - parseISOToCalendarDateTime - should parse datetime with seconds" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should parse midnight" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should parse end of day" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should return null for null input" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should return null for undefined input" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should return null for empty string" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should return null for invalid datetime format" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should parse date without time as midnight" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should return null for invalid hour" duration="0" />
+    <testCase name="dates - parseISOToCalendarDateTime - should return null for invalid minute" duration="0" />
+    <testCase name="dates - calendarDateToISO - should convert a CalendarDate to ISO string" duration="0" />
+    <testCase name="dates - calendarDateToISO - should pad single digit month and day" duration="0" />
+    <testCase name="dates - calendarDateToISO - should handle leap year date" duration="0" />
+    <testCase name="dates - calendarDateToISO - should return null for null input" duration="0" />
+    <testCase name="dates - calendarDateToISO - should return null for undefined input" duration="2" />
+    <testCase name="dates - calendarDateTimeToISO - should convert a CalendarDateTime to ISO string" duration="0" />
+    <testCase name="dates - calendarDateTimeToISO - should pad single digit values" duration="0" />
+    <testCase name="dates - calendarDateTimeToISO - should handle midnight" duration="0" />
+    <testCase name="dates - calendarDateTimeToISO - should return null for null input" duration="0" />
+    <testCase name="dates - calendarDateTimeToISO - should return null for undefined input" duration="0" />
+    <testCase name="dates - getCurrentDate - should return current date as CalendarDate" duration="88" />
+    <testCase name="dates - getCurrentDate - should return correct date at year boundary" duration="1" />
+    <testCase name="dates - getCurrentDate - should return correct date at year end" duration="1" />
+    <testCase name="dates - getCurrentDateTime - should return current datetime as CalendarDateTime" duration="1" />
+    <testCase name="dates - getCurrentDateTime - should return correct datetime at midnight" duration="1" />
+    <testCase name="dates - getCurrentDateTime - should return correct datetime at end of day" duration="1" />
+    <testCase name="dates - hasValidYear - should return true for valid 4-digit year" duration="0" />
+    <testCase name="dates - hasValidYear - should return true for minimum valid year (1000)" duration="0" />
+    <testCase name="dates - hasValidYear - should return true for maximum valid year (9999)" duration="0" />
+    <testCase name="dates - hasValidYear - should return false for null" duration="7" />
+    <testCase name="dates - hasValidYear - should return false for 3-digit year" duration="0" />
+    <testCase name="dates - isNotBefore - should return true when toDate equals fromDate" duration="0" />
+    <testCase name="dates - isNotBefore - should return true when toDate is after fromDate" duration="0" />
+    <testCase name="dates - isNotBefore - should return false when toDate is before fromDate" duration="0" />
+    <testCase name="dates - isNotBefore - should return true for null toDate (skip validation)" duration="0" />
+    <testCase name="dates - isNotBefore - should return true for null fromDate (skip validation)" duration="0" />
+    <testCase name="dates - isNotBefore - should return true for undefined dates (skip validation)" duration="0" />
+    <testCase name="dates - isNotBefore - should return true for invalid date strings (skip validation)" duration="0" />
+    <testCase name="dates - isNotBefore - should handle cross-year comparison" duration="1" />
+    <testCase name="dates - safeParseDateWithFallback - should parse valid ISO date string" duration="1" />
+    <testCase name="dates - safeParseDateWithFallback - should return current date for null input" duration="1" />
+    <testCase name="dates - safeParseDateWithFallback - should return current date for undefined input" duration="1" />
+    <testCase name="dates - safeParseDateWithFallback - should return current date for invalid date string" duration="1" />
+    <testCase name="dates - safeParseDateWithFallback - should return provided fallback when parsing fails" duration="1" />
+    <testCase name="dates - safeParseDateWithFallback - should return provided fallback for invalid date" duration="1" />
+  </file>
+  <file path="src/validation/bookingArrangement.test.ts">
+    <testCase name="validateBookingArrangement - mutual exclusivity: minimumBookingPeriod vs bookWhen - returns false when both minimumBookingPeriod and bookWhen are set" duration="3" />
+    <testCase name="validateBookingArrangement - mutual exclusivity: minimumBookingPeriod vs bookWhen - returns true when only minimumBookingPeriod is set" duration="1" />
+    <testCase name="validateBookingArrangement - mutual exclusivity: minimumBookingPeriod vs bookWhen - returns true when only bookWhen and latestBookingTime are set" duration="0" />
+    <testCase name="validateBookingArrangement - required pairs: bookWhen and latestBookingTime - returns false when bookWhen is set but latestBookingTime is not" duration="1" />
+    <testCase name="validateBookingArrangement - required pairs: bookWhen and latestBookingTime - returns false when latestBookingTime is set but bookWhen is not" duration="1" />
+    <testCase name="validateBookingArrangement - required pairs: bookWhen and latestBookingTime - returns true when both bookWhen and latestBookingTime are set together" duration="0" />
+    <testCase name="validateBookingArrangement - at least one booking option required - returns false when no booking timing option is set" duration="0" />
+    <testCase name="validateBookingArrangement - at least one booking option required - returns true with minimumBookingPeriod alone" duration="0" />
+    <testCase name="validateBookingArrangement - at least one booking option required - returns true with bookWhen and latestBookingTime together" duration="0" />
+    <testCase name="validateBookingArrangement - undefined/null input handling - returns false when bookingArrangement is undefined" duration="1" />
+    <testCase name="validateBookingArrangement - undefined/null input handling - returns false when bookingArrangement is an empty object" duration="0" />
+    <testCase name="validateBookingArrangement - various minimumBookingPeriod formats - returns true for ISO 8601 duration format PT10M (10 minutes)" duration="0" />
+    <testCase name="validateBookingArrangement - various minimumBookingPeriod formats - returns true for ISO 8601 duration format PT2H (2 hours)" duration="0" />
+    <testCase name="validateBookingArrangement - various minimumBookingPeriod formats - returns true for ISO 8601 duration format P1D (1 day)" duration="0" />
+    <testCase name="validateBookingArrangement - integration with other BookingArrangement fields - validates regardless of other optional fields being set" duration="0" />
+    <testCase name="validateBookingArrangement - integration with other BookingArrangement fields - validates with contact information set" duration="0" />
+    <testCase name="validateBookingArrangement - integration with other BookingArrangement fields - validates a minimal booking arrangement with only required fields" duration="0" />
+  </file>
+  <file path="src/validation/dayType.test.ts">
+    <testCase name="day type validation - validateDayType - returns true when operating period contains matching day of week" duration="26" />
+    <testCase name="day type validation - validateDayType - returns true for weekend day type with weekend in period" duration="2" />
+    <testCase name="day type validation - validateDayType - returns true for future day type" duration="1" />
+    <testCase name="day type validation - validateDayType - returns true for expired day type (valid structure, past dates)" duration="1" />
+    <testCase name="day type validation - validateDayType - returns false when dates cannot be parsed" duration="1" />
+    <testCase name="day type validation - validateDayType - returns false when fromDate is invalid" duration="1" />
+    <testCase name="day type validation - validateDayType - returns false when toDate is invalid" duration="0" />
+    <testCase name="day type validation - validateDayType - returns true when multiple assignments all have matching days" duration="1" />
+    <testCase name="day type validation - validateDayType - handles empty daysOfWeek array" duration="1" />
+    <testCase name="day type validation - validateDayType - returns false when operating period has no matching days for single-day type" duration="4" />
+    <testCase name="day type validation - validateDayType - validates each assignment independently" duration="1" />
+    <testCase name="day type validation - validateDayType - returns true for single-day type when that day exists in period" duration="0" />
+    <testCase name="day type validation - validateDayTypes - returns false when dayTypes is undefined" duration="0" />
+    <testCase name="day type validation - validateDayTypes - returns true when dayTypes is empty array (vacuous truth)" duration="0" />
+    <testCase name="day type validation - validateDayTypes - returns true when all day types are valid" duration="0" />
+    <testCase name="day type validation - validateDayTypes - returns false when any day type is invalid" duration="0" />
+    <testCase name="day type validation - validateDayTypes - returns true for single valid day type" duration="0" />
+    <testCase name="day type validation - validateDayTypes - returns false when one of multiple day types has empty daysOfWeek" duration="1" />
+  </file>
+  <file path="src/validation/journeyPatternName.test.ts">
+    <testCase name="validateJourneyPatternName - empty name validation - should return emptyName error for null name" duration="2" />
+    <testCase name="validateJourneyPatternName - empty name validation - should return emptyName error for undefined name" duration="0" />
+    <testCase name="validateJourneyPatternName - empty name validation - should return emptyName error for empty string" duration="0" />
+    <testCase name="validateJourneyPatternName - empty name validation - should return emptyName error for whitespace-only string" duration="0" />
+    <testCase name="validateJourneyPatternName - empty name validation - should use custom empty name message" duration="1" />
+    <testCase name="validateJourneyPatternName - empty name validation - should use default empty name message when not provided" duration="0" />
+    <testCase name="validateJourneyPatternName - duplicate name validation - should return duplicateName error for existing name" duration="0" />
+    <testCase name="validateJourneyPatternName - duplicate name validation - should return duplicateName error for existing name with different whitespace" duration="0" />
+    <testCase name="validateJourneyPatternName - duplicate name validation - should use custom duplicate name message" duration="0" />
+    <testCase name="validateJourneyPatternName - duplicate name validation - should use default duplicate name message when not provided" duration="1" />
+    <testCase name="validateJourneyPatternName - valid name scenarios - should return empty object for valid unique name" duration="0" />
+    <testCase name="validateJourneyPatternName - valid name scenarios - should handle empty existing names array" duration="0" />
+    <testCase name="validateJourneyPatternName - valid name scenarios - should be case-sensitive" duration="0" />
+    <testCase name="validateJourneyPatternName - valid name scenarios - should handle names with special characters" duration="0" />
+    <testCase name="validateJourneyPatternName - whitespace handling - should normalize whitespace when comparing" duration="0" />
+    <testCase name="validateJourneyPatternName - whitespace handling - should handle existing names with only whitespace" duration="0" />
+    <testCase name="getJourneyPatternNames - extracting names - should extract names from journey patterns" duration="4" />
+    <testCase name="getJourneyPatternNames - extracting names - should return empty array for undefined" duration="0" />
+    <testCase name="getJourneyPatternNames - extracting names - should return empty array for empty journey patterns array" duration="0" />
+    <testCase name="getJourneyPatternNames - null/undefined name handling - should handle journey patterns with undefined names" duration="1" />
+    <testCase name="getJourneyPatternNames - null/undefined name handling - should handle journey patterns with null names" duration="1" />
+    <testCase name="getJourneyPatternNames - whitespace handling - should trim whitespace from names" duration="1" />
+    <testCase name="getJourneyPatternNames - whitespace handling - should handle whitespace-only names" duration="0" />
+    <testCase name="getJourneyPatternNames - integration with validateJourneyPatternName - should work together for duplicate detection" duration="0" />
+    <testCase name="getJourneyPatternNames - integration with validateJourneyPatternName - should work together for unique name validation" duration="0" />
+  </file>
+  <file path="src/validation/line.test.ts">
+    <testCase name="line validation - validateServiceJourney - name validation - returns false when name is null" duration="84" />
+    <testCase name="line validation - validateServiceJourney - name validation - returns false when name is empty string" duration="1" />
+    <testCase name="line validation - validateServiceJourney - name validation - returns false when name is whitespace only" duration="1" />
+    <testCase name="line validation - validateServiceJourney - name validation - returns true when name is provided" duration="1" />
+    <testCase name="line validation - validateServiceJourney - passing times validation - returns false when passingTimes is undefined" duration="3" />
+    <testCase name="line validation - validateServiceJourney - passing times validation - returns false when passingTimes is empty" duration="2" />
+    <testCase name="line validation - validateServiceJourney - passing times validation - returns false when only one passing time (need at least 2)" duration="1" />
+    <testCase name="line validation - validateServiceJourney - passing times validation - returns false when passing times have invalid ordering" duration="1" />
+    <testCase name="line validation - validateServiceJourney - passing times validation - returns true when passing times are valid" duration="1" />
+    <testCase name="line validation - validateServiceJourney - dayTypes validation - returns false when dayTypes is undefined" duration="1" />
+    <testCase name="line validation - validateServiceJourney - dayTypes validation - returns false when dayTypes is empty array" duration="2" />
+    <testCase name="line validation - validateServiceJourney - dayTypes validation - returns false when first dayType has empty daysOfWeek" duration="1" />
+    <testCase name="line validation - validateServiceJourney - dayTypes validation - returns false when first dayType has null daysOfWeek" duration="1" />
+    <testCase name="line validation - validateServiceJourney - dayTypes validation - returns false when dayType has invalid date range" duration="1" />
+    <testCase name="line validation - validateServiceJourney - dayTypes validation - returns true when dayType is valid with daysOfWeek set" duration="1" />
+    <testCase name="line validation - validateServiceJourney - dayTypes validation - returns true when multiple dayTypes are valid" duration="11" />
+    <testCase name="line validation - validateServiceJourney - validDayTimes check (first dayType daysOfWeek) - returns false when first dayType has no daysOfWeek but subsequent ones do" duration="1" />
+    <testCase name="line validation - validateServiceJourney - validDayTimes check (first dayType daysOfWeek) - returns true when first dayType has daysOfWeek" duration="1" />
+    <testCase name="line validation - validateServiceJourney - combined validation - returns true for fully valid service journey" duration="3" />
+    <testCase name="line validation - validateServiceJourney - combined validation - returns false when multiple validation rules fail" duration="1" />
+    <testCase name="line validation - validateServiceJourney - combined validation - validates with weekend day type" duration="2" />
+    <testCase name="line validation - validateServiceJourney - combined validation - validates overnight service journey" duration="1" />
+    <testCase name="line validation - validServiceJourneys - undefined/empty input handling - returns false when serviceJourneys is undefined" duration="0" />
+    <testCase name="line validation - validServiceJourneys - undefined/empty input handling - returns true when serviceJourneys is empty array (vacuous truth)" duration="0" />
+    <testCase name="line validation - validServiceJourneys - array validation - returns true when all service journeys are valid" duration="1" />
+    <testCase name="line validation - validServiceJourneys - array validation - returns false when any service journey is invalid" duration="1" />
+    <testCase name="line validation - validServiceJourneys - array validation - returns false when first service journey is invalid" duration="1" />
+    <testCase name="line validation - validServiceJourneys - array validation - returns false when last service journey is invalid" duration="1" />
+    <testCase name="line validation - validServiceJourneys - single service journey - returns true for single valid service journey" duration="0" />
+    <testCase name="line validation - validServiceJourneys - single service journey - returns false for single invalid service journey" duration="1" />
+    <testCase name="line validation - validServiceJourneys - mixed day types - validates journeys with different day types" duration="1" />
+    <testCase name="line validation - validJourneyPattern - undefined/null input handling - returns false when journeyPattern is undefined" duration="0" />
+    <testCase name="line validation - validJourneyPattern - undefined/null input handling - returns false when journeyPattern is null" duration="0" />
+    <testCase name="line validation - validJourneyPattern - name validation - returns false when name is blank/empty" duration="1" />
+    <testCase name="line validation - validJourneyPattern - name validation - returns false when name is whitespace only" duration="0" />
+    <testCase name="line validation - validJourneyPattern - name validation - returns false when name is null" duration="0" />
+    <testCase name="line validation - validJourneyPattern - name validation - returns true when name is provided" duration="1" />
+    <testCase name="line validation - validJourneyPattern - stop points validation - returns false when pointsInSequence is null/empty (coerced to empty array)" duration="0" />
+    <testCase name="line validation - validJourneyPattern - stop points validation - returns false when pointsInSequence is empty array" duration="0" />
+    <testCase name="line validation - validJourneyPattern - stop points validation - returns false when only 1 stop point (need at least 2)" duration="0" />
+    <testCase name="line validation - validJourneyPattern - stop points validation - returns false when stop points have validation errors" duration="0" />
+    <testCase name="line validation - validJourneyPattern - stop points validation - returns true when stop points are valid" duration="0" />
+    <testCase name="line validation - validJourneyPattern - combined validation - returns true for default journey pattern from factory" duration="1" />
+    <testCase name="line validation - validJourneyPattern - combined validation - returns true for minimal journey pattern (2 stops)" duration="1" />
+    <testCase name="line validation - validJourneyPattern - combined validation - returns false for empty journey pattern" duration="1" />
+    <testCase name="line validation - validJourneyPattern - combined validation - returns false when both name and stop points are invalid" duration="0" />
+    <testCase name="line validation - validJourneyPattern - combined validation - validates journey pattern with many stops" duration="2" />
+    <testCase name="line validation - validJourneyPattern - combined validation - validates journey pattern with first stop boarding errors" duration="0" />
+    <testCase name="line validation - validJourneyPattern - combined validation - validates journey pattern with last stop alighting errors" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - FLEXIBLE_AREAS_ONLY type - returns false when journeyPattern is undefined" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - FLEXIBLE_AREAS_ONLY type - returns false when name is blank" duration="1" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - FLEXIBLE_AREAS_ONLY type - returns false when flexible stop point has no flexibleStopPlaceRef" duration="1" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - FLEXIBLE_AREAS_ONLY type - returns false when first flexible stop has no frontText" duration="1" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - FLEXIBLE_AREAS_ONLY type - returns true for valid flexible journey pattern" duration="1" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - FLEXIBLE_AREAS_ONLY type - returns true with multiple flexible stops" duration="1" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - non-FLEXIBLE_AREAS_ONLY types (falls back to validJourneyPattern) - uses standard validation for CORRIDOR_SERVICE" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - non-FLEXIBLE_AREAS_ONLY types (falls back to validJourneyPattern) - uses standard validation for MAIN_ROUTE_WITH_FLEXIBLE_ENDS" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - non-FLEXIBLE_AREAS_ONLY types (falls back to validJourneyPattern) - uses standard validation for HAIL_AND_RIDE_SECTIONS" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - non-FLEXIBLE_AREAS_ONLY types (falls back to validJourneyPattern) - uses standard validation for FIXED_STOP_AREA_WIDE" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - non-FLEXIBLE_AREAS_ONLY types (falls back to validJourneyPattern) - uses standard validation for MIXED_FLEXIBLE" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - non-FLEXIBLE_AREAS_ONLY types (falls back to validJourneyPattern) - uses standard validation for MIXED_FLEXIBLE_AND_FIXED" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - non-FLEXIBLE_AREAS_ONLY types (falls back to validJourneyPattern) - uses standard validation for FIXED" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - non-FLEXIBLE_AREAS_ONLY types (falls back to validJourneyPattern) - returns false for invalid pattern with non-FLEXIBLE_AREAS_ONLY type" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - undefined flexibleLineType - uses standard validation when flexibleLineType is undefined" duration="0" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - undefined flexibleLineType - returns false for invalid pattern when flexibleLineType is undefined" duration="11" />
+    <testCase name="line validation - validFlexibleLineJourneyPattern - mixed stop types (quay and flexible) - validates journey pattern with mixed stop types for non-FLEXIBLE_AREAS_ONLY" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - name validation - returns false when name is blank" duration="1" />
+    <testCase name="line validation - aboutLineStepIsValid - name validation - returns false when name is null" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - name validation - returns false when name is whitespace only" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - publicCode validation - returns false when publicCode is blank and optionalPublicCode is false" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - publicCode validation - returns true when publicCode is blank but optionalPublicCode is true" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - publicCode validation - returns true when publicCode is null but optionalPublicCode is true" duration="1" />
+    <testCase name="line validation - aboutLineStepIsValid - publicCode validation - returns true when publicCode is provided" duration="1" />
+    <testCase name="line validation - aboutLineStepIsValid - operatorRef validation - returns false when operatorRef is blank" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - operatorRef validation - returns false when operatorRef is undefined" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - networkRef validation - returns false when networkRef is blank" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - networkRef validation - returns false when networkRef is undefined" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - transportMode validation - returns false when transportMode is blank" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - transportMode validation - returns false when transportMode is null" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - transportMode validation - validates with various transport modes" duration="3" />
+    <testCase name="line validation - aboutLineStepIsValid - transportSubmode validation - returns false when transportSubmode is blank" duration="1" />
+    <testCase name="line validation - aboutLineStepIsValid - transportSubmode validation - returns false when transportSubmode is undefined" duration="2" />
+    <testCase name="line validation - aboutLineStepIsValid - transportSubmode validation - validates with various transport submodes" duration="4" />
+    <testCase name="line validation - aboutLineStepIsValid - combined validation - returns true for fully valid line" duration="3" />
+    <testCase name="line validation - aboutLineStepIsValid - combined validation - returns false when multiple fields are invalid" duration="1" />
+    <testCase name="line validation - aboutLineStepIsValid - combined validation - validates line with network reference from factory" duration="1" />
+    <testCase name="line validation - aboutLineStepIsValid - combined validation - validates line with all required fields" duration="0" />
+    <testCase name="line validation - aboutLineStepIsValid - combined validation - returns false for empty line" duration="0" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - inherits aboutLineStepIsValid checks - returns false when name is blank" duration="1" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - inherits aboutLineStepIsValid checks - returns false when publicCode is blank and optionalPublicCode is false" duration="0" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - inherits aboutLineStepIsValid checks - returns false when operatorRef is blank" duration="0" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - inherits aboutLineStepIsValid checks - returns false when networkRef is blank" duration="0" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - inherits aboutLineStepIsValid checks - returns false when transportMode is null" duration="1" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - inherits aboutLineStepIsValid checks - returns false when transportSubmode is blank" duration="1" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - flexibleLineType validation (unique to flexible lines) - returns false when flexibleLineType is blank" duration="0" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - flexibleLineType validation (unique to flexible lines) - returns false when flexibleLineType is null" duration="0" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - flexibleLineType validation (unique to flexible lines) - returns true for all FlexibleLineType values" duration="2" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - combined validation - returns true for fully valid flexible line" duration="6" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - combined validation - returns false when multiple fields are invalid" duration="1" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - combined validation - returns false even with valid flexibleLineType but invalid base fields" duration="1" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - combined validation - returns false for valid base fields but missing flexibleLineType" duration="8" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - combined validation - validates flexible line with network reference from factory" duration="7" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - combined validation - validates using createFlexibleLineWithType factory" duration="1" />
+    <testCase name="line validation - aboutFlexibleLineStepIsValid - combined validation - returns false for empty flexible line" duration="2" />
+    <testCase name="line validation - getMaxAllowedStepIndex - returns 0 when line about step is invalid" duration="1" />
+    <testCase name="line validation - getMaxAllowedStepIndex - returns 1 when journey pattern is invalid" duration="0" />
+    <testCase name="line validation - getMaxAllowedStepIndex - returns 2 when service journey is invalid" duration="1" />
+    <testCase name="line validation - getMaxAllowedStepIndex - returns 3 when all validations pass" duration="1" />
+    <testCase name="line validation - getMaxAllowedStepIndex - allows empty publicCode when optionalPublicCode is true" duration="1" />
+    <testCase name="line validation - getMaxAllowedFlexibleLineStepIndex - returns 0 when flexible line about step is invalid" duration="1" />
+    <testCase name="line validation - getMaxAllowedFlexibleLineStepIndex - returns 1 when flexible journey pattern is invalid" duration="1" />
+    <testCase name="line validation - getMaxAllowedFlexibleLineStepIndex - returns 2 when service journey is invalid" duration="1" />
+    <testCase name="line validation - getMaxAllowedFlexibleLineStepIndex - returns 3 when all validations pass" duration="2" />
+    <testCase name="line validation - currentStepIsValid - validates step 0 using aboutLineStepIsValid" duration="1" />
+    <testCase name="line validation - currentStepIsValid - validates step 1 using journey pattern validation" duration="0" />
+    <testCase name="line validation - currentStepIsValid - validates step 2 using service journey validation" duration="1" />
+    <testCase name="line validation - currentStepIsValid - returns true for step 3" duration="1" />
+    <testCase name="line validation - currentStepIsValid - returns false for invalid step numbers" duration="0" />
+    <testCase name="line validation - currentFlexibleLineStepIsValid - validates step 0 using aboutFlexibleLineStepIsValid" duration="3" />
+    <testCase name="line validation - currentFlexibleLineStepIsValid - validates step 1 using flexible journey pattern validation" duration="1" />
+    <testCase name="line validation - currentFlexibleLineStepIsValid - validates step 2 using service journey validation" duration="1" />
+    <testCase name="line validation - currentFlexibleLineStepIsValid - returns true for step 3" duration="0" />
+    <testCase name="line validation - currentFlexibleLineStepIsValid - returns false for invalid step numbers" duration="0" />
+    <testCase name="line validation - validLine (integration tests) - returns true for fully valid line" duration="1" />
+    <testCase name="line validation - validLine (integration tests) - returns false when aboutLineStepIsValid fails" duration="0" />
+    <testCase name="line validation - validLine (integration tests) - returns false when journey pattern validation fails" duration="0" />
+    <testCase name="line validation - validLine (integration tests) - returns false when service journey validation fails" duration="1" />
+    <testCase name="line validation - validLine (integration tests) - allows empty publicCode when optionalPublicCode is true" duration="1" />
+    <testCase name="line validation - validLine (integration tests) - returns false for empty line" duration="0" />
+    <testCase name="line validation - validFlexibleLine (integration tests) - returns true for fully valid FLEXIBLE_AREAS_ONLY line" duration="3" />
+    <testCase name="line validation - validFlexibleLine (integration tests) - returns true for valid CORRIDOR_SERVICE line" duration="1" />
+    <testCase name="line validation - validFlexibleLine (integration tests) - returns false when aboutFlexibleLineStepIsValid fails" duration="0" />
+    <testCase name="line validation - validFlexibleLine (integration tests) - returns false when flexible journey pattern validation fails" duration="1" />
+    <testCase name="line validation - validFlexibleLine (integration tests) - returns false when service journey validation fails" duration="1" />
+    <testCase name="line validation - validFlexibleLine (integration tests) - allows empty publicCode when optionalPublicCode is true" duration="1" />
+    <testCase name="line validation - validFlexibleLine (integration tests) - returns false for empty flexible line" duration="0" />
+  </file>
+  <file path="src/validation/passingTime.test.ts">
+    <testCase name="validateTimes - basic validation - returns invalid when less than 2 passing times" duration="2" />
+    <testCase name="validateTimes - basic validation - returns invalid when only 1 passing time" duration="1" />
+    <testCase name="validateTimes - basic validation - returns invalid when passing time has no fields set" duration="1" />
+    <testCase name="validateTimes - within-stop time ordering - returns invalid when departureTime is before arrivalTime" duration="49" />
+    <testCase name="validateTimes - within-stop time ordering - returns invalid when latestArrivalTime is before earliestDepartureTime" duration="2" />
+    <testCase name="validateTimes - within-stop time ordering - returns invalid when departureTime is before earliestDepartureTime" duration="1" />
+    <testCase name="validateTimes - within-stop time ordering - returns invalid when latestArrivalTime is before arrivalTime" duration="3" />
+    <testCase name="validateTimes - last stop validation - returns invalid when last stop has no arrivalTime or latestArrivalTime" duration="0" />
+    <testCase name="validateTimes - last stop validation - returns valid when last stop has arrivalTime" duration="1" />
+    <testCase name="validateTimes - last stop validation - returns valid when last stop has latestArrivalTime" duration="0" />
+    <testCase name="validateTimes - sequential ordering (times must not be before previous) - returns invalid when departureTime is before previous departureTime" duration="1" />
+    <testCase name="validateTimes - sequential ordering (times must not be before previous) - returns invalid when arrivalTime is before previous arrivalTime" duration="1" />
+    <testCase name="validateTimes - sequential ordering (times must not be before previous) - returns valid for correctly sequenced times" duration="1" />
+    <testCase name="validateTimes - day offset handling (overnight journeys) - returns valid for overnight journey with day offset" duration="1" />
+    <testCase name="validateTimes - day offset handling (overnight journeys) - returns invalid for overnight journey without proper day offset" duration="1" />
+    <testCase name="validateTimes - first stop special case - skips sequential validation for first stop (index 0)" duration="0" />
+    <testCase name="validateTimes - flexible time fields validation - returns invalid when earliestDepartureTime is before previous earliestDepartureTime" duration="1" />
+    <testCase name="validateTimes - flexible time fields validation - returns invalid when latestArrivalTime is before previous latestArrivalTime" duration="1" />
+    <testCase name="validateTimes - flexible time fields validation - returns invalid when earliestDepartureTime is before previous departureTime" duration="1" />
+    <testCase name="validateTimes - flexible time fields validation - returns invalid when earliestDepartureTime is before previous arrivalTime" duration="1" />
+    <testCase name="validateTimes - flexible time fields validation - returns invalid when arrivalTime is before previous earliestDepartureTime" duration="1" />
+    <testCase name="validateTimes - flexible time fields validation - returns invalid when arrivalTime is before previous latestArrivalTime" duration="0" />
+    <testCase name="validateTimes - valid passing time sequences - returns valid for minimal two-stop journey" duration="0" />
+    <testCase name="validateTimes - valid passing time sequences - returns valid for journey with flexible times" duration="1" />
+  </file>
+  <file path="src/validation/stopPoint.test.ts">
+    <testCase name="stopPoint validation - validateStopPoint - stopPlace validation - returns error when both quayRef and flexibleStopPlaceRef are blank" duration="6" />
+    <testCase name="stopPoint validation - validateStopPoint - stopPlace validation - returns no error when quayRef is set" duration="1" />
+    <testCase name="stopPoint validation - validateStopPoint - stopPlace validation - returns no error when flexibleStopPlaceRef is set" duration="1" />
+    <testCase name="stopPoint validation - validateStopPoint - frontText validation - returns error for first stop without frontText" duration="1" />
+    <testCase name="stopPoint validation - validateStopPoint - frontText validation - returns no error for first stop with frontText" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoint - frontText validation - returns no error for middle stop without frontText" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoint - frontText validation - returns no error for last stop without frontText" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoint - boarding validation - returns error for first stop with forAlighting=true" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoint - boarding validation - returns error for first stop with forBoarding=false" duration="3" />
+    <testCase name="stopPoint validation - validateStopPoint - boarding validation - returns no error for valid first stop" duration="1" />
+    <testCase name="stopPoint validation - validateStopPoint - boarding validation - returns error for last stop with forBoarding=true" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoint - boarding validation - returns error for last stop with forAlighting=false" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoint - boarding validation - returns no error for valid last stop" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoint - boarding validation - returns no error for middle stop with any boarding configuration" duration="1" />
+    <testCase name="stopPoint validation - validateStopPoint - returns all errors for invalid stop point" duration="1" />
+    <testCase name="stopPoint validation - validateFlexibleAreasOnlyStopPoint - returns error when flexibleStopPlaceRef is not set" duration="1" />
+    <testCase name="stopPoint validation - validateFlexibleAreasOnlyStopPoint - returns no error when flexibleStopPlaceRef is set" duration="0" />
+    <testCase name="stopPoint validation - validateFlexibleAreasOnlyStopPoint - returns frontText error for first stop without frontText" duration="0" />
+    <testCase name="stopPoint validation - validateFlexibleAreasOnlyStopPoint - never returns boarding error (always undefined)" duration="0" />
+    <testCase name="stopPoint validation - getStopPointsErrors - returns array of errors for each stop point" duration="2" />
+    <testCase name="stopPoint validation - getStopPointsErrors - validates first stop as first, last stop as last" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoints - returns false when less than 2 stop points" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoints - returns false when any stop point has errors" duration="0" />
+    <testCase name="stopPoint validation - validateStopPoints - returns true when all stop points are valid" duration="0" />
+    <testCase name="stopPoint validation - validateFlexibleAreasOnlyStopPoints - returns false when any flexible stop has errors" duration="1" />
+    <testCase name="stopPoint validation - validateFlexibleAreasOnlyStopPoints - returns true when all flexible stops are valid" duration="1" />
+  </file>
+  <file path="src/validation/time.test.ts">
+    <testCase name="time utilities - isBefore - returns false when first time is undefined" duration="3" />
+    <testCase name="time utilities - isBefore - returns false when second time is undefined" duration="0" />
+    <testCase name="time utilities - isBefore - returns true when first time is earlier on same day" duration="92" />
+    <testCase name="time utilities - isBefore - returns false when first time is later on same day" duration="1" />
+    <testCase name="time utilities - isBefore - returns false when times are equal" duration="1" />
+    <testCase name="time utilities - isBefore - returns true when first time is on earlier day" duration="0" />
+    <testCase name="time utilities - isBefore - returns false when first time is on later day" duration="3" />
+    <testCase name="time utilities - isBefore - handles null day offsets as 0" duration="1" />
+    <testCase name="time utilities - isBefore - returns false for invalid time format" duration="0" />
+    <testCase name="time utilities - isAfter - returns false when first time is undefined" duration="0" />
+    <testCase name="time utilities - isAfter - returns false when second time is undefined" duration="0" />
+    <testCase name="time utilities - isAfter - returns true when first time is later on same day" duration="0" />
+    <testCase name="time utilities - isAfter - returns false when first time is earlier on same day" duration="0" />
+    <testCase name="time utilities - isAfter - returns false when times are equal" duration="0" />
+    <testCase name="time utilities - isAfter - returns true when first time is on later day" duration="0" />
+    <testCase name="time utilities - isAfter - returns false when first time is on earlier day" duration="0" />
+    <testCase name="time utilities - isAfter - returns false for invalid time format" duration="0" />
+  </file>
+</testExecutions>

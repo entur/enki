@@ -1,0 +1,91 @@
+[     590ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[     591ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[     591ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[     592ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[     601ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[     603ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[     727ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[     727ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[     830ms] TypeError: Cannot read properties of undefined (reading 'every')
+    at currentStepIsValid (http://localhost:3001/src/validation/line.ts:60:33)
+    at currentStepIsValid (http://localhost:3001/src/scenes/LineEditor/index.tsx:123:44)
+    at http://localhost:3001/src/components/LineEditorStepper/index.tsx:51:48
+    at Array.filter (<anonymous>)
+    at http://localhost:3001/src/components/LineEditorStepper/index.tsx:51:30
+    at Object.react_stack_bottom_frame (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=53501142:18509:20)
+    at renderWithHooks (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=53501142:5654:24)
+    at updateFunctionComponent (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=53501142:7475:21)
+    at beginWork (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=53501142:8525:20)
+    at runWithFiberInDEV (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=53501142:997:72)
+[     830ms] [WARNING] %s
+
+%s
+ An error occurred in one of your React components. Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries. @ http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=53501142:6965
+[  477916ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  477916ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  477921ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  477925ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  477926ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  477934ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  477935ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  477936ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  478104ms] [ERROR] A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://react.dev/link/controlled-components @ http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=53501142:14863
+[  534098ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  534099ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  534099ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  534099ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  534100ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  534102ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  534103ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  534104ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  534111ms] [ERROR] [MSW] Uncaught exception in the request handler for "POST https://other/bar/RUT/graphql":
+
+ReferenceError: addLineTypenames is not defined
+    at http://localhost:3001/src/mocks/handlers.ts?t=1770392731337:165:18
+    at http://localhost:3001/node_modules/.vite/deps/chunk-7IC55IVK.js?v=53501142:260:30
+    at _GraphQLHandler.run (http://localhost:3001/node_modules/.vite/deps/chunk-7IC55IVK.js?v=53501142:236:35)
+    at async executeHandlers (http://localhost:3001/node_modules/.vite/deps/chunk-7IC55IVK.js?v=53501142:391:14)
+    at async until (http://localhost:3001/node_modules/.vite/deps/chunk-7IC55IVK.js?v=53501142:373:19)
+    at async handleRequest (http://localhost:3001/node_modules/.vite/deps/chunk-7IC55IVK.js?v=53501142:3739:39)
+    at async WorkerChannel.<anonymous> (http://localhost:3001/node_modules/.vite/deps/msw_browser.js?v=53501142:1131:7)
+
+This exception has been gracefully handled as a 500 response, however, it's strongly recommended to resolve this error, as it indicates a mistake in your code. If you wish to mock an error response, please see this guide: https://mswjs.io/docs/http/mocking-responses/error-responses @ http://localhost:3001/node_modules/.vite/deps/chunk-7IC55IVK.js?v=53501142:99
+[  534112ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Request Handler Error) @ https://other/bar/RUT/graphql:0
+[  544764ms] [ERROR] You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=53501142:17253
+[  545959ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  545960ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  545961ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  545961ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  545961ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  545964ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  545964ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  545965ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  577369ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  577369ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  577370ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  577370ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  577370ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  577373ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  577373ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  577374ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650332ms] [ERROR] You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=53501142:17253
+[  650341ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650341ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650342ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650342ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650343ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650343ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650344ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650345ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650466ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650468ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  650504ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  651558ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  651558ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  651559ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  651559ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  651561ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  651563ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  651563ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806
+[  651563ms] [WARNING] AuthProvider context is undefined, please verify you are calling useAuth() as child of a <AuthProvider> component. @ http://localhost:3001/node_modules/.vite/deps/react-oidc-context.js?v=53501142:3806

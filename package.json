@@ -12,6 +12,7 @@
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "analyze": "source-map-explorer 'build/assets/*.js'",
     "server": "vite preview",
+    "test:e2e": "playwright test",
     "prepare": "husky"
   },
   "dependencies": {
