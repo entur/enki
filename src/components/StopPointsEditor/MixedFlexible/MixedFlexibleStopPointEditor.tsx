@@ -1,16 +1,14 @@
 import {
   Autocomplete,
   Box,
-  Button,
   FormControlLabel,
   Radio,
   RadioGroup,
   TextField,
 } from '@mui/material';
 import { NormalizedDropdownItemType } from 'helpers/dropdown';
-import BookingArrangementEditor from 'components/BookingArrangementEditor';
-import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
-import ConfirmDialog from 'components/ConfirmDialog';
+import { DeleteStopPointDialog } from '../common/DeleteStopPointDialog';
+import { StopPointBookingArrangement } from '../common/StopPointBookingArrangement';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -239,53 +237,17 @@ export const MixedFlexibleStopPointEditor = ({
           title={formatMessage({ id: 'editorDeleteButtonText' })}
         />
 
-        <ConfirmDialog
+        <DeleteStopPointDialog
           isOpen={isDeleteDialogOpen}
-          title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
-          message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
-          buttons={[
-            <Button
-              key="no"
-              variant="outlined"
-              onClick={() => setDeleteDialogOpen(false)}
-            >
-              {formatMessage({ id: 'no' })}
-            </Button>,
-            <Button
-              key="yes"
-              variant="contained"
-              color="success"
-              onClick={onDelete}
-            >
-              {formatMessage({ id: 'yes' })}
-            </Button>,
-          ]}
-          onDismiss={() => setDeleteDialogOpen(false)}
+          onClose={() => setDeleteDialogOpen(false)}
+          onConfirm={onDelete!}
         />
       </Box>
-      <Box>
-        <BookingArrangementEditor
-          trim
-          bookingArrangement={stopPoint.bookingArrangement}
-          spoilPristine={spoilPristine}
-          bookingInfoAttachment={{
-            type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
-            name: stopPoint.flexibleStopPlace?.name! || stopPoint.quayRef!,
-          }}
-          onChange={(bookingArrangement) => {
-            onChange({
-              ...stopPoint,
-              bookingArrangement,
-            });
-          }}
-          onRemove={() => {
-            onChange({
-              ...stopPoint,
-              bookingArrangement: null,
-            });
-          }}
-        />
-      </Box>
+      <StopPointBookingArrangement
+        stopPoint={stopPoint}
+        spoilPristine={spoilPristine}
+        onChange={onChange}
+      />
     </Box>
   );
 };

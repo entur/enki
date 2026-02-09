@@ -1,8 +1,7 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
 import { NormalizedDropdownItemType } from 'helpers/dropdown';
-import BookingArrangementEditor from 'components/BookingArrangementEditor';
-import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import { mapToItems } from 'helpers/dropdown';
+import { StopPointBookingArrangement } from '../common/StopPointBookingArrangement';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateFlexibleAreasOnlyStopPoint } from 'validation';
 import usePristine from 'hooks/usePristine';
@@ -105,29 +104,11 @@ export const FlexibleAreasOnlyStopPointEditor = ({
           </Box>
         </Box>
       </Box>
-      <Box>
-        <BookingArrangementEditor
-          trim
-          bookingArrangement={stopPoint.bookingArrangement}
-          spoilPristine={spoilPristine}
-          bookingInfoAttachment={{
-            type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
-            name: stopPoint.flexibleStopPlace?.name! || stopPoint.quayRef!,
-          }}
-          onChange={(bookingArrangement) => {
-            onChange({
-              ...stopPoint,
-              bookingArrangement,
-            });
-          }}
-          onRemove={() => {
-            onChange({
-              ...stopPoint,
-              bookingArrangement: null,
-            });
-          }}
-        />
-      </Box>
+      <StopPointBookingArrangement
+        stopPoint={stopPoint}
+        spoilPristine={spoilPristine}
+        onChange={onChange}
+      />
     </Box>
   );
 };
