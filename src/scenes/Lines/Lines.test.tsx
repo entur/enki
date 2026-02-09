@@ -29,7 +29,7 @@ const mocks = [
 
 function createMockClient() {
   return new ApolloClient({
-    link: new MockLink(mocks, false),
+    link: new MockLink(mocks),
     cache: new InMemoryCache(),
   });
 }

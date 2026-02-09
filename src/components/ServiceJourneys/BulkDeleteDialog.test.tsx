@@ -3,6 +3,7 @@ import { render, screen, within } from 'utils/test-utils';
 import userEvent from '@testing-library/user-event';
 import BulkDeleteDialog from './BulkDeleteDialog';
 import ServiceJourney from 'model/ServiceJourney';
+import { DAY_OF_WEEK } from 'model/enums';
 
 describe('BulkDeleteDialog', () => {
   const serviceJourneys: ServiceJourney[] = [
@@ -18,9 +19,10 @@ describe('BulkDeleteDialog', () => {
       dayTypes: [
         {
           id: 'dt-1',
-          daysOfWeek: ['monday', 'tuesday'],
+          daysOfWeek: [DAY_OF_WEEK.MONDAY, DAY_OF_WEEK.TUESDAY],
           dayTypeAssignments: [
             {
+              isAvailable: true,
               operatingPeriod: {
                 fromDate: '2024-01-01',
                 toDate: '2024-12-31',
@@ -42,9 +44,10 @@ describe('BulkDeleteDialog', () => {
       dayTypes: [
         {
           id: 'dt-2',
-          daysOfWeek: ['wednesday'],
+          daysOfWeek: [DAY_OF_WEEK.WEDNESDAY],
           dayTypeAssignments: [
             {
+              isAvailable: true,
               operatingPeriod: {
                 fromDate: '2024-06-01',
                 toDate: '2024-06-30',

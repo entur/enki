@@ -3,6 +3,9 @@ import { render, screen } from 'utils/test-utils';
 import userEvent from '@testing-library/user-event';
 import GeneralLineEditor from './index';
 import Line from 'model/Line';
+import { Organisation } from 'model/Organisation';
+import { Network } from 'model/Network';
+import { Branding } from 'model/Branding';
 import { VEHICLE_MODE } from 'model/enums';
 
 describe('GeneralLineEditor', () => {
@@ -23,13 +26,14 @@ describe('GeneralLineEditor', () => {
     operators: [
       {
         id: 'op-1',
-        name: { value: 'Test Operator' },
-        legalName: { value: 'Test Legal' },
-        contactDetails: {},
+        name: { lang: 'en', value: 'Test Operator' },
+        type: 'operator',
       },
-    ],
-    networks: [{ id: 'net-1', name: 'Test Network' }],
-    brandings: [{ id: 'br-1', name: 'Test Branding' }],
+    ] as Organisation[],
+    networks: [
+      { id: 'net-1', name: 'Test Network', authorityRef: 'auth-1' },
+    ] as Network[],
+    brandings: [{ id: 'br-1', name: 'Test Branding' }] as Branding[],
     onChange: vi.fn(),
     spoilPristine: false,
   };
