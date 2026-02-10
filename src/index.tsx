@@ -54,7 +54,16 @@ const EnkiApp = () => {
   );
 };
 
+async function enableMocking() {
+  if (import.meta.env.DEV && import.meta.env.VITE_ENABLE_MOCKS === 'true') {
+    const { worker } = await import('./mocks/browser');
+    return worker.start({ onUnhandledRequest: 'warn' });
+  }
+  return;
+}
+
 const renderIndex = async () => {
+  await enableMocking();
   const container = document.getElementById('root');
   const root = ReactDOM.createRoot(container!);
   const config = await fetchConfig();
