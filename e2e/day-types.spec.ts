@@ -33,7 +33,7 @@ test.describe('Day types', () => {
     await page.goto('/day-types/create');
 
     // Verify the name field is present
-    await expect(page.getByLabel(/name/i)).toBeVisible();
+    await expect(page.getByRole('textbox', { name: /name/i })).toBeVisible();
 
     // Verify weekday picker section is present
     await expect(page.getByText(/weekdays for availability/i)).toBeVisible();
@@ -42,7 +42,7 @@ test.describe('Day types', () => {
   test('can fill in day type name', async ({ page }) => {
     await page.goto('/day-types/create');
 
-    const nameInput = page.getByLabel(/name/i);
+    const nameInput = page.getByRole('textbox', { name: /name/i });
     await nameInput.fill('Test Day Type');
     await expect(nameInput).toHaveValue('Test Day Type');
   });
@@ -57,7 +57,9 @@ test.describe('Day types', () => {
     await expect(page).toHaveURL(/\/day-types\/edit\//);
 
     // Verify the name field is populated
-    await expect(page.getByLabel(/name/i)).toHaveValue('Hverdager');
+    await expect(
+      page.getByRole('textbox', { name: /name/i }),
+    ).toHaveValue('Hverdager');
   });
 
   test('shows in-use indicator for day types with service journeys', async ({

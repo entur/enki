@@ -8,9 +8,9 @@ test.describe('Networks', () => {
 
   test('renders networks listing with mock data', async ({ page }) => {
     await page.goto('/networks');
-    // Verify mock network data appears
-    await expect(page.getByText('Ruter Flex')).toBeVisible();
-    await expect(page.getByText('AtB Flex')).toBeVisible();
+    // Verify mock network data appears in the table
+    await expect(page.getByRole('cell', { name: 'Ruter Flex' })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'AtB Flex' })).toBeVisible();
   });
 
   test('can navigate to create network page', async ({ page }) => {
