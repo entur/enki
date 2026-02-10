@@ -31,6 +31,33 @@ export default defineConfig({
         },
       };
     })(),
+    (() => {
+      const preloadLocale = process.env.PRELOAD_LOCALE;
+      let base = '/';
+      return {
+        name: 'preload-locale',
+        configResolved(config) {
+          base = config.base;
+        },
+        transformIndexHtml: {
+          order: 'post' as const,
+          handler(_: string, ctx: { server?: unknown; bundle?: Record<string, { fileName: string }> }) {
+            if (ctx.server || !preloadLocale || !ctx.bundle) return [];
+            const chunk = Object.values(ctx.bundle).find(
+              (c) => c.fileName.match(new RegExp(`^assets/${preloadLocale}-.*\\.js$`))
+            );
+            if (!chunk) return [];
+            return [
+              {
+                tag: 'link',
+                attrs: { rel: 'modulepreload', href: `${base}${chunk.fileName}` },
+                injectTo: 'head' as const,
+              },
+            ];
+          },
+        },
+      };
+    })(),
     react(),
     viteTsconfigPaths(),
     svgrPlugin(),
