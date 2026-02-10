@@ -60,6 +60,18 @@ It's possible to bypass authentication locally with the configuration parameter 
 set to `true`. This can be used in combination with the `local-no-authentication` profile in the backend.
 
 
+## Build-time optimizations
+
+### Preloading the default locale
+
+Translation files are split into separate chunks and loaded on demand. To eliminate a round-trip on initial page load, you can set the `PRELOAD_LOCALE` environment variable at build time:
+
+```
+PRELOAD_LOCALE=nb npm run build
+```
+
+This injects a `<link rel="modulepreload">` tag for the matching translation chunk into `index.html`, so the browser fetches and parses it early. If the variable is not set, the build output is unchanged.
+
 ## Testing
 
 Uses [Jest](https://facebook.github.io/jest) for unit and reducer testing.
