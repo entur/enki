@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from 'utils/test-utils';
+import { render, screen, waitFor } from 'utils/test-utils';
+import userEvent from '@testing-library/user-event';
 import { PassingTimePicker } from './PassingTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -102,5 +103,21 @@ describe('PassingTimePicker', () => {
     const minutes = screen.getByRole('spinbutton', { name: 'Minutes' });
     expect(hours).toHaveAttribute('aria-valuetext', 'Empty');
     expect(minutes).toHaveAttribute('aria-valuetext', 'Empty');
+  });
+
+  it('calls onChange with time string when hours are changed via keyboard', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    renderPicker({ selectedTime: '14:30:00', onChange });
+
+    const hours = screen.getByRole('spinbutton', { name: 'Hours' });
+    await user.click(hours);
+    await user.keyboard('{ArrowUp}');
+
+    await waitFor(() => {
+      expect(onChange).toHaveBeenCalled();
+      const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+      expect(lastCall).toMatch(/^\d{2}:\d{2}:\d{2}$/);
+    });
   });
 });

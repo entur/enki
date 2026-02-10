@@ -258,4 +258,82 @@ describe('DayTypeAssignmentsEditor', () => {
     expect(newAssignments).toHaveLength(1);
     expect(newAssignments[0].isAvailable).toBe(true);
   });
+
+  it('calls onChange when from-date is changed via keyboard', async () => {
+    const user = userEvent.setup();
+    const assignments = [createAssignment()];
+    const onChange = vi.fn();
+
+    renderWithDatePicker(
+      <DayTypeAssignmentsEditor
+        dayTypeAssignments={assignments}
+        onChange={onChange}
+      />,
+    );
+
+    // Find From date spinbuttons and interact
+    const monthSpinbuttons = screen.getAllByRole('spinbutton', {
+      name: 'Month',
+    });
+    await user.click(monthSpinbuttons[0]);
+    await user.keyboard('{ArrowUp}');
+
+    // onChange should have been called with updated fromDate
+    expect(onChange).toHaveBeenCalled();
+  });
+
+  it('calls onChange when to-date is changed via keyboard', async () => {
+    const user = userEvent.setup();
+    const assignments = [createAssignment()];
+    const onChange = vi.fn();
+
+    renderWithDatePicker(
+      <DayTypeAssignmentsEditor
+        dayTypeAssignments={assignments}
+        onChange={onChange}
+      />,
+    );
+
+    // Find To date spinbuttons (second set of Month spinbuttons)
+    const monthSpinbuttons = screen.getAllByRole('spinbutton', {
+      name: 'Month',
+    });
+    // The second Month spinbutton belongs to the To date picker
+    await user.click(monthSpinbuttons[1]);
+    await user.keyboard('{ArrowUp}');
+
+    expect(onChange).toHaveBeenCalled();
+  });
+
+  it('syncs local state when parent props change', () => {
+    const assignments = [createAssignment()];
+    const onChange = vi.fn();
+
+    const { rerender } = renderWithDatePicker(
+      <DayTypeAssignmentsEditor
+        dayTypeAssignments={assignments}
+        onChange={onChange}
+      />,
+    );
+
+    // Re-render with different dates to trigger useEffect sync
+    const updatedAssignments = [
+      createAssignment({
+        operatingPeriod: { fromDate: '2025-09-01', toDate: '2025-09-30' },
+      }),
+    ];
+
+    rerender(
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DayTypeAssignmentsEditor
+          dayTypeAssignments={updatedAssignments}
+          onChange={onChange}
+        />
+      </LocalizationProvider>,
+    );
+
+    // The component should have synced and still be showing valid dates
+    const groups = screen.getAllByRole('group');
+    expect(groups.length).toBeGreaterThanOrEqual(2);
+  });
 });

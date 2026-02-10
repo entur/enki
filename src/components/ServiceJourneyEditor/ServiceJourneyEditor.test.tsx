@@ -13,7 +13,10 @@ const dayTypesMock = {
   result: { data: { dayTypes: [] } },
 };
 
-const renderEditor = (props = {}) => {
+const renderEditor = (
+  props = {},
+  { preloadedState }: { preloadedState?: Record<string, unknown> } = {},
+) => {
   const defaultProps = {
     serviceJourney: createServiceJourney({
       name: 'Morning Route',
@@ -37,6 +40,7 @@ const renderEditor = (props = {}) => {
         <ServiceJourneyEditor {...defaultProps} />
       </LocalizationProvider>
     </MockedProvider>,
+    { preloadedState: preloadedState as any },
   );
 };
 
@@ -277,5 +281,127 @@ describe('ServiceJourneyEditor', () => {
     expect(onChange).toHaveBeenCalled();
     const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
     expect(lastCall.privateCode).toBe('PRV-M1X');
+  });
+
+  it('renders operator options from Redux state', async () => {
+    renderEditor(
+      {},
+      {
+        preloadedState: {
+          organisations: [
+            {
+              id: 'ORG:1',
+              name: { lang: 'en', value: 'Ruter' },
+              type: 'operator',
+            },
+            {
+              id: 'ORG:2',
+              name: { lang: 'en', value: 'Vy' },
+              type: 'operator',
+            },
+            {
+              id: 'ORG:3',
+              name: { lang: 'en', value: 'Oslo kommune' },
+              type: 'authority',
+            },
+          ],
+        },
+      },
+    );
+    const operatorInput = screen.getByLabelText('Operator');
+    await userEvent.click(operatorInput);
+    expect(screen.getByText('Ruter')).toBeInTheDocument();
+    expect(screen.getByText('Vy')).toBeInTheDocument();
+    // authority should be filtered out
+    expect(screen.queryByText('Oslo kommune')).not.toBeInTheDocument();
+  });
+
+  it('calls onChange with operatorRef when operator is selected', async () => {
+    const onChange = vi.fn();
+    renderEditor(
+      { onChange },
+      {
+        preloadedState: {
+          organisations: [
+            {
+              id: 'ORG:1',
+              name: { lang: 'en', value: 'Ruter' },
+              type: 'operator',
+            },
+          ],
+        },
+      },
+    );
+    const operatorInput = screen.getByLabelText('Operator');
+    await userEvent.click(operatorInput);
+    await userEvent.click(screen.getByText('Ruter'));
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ operatorRef: 'ORG:1' }),
+    );
+  });
+
+  it('calls onChange to clear operatorRef when operator is deselected', async () => {
+    const onChange = vi.fn();
+    renderEditor(
+      {
+        onChange,
+        serviceJourney: createServiceJourney({
+          name: 'Route with Operator',
+          operatorRef: 'ORG:1',
+          passingTimes: [{}, {}],
+        }),
+      },
+      {
+        preloadedState: {
+          organisations: [
+            {
+              id: 'ORG:1',
+              name: { lang: 'en', value: 'Ruter' },
+              type: 'operator',
+            },
+          ],
+        },
+      },
+    );
+    // The clear button in MUI Autocomplete
+    const clearButton = screen.getByLabelText('Clear');
+    await userEvent.click(clearButton);
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ operatorRef: null }),
+    );
+  });
+
+  it('shows preselected operator when operatorRef matches', () => {
+    renderEditor(
+      {
+        serviceJourney: createServiceJourney({
+          name: 'Route with Operator',
+          operatorRef: 'ORG:1',
+          passingTimes: [{}, {}],
+        }),
+      },
+      {
+        preloadedState: {
+          organisations: [
+            {
+              id: 'ORG:1',
+              name: { lang: 'en', value: 'Ruter' },
+              type: 'operator',
+            },
+          ],
+        },
+      },
+    );
+    expect(screen.getByLabelText('Operator')).toHaveValue('Ruter');
+  });
+
+  it('calls onChange with publicCode when public code is typed', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    const publicCodeInput = screen.getByLabelText('Public code');
+    await userEvent.type(publicCodeInput, 'Z');
+    expect(onChange).toHaveBeenCalled();
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+    expect(lastCall.publicCode).toBe('M1Z');
   });
 });
