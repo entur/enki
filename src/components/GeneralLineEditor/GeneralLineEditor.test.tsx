@@ -7,7 +7,7 @@ import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import { Organisation } from 'model/Organisation';
 import { Network } from 'model/Network';
 import { Branding } from 'model/Branding';
-import { VEHICLE_MODE } from 'model/enums';
+import { VEHICLE_MODE, VEHICLE_SUBMODE } from 'model/enums';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
@@ -262,7 +262,7 @@ describe('GeneralLineEditor - description/privateCode/publicCode branches', () =
     const onChange = vi.fn();
     const lineWithSubmode: FlexibleLine = {
       ...mockLine,
-      transportSubmode: 'localBus',
+      transportSubmode: 'localBus' as VEHICLE_SUBMODE,
       flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
       bookingArrangement: null,
     };
