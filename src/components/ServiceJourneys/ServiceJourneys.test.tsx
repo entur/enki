@@ -9,6 +9,8 @@ import {
   resetIdCounters,
 } from 'test/factories';
 import ServiceJourney from 'model/ServiceJourney';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 beforeEach(() => {
   resetIdCounters();
@@ -300,6 +302,91 @@ describe('ServiceJourneys component', () => {
     });
   });
 
+  describe('copy service journey', () => {
+    it('shows copy icon for SJs with valid id', () => {
+      const jp = createJourneyPattern({
+        serviceJourneys: [
+          createServiceJourneyWithPassingTimes(3, 9, 15, { name: 'SJ A' }),
+          createServiceJourneyWithPassingTimes(3, 11, 15, { name: 'SJ B' }),
+        ],
+      });
+      render(
+        <ServiceJourneys journeyPatterns={[jp]} onChange={vi.fn()}>
+          {renderChild}
+        </ServiceJourneys>,
+      );
+      const copyIcons = screen.getAllByTestId('ContentCopyIcon');
+      expect(copyIcons.length).toBeGreaterThanOrEqual(2);
+    });
+
+    it('does not show copy icon for SJ without id', () => {
+      const sjWithoutId: ServiceJourney = {
+        id: undefined as any,
+        name: 'New SJ',
+        passingTimes: [
+          { departureTime: '09:00:00', departureDayOffset: 0 },
+          { departureTime: '09:15:00', departureDayOffset: 0 },
+          { departureTime: '09:30:00', departureDayOffset: 0 },
+        ],
+      };
+      const sjWithId = createServiceJourneyWithPassingTimes(3, 11, 15, {
+        name: 'Existing SJ',
+      });
+      const jp = createJourneyPattern({
+        serviceJourneys: [sjWithoutId, sjWithId],
+      });
+      render(
+        <ServiceJourneys journeyPatterns={[jp]} onChange={vi.fn()}>
+          {renderChild}
+        </ServiceJourneys>,
+      );
+      // Only 1 copy icon since only sjWithId has a valid id
+      const copyIcons = screen.getAllByTestId('ContentCopyIcon');
+      expect(copyIcons).toHaveLength(1);
+    });
+
+    it('opens copy dialog when copy icon is clicked', async () => {
+      const jp = createJourneyPattern({
+        serviceJourneys: [
+          createServiceJourneyWithPassingTimes(3, 9, 15, { name: 'SJ A' }),
+          createServiceJourneyWithPassingTimes(3, 11, 15, { name: 'SJ B' }),
+        ],
+      });
+      render(
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <ServiceJourneys journeyPatterns={[jp]} onChange={vi.fn()}>
+            {renderChild}
+          </ServiceJourneys>
+        </LocalizationProvider>,
+      );
+      const copyIcons = screen.getAllByTestId('ContentCopyIcon');
+      await userEvent.click(copyIcons[0]);
+      expect(screen.getByText('Copy Service Journey')).toBeInTheDocument();
+    });
+  });
+
+  describe('bulk delete', () => {
+    it('opens bulk delete dialog when bulk delete button is clicked', async () => {
+      const jp = createJourneyPattern({
+        serviceJourneys: [
+          createServiceJourneyWithPassingTimes(3, 9, 15, { name: 'SJ A' }),
+          createServiceJourneyWithPassingTimes(3, 11, 15, { name: 'SJ B' }),
+        ],
+      });
+      render(
+        <ServiceJourneys journeyPatterns={[jp]} onChange={vi.fn()}>
+          {renderChild}
+        </ServiceJourneys>,
+      );
+      await userEvent.click(
+        screen.getByRole('button', { name: 'Bulk delete' }),
+      );
+      // Dialog opens — the dialog title is also "Bulk delete", so there should be 2 occurrences now
+      const bulkDeleteTexts = screen.getAllByText('Bulk delete');
+      expect(bulkDeleteTexts.length).toBeGreaterThanOrEqual(2);
+    });
+  });
+
   describe('add service journey', () => {
     it('renders the add button', () => {
       const jp = createJourneyPattern();
@@ -311,6 +398,17 @@ describe('ServiceJourneys component', () => {
       expect(
         screen.getByText('Create more Service Journeys'),
       ).toBeInTheDocument();
+    });
+
+    it('opens new service journey dialog when add button is clicked', async () => {
+      const jp = createJourneyPattern();
+      render(
+        <ServiceJourneys journeyPatterns={[jp]} onChange={vi.fn()}>
+          {renderChild}
+        </ServiceJourneys>,
+      );
+      await userEvent.click(screen.getByTestId('AddIcon'));
+      expect(screen.getByText('New service journey')).toBeInTheDocument();
     });
   });
 

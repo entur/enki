@@ -155,7 +155,61 @@ describe('JourneyPatterns', () => {
     });
   });
 
-  describe('add journey pattern', () => {
+  describe('copy journey pattern dialog', () => {
+    it('opens copy dialog when copy icon is clicked', async () => {
+      const jp1 = createJourneyPattern({ name: 'Route A' });
+      const jp2 = createJourneyPattern({ name: 'Route B' });
+      render(
+        <JourneyPatterns {...defaultProps} journeyPatterns={[jp1, jp2]}>
+          {renderChildren}
+        </JourneyPatterns>,
+      );
+      const copyButtons = screen.getAllByTestId('ContentCopyIcon');
+      await userEvent.click(copyButtons[0]);
+      expect(screen.getByText('Copy Journey Pattern')).toBeInTheDocument();
+    });
+
+    it('dismisses copy dialog when cancel is clicked', async () => {
+      const onChange = vi.fn();
+      const jp1 = createJourneyPattern({ name: 'Route A' });
+      const jp2 = createJourneyPattern({ name: 'Route B' });
+      render(
+        <JourneyPatterns onChange={onChange} journeyPatterns={[jp1, jp2]}>
+          {renderChildren}
+        </JourneyPatterns>,
+      );
+      const copyButtons = screen.getAllByTestId('ContentCopyIcon');
+      await userEvent.click(copyButtons[0]);
+      expect(screen.getByText('Copy Journey Pattern')).toBeInTheDocument();
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+      await userEvent.click(cancelButton);
+      expect(
+        screen.queryByText('Copy Journey Pattern'),
+      ).not.toBeInTheDocument();
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('calls onChange with copied JP when copy dialog is submitted', async () => {
+      const onChange = vi.fn();
+      const jp1 = createJourneyPattern({ name: 'Route A' });
+      const jp2 = createJourneyPattern({ name: 'Route B' });
+      render(
+        <JourneyPatterns onChange={onChange} journeyPatterns={[jp1, jp2]}>
+          {renderChildren}
+        </JourneyPatterns>,
+      );
+      const copyButtons = screen.getAllByTestId('ContentCopyIcon');
+      await userEvent.click(copyButtons[0]);
+      // The copy dialog pre-fills the name with "Route A (copy)"
+      const saveButton = screen.getByRole('button', { name: 'Create copy' });
+      await userEvent.click(saveButton);
+      expect(onChange).toHaveBeenCalledTimes(1);
+      // Should now have 3 JPs: original 2 + the copy
+      expect(onChange.mock.calls[0][0]).toHaveLength(3);
+    });
+  });
+
+  describe('add journey pattern modal', () => {
     it('renders the add button', () => {
       const jp = createJourneyPattern();
       render(
@@ -166,6 +220,56 @@ describe('JourneyPatterns', () => {
       expect(
         screen.getByText('Create more Journey Patterns'),
       ).toBeInTheDocument();
+    });
+
+    it('opens new JP modal when add button is clicked', async () => {
+      const jp = createJourneyPattern();
+      render(
+        <JourneyPatterns {...defaultProps} journeyPatterns={[jp]}>
+          {renderChildren}
+        </JourneyPatterns>,
+      );
+      await userEvent.click(screen.getByTestId('AddIcon'));
+      expect(screen.getByText('New journey pattern')).toBeInTheDocument();
+    });
+
+    it('dismisses new JP modal when cancel is clicked', async () => {
+      const onChange = vi.fn();
+      const jp = createJourneyPattern();
+      render(
+        <JourneyPatterns onChange={onChange} journeyPatterns={[jp]}>
+          {renderChildren}
+        </JourneyPatterns>,
+      );
+      await userEvent.click(screen.getByTestId('AddIcon'));
+      expect(screen.getByText('New journey pattern')).toBeInTheDocument();
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+      await userEvent.click(cancelButton);
+      await waitFor(() => {
+        expect(
+          screen.queryByText('New journey pattern'),
+        ).not.toBeInTheDocument();
+      });
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('calls onChange with new JP when modal is submitted with a name', async () => {
+      const onChange = vi.fn();
+      const jp = createJourneyPattern({ name: 'Existing' });
+      render(
+        <JourneyPatterns onChange={onChange} journeyPatterns={[jp]}>
+          {renderChildren}
+        </JourneyPatterns>,
+      );
+      await userEvent.click(screen.getByTestId('AddIcon'));
+      const nameInput = screen.getByLabelText('Name *');
+      await userEvent.type(nameInput, 'New Route');
+      const createButton = screen.getByRole('button', { name: 'Create' });
+      await userEvent.click(createButton);
+      expect(onChange).toHaveBeenCalledTimes(1);
+      // Should have 2 JPs: original + the new one
+      expect(onChange.mock.calls[0][0]).toHaveLength(2);
+      expect(onChange.mock.calls[0][0][1].name).toBe('New Route');
     });
   });
 

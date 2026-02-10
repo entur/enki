@@ -126,3 +126,96 @@ describe('BookingArrangementEditor', () => {
     );
   });
 });
+
+describe('BookingArrangementEditor - branch coverage', () => {
+  it('switches booking limit type to TIME and clears fields', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    const timeRadio = screen.getByLabelText('Latest possible booking time');
+    await userEvent.click(timeRadio);
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        latestBookingTime: undefined,
+        minimumBookingPeriod: undefined,
+      }),
+    );
+  });
+
+  it('switches booking limit type to PERIOD and clears bookWhen', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    const periodRadio = screen.getByLabelText(
+      'The minimum period prior to the departure the booking has to be placed',
+    );
+    await userEvent.click(periodRadio);
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        latestBookingTime: undefined,
+        minimumBookingPeriod: undefined,
+        bookWhen: undefined,
+      }),
+    );
+  });
+
+  it('toggles a payment chip on', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    await userEvent.click(screen.getByText('After boarding'));
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        buyWhen: ['afterBoarding'],
+      }),
+    );
+  });
+
+  it('toggles a payment chip off when already selected', async () => {
+    const onChange = vi.fn();
+    renderEditor({
+      onChange,
+      bookingArrangement: { buyWhen: ['afterBoarding'] },
+    });
+    await userEvent.click(screen.getByText('After boarding'));
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        buyWhen: [],
+      }),
+    );
+  });
+
+  it('removes a booking method chip when already selected', async () => {
+    const onChange = vi.fn();
+    renderEditor({
+      onChange,
+      bookingArrangement: { bookingMethods: ['online'] },
+    });
+    await userEvent.click(screen.getByText('Online'));
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        bookingMethods: [],
+      }),
+    );
+  });
+
+  it('renders with pre-filled latestBookingTime and selects TIME radio', () => {
+    renderEditor({
+      bookingArrangement: { latestBookingTime: '14:30' },
+    });
+    const timeRadio = screen.getByLabelText('Latest possible booking time');
+    expect(timeRadio).toBeChecked();
+    const noneRadio = screen.getByLabelText('None');
+    expect(noneRadio).not.toBeChecked();
+  });
+
+  it('hides attachment field when bookingInfoAttachment name is empty', () => {
+    renderEditor({
+      bookingInfoAttachment: {
+        type: BookingInfoAttachmentType.LINE,
+        name: '',
+      },
+    });
+    // The conditional `bookingInfoAttachmentType && bookingInfoAttachmentName`
+    // is false for empty string, so the "Line" labeled TextField is not rendered.
+    // In contrast, default render with name='Test Line' shows it.
+    expect(screen.queryByLabelText('Line')).not.toBeInTheDocument();
+  });
+});

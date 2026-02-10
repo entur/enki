@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, userEvent } from 'utils/test-utils';
+import { render, screen, userEvent, waitFor } from 'utils/test-utils';
 import { mockNetworks, mockOrganisations } from 'mocks/mockData';
 
 const mockNavigate = vi.fn();
@@ -124,6 +124,92 @@ describe('NetworkEditor', () => {
       expect(
         screen.getByRole('button', { name: /delete/i }),
       ).toBeInTheDocument();
+    });
+
+    it('opens delete confirmation dialog on delete click', async () => {
+      const user = userEvent.setup();
+      const NetworkEditor = await loadEditor();
+      render(<NetworkEditor />, { preloadedState });
+
+      await user.click(screen.getByRole('button', { name: /delete/i }));
+
+      expect(screen.getByText(/delete network/i)).toBeInTheDocument();
+    });
+
+    it('closes delete dialog on cancel click', async () => {
+      const user = userEvent.setup();
+      const NetworkEditor = await loadEditor();
+      render(<NetworkEditor />, { preloadedState });
+
+      await user.click(screen.getByRole('button', { name: /delete/i }));
+      expect(screen.getByText(/delete network/i)).toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: /no/i }));
+      await waitFor(() => {
+        expect(
+          screen.queryByRole('heading', { name: /delete network/i }),
+        ).not.toBeInTheDocument();
+      });
+    });
+
+    it('disables delete button when network is used by a line', async () => {
+      const stateWithLinkedLines = {
+        ...preloadedState,
+        flexibleLines: [
+          {
+            id: 'TST:FlexibleLine:99',
+            name: 'Line using network',
+            networkRef: 'TST:Network:1',
+            journeyPatterns: [],
+          },
+        ] as any,
+      };
+      const NetworkEditor = await loadEditor();
+      render(<NetworkEditor />, { preloadedState: stateWithLinkedLines });
+
+      expect(screen.getByRole('button', { name: /delete/i })).toBeDisabled();
+    });
+  });
+
+  describe('save validation', () => {
+    it('shows name validation error when saving with empty name', async () => {
+      const user = userEvent.setup();
+      const NetworkEditor = await loadEditor();
+      render(<NetworkEditor />, { preloadedState });
+
+      await user.click(screen.getByRole('button', { name: /create/i }));
+
+      expect(screen.getByText('Name is required')).toBeInTheDocument();
+    });
+
+    it('shows authority validation error when saving with empty authority', async () => {
+      const user = userEvent.setup();
+      const NetworkEditor = await loadEditor();
+      render(<NetworkEditor />, { preloadedState });
+
+      const nameField = screen.getByLabelText(/^name/i);
+      await user.type(nameField, 'Test Network');
+      await user.click(screen.getByRole('button', { name: /create/i }));
+
+      expect(screen.getByText('Authority is required')).toBeInTheDocument();
+    });
+  });
+
+  describe('loading state', () => {
+    it('does not render the form when lines are not yet loaded', async () => {
+      mockParams = { id: 'TST:Network:1' };
+      const NetworkEditor = await loadEditor();
+      render(<NetworkEditor />, {
+        preloadedState: {
+          ...preloadedState,
+          flexibleLines: undefined as any,
+        },
+      });
+
+      expect(screen.queryByLabelText(/^name/i)).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: /save/i }),
+      ).not.toBeInTheDocument();
     });
   });
 });

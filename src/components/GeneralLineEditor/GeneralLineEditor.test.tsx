@@ -3,10 +3,13 @@ import { render, screen } from 'utils/test-utils';
 import userEvent from '@testing-library/user-event';
 import GeneralLineEditor from './index';
 import Line from 'model/Line';
+import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import { Organisation } from 'model/Organisation';
 import { Network } from 'model/Network';
 import { Branding } from 'model/Branding';
 import { VEHICLE_MODE } from 'model/enums';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 describe('GeneralLineEditor', () => {
   const mockLine: Line = {
@@ -79,6 +82,88 @@ describe('GeneralLineEditor', () => {
 
   it('does not show flexible line type selector for regular lines', () => {
     render(<GeneralLineEditor {...defaultProps} />);
-    expect(screen.queryByLabelText('Type *')).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Flexible line type *'),
+    ).not.toBeInTheDocument();
+  });
+});
+
+describe('GeneralLineEditor - flexible line branches', () => {
+  const mockFlexibleLine: FlexibleLine = {
+    name: 'Test Flex Line',
+    description: 'A flexible line',
+    publicCode: 'FLEX1',
+    privateCode: null,
+    transportMode: VEHICLE_MODE.BUS,
+    transportSubmode: undefined,
+    flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+    bookingArrangement: null,
+    networkRef: 'net-1',
+    operatorRef: 'op-1',
+    journeyPatterns: [],
+    notices: [],
+  };
+
+  const flexibleLineProps = {
+    line: mockFlexibleLine,
+    operators: [
+      {
+        id: 'op-1',
+        name: { lang: 'en', value: 'Test Operator' },
+        type: 'operator',
+      },
+    ] as Organisation[],
+    networks: [
+      { id: 'net-1', name: 'Test Network', authorityRef: 'auth-1' },
+    ] as Network[],
+    brandings: [{ id: 'br-1', name: 'Test Branding' }] as Branding[],
+    onChange: vi.fn(),
+    spoilPristine: false,
+  };
+
+  const renderFlexibleLine = (props = {}) =>
+    render(
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <GeneralLineEditor {...flexibleLineProps} {...props} />
+      </LocalizationProvider>,
+      {
+        config: {
+          supportedFlexibleLineTypes: Object.values(FlexibleLineType),
+        },
+      },
+    );
+
+  it('shows FlexibleLineTypeSelector for flexible lines', () => {
+    renderFlexibleLine();
+    expect(screen.getByLabelText('Flexible line type *')).toBeInTheDocument();
+  });
+
+  it('shows BookingArrangementEditor for flexible lines', () => {
+    renderFlexibleLine();
+    expect(screen.getByText('Booking information')).toBeInTheDocument();
+  });
+
+  it('shows VehicleSubModeDropdown when transportMode is set', () => {
+    renderFlexibleLine();
+    expect(screen.getByLabelText('Transport submode *')).toBeInTheDocument();
+  });
+
+  it('hides VehicleSubModeDropdown when transportMode is undefined', () => {
+    renderFlexibleLine({
+      line: { ...mockFlexibleLine, transportMode: undefined },
+    });
+    expect(
+      screen.queryByLabelText('Transport submode *'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('renders with flexibleLineType without crashing', () => {
+    renderFlexibleLine({
+      line: {
+        ...mockFlexibleLine,
+        flexibleLineType: FlexibleLineType.CORRIDOR_SERVICE,
+      },
+    });
+    expect(screen.getByLabelText('Flexible line type *')).toBeInTheDocument();
   });
 });

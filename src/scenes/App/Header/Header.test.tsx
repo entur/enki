@@ -3,13 +3,15 @@ import { render, screen, userEvent } from 'utils/test-utils';
 import Header from './index';
 import { mockProviders } from 'mocks/mockData';
 
+const mockSignoutRedirect = vi.fn().mockResolvedValue(undefined);
+
 vi.mock('react-oidc-context', () => ({
   useAuth: () => ({
     isAuthenticated: true,
     user: { profile: { name: 'Test User' }, access_token: 'fake-token' },
     logout: vi.fn(),
     signinRedirect: vi.fn(),
-    signoutRedirect: vi.fn(),
+    signoutRedirect: mockSignoutRedirect,
   }),
   hasAuthParams: () => false,
 }));
@@ -114,5 +116,68 @@ describe('Header', () => {
 
     // The user icon button should have label "User" when no preferredName
     expect(getByLabelText('User')).toBeInTheDocument();
+  });
+
+  it('shows "Unknown" in popover when preferredName is not set', async () => {
+    const user = userEvent.setup();
+    render(<Header />, {
+      preloadedState: {
+        ...defaultState,
+        userContext: {
+          ...defaultState.userContext,
+          preferredName: undefined as unknown as string,
+          loaded: true,
+        },
+      },
+      routerProps: { initialEntries: ['/lines'] },
+    });
+
+    await user.click(screen.getByLabelText('User'));
+
+    expect(screen.getByText('Unknown')).toBeInTheDocument();
+  });
+
+  it('calls logout when log out button is clicked', async () => {
+    const user = userEvent.setup();
+    mockSignoutRedirect.mockClear();
+    render(<Header />, {
+      preloadedState: defaultState,
+      routerProps: { initialEntries: ['/lines'] },
+    });
+
+    await user.click(screen.getByLabelText('Test User'));
+    await user.click(screen.getByText('Log out'));
+
+    expect(mockSignoutRedirect).toHaveBeenCalled();
+  });
+
+  it('opens drawer when hamburger menu is clicked', async () => {
+    const user = userEvent.setup();
+    render(<Header />, {
+      preloadedState: defaultState,
+      routerProps: { initialEntries: ['/lines'] },
+    });
+
+    await user.click(screen.getByLabelText('Nplan'));
+
+    expect(screen.getByText('Lines')).toBeInTheDocument();
+  });
+
+  it('does not render provider selector when providers array is empty', () => {
+    render(<Header />, {
+      preloadedState: {
+        ...defaultState,
+        userContext: {
+          ...defaultState.userContext,
+          providers: [],
+          loaded: true,
+        },
+      },
+      routerProps: { initialEntries: ['/lines'] },
+    });
+
+    expect(
+      screen.queryByLabelText('Choose data provider'),
+    ).not.toBeInTheDocument();
   });
 });
