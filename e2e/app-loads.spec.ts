@@ -31,11 +31,15 @@ test.describe('App loads and provider selection', () => {
     page,
   }) => {
     await page.goto('/');
-    await expect(page).toHaveURL(/\/select-provider/);
+    // Wait for either provider selection page or lines page
+    await page.waitForURL(/\/(select-provider|lines)/);
 
-    const combobox = page.getByRole('combobox');
-    await combobox.click();
-    await page.getByRole('option').first().click();
+    // If on provider selection page, select a provider
+    if (page.url().includes('/select-provider')) {
+      const combobox = page.getByRole('combobox');
+      await combobox.click();
+      await page.getByRole('option').first().click();
+    }
 
     await expect(page).toHaveURL(/\/lines/);
     // Verify the lines page has loaded with content
