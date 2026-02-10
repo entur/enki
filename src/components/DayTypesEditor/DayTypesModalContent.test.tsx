@@ -3,6 +3,8 @@ import { render, screen, waitFor } from 'utils/test-utils';
 import userEvent from '@testing-library/user-event';
 import { MockedProvider } from '@apollo/client/testing/react';
 import { MockedResponse } from '@apollo/client/testing';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DayTypesModalContent } from './DayTypesModalContent';
 import { DELETE_DAY_TYPES } from 'api/uttu/mutations';
 import { GET_DAY_TYPES_BY_IDS } from 'api/uttu/queries';
@@ -48,12 +50,14 @@ const renderComponent = (
   const mocks = [createDayTypeByIdsMock(dayTypes), ...extraMocks];
 
   return render(
-    <MockedProvider mocks={mocks}>
-      <DayTypesModalContent
-        dayTypes={dayTypes}
-        refetchDayTypes={refetchDayTypes}
-      />
-    </MockedProvider>,
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <MockedProvider mocks={mocks}>
+        <DayTypesModalContent
+          dayTypes={dayTypes}
+          refetchDayTypes={refetchDayTypes}
+        />
+      </MockedProvider>
+    </LocalizationProvider>,
   );
 };
 
@@ -252,5 +256,33 @@ describe('DayTypesModalContent', () => {
     renderComponent([dayType]);
 
     expect(screen.getByText('No name')).toBeInTheDocument();
+  });
+
+  it('shows a new day type row when "Add day type" is clicked', async () => {
+    const user = userEvent.setup();
+    renderComponent();
+
+    const addButton = screen.getByRole('button', { name: /add day type/i });
+    await user.click(addButton);
+
+    // A new row should appear (the DayTypeEditor for the new day type)
+    // The new day type has no id yet, so we check the expand row appeared
+    const rows = screen.getAllByRole('row');
+    // Header row + new row = at least 2
+    expect(rows.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('adds new day type when "Add day type" button is clicked twice', async () => {
+    const user = userEvent.setup();
+    renderComponent();
+
+    const addButton = screen.getByRole('button', { name: /add day type/i });
+    // First click creates, second click replaces
+    await user.click(addButton);
+    await user.click(addButton);
+
+    const rows = screen.getAllByRole('row');
+    // Header + new row
+    expect(rows.length).toBeGreaterThanOrEqual(2);
   });
 });

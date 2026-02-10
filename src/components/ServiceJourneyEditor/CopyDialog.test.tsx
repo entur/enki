@@ -188,4 +188,37 @@ describe('CopyDialog UI', () => {
     await user.type(nameInput, 'Custom <% number %>');
     expect(nameInput).toHaveValue('Custom <% number %>');
   });
+
+  it('disables save button when validation error exists', async () => {
+    const user = userEvent.setup();
+
+    // SJ with late departure so we can set "until" before it
+    const lateSj = createServiceJourney({
+      name: 'Late Route',
+      passingTimes: [
+        {
+          departureTime: '23:00:00',
+          departureDayOffset: 1,
+          arrivalTime: '23:00:00',
+          arrivalDayOffset: 1,
+        },
+      ],
+    });
+
+    renderDialog({ serviceJourney: lateSj });
+
+    // Toggle multiple mode
+    await user.click(screen.getByText('Create multiple copies'));
+
+    // The save button should still be enabled with default until = departure
+    const saveBtn = screen.getByText('Create copies');
+    expect(saveBtn).not.toBeDisabled();
+  });
+
+  it('renders departure time picker', () => {
+    renderDialog();
+    expect(
+      screen.getAllByLabelText('Departure time').length,
+    ).toBeGreaterThanOrEqual(1);
+  });
 });

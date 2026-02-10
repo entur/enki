@@ -213,9 +213,80 @@ describe('BookingArrangementEditor - branch coverage', () => {
         name: '',
       },
     });
-    // The conditional `bookingInfoAttachmentType && bookingInfoAttachmentName`
-    // is false for empty string, so the "Line" labeled TextField is not rendered.
-    // In contrast, default render with name='Test Line' shows it.
     expect(screen.queryByLabelText('Line')).not.toBeInTheDocument();
+  });
+
+  it('renders with minimumBookingPeriod and selects PERIOD radio', () => {
+    renderEditor({
+      bookingArrangement: { minimumBookingPeriod: 'PT2H' },
+    });
+    const periodRadio = screen.getByLabelText(
+      'The minimum period prior to the departure the booking has to be placed',
+    );
+    expect(periodRadio).toBeChecked();
+  });
+
+  it('renders STOP_POINT attachment label', () => {
+    renderEditor({
+      bookingInfoAttachment: {
+        type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
+        name: 'Stop A',
+      },
+    });
+    expect(screen.getByDisplayValue('Stop A')).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Stop Point in Journey Pattern'),
+    ).toBeInTheDocument();
+  });
+
+  it('renders SERVICE_JOURNEY attachment label', () => {
+    renderEditor({
+      bookingInfoAttachment: {
+        type: BookingInfoAttachmentType.SERVICE_JOURNEY,
+        name: 'SJ-1',
+      },
+    });
+    expect(screen.getByDisplayValue('SJ-1')).toBeInTheDocument();
+    expect(screen.getByLabelText('Service Journey')).toBeInTheDocument();
+  });
+
+  it('calls onChange when email is typed', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    const emailInput = screen.getByLabelText('E-mail');
+    await userEvent.type(emailInput, 'a');
+    expect(onChange).toHaveBeenCalled();
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+    expect(lastCall.bookingContact.email).toBe('a');
+  });
+
+  it('calls onChange when phone is typed', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    const phoneInput = screen.getByLabelText('Phone');
+    await userEvent.type(phoneInput, '1');
+    expect(onChange).toHaveBeenCalled();
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+    expect(lastCall.bookingContact.phone).toBe('1');
+  });
+
+  it('calls onChange when URL is typed', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    const urlInput = screen.getByLabelText('URL');
+    await userEvent.type(urlInput, 'x');
+    expect(onChange).toHaveBeenCalled();
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+    expect(lastCall.bookingContact.url).toBe('x');
+  });
+
+  it('calls onChange when further details is typed', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    const detailsInput = screen.getByLabelText('Further details');
+    await userEvent.type(detailsInput, 'z');
+    expect(onChange).toHaveBeenCalled();
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+    expect(lastCall.bookingContact.furtherDetails).toBe('z');
   });
 });

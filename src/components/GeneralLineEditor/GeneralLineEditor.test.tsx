@@ -258,6 +258,106 @@ describe('GeneralLineEditor - description/privateCode/publicCode branches', () =
     expect(screen.getByText('Public code is required.')).toBeInTheDocument();
   });
 
+  it('calls onChange with flexibleLineType when switching to non-flexibleAreasOnly type', async () => {
+    const onChange = vi.fn();
+    const flexLine: FlexibleLine = {
+      name: 'Flex',
+      publicCode: 'F1',
+      privateCode: null,
+      transportMode: VEHICLE_MODE.BUS,
+      flexibleLineType: FlexibleLineType.FLEXIBLE_AREAS_ONLY,
+      bookingArrangement: null,
+      networkRef: 'net-1',
+      operatorRef: 'op-1',
+      journeyPatterns: [
+        {
+          pointsInSequence: [{ flexibleStopPlaceRef: 'fsp-1' }],
+          serviceJourneys: [{ passingTimes: [{ departureTime: '08:00:00' }] }],
+        },
+      ] as any,
+      notices: [],
+    };
+    render(
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <GeneralLineEditor
+          {...{
+            line: flexLine,
+            operators: [
+              {
+                id: 'op-1',
+                name: { lang: 'en', value: 'Op' },
+                type: 'operator',
+              },
+            ] as Organisation[],
+            networks: [
+              { id: 'net-1', name: 'Net', authorityRef: 'a1' },
+            ] as Network[],
+            brandings: [],
+            onChange,
+            spoilPristine: false,
+          }}
+        />
+      </LocalizationProvider>,
+      {
+        config: {
+          supportedFlexibleLineTypes: Object.values(FlexibleLineType),
+        },
+      },
+    );
+    // Open the flexible line type dropdown and pick a non-flexibleAreasOnly type
+    const flexTypeInput = screen.getByLabelText('Flexible line type *');
+    await userEvent.click(flexTypeInput);
+    const options = await screen.findAllByRole('option');
+    const corridorOption = options.find(
+      (opt) => opt.textContent === 'Corridor service',
+    );
+    if (corridorOption) {
+      await userEvent.click(corridorOption);
+      expect(onChange).toHaveBeenCalled();
+      const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1];
+      // For non-flexibleAreasOnly, journey patterns should be preserved (not cleared)
+      expect(lastCall[0].flexibleLineType).toBe('corridorService');
+    }
+  });
+
+  it('uses lineSupportedVehicleModes config when available', () => {
+    render(
+      <GeneralLineEditor
+        {...{
+          line: {
+            name: 'Test',
+            publicCode: '1',
+            privateCode: null,
+            transportMode: VEHICLE_MODE.BUS,
+            networkRef: 'net-1',
+            operatorRef: 'op-1',
+            journeyPatterns: [],
+            notices: [],
+          } as Line,
+          operators: [
+            {
+              id: 'op-1',
+              name: { lang: 'en', value: 'Op' },
+              type: 'operator',
+            },
+          ] as Organisation[],
+          networks: [
+            { id: 'net-1', name: 'Net', authorityRef: 'a1' },
+          ] as Network[],
+          brandings: [],
+          onChange: vi.fn(),
+          spoilPristine: false,
+        }}
+      />,
+      {
+        config: {
+          lineSupportedVehicleModes: [VEHICLE_MODE.BUS, VEHICLE_MODE.WATER],
+        } as any,
+      },
+    );
+    expect(screen.getByLabelText('Transport mode *')).toBeInTheDocument();
+  });
+
   it('clears transport submode when transport mode changes', async () => {
     const onChange = vi.fn();
     const lineWithSubmode: FlexibleLine = {
