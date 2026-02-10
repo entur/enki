@@ -73,8 +73,33 @@ const mapStatusToTextWithUndefined = (status: Status): string => {
   return mapStatusToText(status);
 };
 
-type SortKey = 'name' | 'status' | 'to';
-type SortDirection = 'asc' | 'desc';
+export type SortKey = 'name' | 'status' | 'to';
+export type SortDirection = 'asc' | 'desc';
+
+export { type ExportableLine };
+
+export const compareExportableLines = (
+  a: ExportableLine,
+  b: ExportableLine,
+  key: SortKey,
+  direction: SortDirection,
+): number => {
+  const aVal = a[key];
+  const bVal = b[key];
+  if (aVal == null && bVal == null) return 0;
+  if (aVal == null) return 1;
+  if (bVal == null) return -1;
+  if (typeof aVal === 'string' && typeof bVal === 'string') {
+    return direction === 'asc'
+      ? aVal.localeCompare(bVal)
+      : bVal.localeCompare(aVal);
+  }
+  if (aVal < bVal) return direction === 'asc' ? -1 : 1;
+  if (aVal > bVal) return direction === 'asc' ? 1 : -1;
+  return 0;
+};
+
+export { mapStatusToTextWithUndefined };
 
 export default ({ onChange }: Props) => {
   const [lines, setLines] = useState<ExportableLine[]>([]);
@@ -109,23 +134,9 @@ export default ({ onChange }: Props) => {
 
   const sortedData = useMemo(() => {
     if (!sortKey) return lines;
-    const key = sortKey;
-    const sorted = [...lines].sort((a, b) => {
-      const aVal = a[key];
-      const bVal = b[key];
-      if (aVal == null && bVal == null) return 0;
-      if (aVal == null) return 1;
-      if (bVal == null) return -1;
-      if (typeof aVal === 'string' && typeof bVal === 'string') {
-        return sortDirection === 'asc'
-          ? aVal.localeCompare(bVal)
-          : bVal.localeCompare(aVal);
-      }
-      if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
-      if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
-      return 0;
-    });
-    return sorted;
+    return [...lines].sort((a, b) =>
+      compareExportableLines(a, b, sortKey, sortDirection),
+    );
   }, [lines, sortKey, sortDirection]);
 
   const handleSort = (key: SortKey) => {

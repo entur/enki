@@ -13,7 +13,11 @@ import {
   render,
   screen,
 } from 'utils/test-utils';
-import LinesForExport from '.';
+import LinesForExport, {
+  compareExportableLines,
+  mapStatusToTextWithUndefined,
+  ExportableLine,
+} from '.';
 
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
@@ -345,5 +349,72 @@ describe('LinesForExport with empty journey patterns', () => {
     expect(checkboxes[1]).toBeDisabled();
     // onChange should have been called with empty array (no selectable lines)
     expect(onChange).toHaveBeenCalledWith([]);
+  });
+});
+
+describe('compareExportableLines', () => {
+  const makeLine = (overrides: Partial<ExportableLine>): ExportableLine => ({
+    id: 'test',
+    name: 'Test',
+    status: 'positive',
+    from: getCurrentDate(),
+    to: getCurrentDate(),
+    selected: true,
+    ...overrides,
+  });
+
+  it('returns 0 when both values are null', () => {
+    const a = makeLine({ name: undefined as any });
+    const b = makeLine({ name: undefined as any });
+    expect(compareExportableLines(a, b, 'name', 'asc')).toBe(0);
+  });
+
+  it('returns 1 when first value is null', () => {
+    const a = makeLine({ name: undefined as any });
+    const b = makeLine({ name: 'B' });
+    expect(compareExportableLines(a, b, 'name', 'asc')).toBe(1);
+  });
+
+  it('returns -1 when second value is null', () => {
+    const a = makeLine({ name: 'A' });
+    const b = makeLine({ name: undefined as any });
+    expect(compareExportableLines(a, b, 'name', 'asc')).toBe(-1);
+  });
+
+  it('compares strings ascending', () => {
+    const a = makeLine({ name: 'Alpha' });
+    const b = makeLine({ name: 'Beta' });
+    expect(compareExportableLines(a, b, 'name', 'asc')).toBeLessThan(0);
+  });
+
+  it('compares strings descending', () => {
+    const a = makeLine({ name: 'Alpha' });
+    const b = makeLine({ name: 'Beta' });
+    expect(compareExportableLines(a, b, 'name', 'desc')).toBeGreaterThan(0);
+  });
+
+  it('compares non-string values (CalendarDate) ascending', () => {
+    const a = makeLine({ to: getCurrentDate() });
+    const b = makeLine({ to: getCurrentDate().add({ days: 10 }) });
+    expect(compareExportableLines(a, b, 'to', 'asc')).toBeLessThan(0);
+  });
+
+  it('compares non-string values descending', () => {
+    const a = makeLine({ to: getCurrentDate() });
+    const b = makeLine({ to: getCurrentDate().add({ days: 10 }) });
+    expect(compareExportableLines(a, b, 'to', 'desc')).toBeGreaterThan(0);
+  });
+
+  it('returns 0 when non-string values are equal', () => {
+    const date = getCurrentDate();
+    const a = makeLine({ to: date });
+    const b = makeLine({ to: date });
+    expect(compareExportableLines(a, b, 'to', 'asc')).toBe(0);
+  });
+});
+
+describe('mapStatusToTextWithUndefined', () => {
+  it('returns "Unknown" for undefined status', () => {
+    expect(mapStatusToTextWithUndefined(undefined)).toBe('Unknown');
   });
 });

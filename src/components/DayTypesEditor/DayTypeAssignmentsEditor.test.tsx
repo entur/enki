@@ -176,6 +176,75 @@ describe('DayTypeAssignmentsEditor', () => {
     ).toBeInTheDocument();
   });
 
+  it('shows validation error when toDate is before fromDate', () => {
+    const assignments = [
+      createAssignment({
+        operatingPeriod: {
+          fromDate: '2025-06-30',
+          toDate: '2025-06-01',
+        },
+      }),
+    ];
+    const onChange = vi.fn();
+
+    renderWithDatePicker(
+      <DayTypeAssignmentsEditor
+        dayTypeAssignments={assignments}
+        onChange={onChange}
+      />,
+    );
+
+    expect(
+      screen.getByText('At least one day after from-date'),
+    ).toBeInTheDocument();
+  });
+
+  it('does not show validation error when toDate equals fromDate', () => {
+    const assignments = [
+      createAssignment({
+        operatingPeriod: {
+          fromDate: '2025-06-15',
+          toDate: '2025-06-15',
+        },
+      }),
+    ];
+    const onChange = vi.fn();
+
+    renderWithDatePicker(
+      <DayTypeAssignmentsEditor
+        dayTypeAssignments={assignments}
+        onChange={onChange}
+      />,
+    );
+
+    expect(
+      screen.queryByText('At least one day after from-date'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not show validation error when toDate is after fromDate', () => {
+    const assignments = [
+      createAssignment({
+        operatingPeriod: {
+          fromDate: '2025-06-01',
+          toDate: '2025-06-30',
+        },
+      }),
+    ];
+    const onChange = vi.fn();
+
+    renderWithDatePicker(
+      <DayTypeAssignmentsEditor
+        dayTypeAssignments={assignments}
+        onChange={onChange}
+      />,
+    );
+
+    expect(
+      screen.queryByText('At least one day after from-date'),
+    ).not.toBeInTheDocument();
+  });
+
   it('auto-adds an assignment when given an empty array', () => {
     const onChange = vi.fn();
 

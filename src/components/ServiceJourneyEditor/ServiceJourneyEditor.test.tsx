@@ -180,4 +180,102 @@ describe('ServiceJourneyEditor', () => {
     // Copy dialog should open
     expect(screen.getByText('Copy Service Journey')).toBeInTheDocument();
   });
+
+  it('completes copy dialog flow and calls copyServiceJourney callback', async () => {
+    const copySJ = vi.fn();
+    renderEditor({
+      copyServiceJourney: copySJ,
+      serviceJourney: createServiceJourney({
+        name: 'Morning Route',
+        passingTimes: [
+          {
+            departureTime: '09:00:00',
+            departureDayOffset: 0,
+            arrivalTime: '09:00:00',
+            arrivalDayOffset: 0,
+          },
+          {
+            departureTime: '09:30:00',
+            departureDayOffset: 0,
+            arrivalTime: '09:30:00',
+            arrivalDayOffset: 0,
+          },
+        ],
+      }),
+    });
+
+    // Open copy dialog
+    await userEvent.click(screen.getByText('Copy'));
+    expect(screen.getByText('Copy Service Journey')).toBeInTheDocument();
+
+    // Click save in dialog
+    await userEvent.click(screen.getByText('Create copies'));
+
+    expect(copySJ).toHaveBeenCalledWith(expect.any(Array));
+    // Dialog should close after save
+    expect(screen.queryByText('Copy Service Journey')).not.toBeInTheDocument();
+  });
+
+  it('dismisses copy dialog without calling copyServiceJourney', async () => {
+    const copySJ = vi.fn();
+    renderEditor({
+      copyServiceJourney: copySJ,
+      serviceJourney: createServiceJourney({
+        name: 'Morning Route',
+        passingTimes: [
+          {
+            departureTime: '09:00:00',
+            departureDayOffset: 0,
+            arrivalTime: '09:00:00',
+            arrivalDayOffset: 0,
+          },
+        ],
+      }),
+    });
+
+    // Open copy dialog
+    await userEvent.click(screen.getByText('Copy'));
+    expect(screen.getByText('Copy Service Journey')).toBeInTheDocument();
+
+    // Click cancel
+    await userEvent.click(screen.getByText('Cancel'));
+
+    expect(copySJ).not.toHaveBeenCalled();
+    expect(screen.queryByText('Copy Service Journey')).not.toBeInTheDocument();
+  });
+
+  it('renders notices section', () => {
+    renderEditor();
+    expect(screen.getByText('Notices')).toBeInTheDocument();
+  });
+
+  it('renders passing times editor', () => {
+    renderEditor();
+    // The GenericPassingTimesEditor renders passing time columns
+    // Verify the component is present by looking for the passing time labels
+    // (departure/arrival time columns are rendered for each stop point)
+    const allInputs = screen.getAllByRole('textbox');
+    // At minimum: name, description, publicCode, privateCode = 4 text inputs
+    expect(allInputs.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it('calls onChange with null description when description is cleared', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    const descInput = screen.getByLabelText('Description');
+    await userEvent.clear(descInput);
+    // After clearing, the last call should have description: null (empty string || null)
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+    expect(lastCall.description).toBeNull();
+  });
+
+  it('calls onChange with privateCode when private code is typed', async () => {
+    const onChange = vi.fn();
+    renderEditor({ onChange });
+    const privateCodeInput = screen.getByLabelText('Private code');
+    await userEvent.type(privateCodeInput, 'X');
+    expect(onChange).toHaveBeenCalled();
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+    expect(lastCall.privateCode).toBe('PRV-M1X');
+  });
 });

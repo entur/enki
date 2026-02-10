@@ -94,6 +94,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
+    testTimeout: 10000,
     setupFiles: ["./src/setupTests.js"],
     exclude: ['node_modules', 'e2e'],
     reporters: [

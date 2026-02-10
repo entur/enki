@@ -135,5 +135,36 @@ describe('BrandingEditor', () => {
         screen.getByRole('button', { name: /delete/i }),
       ).toBeInTheDocument();
     });
+
+    it('opens delete confirmation dialog when delete is clicked', async () => {
+      const user = userEvent.setup();
+      const BrandingEditor = await loadEditor();
+      render(<BrandingEditor />, { preloadedState });
+
+      await user.click(screen.getByRole('button', { name: /delete/i }));
+      expect(screen.getByText(/delete branding/i)).toBeInTheDocument();
+    });
+
+    it('allows editing the description field in edit mode', async () => {
+      const user = userEvent.setup();
+      const BrandingEditor = await loadEditor();
+      render(<BrandingEditor />, { preloadedState });
+
+      const descField = screen.getByLabelText(/description/i);
+      await user.clear(descField);
+      await user.type(descField, 'Updated description');
+      expect(descField).toHaveValue('Updated description');
+    });
+
+    it('populates all fields in edit mode', async () => {
+      const BrandingEditor = await loadEditor();
+      render(<BrandingEditor />, { preloadedState });
+
+      expect(screen.getByLabelText(/^name/i)).toHaveValue('Ruter Flex');
+      expect(screen.getByLabelText(/description/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/short name/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/^url$/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/image url/i)).toBeInTheDocument();
+    });
   });
 });

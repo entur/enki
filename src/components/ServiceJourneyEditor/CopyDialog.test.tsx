@@ -143,4 +143,49 @@ describe('CopyDialog UI', () => {
     renderDialog({ open: false });
     expect(screen.queryByText('Copy Service Journey')).not.toBeInTheDocument();
   });
+
+  it('calls onSave with multiple service journeys when multiple is toggled', async () => {
+    const onSave = vi.fn();
+    const user = userEvent.setup();
+
+    const sjWithTimes = createServiceJourney({
+      name: 'Route A',
+      passingTimes: [
+        {
+          departureTime: '08:00:00',
+          departureDayOffset: 0,
+          arrivalTime: '08:00:00',
+          arrivalDayOffset: 0,
+        },
+        {
+          departureTime: '08:30:00',
+          departureDayOffset: 0,
+          arrivalTime: '08:30:00',
+          arrivalDayOffset: 0,
+        },
+      ],
+    });
+
+    renderDialog({ onSave, serviceJourney: sjWithTimes });
+
+    // Toggle multiple switch
+    await user.click(screen.getByText('Create multiple copies'));
+
+    // The interval and "until" time fields should now be visible
+    expect(screen.getByText('Choose an interval')).toBeInTheDocument();
+
+    // Click save — with default until = departure time, should produce at least 1 copy
+    await user.click(screen.getByText('Create copies'));
+    expect(onSave).toHaveBeenCalled();
+  });
+
+  it('updates name template when typed into', async () => {
+    const user = userEvent.setup();
+    renderDialog();
+
+    const nameInput = screen.getByLabelText('Name template');
+    await user.clear(nameInput);
+    await user.type(nameInput, 'Custom <% number %>');
+    expect(nameInput).toHaveValue('Custom <% number %>');
+  });
 });

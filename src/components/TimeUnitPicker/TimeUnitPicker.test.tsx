@@ -136,4 +136,52 @@ describe('TimeUnitPicker', () => {
     expect(onReset).toHaveBeenCalledTimes(1);
     expect(screen.queryByText('Done')).not.toBeInTheDocument();
   });
+
+  it('positions picker below the trigger when position is BELOW', () => {
+    const { container } = render(
+      <TimeUnitPicker
+        {...defaultProps}
+        position={TimeUnitPickerPosition.BELOW}
+      />,
+    );
+
+    const textbox = screen.getByRole('textbox');
+    fireEvent.mouseDown(textbox, { button: 0 });
+
+    // Picker panel should be visible
+    expect(screen.getByText('Done')).toBeInTheDocument();
+    // The BELOW position applies marginTop instead of bottom
+    const pickerPanel = screen
+      .getByText('Done')
+      .closest('div[style*="position: absolute"]') as HTMLElement;
+    expect(pickerPanel).toBeInTheDocument();
+    expect(pickerPanel.style.marginTop).toBe('15px');
+  });
+
+  it('positions picker above the trigger by default', () => {
+    render(<TimeUnitPicker {...defaultProps} />);
+
+    const textbox = screen.getByRole('textbox');
+    fireEvent.mouseDown(textbox, { button: 0 });
+
+    const pickerPanel = screen
+      .getByText('Done')
+      .closest('div[style*="position: absolute"]') as HTMLElement;
+    expect(pickerPanel).toBeInTheDocument();
+    expect(pickerPanel.style.bottom).toBe('60px');
+  });
+
+  it('closes picker when clicking outside', () => {
+    render(<TimeUnitPicker {...defaultProps} />);
+
+    const textbox = screen.getByRole('textbox');
+    fireEvent.mouseDown(textbox, { button: 0 });
+
+    expect(screen.getByText('Done')).toBeInTheDocument();
+
+    // Click outside both trigger and picker
+    fireEvent.mouseDown(document.body, { button: 0 });
+
+    expect(screen.queryByText('Done')).not.toBeInTheDocument();
+  });
 });

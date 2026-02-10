@@ -169,6 +169,27 @@ describe('NetworkEditor', () => {
 
       expect(screen.getByRole('button', { name: /delete/i })).toBeDisabled();
     });
+
+    it('allows typing in the description field', async () => {
+      const user = userEvent.setup();
+      const NetworkEditor = await loadEditor();
+      render(<NetworkEditor />, { preloadedState });
+
+      const descField = screen.getByLabelText(/description/i);
+      await user.clear(descField);
+      await user.type(descField, 'Updated description');
+      expect(descField).toHaveValue('Updated description');
+    });
+
+    it('allows typing in the private code field', async () => {
+      const user = userEvent.setup();
+      const NetworkEditor = await loadEditor();
+      render(<NetworkEditor />, { preloadedState });
+
+      const privateCodeField = screen.getByLabelText(/private code/i);
+      await user.type(privateCodeField, 'X');
+      expect(privateCodeField).toHaveValue('RUTFLEXX');
+    });
   });
 
   describe('save validation', () => {
