@@ -11,6 +11,7 @@ import {
   getAllByRole,
   getByText,
   render,
+  screen,
 } from 'utils/test-utils';
 import LinesForExport from '.';
 
@@ -216,5 +217,50 @@ describe('LinesForExport', () => {
     await wait();
 
     expect(mockedOnChange).toHaveBeenCalledWith(selectableLineAssociations);
+  });
+
+  it('sorts by name when clicking Line header', async () => {
+    await wait();
+
+    const lineHeader = screen.getByText('Line');
+    fireEvent.click(lineHeader);
+
+    const rows = renderResult.container.querySelectorAll('tbody tr');
+    expect(rows.length).toBe(3);
+    // Ascending alphabetical order: "Test flexible line", "Test line", "Test unavailable line"
+    expect(
+      getByText(rows[0] as HTMLElement, 'Test flexible line'),
+    ).toBeInTheDocument();
+    expect(getByText(rows[1] as HTMLElement, 'Test line')).toBeInTheDocument();
+    expect(
+      getByText(rows[2] as HTMLElement, 'Test unavailable line'),
+    ).toBeInTheDocument();
+  });
+
+  it('toggles sort direction on second click', async () => {
+    await wait();
+
+    const lineHeader = screen.getByText('Line');
+    fireEvent.click(lineHeader); // asc
+    fireEvent.click(lineHeader); // desc
+
+    const rows = renderResult.container.querySelectorAll('tbody tr');
+    // Descending order: "Test unavailable line", "Test line", "Test flexible line"
+    expect(
+      getByText(rows[0] as HTMLElement, 'Test unavailable line'),
+    ).toBeInTheDocument();
+    expect(
+      getByText(rows[2] as HTMLElement, 'Test flexible line'),
+    ).toBeInTheDocument();
+  });
+
+  it('shows indeterminate checkbox when some lines are deselected', async () => {
+    await wait();
+
+    // Deselect one selectable line
+    clickCheckbox(renderResult.container, 1);
+
+    const allCheckbox = getAllByRole(renderResult.container, 'checkbox')[0];
+    expect(allCheckbox).toHaveAttribute('data-indeterminate', 'true');
   });
 });

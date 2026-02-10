@@ -146,4 +146,64 @@ describe('MenuDrawer', () => {
     // After collapse, items should be hidden (unmountOnExit)
     expect(screen.queryByText('Flexible lines')).not.toBeInTheDocument();
   });
+
+  it('shows confirm dialog when navigating with unsaved changes', async () => {
+    const user = userEvent.setup();
+    render(<MenuDrawer open={true} onClose={onClose} />, {
+      preloadedState: {
+        ...defaultState,
+        editor: { isSaved: false },
+      },
+      routerProps: { initialEntries: ['/lines'] },
+    });
+
+    await user.click(screen.getByText('Networks'));
+
+    // onClose should NOT have been called since there are unsaved changes
+    expect(onClose).not.toHaveBeenCalled();
+
+    // Confirm dialog should appear
+    expect(screen.getByText('Unsaved changes!')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'You have unsaved changes which will be lost if you navigate away. Do you want to proceed?',
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it('does not show confirm dialog when state is saved', async () => {
+    const user = userEvent.setup();
+    render(<MenuDrawer open={true} onClose={onClose} />, {
+      preloadedState: defaultState, // editor.isSaved = true
+      routerProps: { initialEntries: ['/lines'] },
+    });
+
+    await user.click(screen.getByText('Networks'));
+
+    // onClose SHOULD have been called since changes are saved
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it('dismisses confirm dialog when clicking cancel', async () => {
+    const user = userEvent.setup();
+    render(<MenuDrawer open={true} onClose={onClose} />, {
+      preloadedState: {
+        ...defaultState,
+        editor: { isSaved: false },
+      },
+      routerProps: { initialEntries: ['/lines'] },
+    });
+
+    await user.click(screen.getByText('Networks'));
+
+    // Dialog should be visible
+    expect(screen.getByText('Unsaved changes!')).toBeInTheDocument();
+
+    // Click cancel to dismiss
+    await user.click(screen.getByText('No, stay on this page'));
+
+    // Dialog should be gone and onClose should not have been called
+    expect(screen.queryByText('Unsaved changes!')).not.toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+  });
 });

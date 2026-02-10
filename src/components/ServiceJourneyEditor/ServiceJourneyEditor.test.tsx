@@ -114,4 +114,49 @@ describe('ServiceJourneyEditor', () => {
     expect(screen.getByLabelText('Public code')).toHaveValue('');
     expect(screen.getByLabelText('Private code')).toHaveValue('');
   });
+
+  it('opens delete dialog when clicking delete chip', async () => {
+    renderEditor({ deleteServiceJourney: vi.fn() });
+
+    await userEvent.click(screen.getByText('Delete'));
+
+    expect(screen.getByText('Delete service journey')).toBeInTheDocument();
+    expect(
+      screen.getByText('Are you sure you want to delete this service journey?'),
+    ).toBeInTheDocument();
+  });
+
+  it('calls deleteServiceJourney when confirming delete', async () => {
+    const deleteServiceJourney = vi.fn();
+    renderEditor({ deleteServiceJourney });
+
+    await userEvent.click(screen.getByText('Delete'));
+
+    // Click the confirm button
+    await userEvent.click(screen.getByText('Yes'));
+
+    expect(deleteServiceJourney).toHaveBeenCalled();
+  });
+
+  it('does not call deleteServiceJourney when cancelling delete', async () => {
+    const deleteServiceJourney = vi.fn();
+    renderEditor({ deleteServiceJourney });
+
+    await userEvent.click(screen.getByText('Delete'));
+
+    // Click the cancel button
+    await userEvent.click(screen.getByText('No'));
+
+    expect(deleteServiceJourney).not.toHaveBeenCalled();
+  });
+
+  it('renders booking arrangement editor when flexibleLineType is provided', () => {
+    renderEditor({ flexibleLineType: 'flexibleAreasOnly' });
+    expect(screen.getByText('Booking information')).toBeInTheDocument();
+  });
+
+  it('does not render booking arrangement editor without flexibleLineType', () => {
+    renderEditor();
+    expect(screen.queryByText('Booking information')).not.toBeInTheDocument();
+  });
 });
