@@ -129,6 +129,53 @@ describe('DayTypeAssignmentsEditor', () => {
     expect(updated[0].isAvailable).toBe(false);
   });
 
+  it('calls onChange when delete button is clicked', async () => {
+    const user = userEvent.setup();
+    const assignments = [
+      createAssignment({
+        operatingPeriod: { fromDate: '2025-01-01', toDate: '2025-06-30' },
+      }),
+      createAssignment({
+        operatingPeriod: { fromDate: '2025-07-01', toDate: '2025-12-31' },
+      }),
+    ];
+    const onChange = vi.fn();
+
+    renderWithDatePicker(
+      <DayTypeAssignmentsEditor
+        dayTypeAssignments={assignments}
+        onChange={onChange}
+      />,
+    );
+
+    const deleteButtons = screen
+      .getAllByRole('button')
+      .filter((btn) => btn.querySelector('[data-testid="DeleteIcon"]'));
+    await user.click(deleteButtons[0]);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    const remaining = onChange.mock.calls[0][0];
+    expect(remaining).toHaveLength(1);
+    // The second assignment should remain
+    expect(remaining[0].operatingPeriod.fromDate).toBe('2025-07-01');
+  });
+
+  it('renders "Add date" button', () => {
+    const assignments = [createAssignment()];
+    const onChange = vi.fn();
+
+    renderWithDatePicker(
+      <DayTypeAssignmentsEditor
+        dayTypeAssignments={assignments}
+        onChange={onChange}
+      />,
+    );
+
+    expect(
+      screen.getByRole('button', { name: /add date/i }),
+    ).toBeInTheDocument();
+  });
+
   it('auto-adds an assignment when given an empty array', () => {
     const onChange = vi.fn();
 

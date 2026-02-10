@@ -87,4 +87,20 @@ describe('PassingTimePicker', () => {
     expect(hours).toHaveAttribute('aria-valuetext', 'Empty');
     expect(minutes).toHaveAttribute('aria-valuetext', 'Empty');
   });
+
+  it('shows empty when selectedTime is undefined', () => {
+    renderPicker({ selectedTime: undefined });
+    const hours = screen.getByRole('spinbutton', { name: 'Hours' });
+    const minutes = screen.getByRole('spinbutton', { name: 'Minutes' });
+    expect(hours).toHaveAttribute('aria-valuetext', 'Empty');
+    expect(minutes).toHaveAttribute('aria-valuetext', 'Empty');
+  });
+
+  it('shows empty when selectedTime is empty string', () => {
+    renderPicker({ selectedTime: '' });
+    const hours = screen.getByRole('spinbutton', { name: 'Hours' });
+    const minutes = screen.getByRole('spinbutton', { name: 'Minutes' });
+    expect(hours).toHaveAttribute('aria-valuetext', 'Empty');
+    expect(minutes).toHaveAttribute('aria-valuetext', 'Empty');
+  });
 });

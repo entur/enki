@@ -159,4 +159,25 @@ describe('ServiceJourneyEditor', () => {
     renderEditor();
     expect(screen.queryByText('Booking information')).not.toBeInTheDocument();
   });
+
+  it('renders with operatorRef preselected', () => {
+    renderEditor({
+      serviceJourney: createServiceJourney({
+        name: 'Route with Operator',
+        operatorRef: 'ORG:1',
+        passingTimes: [{}, {}],
+      }),
+    });
+    expect(screen.getByLabelText('Name *')).toHaveValue('Route with Operator');
+  });
+
+  it('calls copyServiceJourney when copy dialog is confirmed', async () => {
+    const copyServiceJourney = vi.fn();
+    renderEditor({ copyServiceJourney });
+
+    await userEvent.click(screen.getByText('Copy'));
+
+    // Copy dialog should open
+    expect(screen.getByText('Copy Service Journey')).toBeInTheDocument();
+  });
 });

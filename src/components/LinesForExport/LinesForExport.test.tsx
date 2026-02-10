@@ -263,4 +263,87 @@ describe('LinesForExport', () => {
     const allCheckbox = getAllByRole(renderResult.container, 'checkbox')[0];
     expect(allCheckbox).toHaveAttribute('data-indeterminate', 'true');
   });
+
+  it('sorts by status column', async () => {
+    await wait();
+
+    const statusHeader = screen.getByText('Status');
+    fireEvent.click(statusHeader);
+
+    const rows = renderResult.container.querySelectorAll('tbody tr');
+    expect(rows.length).toBe(3);
+    // Ascending alphabetical: "negative" < "neutral" < "positive"
+    // secondLine (negative), flexibleLine (neutral), line (positive)
+    expect(
+      getByText(rows[0] as HTMLElement, 'Test unavailable line'),
+    ).toBeInTheDocument();
+    expect(
+      getByText(rows[1] as HTMLElement, 'Test flexible line'),
+    ).toBeInTheDocument();
+    expect(getByText(rows[2] as HTMLElement, 'Test line')).toBeInTheDocument();
+  });
+
+  it('sorts by availability (to) column using non-string comparison', async () => {
+    await wait();
+
+    const availabilityHeader = screen.getByText('Availability');
+    fireEvent.click(availabilityHeader);
+
+    const rows = renderResult.container.querySelectorAll('tbody tr');
+    expect(rows.length).toBe(3);
+    // Ascending by CalendarDate 'to': secondLine (today-10), flexibleLine (today+10), line (today+130)
+    expect(
+      getByText(rows[0] as HTMLElement, 'Test unavailable line'),
+    ).toBeInTheDocument();
+    expect(
+      getByText(rows[1] as HTMLElement, 'Test flexible line'),
+    ).toBeInTheDocument();
+    expect(getByText(rows[2] as HTMLElement, 'Test line')).toBeInTheDocument();
+  });
+});
+
+describe('LinesForExport with empty journey patterns', () => {
+  const emptyLine = {
+    id: 'TST:Line:3',
+    name: 'Empty line',
+    journeyPatterns: [],
+  };
+
+  const emptyMocks = [
+    {
+      request: { query: GET_LINES_FOR_EXPORT },
+      result: {
+        data: {
+          lines: [emptyLine],
+          flexibleLines: [],
+        },
+      },
+      delay: 30,
+    },
+  ];
+
+  it('renders line with empty journey patterns as disabled', async () => {
+    const onChange = vi.fn();
+    const { container } = render(
+      <MockedProvider
+        mocks={emptyMocks}
+        defaultOptions={{
+          watchQuery: { fetchPolicy: 'no-cache' },
+          query: { fetchPolicy: 'no-cache' },
+        }}
+      >
+        <MemoryRouter>
+          <LinesForExport onChange={onChange} />
+        </MemoryRouter>
+      </MockedProvider>,
+    );
+    await wait();
+
+    expect(getByText(container, 'Empty line')).toBeInTheDocument();
+    const checkboxes = getAllByRole(container, 'checkbox');
+    // The line checkbox (index 1, after "all" checkbox) should be disabled
+    expect(checkboxes[1]).toBeDisabled();
+    // onChange should have been called with empty array (no selectable lines)
+    expect(onChange).toHaveBeenCalledWith([]);
+  });
 });

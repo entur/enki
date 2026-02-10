@@ -79,4 +79,43 @@ describe('NewServiceJourneyDialog', () => {
     render(<NewServiceJourneyDialog {...defaultProps} open={false} />);
     expect(screen.queryByText('New service journey')).not.toBeInTheDocument();
   });
+
+  it('calls setSelectedJourneyPatternIndex when changing journey pattern', async () => {
+    const setSelectedJourneyPatternIndex = vi.fn();
+    render(
+      <NewServiceJourneyDialog
+        {...defaultProps}
+        setSelectedJourneyPatternIndex={setSelectedJourneyPatternIndex}
+      />,
+    );
+
+    // The Autocomplete currently shows "Route Alpha" — click on it to open dropdown
+    const jpInput = screen.getByLabelText('Choose journey pattern');
+    await userEvent.click(jpInput);
+
+    // Select "Route Beta" from the dropdown
+    const option = await screen.findByText('Route Beta');
+    await userEvent.click(option);
+
+    // Should have been called with index 1 (keys.indexOf('key-1'))
+    expect(setSelectedJourneyPatternIndex).toHaveBeenCalledWith(1);
+  });
+
+  it('handles journey pattern with no name', () => {
+    const jpNoName: JourneyPattern[] = [
+      {
+        pointsInSequence: [{ key: 'sp-1', quayRef: 'NSR:Quay:1' }],
+        serviceJourneys: [{ id: 'sj-1', passingTimes: [] }],
+      },
+    ];
+    render(
+      <NewServiceJourneyDialog
+        {...defaultProps}
+        journeyPatterns={jpNoName}
+        keys={['key-0']}
+      />,
+    );
+    // Should render without crash; the autocomplete value should be empty string label
+    expect(screen.getByLabelText('Choose journey pattern')).toBeInTheDocument();
+  });
 });

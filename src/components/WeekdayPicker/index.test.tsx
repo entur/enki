@@ -99,4 +99,33 @@ describe('WeekdayPicker component', () => {
       screen.queryByText('Please fill in the availability.'),
     ).not.toBeInTheDocument();
   });
+
+  it('renders selected chips with filled variant', () => {
+    const allDays = [
+      DAY_OF_WEEK.MONDAY,
+      DAY_OF_WEEK.TUESDAY,
+      DAY_OF_WEEK.WEDNESDAY,
+      DAY_OF_WEEK.THURSDAY,
+      DAY_OF_WEEK.FRIDAY,
+      DAY_OF_WEEK.SATURDAY,
+      DAY_OF_WEEK.SUNDAY,
+    ];
+    render(
+      <WeekdayPicker days={allDays} onChange={vi.fn()} spoilPristine={false} />,
+    );
+    const chips = screen.getAllByRole('button');
+    chips.forEach((chip) => {
+      expect(chip).toHaveClass('MuiChip-filled');
+    });
+  });
+
+  it('renders unselected chips with outlined variant', () => {
+    render(
+      <WeekdayPicker days={[]} onChange={vi.fn()} spoilPristine={false} />,
+    );
+    const chips = screen.getAllByRole('button');
+    chips.forEach((chip) => {
+      expect(chip).toHaveClass('MuiChip-outlined');
+    });
+  });
 });
