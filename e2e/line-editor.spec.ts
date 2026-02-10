@@ -306,4 +306,99 @@ test.describe('Line editor', () => {
       await expect(page.getByRole('button', { name: /save/i })).toBeVisible();
     });
   });
+
+  test.describe('Workflows — save and delete', () => {
+    test('can edit line name and save successfully', async ({ page }) => {
+      await page.getByText('Linje 201 Majorstuen - Tøyen').click();
+      await expect(page).toHaveURL(/\/lines\/edit\//);
+
+      // Modify the line name
+      const nameInput = page.getByRole('textbox', { name: /name/i }).first();
+      await nameInput.fill('Updated Line Name');
+      await expect(nameInput).toHaveValue('Updated Line Name');
+
+      // Click Save
+      await page.getByRole('button', { name: /save/i }).click();
+
+      // Verify success notification
+      await expect(page.getByText('The line was successfully saved!')).toBeVisible();
+    });
+
+    test('can save line from Step 2 (Journey Patterns)', async ({ page }) => {
+      await page.getByText('Linje 201 Majorstuen - Tøyen').click();
+      await expect(page).toHaveURL(/\/lines\/edit\//);
+
+      // Navigate to Step 2
+      await page.getByRole('button', { name: 'Next' }).click();
+      await expect(
+        page.getByRole('heading', { name: /journey patterns/i }),
+      ).toBeVisible();
+
+      // Click Save from Step 2
+      await page.getByRole('button', { name: /save/i }).click();
+
+      // Verify success notification
+      await expect(page.getByText('The line was successfully saved!')).toBeVisible();
+    });
+
+    test('can save line from Step 3 (Service Journeys)', async ({ page }) => {
+      await page.getByText('Linje 201 Majorstuen - Tøyen').click();
+      await expect(page).toHaveURL(/\/lines\/edit\//);
+
+      // Navigate to Step 3
+      await page.getByRole('button', { name: 'Next' }).click();
+      await page.getByRole('button', { name: 'Next' }).click();
+      await expect(
+        page.getByRole('heading', { name: /service journeys/i }),
+      ).toBeVisible();
+
+      // Click Save from Step 3
+      await page.getByRole('button', { name: /save/i }).click();
+
+      // Verify success notification
+      await expect(page.getByText('The line was successfully saved!')).toBeVisible();
+    });
+
+    test('can delete a line with confirmation dialog', async ({ page }) => {
+      await page.getByText('Linje 201 Majorstuen - Tøyen').click();
+      await expect(page).toHaveURL(/\/lines\/edit\//);
+
+      // Click Delete
+      await page.getByRole('button', { name: /delete/i }).click();
+
+      // Verify confirmation dialog appears
+      await expect(
+        page.getByRole('heading', { name: 'Delete line' }),
+      ).toBeVisible();
+      await expect(
+        page.getByText('Are you sure you want to delete this line?'),
+      ).toBeVisible();
+
+      // Confirm deletion
+      await page.getByRole('button', { name: 'Yes' }).click();
+
+      // Verify redirect to lines listing and success notification
+      await expect(page).toHaveURL(/\/lines$/);
+      await expect(page.getByText('The line was deleted')).toBeVisible();
+    });
+
+    test('can cancel line deletion', async ({ page }) => {
+      await page.getByText('Linje 201 Majorstuen - Tøyen').click();
+      await expect(page).toHaveURL(/\/lines\/edit\//);
+
+      // Click Delete
+      await page.getByRole('button', { name: /delete/i }).click();
+
+      // Verify confirmation dialog
+      await expect(
+        page.getByRole('heading', { name: 'Delete line' }),
+      ).toBeVisible();
+
+      // Cancel deletion
+      await page.getByRole('button', { name: 'No' }).click();
+
+      // Should remain on the edit page
+      await expect(page).toHaveURL(/\/lines\/edit\//);
+    });
+  });
 });

@@ -40,5 +40,47 @@ test.describe('Networks', () => {
       name: /create new network/i,
     });
     await createButton.click();
+
+    // Verify success notification
+    await expect(page.getByText('The network was saved.')).toBeVisible();
+  });
+
+  test('can edit and save an existing network', async ({ page }) => {
+    await page.goto('/networks');
+
+    // Click on existing network to edit
+    await page.getByRole('cell', { name: 'Ruter Flex' }).click();
+    await expect(page).toHaveURL(/\/networks\/edit\//);
+
+    // Modify the name
+    const nameInput = page.getByLabel(/name/i);
+    await nameInput.fill('Updated Network');
+
+    // Click Save
+    await page.getByRole('button', { name: /save/i }).click();
+
+    // Verify success notification
+    await expect(page.getByText('The network was saved.')).toBeVisible();
+  });
+
+  test('can delete a network with confirmation', async ({ page }) => {
+    await page.goto('/networks');
+    await page.getByRole('cell', { name: 'Ruter Flex' }).click();
+    await expect(page).toHaveURL(/\/networks\/edit\//);
+
+    // Click Delete
+    await page.getByRole('button', { name: /delete/i }).click();
+
+    // Verify confirmation dialog
+    await expect(
+      page.getByText('Are you sure you want to delete this network?'),
+    ).toBeVisible();
+
+    // Confirm deletion
+    await page.getByRole('button', { name: 'Yes' }).click();
+
+    // Verify redirect and success notification
+    await expect(page).toHaveURL(/\/networks$/);
+    await expect(page.getByText('The network was deleted.')).toBeVisible();
   });
 });
