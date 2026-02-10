@@ -86,4 +86,58 @@ test.describe('Brandings', () => {
       page.getByRole('textbox', { name: /description/i }),
     ).toHaveValue('Branding for Ruter fleksible linjer');
   });
+
+  test('can create a new branding', async ({ page }) => {
+    await page.goto('/brandings/create');
+
+    // Fill in required fields
+    await page.getByRole('textbox', { name: /^name/i }).fill('Test Branding');
+    await page
+      .getByRole('textbox', { name: /description/i })
+      .fill('A test branding');
+
+    // Click create button
+    await page.getByRole('button', { name: /create new branding/i }).click();
+
+    // Verify success notification
+    await expect(page.getByText('The branding was saved.')).toBeVisible();
+  });
+
+  test('can edit and save an existing branding', async ({ page }) => {
+    await page.goto('/brandings');
+    await page.getByRole('cell', { name: 'Ruter Flex' }).click();
+    await expect(page).toHaveURL(/\/brandings\/edit\//);
+
+    // Modify the name
+    const nameInput = page.getByRole('textbox', { name: /^name/i });
+    await nameInput.fill('Updated Branding');
+    await expect(nameInput).toHaveValue('Updated Branding');
+
+    // Click Save
+    await page.getByRole('button', { name: /save/i }).click();
+
+    // Verify success notification
+    await expect(page.getByText('The branding was saved.')).toBeVisible();
+  });
+
+  test('can delete a branding with confirmation', async ({ page }) => {
+    await page.goto('/brandings');
+    await page.getByRole('cell', { name: 'Ruter Flex' }).click();
+    await expect(page).toHaveURL(/\/brandings\/edit\//);
+
+    // Click Delete
+    await page.getByRole('button', { name: /delete/i }).click();
+
+    // Verify confirmation dialog
+    await expect(
+      page.getByText('Are you sure you want to delete this branding?'),
+    ).toBeVisible();
+
+    // Confirm deletion
+    await page.getByRole('button', { name: 'Yes' }).click();
+
+    // Verify redirect and success notification
+    await expect(page).toHaveURL(/\/brandings$/);
+    await expect(page.getByText('The branding was deleted.')).toBeVisible();
+  });
 });
