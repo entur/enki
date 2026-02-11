@@ -147,18 +147,17 @@ const NetworkEditor = () => {
               />
 
               <Autocomplete
-                value={
-                  authorities.find((v) => v.id === network.authorityRef)
+                value={(() => {
+                  const authority = authorities.find(
+                    (v) => v.id === network.authorityRef,
+                  );
+                  return authority
                     ? {
-                        value:
-                          authorities.find((v) => v.id === network.authorityRef)
-                            ?.id ?? '',
-                        label:
-                          authorities.find((v) => v.id === network.authorityRef)
-                            ?.name.value ?? '',
+                        value: authority.id,
+                        label: authority.name.value,
                       }
-                    : null
-                }
+                    : null;
+                })()}
                 onChange={(_event, newValue) =>
                   handleAuthoritySelectionChange(newValue?.value ?? '')
                 }
