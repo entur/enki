@@ -37,3 +37,8 @@ src/i18n/build
 # Ignore bootstrap config file
 public/bootstrap.json
 .env.development.local
+
+.playwright-mcp/
+playwright-report/
+test-results/
+test-report.xml
