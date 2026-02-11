@@ -5,7 +5,6 @@ import { ComponentClass, FunctionComponent, useMemo } from 'react';
 import { FlexibleAreasOnlyPassingTimesEditor } from './FlexibleAreasOnlyPassingTimesEditor/FlexibleAreasOnlyPassingTimesEditor';
 import { GenericPassingTimesEditor } from './GenericPassingTimesEditor/GenericPassingTimesEditor';
 import { MixedFlexiblePassingTimesEditor } from './MixedFlexiblePassingTimesEditor/MixedFlexiblePassingTimesEditor';
-import './styles.scss';
 
 export type PassingTimesEditorProps = {
   passingTimes: PassingTime[];

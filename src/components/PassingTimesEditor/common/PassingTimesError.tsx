@@ -1,4 +1,4 @@
-import { SmallAlertBox } from '@entur/alert';
+import { Alert } from '@mui/material';
 import { ErrorHandling, getErrorFeedback } from 'helpers/errorHandling';
 import { validateTimes } from 'validation';
 import PassingTime from 'model/PassingTime';
@@ -34,7 +34,7 @@ export const PassingTimesError = ({
   const error = usePassingTimesError({ passingTimes, spoilPristine });
 
   if (error.feedback) {
-    return <SmallAlertBox variant="error">{error.feedback}</SmallAlertBox>;
+    return <Alert severity="error">{error.feedback}</Alert>;
   } else {
     return null;
   }

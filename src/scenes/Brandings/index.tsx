@@ -1,14 +1,15 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
+import Add from '@mui/icons-material/Add';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
   Table,
   TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { Heading1 } from '@entur/typography';
+  Typography,
+} from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { deleteBrandingById, loadBrandings } from 'actions/brandings';
 import Loading from 'components/Loading';
 import { Branding } from 'model/Branding';
@@ -18,7 +19,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
-import './styles.scss';
 
 const Brandings = () => {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ const Brandings = () => {
     (id: string) => {
       navigate(`/brandings/edit/${id}`);
     },
-    [history],
+    [navigate],
   );
 
   const RenderTableRows = ({ brandingList }: { brandingList: Branding[] }) => (
@@ -54,12 +54,12 @@ const Brandings = () => {
           onClick={() => handleOnRowClick(b.id!)}
           title={b.description}
         >
-          <DataCell>{b.name}</DataCell>
-          <DataCell>{b.shortName}</DataCell>
-          <DataCell>{b.description}</DataCell>
-          <DataCell>{b.url}</DataCell>
-          <DataCell>{b.imageUrl}</DataCell>
-          <DataCell className="delete-row-cell">
+          <TableCell>{b.name}</TableCell>
+          <TableCell>{b.shortName}</TableCell>
+          <TableCell>{b.description}</TableCell>
+          <TableCell>{b.url}</TableCell>
+          <TableCell>{b.imageUrl}</TableCell>
+          <TableCell sx={{ width: 50, textAlign: 'right' }}>
             <DeleteButton
               onClick={() => {
                 setSelectedBranding(b);
@@ -68,60 +68,71 @@ const Brandings = () => {
               title=""
               thin
             />
-          </DataCell>
+          </TableCell>
         </TableRow>
       ))}
       {brandingList.length === 0 && (
-        <TableRow className="row-no-brandings disabled">
-          <DataCell colSpan={3}>
+        <TableRow>
+          <TableCell colSpan={3}>
             {formatMessage({ id: 'brandingsNoBrandingsFoundText' })}
-          </DataCell>
+          </TableCell>
         </TableRow>
       )}
     </>
   );
 
   return (
-    <div className="brandings">
-      <Heading1>{formatMessage({ id: 'brandingsHeaderText' })}</Heading1>
+    <Stack spacing={3} sx={{ flex: 1 }}>
+      <Typography variant="h1">
+        {formatMessage({ id: 'brandingsHeaderText' })}
+      </Typography>
 
-      <SecondaryButton className="create" as={Link} to="/brandings/create">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        component={Link}
+        to="/brandings/create"
+        sx={{ alignSelf: 'flex-start' }}
+      >
+        <Add />
         {formatMessage({ id: 'editorCreateBrandingHeaderText' })}
-      </SecondaryButton>
+      </Button>
 
       <Loading
         text={formatMessage({ id: 'brandingsLoadingBrandingsText' })}
         isLoading={!brandings || !organisations}
       >
         <>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <HeaderCell>
-                  {formatMessage({ id: 'brandingsNameTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage({ id: 'brandingsShortNameTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage({
-                    id: 'brandingsDescriptionTableHeaderLabel',
-                  })}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage({ id: 'brandingsUrlTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage({ id: 'brandingsImageUrlTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>{''}</HeaderCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <RenderTableRows brandingList={brandings!} />
-            </TableBody>
-          </Table>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    {formatMessage({ id: 'brandingsNameTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'brandingsShortNameTableHeaderLabel',
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'brandingsDescriptionTableHeaderLabel',
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'brandingsUrlTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'brandingsImageUrlTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>{''}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <RenderTableRows brandingList={brandings!} />
+              </TableBody>
+            </Table>
+          </TableContainer>
           {showDeleteDialogue && selectedBranding && (
             <ConfirmDialog
               isOpen
@@ -136,7 +147,8 @@ const Brandings = () => {
                 id: 'editorDeleteBrandingConfirmationDialogMessage',
               })}
               buttons={[
-                <SecondaryButton
+                <Button
+                  variant="outlined"
                   key="no"
                   onClick={() => {
                     setSelectedBranding(undefined);
@@ -144,8 +156,10 @@ const Brandings = () => {
                   }}
                 >
                   {formatMessage({ id: 'no' })}
-                </SecondaryButton>,
-                <SuccessButton
+                </Button>,
+                <Button
+                  variant="contained"
+                  color="error"
                   key="yes"
                   onClick={() => {
                     dispatch(deleteBrandingById(selectedBranding?.id, intl))
@@ -157,13 +171,13 @@ const Brandings = () => {
                   }}
                 >
                   {formatMessage({ id: 'yes' })}
-                </SuccessButton>,
+                </Button>,
               ]}
             />
           )}
         </>
       </Loading>
-    </div>
+    </Stack>
   );
 };
 

@@ -1,8 +1,7 @@
-import { Modal } from '@entur/modal';
+import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import DayType from 'model/DayType';
 import { useIntl } from 'react-intl';
 import { DayTypesModalContent } from './DayTypesModalContent';
-import './styles.scss';
 
 export const DayTypesModal = ({
   open,
@@ -17,17 +16,14 @@ export const DayTypesModal = ({
 }) => {
   const { formatMessage } = useIntl();
   return (
-    <Modal
-      open={open}
-      size="extraLarge"
-      title={formatMessage({ id: 'dayTypesModalTitle' })}
-      onDismiss={() => setOpen(false)}
-      className="copy-dialog"
-    >
-      <DayTypesModalContent
-        dayTypes={dayTypes}
-        refetchDayTypes={refetchDayTypes}
-      />
-    </Modal>
+    <Dialog open={open} onClose={() => setOpen(false)} maxWidth="lg" fullWidth>
+      <DialogTitle>{formatMessage({ id: 'dayTypesModalTitle' })}</DialogTitle>
+      <DialogContent>
+        <DayTypesModalContent
+          dayTypes={dayTypes}
+          refetchDayTypes={refetchDayTypes}
+        />
+      </DialogContent>
+    </Dialog>
   );
 };

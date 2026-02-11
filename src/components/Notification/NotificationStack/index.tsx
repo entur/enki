@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import { Notification, NotificationDuration } from 'reducers/notificationSlice';
 import StackedNotification from './StackedNotification';
 import ModalNote from './StackedNotification/Note/ModalNote';
@@ -18,7 +19,7 @@ const NotificationStack = (props: Props) => {
   const numberOfNotifications = notifications.length - 1;
 
   return (
-    <div>
+    <Box>
       {notifications.map((notification, index) => {
         const isLast = numberOfNotifications === index;
         const topOffset = getTopOffset(index);
@@ -48,7 +49,7 @@ const NotificationStack = (props: Props) => {
           />
         );
       })}
-    </div>
+    </Box>
   );
 };
 

@@ -247,6 +247,11 @@ export const messages: MessagesKey = {
   flexibleLineType_fixed: 'Pysäkkipohjainen',
   flexibleLineType_flexibleAreasOnly: 'Kutsualueet',
   flexibleLineType_mixedFlexible: 'Osin joustava',
+  flexibleLineType_corridorService: 'Käytäväpalvelu',
+  flexibleLineType_mainRouteWithFlexibleEnds: 'Pääreitin joustavat päät',
+  flexibleLineType_hailAndRideSections: 'Pysäytä ja nouse -osuudet',
+  flexibleLineType_fixedStopAreaWide: 'Kiinteä pysäkki laajalla alueella',
+  flexibleLineType_mixedFlexibleAndFixed: 'Yhdistetty joustava ja kiinteä',
   flexibleLineTypeDrawer_fixed:
     'Kiinteä ja aikataulutettu reitti, joka on tilattava etukäteen.',
   flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
@@ -259,6 +264,10 @@ export const messages: MessagesKey = {
     'Reitti on määritelty, mutta valituilla osuuksilla on mahdollista nousta tai poistua milloin tahansa.',
   flexibleLineTypeDrawer_mixedFlexible:
     'Osin joustava, määrättyjä pysäkkejä ja kutsualueita yhdistelevä liikenne, joka sisältää aikataulutettuja pysäkkejä.',
+  flexibleLineTypeDrawer_corridorService:
+    'Palvelu toimii määritellyllä käytävällä, jossa matkustajat voidaan ottaa kyytiin ja jättää reitin varrella.',
+  flexibleLineTypeDrawer_mixedFlexibleAndFixed:
+    'Yhdistelmä kiinteitä pysäkkejä ja joustavia alueita, joissa osa pysäkeistä on kiinteitä ja osa joustavia.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Lisää pysäkkiketju',
   journeyPatternsUnsavedChanges: 'Sinulla on tallentamattomia muutoksia.',
   journeyPatternsSaveAndContinue: 'Tallenna ja jatka',
@@ -791,4 +800,7 @@ export const messages: MessagesKey = {
   dayTypesDeleteDayTypeSuccessTitle: 'Poista kalenteri',
   dayTypesDeleteDayTypeSuccessMessage: 'Kalenteri poistettiin.',
   dayTypesDeleteDayTypeErrorTitle: 'Poista kalenteri',
+
+  // Duration
+  'duration.hours': '{hours} tuntia',
 };

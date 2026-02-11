@@ -1,9 +1,9 @@
 import { StopPlace } from '../../api';
-import { Button } from '@entur/button';
+import { Button } from '@mui/material';
 import { getMarkerIcon } from './markerIcons';
 import { Marker, Popup } from 'react-leaflet';
 import { useIntl } from 'react-intl';
-import { AddIcon } from '@entur/icons';
+import AddIcon from '@mui/icons-material/Add';
 import StopPlaceDetails from './StopPlaceDetails';
 import { memo, useRef } from 'react';
 import { usePopupOpeningOnFocus } from './hooks/usePopupOpeningOnFocus';
@@ -48,8 +48,7 @@ const StopPlaceMarker = memo(
                 markerRef.current.closePopup();
                 showQuays(true, stopPlace.id);
               }}
-              width="auto"
-              variant="primary"
+              variant="contained"
               size="small"
             >
               {formatMessage({ id: 'showQuays' })}
@@ -63,11 +62,10 @@ const StopPlaceMarker = memo(
                 // To avoid grey area on the map once the container gets bigger in the height:
                 window.dispatchEvent(new Event('resize'));
               }}
-              width="auto"
-              variant="primary"
+              variant="contained"
               size="small"
+              startIcon={<AddIcon />}
             >
-              <AddIcon />
               {formatMessage({ id: 'addToJourneyPattern' })}
             </Button>
           )}

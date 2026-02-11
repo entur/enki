@@ -2,7 +2,7 @@ import { EnkiIntlProvider } from './EnkiIntlProvider';
 import { useIntl } from 'react-intl';
 import { ConfigContext } from '../config/ConfigContext';
 import { Provider } from 'react-redux';
-import { act, cleanup, render, screen, waitFor } from '../utils/test-utils';
+import { cleanup, render, screen, waitFor } from '../utils/test-utils';
 import userEvent from '@testing-library/user-event';
 import { afterEach } from 'vitest';
 import { store } from '../utils/test-utils';
@@ -49,9 +49,9 @@ describe('EnkiIntlProvider', () => {
       'Loading providers and organisations...',
     );
 
-    act(() => {
-      userEvent.click(screen.getByTestId('TestComponentChangeLocaleButton'));
-    });
+    await userEvent.click(
+      screen.getByTestId('TestComponentChangeLocaleButton'),
+    );
 
     await waitFor(() => {
       expect(screen.getByTestId('TestComponentHeader')).toHaveTextContent(

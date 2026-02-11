@@ -1,7 +1,6 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import BookingArrangementEditor from 'components/BookingArrangementEditor';
-import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
-import ConfirmDialog from 'components/ConfirmDialog';
+import { Box } from '@mui/material';
+import { DeleteStopPointDialog } from '../common/DeleteStopPointDialog';
+import { StopPointBookingArrangement } from '../common/StopPointBookingArrangement';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'validation';
@@ -59,9 +58,15 @@ export const GenericStopPointEditor = ({
   }, []);
 
   return (
-    <div className="stop-point">
-      <div className="stop-point-element">
-        <div className="stop-point-key-info stop-point-key-info--general">
+    <Box sx={{ borderBottom: 2, borderColor: 'divider', pb: 2 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          mt: 3,
+        }}
+      >
+        <Box sx={{ minWidth: 'fit-content', display: 'flex' }}>
           <StopPointOrder
             order={order}
             isLast={isLast}
@@ -70,8 +75,16 @@ export const GenericStopPointEditor = ({
               swapStopPoints as (pos1: number, pos2: number) => void
             }
           />
-        </div>
-        <div className="stop-point-info">
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            flexGrow: 1,
+            mx: 2,
+          }}
+        >
           <QuayRefField
             initialQuayRef={stopPoint.quayRef}
             errorFeedback={getErrorFeedback(
@@ -98,73 +111,52 @@ export const GenericStopPointEditor = ({
             onChange={onBoardingTypeChange}
             error={boardingError}
           />
-        </div>
+        </Box>
 
-        <ComponentToggle<SandboxFeatures, StopPointButtonGroupProps>
-          feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
-          renderFallback={() => (
-            <DeleteButton
-              thin={true}
-              disabled={!canDelete}
-              onClick={() => {
-                onDeleteDialogOpen(true);
-              }}
-              title={formatMessage({ id: 'editorDeleteButtonText' })}
-            />
-          )}
-          componentProps={{
-            stopPoint,
-            onDeleteDialogOpen,
-            flexibleLineType,
-            onFocusedQuayIdUpdate,
-            canDelete,
+        <Box
+          sx={{
+            flexShrink: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
           }}
-        />
-
-        <ConfirmDialog
-          isOpen={isDeleteDialogOpen}
-          title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
-          message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
-          buttons={[
-            <SecondaryButton
-              key="no"
-              onClick={() => setDeleteDialogOpen(false)}
-            >
-              {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton key="yes" onClick={onDelete}>
-              {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
-          ]}
-          onDismiss={() => setDeleteDialogOpen(false)}
-        />
-      </div>
-
-      {flexibleLineType && (
-        <div>
-          <BookingArrangementEditor
-            trim
-            bookingArrangement={stopPoint.bookingArrangement}
-            spoilPristine={spoilPristine}
-            bookingInfoAttachment={{
-              type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
-              name: stopPoint.flexibleStopPlace?.name! || stopPoint.quayRef!,
-            }}
-            onChange={(bookingArrangement) => {
-              onChange({
-                ...stopPoint,
-                bookingArrangement,
-              });
-            }}
-            onRemove={() => {
-              onChange({
-                ...stopPoint,
-                bookingArrangement: null,
-              });
+        >
+          <ComponentToggle<SandboxFeatures, StopPointButtonGroupProps>
+            feature={'JourneyPatternStopPointMap/StopPointButtonGroup'}
+            renderFallback={() => (
+              <DeleteButton
+                thin={true}
+                disabled={!canDelete}
+                onClick={() => {
+                  onDeleteDialogOpen(true);
+                }}
+                title={formatMessage({ id: 'editorDeleteButtonText' })}
+              />
+            )}
+            componentProps={{
+              stopPoint,
+              onDeleteDialogOpen,
+              flexibleLineType,
+              onFocusedQuayIdUpdate,
+              canDelete,
             }}
           />
-        </div>
+        </Box>
+
+        <DeleteStopPointDialog
+          isOpen={isDeleteDialogOpen}
+          onClose={() => setDeleteDialogOpen(false)}
+          onConfirm={onDelete!}
+        />
+      </Box>
+
+      {flexibleLineType && (
+        <StopPointBookingArrangement
+          stopPoint={stopPoint}
+          spoilPristine={spoilPristine}
+          onChange={onChange}
+        />
       )}
-    </div>
+    </Box>
   );
 };

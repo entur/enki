@@ -1,14 +1,15 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
+import Add from '@mui/icons-material/Add';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
   Table,
   TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { Heading1 } from '@entur/typography';
+  Typography,
+} from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { deleteNetworkById, loadNetworks } from 'actions/networks';
 import Loading from 'components/Loading';
 import { Network } from 'model/Network';
@@ -19,7 +20,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import DeleteButton from '../../components/DeleteButton/DeleteButton';
-import './styles.scss';
 
 const Networks = () => {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const Networks = () => {
     (id: string) => {
       navigate(`/networks/edit/${id}`);
     },
-    [history],
+    [navigate],
   );
 
   const RenderTableRows = ({
@@ -61,13 +61,13 @@ const Networks = () => {
           onClick={() => handleOnRowClick(n.id!)}
           title={n.description}
         >
-          <DataCell>{n.name}</DataCell>
-          <DataCell>{n.privateCode}</DataCell>
-          <DataCell>
+          <TableCell>{n.name}</TableCell>
+          <TableCell>{n.privateCode}</TableCell>
+          <TableCell>
             {organisationList.find((o) => o.id === n.authorityRef)?.name
               ?.value ?? '-'}
-          </DataCell>
-          <DataCell className="delete-row-cell">
+          </TableCell>
+          <TableCell sx={{ width: 50, textAlign: 'right' }}>
             <DeleteButton
               onClick={() => {
                 setSelectedNetwork(n);
@@ -76,55 +76,66 @@ const Networks = () => {
               title=""
               thin
             />
-          </DataCell>
+          </TableCell>
         </TableRow>
       ))}
       {networkList.length === 0 && (
-        <TableRow className="row-no-networks disabled">
-          <DataCell colSpan={3}>
+        <TableRow>
+          <TableCell colSpan={3}>
             {formatMessage({ id: 'networksNoNetworksFoundText' })}
-          </DataCell>
+          </TableCell>
         </TableRow>
       )}
     </>
   );
 
   return (
-    <div className="networks">
-      <Heading1>{formatMessage({ id: 'networksHeaderText' })}</Heading1>
+    <Stack spacing={3} sx={{ flex: 1 }}>
+      <Typography variant="h1">
+        {formatMessage({ id: 'networksHeaderText' })}
+      </Typography>
 
-      <SecondaryButton className="create" as={Link} to="/networks/create">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        component={Link}
+        to="/networks/create"
+        sx={{ alignSelf: 'flex-start' }}
+      >
+        <Add />
         {formatMessage({ id: 'editorCreateNetworkHeaderText' })}
-      </SecondaryButton>
+      </Button>
 
       <Loading
         text={formatMessage({ id: 'networksLoadingNetworksText' })}
         isLoading={!networks || !organisations}
       >
         <>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <HeaderCell>
-                  {formatMessage({ id: 'networksNameTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage({ id: 'networksPrivateCodeTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage({ id: 'networksAuthorityTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>{''}</HeaderCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <RenderTableRows
-                networkList={networks!}
-                organisationList={organisations!}
-              />
-            </TableBody>
-          </Table>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    {formatMessage({ id: 'networksNameTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'networksPrivateCodeTableHeaderLabel',
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'networksAuthorityTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>{''}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <RenderTableRows
+                  networkList={networks!}
+                  organisationList={organisations!}
+                />
+              </TableBody>
+            </Table>
+          </TableContainer>
           {showDeleteDialogue && selectedNetwork && (
             <ConfirmDialog
               isOpen
@@ -139,7 +150,8 @@ const Networks = () => {
                 id: 'editorDeleteNetworkConfirmationDialogMessage',
               })}
               buttons={[
-                <SecondaryButton
+                <Button
+                  variant="outlined"
                   key="no"
                   onClick={() => {
                     setSelectedNetwork(undefined);
@@ -147,8 +159,10 @@ const Networks = () => {
                   }}
                 >
                   {formatMessage({ id: 'no' })}
-                </SecondaryButton>,
-                <SuccessButton
+                </Button>,
+                <Button
+                  variant="contained"
+                  color="error"
                   key="yes"
                   onClick={() => {
                     dispatch(deleteNetworkById(selectedNetwork?.id, intl))
@@ -160,13 +174,13 @@ const Networks = () => {
                   }}
                 >
                   {formatMessage({ id: 'yes' })}
-                </SuccessButton>,
+                </Button>,
               ]}
             />
           )}
         </>
       </Loading>
-    </div>
+    </Stack>
   );
 };
 

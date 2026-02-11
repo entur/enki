@@ -1,16 +1,20 @@
-import { ButtonGroup, PrimaryButton, SecondaryButton } from '@entur/button';
-import { Checkbox, TextField } from '@entur/form';
-import { SearchIcon } from '@entur/icons';
-import { Modal } from '@entur/modal';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  InputAdornment,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { StrongText, SubParagraph } from '@entur/typography';
+  TextField,
+  Typography,
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import ServiceJourney from 'model/ServiceJourney';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -65,96 +69,109 @@ export default (props: Props) => {
   };
 
   return (
-    <Modal
-      open={open}
-      size="extraLarge"
-      title={formatMessage({ id: 'bulkDeleteDialogTitle' })}
-      onDismiss={dismiss}
-    >
-      <TextField
-        label={formatMessage({ id: 'bulkDeleteDialogFilterSearchLabel' })}
-        style={{ width: '15rem' }}
-        prepend={<SearchIcon inline />}
-        value={filterSearch}
-        placeholder=""
-        onChange={(e: any) => setFilterSearch(e.target.value)}
-      />
-      <Table spacing="small" style={{ marginTop: '1rem' }}>
-        <TableHead>
-          <HeaderCell padding="checkbox">
-            <Checkbox
-              name="all"
-              checked={
-                selectedIds.length > 0 && selectedIds.length < data.length
-                  ? 'indeterminate'
-                  : selectedIds.length > 0
-              }
-              onChange={() =>
-                selectedIds.length > 0
-                  ? setSelectedIds([])
-                  : setSelectedIds(data.map((sj) => sj.id!))
-              }
-            />
-          </HeaderCell>
-          <HeaderCell>
-            {formatMessage({ id: 'bulkDeleteDialogNameHeader' })}
-          </HeaderCell>
-          <HeaderCell>
-            {formatMessage({ id: 'bulkDeleteDialogDepartureHeader' })}
-          </HeaderCell>
-          <HeaderCell>
-            {formatMessage({ id: 'bulkDeleteDialogDepartureDayOffsetHeader' })}
-          </HeaderCell>
-          <HeaderCell>
-            {formatMessage({ id: 'bulkDeleteDialogValidityHeader' })}
-          </HeaderCell>
-        </TableHead>
-        <TableBody>
-          {data.map((sj, index) => (
-            <TableRow key={index}>
-              <DataCell>
+    <Dialog open={open} onClose={dismiss} maxWidth="lg" fullWidth>
+      <DialogTitle>
+        {formatMessage({ id: 'bulkDeleteDialogTitle' })}
+      </DialogTitle>
+      <DialogContent>
+        <TextField
+          label={formatMessage({ id: 'bulkDeleteDialogFilterSearchLabel' })}
+          sx={{ width: '15rem' }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            },
+          }}
+          value={filterSearch}
+          placeholder=""
+          onChange={(e: any) => setFilterSearch(e.target.value)}
+          variant="outlined"
+          size="small"
+        />
+        <Table size="small" sx={{ mt: 2 }}>
+          <TableHead>
+            <TableRow>
+              <TableCell padding="checkbox">
                 <Checkbox
-                  name={sj.name}
-                  checked={selectedIds.includes(sj.id!)}
+                  indeterminate={
+                    selectedIds.length > 0 && selectedIds.length < data.length
+                  }
+                  checked={selectedIds.length > 0}
                   onChange={() =>
-                    selectedIds.includes(sj.id!) ? remove(sj.id!) : add(sj.id!)
+                    selectedIds.length > 0
+                      ? setSelectedIds([])
+                      : setSelectedIds(data.map((sj) => sj.id!))
                   }
                 />
-              </DataCell>
-              <DataCell>{sj.name}</DataCell>
-              <DataCell>{sj.passingTimes[0].departureTime}</DataCell>
-              <DataCell>{sj.passingTimes[0].departureDayOffset}</DataCell>
-              <DataCell>
-                {sj.dayTypes?.map((dt) => (
-                  <SubParagraph>
-                    <StrongText>{dt.daysOfWeek.join(' ')}: </StrongText>
-                    {dt.dayTypeAssignments.map((dta, index) => (
-                      <span key={index}>
-                        {dta.operatingPeriod.fromDate} - {' '}
-                        {dta.operatingPeriod.toDate}
-                      </span>
-                    ))}
-                  </SubParagraph>
-                ))}
-              </DataCell>
+              </TableCell>
+              <TableCell>
+                {formatMessage({ id: 'bulkDeleteDialogNameHeader' })}
+              </TableCell>
+              <TableCell>
+                {formatMessage({ id: 'bulkDeleteDialogDepartureHeader' })}
+              </TableCell>
+              <TableCell>
+                {formatMessage({
+                  id: 'bulkDeleteDialogDepartureDayOffsetHeader',
+                })}
+              </TableCell>
+              <TableCell>
+                {formatMessage({ id: 'bulkDeleteDialogValidityHeader' })}
+              </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      <ButtonGroup style={{ marginTop: '1rem' }}>
-        <SecondaryButton onClick={() => dismiss()}>
+          </TableHead>
+          <TableBody>
+            {data.map((sj, index) => (
+              <TableRow key={index}>
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    checked={selectedIds.includes(sj.id!)}
+                    onChange={() =>
+                      selectedIds.includes(sj.id!)
+                        ? remove(sj.id!)
+                        : add(sj.id!)
+                    }
+                  />
+                </TableCell>
+                <TableCell>{sj.name}</TableCell>
+                <TableCell>{sj.passingTimes[0].departureTime}</TableCell>
+                <TableCell>{sj.passingTimes[0].departureDayOffset}</TableCell>
+                <TableCell>
+                  {sj.dayTypes?.map((dt) => (
+                    <Typography variant="body2" key={dt.daysOfWeek.join()}>
+                      <strong>{dt.daysOfWeek.join(' ')}: </strong>
+                      {dt.dayTypeAssignments.map((dta, index) => (
+                        <span key={index}>
+                          {dta.operatingPeriod.fromDate} -{' '}
+                          {dta.operatingPeriod.toDate}
+                        </span>
+                      ))}
+                    </Typography>
+                  ))}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="outlined" onClick={() => dismiss()}>
           {formatMessage({ id: 'bulkDeleteDialogCancelButtonLabel' })}
-        </SecondaryButton>
-        <PrimaryButton
+        </Button>
+        <Button
+          variant="contained"
           disabled={selectedIds.length === 0}
           onClick={() =>
             onConfirm(selectedIds, serviceJourneys, journeyPatternIndex)
           }
         >
           {formatMessage({ id: 'bulkDeleteDialogConfirmButtonLabel' })}
-        </PrimaryButton>
-      </ButtonGroup>
-    </Modal>
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };

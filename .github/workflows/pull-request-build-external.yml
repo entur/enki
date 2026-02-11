@@ -33,4 +33,8 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run test -- run --coverage --reporter=default
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run E2E tests
+        run: npm run test:e2e
       - run: npm run build

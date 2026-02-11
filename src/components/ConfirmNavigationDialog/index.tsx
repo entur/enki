@@ -1,4 +1,4 @@
-import { PrimaryButton, SecondaryButton } from '@entur/button';
+import { Button } from '@mui/material';
 import { setSavedChanges } from 'actions/editor';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { useNavigate } from 'react-router-dom';
@@ -29,18 +29,19 @@ const NavigateConfirmBox = (props: NavigateConfirmProps) => {
       title={props.title}
       message={props.description}
       buttons={[
-        <SecondaryButton
+        <Button
           key={1}
+          variant="outlined"
           onClick={() => {
             props.hideDialog();
             RedirectHandler();
           }}
         >
           {props.confirmText}
-        </SecondaryButton>,
-        <PrimaryButton key={2} onClick={() => props.hideDialog()}>
+        </Button>,
+        <Button key={2} variant="contained" onClick={() => props.hideDialog()}>
           {props.cancelText}
-        </PrimaryButton>,
+        </Button>,
       ]}
       onDismiss={() => props.hideDialog()}
     />

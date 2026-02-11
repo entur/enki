@@ -1,16 +1,14 @@
-import { Dropdown } from '@entur/dropdown';
-import BookingArrangementEditor from 'components/BookingArrangementEditor';
-import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
-import { mapToItems } from 'helpers/dropdown';
+import { Box } from '@mui/material';
+import { StopPointBookingArrangement } from '../common/StopPointBookingArrangement';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateFlexibleAreasOnlyStopPoint } from 'validation';
 import usePristine from 'hooks/usePristine';
 import { useIntl } from 'react-intl';
-import { useAppSelector } from '../../../store/hooks';
 import {
   FrontTextTextField,
   useOnFrontTextChange,
 } from '../common/FrontTextTextField';
+import { FlexibleStopPlaceSelector } from '../common/FlexibleStopPlaceSelector';
 import { StopPointEditorProps } from '../common/StopPointEditorProps';
 
 export const FlexibleAreasOnlyStopPointEditor = ({
@@ -21,89 +19,57 @@ export const FlexibleAreasOnlyStopPointEditor = ({
   const { stopPlace: stopPlaceError, frontText: frontTextError } =
     validateFlexibleAreasOnlyStopPoint(stopPoint);
   const { formatMessage } = useIntl();
-  const flexibleStopPlaces = useAppSelector(
-    (state) => state.flexibleStopPlaces,
-  );
   const onFrontTextChange = useOnFrontTextChange(stopPoint, onChange);
-  const stopPlacePristine = usePristine(
-    stopPoint.flexibleStopPlaceRef,
-    spoilPristine,
-  );
   const frontTextPristine = usePristine(
     stopPoint.destinationDisplay?.frontText,
     spoilPristine,
   );
 
   return (
-    <div className="stop-point">
-      <div className="stop-point-element">
-        <div className="stop-point-info">
-          <Dropdown<string>
-            className="stop-point-dropdown"
-            selectedItem={
-              mapToItems(
-                flexibleStopPlaces?.filter(
-                  (item) => item.id === stopPoint.flexibleStopPlaceRef,
-                ) || [],
-              ).pop() || null
-            }
-            placeholder={formatMessage({ id: 'defaultOption' })}
-            items={mapToItems(flexibleStopPlaces || [])}
-            clearable
-            labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-            label={formatMessage({ id: 'stopPlace' })}
-            onChange={(e) =>
-              onChange({
-                ...stopPoint,
-                flexibleStopPlaceRef: e?.value,
-              })
-            }
-            noMatchesText={formatMessage({
-              id: 'dropdownNoMatchesText',
-            })}
-            {...getErrorFeedback(
-              stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
-              !stopPlaceError,
-              stopPlacePristine,
-            )}
+    <Box sx={{ borderBottom: 2, borderColor: 'divider' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          mt: 3,
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 2,
+            maxWidth: '50rem',
+            flexBasis: '100%',
+          }}
+        >
+          <FlexibleStopPlaceSelector
+            stopPoint={stopPoint}
+            spoilPristine={spoilPristine}
+            stopPlaceError={stopPlaceError}
+            onChange={onChange}
           />
 
-          <FrontTextTextField
-            value={stopPoint.destinationDisplay?.frontText}
-            onChange={onFrontTextChange}
-            spoilPristine={spoilPristine}
-            isFirst={true}
-            {...getErrorFeedback(
-              frontTextError ? formatMessage({ id: frontTextError }) : '',
-              !frontTextError,
-              frontTextPristine,
-            )}
-          />
-        </div>
-      </div>
-      <div>
-        <BookingArrangementEditor
-          trim
-          bookingArrangement={stopPoint.bookingArrangement}
-          spoilPristine={spoilPristine}
-          bookingInfoAttachment={{
-            type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
-            name: stopPoint.flexibleStopPlace?.name! || stopPoint.quayRef!,
-          }}
-          onChange={(bookingArrangement) => {
-            onChange({
-              ...stopPoint,
-              bookingArrangement,
-            });
-          }}
-          onRemove={() => {
-            onChange({
-              ...stopPoint,
-              bookingArrangement: null,
-            });
-          }}
-        />
-      </div>
-    </div>
+          <Box sx={{ flex: 2, minWidth: 200 }}>
+            <FrontTextTextField
+              value={stopPoint.destinationDisplay?.frontText}
+              onChange={onFrontTextChange}
+              spoilPristine={spoilPristine}
+              isFirst={true}
+              {...getErrorFeedback(
+                frontTextError ? formatMessage({ id: frontTextError }) : '',
+                !frontTextError,
+                frontTextPristine,
+              )}
+            />
+          </Box>
+        </Box>
+      </Box>
+      <StopPointBookingArrangement
+        stopPoint={stopPoint}
+        spoilPristine={spoilPristine}
+        onChange={onChange}
+      />
+    </Box>
   );
 };

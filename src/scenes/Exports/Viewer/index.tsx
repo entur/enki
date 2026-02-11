@@ -1,6 +1,5 @@
-import { PrimaryButton } from '@entur/button';
-import { DownloadIcon } from '@entur/icons';
-import { Label } from '@entur/typography';
+import Download from '@mui/icons-material/Download';
+import { Button, Typography } from '@mui/material';
 import { loadExportById } from 'actions/exports';
 import { useAuth } from 'auth/auth';
 import Loading from 'components/Loading';
@@ -15,7 +14,7 @@ import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { getIconForSeverity, getIconForStatus } from '../icons/icons';
-import './styles.scss';
+import Box from '@mui/material/Box';
 
 const ExportItem = ({
   label,
@@ -24,10 +23,12 @@ const ExportItem = ({
   label: string;
   value: string | ReactElement;
 }) => (
-  <div className="export-item">
-    <Label>{label}</Label>
-    <div className="value">{value}</div>
-  </div>
+  <Box sx={{ minWidth: '10rem', mr: 1.5, mb: 1.5 }}>
+    <Typography variant="body2" component="label">
+      {label}
+    </Typography>
+    <Box>{value}</Box>
+  </Box>
 );
 
 const getCurrentExportSelector = (params: Params) => (state: GlobalState) =>
@@ -67,18 +68,16 @@ const ExportsViewer = () => {
 
   return (
     <Page
-      className="export-viewer"
       title={formatMessage({ id: 'viewerHeader' })}
       backButtonTitle={formatMessage({ id: 'navBarExportsMenuItemLabel' })}
     >
       <Loading
         text={formatMessage({ id: 'viewerLoadingText' })}
         isLoading={!theExport}
-        className=""
       >
         {() => (
-          <div className="export-view">
-            <div className="export-items">
+          <Box>
+            <Box sx={{ my: 2 }}>
               <ExportItem
                 label={formatMessage({ id: 'viewerNameLabel' })}
                 value={theExport!.name}
@@ -118,19 +117,24 @@ const ExportsViewer = () => {
               <ExportItem
                 label={formatMessage({ id: 'viewerStatusLabel' })}
                 value={
-                  <div className="export-status">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     {getIconForStatus(theExport!.exportStatus)}
                     {theExport!.exportStatus &&
                       formatMessage({ id: theExport!.exportStatus })}
-                  </div>
+                  </Box>
                 }
               />
-            </div>
+            </Box>
 
             {theExport!.exportStatus === EXPORT_STATUS.SUCCESS && (
-              <div className="export-download">
-                <Label>{formatMessage({ id: 'viewerDownloadLabel' })}</Label>
-                <PrimaryButton
+              <Box sx={{ display: 'flex', flexDirection: 'column', mt: 2 }}>
+                <Typography variant="body2" component="label">
+                  {formatMessage({ id: 'viewerDownloadLabel' })}
+                </Typography>
+                <Button
+                  variant="contained"
+                  sx={{ alignSelf: 'flex-start' }}
+                  startIcon={<Download />}
                   onClick={async (event: React.MouseEvent<HTMLElement>) => {
                     event.stopPropagation();
                     download(
@@ -141,31 +145,37 @@ const ExportsViewer = () => {
                     );
                   }}
                 >
-                  <DownloadIcon />
                   {formatMessage({ id: 'viewerDownloadLinkText' })}
-                </PrimaryButton>
-              </div>
+                </Button>
+              </Box>
             )}
             {(theExport?.messages ?? []).length > 0 && (
               <>
-                <Label>{formatMessage({ id: 'viewerMessagesLabel' })}</Label>
-                <div className="value messages">
+                <Typography variant="body2" component="label">
+                  {formatMessage({ id: 'viewerMessagesLabel' })}
+                </Typography>
+                <Box>
                   {(theExport?.messages ?? []).map((m, i) => (
-                    <div key={i} className="message">
-                      <div className="icon">
+                    <Box
+                      key={`${m.severity}-${m.message}-${i}`}
+                      sx={{ display: 'flex', alignItems: 'center' }}
+                    >
+                      <Box
+                        sx={{ display: 'flex', alignItems: 'center', mr: 1 }}
+                      >
                         {getIconForSeverity(m.severity)}
-                      </div>
-                      <div>
+                      </Box>
+                      <Box>
                         {m?.message && isOfUttuMessage(m.message)
                           ? formatMessage({ id: uttuMessages[m.message] })
                           : m.message}
-                      </div>
-                    </div>
+                      </Box>
+                    </Box>
                   ))}
-                </div>
+                </Box>
               </>
             )}
-          </div>
+          </Box>
         )}
       </Loading>
     </Page>

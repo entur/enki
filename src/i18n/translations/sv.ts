@@ -247,6 +247,11 @@ export const messages: MessagesKey = {
   flexibleLineType_fixed: 'Fast',
   flexibleLineType_flexibleAreasOnly: 'Endast flexibla områden',
   flexibleLineType_mixedFlexible: 'Blandat',
+  flexibleLineType_corridorService: 'Korridortjänst',
+  flexibleLineType_mainRouteWithFlexibleEnds: 'Huvudrutt med flexibla ändar',
+  flexibleLineType_hailAndRideSections: 'Vinka-och-åk-sträckor',
+  flexibleLineType_fixedStopAreaWide: 'Fast stopp med områdestäckning',
+  flexibleLineType_mixedFlexibleAndFixed: 'Blandat flexibelt och fast',
   flexibleLineTypeDrawer_fixed:
     'Fast linje med fasta tider, men måste förhandsbeställas för att den ska köras.',
   flexibleLineTypeDrawer_mainRouteWithFlexibleEnds:
@@ -259,6 +264,10 @@ export const messages: MessagesKey = {
     'Rutten är definerad och har några fasta hållplatser. Längs delar av rutten kan av- och påstigning ske vart som helst där kunden kommunicerar med chauffören.',
   flexibleLineTypeDrawer_mixedFlexible:
     'En blandning av förhandsdefinerade hållplatser och flexibla områden, med tidsrum och fasta tider för ombord- och avstigning.',
+  flexibleLineTypeDrawer_corridorService:
+    'Tjänsten opererar längs en definierad korridor, där passagerare kan hämtas och släppas av längs rutten.',
+  flexibleLineTypeDrawer_mixedFlexibleAndFixed:
+    'En kombination av fasta hållplatser och flexibla områden, där vissa stopp är fasta och andra är flexibla.',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Lägg till journey pattern',
   journeyPatternsUnsavedChanges: 'Du har ändringar som inte är sparade.',
   journeyPatternsSaveAndContinue: 'Spara och gå vidare',
@@ -785,4 +794,7 @@ export const messages: MessagesKey = {
   dayTypesDeleteDayTypeSuccessTitle: 'Ta bort kalender',
   dayTypesDeleteDayTypeSuccessMessage: 'Kalendern togs bort.',
   dayTypesDeleteDayTypeErrorTitle: 'Ta bort kalender',
+
+  // Duration
+  'duration.hours': '{hours} timmar',
 };

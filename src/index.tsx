@@ -1,9 +1,11 @@
 import { Apollo } from 'api';
 import { ConfigContext, useConfig } from 'config/ConfigContext';
 import { fetchConfig } from 'config/fetchConfig';
+import CssBaseline from '@mui/material/CssBaseline';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import ReactDOM from 'react-dom/client';
 import App from 'scenes/App';
-
 import { AuthProvider, useAuth } from 'auth/auth';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { store } from 'store/store';
@@ -18,6 +20,7 @@ import {
   ComponentToggleProvider,
   ToggleFlags,
 } from '@entur/react-component-toggle';
+import { EnkiThemeProvider } from './EnkiThemeProvider';
 
 const AuthenticatedApp = () => {
   const dispatch = useAppDispatch();
@@ -54,7 +57,15 @@ const EnkiApp = () => {
   );
 };
 
+async function enableMocking() {
+  if (import.meta.env.DEV && import.meta.env.VITE_ENABLE_MOCKS === 'true') {
+    const { worker } = await import('./mocks/browser');
+    return worker.start({ onUnhandledRequest: 'warn' });
+  }
+}
+
 const renderIndex = async () => {
+  await enableMocking();
   const container = document.getElementById('root');
   const root = ReactDOM.createRoot(container!);
   const config = await fetchConfig();
@@ -76,17 +87,21 @@ const renderIndex = async () => {
           }
         }}
       >
-        <Provider store={store}>
-          <ComponentToggle feature={`${config.extPath}/CustomStyle`} />
-          <ComponentToggle
-            feature={`${config.extPath}/CustomIntlProvider`}
-            renderFallback={() => <EnkiApp />}
-          >
-            <AuthProvider>
-              <AuthenticatedApp />
-            </AuthProvider>
-          </ComponentToggle>
-        </Provider>
+        <EnkiThemeProvider>
+          <CssBaseline />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Provider store={store}>
+              <ComponentToggle
+                feature={`${config.extPath}/CustomIntlProvider`}
+                renderFallback={() => <EnkiApp />}
+              >
+                <AuthProvider>
+                  <AuthenticatedApp />
+                </AuthProvider>
+              </ComponentToggle>
+            </Provider>
+          </LocalizationProvider>
+        </EnkiThemeProvider>
       </ComponentToggleProvider>
     </ConfigContext.Provider>,
   );

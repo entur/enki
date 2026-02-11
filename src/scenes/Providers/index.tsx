@@ -1,21 +1,21 @@
-import { SecondaryButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
+import Add from '@mui/icons-material/Add';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
   Table,
   TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { Heading1, Paragraph } from '@entur/typography';
+  Typography,
+} from '@mui/material';
+import Stack from '@mui/material/Stack';
 import Loading from 'components/Loading';
 import Provider, { sortProviders } from 'model/Provider';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import './styles.scss';
 import { getProviders } from '../../actions/providers';
 import { useConfig } from 'config/ConfigContext';
 
@@ -40,7 +40,7 @@ const Providers = () => {
 
   const handleMigrateClick = useCallback(
     (providerId: string, event: React.MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation(); // Prevent row click
+      event.stopPropagation();
       navigate(`/providers/${providerId}/migrate-line`);
     },
     [navigate],
@@ -69,21 +69,23 @@ const Providers = () => {
           onClick={() => handleOnRowClick(n.code!)}
           title={n.name}
         >
-          <DataCell>{n.name}</DataCell>
-          <DataCell>{n.code}</DataCell>
-          <DataCell>{n.codespace?.xmlns}</DataCell>
-          <DataCell>{n.codespace?.xmlnsUrl}</DataCell>
+          <TableCell>{n.name}</TableCell>
+          <TableCell>{n.code}</TableCell>
+          <TableCell>{n.codespace?.xmlns}</TableCell>
+          <TableCell>{n.codespace?.xmlnsUrl}</TableCell>
           {isLineMigrationEnabled && (
-            <DataCell className="action-cell">
-              <SecondaryButton
+            <TableCell sx={{ width: 150, minWidth: 150 }}>
+              <Button
+                variant="outlined"
                 size="small"
+                sx={{ whiteSpace: 'nowrap' }}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
                   handleMigrateClick(n.code!, event)
                 }
               >
                 Migrate Lines
-              </SecondaryButton>
-            </DataCell>
+              </Button>
+            </TableCell>
           )}
         </TableRow>
       ))}
@@ -91,51 +93,62 @@ const Providers = () => {
   );
 
   return (
-    <div className="providers">
-      <Heading1>{formatMessage({ id: 'providersHeaderText' })}</Heading1>
+    <Stack spacing={3} sx={{ flex: 1 }}>
+      <Typography variant="h1">
+        {formatMessage({ id: 'providersHeaderText' })}
+      </Typography>
       {providers.length === 0 && (
-        <Paragraph>
+        <Typography variant="body1">
           {formatMessage({ id: 'noProvidersDescriptionText' })}
-        </Paragraph>
+        </Typography>
       )}
 
-      <SecondaryButton className="create" as={Link} to="/providers/create">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        component={Link}
+        to="/providers/create"
+        sx={{ alignSelf: 'flex-start' }}
+      >
+        <Add />
         {formatMessage({ id: 'createProviderHeaderText' })}
-      </SecondaryButton>
+      </Button>
 
       <Loading
         text={formatMessage({ id: 'providersLoading' })}
         isLoading={!providers}
       >
         <>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <HeaderCell>
-                  {formatMessage({ id: 'providersNameTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage({ id: 'providersCodeTableHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage({ id: 'providersCodespaceXmlnsHeaderLabel' })}
-                </HeaderCell>
-                <HeaderCell>
-                  {formatMessage({
-                    id: 'providersCodespaceXmlnsUrlHeaderLabel',
-                  })}
-                </HeaderCell>
-                {isLineMigrationEnabled && <HeaderCell>Actions</HeaderCell>}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <RenderTableRows providerList={providers} />
-            </TableBody>
-          </Table>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    {formatMessage({ id: 'providersNameTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({ id: 'providersCodeTableHeaderLabel' })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'providersCodespaceXmlnsHeaderLabel',
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {formatMessage({
+                      id: 'providersCodespaceXmlnsUrlHeaderLabel',
+                    })}
+                  </TableCell>
+                  {isLineMigrationEnabled && <TableCell>Actions</TableCell>}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <RenderTableRows providerList={providers} />
+              </TableBody>
+            </Table>
+          </TableContainer>
         </>
       </Loading>
-    </div>
+    </Stack>
   );
 };
 
