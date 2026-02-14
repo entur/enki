@@ -37,6 +37,7 @@ export default (props: Props) => {
     id: 'linesPrivateCodeTableHeaderLabel',
   });
   const operatorTableHeader = formatMessage({ id: 'linesOperatorTableHeader' });
+  const brandingTableHeader = formatMessage({ id: 'linesBrandingTableHeader' });
   const noLinesFoundText = formatMessage({ id: 'linesNoLinesFoundText' });
   const loadingText = formatMessage({ id: 'linesLoadingText' });
 
@@ -60,6 +61,7 @@ export default (props: Props) => {
           <HeaderCell>{publicCodeTableHeader}</HeaderCell>
           <HeaderCell>{privateCodeTableHeader}</HeaderCell>
           <HeaderCell>{operatorTableHeader}</HeaderCell>
+          <HeaderCell>{brandingTableHeader}</HeaderCell>
           <HeaderCell>{''}</HeaderCell>
         </TableRow>
       </TableHead>
@@ -71,7 +73,7 @@ export default (props: Props) => {
 const renderNoLinesFound = (noLinesFoundText: string) => {
   return (
     <TableRow className="row-no-lines disabled">
-      <DataCell colSpan={3}>{noLinesFoundText}</DataCell>
+      <DataCell colSpan={6}>{noLinesFoundText}</DataCell>
     </TableRow>
   );
 };
@@ -79,7 +81,7 @@ const renderNoLinesFound = (noLinesFoundText: string) => {
 const renderLoading = (loadingText: string) => {
   return (
     <TableRow className="disabled">
-      <DataCell colSpan={3}>
+      <DataCell colSpan={6}>
         <Loading className="" text={loadingText} children={null} />
       </DataCell>
     </TableRow>
@@ -98,6 +100,7 @@ const renderTableRows = (props: Props) => {
         {organisations?.find((op) => op.id === line.operatorRef)?.name?.value ??
           '-'}
       </DataCell>
+      <DataCell>{line.branding?.name ?? '-'}</DataCell>
       <DataCell className="delete-row-cell">
         <DeleteButton onClick={() => onDeleteRowClick(line)} title="" thin />
       </DataCell>
