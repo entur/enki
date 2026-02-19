@@ -298,9 +298,9 @@ export const messages: MessagesKey = {
   newServiceJourneyModalJourneyPatternLabel: 'Välj journey pattern',
   serviceJourneysInfo:
     'Du kan skapa olika Service Journeys för olika öppettider. T. ex. en för vardagar och en för helg.',
-  dayTypesEditorSelectLabel: 'Välj day types för den här turen',
-  dayTypesModalTitle: 'Redigera day types',
-  dayTypesModalAddNewButtonLabel: 'Lägg till day type',
+  dayTypesEditorSelectLabel: 'Välj kalendrar för den här turen',
+  dayTypesModalTitle: 'Redigera kalendrar',
+  dayTypesModalAddNewButtonLabel: 'Lägg till kalender',
   dayTypesModalIdHeader: 'NeTEx ID',
   dayTypesModalNameHeader: 'Namn',
   dayTypesModalUsedByHeader: 'Används',
@@ -312,7 +312,7 @@ export const messages: MessagesKey = {
   weekdaysError: 'Du måste fylla i tillgänglighet.',
   dayTypeEditorNameFieldLabel: 'Namn',
   dayTypeEditorNameFieldLabelTooltip:
-    'För identifikation av day type-entiteter i Nplan',
+    'För identifikation av kalender-entiteter i Nplan',
   dayTypeEditorDateAvailability: 'Giltighet för tjänsten',
   dayTypeEditorDateTooltip: 'Lägg till datum för när tjänsten är tillgänglig',
   dayTypeEditorAddDayTypeAssignment: 'Lägg till datum',
@@ -322,9 +322,9 @@ export const messages: MessagesKey = {
   dayTypeEditorFromDate: 'Från och med *',
   dayTypeEditorToDate: 'Till och med *',
   dayTypeEditorToDateValidation: 'inte före från-datum',
-  dayTypesEditButton: 'Redigera day types',
-  deleteDayTypesErrorTitle: 'Fel uppstod under borttagning av day types',
-  deleteSelectedDayTypesButtonLabel: 'Ta bort markerade day types',
+  dayTypesEditButton: 'Redigera kalendrar',
+  deleteDayTypesErrorTitle: 'Fel uppstod under borttagning av kalendrar',
+  deleteSelectedDayTypesButtonLabel: 'Ta bort markerade kalendrar',
   passingTimesEditorError: 'Du måste ha giltiga passeringstider.',
   editorAddStopPoint: 'Lägg till hållplats',
   editorAddServiceJourneys: 'Lägg till flera Service Journeys',
@@ -548,6 +548,11 @@ export const messages: MessagesKey = {
   editorDescriptionFormLabelText: 'Beskrivning',
   editorEditHeader: 'Redigera flexibel hållplats',
   errorCoordinates: 'Koordinaterna är inte i rätt format',
+  errorCoordinatesEmpty: 'Inga koordinater angivna',
+  errorCoordinatesSelfIntersecting:
+    'Polygonkanterna korsar varandra. Justera formen så att inga kanter korsar.',
+  errorCoordinatesSelfIntersectingCount:
+    'Polygonen har {count} självkorsning(ar)',
   editorLoadingDependenciesText: 'Läser in avhengigheter',
   editorLoadingStopPlaceText: 'Läser in hållplatsen',
   editorNameFormLabelText: 'Namn *',
@@ -745,4 +750,39 @@ export const messages: MessagesKey = {
   copyInstance: 'en kopia',
   journeyPatternDuplicateNameValidationError:
     'Journey pattern måste ha ett unikt namn',
+
+  // Day Types - Navigation
+  navBarDayTypesMenuItemLabel: 'Kalendrar',
+
+  // Day Types - List page
+  dayTypesHeaderText: 'Kalendrar',
+  dayTypesCreateDayTypeButtonLabel: 'Skapa kalender',
+  dayTypesLoadingText: 'Laddar kalendrar...',
+  dayTypesNameTableHeader: 'Namn',
+  dayTypesWeekdaysTableHeader: 'Veckodagar',
+  dayTypesInUseTableHeader: 'Används',
+  dayTypesNoDayTypesFoundText: 'Inga kalendrar hittades.',
+  dayTypesDeleteConfirmDialogTitle: 'Ta bort kalender',
+  dayTypesDeleteConfirmDialogMessage:
+    'Är du säker på att du vill ta bort denna kalender?',
+
+  // Day Types - Editor page
+  dayTypesCreateDayTypeHeader: 'Skapa kalender',
+  dayTypesEditDayTypeHeader: 'Redigera kalender',
+  dayTypesEditorDescription:
+    'Kalendrar definierar när tjänster är tillgängliga. Välj veckodagar och datumintervall för tjänstens tillgänglighet.',
+  dayTypesSavingDayTypeText: 'Sparar kalender...',
+  dayTypesDeletingDayTypeText: 'Tar bort kalender...',
+  dayTypesLoadingDayTypeText: 'Laddar kalender...',
+  dayType: 'kalender',
+
+  // Day Types - Notifications
+  dayTypesLoadDayTypesErrorTitle: 'Ladda kalendrar',
+  dayTypesLoadDayTypeErrorTitle: 'Ladda kalender',
+  dayTypesSaveDayTypeSuccessTitle: 'Spara kalender',
+  dayTypesSaveDayTypeSuccessMessage: 'Kalendern sparades.',
+  dayTypesSaveDayTypeErrorTitle: 'Spara kalender',
+  dayTypesDeleteDayTypeSuccessTitle: 'Ta bort kalender',
+  dayTypesDeleteDayTypeSuccessMessage: 'Kalendern togs bort.',
+  dayTypesDeleteDayTypeErrorTitle: 'Ta bort kalender',
 };

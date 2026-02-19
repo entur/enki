@@ -51,6 +51,7 @@ jobs:
       - run: npm run build
         env:
           REACT_APP_VERSION: preview_${{ github.sha }}
+          PRELOAD_LOCALE: nb
       - name: Copy favicon
         run: cp .github/environments/npl-d.ico build/favicon.ico
       - name: Copy bootstrap config

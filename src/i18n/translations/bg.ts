@@ -16,7 +16,7 @@ export const messages = {
     'Добавете поне две фиксирани спирки или гъвкави зони.',
   stopPlaceAddAreaButtonLabel: 'Добави зона',
   dayTypeEditorAddDayTypeAssignment: 'Добави дата',
-  dayTypesModalAddNewButtonLabel: 'Добави тип ден',
+  dayTypesModalAddNewButtonLabel: 'Добави календар',
   journeyPatternsAddJourneyPatternIconButtonLabel: 'Добави маршрутна схема',
   addNoticeTooltip: 'Добави бележка',
   editorAddStopPoint: 'Добави спирка',
@@ -156,7 +156,7 @@ export const messages = {
   copyJourneyPatternDialogCancelButtonText: 'Отказ',
   copyServiceJourneyDialogIntervalLabel: 'Избери интервал',
   navBarDataProvider: 'Избери доставчик на данни',
-  dayTypesEditorSelectLabel: 'Изберете тип ден за услугата',
+  dayTypesEditorSelectLabel: 'Изберете календар за услугата',
   flexibleStopPlaceRefAndQuayRefBothValues:
     'Изберете спирка или платформа, но не и двете.',
   newServiceJourneyModalJourneyPatternLabel: 'Избери маршрутна схема',
@@ -215,7 +215,7 @@ export const messages = {
   editorDeleteNetworkConfirmationDialogTitle: 'Изтрий мрежа',
   editorDeleteNetworkConfirmDialogTitle: 'Изтрий мрежа',
   deleteNoticeTooltip: 'Изтрий бележка',
-  deleteSelectedDayTypesButtonLabel: 'Изтрий избраните типове дни',
+  deleteSelectedDayTypesButtonLabel: 'Изтрий избраните календари',
   serviceJourneyDeleteTitle: 'Изтрий услуга',
   flexibleStopPlacesDeleteStopPlaceErrorHeader: 'Изтрий спирка',
   flexibleStopPlacesDeleteStopPlaceSuccessHeader: 'Изтрий спирка',
@@ -256,8 +256,8 @@ export const messages = {
   newServiceJourneyModalPlaceholder: 'Напр. "планински маршрут уикенд"',
   editorEdit: 'Редактирай',
   editorEditBrandingHeaderText: 'Редактирай брандинг',
-  dayTypesModalTitle: 'Редактирай типове дни',
-  dayTypesEditButton: 'Редактирай типове дни',
+  dayTypesModalTitle: 'Редактирай календари',
+  dayTypesEditButton: 'Редактирай календари',
   editorEditHeader: 'Редактирай спирка по желание',
   editorEditLineHeader: 'Редактирай линия',
   editorEditNetworkHeaderText: 'Редактирай мрежа',
@@ -278,7 +278,7 @@ export const messages = {
   passingTimesInfo: 'Въведете времена на преминаване за спирките.',
   uttuErrorENTITY_IS_REFERENCED:
     'Обектът не може да бъде изтрит, защото данните се използват за други събития {noOfLines, number} other {noOfLines, plural, one {entity has a reference} other {entities have references}} to it.',
-  deleteDayTypesErrorTitle: 'Грешка при изтриване на типове дни',
+  deleteDayTypesErrorTitle: 'Грешка при изтриване на календари',
   saveProviderError: 'Грешка при запазване на превозвач',
   viewerHeader: 'Извличане',
   exportCreatorDescription:
@@ -635,6 +635,11 @@ export const messages = {
   telecabin: 'Кабинков лифт',
   bookingMethodText: 'Текст',
   errorCoordinates: 'Координатите са в невалиден формат',
+  errorCoordinatesEmpty: 'Не са предоставени координати',
+  errorCoordinatesSelfIntersecting:
+    'Ръбовете на полигона се пресичат. Моля, коригирайте формата, така че ръбовете да не се пресичат.',
+  errorCoordinatesSelfIntersectingCount:
+    'Полигонът има {count} самопресичане(я)',
   requiredInputMarker: 'Полетата, маркирани с *, са задължителни',
   uttuErrorCONSTRAINT_VIOLATION_JOURNEY_PATTERN_UNIQUE_NAME:
     'Маршрутната схема трябва да има уникално име',
@@ -661,7 +666,7 @@ export const messages = {
   viewerToDateLabel: 'Крайна дата',
   exportCreatorToDateFormLabel: 'Крайна дата *',
   dayTypeEditorNameFieldLabelTooltip:
-    'За идентифициране на типовете дни в Nplan',
+    'За идентифициране на календарите в Nplan',
   bookingLabel:
     'За улесняване на резервацията препоръчваме да попълните телефон, URL и бележка.',
   validateFormErrorExportFromDateIsAfterToDate:
@@ -740,4 +745,39 @@ export const messages = {
   passingTimesEditorError: 'Необходими са валидни времена на преминаване.',
   noProvidersDescriptionText:
     'За да инсталирате Nplan се изисква поне един превозвач',
+
+  // Day Types - Navigation
+  navBarDayTypesMenuItemLabel: 'Календари',
+
+  // Day Types - List page
+  dayTypesHeaderText: 'Календари',
+  dayTypesCreateDayTypeButtonLabel: 'Създай календар',
+  dayTypesLoadingText: 'Зареждане на календари...',
+  dayTypesNameTableHeader: 'Име',
+  dayTypesWeekdaysTableHeader: 'Дни от седмицата',
+  dayTypesInUseTableHeader: 'В употреба',
+  dayTypesNoDayTypesFoundText: 'Не са намерени календари.',
+  dayTypesDeleteConfirmDialogTitle: 'Изтрий календар',
+  dayTypesDeleteConfirmDialogMessage:
+    'Сигурни ли сте, че искате да изтриете този календар?',
+
+  // Day Types - Editor page
+  dayTypesCreateDayTypeHeader: 'Създай календар',
+  dayTypesEditDayTypeHeader: 'Редактирай календар',
+  dayTypesEditorDescription:
+    'Календарите определят кога услугите са достъпни. Изберете дни от седмицата и периоди за наличност на услугата.',
+  dayTypesSavingDayTypeText: 'Запазване на календар...',
+  dayTypesDeletingDayTypeText: 'Изтриване на календар...',
+  dayTypesLoadingDayTypeText: 'Зареждане на календар...',
+  dayType: 'календар',
+
+  // Day Types - Notifications
+  dayTypesLoadDayTypesErrorTitle: 'Зареждане на календари',
+  dayTypesLoadDayTypeErrorTitle: 'Зареждане на календар',
+  dayTypesSaveDayTypeSuccessTitle: 'Запазване на календар',
+  dayTypesSaveDayTypeSuccessMessage: 'Календарът беше запазен.',
+  dayTypesSaveDayTypeErrorTitle: 'Запазване на календар',
+  dayTypesDeleteDayTypeSuccessTitle: 'Изтриване на календар',
+  dayTypesDeleteDayTypeSuccessMessage: 'Календарът беше изтрит.',
+  dayTypesDeleteDayTypeErrorTitle: 'Изтриване на календар',
 };

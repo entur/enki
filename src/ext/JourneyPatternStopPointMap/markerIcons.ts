@@ -6,21 +6,36 @@ export const getMarkerIcon = (
   isStopPlace: boolean,
   isSelected: boolean,
 ) => {
+  const selectedClass = isSelected ? 'selected-quay-marker' : '';
   switch (transportMode) {
     case VEHICLE_MODE.BUS:
-      return isStopPlace ? busStopPlaceIcon : busQuayIcon(isSelected);
+      return isStopPlace
+        ? busStopPlaceIcon
+        : busQuayIcon(isSelected, selectedClass);
     case VEHICLE_MODE.RAIL:
-      return isStopPlace ? railStopPlaceIcon : railQuayIcon(isSelected);
+      return isStopPlace
+        ? railStopPlaceIcon
+        : railQuayIcon(isSelected, selectedClass);
     case VEHICLE_MODE.WATER:
-      return isStopPlace ? ferryStopPlaceIcon : ferryQuayIcon(isSelected);
+      return isStopPlace
+        ? ferryStopPlaceIcon
+        : ferryQuayIcon(isSelected, selectedClass);
     case VEHICLE_MODE.AIR:
-      return isStopPlace ? airplaneStopPlaceIcon : defaultQuayIcon(isSelected);
+      return isStopPlace
+        ? airplaneStopPlaceIcon
+        : defaultQuayIcon(isSelected, selectedClass);
     case VEHICLE_MODE.TRAM:
-      return isStopPlace ? tramStopPlaceIcon : tramQuayIcon(isSelected);
+      return isStopPlace
+        ? tramStopPlaceIcon
+        : tramQuayIcon(isSelected, selectedClass);
     case VEHICLE_MODE.METRO:
-      return isStopPlace ? subwayStopPlaceIcon : defaultQuayIcon(isSelected);
+      return isStopPlace
+        ? subwayStopPlaceIcon
+        : defaultQuayIcon(isSelected, selectedClass);
     default:
-      return isStopPlace ? defaultStopPlaceIcon : defaultQuayIcon(isSelected);
+      return isStopPlace
+        ? defaultStopPlaceIcon
+        : defaultQuayIcon(isSelected, selectedClass);
   }
 };
 
@@ -51,7 +66,10 @@ export const defaultStopPlaceIcon = L.divIcon({
   iconAnchor: [11, 31],
 });
 
-export const defaultQuayIcon = (isSelected: boolean) => {
+export const defaultQuayIcon = (
+  isSelected: boolean,
+  extraClassName: string = '',
+) => {
   return L.divIcon({
     html: `
       <svg width="34" height="34" viewBox="0 0 32 32"  xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +77,7 @@ export const defaultQuayIcon = (isSelected: boolean) => {
         <circle cx="16" cy="13" r="11" fill=${getQuayIconColor(isSelected)} />
       </svg>
       `,
-    className: 'svg-icon',
+    className: `svg-icon ${extraClassName}`.trim(),
     iconSize: [24, 40],
     iconAnchor: [17, 31],
   });
@@ -77,7 +95,10 @@ export const busStopPlaceIcon = L.divIcon({
   iconAnchor: [11, 31],
 });
 
-export const busQuayIcon = (isSelected: boolean) => {
+export const busQuayIcon = (
+  isSelected: boolean,
+  extraClassName: string = '',
+) => {
   return L.divIcon({
     html: `
       <svg width="34" height="34" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +108,7 @@ export const busQuayIcon = (isSelected: boolean) => {
         <path d="M20.68 7.02C19.08 6.82 17.62 6.72 16.02 6.72C14.36 6.72 12.92 6.8 11.34 7.02C10.86 7.08 10.58 7.36 10.58 7.78V17.14C10.58 17.44 10.8 17.64 11 17.7L11.6 17.8V19.06C11.6 19.2 11.72 19.3 11.88 19.3H12.84C12.96 19.3 13.08 19.2 13.08 19.06V17.94C13.86 18.04 14.92 18.08 15.98 18.08C17.06 18.08 18.16 18.04 18.92 17.94V19.06C18.92 19.2 19.06 19.3 19.18 19.3H20.14C20.3 19.3 20.42 19.2 20.42 19.06V17.8L21.02 17.7C21.24 17.64 21.44 17.46 21.44 17.14V7.78C21.44 7.36 21.16 7.08 20.68 7.02ZM20.58 14.26C20.58 14.52 20.48 14.66 20.16 14.7C19.02 14.9 17.52 15.1 16.06 15.1C14.52 15.1 13.06 14.92 11.9 14.66C11.58 14.6 11.46 14.48 11.46 14.22V8.38C11.46 8.12 11.58 7.94 11.9 7.94L20.16 7.98C20.48 7.98 20.58 8.16 20.58 8.42V14.26ZM12.32 16.84C12.02 16.82 11.78 16.58 11.78 16.3C11.8 16.04 12.04 15.8 12.32 15.8C12.6 15.8 12.84 16.04 12.84 16.3C12.84 16.6 12.6 16.84 12.32 16.84ZM19.62 16.84C19.34 16.82 19.1 16.58 19.1 16.3C19.12 16.04 19.36 15.8 19.62 15.8C19.9 15.8 20.14 16.04 20.14 16.3C20.14 16.6 19.9 16.84 19.62 16.84Z" fill="white"/>
       </svg>
       `,
-    className: 'svg-icon',
+    className: `svg-icon ${extraClassName}`.trim(),
     iconSize: [24, 40],
     iconAnchor: [17, 31],
   });
@@ -105,7 +126,10 @@ export const railStopPlaceIcon = L.divIcon({
   iconAnchor: [11, 31],
 });
 
-export const railQuayIcon = (isSelected: boolean) => {
+export const railQuayIcon = (
+  isSelected: boolean,
+  extraClassName: string = '',
+) => {
   return L.divIcon({
     html: `
       <svg width="34" height="34" viewBox="0 0 32 32"  xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +139,7 @@ export const railQuayIcon = (isSelected: boolean) => {
         <path d="M20.6518 14.8921V9.71037C20.6518 8.59727 19.7493 6.6008 18.6362 6.6008H13.3644C12.2513 6.6008 11.3488 8.59727 11.3488 9.71037V14.8921C11.3488 16.0052 12.2513 17.4547 13.3644 17.4547H13.4807L12.9845 18.0474H12.1232L11.5763 18.631H12.4946L11.85 19.4009H13.037L13.6816 18.631H18.3179L18.9625 19.4009H20.1495L19.5049 18.631H20.4232L19.8763 18.0474H19.0161L18.5199 17.4547H18.6362C19.7493 17.4552 20.6518 16.0057 20.6518 14.8921ZM19.2831 15.5186C18.9551 15.5186 18.6893 15.2527 18.6893 14.9254C18.6893 14.5974 18.9551 14.3321 19.2831 14.3321C19.611 14.3321 19.8763 14.598 19.8763 14.9254C19.8763 15.2533 19.6104 15.5186 19.2831 15.5186ZM14.2765 7.84034H17.723V8.42398H14.2765V7.84034ZM12.717 15.5186C12.3891 15.5186 12.1238 15.2527 12.1238 14.9254C12.1238 14.5974 12.3896 14.3321 12.717 14.3321C13.0449 14.3321 13.3102 14.598 13.3102 14.9254C13.3102 15.2533 13.0449 15.5186 12.717 15.5186ZM12.3529 13.0491C12.2175 13.0124 12.1232 12.8899 12.1232 12.7494V9.64208C12.1232 9.47105 12.2621 9.33219 12.4331 9.33219H19.5658C19.7369 9.33219 19.8757 9.47105 19.8757 9.64208V12.75C19.8757 12.8905 19.782 13.013 19.646 13.0497C19.1058 13.1947 17.6727 13.3127 15.9992 13.3127C14.3256 13.3127 12.8931 13.1942 12.3529 13.0491ZM17.8291 18.0479H14.1704L14.6666 17.4552H17.3324L17.8291 18.0479Z" fill="white"/>
       </svg>
       `,
-    className: 'svg-icon',
+    className: `svg-icon ${extraClassName}`.trim(),
     iconSize: [24, 40],
     iconAnchor: [17, 31],
   });
@@ -132,7 +156,10 @@ export const ferryStopPlaceIcon = L.divIcon({
   iconAnchor: [12, 40],
 });
 
-export const ferryQuayIcon = (isSelected: boolean) => {
+export const ferryQuayIcon = (
+  isSelected: boolean,
+  extraClassName: string = '',
+) => {
   return L.divIcon({
     html: `
       <svg viewBox="0 0 16 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -160,7 +187,7 @@ export const ferryQuayIcon = (isSelected: boolean) => {
     </g>
 </svg>
       `,
-    className: 'svg-icon',
+    className: `svg-icon ${extraClassName}`.trim(),
     iconSize: [24, 40],
     iconAnchor: [12, 31],
   });
@@ -177,7 +204,10 @@ export const tramStopPlaceIcon = L.divIcon({
   iconAnchor: [12, 40],
 });
 
-export const tramQuayIcon = (isSelected: boolean) => {
+export const tramQuayIcon = (
+  isSelected: boolean,
+  extraClassName: string = '',
+) => {
   return L.divIcon({
     html: `
       <svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -187,7 +217,7 @@ export const tramQuayIcon = (isSelected: boolean) => {
         <path d="M18.18 19.2V18.6L17.44 18.7V19.2H14.58V18.7L13.84 18.6V19.2H13.24C13.02 19.2 12.88 19.38 12.88 19.56C12.88 19.82 13.02 19.98 13.24 19.98H18.78C18.96 19.98 19.16 19.82 19.16 19.56C19.16 19.38 18.96 19.2 18.78 19.2H18.18ZM19.18 8.41999C19.08 8.17999 18.94 8.05999 18.7 7.99999C17.84 7.77999 17.22 7.69999 16.42 7.67999V6.97999H17.9C18.1 6.97999 18.26 6.79999 18.26 6.59999C18.26 6.35999 18.1 6.17999 17.9 6.17999H14.14C13.9 6.17999 13.72 6.35999 13.72 6.59999C13.72 6.79999 13.9 6.97999 14.14 6.97999H15.6V7.67999C14.78 7.69999 14.12 7.77999 13.32 7.99999C13.04 8.07999 12.9 8.17999 12.78 8.41999L12.44 9.23999C12.34 9.47999 12.34 9.81999 12.34 10.08V17.28C12.34 17.64 12.58 17.86 12.94 17.92C14.02 18.14 14.96 18.22 16 18.22C17 18.22 17.96 18.14 19.08 17.92C19.42 17.86 19.68 17.64 19.68 17.28V10.08C19.68 9.81999 19.62 9.47999 19.52 9.23999L19.18 8.41999ZM13.52 16.56C13.26 16.56 13.06 16.38 13.06 16.12C13.06 15.84 13.26 15.62 13.52 15.62C13.8 15.62 14 15.84 14 16.12C14 16.38 13.8 16.56 13.52 16.56ZM13.08 9.91999H18.9V14.78C18.14 15 17.06 15.14 16 15.14C14.96 15.14 13.88 14.98 13.08 14.78V9.91999ZM18.54 16.56C18.28 16.56 18.1 16.38 18.1 16.12C18.1 15.84 18.28 15.62 18.54 15.62C18.82 15.62 19.04 15.84 19.04 16.12C19.04 16.38 18.82 16.56 18.54 16.56Z" fill="white"/>
       </svg>
       `,
-    className: 'svg-icon',
+    className: `svg-icon ${extraClassName}`.trim(),
     iconSize: [24, 40],
     iconAnchor: [17, 31],
   });

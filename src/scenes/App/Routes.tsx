@@ -25,7 +25,11 @@ import { NoSelectedProvider } from './NoSelectedProvider/NoSelectedProvider';
 import { useAppSelector } from '../../store/hooks';
 import Brandings from '../Brandings';
 import BrandingEditor from '../Brandings/Editor';
+import DayTypesOverview from '../DayTypes';
+import DayTypeEditor from '../DayTypes/Editor';
 import { useConfig } from 'config/ConfigContext';
+
+export const SELECT_PROVIDER_PATH = '/select-provider';
 
 const Routes = () => {
   const noProviders = useNoProviders();
@@ -41,10 +45,10 @@ const Routes = () => {
 
   if (
     noSelectedProvider &&
-    location.pathname !== '/select-provider' &&
+    location.pathname !== SELECT_PROVIDER_PATH &&
     !location.pathname.startsWith('/providers')
   ) {
-    return <Navigate to="/select-provider" replace />;
+    return <Navigate to={SELECT_PROVIDER_PATH} replace />;
   }
 
   return (
@@ -54,6 +58,9 @@ const Routes = () => {
         <Route path="/brandings" element={<Brandings />} />
         <Route path="/brandings/create" element={<BrandingEditor />} />
         <Route path="/brandings/edit/:id" element={<BrandingEditor />} />
+        <Route path="/day-types" element={<DayTypesOverview />} />
+        <Route path="/day-types/create" element={<DayTypeEditor />} />
+        <Route path="/day-types/edit/:id" element={<DayTypeEditor />} />
         <Route path="/networks" element={<NetworksOverview />} />
         <Route path="/networks/create" element={<NetworkEditor />} />
         <Route path="/networks/edit/:id" element={<NetworkEditor />} />
@@ -81,7 +88,7 @@ const Routes = () => {
             element={<LineMigration />}
           />
         )}
-        <Route path="/select-provider" element={<NoSelectedProvider />} />
+        <Route path={SELECT_PROVIDER_PATH} element={<NoSelectedProvider />} />
       </ReactRoutes>
     </div>
   );
