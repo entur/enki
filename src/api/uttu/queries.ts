@@ -101,7 +101,8 @@ query getFlexibleLines {
     },
     branding {
       id
-      },
+      name
+    },
     journeyPatterns {
       pointsInSequence {
         flexibleStopPlace {
@@ -394,6 +395,10 @@ export const GET_LINES = gql`
       privateCode
       publicCode
       operatorRef
+      branding {
+        id
+        name
+      }
     }
   }
 `;

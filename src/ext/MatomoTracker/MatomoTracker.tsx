@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useConfig } from '../../config/ConfigContext';
 import { MatomoConfig } from './types';
 

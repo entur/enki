@@ -443,6 +443,7 @@ export const messages: MessagesKey = {
   linesNameTableHeaderLabel: 'Name',
   linesNoLinesFoundText: 'No lines found.',
   linesOperatorTableHeader: 'Operator',
+  linesBrandingTableHeader: 'Branding',
   linesPublicCodeTableHeaderLabel: 'Public code',
   linesPrivateCodeTableHeaderLabel: 'Private code',
   nameEmpty: 'Name is required.',

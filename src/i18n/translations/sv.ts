@@ -441,6 +441,7 @@ export const messages: MessagesKey = {
   linesNameTableHeaderLabel: 'Namn',
   linesNoLinesFoundText: 'Inga linjer hittades.',
   linesOperatorTableHeader: 'Operatör',
+  linesBrandingTableHeader: 'Varumärke',
   linesPublicCodeTableHeaderLabel: 'Offentlig kod',
   linesPrivateCodeTableHeaderLabel: 'Privat kod',
   nameEmpty: 'Namn måste fyllas i.',

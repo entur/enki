@@ -443,6 +443,7 @@ export const messages: MessagesKey = {
   linesNameTableHeaderLabel: 'Nimi',
   linesNoLinesFoundText: 'Ei linjoja löytynyt.',
   linesOperatorTableHeader: 'Operaattori',
+  linesBrandingTableHeader: 'Brändi',
   linesPublicCodeTableHeaderLabel: 'Julkinen tunnus',
   linesPrivateCodeTableHeaderLabel: 'Yksityinen tunnus',
   nameEmpty: 'Nimi vaaditaan.',
@@ -593,9 +594,9 @@ export const messages: MessagesKey = {
   passingTimesDepartureTime: 'Lähtöaika',
   passingTimesLatestArrivalTime: 'Loppu',
   passingTimesEarliestDepartureTime: 'Aloita',
-  passingTimesDayOffset: 'Päiväoffsetti',
+  passingTimesDayOffset: 'Päiväsiirtymä',
   passingTimesDayOffsetTooltip:
-    'Aseta päiväoffsetti, jos kulkuajat ovat päivän tai enemmän palvelun lähdön jälkeen',
+    'Aseta päiväsiirtymä, jos kulkuajat ovat päivän tai enemmän palvelun lähdön jälkeen',
   errorAllPassingTimesMustBeFilled:
     'Kaikkien ohitusaikojen on oltava asetettu.',
   errorDepartureAfterArrival: 'Lähtöaika ei voi olla ennen saapumisaikaa.',
@@ -701,7 +702,7 @@ export const messages: MessagesKey = {
   bulkDeleteDialogFilterSearchLabel: 'Suodata nimen perusteella',
   bulkDeleteDialogNameHeader: 'Nimi',
   bulkDeleteDialogDepartureHeader: 'Lähtö',
-  bulkDeleteDialogDepartureDayOffsetHeader: 'Päiväoffsetti',
+  bulkDeleteDialogDepartureDayOffsetHeader: 'Päiväsiirtymä',
   bulkDeleteDialogValidityHeader: 'Voimassaolo',
   bulkDeleteDialogCancelButtonLabel: 'Peruuta',
   bulkDeleteDialogConfirmButtonLabel: 'Poista',

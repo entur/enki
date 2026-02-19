@@ -36,6 +36,7 @@ export default (props: Props) => {
     id: 'linesPrivateCodeTableHeaderLabel',
   });
   const operatorTableHeader = formatMessage({ id: 'linesOperatorTableHeader' });
+  const brandingTableHeader = formatMessage({ id: 'linesBrandingTableHeader' });
   const noLinesFoundText = formatMessage({ id: 'linesNoLinesFoundText' });
   const loadingText = formatMessage({ id: 'linesLoadingText' });
 
@@ -60,6 +61,7 @@ export default (props: Props) => {
             <TableCell>{publicCodeTableHeader}</TableCell>
             <TableCell>{privateCodeTableHeader}</TableCell>
             <TableCell>{operatorTableHeader}</TableCell>
+            <TableCell>{brandingTableHeader}</TableCell>
             <TableCell>{''}</TableCell>
           </TableRow>
         </TableHead>
@@ -72,7 +74,7 @@ export default (props: Props) => {
 const renderNoLinesFound = (noLinesFoundText: string) => {
   return (
     <TableRow>
-      <TableCell colSpan={3}>{noLinesFoundText}</TableCell>
+      <TableCell colSpan={6}>{noLinesFoundText}</TableCell>
     </TableRow>
   );
 };
@@ -80,7 +82,7 @@ const renderNoLinesFound = (noLinesFoundText: string) => {
 const renderLoading = (loadingText: string) => {
   return (
     <TableRow>
-      <TableCell colSpan={3}>
+      <TableCell colSpan={6}>
         <Loading text={loadingText}>{null}</Loading>
       </TableCell>
     </TableRow>
@@ -99,6 +101,7 @@ const renderTableRows = (props: Props) => {
         {organisations?.find((op) => op.id === line.operatorRef)?.name?.value ??
           '-'}
       </TableCell>
+      <TableCell>{line.branding?.name ?? '-'}</TableCell>
       <TableCell sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <DeleteButton onClick={() => onDeleteRowClick(line)} title="" thin />
       </TableCell>

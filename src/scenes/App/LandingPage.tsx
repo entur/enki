@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../auth/auth';
 import AppBar from '@mui/material/AppBar';

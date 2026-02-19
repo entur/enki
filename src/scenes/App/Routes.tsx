@@ -29,6 +29,8 @@ import DayTypesOverview from '../DayTypes';
 import DayTypeEditor from '../DayTypes/Editor';
 import { useConfig } from 'config/ConfigContext';
 
+export const SELECT_PROVIDER_PATH = '/select-provider';
+
 const Routes = () => {
   const noProviders = useNoProviders();
   const noSelectedProvider = useNoSelectedProvider();
@@ -43,10 +45,10 @@ const Routes = () => {
 
   if (
     noSelectedProvider &&
-    location.pathname !== '/select-provider' &&
+    location.pathname !== SELECT_PROVIDER_PATH &&
     !location.pathname.startsWith('/providers')
   ) {
-    return <Navigate to="/select-provider" replace />;
+    return <Navigate to={SELECT_PROVIDER_PATH} replace />;
   }
 
   return (
@@ -86,7 +88,7 @@ const Routes = () => {
             element={<LineMigration />}
           />
         )}
-        <Route path="/select-provider" element={<NoSelectedProvider />} />
+        <Route path={SELECT_PROVIDER_PATH} element={<NoSelectedProvider />} />
       </ReactRoutes>
     </div>
   );

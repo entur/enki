@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import ReactDOM from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import App from 'scenes/App';
 import { AuthProvider, useAuth } from 'auth/auth';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
@@ -90,16 +91,18 @@ const renderIndex = async () => {
         <EnkiThemeProvider>
           <CssBaseline />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Provider store={store}>
-              <ComponentToggle
-                feature={`${config.extPath}/CustomIntlProvider`}
-                renderFallback={() => <EnkiApp />}
-              >
-                <AuthProvider>
-                  <AuthenticatedApp />
-                </AuthProvider>
-              </ComponentToggle>
-            </Provider>
+            <HelmetProvider>
+              <Provider store={store}>
+                <ComponentToggle
+                  feature={`${config.extPath}/CustomIntlProvider`}
+                  renderFallback={() => <EnkiApp />}
+                >
+                  <AuthProvider>
+                    <AuthenticatedApp />
+                  </AuthProvider>
+                </ComponentToggle>
+              </Provider>
+            </HelmetProvider>
           </LocalizationProvider>
         </EnkiThemeProvider>
       </ComponentToggleProvider>

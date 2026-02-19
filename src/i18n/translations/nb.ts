@@ -440,6 +440,7 @@ export const messages = {
   linesNameTableHeaderLabel: 'Navn',
   linesNoLinesFoundText: 'Ingen linjer ble funnet.',
   linesOperatorTableHeader: 'Operatør',
+  linesBrandingTableHeader: 'Merkevare',
   linesPublicCodeTableHeaderLabel: 'Publikumskode',
   linesPrivateCodeTableHeaderLabel: 'Privat kode',
   nameEmpty: 'Navn må fylles inn.',
