@@ -2,7 +2,7 @@ import stylesURL from './styles.scss?url';
 import { useIntl } from 'react-intl';
 import logo from './logo.png';
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 export const FintrafficLogo = () => {
   const { formatMessage } = useIntl();
