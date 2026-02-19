@@ -1,7 +1,6 @@
-import { TertiaryButton } from '@entur/button';
-import { DeleteIcon } from '@entur/icons';
+import Delete from '@mui/icons-material/Delete';
+import { Button } from '@mui/material';
 import React from 'react';
-import './DeleteButton.scss';
 
 type Props = {
   onClick: () => void;
@@ -11,17 +10,25 @@ type Props = {
 };
 
 const DeleteButton = (props: Props) => (
-  <TertiaryButton
+  <Button
     id="delete-button"
-    className={props.thin ? 'thin' : ''}
+    variant="text"
     onClick={(event: React.MouseEvent) => {
       props.onClick();
       event.stopPropagation();
     }}
     disabled={props.disabled}
+    startIcon={<Delete />}
+    sx={{
+      m: props.thin ? 0 : 'auto 0 auto auto',
+      px: 0.5,
+      minWidth: 'fit-content',
+      width: props.thin ? 'fit-content' : undefined,
+      whiteSpace: 'nowrap',
+    }}
   >
-    <DeleteIcon inline /> {props.title}
-  </TertiaryButton>
+    {props.title}
+  </Button>
 );
 
 export default DeleteButton;

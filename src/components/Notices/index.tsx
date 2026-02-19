@@ -1,17 +1,15 @@
-import { IconButton } from '@entur/button';
-import { TextArea } from '@entur/form';
-import { AddIcon, DeleteIcon } from '@entur/icons';
 import {
-  DataCell,
-  EditableCell,
-  Table,
-  TableBody,
-  TableRow,
-} from '@entur/table';
-import { Tooltip } from '@entur/tooltip';
-import { Heading4 } from '@entur/typography';
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Notice from 'model/Notice';
-import './styles.scss';
 import { FormatMessage } from 'i18n';
 type Props = {
   notices?: Notice[];
@@ -41,54 +39,44 @@ export default ({ notices = [], setNotices, formatMessage }: Props) => {
   };
 
   return (
-    <section className="notices">
-      <Heading4>{formatMessage({ id: 'noticesHeader' })}</Heading4>
-      <Table fixed>
-        <TableBody>
-          {notices?.map((notice, i) => (
-            <TableRow key={'' + i} hover className="notices-row">
-              <EditableCell className="notices-editable-cell">
-                <TextArea
-                  label=""
-                  onBlur={() => notice.text === '' && removeNotice(i)}
-                  className="notices-text-area"
-                  value={notice.text}
-                  onChange={(e: any) => updateNotice(i, e.target.value)}
-                />
-              </EditableCell>
-              <DataCell align="right">
-                <Tooltip
-                  placement="bottom"
-                  content={formatMessage({ id: 'deleteNoticeTooltip' })}
-                >
-                  <IconButton
-                    className="notices-icon-button"
-                    onClick={() => removeNotice(i)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              </DataCell>
-            </TableRow>
-          ))}
-          <TableRow hover onClick={() => addNotice()}>
-            <DataCell>{''}</DataCell>
-            <DataCell align="right">
-              <Tooltip
-                placement="bottom"
-                content={formatMessage({ id: 'addNoticeTooltip' })}
-              >
-                <IconButton
-                  className="notices-icon-button"
-                  onClick={() => addNotice()}
-                >
-                  <AddIcon />
-                </IconButton>
-              </Tooltip>
-            </DataCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </section>
+    <Box component="section" sx={{ mt: 4 }}>
+      <Typography variant="h4" sx={{ mb: 1 }}>
+        {formatMessage({ id: 'noticesHeader' })}
+      </Typography>
+      <Stack spacing={2}>
+        {notices?.map((notice, i) => (
+          <Box
+            key={'' + i}
+            sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}
+          >
+            <TextField
+              multiline
+              rows={2}
+              label=""
+              onBlur={() => notice.text === '' && removeNotice(i)}
+              value={notice.text}
+              onChange={(e: any) => updateNotice(i, e.target.value)}
+              fullWidth
+            />
+            <Tooltip
+              placement="bottom"
+              title={formatMessage({ id: 'deleteNoticeTooltip' })}
+            >
+              <IconButton onClick={() => removeNotice(i)}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        ))}
+        <Button
+          variant="text"
+          startIcon={<AddIcon />}
+          onClick={() => addNotice()}
+          sx={{ alignSelf: 'flex-start' }}
+        >
+          {formatMessage({ id: 'addNoticeTooltip' })}
+        </Button>
+      </Stack>
+    </Box>
   );
 };

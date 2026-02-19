@@ -1,7 +1,6 @@
-import cx from 'classnames';
+import { Box } from '@mui/material';
 import { Fragment, ReactElement } from 'react';
 import LoadingIcon from '../icons/Loading';
-import './styles.scss';
 
 type Props = {
   isLoading: boolean;
@@ -18,24 +17,49 @@ const OverlayLoader = ({
   children,
   seeThrough = true,
 }: Props) => {
-  const classNames = cx('overlay-loader', className);
-  const overlayClassNames = cx('overlay', { seeThrough });
   return (
-    <div className={classNames}>
+    <Box className={className} sx={{ position: 'relative' }}>
       {isLoading && (
         <Fragment>
-          <div className={overlayClassNames} />
-          <div className="loader">
-            <div className="spinner">
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              zIndex: 1001,
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'background.default',
+              opacity: seeThrough ? 0.9 : 1,
+            }}
+          />
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              zIndex: 1001,
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontSize: '18px',
+              fontWeight: 500,
+              maxHeight: '1000px',
+            }}
+          >
+            <Box>
               <LoadingIcon />
-            </div>
-            <div className="text">{text}</div>
-          </div>
+            </Box>
+            <Box sx={{ mt: '5px', fontSize: '17px', fontWeight: 500 }}>
+              {text}
+            </Box>
+          </Box>
         </Fragment>
       )}
 
       {children}
-    </div>
+    </Box>
   );
 };
 

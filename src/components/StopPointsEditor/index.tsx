@@ -4,7 +4,6 @@ import { ComponentClass, FunctionComponent, useMemo } from 'react';
 import { FlexibleAreasOnlyStopPointsEditor } from './FlexibleAreasOnly/FlexibleAreasOnlyStopPointsEditor';
 import { GenericStopPointsEditor } from './Generic/GenericStopPointsEditor';
 import { MixedFlexibleStopPointsEditor } from './MixedFlexible/MixedFlexibleStopPointsEditor';
-import './styles.scss';
 import { VEHICLE_MODE } from '../../model/enums';
 
 export type StopPointsEditorProps = {

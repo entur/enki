@@ -1,8 +1,7 @@
 import { StopPlace } from '../../../api';
-import { Heading5 } from '@entur/typography';
-import { PositionIcon } from '@entur/icons';
+import { IconButton, Typography } from '@mui/material';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 import React from 'react';
-import { TertiarySquareButton } from '@entur/button';
 import {
   FocusedMarker,
   JourneyPatternMarker,
@@ -33,11 +32,13 @@ const SearchResult = ({
       className={`map-search-result ${!isLast ? 'map-search-result--not-last' : ''}`}
     >
       <div style={{ marginRight: '1rem' }}>
-        <Heading5 className={'popup-title'}>{stopPlace.name.value}</Heading5>
+        <Typography variant="h5" className={'popup-title'}>
+          {stopPlace.name.value}
+        </Typography>
         <div className={'popup-id'}>{stopPlace.id}</div>
       </div>
 
-      <TertiarySquareButton
+      <IconButton
         onClick={() => {
           let focusedMarker: JourneyPatternMarker;
           const selectedQuayIds = getSelectedQuayIds(stopPlace);
@@ -63,8 +64,8 @@ const SearchResult = ({
           });
         }}
       >
-        <PositionIcon />
-      </TertiarySquareButton>
+        <MyLocationIcon />
+      </IconButton>
     </div>
   );
 };

@@ -1,13 +1,18 @@
 import './styles.scss';
-import { TextField } from '@entur/form';
-import { SearchIcon } from '@entur/icons';
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import debounce from '../../../components/StopPointsEditor/common/debounce';
 import { VEHICLE_MODE } from '../../../model/enums';
 import { useAppSelector } from '../../../store/hooks';
 import SearchResult from './SearchResult';
 import { StopPlace, UttuQuery } from '../../../api';
-import { Label } from '@entur/typography';
 import { useIntl } from 'react-intl';
 import { getStopPlacesState, sortStopPlaces } from '../helpers';
 import { FocusedMarker, JourneyPatternsStopPlacesState } from '../types';
@@ -96,16 +101,34 @@ const SearchPopover = memo(
     return (
       <div className={'search-popover'}>
         <TextField
-          label={''}
           className={'search-input'}
-          prepend={<SearchIcon inline />}
-          placeholder={formatMessage({ id: 'mapSearchPlaceholder' })}
-          clearable={true}
-          value={searchText}
-          onClear={() => {
-            setSearchText('');
-            onSearchedStopPlacesFetched(getStopPlacesState(undefined));
+          size="small"
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+              endAdornment: searchText ? (
+                <InputAdornment position="end">
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      setSearchText('');
+                      onSearchedStopPlacesFetched(
+                        getStopPlacesState(undefined),
+                      );
+                    }}
+                  >
+                    <ClearIcon fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              ) : null,
+            },
           }}
+          placeholder={formatMessage({ id: 'mapSearchPlaceholder' })}
+          value={searchText ?? ''}
           onChange={(e: any) => {
             setIsTyping(true);
             if (e.target.value?.length > 1) {
@@ -121,9 +144,9 @@ const SearchPopover = memo(
           <div className={'map-search-results-wrapper'}>
             {isLoading && (
               <div className={'map-search-status-label'}>
-                <Label>
+                <Typography variant="caption">
                   <i>{formatMessage({ id: 'mapSearchInProgress' })}</i>
-                </Label>
+                </Typography>
               </div>
             )}
             {!isLoading &&
@@ -131,16 +154,19 @@ const SearchPopover = memo(
               !(searchedStopPlaces?.length > 0) &&
               searchText?.length > 1 && (
                 <div className={'map-search-status-label'}>
-                  <Label>
+                  <Typography variant="caption">
                     <i>{formatMessage({ id: 'mapSearchNoResults' })}</i>
-                  </Label>
+                  </Typography>
                 </div>
               )}
             {!isLoading && searchedStopPlaces?.length > 0 ? (
               <div className={'map-search-results-container'}>
-                <Label className="required-input map-search-results-label">
+                <Typography
+                  variant="caption"
+                  className="required-input map-search-results-label"
+                >
                   <i>{formatMessage({ id: 'mapSearchResults' })}</i>
-                </Label>
+                </Typography>
                 {searchResults}
               </div>
             ) : (

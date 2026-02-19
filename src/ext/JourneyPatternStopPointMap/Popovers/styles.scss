@@ -1,5 +1,3 @@
-@use '../../../../node_modules/@entur/tokens/dist/styles' as *;
-
 .search-popover {
   position: absolute;
   top: 12px;
@@ -36,7 +34,7 @@
 }
 
 .map-search-result--not-last {
-  border-bottom: 1px solid $colors-greys-grey20;
+  border-bottom: 1px solid #d1d3d3;
   padding-bottom: 0.7rem;
 }
 
@@ -48,30 +46,4 @@
   margin-top: 0.5rem;
   margin-left: 1rem;
   margin-bottom: 0;
-}
-
-// These had to be explicitly stated because otherwise aren't applied
-.map-search-results-container .eds-label,
-.search-popover .eds-label {
-  color: var(--components-typography-label-standard-text-accent) !important;
-}
-.map-search-results-container .eds-square-button__button {
-  color: $colors-greys-grey20;
-}
-.search-popover .eds-form-control {
-  padding: 0.4rem 1rem 0.25rem;
-  font-family: 'Nationale', serif;
-}
-.search-popover .eds-form-control-wrapper:focus-within {
-  border-color: var(--components-form-baseform-standard-border-interactive);
-}
-.search-popover .eds-form-control-wrapper:hover {
-  border-color: var(--components-form-baseform-standard-border-interactive);
-}
-.search-popover .eds-contrast .eds-form-control-wrapper:focus-within {
-  outline: 1px solid var(--components-form-baseform-standard-border-interactive);
-}
-
-.search-popover .eds-icon.eds-icon--inline {
-  left: 0.75rem;
 }

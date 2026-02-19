@@ -20,7 +20,6 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import LineEditorSteps from './LineEditorSteps';
 import { FIXED_LINE_STEPS } from './constants';
 import { useLine, useUttuErrors } from './hooks';
-import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 
 export default () => {
