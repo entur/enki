@@ -1,6 +1,6 @@
-import { IconButton } from '@entur/button';
-import { BackArrowIcon } from '@entur/icons';
-import { Paragraph } from '@entur/typography';
+import { Box, IconButton, Typography } from '@mui/material';
+import ArrowUpward from '@mui/icons-material/ArrowUpward';
+import ArrowDownward from '@mui/icons-material/ArrowDownward';
 import React from 'react';
 
 export type StopPointOrder = {
@@ -17,27 +17,32 @@ const StopPointOrder = ({
   swapStopPoints,
 }: StopPointOrder) => {
   return (
-    <div className={'order'}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minWidth: 40,
+      }}
+    >
       {!isFirst && (
         <IconButton
           onClick={() => swapStopPoints(order - 2, order - 1)}
-          className={'move-up'}
           size={'small'}
         >
-          <BackArrowIcon />
+          <ArrowUpward />
         </IconButton>
       )}
-      <Paragraph>{order}</Paragraph>
+      <Typography variant="body1">{order}</Typography>
       {!isLast && (
         <IconButton
           onClick={() => swapStopPoints(order - 1, order)}
-          className={'move-down'}
           size={'small'}
         >
-          <BackArrowIcon />
+          <ArrowDownward />
         </IconButton>
       )}
-    </div>
+    </Box>
   );
 };
 

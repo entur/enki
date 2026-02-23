@@ -1,7 +1,4 @@
-import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { TextArea, TextField } from '@entur/form';
-import { Paragraph } from '@entur/typography';
+import { Autocomplete, TextField, Typography } from '@mui/material';
 import { loadFlexibleLines } from 'actions/flexibleLines';
 import {
   deleteNetworkById,
@@ -9,92 +6,63 @@ import {
   loadNetworks,
   saveNetwork,
 } from 'actions/networks';
-import ConfirmDialog from 'components/ConfirmDialog';
+import { EntityEditorActions } from 'components/EntityEditorActions';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { mapToItems } from 'helpers/dropdown';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
+import { useEntityEditor } from 'hooks/useEntityEditor';
 import { Network } from 'model/Network';
 import { filterAuthorities } from 'model/Organisation';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { Params, useNavigate, useParams } from 'react-router-dom';
-import { GlobalState } from 'reducers';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import './styles.scss';
-
-const getCurrentNetworkSelector = (params: Params) => (state: GlobalState) =>
-  state.networks?.find((network) => network.id === params.id);
+import { ChangeEvent, useCallback, useEffect } from 'react';
+import { useAppSelector } from '../../../store/hooks';
+import Stack from '@mui/material/Stack';
 
 const NetworkEditor = () => {
-  const params = useParams();
-  const navigate = useNavigate();
-  const intl = useIntl();
-  const { formatMessage } = intl;
+  const {
+    entity: network,
+    setEntity: setNetwork,
+    onFieldChange,
+    isSaving,
+    isDeleting,
+    saveClicked,
+    isDeleteDialogOpen,
+    setDeleteDialogOpen,
+    handleSave,
+    handleDelete,
+    params,
+    dispatch,
+    intl,
+    formatMessage,
+  } = useEntityEditor<Network>({
+    entitySelector: (params) => (state) =>
+      state.networks?.find((n) => n.id === params.id),
+    defaultEntity: { name: '', authorityRef: '' },
+    loadById: loadNetworkById,
+    save: saveNetwork,
+    loadAll: loadNetworks,
+    deleteById: deleteNetworkById,
+    navigateTo: '/networks',
+  });
+
   const organisations = useAppSelector(({ organisations }) => organisations);
   const lines = useAppSelector(({ flexibleLines }) => flexibleLines);
-  let currentNetwork = useAppSelector(getCurrentNetworkSelector(params));
-
-  if (!currentNetwork) {
-    currentNetwork = {
-      name: '',
-      authorityRef: '',
-    };
-  }
-
-  const [isSaving, setSaving] = useState<boolean>(false);
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
-  const [isDeleting, setDeleting] = useState<boolean>(false);
-  const [network, setNetwork] = useState<Network>(currentNetwork);
-  const [saveClicked, setSaveClicked] = useState<boolean>(false);
 
   const namePristine = usePristine(network.name, saveClicked);
   const authorityPristine = usePristine(network.authorityRef, saveClicked);
 
-  const dispatch = useAppDispatch();
-
   const dispatchLoadFlexibleLines = useCallback(
     () => dispatch(loadFlexibleLines(intl)),
-    [dispatch],
+    [dispatch, intl],
   );
-
-  const onFieldChange = (field: keyof Network, value: string) => {
-    setNetwork({ ...network, [field]: value });
-  };
-
-  const dispatchLoadNetwork = useCallback(() => {
-    if (params.id) {
-      dispatch(loadNetworkById(params.id, intl)).catch(() =>
-        navigate('/networks'),
-      );
-    }
-  }, [dispatch, params.id, intl, navigate]);
 
   useEffect(() => {
     dispatchLoadFlexibleLines();
-    dispatchLoadNetwork();
-  }, [dispatchLoadFlexibleLines, dispatchLoadNetwork]);
-
-  useEffect(() => {
-    if (params.id) {
-      setNetwork(currentNetwork);
-    }
-  }, [currentNetwork, params.id]);
-
-  const handleOnSaveClick = () => {
-    if (network.name && network.authorityRef) {
-      setSaving(true);
-      dispatch(saveNetwork(network, intl))
-        .then(() => dispatch(loadNetworks(intl)))
-        .then(() => navigate('/networks'))
-        .finally(() => setSaving(false));
-    }
-    setSaveClicked(true);
-  };
+  }, [dispatchLoadFlexibleLines]);
 
   const handleAuthoritySelectionChange = (authoritySelection: string) => {
     setNetwork({
@@ -103,20 +71,12 @@ const NetworkEditor = () => {
     });
   };
 
-  const handleDelete = () => {
-    setDeleteDialogOpen(false);
-    setDeleting(true);
-    dispatch(deleteNetworkById(network?.id, intl)).then(() =>
-      navigate('/networks'),
-    );
-  };
-
   const authorities = filterAuthorities(organisations ?? []);
 
   const isDeleteDisabled =
     !network ||
     !lines ||
-    !!lines.find((l) => l.networkRef === network.id) ||
+    lines.some((l) => l.networkRef === network.id) ||
     isDeleting;
 
   return (
@@ -128,14 +88,13 @@ const NetworkEditor = () => {
           : formatMessage({ id: 'editorCreateNetworkHeaderText' })
       }
     >
-      <div className="network-editor">
-        <Paragraph>
+      <>
+        <Typography variant="body1">
           {formatMessage({ id: 'editorNetworkDescription' })}
-        </Paragraph>
+        </Typography>
 
         {network && lines ? (
           <OverlayLoader
-            className=""
             isLoading={isSaving || isDeleting}
             text={
               isSaving
@@ -143,13 +102,14 @@ const NetworkEditor = () => {
                 : formatMessage({ id: 'editorDeletingNetworkLoadingText' })
             }
           >
-            <div className="network-form">
+            <Stack spacing={3} sx={{ maxWidth: 450 }}>
               <RequiredInputMarker />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({ id: 'editorNetworkNameLabelText' })}
-                {...getErrorFeedback(
+                {...getMuiErrorProps(
                   formatMessage({ id: 'editorNetworkValidationName' }),
                   !isBlank(network.name),
                   namePristine,
@@ -160,19 +120,23 @@ const NetworkEditor = () => {
                 }
               />
 
-              <TextArea
-                className="form-section"
+              <TextField
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={4}
                 label={formatMessage({
                   id: 'editorNetworkDescriptionLabelText',
                 })}
                 value={network.description}
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                  onFieldChange('description', e.target.value)
-                }
+                onChange={(
+                  e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+                ) => onFieldChange('description', e.target.value)}
               />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorNetworkPrivateCodeLabelText',
                 })}
@@ -182,60 +146,67 @@ const NetworkEditor = () => {
                 }
               />
 
-              <Dropdown
-                className="form-section"
-                selectedItem={{
-                  value: authorities.find((v) => v.id === network.authorityRef)
-                    ?.id,
-                  label:
-                    authorities.find((v) => v.id === network.authorityRef)?.name
-                      .value ?? '',
-                }}
-                items={() =>
-                  mapToItems(
-                    authorities.map((v) => ({ ...v, name: v.name.value })),
-                  )
+              <Autocomplete
+                value={(() => {
+                  const authority = authorities.find(
+                    (v) => v.id === network.authorityRef,
+                  );
+                  return authority
+                    ? {
+                        value: authority.id,
+                        label: authority.name.value,
+                      }
+                    : null;
+                })()}
+                onChange={(_event, newValue) =>
+                  handleAuthoritySelectionChange(newValue?.value ?? '')
                 }
-                placeholder={formatMessage({ id: 'defaultOption' })}
-                clearable
-                labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-                label={formatMessage({ id: 'editorNetworkAuthorityLabelText' })}
-                noMatchesText={formatMessage({
-                  id: 'dropdownNoMatchesText',
-                })}
-                onChange={(organisation) =>
-                  handleAuthoritySelectionChange(organisation?.value ?? '')
+                options={mapToItems(
+                  authorities.map((v) => ({ ...v, name: v.name.value })),
+                )}
+                getOptionLabel={(option) => option.label}
+                isOptionEqualToValue={(option, value) =>
+                  option.value === value.value
                 }
-                {...getErrorFeedback(
-                  formatMessage({ id: 'editorNetworkValidationAuthority' }),
-                  !isBlank(network.authorityRef),
-                  authorityPristine,
+                noOptionsText={formatMessage({ id: 'dropdownNoMatchesText' })}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={formatMessage({
+                      id: 'editorNetworkAuthorityLabelText',
+                    })}
+                    placeholder={formatMessage({ id: 'defaultOption' })}
+                    {...getMuiErrorProps(
+                      formatMessage({
+                        id: 'editorNetworkValidationAuthority',
+                      }),
+                      !isBlank(network.authorityRef),
+                      authorityPristine,
+                    )}
+                  />
                 )}
               />
-              <div className="buttons">
-                {params.id && (
-                  <NegativeButton
-                    onClick={() => setDeleteDialogOpen(true)}
-                    disabled={isDeleteDisabled}
-                  >
-                    {formatMessage({ id: 'editorDeleteButtonText' })}
-                  </NegativeButton>
-                )}
 
-                <SuccessButton onClick={handleOnSaveClick}>
-                  {params.id
-                    ? formatMessage({ id: 'editorSaveButtonText' })
-                    : formatMessage(
-                        { id: 'editorDetailedCreate' },
-                        { details: formatMessage({ id: 'network' }) },
-                      )}
-                </SuccessButton>
-              </div>
-            </div>
+              <EntityEditorActions
+                isEditing={!!params.id}
+                isDeleteDisabled={isDeleteDisabled}
+                onDeleteClick={() => setDeleteDialogOpen(true)}
+                onSaveClick={() =>
+                  handleSave(!!network.name && !!network.authorityRef)
+                }
+                isDeleteDialogOpen={isDeleteDialogOpen}
+                onDeleteDialogClose={() => setDeleteDialogOpen(false)}
+                onDeleteConfirm={handleDelete}
+                entityName="network"
+                deleteConfirmTitleId="editorDeleteNetworkConfirmDialogTitle"
+                deleteConfirmMessageId="editorDeleteNetworkConfirmDialogMessage"
+                deleteConfirmCancelId="editorDeleteNetworkConfirmDialogCancelText"
+                deleteConfirmConfirmId="editorDeleteNetworkConfirmDialogConfirmText"
+              />
+            </Stack>
           </OverlayLoader>
         ) : (
           <Loading
-            className=""
             isLoading={!network}
             isFullScreen
             children={null}
@@ -246,28 +217,7 @@ const NetworkEditor = () => {
             }
           />
         )}
-
-        <ConfirmDialog
-          isOpen={isDeleteDialogOpen}
-          title={formatMessage({ id: 'editorDeleteNetworkConfirmDialogTitle' })}
-          message={formatMessage({
-            id: 'editorDeleteNetworkConfirmDialogMessage',
-          })}
-          buttons={[
-            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-              {formatMessage({
-                id: 'editorDeleteNetworkConfirmDialogCancelText',
-              })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={handleDelete}>
-              {formatMessage({
-                id: 'editorDeleteNetworkConfirmDialogConfirmText',
-              })}
-            </SuccessButton>,
-          ]}
-          onDismiss={() => setDeleteDialogOpen(false)}
-        />
-      </div>
+      </>
     </Page>
   );
 };

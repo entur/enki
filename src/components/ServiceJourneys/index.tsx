@@ -1,7 +1,20 @@
-import { TertiaryButton } from '@entur/button';
-import { Accordion, AccordionItem } from '@entur/expand';
-import { Heading1, Heading3, LeadParagraph } from '@entur/typography';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  IconButton,
+  Paper,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import ContentCopy from '@mui/icons-material/ContentCopy';
+import Delete from '@mui/icons-material/Delete';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddButton from 'components/AddButton/AddButton';
+import ConfirmDialog from 'components/ConfirmDialog';
+import CopyDialog from 'components/ServiceJourneyEditor/CopyDialog';
 import {
   changeElementAtIndex,
   removeElementByIndex,
@@ -13,11 +26,11 @@ import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
-import { Fragment, ReactElement, useState } from 'react';
-import { useIntl } from 'react-intl';
+import { ReactElement, useState } from 'react';
+import { IntlShape, useIntl } from 'react-intl';
 import BulkDeleteDialog from './BulkDeleteDialog';
 import NewServiceJourneyDialog from './NewServiceJourneyDialog';
-import './styles.scss';
+import Box from '@mui/material/Box';
 
 type Props = {
   journeyPatterns: JourneyPattern[];
@@ -55,10 +68,81 @@ export const sortByDepartureTime = (sortable: Sortable[]): Sortable[] => {
     );
 };
 
+type ServiceJourneyAccordionProps = {
+  sj: ServiceJourney;
+  sjIndex: number;
+  jpIndex: number;
+  accordionKey: string;
+  defaultExpanded: boolean;
+  serviceJourneysCount: number;
+  formatMessage: IntlShape['formatMessage'];
+  setCopyTarget: (target: { jpIndex: number; sjIndex: number }) => void;
+  setDeleteTarget: (target: { jpIndex: number; sjIndex: number }) => void;
+  renderedChildren: ReactElement;
+};
+
+const ServiceJourneyAccordion = ({
+  sj,
+  sjIndex,
+  jpIndex,
+  accordionKey,
+  defaultExpanded,
+  serviceJourneysCount,
+  formatMessage,
+  setCopyTarget,
+  setDeleteTarget,
+  renderedChildren,
+}: ServiceJourneyAccordionProps) => (
+  <Accordion key={accordionKey} defaultExpanded={defaultExpanded}>
+    <AccordionSummary
+      expandIcon={<ExpandMoreIcon />}
+      sx={{
+        '& .MuiAccordionSummary-content': {
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        },
+      }}
+    >
+      <Typography>{sj.name}</Typography>
+      <Stack direction="row" spacing={0.5} onClick={(e) => e.stopPropagation()}>
+        {sj.id && (
+          <Tooltip title={formatMessage({ id: 'editorCopyButtonText' })}>
+            <IconButton
+              size="small"
+              onClick={() => setCopyTarget({ jpIndex, sjIndex })}
+            >
+              <ContentCopy fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        )}
+        {serviceJourneysCount > 1 && (
+          <Tooltip title={formatMessage({ id: 'editorDeleteButtonText' })}>
+            <IconButton
+              size="small"
+              onClick={() => setDeleteTarget({ jpIndex, sjIndex })}
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Stack>
+    </AccordionSummary>
+    <AccordionDetails>{renderedChildren}</AccordionDetails>
+  </Accordion>
+);
+
 export default ({ journeyPatterns, onChange, children }: Props) => {
   const [showNewServiceJourneyDialog, setShowNewServiceJourneyDialog] =
     useState<boolean>(false);
   const [showBulkDeleteDialog, setShowBulkDeleteDialog] = useState<number>(-1);
+  const [deleteTarget, setDeleteTarget] = useState<{
+    jpIndex: number;
+    sjIndex: number;
+  } | null>(null);
+  const [copyTarget, setCopyTarget] = useState<{
+    jpIndex: number;
+    sjIndex: number;
+  } | null>(null);
   const { formatMessage } = useIntl();
 
   const [selectedJourneyPatternIndex, setSelectedJourneyPatternIndex] =
@@ -185,15 +269,21 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
     const mappedServiceJourneys = jp.serviceJourneys.map((sj, sjIndex) => ({
       sj,
       render: () => (
-        <AccordionItem
+        <ServiceJourneyAccordion
           key={keys[jpIndex] + sjIndex}
-          title={sj.name}
-          defaultOpen={
+          sj={sj}
+          sjIndex={sjIndex}
+          jpIndex={jpIndex}
+          accordionKey={keys[jpIndex] + sjIndex}
+          defaultExpanded={
             jpIndex === selectedJourneyPatternIndex &&
             (!sj.id || sjIndex === jp.serviceJourneys.length - 1)
           }
-        >
-          {children(
+          serviceJourneysCount={jp.serviceJourneys.length}
+          formatMessage={formatMessage}
+          setCopyTarget={setCopyTarget}
+          setDeleteTarget={setDeleteTarget}
+          renderedChildren={children(
             sj,
             journeyPatterns[jpIndex].pointsInSequence,
             updateServiceJourney(
@@ -201,21 +291,10 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               journeyPatterns[jpIndex].serviceJourneys,
               jpIndex,
             ),
-            jp.serviceJourneys.length > 1
-              ? deleteServiceJourney(
-                  sjIndex,
-                  journeyPatterns[jpIndex].serviceJourneys,
-                  jpIndex,
-                )
-              : undefined,
-            sj.id
-              ? copyServiceJourney(
-                  journeyPatterns[jpIndex].serviceJourneys,
-                  jpIndex,
-                )
-              : undefined,
+            undefined,
+            undefined,
           )}
-        </AccordionItem>
+        />
       ),
     }));
 
@@ -248,11 +327,13 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
         />
       )}
 
-      <div className="service-journeys-editor">
-        <Heading1>{formatMessage({ id: 'editorServiceJourneys' })}</Heading1>
-        <LeadParagraph>
+      <Box>
+        <Typography variant="h1">
+          {formatMessage({ id: 'editorServiceJourneys' })}
+        </Typography>
+        <Typography variant="body1">
           {formatMessage({ id: 'serviceJourneysInfo' })}
-        </LeadParagraph>
+        </Typography>
         {journeyPatterns.length === 1 &&
         journeyPatterns.flatMap((jp) => jp.serviceJourneys).length === 1
           ? children(
@@ -263,45 +344,105 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
               copyServiceJourney(journeyPatterns[0].serviceJourneys, 0),
             )
           : journeyPatterns.map((jp, jpIndex) => (
-              <Fragment key={keys[jpIndex]}>
+              <Paper
+                variant="outlined"
+                key={keys[jpIndex]}
+                sx={{ p: 2, mt: jpIndex > 0 ? 3 : 0 }}
+              >
                 <ServiceJourneyPerJourneyPatternWrapper>
-                  {journeyPatterns.length > 1 && <Heading3>{jp.name}</Heading3>}
+                  {journeyPatterns.length > 1 && (
+                    <Typography variant="h3">{jp.name}</Typography>
+                  )}
                   {jp.serviceJourneys.length > 1 && (
                     <ServiceJourneyBulkDeleteHeader>
-                      <TertiaryButton
+                      <Button
+                        variant="text"
                         onClick={() => setShowBulkDeleteDialog(jpIndex)}
                       >
                         {formatMessage({
                           id: 'openBulkDeleteDialogButtonLabel',
                         })}
-                      </TertiaryButton>
+                      </Button>
                     </ServiceJourneyBulkDeleteHeader>
                   )}
                 </ServiceJourneyPerJourneyPatternWrapper>
-                <Accordion>{renderServiceJourneys(jp, jpIndex)}</Accordion>
-              </Fragment>
+                <Stack spacing={1}>{renderServiceJourneys(jp, jpIndex)}</Stack>
+              </Paper>
             ))}
         <AddButton
           onClick={() => setShowNewServiceJourneyDialog(true)}
           buttonTitle={formatMessage({ id: 'editorAddServiceJourneys' })}
         />
-      </div>
+      </Box>
+
+      {deleteTarget !== null && (
+        <ConfirmDialog
+          isOpen={true}
+          title={formatMessage({ id: 'serviceJourneyDeleteTitle' })}
+          message={formatMessage({ id: 'serviceJourneydeleteMessage' })}
+          buttons={[
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setDeleteTarget(null)}
+            >
+              {formatMessage({ id: 'no' })}
+            </Button>,
+            <Button
+              variant="contained"
+              color="error"
+              key={1}
+              onClick={() => {
+                deleteServiceJourney(
+                  deleteTarget.sjIndex,
+                  journeyPatterns[deleteTarget.jpIndex].serviceJourneys,
+                  deleteTarget.jpIndex,
+                )();
+                setDeleteTarget(null);
+              }}
+            >
+              {formatMessage({ id: 'yes' })}
+            </Button>,
+          ]}
+          onDismiss={() => setDeleteTarget(null)}
+        />
+      )}
+
+      {copyTarget !== null && (
+        <CopyDialog
+          open={true}
+          serviceJourney={
+            journeyPatterns[copyTarget.jpIndex].serviceJourneys[
+              copyTarget.sjIndex
+            ]
+          }
+          onSave={(newServiceJourneys) => {
+            copyServiceJourney(
+              journeyPatterns[copyTarget.jpIndex].serviceJourneys,
+              copyTarget.jpIndex,
+            )(newServiceJourneys);
+            setCopyTarget(null);
+          }}
+          onDismiss={() => setCopyTarget(null)}
+        />
+      )}
     </>
   );
 };
 
 const ServiceJourneyPerJourneyPatternWrapper = ({ children }: any) => (
-  <div
-    style={{
+  <Box
+    sx={{
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      mt: 2,
     }}
   >
     {children}
-  </div>
+  </Box>
 );
 
 const ServiceJourneyBulkDeleteHeader = ({ children }: any) => (
-  <div style={{ alignContent: 'flex-end' }}>{children}</div>
+  <Box sx={{ alignContent: 'flex-end' }}>{children}</Box>
 );

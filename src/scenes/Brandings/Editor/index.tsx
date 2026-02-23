@@ -1,95 +1,48 @@
-import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { TextArea, TextField } from '@entur/form';
-import { Paragraph } from '@entur/typography';
+import { TextField, Typography } from '@mui/material';
 import {
   deleteBrandingById,
   loadBrandingById,
   loadBrandings,
   saveBranding,
 } from 'actions/brandings';
-import ConfirmDialog from 'components/ConfirmDialog';
+import { EntityEditorActions } from 'components/EntityEditorActions';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
+import { useEntityEditor } from 'hooks/useEntityEditor';
 import { Branding } from 'model/Branding';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { Params, useNavigate, useParams } from 'react-router-dom';
-import { GlobalState } from 'reducers';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import './styles.scss';
-
-const getCurrentBrandingSelector = (params: Params) => (state: GlobalState) =>
-  state.brandings?.find((branding) => branding.id === params.id);
+import { ChangeEvent } from 'react';
+import Stack from '@mui/material/Stack';
 
 const BrandingEditor = () => {
-  const params = useParams();
-  const navigate = useNavigate();
-  const intl = useIntl();
-  const { formatMessage } = intl;
-  let currentBranding = useAppSelector(getCurrentBrandingSelector(params));
-
-  if (!currentBranding) {
-    currentBranding = {
-      name: '',
-    };
-  }
-
-  const [isSaving, setSaving] = useState<boolean>(false);
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
-  const [isDeleting, setDeleting] = useState<boolean>(false);
-  const [branding, setBranding] = useState<Branding>(currentBranding);
-  const [saveClicked, setSaveClicked] = useState<boolean>(false);
+  const {
+    entity: branding,
+    onFieldChange,
+    isSaving,
+    isDeleting,
+    saveClicked,
+    isDeleteDialogOpen,
+    setDeleteDialogOpen,
+    handleSave,
+    handleDelete,
+    params,
+    formatMessage,
+  } = useEntityEditor<Branding>({
+    entitySelector: (params) => (state) =>
+      state.brandings?.find((b) => b.id === params.id),
+    defaultEntity: { name: '' },
+    loadById: loadBrandingById,
+    save: saveBranding,
+    loadAll: loadBrandings,
+    deleteById: deleteBrandingById,
+    navigateTo: '/brandings',
+  });
 
   const namePristine = usePristine(branding.name, saveClicked);
-
-  const dispatch = useAppDispatch();
-
-  const onFieldChange = (field: keyof Branding, value: string) => {
-    setBranding({ ...branding, [field]: value });
-  };
-
-  const dispatchLoadBranding = useCallback(() => {
-    if (params.id) {
-      dispatch(loadBrandingById(params.id, intl)).catch(() =>
-        navigate('/brandings'),
-      );
-    }
-  }, [dispatch, params.id, intl, navigate]);
-
-  useEffect(() => {
-    dispatchLoadBranding();
-  }, [dispatchLoadBranding]);
-
-  useEffect(() => {
-    if (params.id) {
-      setBranding(currentBranding);
-    }
-  }, [currentBranding, params.id]);
-
-  const handleOnSaveClick = () => {
-    if (branding.name) {
-      setSaving(true);
-      dispatch(saveBranding(branding, intl))
-        .then(() => dispatch(loadBrandings(intl)))
-        .then(() => navigate('/brandings'))
-        .finally(() => setSaving(false));
-    }
-    setSaveClicked(true);
-  };
-
-  const handleDelete = () => {
-    setDeleteDialogOpen(false);
-    setDeleting(true);
-    dispatch(deleteBrandingById(branding?.id, intl)).then(() =>
-      navigate('/brandings'),
-    );
-  };
-
   const isDeleteDisabled = !branding || isDeleting;
 
   return (
@@ -101,14 +54,13 @@ const BrandingEditor = () => {
           : formatMessage({ id: 'editorCreateBrandingHeaderText' })
       }
     >
-      <div className="branding-editor">
-        <Paragraph>
+      <>
+        <Typography variant="body1">
           {formatMessage({ id: 'editorBrandingDescription' })}
-        </Paragraph>
+        </Typography>
 
         {branding ? (
           <OverlayLoader
-            className=""
             isLoading={isSaving || isDeleting}
             text={
               isSaving
@@ -116,13 +68,14 @@ const BrandingEditor = () => {
                 : formatMessage({ id: 'editorDeletingBrandingLoadingText' })
             }
           >
-            <div className="branding-form">
+            <Stack spacing={3} sx={{ maxWidth: 450 }}>
               <RequiredInputMarker />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({ id: 'editorBrandingNameLabelText' })}
-                {...getErrorFeedback(
+                {...getMuiErrorProps(
                   formatMessage({ id: 'editorBrandingValidationName' }),
                   !isBlank(branding.name),
                   namePristine,
@@ -133,8 +86,11 @@ const BrandingEditor = () => {
                 }
               />
 
-              <TextArea
-                className="form-section"
+              <TextField
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={4}
                 label={formatMessage({
                   id: 'editorBrandingDescriptionLabelText',
                 })}
@@ -145,7 +101,8 @@ const BrandingEditor = () => {
               />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorBrandingShortNameLabelText',
                 })}
@@ -156,7 +113,8 @@ const BrandingEditor = () => {
               />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorBrandingUrlLabelText',
                 })}
@@ -167,7 +125,8 @@ const BrandingEditor = () => {
               />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorBrandingImageUrlLabelText',
                 })}
@@ -177,30 +136,24 @@ const BrandingEditor = () => {
                 }
               />
 
-              <div className="buttons">
-                {params.id && (
-                  <NegativeButton
-                    onClick={() => setDeleteDialogOpen(true)}
-                    disabled={isDeleteDisabled}
-                  >
-                    {formatMessage({ id: 'editorDeleteButtonText' })}
-                  </NegativeButton>
-                )}
-
-                <SuccessButton onClick={handleOnSaveClick}>
-                  {params.id
-                    ? formatMessage({ id: 'editorSaveButtonText' })
-                    : formatMessage(
-                        { id: 'editorDetailedCreate' },
-                        { details: formatMessage({ id: 'branding' }) },
-                      )}
-                </SuccessButton>
-              </div>
-            </div>
+              <EntityEditorActions
+                isEditing={!!params.id}
+                isDeleteDisabled={isDeleteDisabled}
+                onDeleteClick={() => setDeleteDialogOpen(true)}
+                onSaveClick={() => handleSave(!!branding.name)}
+                isDeleteDialogOpen={isDeleteDialogOpen}
+                onDeleteDialogClose={() => setDeleteDialogOpen(false)}
+                onDeleteConfirm={handleDelete}
+                entityName="branding"
+                deleteConfirmTitleId="editorDeleteBrandingConfirmDialogTitle"
+                deleteConfirmMessageId="editorDeleteBrandingConfirmDialogMessage"
+                deleteConfirmCancelId="editorDeleteBrandingConfirmDialogCancelText"
+                deleteConfirmConfirmId="editorDeleteBrandingConfirmDialogConfirmText"
+              />
+            </Stack>
           </OverlayLoader>
         ) : (
           <Loading
-            className=""
             isLoading={!branding}
             isFullScreen
             children={null}
@@ -211,30 +164,7 @@ const BrandingEditor = () => {
             }
           />
         )}
-
-        <ConfirmDialog
-          isOpen={isDeleteDialogOpen}
-          title={formatMessage({
-            id: 'editorDeleteBrandingConfirmDialogTitle',
-          })}
-          message={formatMessage({
-            id: 'editorDeleteBrandingConfirmDialogMessage',
-          })}
-          buttons={[
-            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
-              {formatMessage({
-                id: 'editorDeleteBrandingConfirmDialogCancelText',
-              })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={handleDelete}>
-              {formatMessage({
-                id: 'editorDeleteBrandingConfirmDialogConfirmText',
-              })}
-            </SuccessButton>,
-          ]}
-          onDismiss={() => setDeleteDialogOpen(false)}
-        />
-      </div>
+      </>
     </Page>
   );
 };

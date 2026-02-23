@@ -1,5 +1,4 @@
-import { Drawer } from '@entur/modal';
-import { Heading4 } from '@entur/typography';
+import { Box, Drawer, Typography } from '@mui/material';
 import { useConfig } from 'config/ConfigContext';
 import { MessagesKey } from 'i18n/translationKeys';
 import { useIntl } from 'react-intl';
@@ -14,23 +13,26 @@ const FlexibleLineTypeDrawer = ({ open, onDismiss, title }: Props) => {
   const { supportedFlexibleLineTypes } = useConfig();
 
   return (
-    <Drawer title={title} onDismiss={onDismiss} open={open}>
-      <header className="flexible-line-type-drawer">
-        {formatMessage({ id: 'generalDrawer' })}
-      </header>
+    <Drawer anchor="right" open={open} onClose={onDismiss}>
+      <Box sx={{ p: 3, maxWidth: 400 }}>
+        <Typography variant="h6" gutterBottom>
+          {title}
+        </Typography>
+        <header>{formatMessage({ id: 'generalDrawer' })}</header>
 
-      {supportedFlexibleLineTypes?.map((flexibleLineType) => (
-        <section className="flexible-line-type-drawer" key={flexibleLineType}>
-          <Heading4>
+        {supportedFlexibleLineTypes?.map((flexibleLineType) => (
+          <section key={flexibleLineType}>
+            <Typography variant="h6">
+              {formatMessage({
+                id: `flexibleLineType_${flexibleLineType}` as keyof MessagesKey,
+              })}
+            </Typography>
             {formatMessage({
-              id: `flexibleLineType_${flexibleLineType}` as keyof MessagesKey,
+              id: `flexibleLineTypeDrawer_${flexibleLineType}` as keyof MessagesKey,
             })}
-          </Heading4>
-          {formatMessage({
-            id: `flexibleLineTypeDrawer_${flexibleLineType}` as keyof MessagesKey,
-          })}
-        </section>
-      ))}
+          </section>
+        ))}
+      </Box>
     </Drawer>
   );
 };

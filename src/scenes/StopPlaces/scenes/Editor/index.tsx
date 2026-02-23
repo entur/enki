@@ -1,15 +1,12 @@
-import { SmallAlertBox } from '@entur/alert';
-import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { TextArea, TextField } from '@entur/form';
-import { GridContainer, GridItem } from '@entur/grid';
-import { Paragraph } from '@entur/typography';
+import { Alert, Button, TextField, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import ConfirmDialog from 'components/ConfirmDialog';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { replaceElement, removeElementByIndex } from 'helpers/arrays';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import usePristine from 'hooks/usePristine';
 import { LeafletMouseEvent } from 'leaflet';
 import GeoJSON, {
@@ -28,7 +25,8 @@ import { StopPlaceTypeDropdown } from './components/StopPlaceTypeDropdown';
 import { useFlexibleStopPlace } from './hooks/useFlexibleStopPlace';
 import { useHandleDelete } from './hooks/useHandleDelete';
 import { useHandleOnSaveClick } from './hooks/useHandleOnSaveClick';
-import './styles.scss';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import { transformToMapCoordinates } from './utils/transformToMapCoordinates';
 import { validateFlexibleStopPlace } from './utils/validateForm';
 import FormMap from '../../../../components/FormMap';
@@ -83,14 +81,11 @@ const FlexibleStopPlaceEditor = () => {
   );
 
   const handleMapOnClick = (e: LeafletMouseEvent) => {
-    // Convert coordinate from map to geojson long-lat order
     const newCoordinate: Coordinate = [e.latlng.lng, e.latlng.lat];
-
     const newCoordinates = addCoordinate(
       polygonCoordinates[currentAreaIndex],
       newCoordinate,
     );
-
     changePolygon({
       type: GEOMETRY_TYPE.POLYGON,
       coordinates: newCoordinates,
@@ -180,13 +175,13 @@ const FlexibleStopPlaceEditor = () => {
           flexibleStopPlace?.id,
       );
 
-  const nameError = getErrorFeedback(
+  const nameError = getMuiErrorProps(
     errors.name ? formatMessage({ id: errors.name }) : '',
     !errors.name,
     namePristine,
   );
 
-  const stopPlaceTypeError = getErrorFeedback(
+  const stopPlaceTypeError = getMuiErrorProps(
     errors.flexibleStopPlaceType
       ? formatMessage({ id: errors.flexibleStopPlaceType })
       : '',
@@ -194,7 +189,7 @@ const FlexibleStopPlaceEditor = () => {
     stopPlaceTypePristine,
   );
 
-  const areaError = getErrorFeedback(
+  const areaError = getMuiErrorProps(
     errors.flexibleArea ? formatMessage({ id: errors.flexibleArea }) : '',
     !errors.flexibleArea,
     areasPristine,
@@ -209,39 +204,32 @@ const FlexibleStopPlaceEditor = () => {
           : formatMessage({ id: 'editorCreateHeader' })
       }
     >
-      <div className="stop-place-editor">
-        <Paragraph>{formatMessage({ id: 'editorDescription' })}</Paragraph>
+      <>
+        <Typography variant="body1">
+          {formatMessage({ id: 'editorDescription' })}
+        </Typography>
 
-        <Paragraph>
-          <GridContainer spacing="medium" rowSpacing="large">
-            {nameError.feedback && (
-              <GridItem small={12}>
-                <SmallAlertBox variant="error">
-                  {nameError.feedback}
-                </SmallAlertBox>
-              </GridItem>
-            )}
+        <Grid container spacing={2}>
+          {nameError.helperText && (
+            <Grid size={{ xs: 12 }}>
+              <Alert severity="error">{nameError.helperText}</Alert>
+            </Grid>
+          )}
 
-            {stopPlaceTypeError.feedback && (
-              <GridItem small={12}>
-                <SmallAlertBox variant="error">
-                  {stopPlaceTypeError.feedback}
-                </SmallAlertBox>
-              </GridItem>
-            )}
+          {stopPlaceTypeError.helperText && (
+            <Grid size={{ xs: 12 }}>
+              <Alert severity="error">{stopPlaceTypeError.helperText}</Alert>
+            </Grid>
+          )}
 
-            {areaError.feedback && (
-              <GridItem small={12}>
-                <SmallAlertBox variant="error">
-                  {areaError.feedback}
-                </SmallAlertBox>
-              </GridItem>
-            )}
-          </GridContainer>
-        </Paragraph>
+          {areaError.helperText && (
+            <Grid size={{ xs: 12 }}>
+              <Alert severity="error">{areaError.helperText}</Alert>
+            </Grid>
+          )}
+        </Grid>
         {flexibleStopPlace && !isLoading ? (
           <OverlayLoader
-            className=""
             isLoading={isSaving || isDeleting}
             text={
               isSaving
@@ -249,13 +237,15 @@ const FlexibleStopPlaceEditor = () => {
                 : formatMessage({ id: 'editorDeletingOverlayLoaderText' })
             }
           >
-            <div className="stop-place-form-container">
-              <div className="stop-place-form">
+            <Stack direction="row" spacing={2}>
+              <Stack spacing={2} sx={{ maxWidth: 450 }}>
                 <RequiredInputMarker />
 
                 <TextField
+                  variant="outlined"
+                  fullWidth
                   label={formatMessage({ id: 'editorNameFormLabelText' })}
-                  {...getErrorFeedback(
+                  {...getMuiErrorProps(
                     errors.name ? formatMessage({ id: errors.name }) : '',
                     !errors.name,
                     namePristine,
@@ -269,7 +259,11 @@ const FlexibleStopPlaceEditor = () => {
                   }
                 />
 
-                <TextArea
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  rows={4}
                   label={formatMessage({
                     id: 'editorDescriptionFormLabelText',
                   })}
@@ -283,6 +277,8 @@ const FlexibleStopPlaceEditor = () => {
                 />
 
                 <TextField
+                  variant="outlined"
+                  fullWidth
                   label={formatMessage({
                     id: 'editorPrivateCodeFormLabelText',
                   })}
@@ -324,7 +320,8 @@ const FlexibleStopPlaceEditor = () => {
                   />
                 ))}
 
-                <SecondaryButton
+                <Button
+                  variant="outlined"
                   onClick={() => {
                     setFlexibleStopPlace((current) => ({
                       ...current,
@@ -336,19 +333,30 @@ const FlexibleStopPlaceEditor = () => {
                   }}
                 >
                   {formatMessage({ id: 'stopPlaceAddAreaButtonLabel' })}
-                </SecondaryButton>
+                </Button>
 
-                <div className="buttons">
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent="space-between"
+                  sx={{ mt: 4 }}
+                >
                   {params.id && (
-                    <NegativeButton
+                    <Button
+                      variant="contained"
+                      color="error"
                       onClick={() => setDeleteDialogOpen(true)}
                       disabled={isDeleteDisabled}
                     >
                       {formatMessage({ id: 'editorDeleteButtonText' })}
-                    </NegativeButton>
+                    </Button>
                   )}
 
-                  <SuccessButton onClick={handleOnSaveClick}>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={handleOnSaveClick}
+                  >
                     {params.id
                       ? formatMessage({ id: 'editorSaveButtonText' })
                       : formatMessage(
@@ -357,11 +365,18 @@ const FlexibleStopPlaceEditor = () => {
                           },
                           { details: formatMessage({ id: 'stopPlaceText' }) },
                         )}
-                  </SuccessButton>
-                </div>
-              </div>
+                  </Button>
+                </Stack>
+              </Stack>
 
-              <div className="stop-place-flexible-area">
+              <Box
+                sx={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  zIndex: 0,
+                }}
+              >
                 <FormMap undo={handleUndoClick}>
                   <PolygonMap
                     addCoordinate={handleMapOnClick}
@@ -380,13 +395,12 @@ const FlexibleStopPlaceEditor = () => {
                     }
                   />
                 </FormMap>
-              </div>
-            </div>
+              </Box>
+            </Stack>
           </OverlayLoader>
         ) : (
           <Loading
             children={null}
-            className=""
             text={
               flexibleStopPlace
                 ? formatMessage({ id: 'editorLoadingStopPlaceText' })
@@ -400,20 +414,29 @@ const FlexibleStopPlaceEditor = () => {
           title={formatMessage({ id: 'editorDeleteStopPlaceDialogTitle' })}
           message={formatMessage({ id: 'editorDeleteStopPlaceDialogMessage' })}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setDeleteDialogOpen(false)}
+            >
               {formatMessage({
                 id: 'editorDeleteStopPlaceDialogCancelButtonText',
               })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={handleDelete}>
+            </Button>,
+            <Button
+              variant="contained"
+              color="error"
+              key={1}
+              onClick={handleDelete}
+            >
               {formatMessage({
                 id: 'editorDeleteStopPlaceDialogConfirmButtonText',
               })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />
-      </div>
+      </>
     </Page>
   );
 };

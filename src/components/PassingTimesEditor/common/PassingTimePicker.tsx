@@ -1,10 +1,4 @@
-import {
-  nativeDateToTimeValue,
-  timeOrDateValueToNativeDate,
-  TimePicker,
-} from '@entur/datepicker';
-import { TimeValue } from '@react-types/datepicker';
-import { useIntl } from 'react-intl';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { toDate } from './toDate';
 
 type Props = {
@@ -24,27 +18,25 @@ export const PassingTimePicker = ({
   selectedTime,
   ignoreSelectedTime = false,
 }: Props) => {
-  const { locale } = useIntl();
+  const timeValue =
+    disabled || !selectedTime || ignoreSelectedTime
+      ? null
+      : toDate(selectedTime) || null;
+
   return (
     <TimePicker
-      locale={locale}
       disabled={disabled}
       label={`${label}${required ? ' *' : ''}`}
-      className="timepicker"
-      onChange={(timeValue: TimeValue | null) => {
-        let date = null;
-        if (timeValue) {
-          date = timeOrDateValueToNativeDate(timeValue)
-            ?.toTimeString()
-            .split(' ')[0];
+      value={timeValue}
+      onChange={(newValue: Date | null) => {
+        if (newValue) {
+          const timeString = newValue.toTimeString().split(' ')[0];
+          onChange(timeString);
+        } else {
+          onChange(null);
         }
-        onChange(date || null);
       }}
-      selectedTime={
-        disabled || !selectedTime || ignoreSelectedTime
-          ? null
-          : nativeDateToTimeValue(toDate(selectedTime!)!)
-      }
+      ampm={false}
     />
   );
 };

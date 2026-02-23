@@ -1,14 +1,17 @@
-import { SecondaryButton, SecondarySquareButton } from '@entur/button';
-import { AddIcon, DownloadIcon } from '@entur/icons';
+import Add from '@mui/icons-material/Add';
+import Download from '@mui/icons-material/Download';
 import {
-  DataCell,
-  HeaderCell,
+  Button,
+  IconButton,
   Table,
   TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-} from '@entur/table';
-import { Heading1 } from '@entur/typography';
+  Typography,
+} from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { loadExports } from 'actions/exports';
 import { useAuth } from 'auth/auth';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
@@ -21,7 +24,6 @@ import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 import { ExportsState } from 'reducers/exportsSlice';
 import { getIconForStatus } from './icons/icons';
-import './styles.scss';
 
 const Exports = () => {
   const navigate = useNavigate();
@@ -49,87 +51,96 @@ const Exports = () => {
       return exports.length > 0 ? (
         exports.map((e) => (
           <TableRow key={e.id} onClick={() => handleOnRowClick(e.id ?? '')}>
-            <DataCell>{e.name}</DataCell>
-            <DataCell>{getIconForStatus(e.exportStatus)}</DataCell>
-            <DataCell>{new Date(e.created!).toLocaleString(locale)}</DataCell>
-            <DataCell>
+            <TableCell>{e.name}</TableCell>
+            <TableCell>{getIconForStatus(e.exportStatus)}</TableCell>
+            <TableCell>{new Date(e.created!).toLocaleString(locale)}</TableCell>
+            <TableCell>
               {e.exportStatus === EXPORT_STATUS.SUCCESS && (
-                <SecondarySquareButton
+                <IconButton
+                  size="small"
                   onClick={async (event: React.MouseEvent<HTMLElement>) => {
                     event.stopPropagation();
                     download(uttuApiUrl, e, await auth.getAccessToken(), intl);
                   }}
                 >
-                  <DownloadIcon />
-                </SecondarySquareButton>
+                  <Download />
+                </IconButton>
               )}
-            </DataCell>
+            </TableCell>
             {!hideExportDryRun && (
-              <DataCell>
+              <TableCell>
                 {e.dryRun
                   ? formatMessage({ id: 'exportsDryRunYes' })
                   : formatMessage({ id: 'exportsDryRunNo' })}
-              </DataCell>
+              </TableCell>
             )}
           </TableRow>
         ))
       ) : (
-        <TableRow className="row-no-exports disabled">
-          <DataCell colSpan={6}>
+        <TableRow>
+          <TableCell colSpan={6}>
             {formatMessage({ id: 'exportsNoExportsFoundText' })}
-          </DataCell>
+          </TableCell>
         </TableRow>
       );
     } else {
       return (
-        <TableRow className="disabled">
-          <DataCell colSpan={6}>
+        <TableRow>
+          <TableCell colSpan={6}>
             <Loading
               text={formatMessage({ id: 'exportsLoadingExportsText' })}
               isLoading={!exports}
               children={null}
-              className=""
             />
-          </DataCell>
+          </TableCell>
         </TableRow>
       );
     }
   };
 
   return (
-    <div className="exports">
-      <Heading1>{formatMessage({ id: 'exportsHeader' })}</Heading1>
+    <Stack spacing={3} sx={{ flex: 1 }}>
+      <Typography variant="h1">
+        {formatMessage({ id: 'exportsHeader' })}
+      </Typography>
 
-      <SecondaryButton as={Link} to="/exports/create" className="create">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        component={Link}
+        to="/exports/create"
+        startIcon={<Add />}
+        sx={{ alignSelf: 'flex-start' }}
+      >
         {formatMessage({ id: 'exportsCreateExportButtonLabel' })}
-      </SecondaryButton>
+      </Button>
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            <HeaderCell>
-              {formatMessage({ id: 'exportsTableHeaderLabelName' })}
-            </HeaderCell>
-            <HeaderCell>
-              {formatMessage({ id: 'exportsTableHeaderLabelStatus' })}
-            </HeaderCell>
-            <HeaderCell>
-              {formatMessage({ id: 'exportsTableHeaderLabelCreated' })}
-            </HeaderCell>
-            <HeaderCell>
-              {formatMessage({ id: 'exportsTableHeaderLabelDownload' })}
-            </HeaderCell>
-            {!hideExportDryRun && (
-              <HeaderCell>
-                {formatMessage({ id: 'exportsTableHeaderLabelDryrun' })}
-              </HeaderCell>
-            )}
-          </TableRow>
-        </TableHead>
-        <TableBody>{renderTableRows()}</TableBody>
-      </Table>
-    </div>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                {formatMessage({ id: 'exportsTableHeaderLabelName' })}
+              </TableCell>
+              <TableCell>
+                {formatMessage({ id: 'exportsTableHeaderLabelStatus' })}
+              </TableCell>
+              <TableCell>
+                {formatMessage({ id: 'exportsTableHeaderLabelCreated' })}
+              </TableCell>
+              <TableCell>
+                {formatMessage({ id: 'exportsTableHeaderLabelDownload' })}
+              </TableCell>
+              {!hideExportDryRun && (
+                <TableCell>
+                  {formatMessage({ id: 'exportsTableHeaderLabelDryrun' })}
+                </TableCell>
+              )}
+            </TableRow>
+          </TableHead>
+          <TableBody>{renderTableRows()}</TableBody>
+        </Table>
+      </TableContainer>
+    </Stack>
   );
 };
 

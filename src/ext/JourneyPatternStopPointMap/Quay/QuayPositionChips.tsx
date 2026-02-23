@@ -1,7 +1,6 @@
-import { TagChip } from '@entur/chip';
+import { Button, Chip } from '@mui/material';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { SecondaryButton, SuccessButton } from '@entur/button';
 import ConfirmDialog from '../../../components/ConfirmDialog';
 
 interface QuayPositionChipsProps {
@@ -34,16 +33,15 @@ const QuayPositionChips = ({
       </div>
       <div style={{ display: 'flex', marginBottom: '0.3rem' }}>
         {stopPointSequenceIndexes.map((index) => (
-          <TagChip
+          <Chip
             key={'stop-point-sequence-index-chip-' + quayId + '-' + index}
             className={'stop-point-sequence-index-chip'}
-            size={'small'}
-            onClose={() => {
+            size="small"
+            label={index + 1}
+            onDelete={() => {
               setDeleteDialogState({ index });
             }}
-          >
-            {index + 1}
-          </TagChip>
+          />
         ))}
       </div>
 
@@ -52,14 +50,17 @@ const QuayPositionChips = ({
         title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
         message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
         buttons={[
-          <SecondaryButton
+          <Button
             key="no"
+            variant="outlined"
             onClick={() => setDeleteDialogState({ index: undefined })}
           >
             {formatMessage({ id: 'no' })}
-          </SecondaryButton>,
-          <SuccessButton
+          </Button>,
+          <Button
             key="yes"
+            variant="contained"
+            color="success"
             onClick={() => {
               if (deleteDialogState.index === undefined) {
                 return;
@@ -72,7 +73,7 @@ const QuayPositionChips = ({
             }}
           >
             {formatMessage({ id: 'yes' })}
-          </SuccessButton>,
+          </Button>,
         ]}
         onDismiss={() => setDeleteDialogState({ index: undefined })}
       />

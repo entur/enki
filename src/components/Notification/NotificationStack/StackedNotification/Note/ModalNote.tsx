@@ -1,5 +1,11 @@
-import { PrimaryButton } from '@entur/button';
-import { Modal } from '@entur/modal';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 
@@ -21,15 +27,25 @@ const ModalNote = (props: Props) => {
   }, [onDismiss]);
 
   return (
-    <Modal title={title} size="small" open={isActive} onDismiss={handleDismiss}>
-      <div className="notification-modal">
-        <div className="notification-modal-message">{message}</div>
-
-        <PrimaryButton onClick={handleDismiss}>
+    <Dialog open={isActive} onClose={handleDismiss} maxWidth="xs" fullWidth>
+      <DialogTitle>{title}</DialogTitle>
+      <DialogContent>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}
+        >
+          <Box sx={{ pb: 4 }}>{message}</Box>
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" onClick={handleDismiss}>
           {formatMessage({ id: 'flexibleLinesSaveLineSuccessButton' })}
-        </PrimaryButton>
-      </div>
-    </Modal>
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

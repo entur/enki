@@ -29,7 +29,7 @@ const PolygonMap = (props: Props) => {
         }}
       />
       {props.otherPolygons.map((polygon, index) => (
-        <Polygon key={index} positions={polygon} color={'#888'} />
+        <Polygon key={index} positions={polygon} color={'grey'} />
       ))}
     </>
   );

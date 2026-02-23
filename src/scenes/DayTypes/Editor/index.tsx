@@ -1,5 +1,4 @@
-import { NegativeButton, SecondaryButton, SuccessButton } from '@entur/button';
-import { Paragraph } from '@entur/typography';
+import { Button, Typography } from '@mui/material';
 import {
   deleteDayTypeById,
   loadDayTypeById,
@@ -17,7 +16,7 @@ import { Params, useNavigate, useParams } from 'react-router-dom';
 import { GlobalState } from 'reducers';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { DayTypeForm } from './DayTypeForm';
-import './styles.scss';
+import Stack from '@mui/material/Stack';
 
 const getCurrentDayTypeSelector = (params: Params) => (state: GlobalState) =>
   state.dayTypes?.find((dt) => dt.id === params.id);
@@ -93,14 +92,13 @@ const DayTypeEditor = () => {
           : formatMessage({ id: 'dayTypesCreateDayTypeHeader' })
       }
     >
-      <div className="day-type-editor">
-        <Paragraph>
+      <Stack spacing={3}>
+        <Typography variant="body1">
           {formatMessage({ id: 'dayTypesEditorDescription' })}
-        </Paragraph>
+        </Typography>
 
         {dayType ? (
           <OverlayLoader
-            className=""
             isLoading={isSaving || isDeleting}
             text={
               isSaving
@@ -108,37 +106,48 @@ const DayTypeEditor = () => {
                 : formatMessage({ id: 'dayTypesDeletingDayTypeText' })
             }
           >
-            <div className="day-type-form">
+            <Stack spacing={3} sx={{ maxWidth: 800 }}>
               <DayTypeForm
                 dayType={dayType}
                 onChange={setDayType}
                 onValidationChange={setIsValid}
               />
 
-              <div className="buttons">
+              <Stack
+                direction="row"
+                spacing={2}
+                justifyContent="flex-end"
+                sx={{ mt: 4 }}
+              >
                 {params.id && (
-                  <NegativeButton
+                  <Button
+                    variant="contained"
+                    color="error"
                     onClick={() => setDeleteDialogOpen(true)}
                     disabled={isDeleteDisabled}
                   >
                     {formatMessage({ id: 'editorDeleteButtonText' })}
-                  </NegativeButton>
+                  </Button>
                 )}
 
-                <SuccessButton onClick={handleOnSaveClick} disabled={!isValid}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleOnSaveClick}
+                  disabled={!isValid}
+                >
                   {params.id
                     ? formatMessage({ id: 'editorSaveButtonText' })
                     : formatMessage(
                         { id: 'editorDetailedCreate' },
                         { details: formatMessage({ id: 'dayType' }) },
                       )}
-                </SuccessButton>
-              </div>
-            </div>
+                </Button>
+              </Stack>
+            </Stack>
           </OverlayLoader>
         ) : (
           <Loading
-            className=""
             isLoading={!dayType}
             isFullScreen
             children={null}
@@ -153,16 +162,25 @@ const DayTypeEditor = () => {
             id: 'dayTypesDeleteConfirmDialogMessage',
           })}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setDeleteDialogOpen(false)}>
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setDeleteDialogOpen(false)}
+            >
               {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={handleDelete}>
+            </Button>,
+            <Button
+              variant="contained"
+              color="error"
+              key={1}
+              onClick={handleDelete}
+            >
               {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setDeleteDialogOpen(false)}
         />
-      </div>
+      </Stack>
     </Page>
   );
 };

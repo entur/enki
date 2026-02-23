@@ -1,17 +1,12 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { Radio, RadioGroup } from '@entur/form';
-import BookingArrangementEditor from 'components/BookingArrangementEditor';
-import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
-import ConfirmDialog from 'components/ConfirmDialog';
+import { Box, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { DeleteStopPointDialog } from '../common/DeleteStopPointDialog';
+import { StopPointBookingArrangement } from '../common/StopPointBookingArrangement';
 import DeleteButton from 'components/DeleteButton/DeleteButton';
-import { mapToItems } from 'helpers/dropdown';
 import { getErrorFeedback } from 'helpers/errorHandling';
 import { validateStopPoint } from 'validation';
 import usePristine from 'hooks/usePristine';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useAppSelector } from '../../../store/hooks';
 import {
   BoardingTypeSelect,
   useOnBoardingTypeChange,
@@ -21,6 +16,7 @@ import {
   FrontTextTextField,
   useOnFrontTextChange,
 } from '../common/FrontTextTextField';
+import { FlexibleStopPlaceSelector } from '../common/FlexibleStopPlaceSelector';
 import { QuayRefField, useOnQuayRefChange } from '../common/QuayRefField';
 import { MixedFlexibleStopPointEditorProps } from '../common/StopPointEditorProps';
 import StopPointOrder from '../common/StopPointOrder';
@@ -47,16 +43,8 @@ export const MixedFlexibleStopPointEditor = ({
     stopPoint.quayRef ? StopPlaceMode.EXTERNAL : StopPlaceMode.FLEXIBLE,
   );
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const flexibleStopPlaces = useAppSelector(
-    (state) => state.flexibleStopPlaces,
-  );
 
   const quayRefPristine = usePristine(stopPoint.quayRef, spoilPristine);
-
-  const stopPlacePristine = usePristine(
-    stopPoint.flexibleStopPlaceRef,
-    spoilPristine,
-  );
 
   const onQuayRefChange = useOnQuayRefChange(stopPoint, onChange);
   const onFrontTextChange = useOnFrontTextChange(stopPoint, onChange);
@@ -88,9 +76,15 @@ export const MixedFlexibleStopPointEditor = ({
   }, [stopPoint.key]);
 
   return (
-    <div className="stop-point">
-      <div className="stop-point-element">
-        <div className="stop-point-key-info stop-point-key-info--flexible">
+    <Box sx={{ borderBottom: 2, borderColor: 'divider' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          mt: 3,
+        }}
+      >
+        <Box sx={{ minWidth: 'fit-content', display: 'flex' }}>
           <StopPointOrder
             order={order}
             isLast={isLast}
@@ -121,46 +115,41 @@ export const MixedFlexibleStopPointEditor = ({
               onChange(newStopPoint);
             }}
           >
-            <div className="radio-buttons">
-              <Radio value={StopPlaceMode.FLEXIBLE}>
-                {formatMessage({ id: 'selectCustom' })}
-              </Radio>
-              <Radio value={StopPlaceMode.EXTERNAL}>
-                {formatMessage({ id: 'selectNsr' })}
-              </Radio>
-            </div>
-          </RadioGroup>
-        </div>
-        <div className="stop-point-info">
-          {selectMode === StopPlaceMode.FLEXIBLE && (
-            <Dropdown
-              className="stop-point-dropdown"
-              selectedItem={{
-                value: stopPoint.flexibleStopPlaceRef,
-                label:
-                  flexibleStopPlaces?.find(
-                    (item) => item.id === stopPoint.flexibleStopPlaceRef,
-                  )?.name || '',
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
               }}
-              placeholder={formatMessage({ id: 'defaultOption' })}
-              items={mapToItems(flexibleStopPlaces || [])}
-              clearable
-              labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-              label={formatMessage({ id: 'stopPlace' })}
-              onChange={(e) =>
-                onChange({
-                  ...stopPoint,
-                  flexibleStopPlaceRef: e?.value,
-                })
-              }
-              noMatchesText={formatMessage({
-                id: 'dropdownNoMatchesText',
-              })}
-              {...getErrorFeedback(
-                stopPlaceError ? formatMessage({ id: stopPlaceError }) : '',
-                !stopPlaceError,
-                stopPlacePristine,
-              )}
+            >
+              <FormControlLabel
+                value={StopPlaceMode.FLEXIBLE}
+                control={<Radio />}
+                label={formatMessage({ id: 'selectCustom' })}
+              />
+              <FormControlLabel
+                value={StopPlaceMode.EXTERNAL}
+                control={<Radio />}
+                label={formatMessage({ id: 'selectNsr' })}
+              />
+            </Box>
+          </RadioGroup>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 2,
+            maxWidth: '50rem',
+            flexBasis: '100%',
+          }}
+        >
+          {selectMode === StopPlaceMode.FLEXIBLE && (
+            <FlexibleStopPlaceSelector
+              stopPoint={stopPoint}
+              spoilPristine={spoilPristine}
+              stopPlaceError={stopPlaceError}
+              onChange={onChange}
             />
           )}
 
@@ -176,68 +165,42 @@ export const MixedFlexibleStopPointEditor = ({
             />
           )}
 
-          <FrontTextTextField
-            value={stopPoint.destinationDisplay?.frontText}
-            onChange={onFrontTextChange}
-            disabled={isLast}
-            spoilPristine={spoilPristine}
-            frontTextError={frontTextError}
-            isFirst={isFirst}
-          />
+          <Box sx={{ flex: 1, minWidth: 200 }}>
+            <FrontTextTextField
+              value={stopPoint.destinationDisplay?.frontText}
+              onChange={onFrontTextChange}
+              disabled={isLast}
+              spoilPristine={spoilPristine}
+              frontTextError={frontTextError}
+              isFirst={isFirst}
+            />
+          </Box>
 
-          <BoardingTypeSelect
-            boardingType={selectedBoardingType}
-            onChange={onBoardingTypeChange}
-            error={boardingError}
-          />
-        </div>
+          <Box sx={{ flex: 1, minWidth: 200 }}>
+            <BoardingTypeSelect
+              boardingType={selectedBoardingType}
+              onChange={onBoardingTypeChange}
+              error={boardingError}
+            />
+          </Box>
+        </Box>
         <DeleteButton
           disabled={!canDelete}
           onClick={() => setDeleteDialogOpen(true)}
           title={formatMessage({ id: 'editorDeleteButtonText' })}
         />
 
-        <ConfirmDialog
+        <DeleteStopPointDialog
           isOpen={isDeleteDialogOpen}
-          title={formatMessage({ id: 'deleteStopPointDialogTitle' })}
-          message={formatMessage({ id: 'deleteStopPointDialogMessage' })}
-          buttons={[
-            <SecondaryButton
-              key="no"
-              onClick={() => setDeleteDialogOpen(false)}
-            >
-              {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton key="yes" onClick={onDelete}>
-              {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
-          ]}
-          onDismiss={() => setDeleteDialogOpen(false)}
+          onClose={() => setDeleteDialogOpen(false)}
+          onConfirm={onDelete!}
         />
-      </div>
-      <div>
-        <BookingArrangementEditor
-          trim
-          bookingArrangement={stopPoint.bookingArrangement}
-          spoilPristine={spoilPristine}
-          bookingInfoAttachment={{
-            type: BookingInfoAttachmentType.STOP_POINT_IN_JOURNEYPATTERN,
-            name: stopPoint.flexibleStopPlace?.name! || stopPoint.quayRef!,
-          }}
-          onChange={(bookingArrangement) => {
-            onChange({
-              ...stopPoint,
-              bookingArrangement,
-            });
-          }}
-          onRemove={() => {
-            onChange({
-              ...stopPoint,
-              bookingArrangement: null,
-            });
-          }}
-        />
-      </div>
-    </div>
+      </Box>
+      <StopPointBookingArrangement
+        stopPoint={stopPoint}
+        spoilPristine={spoilPristine}
+        onChange={onChange}
+      />
+    </Box>
   );
 };

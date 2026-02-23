@@ -1,13 +1,13 @@
 import { useIntl } from 'react-intl';
 
 import {
-  DataCell,
-  HeaderCell,
   Table,
   TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-} from '@entur/table';
+} from '@mui/material';
 
 import Line from 'model/Line';
 
@@ -15,7 +15,6 @@ import DeleteButton from 'components/DeleteButton/DeleteButton';
 import Loading from 'components/Loading';
 
 import { Organisation } from 'model/Organisation';
-import './styles.scss';
 
 export type Props = {
   lines?: Line[];
@@ -54,36 +53,38 @@ export default (props: Props) => {
   };
 
   return (
-    <Table className="lines-table">
-      <TableHead>
-        <TableRow>
-          <HeaderCell>{nameTableHeader}</HeaderCell>
-          <HeaderCell>{publicCodeTableHeader}</HeaderCell>
-          <HeaderCell>{privateCodeTableHeader}</HeaderCell>
-          <HeaderCell>{operatorTableHeader}</HeaderCell>
-          <HeaderCell>{brandingTableHeader}</HeaderCell>
-          <HeaderCell>{''}</HeaderCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>{renderTableBody()}</TableBody>
-    </Table>
+    <TableContainer>
+      <Table sx={{ mt: 2.5 }}>
+        <TableHead>
+          <TableRow>
+            <TableCell>{nameTableHeader}</TableCell>
+            <TableCell>{publicCodeTableHeader}</TableCell>
+            <TableCell>{privateCodeTableHeader}</TableCell>
+            <TableCell>{operatorTableHeader}</TableCell>
+            <TableCell>{brandingTableHeader}</TableCell>
+            <TableCell>{''}</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{renderTableBody()}</TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
 const renderNoLinesFound = (noLinesFoundText: string) => {
   return (
-    <TableRow className="row-no-lines disabled">
-      <DataCell colSpan={6}>{noLinesFoundText}</DataCell>
+    <TableRow>
+      <TableCell colSpan={6}>{noLinesFoundText}</TableCell>
     </TableRow>
   );
 };
 
 const renderLoading = (loadingText: string) => {
   return (
-    <TableRow className="disabled">
-      <DataCell colSpan={6}>
-        <Loading className="" text={loadingText} children={null} />
-      </DataCell>
+    <TableRow>
+      <TableCell colSpan={6}>
+        <Loading text={loadingText}>{null}</Loading>
+      </TableCell>
     </TableRow>
   );
 };
@@ -93,17 +94,17 @@ const renderTableRows = (props: Props) => {
 
   return lines?.map((line) => (
     <TableRow key={line.id} onClick={() => onRowClick(line)}>
-      <DataCell title={line.description || undefined}>{line.name}</DataCell>
-      <DataCell>{line.publicCode}</DataCell>
-      <DataCell>{line.privateCode}</DataCell>
-      <DataCell>
+      <TableCell title={line.description || undefined}>{line.name}</TableCell>
+      <TableCell>{line.publicCode}</TableCell>
+      <TableCell>{line.privateCode}</TableCell>
+      <TableCell>
         {organisations?.find((op) => op.id === line.operatorRef)?.name?.value ??
           '-'}
-      </DataCell>
-      <DataCell>{line.branding?.name ?? '-'}</DataCell>
-      <DataCell className="delete-row-cell">
+      </TableCell>
+      <TableCell>{line.branding?.name ?? '-'}</TableCell>
+      <TableCell sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <DeleteButton onClick={() => onDeleteRowClick(line)} title="" thin />
-      </DataCell>
+      </TableCell>
     </TableRow>
   ));
 };

@@ -1,87 +1,17 @@
-@use '@entur/tokens/dist/styles.scss' as *;
-
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Nationale', serif;
-  height: 100vh;
 }
 
 #root {
   height: 100%;
 }
 
-h1 {
-  font-size: 34px;
-  font-weight: 600;
-  line-height: 42px;
-  color: $colors-brand-blue;
-}
-
-h2 {
-  font-size: 28px;
-  font-weight: 600;
-  line-height: 36px;
-  color: $colors-brand-blue;
-}
-
-h3 {
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 30px;
-  color: $colors-brand-blue;
-}
-h4 {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-  color: $colors-brand-blue;
-}
-
-p {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 22px;
-}
-sub {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 22px;
-}
-label {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-}
-table,
-td,
-th {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-}
-
-li {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 30px;
-}
-
-small {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
-}
-
 .positive {
-  color: $colors-validation-mint;
+  color: #1a8e60;
 }
 
 table {
-  tr:hover {
-    cursor: pointer;
-  }
-
   tr.row-no-lines {
     font-style: italic;
     border: 0;
@@ -90,19 +20,5 @@ table {
   tr.disabled:hover {
     background-color: initial;
     cursor: default;
-  }
-}
-
-.eds-stepper {
-  padding-inline-start: 0;
-
-  .eds-stepper__step {
-    width: 100%;
-  }
-
-  li {
-    flex-grow: 1;
-    line-height: inherit;
-    padding-right: 0.25rem;
   }
 }

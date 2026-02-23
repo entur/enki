@@ -1,6 +1,6 @@
 import { StopPlace } from '../../api';
 import { useIntl } from 'react-intl';
-import { Heading5 } from '@entur/typography';
+import { Typography } from '@mui/material';
 
 interface StopPlaceDetailsProps {
   stopPlace: StopPlace;
@@ -13,7 +13,9 @@ const StopPlaceDetails = ({ stopPlace }: StopPlaceDetailsProps) => {
   return (
     <>
       <section>
-        <Heading5 className={'popup-title'}>{stopPlace.name.value}</Heading5>
+        <Typography variant="h5" className={'popup-title'}>
+          {stopPlace.name.value}
+        </Typography>
         <div className={'popup-id'}>{stopPlace.id}</div>
       </section>
 

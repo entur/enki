@@ -1,4 +1,3 @@
-import cx from 'classnames';
 import * as durationLib from 'duration-fns';
 import { useIntl } from 'react-intl';
 import TimeUnitPicker, { TimeUnitPickerPosition } from '../TimeUnitPicker';
@@ -18,7 +17,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const formatDuration = (duration: any, intl: any) => {
+export const formatDuration = (duration: any, intl: any) => {
   const parts = [];
   if (duration.years) {
     parts.push(
@@ -139,7 +138,7 @@ export default (props: Props) => {
       showMinutes={showMinutes}
       showSeconds={showSeconds}
       textValue={parsedDuration?.textValue}
-      className={cx('duration-picker', className)}
+      className={className}
       position={position}
       disabled={disabled}
     />

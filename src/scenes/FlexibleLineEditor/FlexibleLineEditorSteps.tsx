@@ -6,7 +6,6 @@ import ServiceJourneys from 'components/ServiceJourneys';
 import FlexibleLine, { FlexibleLineType } from 'model/FlexibleLine';
 import { Network } from 'model/Network';
 import { Organisation } from 'model/Organisation';
-import './styles.scss';
 import { Branding } from '../../model/Branding';
 import { mapLineModeToStopPlaceMode } from '../../model/enums';
 
@@ -26,7 +25,7 @@ const FlexibleLineEditor = (props: Props) => {
     <>
       {props.activeStep === 0 && (
         <>
-          <section className="general-line-info">
+          <section>
             <General
               line={props.flexibleLine}
               operators={props.operators}

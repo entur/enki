@@ -94,13 +94,31 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
+    testTimeout: 10000,
     setupFiles: ["./src/setupTests.js"],
+    exclude: ['node_modules', 'e2e'],
     reporters: [
       'default',
       ['vitest-sonar-reporter', { outputFile: 'test-report.xml' }],
     ],
     coverage: {
-      reporter: ['lcov'],
+      provider: 'v8',
+      reporter: ['text', 'text-summary', 'lcov', 'html'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: [
+        'src/**/*.test.*',
+        'src/test/**',
+        'src/mocks/**',
+        'src/ext/Fintraffic/**',
+        '**/*.d.ts',
+        'src/i18n/translations/**',
+      ],
+      thresholds: {
+        statements: 38,
+        branches: 31,
+        functions: 31,
+        lines: 38,
+      },
     },
   },
 });

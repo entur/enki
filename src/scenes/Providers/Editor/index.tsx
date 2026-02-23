@@ -1,12 +1,11 @@
-import { SuccessButton, SecondaryButton } from '@entur/button';
-import { TextField } from '@entur/form';
+import { Button, TextField } from '@mui/material';
 import { saveProvider } from 'actions/providers';
 import Loading from 'components/Loading';
 import OverlayLoader from 'components/OverlayLoader';
 import Page from 'components/Page';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useConfig } from 'config/ConfigContext';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import Provider from 'model/Provider';
@@ -14,7 +13,7 @@ import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Params, useNavigate, useParams, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import './styles.scss';
+import Stack from '@mui/material/Stack';
 import { RootState } from '../../../store/store';
 import { fetchUserContext } from '../../../auth/userContextSlice';
 import { useAuth } from '../../../auth/auth';
@@ -87,20 +86,20 @@ const ProviderEditor = () => {
           : formatMessage({ id: 'editorCreateProviderHeaderText' })
       }
     >
-      <div className="provider-editor">
+      <>
         {(provider && (
           <OverlayLoader
-            className=""
             isLoading={isSaving}
             text={formatMessage({ id: 'editorSavingProviderLoadingText' })}
           >
-            <div className="provider-form">
+            <Stack spacing={3} sx={{ maxWidth: 450 }}>
               <RequiredInputMarker />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({ id: 'editorProviderNameLabelText' })}
-                {...getErrorFeedback(
+                {...getMuiErrorProps(
                   formatMessage({ id: 'editorProviderValidationField' }),
                   !isBlank(provider.name),
                   namePristine,
@@ -112,7 +111,8 @@ const ProviderEditor = () => {
               />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({ id: 'editorProviderCodeLabelText' })}
                 value={provider.code ?? ''}
                 disabled={!!params.id}
@@ -127,7 +127,7 @@ const ProviderEditor = () => {
                     },
                   });
                 }}
-                {...getErrorFeedback(
+                {...getMuiErrorProps(
                   formatMessage({ id: 'editorProviderValidationField' }),
                   !isBlank(provider.code),
                   namePristine,
@@ -135,7 +135,8 @@ const ProviderEditor = () => {
               />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorProviderCodespaceXmlnsLabelText',
                 })}
@@ -144,7 +145,8 @@ const ProviderEditor = () => {
               />
 
               <TextField
-                className="form-section"
+                variant="outlined"
+                fullWidth
                 label={formatMessage({
                   id: 'editorProviderCodespaceXmlnsUrlLabelText',
                 })}
@@ -152,8 +154,10 @@ const ProviderEditor = () => {
                 value={provider.codespace?.xmlnsUrl ?? ''}
               />
 
-              <div className="buttons">
-                <SuccessButton
+              <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
+                <Button
+                  variant="contained"
+                  color="success"
                   disabled={!validProvider}
                   onClick={handleOnSaveClick}
                 >
@@ -163,29 +167,29 @@ const ProviderEditor = () => {
                         { id: 'editorDetailedCreate' },
                         { details: formatMessage({ id: 'provider' }) },
                       )}
-                </SuccessButton>
+                </Button>
 
                 {params.id && (
-                  <SecondaryButton
-                    as={Link}
+                  <Button
+                    variant="outlined"
+                    component={Link}
                     to={`/providers/${params.id}/migrate-line`}
                   >
                     Migrate Lines
-                  </SecondaryButton>
+                  </Button>
                 )}
-              </div>
-            </div>
+              </Stack>
+            </Stack>
           </OverlayLoader>
         )) || (
           <Loading
-            className=""
             isLoading={!provider}
             isFullScreen
             children={null}
             text={formatMessage({ id: 'editorLoadingProviderText' })}
           />
         )}
-      </div>
+      </>
     </Page>
   );
 };

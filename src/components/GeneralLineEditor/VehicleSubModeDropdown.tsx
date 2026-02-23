@@ -1,6 +1,9 @@
-import { Dropdown } from '@entur/dropdown';
-import { mapVehicleSubmodeAndLabelToItems } from 'helpers/dropdown';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { Autocomplete, Box, TextField } from '@mui/material';
+import {
+  NormalizedDropdownItemType,
+  mapVehicleSubmodeAndLabelToItems,
+} from 'helpers/dropdown';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import {
@@ -35,29 +38,34 @@ const VehicleSubModeDropdown = (props: Props) => {
     [props.transportMode, formatMessage],
   );
 
+  const items = getSubModeItems();
+
   return (
-    <div key={props.transportMode}>
-      <Dropdown
-        selectedItem={
-          getSubModeItems().find(
-            (item) => item.value === props.transportSubmode,
-          ) || null
+    <Box key={props.transportMode}>
+      <Autocomplete
+        value={
+          items.find((item) => item.value === props.transportSubmode) || null
         }
-        placeholder={formatMessage({ id: 'defaultOption' })}
-        items={getSubModeItems}
-        clearable
-        labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-        label={formatMessage({ id: 'transportSubModeTitle' })}
-        onChange={(element) =>
+        options={items}
+        getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
+        isOptionEqualToValue={(option, value) => option.value === value.value}
+        onChange={(_e, element) =>
           props.submodeChange(element?.value as VEHICLE_SUBMODE)
         }
-        {...getErrorFeedback(
-          formatMessage({ id: 'transportSubModeEmpty' }),
-          !isBlank(props.transportSubmode),
-          submodePristine,
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={formatMessage({ id: 'transportSubModeTitle' })}
+            placeholder={formatMessage({ id: 'defaultOption' })}
+            {...getMuiErrorProps(
+              formatMessage({ id: 'transportSubModeEmpty' }),
+              !isBlank(props.transportSubmode),
+              submodePristine,
+            )}
+          />
         )}
       />
-    </div>
+    </Box>
   );
 };
 

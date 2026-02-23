@@ -1,6 +1,4 @@
-import { SmallAlertBox } from '@entur/alert';
-import { PrimaryButton } from '@entur/button';
-import { Stepper } from '@entur/menu';
+import { Alert, Box, Button, Stepper, Step, StepButton } from '@mui/material';
 import ConfirmDialog from 'components/ConfirmDialog';
 import ConfirmNavigationDialog from 'components/ConfirmNavigationDialog';
 import OverlayLoader from 'components/OverlayLoader';
@@ -8,7 +6,6 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import NavigationButtons from './NavigationButtons';
-import './styles.scss';
 
 type Props = {
   steps: string[];
@@ -83,15 +80,17 @@ export default ({
 
   return (
     <>
-      <Stepper
-        interactive
-        steps={steps}
-        activeIndex={activeStepperIndex}
-        onStepClick={(index) => onStepClicked(index)}
-      />
-      <div className="line-editor">
+      <Stepper activeStep={activeStepperIndex} nonLinear>
+        {steps.map((label, index) => (
+          <Step key={label}>
+            <StepButton onClick={() => onStepClicked(index)}>
+              {label}
+            </StepButton>
+          </Step>
+        ))}
+      </Stepper>
+      <Box sx={{ mt: 3 }}>
         <OverlayLoader
-          className=""
           isLoading={isSaving || isDeleting}
           text={
             isSaving
@@ -99,17 +98,13 @@ export default ({
               : formatMessage({ id: 'editorDeleteLineLoadingText' })
           }
         >
-          <div className="editor-pages">{children(activeStepperIndex)}</div>
+          <Box>{children(activeStepperIndex)}</Box>
           <>
             {otherStepsHasError && spoilPristine && isEdit && (
-              <SmallAlertBox
-                className="step-errors"
-                variant="error"
-                width="fit-content"
-              >
+              <Alert severity="error" sx={{ width: 'fit-content', mt: 6 }}>
                 {formatMessage({ id: 'fixErrorsInTheFollowingSteps' })}
                 {invalidSteps.join(', ')}
-              </SmallAlertBox>
+              </Alert>
             )}
           </>
           <NavigationButtons
@@ -127,7 +122,7 @@ export default ({
             }}
           />
         </OverlayLoader>
-      </div>
+      </Box>
       {showConfirm && (
         <ConfirmNavigationDialog
           hideDialog={() => setShowConfirm(false)}
@@ -140,15 +135,14 @@ export default ({
       )}
       {authoritiesMissing && (
         <ConfirmDialog
-          className="authority-missing-modal"
           isOpen={true}
           title={formatMessage({ id: 'networkAuthorityMissing' })}
           message={formatMessage({ id: 'networkAuthorityMissingDetails' })}
           onDismiss={() => navigate('/')}
           buttons={[
-            <PrimaryButton key="0" onClick={() => navigate('/')}>
+            <Button variant="contained" key="0" onClick={() => navigate('/')}>
               {formatMessage({ id: 'homePage' })}
-            </PrimaryButton>,
+            </Button>,
           ]}
         />
       )}

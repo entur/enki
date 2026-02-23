@@ -1,7 +1,13 @@
-import { PrimaryButton, SecondaryButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { TextField } from '@entur/form';
-import { Modal } from '@entur/modal';
+import {
+  Autocomplete,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography,
+} from '@mui/material';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
@@ -37,63 +43,73 @@ export default (props: Props) => {
   const { formatMessage } = useIntl();
   const textFieldRef = useRef<HTMLInputElement>(null);
 
+  const jpOptions = journeyPatterns.map((jp, i) => ({
+    value: keys[i],
+    label: jp.name || '',
+  }));
+
+  const selectedJpOption = jpOptions[selectedJourneyPatternIndex] ?? null;
+
   return (
-    <Modal
-      size="large"
-      open={open}
-      title={formatMessage({ id: 'newServiceJourneyModalTitle' })}
-      onDismiss={() => setOpen(false)}
-      className="modal"
-    >
-      {formatMessage({ id: 'newServiceJourneyModalSubTitle' })}
-      <div className="modal-content">
+    <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
+      <DialogTitle>
+        {formatMessage({ id: 'newServiceJourneyModalTitle' })}
+      </DialogTitle>
+      <DialogContent>
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          {formatMessage({ id: 'newServiceJourneyModalSubTitle' })}
+        </Typography>
         <TextField
           label={formatMessage({ id: 'newServiceJourneyModalNameLabel' })}
-          className="modal-input"
           placeholder={formatMessage({
             id: 'newServiceJourneyModalPlaceholder',
           })}
-          ref={textFieldRef}
+          inputRef={textFieldRef}
+          variant="outlined"
+          fullWidth
+          sx={{ mb: 2 }}
         />
-        <Dropdown
-          label={formatMessage({
-            id: 'newServiceJourneyModalJourneyPatternLabel',
-          })}
-          className="modal-input"
-          items={journeyPatterns?.map((jp, i) => ({
-            value: keys[i],
-            label: jp.name || '',
-          }))}
-          selectedItem={{
-            value: keys[selectedJourneyPatternIndex],
-            label: journeyPatterns[selectedJourneyPatternIndex].name || '',
+        <Autocomplete
+          options={jpOptions}
+          getOptionLabel={(option) => option.label}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          value={selectedJpOption}
+          onChange={(_event, newValue) => {
+            if (newValue) {
+              setSelectedJourneyPatternIndex(keys.indexOf(newValue.value));
+            }
           }}
-          onChange={(selected) =>
-            setSelectedJourneyPatternIndex(keys.indexOf(selected?.value!))
-          }
+          disableClearable
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={formatMessage({
+                id: 'newServiceJourneyModalJourneyPatternLabel',
+              })}
+              variant="outlined"
+            />
+          )}
         />
-        <div>
-          <SecondaryButton
-            onClick={() => setOpen(false)}
-            className="margin-right"
-          >
-            {formatMessage({ id: 'newServiceJourneyModalCancel' })}
-          </SecondaryButton>
-          <PrimaryButton
-            onClick={() => {
-              const jp = journeyPatterns[selectedJourneyPatternIndex];
-              addNewServiceJourney(
-                textFieldRef?.current?.value ?? '',
-                jp.serviceJourneys,
-                jp.pointsInSequence,
-                selectedJourneyPatternIndex,
-              );
-            }}
-          >
-            {formatMessage({ id: 'newServiceJourneyModalCreate' })}
-          </PrimaryButton>
-        </div>
-      </div>
-    </Modal>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="outlined" onClick={() => setOpen(false)}>
+          {formatMessage({ id: 'newServiceJourneyModalCancel' })}
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            const jp = journeyPatterns[selectedJourneyPatternIndex];
+            addNewServiceJourney(
+              textFieldRef?.current?.value ?? '',
+              jp.serviceJourneys,
+              jp.pointsInSequence,
+              selectedJourneyPatternIndex,
+            );
+          }}
+        >
+          {formatMessage({ id: 'newServiceJourneyModalCreate' })}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };

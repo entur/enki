@@ -1,19 +1,24 @@
-import { FilterChip } from '@entur/chip';
 import {
-  TimePicker,
-  nativeDateToTimeValue,
-  timeOrDateValueToNativeDate,
-} from '@entur/datepicker';
-import { Dropdown } from '@entur/dropdown';
-import { Fieldset, Radio, RadioGroup, TextArea, TextField } from '@entur/form';
-import { Label, LeadParagraph } from '@entur/typography';
-import { TimeValue } from '@react-types/datepicker';
-import { CalendarDateTime } from '@internationalized/date';
+  Autocomplete,
+  Chip,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import DurationPicker from 'components/DurationPicker';
 import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
-import { getCurrentDateTime } from '../../utils/dates';
+
 import { addOrRemove } from 'helpers/arrays';
-import { getEnumInit, mapEnumToItems } from 'helpers/dropdown';
+import {
+  getEnumInit,
+  mapEnumToItems,
+  NormalizedDropdownItemType,
+} from 'helpers/dropdown';
 import BookingArrangement from 'model/BookingArrangement';
 import Contact from 'model/Contact';
 import {
@@ -28,7 +33,8 @@ import {
 import { ChangeEvent, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { BookingInfoAttachment, bookingInfoAttachmentLabel } from './constants';
-import './styles.scss';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 type Props = {
   onChange: (bookingArrangement: BookingArrangement | undefined) => void;
@@ -39,7 +45,7 @@ type Props = {
 
 export default (props: Props) => {
   const intl = useIntl();
-  const { formatMessage, locale } = intl;
+  const { formatMessage } = intl;
   const {
     bookingArrangement,
     onChange,
@@ -59,15 +65,12 @@ export default (props: Props) => {
     minimumBookingPeriod,
   } = bookingArrangement;
 
-  let latestbookingTimeAsDate: CalendarDateTime | undefined = undefined;
+  let latestbookingTimeAsDate: Date | null = null;
   if (latestBookingTime && latestBookingTime !== '') {
-    const currentDateTime = getCurrentDateTime();
     const [hours, minutes] = latestBookingTime.split(':').map(Number);
-    latestbookingTimeAsDate = currentDateTime.copy();
-    latestbookingTimeAsDate.set({
-      hour: hours,
-      minute: minutes,
-    });
+    const d = new Date();
+    d.setHours(hours, minutes, 0, 0);
+    latestbookingTimeAsDate = d;
   }
 
   const onContactChange = (contact: Contact) =>
@@ -121,199 +124,268 @@ export default (props: Props) => {
       minimumBookingPeriod: period,
     });
 
+  const bookingAccessItems = mapEnumToItems(BOOKING_ACCESS);
+  const purchaseWhenItems = mapEnumToItems(PURCHASE_WHEN);
+
   return (
-    <div className="booking-editor">
-      <LeadParagraph>{formatMessage({ id: 'bookingInfoText' })}</LeadParagraph>
-      <Label>
-        <i>{formatMessage({ id: 'bookingLabel' })} </i>
-      </Label>
+    <Box>
+      <Typography variant="subtitle1">
+        {formatMessage({ id: 'bookingInfoText' })}
+      </Typography>
+      <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
+        {formatMessage({ id: 'bookingLabel' })}{' '}
+      </Typography>
 
       {bookingInfoAttachmentType && bookingInfoAttachmentName && (
-        <section className="booking-contact-info">
-          <TextField
-            label={bookingInfoAttachmentLabel(bookingInfoAttachmentType)}
-            value={bookingInfoAttachmentName}
-            disabled
-          />
-        </section>
+        <Grid container spacing={3} sx={{ mt: 1 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              label={bookingInfoAttachmentLabel(bookingInfoAttachmentType)}
+              value={bookingInfoAttachmentName}
+              disabled
+              fullWidth
+            />
+          </Grid>
+        </Grid>
       )}
 
-      <section className="booking-contact-info">
-        <TextField
-          label={formatMessage({ id: 'contactFieldsContactPersonTitle' })}
-          defaultValue={bookingContact?.contactPerson ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({
-              ...bookingContact,
-              contactPerson: e.target.value,
-            })
-          }
-        />
-
-        <TextField
-          label={formatMessage({ id: 'contactFieldsEmailTitle' })}
-          defaultValue={bookingContact?.email ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({ ...bookingContact, email: e.target.value })
-          }
-        />
-
-        <TextField
-          label={formatMessage({ id: 'contactFieldsPhoneTitle' })}
-          defaultValue={bookingContact?.phone ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({ ...bookingContact, phone: e.target.value })
-          }
-        />
-
-        <TextField
-          label={formatMessage({ id: 'contactFieldsUrlTitle' })}
-          value={bookingContact?.url ?? ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({ ...bookingContact, url: e.target.value })
-          }
-        />
-
-        <TextArea
-          label={formatMessage({ id: 'bookingNoteFieldTitle' })}
-          labelTooltip={formatMessage({ id: 'bookingNoteTooltip' })}
-          style={{ width: '100%' }}
-          value={bookingNote ?? ''}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            onChange({ ...bookingArrangement, bookingNote: e.target.value })
-          }
-        />
-
-        <Dropdown
-          label={formatMessage({ id: 'bookingAccessSelectionTitle' })}
-          selectedItem={getEnumInit(bookingAccess)}
-          placeholder={formatMessage({ id: 'defaultOption' })}
-          items={mapEnumToItems(BOOKING_ACCESS)}
-          clearable
-          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-          onChange={(e) =>
-            onChange({
-              ...bookingArrangement,
-              bookingAccess: e?.value as BOOKING_ACCESS,
-            })
-          }
-        />
-
-        <TextField
-          label={formatMessage({ id: 'contactFieldsFurtherDetailsTitle' })}
-          value={bookingContact?.furtherDetails || ''}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onContactChange({
-              ...bookingContact,
-              furtherDetails: e.target.value,
-            })
-          }
-        />
-      </section>
-
-      <section className="booking-time-info">
-        <Dropdown
-          disabled={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
-          label={formatMessage({ id: 'bookingTimeSelectionTitle' })}
-          selectedItem={getEnumInit(bookWhen)}
-          placeholder={formatMessage({ id: 'defaultOption' })}
-          items={mapEnumToItems(PURCHASE_WHEN)}
-          clearable
-          labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-          onChange={(e) => {
-            onBookingLimitTypeChange(
-              e?.value ? BOOKING_LIMIT_TYPE.TIME : BOOKING_LIMIT_TYPE.NONE,
-            );
-            onChange({
-              ...bookingArrangement,
-              bookWhen: e?.value as PURCHASE_WHEN,
-            });
-          }}
-        />
-
-        <RadioGroup
-          name="booking-limit-type"
-          label={formatMessage({ id: 'bookingLimitFieldsHeaderLabel' })}
-          onChange={(e) =>
-            onBookingLimitTypeChange(e?.target?.value as BOOKING_LIMIT_TYPE)
-          }
-          value={bookingLimitType}
-        >
-          <Radio value={BOOKING_LIMIT_TYPE.NONE}>
-            {formatMessage({ id: 'bookingLimitTypeNoneRadioButtonLabel' })}
-          </Radio>
-
-          <Radio value={BOOKING_LIMIT_TYPE.TIME}>
-            {formatMessage({
-              id: 'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel',
-            })}
-          </Radio>
-
-          <TimePicker
-            label=""
-            locale={locale}
-            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
-            selectedTime={
-              latestbookingTimeAsDate ? latestbookingTimeAsDate : null
+      <Grid container spacing={3} sx={{ mt: 1 }}>
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsContactPersonTitle' })}
+            defaultValue={bookingContact?.contactPerson ?? ''}
+            fullWidth
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({
+                ...bookingContact,
+                contactPerson: e.target.value,
+              })
             }
-            onChange={(date: TimeValue | null) => {
-              let formattedDate;
+          />
+        </Grid>
 
-              if (date != null) {
-                formattedDate = `${date.hour}:${date.minute}`;
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsEmailTitle' })}
+            defaultValue={bookingContact?.email ?? ''}
+            fullWidth
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({ ...bookingContact, email: e.target.value })
+            }
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsPhoneTitle' })}
+            defaultValue={bookingContact?.phone ?? ''}
+            fullWidth
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({ ...bookingContact, phone: e.target.value })
+            }
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsUrlTitle' })}
+            value={bookingContact?.url ?? ''}
+            fullWidth
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({ ...bookingContact, url: e.target.value })
+            }
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12 }}>
+          <TextField
+            multiline
+            rows={4}
+            label={formatMessage({ id: 'bookingNoteFieldTitle' })}
+            fullWidth
+            value={bookingNote ?? ''}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              onChange({ ...bookingArrangement, bookingNote: e.target.value })
+            }
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <Autocomplete
+            fullWidth
+            value={getEnumInit(bookingAccess)}
+            options={bookingAccessItems}
+            getOptionLabel={(option: NormalizedDropdownItemType) =>
+              option.label
+            }
+            isOptionEqualToValue={(option, value) =>
+              option.value === value.value
+            }
+            onChange={(_e, item) =>
+              onChange({
+                ...bookingArrangement,
+                bookingAccess: item?.value as BOOKING_ACCESS,
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={formatMessage({ id: 'bookingAccessSelectionTitle' })}
+                placeholder={formatMessage({ id: 'defaultOption' })}
+              />
+            )}
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={formatMessage({ id: 'contactFieldsFurtherDetailsTitle' })}
+            value={bookingContact?.furtherDetails || ''}
+            fullWidth
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onContactChange({
+                ...bookingContact,
+                furtherDetails: e.target.value,
+              })
+            }
+          />
+        </Grid>
+      </Grid>
+
+      <Box sx={{ mt: 3 }}>
+        <Grid container spacing={3} sx={{ mb: 2 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <Autocomplete
+              fullWidth
+              disabled={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
+              value={getEnumInit(bookWhen)}
+              options={purchaseWhenItems}
+              getOptionLabel={(option: NormalizedDropdownItemType) =>
+                option.label
               }
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              onChange={(_e, item) => {
+                onBookingLimitTypeChange(
+                  item?.value
+                    ? BOOKING_LIMIT_TYPE.TIME
+                    : BOOKING_LIMIT_TYPE.NONE,
+                );
+                onChange({
+                  ...bookingArrangement,
+                  bookWhen: item?.value as PURCHASE_WHEN,
+                });
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={formatMessage({ id: 'bookingTimeSelectionTitle' })}
+                  placeholder={formatMessage({ id: 'defaultOption' })}
+                />
+              )}
+            />
+          </Grid>
+        </Grid>
 
-              onLatestBookingTimeChange(formattedDate);
-            }}
-          />
+        <FormControl component="fieldset" sx={{ mt: 3 }}>
+          <FormLabel>
+            {formatMessage({ id: 'bookingLimitFieldsHeaderLabel' })}
+          </FormLabel>
+          <RadioGroup
+            name="booking-limit-type"
+            onChange={(e) =>
+              onBookingLimitTypeChange(e?.target?.value as BOOKING_LIMIT_TYPE)
+            }
+            value={bookingLimitType}
+          >
+            <FormControlLabel
+              value={BOOKING_LIMIT_TYPE.NONE}
+              control={<Radio />}
+              label={formatMessage({
+                id: 'bookingLimitTypeNoneRadioButtonLabel',
+              })}
+            />
 
-          <Radio value={BOOKING_LIMIT_TYPE.PERIOD}>
-            {formatMessage({
-              id: 'bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel',
-            })}
-          </Radio>
+            <FormControlLabel
+              value={BOOKING_LIMIT_TYPE.TIME}
+              control={<Radio />}
+              label={formatMessage({
+                id: 'bookingLimitFieldsBookingLimitTypeTimeRadioButtonLabel',
+              })}
+            />
 
-          <DurationPicker
-            duration={minimumBookingPeriod}
-            resetOnZero
-            disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
-            position={TimeUnitPickerPosition.ABOVE}
-            showYears={false}
-            showMonths={false}
-            onChange={(period?: string) => onMinimumBookingPeriodChange(period)}
-          />
-        </RadioGroup>
+            <TimePicker
+              label=""
+              disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.TIME}
+              value={latestbookingTimeAsDate}
+              onChange={(date: Date | null) => {
+                let formattedDate;
 
-        <Fieldset label={formatMessage({ id: 'bookingMethodSelectionTitle' })}>
-          <div className="filter-chip-list">
+                if (date != null) {
+                  formattedDate = `${date.getHours()}:${date.getMinutes()}`;
+                }
+
+                onLatestBookingTimeChange(formattedDate);
+              }}
+            />
+
+            <FormControlLabel
+              value={BOOKING_LIMIT_TYPE.PERIOD}
+              control={<Radio />}
+              label={formatMessage({
+                id: 'bookingLimitFieldsBookingLimitTypePeriodRadioButtonLabel',
+              })}
+            />
+
+            <DurationPicker
+              duration={minimumBookingPeriod}
+              resetOnZero
+              disabled={bookingLimitType !== BOOKING_LIMIT_TYPE.PERIOD}
+              position={TimeUnitPickerPosition.ABOVE}
+              showYears={false}
+              showMonths={false}
+              onChange={(period?: string) =>
+                onMinimumBookingPeriodChange(period)
+              }
+            />
+          </RadioGroup>
+        </FormControl>
+
+        <FormControl component="fieldset" sx={{ mt: 3 }}>
+          <FormLabel>
+            {formatMessage({ id: 'bookingMethodSelectionTitle' })}
+          </FormLabel>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {Object.values(BOOKING_METHOD).map((v) => (
-              <FilterChip
-                value={v}
+              <Chip
                 key={v}
-                checked={bookingMethods?.includes(v)}
+                label={formatMessage({ id: bookingMethodMessages[v] })}
+                variant={bookingMethods?.includes(v) ? 'filled' : 'outlined'}
+                color={bookingMethods?.includes(v) ? 'primary' : 'default'}
                 onClick={() => onBookingMethodChange(v)}
-              >
-                {formatMessage({ id: bookingMethodMessages[v] })}
-              </FilterChip>
+              />
             ))}
-          </div>
-        </Fieldset>
+          </Box>
+        </FormControl>
 
-        <Fieldset label={formatMessage({ id: 'paymentSelectionTitle' })}>
-          <div className="filter-chip-list">
+        <FormControl component="fieldset" sx={{ mt: 3 }}>
+          <FormLabel>
+            {formatMessage({ id: 'paymentSelectionTitle' })}
+          </FormLabel>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {Object.values(PURCHASE_MOMENT).map((v) => (
-              <FilterChip
-                value={v}
+              <Chip
                 key={v}
-                checked={buyWhen?.includes(v)}
+                label={formatMessage({ id: paymentTimeMessages[v] })}
+                variant={buyWhen?.includes(v) ? 'filled' : 'outlined'}
+                color={buyWhen?.includes(v) ? 'primary' : 'default'}
                 onClick={() => onPurchaseMomentChange(v)}
-              >
-                {formatMessage({ id: paymentTimeMessages[v] })}
-              </FilterChip>
+              />
             ))}
-          </div>
-        </Fieldset>
-      </section>
-    </div>
+          </Box>
+        </FormControl>
+      </Box>
+    </Box>
   );
 };

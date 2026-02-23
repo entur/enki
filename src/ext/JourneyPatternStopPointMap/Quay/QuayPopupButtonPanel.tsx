@@ -1,5 +1,5 @@
-import { Button, SecondaryButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
+import { Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import React from 'react';
 import { useIntl } from 'react-intl';
 
@@ -45,15 +45,14 @@ const QuayPopupButtonPanel = ({
           // To avoid grey area on the map once the container gets bigger in the height:
           window.dispatchEvent(new Event('resize'));
         }}
-        width="auto"
-        variant="primary"
+        variant="contained"
         size="small"
+        startIcon={<AddIcon />}
       >
-        <AddIcon />
         {formatMessage({ id: 'addToJourneyPattern' })}
       </Button>
       {hasSelectedQuay && hasNonSelectedQuays ? (
-        <SecondaryButton
+        <Button
           className={'popup-button'}
           style={{
             marginLeft: '0.5rem',
@@ -68,28 +67,28 @@ const QuayPopupButtonPanel = ({
             }
             hideNonSelectedQuays(!hideNonSelectedQuaysState);
           }}
-          width="auto"
+          variant="outlined"
           size="small"
         >
           {hideNonSelectedQuaysState
             ? formatMessage({ id: 'showNonSelectedQuays' })
             : formatMessage({ id: 'hideNonSelectedQuays' })}
-        </SecondaryButton>
+        </Button>
       ) : (
         ''
       )}
       {!hasSelectedQuay && quaysTotalCount > 1 ? (
-        <SecondaryButton
+        <Button
           className={'popup-button'}
           style={{
             marginLeft: '0.5rem',
           }}
           onClick={() => showQuays(false)}
-          width="auto"
+          variant="outlined"
           size="small"
         >
           {formatMessage({ id: 'hideQuays' })}
-        </SecondaryButton>
+        </Button>
       ) : (
         ''
       )}

@@ -1,4 +1,4 @@
-import { TextField } from '@entur/form';
+import { TextField } from '@mui/material';
 import { useQuaySearch } from 'api/useQuaySearch';
 import { ErrorHandling } from 'helpers/errorHandling';
 import StopPoint from 'model/StopPoint';
@@ -75,19 +75,28 @@ export const QuayRefField = ({
     }
   }, [initialQuayRef]);
 
+  // Determine error state: errorFeedback takes precedence over quaySearchFeedback
+  const hasError =
+    errorFeedback.variant === 'error' && !!errorFeedback.feedback;
+  const helperText = hasError
+    ? errorFeedback.feedback
+    : quaySearchFeedback.feedback || '';
+
   return (
     <TextField
-      className="stop-point-info-item"
+      fullWidth
       label={formatMessage({ id: 'labelQuayRef' })}
-      {...errorFeedback}
-      {...quaySearchFeedback}
+      error={hasError}
+      helperText={helperText}
       value={quayRefInputValue ?? ''}
       placeholder="NSR:Quay:69"
       onChange={(e: ChangeEvent<HTMLInputElement>) => {
         setQuayRefInputValue(e.target.value);
         debouncedSearchForQuay(e.target.value);
       }}
-      onBlur={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+      onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+        onChange(e.target.value)
+      }
     />
   );
 };

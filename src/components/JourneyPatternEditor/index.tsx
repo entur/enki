@@ -1,4 +1,4 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
+import { Box, Button, Stack } from '@mui/material';
 import ConfirmDialog from 'components/ConfirmDialog';
 import RequiredInputMarker from 'components/RequiredInputMarker';
 import { useStopPointsEditor } from 'components/StopPointsEditor';
@@ -9,7 +9,6 @@ import StopPoint from 'model/StopPoint';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import General from './General';
-import './styles.scss';
 import { useConfig } from '../../config/ConfigContext';
 import { VEHICLE_MODE } from '../../model/enums';
 import ServiceJourney from '../../model/ServiceJourney';
@@ -24,7 +23,7 @@ type Props = {
   journeyPattern: JourneyPattern;
   onSave: (journeyPattern: JourneyPattern) => void;
   onDelete?: () => void;
-  onCopy: (jpName: string) => void;
+  onCopy?: (jpName: string) => void;
   spoilPristine: boolean;
   flexibleLineType?: FlexibleLineType;
   transportMode?: VEHICLE_MODE;
@@ -183,8 +182,8 @@ const JourneyPatternEditor = ({
   const StopPointsEditor = useStopPointsEditor(flexibleLineType);
 
   return (
-    <div className="journey-pattern-editor">
-      <div style={{ width: '100%' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box sx={{ width: '100%' }}>
         <section>
           <RequiredInputMarker />
           <General
@@ -210,21 +209,23 @@ const JourneyPatternEditor = ({
           initDefaultJourneyPattern={initDefaultJourneyPattern}
           swapStopPoints={swapStopPoints}
         />
-      </div>
-      <div className="journey-pattern-editor-action-chips">
-        {onDelete && (
-          <DeleteActionChip
-            className="journey-pattern-editor-action-chip"
-            onClick={() => setShowDeleteDialog(true)}
-            title={formatMessage({ id: 'editorDeleteButtonText' })}
-          />
-        )}
-        <CopyActionChip
-          className="journey-pattern-editor-action-chip"
-          title={formatMessage({ id: 'editorCopyButtonText' })}
-          onClick={() => setShowCopyDialog(true)}
-        />
-      </div>
+      </Box>
+      {(onDelete || onCopy) && (
+        <Stack direction="row" spacing={2}>
+          {onDelete && (
+            <DeleteActionChip
+              onClick={() => setShowDeleteDialog(true)}
+              title={formatMessage({ id: 'editorDeleteButtonText' })}
+            />
+          )}
+          {onCopy && (
+            <CopyActionChip
+              title={formatMessage({ id: 'editorCopyButtonText' })}
+              onClick={() => setShowCopyDialog(true)}
+            />
+          )}
+        </Stack>
+      )}
 
       {showDeleteDialog && onDelete && (
         <ConfirmDialog
@@ -232,17 +233,26 @@ const JourneyPatternEditor = ({
           title={formatMessage({ id: 'journeyPatternDeleteDialogTitle' })}
           message={formatMessage({ id: 'journeyPatternDeleteDialogMessage' })}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setShowDeleteDialog(false)}
+            >
               {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={onDelete}>
+            </Button>,
+            <Button
+              variant="contained"
+              color="error"
+              key={1}
+              onClick={onDelete}
+            >
               {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setShowDeleteDialog(false)}
         />
       )}
-      {showCopyDialog && (
+      {onCopy && showCopyDialog && (
         <CopyDialog
           open={showCopyDialog}
           journeyPattern={journeyPattern}
@@ -254,7 +264,7 @@ const JourneyPatternEditor = ({
           validateJourneyPatternName={validateJourneyPatternName}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

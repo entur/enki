@@ -1,10 +1,7 @@
-import { NegativeButton, SuccessButton } from '@entur/button';
-import { Dropdown } from '@entur/dropdown';
-import { TextField } from '@entur/form';
-import cx from 'classnames';
+import { Button, TextField, Autocomplete, useTheme } from '@mui/material';
+import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
-import './styles.scss';
 
 export enum TimeUnitPickerPosition {
   ABOVE = 'above',
@@ -54,9 +51,9 @@ export default (props: Props) => {
     disabled = false,
   } = props;
 
-  const classNames = cx(className, 'time-unit-picker');
-  const containerClassNames = cx('pickers-container', position);
+  const classNames = className || '';
 
+  const theme = useTheme();
   const { formatMessage } = useIntl();
 
   const [isOpen, setOpen] = useState(false);
@@ -93,14 +90,29 @@ export default (props: Props) => {
   });
 
   return (
-    <div className={classNames}>
+    <div className={classNames} style={{ position: 'relative' }}>
       <div ref={triggerEl}>
-        <TextField label="" value={textValue} readOnly={true} />
+        <TextField
+          label=""
+          value={textValue}
+          slotProps={{ input: { readOnly: true } }}
+        />
       </div>
 
       {isOpen && (
-        <div className={containerClassNames} ref={pickerEl}>
-          <div className="pickers">
+        <div
+          style={{
+            position: 'absolute',
+            zIndex: 100,
+            width: 400,
+            padding: 25,
+            backgroundColor: theme.palette.grey[100],
+            textAlign: 'center',
+            ...(position === 'above' ? { bottom: 60 } : { marginTop: 15 }),
+          }}
+          ref={pickerEl}
+        >
+          <div>
             {showYears && (
               <Picker
                 label={formatMessage({ id: 'timeUnitPickerYearsLabel' })}
@@ -156,21 +168,34 @@ export default (props: Props) => {
             )}
           </div>
 
-          <div className="buttons">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: 35,
+              gap: 12,
+            }}
+          >
             {onReset && (
-              <NegativeButton
+              <Button
+                variant="contained"
+                color="error"
                 onClick={() => {
                   onReset();
                   setOpen(false);
                 }}
               >
                 {formatMessage({ id: 'timeUnitPickerResetLabel' })}
-              </NegativeButton>
+              </Button>
             )}
 
-            <SuccessButton onClick={() => setOpen(false)}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => setOpen(false)}
+            >
               {formatMessage({ id: 'timeUnitPickerDoneLabel' })}
-            </SuccessButton>
+            </Button>
           </div>
         </div>
       )}
@@ -192,16 +217,18 @@ const Picker = ({ label, value, onChange, nrOfOptions }: PickerProps) => {
   }));
 
   return (
-    <div className="picker">
-      <Dropdown
-        items={options}
-        label={label}
-        selectedItem={{
+    <div style={{ marginBottom: 20, fontWeight: 500 }}>
+      <Autocomplete
+        options={options}
+        getOptionLabel={(option: NormalizedDropdownItemType) => option.label}
+        isOptionEqualToValue={(option, val) => option.value === val.value}
+        value={{
           value: `${value}`,
           label: `${value < 10 ? '0' + value : value}`,
         }}
-        onChange={(e) => onChange(parseInt(e?.value || ''))}
-        placeholder={value.toString()}
+        onChange={(_e, item) => onChange(Number.parseInt(item?.value || '0'))}
+        disableClearable
+        renderInput={(params) => <TextField {...params} label={label} />}
       />
     </div>
   );

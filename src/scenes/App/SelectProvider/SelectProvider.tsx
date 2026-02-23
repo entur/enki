@@ -6,7 +6,13 @@ import {
   ACTIVE_PROVIDER,
 } from '../../../auth/userContextSlice';
 import { sortProviders } from '../../../model/Provider';
-import { Dropdown } from '@entur/dropdown';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+
+type ProviderOption = {
+  value: string;
+  label: string;
+};
 
 export const SelectProvider = () => {
   const navigate = useNavigate();
@@ -27,7 +33,7 @@ export const SelectProvider = () => {
 
   const active = providers?.find(({ code }) => code === activeProviderCode);
 
-  const items = providers
+  const items: ProviderOption[] = providers
     ? providers
         .slice()
         .sort(sortProviders)
@@ -37,21 +43,31 @@ export const SelectProvider = () => {
         }))
     : [];
 
+  const selectedItem =
+    items.find((item) => item.value === active?.code) ?? null;
+
   return (
     <>
       {providers && (
-        <Dropdown
-          className="provider-wrapper"
-          items={() => items}
-          label={formatMessage({ id: 'navBarDataProvider' })}
-          selectedItem={{
-            value: active?.code,
-            label: active?.name ?? '',
-          }}
-          onChange={(e) => handleActiveProviderChange(e?.value)}
-          noMatchesText={formatMessage({
+        <Autocomplete
+          size="small"
+          options={items}
+          getOptionLabel={(option) => option.label}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          value={selectedItem}
+          onChange={(_event, newValue) =>
+            handleActiveProviderChange(newValue?.value)
+          }
+          noOptionsText={formatMessage({
             id: 'dropdownNoMatchesText',
           })}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              size="small"
+              label={formatMessage({ id: 'navBarDataProvider' })}
+            />
+          )}
         />
       )}
     </>

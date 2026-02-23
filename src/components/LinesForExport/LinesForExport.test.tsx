@@ -11,8 +11,13 @@ import {
   getAllByRole,
   getByText,
   render,
+  screen,
 } from 'utils/test-utils';
-import LinesForExport from '.';
+import LinesForExport, {
+  compareExportableLines,
+  mapStatusToTextWithUndefined,
+  ExportableLine,
+} from '.';
 
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
@@ -216,5 +221,200 @@ describe('LinesForExport', () => {
     await wait();
 
     expect(mockedOnChange).toHaveBeenCalledWith(selectableLineAssociations);
+  });
+
+  it('sorts by name when clicking Line header', async () => {
+    await wait();
+
+    const lineHeader = screen.getByText('Line');
+    fireEvent.click(lineHeader);
+
+    const rows = renderResult.container.querySelectorAll('tbody tr');
+    expect(rows.length).toBe(3);
+    // Ascending alphabetical order: "Test flexible line", "Test line", "Test unavailable line"
+    expect(
+      getByText(rows[0] as HTMLElement, 'Test flexible line'),
+    ).toBeInTheDocument();
+    expect(getByText(rows[1] as HTMLElement, 'Test line')).toBeInTheDocument();
+    expect(
+      getByText(rows[2] as HTMLElement, 'Test unavailable line'),
+    ).toBeInTheDocument();
+  });
+
+  it('toggles sort direction on second click', async () => {
+    await wait();
+
+    const lineHeader = screen.getByText('Line');
+    fireEvent.click(lineHeader); // asc
+    fireEvent.click(lineHeader); // desc
+
+    const rows = renderResult.container.querySelectorAll('tbody tr');
+    // Descending order: "Test unavailable line", "Test line", "Test flexible line"
+    expect(
+      getByText(rows[0] as HTMLElement, 'Test unavailable line'),
+    ).toBeInTheDocument();
+    expect(
+      getByText(rows[2] as HTMLElement, 'Test flexible line'),
+    ).toBeInTheDocument();
+  });
+
+  it('shows indeterminate checkbox when some lines are deselected', async () => {
+    await wait();
+
+    // Deselect one selectable line
+    clickCheckbox(renderResult.container, 1);
+
+    const allCheckbox = getAllByRole(renderResult.container, 'checkbox')[0];
+    expect(allCheckbox).toHaveAttribute('data-indeterminate', 'true');
+  });
+
+  it('sorts by status column', async () => {
+    await wait();
+
+    const statusHeader = screen.getByText('Status');
+    fireEvent.click(statusHeader);
+
+    const rows = renderResult.container.querySelectorAll('tbody tr');
+    expect(rows.length).toBe(3);
+    // Ascending alphabetical: "negative" < "neutral" < "positive"
+    // secondLine (negative), flexibleLine (neutral), line (positive)
+    expect(
+      getByText(rows[0] as HTMLElement, 'Test unavailable line'),
+    ).toBeInTheDocument();
+    expect(
+      getByText(rows[1] as HTMLElement, 'Test flexible line'),
+    ).toBeInTheDocument();
+    expect(getByText(rows[2] as HTMLElement, 'Test line')).toBeInTheDocument();
+  });
+
+  it('sorts by availability (to) column using non-string comparison', async () => {
+    await wait();
+
+    const availabilityHeader = screen.getByText('Availability');
+    fireEvent.click(availabilityHeader);
+
+    const rows = renderResult.container.querySelectorAll('tbody tr');
+    expect(rows.length).toBe(3);
+    // Ascending by CalendarDate 'to': secondLine (today-10), flexibleLine (today+10), line (today+130)
+    expect(
+      getByText(rows[0] as HTMLElement, 'Test unavailable line'),
+    ).toBeInTheDocument();
+    expect(
+      getByText(rows[1] as HTMLElement, 'Test flexible line'),
+    ).toBeInTheDocument();
+    expect(getByText(rows[2] as HTMLElement, 'Test line')).toBeInTheDocument();
+  });
+});
+
+describe('LinesForExport with empty journey patterns', () => {
+  const emptyLine = {
+    id: 'TST:Line:3',
+    name: 'Empty line',
+    journeyPatterns: [],
+  };
+
+  const emptyMocks = [
+    {
+      request: { query: GET_LINES_FOR_EXPORT },
+      result: {
+        data: {
+          lines: [emptyLine],
+          flexibleLines: [],
+        },
+      },
+      delay: 30,
+    },
+  ];
+
+  it('renders line with empty journey patterns as disabled', async () => {
+    const onChange = vi.fn();
+    const { container } = render(
+      <MockedProvider
+        mocks={emptyMocks}
+        defaultOptions={{
+          watchQuery: { fetchPolicy: 'no-cache' },
+          query: { fetchPolicy: 'no-cache' },
+        }}
+      >
+        <MemoryRouter>
+          <LinesForExport onChange={onChange} />
+        </MemoryRouter>
+      </MockedProvider>,
+    );
+    await wait();
+
+    expect(getByText(container, 'Empty line')).toBeInTheDocument();
+    const checkboxes = getAllByRole(container, 'checkbox');
+    // The line checkbox (index 1, after "all" checkbox) should be disabled
+    expect(checkboxes[1]).toBeDisabled();
+    // onChange should have been called with empty array (no selectable lines)
+    expect(onChange).toHaveBeenCalledWith([]);
+  });
+});
+
+describe('compareExportableLines', () => {
+  const makeLine = (overrides: Partial<ExportableLine>): ExportableLine => ({
+    id: 'test',
+    name: 'Test',
+    status: 'positive',
+    from: getCurrentDate(),
+    to: getCurrentDate(),
+    selected: true,
+    ...overrides,
+  });
+
+  it('returns 0 when both values are null', () => {
+    const a = makeLine({ name: undefined as any });
+    const b = makeLine({ name: undefined as any });
+    expect(compareExportableLines(a, b, 'name', 'asc')).toBe(0);
+  });
+
+  it('returns 1 when first value is null', () => {
+    const a = makeLine({ name: undefined as any });
+    const b = makeLine({ name: 'B' });
+    expect(compareExportableLines(a, b, 'name', 'asc')).toBe(1);
+  });
+
+  it('returns -1 when second value is null', () => {
+    const a = makeLine({ name: 'A' });
+    const b = makeLine({ name: undefined as any });
+    expect(compareExportableLines(a, b, 'name', 'asc')).toBe(-1);
+  });
+
+  it('compares strings ascending', () => {
+    const a = makeLine({ name: 'Alpha' });
+    const b = makeLine({ name: 'Beta' });
+    expect(compareExportableLines(a, b, 'name', 'asc')).toBeLessThan(0);
+  });
+
+  it('compares strings descending', () => {
+    const a = makeLine({ name: 'Alpha' });
+    const b = makeLine({ name: 'Beta' });
+    expect(compareExportableLines(a, b, 'name', 'desc')).toBeGreaterThan(0);
+  });
+
+  it('compares non-string values (CalendarDate) ascending', () => {
+    const a = makeLine({ to: getCurrentDate() });
+    const b = makeLine({ to: getCurrentDate().add({ days: 10 }) });
+    expect(compareExportableLines(a, b, 'to', 'asc')).toBeLessThan(0);
+  });
+
+  it('compares non-string values descending', () => {
+    const a = makeLine({ to: getCurrentDate() });
+    const b = makeLine({ to: getCurrentDate().add({ days: 10 }) });
+    expect(compareExportableLines(a, b, 'to', 'desc')).toBeGreaterThan(0);
+  });
+
+  it('returns 0 when non-string values are equal', () => {
+    const date = getCurrentDate();
+    const a = makeLine({ to: date });
+    const b = makeLine({ to: date });
+    expect(compareExportableLines(a, b, 'to', 'asc')).toBe(0);
+  });
+});
+
+describe('mapStatusToTextWithUndefined', () => {
+  it('returns "Unknown" for undefined status', () => {
+    expect(mapStatusToTextWithUndefined(undefined)).toBe('Unknown');
   });
 });
