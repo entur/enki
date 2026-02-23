@@ -9,37 +9,15 @@
     }
   },
   "supportedFlexibleLineTypes": ["mixedFlexible", "flexibleAreasOnly", "fixed"],
-  "extPath": "Fintraffic",
-  "defaultLocale": "fi",
-  "supportedLocales": ["fi", "sv", "en"],
-  "disableAutomaticLoginRedirect": true,
-  "hideExportDryRun": true,
+  "routeGeometrySupportedVehicleModes": ["bus", "coach", "taxi", "rail", "water"],
+  "exportGenerateServiceLinksDefault": false,
+  "exportIncludeDatedServiceJourneysDefault": false,
+  "disableIncludeDatedServiceJourneysCheckbox": false,
+  "optionalPublicCodeOnLine": true,
+  "enableLineMigration": true,
   "sandboxFeatures": {
-    "Fintraffic": true,
     "JourneyPatternStopPointMap": true,
-    "AuthenticatedTileLayer": true
+    "Fintraffic": true
   },
-  "routeGeometrySupportedVehicleModes": ["bus"],
-  "lineSupportedVehicleModes": ["bus", "rail", "water", "tram"],
-  "journeyPatternMapStopPlacesLimit": 4000,
-  "mapConfig": {
-    "tileLayers": [
-      {
-        "name": "Digitransit",
-        "attribution": "&amp;copy <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
-        "url": "https://cdn.digitransit.fi/map/v3/hsl-map/{z}/{x}/{y}.png?digitransit-subscription-key=17771c2dff3e4225ae7daab22456b53e"
-      },
-      {
-        "name": "OpenStreetMap",
-        "url": "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        "attribution": "&copy; <a href=\"https://osm.org/copyright\">OpenStreetMap</a> contributors"
-      }
-    ],
-    "defaultTileLayer": "Digitransit",
-    "center": [
-      65,
-      26
-    ],
-    "zoom": 6
-  }
+  "extPath": "Fintraffic"
 }
