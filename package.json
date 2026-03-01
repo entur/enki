@@ -12,6 +12,7 @@
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "analyze": "source-map-explorer 'build/assets/*.js'",
     "server": "vite preview",
+    "test:e2e": "playwright test",
     "prepare": "husky"
   },
   "dependencies": {
@@ -71,6 +72,7 @@
   },
   "devDependencies": {
     "@entur/rollup-plugin-react-component-toggle": "1.0.0",
+    "@playwright/test": "^1.58.2",
     "@redux-devtools/extension": "3.3.0",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "6.9.1",

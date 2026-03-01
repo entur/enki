@@ -39,6 +39,10 @@ jobs:
       - run: npm ci --legacy-peer-deps
       - run: npm run check
       - run: npm run test -- run --coverage
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run E2E tests
+        run: npm run test:e2e
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v7.0.0
         env:
@@ -51,7 +55,8 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.cpd.exclusions=src/i18n/translations/*.ts
             -Dsonar.tests=src
-            -Dsonar.test.inclusions=src/**/*.spec.ts,src/**/*.spec.tsx,src/**/*.test.ts,src/**/*.test.tsx
+            -Dsonar.test.inclusions=src/**/*.spec.ts,src/**/*.spec.tsx,src/**/*.test.ts,src/**/*.test.tsx,src/**/*.test.jsx
+            -Dsonar.coverage.exclusions=src/mocks/**
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.testExecutionReportPaths=test-report.xml
       - name: Bump version
