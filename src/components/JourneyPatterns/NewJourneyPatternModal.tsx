@@ -1,7 +1,13 @@
-import { FeedbackText, TextField } from '@entur/form';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { PrimaryButton, SecondaryButton } from '@entur/button';
-import { Modal } from '@entur/modal';
 import { useIntl } from 'react-intl';
 import { JourneyPatternNameValidationError } from './index';
 
@@ -32,48 +38,49 @@ const NewJourneyPatternModal = ({
   }, [newJourneyPatternName]);
 
   return (
-    <Modal
-      size="small"
-      open={open}
-      title={formatMessage({ id: 'newJourneyPatternModalTitle' })}
-      onDismiss={onDismiss}
-      className="modal"
-    >
-      {formatMessage({ id: 'newJourneyPatternModalSubTitle' })}
-      <div className="modal-content">
+    <Dialog open={open} onClose={onDismiss} maxWidth="xs" fullWidth>
+      <DialogTitle>
+        {formatMessage({ id: 'newJourneyPatternModalTitle' })}
+      </DialogTitle>
+      <DialogContent>
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          {formatMessage({ id: 'newJourneyPatternModalSubTitle' })}
+        </Typography>
         <TextField
           label={formatMessage({ id: 'newJourneyPatternModalLabel' })}
-          className="modal-input"
           placeholder={formatMessage({
             id: 'newJourneyPatternModalPlaceholder',
           })}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setNewJourneyPatternName(e.target.value);
           }}
+          variant="outlined"
+          fullWidth
         />
         {validationError.emptyName && (
-          <FeedbackText variant="error">
+          <Typography color="error" variant="body2" sx={{ mt: 1 }}>
             {validationError.emptyName}
-          </FeedbackText>
+          </Typography>
         )}
         {validationError.duplicateName && (
-          <FeedbackText variant="error">
+          <Typography color="error" variant="body2" sx={{ mt: 1 }}>
             {validationError.duplicateName}
-          </FeedbackText>
+          </Typography>
         )}
-        <div className={'confirm-dialog-buttons'}>
-          <SecondaryButton onClick={() => onDismiss()} className="margin-right">
-            {formatMessage({ id: 'newJourneyPatternModalCancel' })}
-          </SecondaryButton>
-          <PrimaryButton
-            onClick={() => onSave(newJourneyPatternName ?? '')}
-            disabled={!!validationError.duplicateName}
-          >
-            {formatMessage({ id: 'newJourneyPatternModalCreate' })}
-          </PrimaryButton>
-        </div>
-      </div>
-    </Modal>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="outlined" onClick={() => onDismiss()}>
+          {formatMessage({ id: 'newJourneyPatternModalCancel' })}
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => onSave(newJourneyPatternName ?? '')}
+          disabled={!!validationError.duplicateName}
+        >
+          {formatMessage({ id: 'newJourneyPatternModalCreate' })}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

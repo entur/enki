@@ -1,4 +1,5 @@
-import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
+import { Autocomplete, TextField } from '@mui/material';
+import { NormalizedDropdownItemType } from 'helpers/dropdown';
 import { MessagesKey } from 'i18n/translationKeys';
 import StopPoint from 'model/StopPoint';
 import { useCallback, useMemo } from 'react';
@@ -72,23 +73,28 @@ export const BoardingTypeSelect = ({
 }: Props) => {
   const { formatMessage } = useIntl();
   const boardingDropDownItems = useBoardingDropDownItems();
+  const selectedItem =
+    boardingDropDownItems.find((item) => item.value === boardingType) || null;
   return (
-    <Dropdown
-      className="stop-point-info-item"
-      label={formatMessage({ id: 'labelBoarding' })}
-      selectedItem={{
-        value: boardingType as string,
-        label:
-          boardingDropDownItems.find((item) => item.value === boardingType)
-            ?.label || '',
-      }}
-      placeholder={formatMessage({ id: 'defaultOption' })}
-      onChange={(element: NormalizedDropdownItemType | null) =>
-        onChange(element?.value as BoardingType)
+    <Autocomplete
+      fullWidth
+      value={selectedItem}
+      onChange={(_event, newValue: NormalizedDropdownItemType | null) =>
+        onChange(newValue?.value as BoardingType)
       }
-      items={boardingDropDownItems}
-      feedback={error && formatMessage({ id: error })}
-      variant={error ? 'error' : undefined}
+      options={boardingDropDownItems}
+      getOptionLabel={(option) => option.label}
+      isOptionEqualToValue={(option, value) => option.value === value.value}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          fullWidth
+          label={formatMessage({ id: 'labelBoarding' })}
+          placeholder={formatMessage({ id: 'defaultOption' })}
+          error={!!error}
+          helperText={error ? formatMessage({ id: error }) : ''}
+        />
+      )}
     />
   );
 };

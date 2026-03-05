@@ -1,5 +1,5 @@
-import { VariantType } from '@entur/form';
 import { Quay, StopPlace } from 'api';
+import { VariantType } from 'helpers/errorHandling';
 
 export type QuaySearch = { stopPlace?: StopPlace; quay?: Quay };
 

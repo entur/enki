@@ -1,4 +1,10 @@
-import { VariantType } from '@entur/form';
+export type VariantType =
+  | 'success'
+  | 'negative'
+  | 'warning'
+  | 'information'
+  | 'error'
+  | 'info';
 
 export type ErrorHandling = {
   variant: VariantType | undefined;

@@ -1,4 +1,4 @@
-import { TextArea } from '@entur/form';
+import { TextField } from '@mui/material';
 import {
   Coordinate,
   validateCoordinateInput,
@@ -90,13 +90,14 @@ export const CoordinatesInputField = ({
   };
 
   return (
-    <TextArea
-      label={formatMessage({
-        id: 'editorCoordinatesFormLabelText',
-      })}
-      variant={errorMessage ? 'error' : undefined}
-      feedback={errorMessage ?? undefined}
-      rows={12}
+    <TextField
+      variant="outlined"
+      fullWidth
+      multiline
+      rows={8}
+      label={formatMessage({ id: 'editorCoordinatesFormLabelText' })}
+      error={!!errorMessage}
+      helperText={errorMessage ?? undefined}
       value={inputValue}
       onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
         setInputValue(e.target.value)

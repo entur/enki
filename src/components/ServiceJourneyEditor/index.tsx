@@ -1,6 +1,4 @@
-import { SecondaryButton, SuccessButton } from '@entur/button';
-import { Dropdown, NormalizedDropdownItemType } from '@entur/dropdown';
-import { TextField } from '@entur/form';
+import { Autocomplete, Button, TextField, Tooltip } from '@mui/material';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
 import ConfirmDialog from 'components/ConfirmDialog';
@@ -10,8 +8,7 @@ import DeleteActionChip from 'components/DeleteActionChip';
 import Notices from 'components/Notices';
 import { usePassingTimesEditor } from 'components/PassingTimesEditor';
 import RequiredInputMarker from 'components/RequiredInputMarker';
-import { getInit, mapToItems } from 'helpers/dropdown';
-import { getErrorFeedback } from 'helpers/errorHandling';
+import { getMuiErrorProps } from 'helpers/muiFormHelpers';
 import { isBlank } from 'helpers/forms';
 import usePristine from 'hooks/usePristine';
 import { FlexibleLineType } from 'model/FlexibleLine';
@@ -22,7 +19,9 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useAppSelector } from '../../store/hooks';
 import CopyDialog from './CopyDialog';
-import './styles.scss';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -75,16 +74,24 @@ const ServiceJourneyEditor = (props: Props) => {
 
   const PassingTimesEditor = usePassingTimesEditor(flexibleLineType);
 
+  const operatorOptions = operators.map((op) => ({
+    value: op.id ?? '',
+    label: op.name.value ?? '',
+  }));
+
+  const selectedOperator =
+    operatorOptions.find((op) => op.value === operatorSelection) ?? null;
+
   return (
-    <div className="service-journey-editor">
-      <div className="service-journey-editor-form">
+    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box sx={{ flex: 1 }}>
         <RequiredInputMarker />
-        <div className="input-group">
-          <div className="service-journey-inputs">
+        <Grid container spacing={3}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
-              className="form-section"
+              fullWidth
               label={formatMessage({ id: 'generalNameLabel' })}
-              {...getErrorFeedback(
+              {...getMuiErrorProps(
                 formatMessage({ id: 'nameIsRequired' }),
                 !isBlank(name),
                 namePristine,
@@ -93,56 +100,72 @@ const ServiceJourneyEditor = (props: Props) => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 onFieldChange('name', e.target.value)
               }
+              variant="outlined"
             />
+          </Grid>
 
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
+              fullWidth
               label={formatMessage({ id: 'generalDescription' })}
-              className="form-section"
               value={description || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 onFieldChange('description', e.target.value || null)
               }
+              variant="outlined"
             />
+          </Grid>
 
-            <TextField
-              label={formatMessage({ id: 'generalPublicCode' })}
-              labelTooltip={formatMessage({ id: 'generalPublicCodeTooltip' })}
-              className="form-section"
-              value={publicCode || ''}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                onFieldChange('publicCode', e.target.value || null)
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <Tooltip title={formatMessage({ id: 'generalPublicCodeTooltip' })}>
+              <TextField
+                fullWidth
+                label={formatMessage({ id: 'generalPublicCode' })}
+                value={publicCode || ''}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onFieldChange('publicCode', e.target.value || null)
+                }
+                variant="outlined"
+              />
+            </Tooltip>
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <Tooltip title={formatMessage({ id: 'generalPrivateCodeTooltip' })}>
+              <TextField
+                fullWidth
+                label={formatMessage({ id: 'generalPrivateCode' })}
+                value={privateCode || ''}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onFieldChange('privateCode', e.target.value || null);
+                }}
+                variant="outlined"
+              />
+            </Tooltip>
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <Autocomplete
+              options={operatorOptions}
+              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
               }
+              value={selectedOperator}
+              onChange={(_event, newValue) =>
+                handleOperatorSelectionChange(newValue?.value)
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={formatMessage({ id: 'generalOperator' })}
+                  placeholder={formatMessage({ id: 'defaultOption' })}
+                  variant="outlined"
+                />
+              )}
             />
-
-            <TextField
-              label={formatMessage({ id: 'generalPrivateCode' })}
-              labelTooltip={formatMessage({ id: 'generalPrivateCodeTooltip' })}
-              className="form-section"
-              value={privateCode || ''}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onFieldChange('privateCode', e.target.value || null);
-              }}
-            />
-          </div>
-
-          <Dropdown
-            className="form-section operator-selector"
-            label={formatMessage({ id: 'generalOperator' })}
-            selectedItem={getInit(
-              operators.map((op) => ({ ...op, name: op.name.value })),
-              operatorSelection,
-            )}
-            placeholder={formatMessage({ id: 'defaultOption' })}
-            items={mapToItems(
-              operators.map((op) => ({ ...op, name: op.name.value })),
-            )}
-            clearable
-            labelClearSelectedItem={formatMessage({ id: 'clearSelected' })}
-            onChange={(e: NormalizedDropdownItemType | null) =>
-              handleOperatorSelectionChange(e?.value)
-            }
-          />
-        </div>
+          </Grid>
+        </Grid>
 
         <Notices
           notices={serviceJourney.notices}
@@ -178,7 +201,7 @@ const ServiceJourneyEditor = (props: Props) => {
             }}
           />
         )}
-        <section className="day-type-section">
+        <Box sx={{ mt: 4 }}>
           <DayTypesEditor
             dayTypes={serviceJourney.dayTypes!}
             onChange={(dayTypes) => {
@@ -188,9 +211,9 @@ const ServiceJourneyEditor = (props: Props) => {
               });
             }}
           />
-        </section>
+        </Box>
 
-        <section className="passing-times-section">
+        <Box sx={{ mt: 4 }}>
           <PassingTimesEditor
             passingTimes={passingTimes ?? []}
             stopPoints={stopPoints}
@@ -198,36 +221,43 @@ const ServiceJourneyEditor = (props: Props) => {
             spoilPristine={spoilPristine}
             flexibleLineType={flexibleLineType}
           />
-        </section>
-      </div>
-      <div className="service-journey-editor-action-chips">
+        </Box>
+      </Box>
+      <Stack direction="row" spacing={2} sx={{ ml: 2 }}>
         {deleteServiceJourney && (
           <DeleteActionChip
-            className="service-journey-editor-action-chip"
             onClick={() => setShowDeleteDialog(true)}
             title={formatMessage({ id: 'editorDeleteButtonText' })}
           />
         )}
         {copyServiceJourney && (
           <CopyActionChip
-            className="service-journey-editor-action-chip"
             title={formatMessage({ id: 'editorCopyButtonText' })}
             onClick={() => setShowCopyDialog(true)}
           />
         )}
-      </div>
+      </Stack>
       {deleteServiceJourney && (
         <ConfirmDialog
           isOpen={showDeleteDialog}
           title={formatMessage({ id: 'serviceJourneyDeleteTitle' })}
           message={formatMessage({ id: 'serviceJourneydeleteMessage' })}
           buttons={[
-            <SecondaryButton key={2} onClick={() => setShowDeleteDialog(false)}>
+            <Button
+              variant="outlined"
+              key={2}
+              onClick={() => setShowDeleteDialog(false)}
+            >
               {formatMessage({ id: 'no' })}
-            </SecondaryButton>,
-            <SuccessButton key={1} onClick={deleteServiceJourney}>
+            </Button>,
+            <Button
+              variant="contained"
+              color="error"
+              key={1}
+              onClick={deleteServiceJourney}
+            >
               {formatMessage({ id: 'yes' })}
-            </SuccessButton>,
+            </Button>,
           ]}
           onDismiss={() => setShowDeleteDialog(false)}
         />
@@ -244,7 +274,7 @@ const ServiceJourneyEditor = (props: Props) => {
           onDismiss={() => setShowCopyDialog(false)}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

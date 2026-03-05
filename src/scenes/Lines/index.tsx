@@ -4,15 +4,15 @@ import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { SecondaryButton } from '@entur/button';
-import { AddIcon } from '@entur/icons';
-import { Heading1 } from '@entur/typography';
+import Add from '@mui/icons-material/Add';
+import { Button, Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
 
 import { GET_LINES } from 'api/uttu/queries';
+import LinesTable from 'components/LinesTable';
+import Loading from 'components/Loading';
 import useRefetchOnLocationChange from 'hooks/useRefetchOnLocationChange';
 import Line from 'model/Line';
-
-import LinesTable from 'components/LinesTable';
 import useUttuError from 'hooks/useUttuError';
 import { useAppSelector } from '../../store/hooks';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
@@ -59,26 +59,38 @@ export default () => {
   const done = !loading && networkStatus !== NetworkStatus.refetch;
 
   return (
-    <div className="lines">
-      <Heading1>{formatMessage({ id: 'linesHeader' })}</Heading1>
+    <Stack spacing={3} sx={{ flex: 1 }}>
+      <Typography variant="h1">
+        {formatMessage({ id: 'linesHeader' })}
+      </Typography>
 
-      <SecondaryButton as={Link} to="/lines/create" className="new-line-button">
-        <AddIcon />
+      <Button
+        variant="outlined"
+        component={Link}
+        to="/lines/create"
+        startIcon={<Add />}
+        sx={{ alignSelf: 'flex-start' }}
+      >
         {formatMessage({ id: 'linesCreateLineIconButtonLabel' })}
-      </SecondaryButton>
+      </Button>
 
-      <LinesTable
-        lines={done ? data && data.lines : undefined}
-        organisations={organisations!}
-        onRowClick={handleOnRowClick}
-        onDeleteRowClick={setLineSelectedForDeletion}
-      />
+      <Loading
+        isLoading={!done}
+        text={formatMessage({ id: 'linesLoadingText' })}
+      >
+        <LinesTable
+          lines={data?.lines ?? []}
+          organisations={organisations!}
+          onRowClick={handleOnRowClick}
+          onDeleteRowClick={setLineSelectedForDeletion}
+        />
+      </Loading>
 
       <DeleteConfirmationDialog
         visible={!!lineSelectedForDeletion}
         onDismiss={dismissDeleteLine}
         onConfirm={confirmDeleteLine}
       />
-    </div>
+    </Stack>
   );
 };

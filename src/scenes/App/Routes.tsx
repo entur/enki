@@ -52,7 +52,7 @@ const Routes = () => {
   }
 
   return (
-    <div className="routes">
+    <div>
       <ReactRoutes>
         <Route path="/" element={<Navigate to="/lines" replace />} />
         <Route path="/brandings" element={<Brandings />} />
