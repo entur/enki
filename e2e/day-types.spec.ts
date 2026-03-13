@@ -33,7 +33,7 @@ test.describe('Day types', () => {
     await page.goto('/day-types/create');
 
     // Verify the name field is present
-    await expect(page.getByLabel(/name/i)).toBeVisible();
+    await expect(page.getByRole('textbox', { name: /name/i })).toBeVisible();
 
     // Verify weekday picker section is present
     await expect(page.getByText(/weekdays for availability/i)).toBeVisible();
@@ -42,7 +42,7 @@ test.describe('Day types', () => {
   test('can fill in day type name', async ({ page }) => {
     await page.goto('/day-types/create');
 
-    const nameInput = page.getByLabel(/name/i);
+    const nameInput = page.getByRole('textbox', { name: /name/i });
     await nameInput.fill('Test Day Type');
     await expect(nameInput).toHaveValue('Test Day Type');
   });
@@ -57,7 +57,9 @@ test.describe('Day types', () => {
     await expect(page).toHaveURL(/\/day-types\/edit\//);
 
     // Verify the name field is populated
-    await expect(page.getByLabel(/name/i)).toHaveValue('Hverdager');
+    await expect(
+      page.getByRole('textbox', { name: /name/i }),
+    ).toHaveValue('Hverdager');
   });
 
   test('shows in-use indicator for day types with service journeys', async ({
@@ -84,5 +86,33 @@ test.describe('Day types', () => {
     await expect(
       page.getByRole('button', { name: /delete/i }),
     ).toBeVisible();
+  });
+
+  test('can edit and save an existing day type', async ({ page }) => {
+    await page.goto('/day-types');
+    await page.getByText('Hverdager').click();
+    await expect(page).toHaveURL(/\/day-types\/edit\//);
+
+    // Modify the name
+    const nameInput = page.getByRole('textbox', { name: /name/i });
+    await nameInput.fill('Updated Weekdays');
+    await expect(nameInput).toHaveValue('Updated Weekdays');
+
+    // Click Save
+    await page.getByRole('button', { name: /save/i }).click();
+
+    // Verify success notification
+    await expect(page.getByText('Day type was saved.')).toBeVisible();
+  });
+
+  test('delete button is disabled for in-use day types', async ({ page }) => {
+    await page.goto('/day-types');
+    await page.getByText('Hverdager').click();
+    await expect(page).toHaveURL(/\/day-types\/edit\//);
+
+    // Delete should be disabled because this day type is used by service journeys
+    await expect(
+      page.getByRole('button', { name: /delete/i }),
+    ).toBeDisabled();
   });
 });
