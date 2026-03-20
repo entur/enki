@@ -31,9 +31,9 @@ test.describe('Flexible line editor', () => {
     await page.goto('/flexible-lines/create');
 
     // Verify stepper shows the three steps
-    await expect(page.getByText('1. General')).toBeVisible();
-    await expect(page.getByText('2. Journey Patterns')).toBeVisible();
-    await expect(page.getByText('3. Service Journeys')).toBeVisible();
+    await expect(page.getByText('General', { exact: true })).toBeVisible();
+    await expect(page.getByText('Journey Patterns', { exact: true })).toBeVisible();
+    await expect(page.getByText('Service Journeys', { exact: true })).toBeVisible();
 
     // Verify Step 1 form fields are present
     await expect(
@@ -72,7 +72,7 @@ test.describe('Flexible line editor', () => {
     await expect(page).toHaveURL(/\/flexible-lines\/edit\//);
 
     // Verify the line data is loaded in Step 1
-    await expect(page.getByText('1. General')).toBeVisible();
+    await expect(page.getByText('General', { exact: true })).toBeVisible();
   });
 
   test('can navigate between editor steps', async ({ page }) => {
@@ -83,13 +83,13 @@ test.describe('Flexible line editor', () => {
     await nameInput.fill('Test Line');
 
     // Click on Step 2 (Journey Patterns)
-    await page.getByText('2. Journey Patterns').click();
+    await page.getByText('Journey Patterns', { exact: true }).click();
 
     // Click on Step 3 (Service Journeys)
-    await page.getByText('3. Service Journeys').click();
+    await page.getByText('Service Journeys', { exact: true }).click();
 
     // Navigate back to Step 1
-    await page.getByText('1. General').click();
+    await page.getByText('General', { exact: true }).click();
     await expect(nameInput).toHaveValue('Test Line');
   });
 });

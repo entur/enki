@@ -37,9 +37,9 @@ test.describe('Line editor', () => {
     });
 
     test('shows stepper with all three steps', async ({ page }) => {
-      await expect(page.getByText('1. General')).toBeVisible();
-      await expect(page.getByText('2. Journey Patterns')).toBeVisible();
-      await expect(page.getByText('3. Service Journeys')).toBeVisible();
+      await expect(page.getByText('General', { exact: true })).toBeVisible();
+      await expect(page.getByText('Journey Patterns', { exact: true })).toBeVisible();
+      await expect(page.getByText('Service Journeys', { exact: true })).toBeVisible();
     });
 
     test('shows About the line heading', async ({ page }) => {
@@ -68,10 +68,16 @@ test.describe('Line editor', () => {
       await expect(
         page.getByRole('heading', { name: /about the line/i }),
       ).toBeVisible();
-      // @entur design system comboboxes show selected value as text, not input value
-      await expect(page.getByText('Vy Buss AS').first()).toBeVisible();
-      await expect(page.getByText('Bus').first()).toBeVisible();
-      await expect(page.getByText('Local bus')).toBeVisible();
+      // MUI Autocomplete shows selected value in the input field
+      await expect(
+        page.getByRole('combobox', { name: /operator/i }),
+      ).toHaveValue('Vy Buss AS');
+      await expect(
+        page.getByRole('combobox', { name: /transport mode/i }),
+      ).toHaveValue('Bus');
+      await expect(
+        page.getByRole('combobox', { name: /transport submode/i }),
+      ).toHaveValue('Local bus');
     });
 
     test('shows notices section with existing notice', async ({ page }) => {
@@ -85,7 +91,7 @@ test.describe('Line editor', () => {
     test('has Save and Delete buttons', async ({ page }) => {
       await expect(page.getByRole('button', { name: /save/i })).toBeVisible();
       await expect(
-        page.getByRole('button', { name: /delete/i }),
+        page.getByRole('button', { name: 'Delete', exact: true }),
       ).toBeVisible();
     });
   });
@@ -154,7 +160,7 @@ test.describe('Line editor', () => {
       ).toBeVisible();
 
       // Click completed Step 1 to go back (completed steps become buttons)
-      await page.getByText('1. General').click();
+      await page.getByText('General', { exact: true }).click();
       await expect(
         page.getByRole('heading', { name: /about the line/i }),
       ).toBeVisible();
@@ -186,25 +192,27 @@ test.describe('Line editor', () => {
     });
 
     test('shows expanded JP with stop point quay IDs', async ({ page }) => {
-      // The last JP is expanded by default
+      // The last JP accordion is expanded by default; scope to its region
+      const expandedPanel = page.getByRole('region');
       await expect(
-        page.locator('input[value="NSR:Quay:2003"]'),
+        expandedPanel.locator('input[value="NSR:Quay:2003"]'),
       ).toBeVisible();
       await expect(
-        page.locator('input[value="NSR:Quay:2002"]'),
+        expandedPanel.locator('input[value="NSR:Quay:2002"]'),
       ).toBeVisible();
       await expect(
-        page.locator('input[value="NSR:Quay:2001"]'),
+        expandedPanel.locator('input[value="NSR:Quay:2001"]'),
       ).toBeVisible();
     });
 
     test('shows expanded JP with front text and resolved stop names', async ({
       page,
     }) => {
-      // Verify resolved stop place names
-      await expect(page.getByText('Tøyen 1')).toBeVisible();
-      await expect(page.getByText('Stortinget 1')).toBeVisible();
-      await expect(page.getByText('Majorstuen A')).toBeVisible();
+      // Verify resolved stop place names within the expanded JP panel
+      const expandedPanel = page.getByRole('region');
+      await expect(expandedPanel.getByText('Tøyen 1')).toBeVisible();
+      await expect(expandedPanel.getByText('Stortinget 1')).toBeVisible();
+      await expect(expandedPanel.getByText('Majorstuen A')).toBeVisible();
     });
 
     test('shows Create more Journey Patterns text', async ({ page }) => {
@@ -279,8 +287,11 @@ test.describe('Line editor', () => {
     });
 
     test('shows expanded SJ with day types', async ({ page }) => {
-      // Day type chips should be visible in the expanded SJ
-      await expect(page.getByText('Hverdager').first()).toBeVisible();
+      // Expand a service journey that has day types
+      await page.getByRole('button', { name: 'Ettermiddagsretur' }).click();
+      // Day type chips should be visible in the expanded SJ region
+      const expandedPanel = page.getByRole('region').last();
+      await expect(expandedPanel.getByText('Hverdager')).toBeVisible();
     });
 
     test('shows expanded SJ with passing times section', async ({ page }) => {
@@ -364,7 +375,7 @@ test.describe('Line editor', () => {
       await expect(page).toHaveURL(/\/lines\/edit\//);
 
       // Click Delete
-      await page.getByRole('button', { name: /delete/i }).click();
+      await page.getByRole('button', { name: 'Delete', exact: true }).click();
 
       // Verify confirmation dialog appears
       await expect(
@@ -387,7 +398,7 @@ test.describe('Line editor', () => {
       await expect(page).toHaveURL(/\/lines\/edit\//);
 
       // Click Delete
-      await page.getByRole('button', { name: /delete/i }).click();
+      await page.getByRole('button', { name: 'Delete', exact: true }).click();
 
       // Verify confirmation dialog
       await expect(
