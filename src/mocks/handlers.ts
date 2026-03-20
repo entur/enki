@@ -239,12 +239,15 @@ export const handlers = [
     return HttpResponse.json({
       data: {
         lines: mockLines.map(
-          ({ id, name, privateCode, publicCode, operatorRef }) => ({
+          ({ id, name, privateCode, publicCode, operatorRef, branding }) => ({
             id,
             name,
             privateCode,
             publicCode,
             operatorRef,
+            branding: branding
+              ? { id: branding.id, name: branding.name }
+              : null,
           }),
         ),
       },

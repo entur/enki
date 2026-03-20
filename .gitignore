@@ -45,3 +45,4 @@ test-report.xml
 test-results/
 *.log
 playwright-report/
+.playwright-mcp/

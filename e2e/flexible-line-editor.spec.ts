@@ -31,28 +31,30 @@ test.describe('Flexible line editor', () => {
     await page.goto('/flexible-lines/create');
 
     // Verify stepper shows the three steps
-    await expect(page.getByRole('button', { name: 'General' })).toBeVisible();
-    await expect(
-      page.getByRole('button', { name: 'Journey Patterns' }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole('button', { name: 'Service Journeys' }),
-    ).toBeVisible();
+    await expect(page.getByText('General', { exact: true })).toBeVisible();
+    await expect(page.getByText('Journey Patterns', { exact: true })).toBeVisible();
+    await expect(page.getByText('Service Journeys', { exact: true })).toBeVisible();
 
     // Verify Step 1 form fields are present
-    await expect(page.getByLabel(/name/i).first()).toBeVisible();
-    await expect(page.getByLabel(/description/i).first()).toBeVisible();
+    await expect(
+      page.getByRole('textbox', { name: /name/i }).first(),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('textbox', { name: /description/i }).first(),
+    ).toBeVisible();
   });
 
   test('can fill Step 1 form fields', async ({ page }) => {
     await page.goto('/flexible-lines/create');
 
     // Fill in the name field
-    const nameInput = page.getByLabel(/^name/i).first();
+    const nameInput = page.getByRole('textbox', { name: /^name/i }).first();
     await nameInput.fill('Test Flexible Line');
 
     // Fill in the description
-    const descriptionInput = page.getByLabel(/description/i).first();
+    const descriptionInput = page
+      .getByRole('textbox', { name: /description/i })
+      .first();
     await descriptionInput.fill('A test flexible line');
 
     // Verify the fields have the expected values
@@ -70,24 +72,24 @@ test.describe('Flexible line editor', () => {
     await expect(page).toHaveURL(/\/flexible-lines\/edit\//);
 
     // Verify the line data is loaded in Step 1
-    await expect(page.getByText('General')).toBeVisible();
+    await expect(page.getByText('General', { exact: true })).toBeVisible();
   });
 
   test('can navigate between editor steps', async ({ page }) => {
     await page.goto('/flexible-lines/create');
 
     // Fill required name field to allow navigation
-    const nameInput = page.getByLabel(/^name/i).first();
+    const nameInput = page.getByRole('textbox', { name: /^name/i }).first();
     await nameInput.fill('Test Line');
 
     // Click on Step 2 (Journey Patterns)
-    await page.getByRole('button', { name: 'Journey Patterns' }).click();
+    await page.getByText('Journey Patterns', { exact: true }).click();
 
     // Click on Step 3 (Service Journeys)
-    await page.getByRole('button', { name: 'Service Journeys' }).click();
+    await page.getByText('Service Journeys', { exact: true }).click();
 
     // Navigate back to Step 1
-    await page.getByRole('button', { name: 'General' }).click();
+    await page.getByText('General', { exact: true }).click();
     await expect(nameInput).toHaveValue('Test Line');
   });
 });

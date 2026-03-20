@@ -279,7 +279,7 @@ export const mockFlexibleLines = [
       minimumBookingPeriod: 'PT2H',
     },
     network: { id: 'TST:Network:1' },
-    branding: { id: 'TST:Branding:1' },
+    branding: { id: 'TST:Branding:1', name: 'Ruter' },
     journeyPatterns: [
       {
         id: 'TST:JourneyPattern:1',
@@ -494,7 +494,7 @@ export const mockLines = [
     operatorRef: 'TST:Operator:1',
     notices: [{ text: 'Ruteendring fra 1. mars' }],
     network: { id: 'TST:Network:1', authorityRef: 'TST:Authority:1' },
-    branding: { id: 'TST:Branding:1' },
+    branding: { id: 'TST:Branding:1', name: 'Ruter' },
     journeyPatterns: [
       {
         id: 'TST:JourneyPattern:3',
