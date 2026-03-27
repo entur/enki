@@ -26,7 +26,7 @@ import useUniqueKeys from 'hooks/useUniqueKeys';
 import JourneyPattern from 'model/JourneyPattern';
 import ServiceJourney from 'model/ServiceJourney';
 import StopPoint from 'model/StopPoint';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useCallback, useState } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import BulkDeleteDialog from './BulkDeleteDialog';
 import NewServiceJourneyDialog from './NewServiceJourneyDialog';
@@ -78,7 +78,7 @@ type ServiceJourneyAccordionProps = {
   formatMessage: IntlShape['formatMessage'];
   setCopyTarget: (target: { jpIndex: number; sjIndex: number }) => void;
   setDeleteTarget: (target: { jpIndex: number; sjIndex: number }) => void;
-  renderedChildren: ReactElement;
+  renderChildren: () => ReactElement;
 };
 
 const ServiceJourneyAccordion = ({
@@ -91,45 +91,69 @@ const ServiceJourneyAccordion = ({
   formatMessage,
   setCopyTarget,
   setDeleteTarget,
-  renderedChildren,
-}: ServiceJourneyAccordionProps) => (
-  <Accordion key={accordionKey} defaultExpanded={defaultExpanded}>
-    <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
-      sx={{
-        '& .MuiAccordionSummary-content': {
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        },
-      }}
+  renderChildren,
+}: ServiceJourneyAccordionProps) => {
+  const [hasBeenExpanded, setHasBeenExpanded] = useState(defaultExpanded);
+
+  const handleChange = useCallback(
+    (_: React.SyntheticEvent, expanded: boolean) => {
+      if (expanded && !hasBeenExpanded) {
+        setHasBeenExpanded(true);
+      }
+    },
+    [hasBeenExpanded],
+  );
+
+  return (
+    <Accordion
+      key={accordionKey}
+      defaultExpanded={defaultExpanded}
+      onChange={handleChange}
+      slotProps={{ transition: { unmountOnExit: true } }}
     >
-      <Typography>{sj.name}</Typography>
-      <Stack direction="row" spacing={0.5} onClick={(e) => e.stopPropagation()}>
-        {sj.id && (
-          <Tooltip title={formatMessage({ id: 'editorCopyButtonText' })}>
-            <IconButton
-              size="small"
-              onClick={() => setCopyTarget({ jpIndex, sjIndex })}
-            >
-              <ContentCopy fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        )}
-        {serviceJourneysCount > 1 && (
-          <Tooltip title={formatMessage({ id: 'editorDeleteButtonText' })}>
-            <IconButton
-              size="small"
-              onClick={() => setDeleteTarget({ jpIndex, sjIndex })}
-            >
-              <Delete fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        )}
-      </Stack>
-    </AccordionSummary>
-    <AccordionDetails>{renderedChildren}</AccordionDetails>
-  </Accordion>
-);
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        sx={{
+          '& .MuiAccordionSummary-content': {
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          },
+        }}
+      >
+        <Typography>{sj.name}</Typography>
+        <Stack
+          direction="row"
+          spacing={0.5}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {sj.id && (
+            <Tooltip title={formatMessage({ id: 'editorCopyButtonText' })}>
+              <IconButton
+                size="small"
+                onClick={() => setCopyTarget({ jpIndex, sjIndex })}
+              >
+                <ContentCopy fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
+          {serviceJourneysCount > 1 && (
+            <Tooltip title={formatMessage({ id: 'editorDeleteButtonText' })}>
+              <IconButton
+                size="small"
+                onClick={() => setDeleteTarget({ jpIndex, sjIndex })}
+              >
+                <Delete fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Stack>
+      </AccordionSummary>
+      <AccordionDetails>
+        {hasBeenExpanded ? renderChildren() : null}
+      </AccordionDetails>
+    </Accordion>
+  );
+};
 
 export default ({ journeyPatterns, onChange, children }: Props) => {
   const [showNewServiceJourneyDialog, setShowNewServiceJourneyDialog] =
@@ -283,17 +307,19 @@ export default ({ journeyPatterns, onChange, children }: Props) => {
           formatMessage={formatMessage}
           setCopyTarget={setCopyTarget}
           setDeleteTarget={setDeleteTarget}
-          renderedChildren={children(
-            sj,
-            journeyPatterns[jpIndex].pointsInSequence,
-            updateServiceJourney(
-              sjIndex,
-              journeyPatterns[jpIndex].serviceJourneys,
-              jpIndex,
-            ),
-            undefined,
-            undefined,
-          )}
+          renderChildren={() =>
+            children(
+              sj,
+              journeyPatterns[jpIndex].pointsInSequence,
+              updateServiceJourney(
+                sjIndex,
+                journeyPatterns[jpIndex].serviceJourneys,
+                jpIndex,
+              ),
+              undefined,
+              undefined,
+            )
+          }
         />
       ),
     }));
