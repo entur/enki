@@ -61,6 +61,10 @@ describe('copyServiceJourney', () => {
     expect(copies[5].passingTimes[2].departureTime).toBe('12:05:00');
     expect(copies[5].passingTimes[3].arrivalTime).toBe('12:10:00');
     expect(copies[5].passingTimes[3].departureTime).toBe('12:10:00');
+
+    // Name template should use departure time, not sequential number
+    expect(copies[0].name).toBe('Departure 11:10');
+    expect(copies[5].name).toBe('Departure 12:00');
   });
 });
 
@@ -102,7 +106,7 @@ describe('CopyDialog UI', () => {
   it('renders name template with default value', () => {
     renderDialog();
     expect(screen.getByLabelText('Name template')).toHaveValue(
-      'Morning Route (<% number %>)',
+      'Morning Route (<% time %>)',
     );
   });
 
@@ -130,13 +134,25 @@ describe('CopyDialog UI', () => {
     expect(onDismiss).toHaveBeenCalled();
   });
 
-  it('calls onSave when Create copies is clicked', async () => {
+  it('calls onSave with exactly one copy when single copy mode', async () => {
     const onSave = vi.fn();
     const user = userEvent.setup();
     renderDialog({ onSave });
 
     await user.click(screen.getByText('Create copies'));
-    expect(onSave).toHaveBeenCalled();
+    expect(onSave).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining({
+          passingTimes: expect.arrayContaining([
+            expect.objectContaining({
+              departureTime: '09:00:00',
+              departureDayOffset: 0,
+            }),
+          ]),
+        }),
+      ]),
+    );
+    expect(onSave.mock.calls[0][0]).toHaveLength(1);
   });
 
   it('does not render when open is false', () => {
@@ -185,8 +201,8 @@ describe('CopyDialog UI', () => {
 
     const nameInput = screen.getByLabelText('Name template');
     await user.clear(nameInput);
-    await user.type(nameInput, 'Custom <% number %>');
-    expect(nameInput).toHaveValue('Custom <% number %>');
+    await user.type(nameInput, 'Custom <% time %>');
+    expect(nameInput).toHaveValue('Custom <% time %>');
   });
 
   it('disables save button when validation error exists', async () => {

@@ -140,13 +140,14 @@ export const copyServiceJourney = (
     minutesOffset,
   );
 
+  const newDepartureTime = (
+    (newPassingTimes[0] as PassingTime)?.departureTime ?? ''
+  ).slice(0, 5);
+
   const newServiceJourney = {
     ...cloneDeep(copyableServiceJourney),
     id: `new_${createUuid()}`,
-    name: nameTemplate.replace(
-      '<% number %>',
-      (newServiceJourneys.length + 1).toString(),
-    ),
+    name: nameTemplate.replace('<% time %>', newDepartureTime),
     dayTypesRefs,
     passingTimes: newPassingTimes,
   };
@@ -176,7 +177,7 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
     serviceJourney.passingTimes[0].departureDayOffset || 0;
 
   const [nameTemplate, setNameTemplate] = useState<string>(
-    `${serviceJourney.name || 'New'} (<% number %>)`,
+    `${serviceJourney.name || 'New'} (<% time %>)`,
   );
   const [initialDepartureTime, setInitialDepartureTime] =
     useState<string>(defaultDepartureTime);
@@ -225,18 +226,58 @@ export default ({ open, serviceJourney, onSave, onDismiss }: Props) => {
   }, [multiple, initialDepartureTime, initialDayOffset]);
 
   const save = () => {
-    onSave(
-      copyServiceJourney(
-        serviceJourney,
-        [],
-        nameTemplate,
-        initialDepartureTime,
+    if (multiple) {
+      onSave(
+        copyServiceJourney(
+          serviceJourney,
+          [],
+          nameTemplate,
+          initialDepartureTime,
+          initialDayOffset,
+          untilTime,
+          untilDayOffset,
+          duration.parse(repeatDuration),
+        ),
+      );
+    } else {
+      const originalDeparture = addDays(
+        parseTime(defaultDepartureTime),
+        defaultDayOffset,
+      );
+      const newDeparture = addDays(
+        parseTime(initialDepartureTime),
         initialDayOffset,
-        untilTime,
-        untilDayOffset,
-        duration.parse(repeatDuration),
-      ),
-    );
+      );
+      const offsetMinutes = Math.round(
+        (newDeparture.toDate().getTime() -
+          originalDeparture.toDate().getTime()) /
+          60000,
+      );
+
+      const { id, passingTimes, dayTypesRefs, ...copyableServiceJourney } =
+        serviceJourney;
+
+      const newPassingTimes = offsetPassingTimes(
+        passingTimes.map(({ id, ...pt }) => pt),
+        offsetMinutes,
+      );
+
+      onSave([
+        {
+          ...cloneDeep(copyableServiceJourney),
+          id: `new_${createUuid()}`,
+          name: nameTemplate.replace(
+            '<% time %>',
+            ((newPassingTimes[0] as PassingTime)?.departureTime ?? '').slice(
+              0,
+              5,
+            ),
+          ),
+          dayTypesRefs,
+          passingTimes: newPassingTimes,
+        },
+      ]);
+    }
   };
 
   return (
