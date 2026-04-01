@@ -39,6 +39,8 @@ jobs:
       - run: npm ci --legacy-peer-deps
       - run: npm run check
       - run: npm run test -- run --coverage
+      - name: Initialize MSW service worker
+        run: npx msw init public/ --save=false
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
       - name: Run E2E tests
