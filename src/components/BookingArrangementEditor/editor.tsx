@@ -105,9 +105,9 @@ export default (props: Props) => {
       latestBookingTime: undefined,
       minimumBookingPeriod: undefined,
       bookWhen:
-        type === BOOKING_LIMIT_TYPE.PERIOD
-          ? undefined
-          : bookingArrangement.bookWhen,
+        type === BOOKING_LIMIT_TYPE.TIME
+          ? bookingArrangement.bookWhen
+          : undefined,
     });
     setBookingLimitType(type);
   };
