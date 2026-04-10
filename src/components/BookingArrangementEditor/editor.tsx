@@ -105,9 +105,9 @@ export default (props: Props) => {
       latestBookingTime: undefined,
       minimumBookingPeriod: undefined,
       bookWhen:
-        type === BOOKING_LIMIT_TYPE.PERIOD
-          ? undefined
-          : bookingArrangement.bookWhen,
+        type === BOOKING_LIMIT_TYPE.TIME
+          ? bookingArrangement.bookWhen
+          : undefined,
     });
     setBookingLimitType(type);
   };
@@ -294,9 +294,13 @@ export default (props: Props) => {
           </FormLabel>
           <RadioGroup
             name="booking-limit-type"
-            onChange={(e) =>
-              onBookingLimitTypeChange(e?.target?.value as BOOKING_LIMIT_TYPE)
-            }
+            onChange={(e) => {
+              if ((e.target as HTMLInputElement).type === 'radio') {
+                onBookingLimitTypeChange(
+                  e?.target?.value as BOOKING_LIMIT_TYPE,
+                );
+              }
+            }}
             value={bookingLimitType}
           >
             <FormControlLabel
@@ -323,7 +327,9 @@ export default (props: Props) => {
                 let formattedDate;
 
                 if (date != null) {
-                  formattedDate = `${date.getHours()}:${date.getMinutes()}`;
+                  const hours = String(date.getHours()).padStart(2, '0');
+                  const minutes = String(date.getMinutes()).padStart(2, '0');
+                  formattedDate = `${hours}:${minutes}`;
                 }
 
                 onLatestBookingTimeChange(formattedDate);
