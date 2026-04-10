@@ -294,9 +294,13 @@ export default (props: Props) => {
           </FormLabel>
           <RadioGroup
             name="booking-limit-type"
-            onChange={(e) =>
-              onBookingLimitTypeChange(e?.target?.value as BOOKING_LIMIT_TYPE)
-            }
+            onChange={(e) => {
+              if ((e.target as HTMLInputElement).type === 'radio') {
+                onBookingLimitTypeChange(
+                  e?.target?.value as BOOKING_LIMIT_TYPE,
+                );
+              }
+            }}
             value={bookingLimitType}
           >
             <FormControlLabel
