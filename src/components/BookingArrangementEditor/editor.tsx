@@ -323,7 +323,9 @@ export default (props: Props) => {
                 let formattedDate;
 
                 if (date != null) {
-                  formattedDate = `${date.getHours()}:${date.getMinutes()}`;
+                  const hours = String(date.getHours()).padStart(2, '0');
+                  const minutes = String(date.getMinutes()).padStart(2, '0');
+                  formattedDate = `${hours}:${minutes}`;
                 }
 
                 onLatestBookingTimeChange(formattedDate);
