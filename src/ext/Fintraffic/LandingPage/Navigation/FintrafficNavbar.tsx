@@ -35,6 +35,14 @@ const FintrafficNavbar = () => {
       value: `https://www.fintraffic.fi/${selectedLocaleCode}/${formatMessage({ id: 'fintrafficAppLink' })}`,
     },
     {
+      label: formatMessage({ id: 'fintrafficMatka' }),
+      value: `https://matka.fintraffic.fi/?locale=${selectedLocaleCode}`,
+    },
+    {
+      label: formatMessage({ id: 'fintrafficSky' }),
+      value: 'https://sky.fintraffic.fi',
+    },
+    {
       label: 'Digitraffic',
       value: 'https://www.digitraffic.fi/',
     },

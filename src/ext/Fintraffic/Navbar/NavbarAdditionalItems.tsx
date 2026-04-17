@@ -104,6 +104,14 @@ export const NavbarAdditionalItems = () => {
           path={`https://www.fintraffic.fi/${selectedLocaleCode}/${formatMessage({ id: 'fintrafficAppLink' })}`}
         />
         <NavBarExternalLinkItem
+          text={formatMessage({ id: 'fintrafficMatka' })}
+          path={`https://matka.fintraffic.fi/?locale=${selectedLocaleCode}`}
+        />
+        <NavBarExternalLinkItem
+          text={formatMessage({ id: 'fintrafficSky' })}
+          path="https://sky.fintraffic.fi"
+        />
+        <NavBarExternalLinkItem
           text={formatMessage({ id: 'digitraffic' })}
           path="https://www.digitraffic.fi/"
         />
