@@ -62,7 +62,7 @@
   "devDependencies": {
     "@entur/rollup-plugin-react-component-toggle": "1.0.0",
     "@playwright/test": "1.59.1",
-    "@redux-devtools/extension": "3.3.0",
+    "@redux-devtools/extension": "4.0.0",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
