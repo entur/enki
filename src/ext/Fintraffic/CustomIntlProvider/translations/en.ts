@@ -29,6 +29,8 @@ export const messages = {
   localesv: 'På Svenska',
   fintrafficApp: 'Fintraffic App',
   fintrafficAppLink: 'fintraffic_app',
+  fintrafficMatka: 'Fintraffic Matka',
+  fintrafficSky: 'Fintraffic Sky',
   landingPageIntroP1:
     'Route and Schedule Editor (RAE) is an editor managed by Fintraffic Oy, which can be used to digitize and store public transport routes and demand-responsive transport with stop chains and stop-specific schedules into NeTEx-format travel data.',
   landingPageIntroP2:

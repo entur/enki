@@ -29,6 +29,8 @@ export const messages = {
   shortcuts: 'Genvägar',
   fintrafficApp: 'Fintraffic Appen',
   fintrafficAppLink: 'fintraffic_appen',
+  fintrafficMatka: 'Fintraffic Matka',
+  fintrafficSky: 'Fintraffic Sky',
   landingPageIntroP1:
     'Rutt- och schemaredigerare (RAE) är en redigerare som hanteras av Fintraffic Oy, som kan användas för att digitalisera och lagra kollektivtrafiklinjer och anropsstyrd trafik med hållplatskedjor och hållplatsspecifika tidtabeller i NeTEx-format resedata.',
   landingPageIntroP2:

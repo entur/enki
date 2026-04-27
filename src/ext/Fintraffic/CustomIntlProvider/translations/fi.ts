@@ -29,6 +29,8 @@ export const messages = {
   shortcuts: 'Pikavalinnat',
   fintrafficApp: 'Fintraffic Mobiili',
   fintrafficAppLink: 'digitaalisetpalvelut/mobiili',
+  fintrafficMatka: 'Fintraffic Matka',
+  fintrafficSky: 'Fintraffic Sky',
   landingPageIntroP1:
     'Reitti- ja aikataulueditori (RAE) on Fintraffic Oy:n hallinnoima editori, jolla voidaan digitoida ja tallentaa joukkoliikennereittejä ja kutsujoukkoliikennettä pysäkkiketjuineen ja pysäkkikohtaisine aikatauluineen NeTEx-muotoiseksi matkatietoaineistoksi.',
   landingPageIntroP2:
