@@ -46,7 +46,7 @@ jobs:
       - name: Run E2E tests
         run: npm run test:e2e
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v7.1.0
+        uses: sonarsource/sonarqube-scan-action@v8
         env:
           SONAR_TOKEN: ${{ secrets.ENTUR_SONAR_PASSWORD }}
           SONAR_HOST_URL: https://sonarcloud.io
