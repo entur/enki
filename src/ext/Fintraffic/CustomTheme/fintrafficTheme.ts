@@ -70,9 +70,9 @@ export const fintrafficTheme = createTheme({
       contrastText: fdsColors.brandBlack,
     },
     success: {
-      main: fdsColors.success200,
-      light: fdsColors.success100,
-      dark: fdsColors.success300,
+      main: fdsColors.success300,
+      light: fdsColors.success50,
+      dark: fdsColors.success400,
       contrastText: fdsColors.brandWhite,
     },
     info: {
@@ -174,6 +174,14 @@ export const fintrafficTheme = createTheme({
           color: fdsColors.brandWhite,
           '&:hover': {
             backgroundColor: fdsColors.interactive300,
+          },
+        },
+        containedSuccess: {
+          backgroundColor: fdsColors.brandBlack,
+          color: fdsColors.brandWhite,
+          '&:hover': {
+            backgroundColor: fdsColors.interactive200,
+            color: fdsColors.brandWhite,
           },
         },
         containedError: {
@@ -285,7 +293,7 @@ export const fintrafficTheme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#e1eff8',
+          backgroundColor: fdsColors.brandWhite,
           color: fdsColors.brandBlack,
         },
       },
