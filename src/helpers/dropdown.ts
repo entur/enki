@@ -7,11 +7,7 @@ export type NormalizedDropdownItemType<ValueType = string> = {
   itemKey?: string;
 };
 import { MessagesKey } from '../i18n/translationKeys';
-import {
-  VEHICLE_MODE,
-  VEHICLE_SUBMODE,
-  vehicleSubmodeMessages,
-} from '../model/enums';
+import { VEHICLE_SUBMODE, vehicleSubmodeMessages } from '../model/enums';
 import { FormatMessage } from 'i18n';
 
 type GenericDropdownItem<E> = {
@@ -57,11 +53,11 @@ export const mapEnumToItems = <E extends Object>(
   })),
 ];
 
-export const mapVehicleModeAndLabelToItems = (
-  e: Record<VEHICLE_MODE, keyof MessagesKey>,
+export const mapEnumMessagesToItems = <E extends string>(
+  messages: Record<E, keyof MessagesKey>,
   formatMessage: FormatMessage,
 ): NormalizedDropdownItemType[] => [
-  ...Object.entries(e).map(([key, label]) => ({
+  ...Object.entries<keyof MessagesKey>(messages).map(([key, label]) => ({
     value: key,
     label: formatMessage({ id: label }),
   })),
