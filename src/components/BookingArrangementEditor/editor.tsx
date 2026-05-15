@@ -15,8 +15,7 @@ import { TimeUnitPickerPosition } from 'components/TimeUnitPicker';
 
 import { addOrRemove } from 'helpers/arrays';
 import {
-  getEnumInit,
-  mapEnumToItems,
+  mapEnumMessagesToItems,
   NormalizedDropdownItemType,
 } from 'helpers/dropdown';
 import BookingArrangement from 'model/BookingArrangement';
@@ -27,6 +26,8 @@ import {
   BOOKING_METHOD,
   PURCHASE_MOMENT,
   PURCHASE_WHEN,
+  bookingAccessMessages,
+  bookingTimeMessages,
   bookingMethodMessages,
   paymentTimeMessages,
 } from 'model/enums';
@@ -124,8 +125,19 @@ export default (props: Props) => {
       minimumBookingPeriod: period,
     });
 
-  const bookingAccessItems = mapEnumToItems(BOOKING_ACCESS);
-  const purchaseWhenItems = mapEnumToItems(PURCHASE_WHEN);
+  const bookingAccessItems = mapEnumMessagesToItems(
+    bookingAccessMessages,
+    formatMessage,
+  );
+  const purchaseWhenItems = mapEnumMessagesToItems(
+    bookingTimeMessages,
+    formatMessage,
+  );
+
+  const selectedBookingAccess =
+    bookingAccessItems.find((item) => item.value === bookingAccess) ?? null;
+  const selectedPurchaseWhen =
+    purchaseWhenItems.find((item) => item.value === bookWhen) ?? null;
 
   return (
     <Box>
@@ -213,7 +225,7 @@ export default (props: Props) => {
         <Grid size={{ xs: 12, sm: 6 }}>
           <Autocomplete
             fullWidth
-            value={getEnumInit(bookingAccess)}
+            value={selectedBookingAccess}
             options={bookingAccessItems}
             getOptionLabel={(option: NormalizedDropdownItemType) =>
               option.label
@@ -258,7 +270,7 @@ export default (props: Props) => {
             <Autocomplete
               fullWidth
               disabled={bookingLimitType === BOOKING_LIMIT_TYPE.PERIOD}
-              value={getEnumInit(bookWhen)}
+              value={selectedPurchaseWhen}
               options={purchaseWhenItems}
               getOptionLabel={(option: NormalizedDropdownItemType) =>
                 option.label

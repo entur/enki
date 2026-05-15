@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import BookingArrangementEditor from './index';
 import { BookingInfoAttachmentType } from './constants';
 import { createBookingArrangement } from 'test/factories';
+import { PURCHASE_WHEN } from 'model/enums';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
@@ -81,5 +82,31 @@ describe('BookingArrangementEditor (wrapper)', () => {
     renderEditor({ bookingArrangement: createBookingArrangement() });
     await userEvent.click(screen.getByRole('button', { name: 'Show / Edit' }));
     expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
+  });
+
+  it('shows translated label for selected booking access value', async () => {
+    renderEditor({ bookingArrangement: createBookingArrangement() });
+    await userEvent.click(screen.getByRole('button', { name: 'Show / Edit' }));
+
+    const bookingAccessInput = screen.getByRole('combobox', {
+      name: 'Booking access',
+    });
+    expect(bookingAccessInput).toHaveValue('Public');
+  });
+
+  it('shows translated label for selected purchase when value', async () => {
+    renderEditor({
+      bookingArrangement: createBookingArrangement({
+        bookWhen: PURCHASE_WHEN.ADVANCE_AND_DAY_OF_TRAVEL,
+        minimumBookingPeriod: undefined,
+        latestBookingTime: '08:00:00',
+      }),
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Show / Edit' }));
+
+    const purchaseWhenInput = screen.getByRole('combobox', {
+      name: 'Booking time',
+    });
+    expect(purchaseWhenInput).toHaveValue('Advance and day of travel');
   });
 });

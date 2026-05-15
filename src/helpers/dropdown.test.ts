@@ -2,13 +2,17 @@ import {
   getInit,
   mapToItems,
   getEnumInit,
+  mapEnumMessagesToItems,
   mapEnumToItems,
-  mapVehicleModeAndLabelToItems,
   mapVehicleSubmodeAndLabelToItems,
   mapFlexibleLineTypeAndLabelToItems,
 } from './dropdown';
 import {
+  BOOKING_ACCESS,
+  PURCHASE_WHEN,
   VEHICLE_MODE,
+  bookingAccessMessages,
+  bookingTimeMessages,
   vehicleModeMessages,
   vehicleSubmodeMessages,
   VEHICLE_SUBMODE_LINK,
@@ -114,18 +118,44 @@ describe('dropdown', () => {
     });
   });
 
-  describe('mapVehicleModeAndLabelToItems', () => {
+  describe('mapEnumMessagesToItems', () => {
+    it('should map booking access values with translated labels', () => {
+      const result = mapEnumMessagesToItems(
+        bookingAccessMessages,
+        mockFormatMessage,
+      );
+
+      expect(result.length).toBe(Object.keys(bookingAccessMessages).length);
+      expect(result).toContainEqual({
+        value: BOOKING_ACCESS.PUBLIC,
+        label: 'translated_bookingAccessPublic',
+      });
+    });
+
+    it('should map purchase when values with translated labels', () => {
+      const result = mapEnumMessagesToItems(
+        bookingTimeMessages,
+        mockFormatMessage,
+      );
+
+      expect(result.length).toBe(Object.keys(bookingTimeMessages).length);
+      expect(result).toContainEqual({
+        value: PURCHASE_WHEN.ADVANCE_AND_DAY_OF_TRAVEL,
+        label: 'translated_purchaseWhenAdvanceAndDayOfTravel',
+      });
+    });
+
     it('should map vehicle modes with translated labels', () => {
-      const result = mapVehicleModeAndLabelToItems(
+      const result = mapEnumMessagesToItems(
         vehicleModeMessages,
         mockFormatMessage,
       );
 
+      expect(result.length).toBe(Object.keys(vehicleModeMessages).length);
       expect(result).toContainEqual({
         value: VEHICLE_MODE.BUS,
         label: 'translated_bus',
       });
-      expect(result.length).toBe(Object.keys(vehicleModeMessages).length);
     });
   });
 

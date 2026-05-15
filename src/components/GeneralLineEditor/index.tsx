@@ -2,7 +2,7 @@ import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import {
   NormalizedDropdownItemType,
   mapToItems,
-  mapVehicleModeAndLabelToItems,
+  mapEnumMessagesToItems,
 } from 'helpers/dropdown';
 import BookingArrangementEditor from 'components/BookingArrangementEditor';
 import { BookingInfoAttachmentType } from 'components/BookingArrangementEditor/constants';
@@ -90,7 +90,7 @@ export default <T extends Line>({
 
   const getModeItems = useCallback(
     () =>
-      mapVehicleModeAndLabelToItems(
+      mapEnumMessagesToItems(
         lineSupportedVehicleModes && lineSupportedVehicleModes.length > 0
           ? getSupportedVehicleModeMessages()
           : vehicleModeMessages,
