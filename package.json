@@ -85,7 +85,7 @@
     "husky": "9.1.7",
     "identity-obj-proxy": "3.0.0",
     "jsdom": "29.0.2",
-    "lint-staged": "16.4.0",
+    "lint-staged": "17.0.7",
     "lit-html": "3.3.2",
     "msw": "2.13.5",
     "prettier": "3.8.3",
