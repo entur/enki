@@ -38,8 +38,10 @@ export const EntityEditorActions = ({
       <Stack
         direction="row"
         spacing={2}
-        justifyContent="flex-end"
-        sx={{ mt: 4 }}
+        sx={{
+          justifyContent: 'flex-end',
+          mt: 4,
+        }}
       >
         {isEditing && (
           <Button
@@ -61,7 +63,6 @@ export const EntityEditorActions = ({
               )}
         </Button>
       </Stack>
-
       <ConfirmDialog
         isOpen={isDeleteDialogOpen}
         title={formatMessage({ id: deleteConfirmTitleId })}

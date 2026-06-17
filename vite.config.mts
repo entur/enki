@@ -87,6 +87,18 @@ export default defineConfig({
     testTimeout: 10000,
     setupFiles: ["./src/setupTests.js"],
     exclude: ['node_modules', 'e2e'],
+    server: {
+      deps: {
+        // MUI 9's Transition.mjs does an extensionless directory import of
+        // react-transition-group/TransitionGroupContext, which relies on a
+        // legacy stub package.json that Node's ESM resolver rejects (Vite's
+        // bundler, used for the build, resolves it fine). Inline these so Vite
+        // transforms and resolves them instead of handing the .mjs to Node.
+        // Regexes (not bare strings) are required so the subpath import is
+        // matched, not just the package entry point.
+        inline: [/@mui\//, /react-transition-group/],
+      },
+    },
     reporters: [
       'default',
       ['vitest-sonar-reporter', { outputFile: 'test-report.xml' }],

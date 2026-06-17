@@ -161,54 +161,74 @@ export const fintrafficTheme = createTheme({
           lineHeight: '22px',
           transition: 'all 200ms',
         },
-        containedPrimary: {
-          backgroundColor: fdsColors.brandBlack,
-          color: fdsColors.brandWhite,
-          '&:hover': {
-            backgroundColor: fdsColors.interactive200,
-            color: fdsColors.brandWhite,
-          },
-        },
-        containedSecondary: {
-          backgroundColor: fdsColors.interactive200,
-          color: fdsColors.brandWhite,
-          '&:hover': {
-            backgroundColor: fdsColors.interactive300,
-          },
-        },
-        containedSuccess: {
-          backgroundColor: fdsColors.brandBlack,
-          color: fdsColors.brandWhite,
-          '&:hover': {
-            backgroundColor: fdsColors.interactive200,
-            color: fdsColors.brandWhite,
-          },
-        },
-        containedError: {
-          backgroundColor: fdsColors.danger300,
-          color: fdsColors.brandWhite,
-          '&:hover': {
-            backgroundColor: fdsColors.danger400,
-          },
-        },
-        outlinedPrimary: {
-          borderColor: fdsColors.brandBlack,
-          borderWidth: 2,
-          color: fdsColors.brandBlack,
-          '&:hover': {
-            backgroundColor: fdsColors.interactive200,
-            borderColor: 'transparent',
-            color: fdsColors.brandWhite,
-          },
-        },
-        textPrimary: {
-          color: fdsColors.brandBlack,
-          '&:hover': {
-            backgroundColor: fdsColors.interactive200,
-            color: fdsColors.brandWhite,
-          },
-        },
       },
+      variants: [
+        {
+          props: { variant: 'contained', color: 'primary' },
+          style: {
+            backgroundColor: fdsColors.brandBlack,
+            color: fdsColors.brandWhite,
+            '&:hover': {
+              backgroundColor: fdsColors.interactive200,
+              color: fdsColors.brandWhite,
+            },
+          },
+        },
+        {
+          props: { variant: 'contained', color: 'secondary' },
+          style: {
+            backgroundColor: fdsColors.interactive200,
+            color: fdsColors.brandWhite,
+            '&:hover': {
+              backgroundColor: fdsColors.interactive300,
+            },
+          },
+        },
+        {
+          props: { variant: 'contained', color: 'success' },
+          style: {
+            backgroundColor: fdsColors.brandBlack,
+            color: fdsColors.brandWhite,
+            '&:hover': {
+              backgroundColor: fdsColors.interactive200,
+              color: fdsColors.brandWhite,
+            },
+          },
+        },
+        {
+          props: { variant: 'contained', color: 'error' },
+          style: {
+            backgroundColor: fdsColors.danger300,
+            color: fdsColors.brandWhite,
+            '&:hover': {
+              backgroundColor: fdsColors.danger400,
+            },
+          },
+        },
+        {
+          props: { variant: 'outlined', color: 'primary' },
+          style: {
+            borderColor: fdsColors.brandBlack,
+            borderWidth: 2,
+            color: fdsColors.brandBlack,
+            '&:hover': {
+              backgroundColor: fdsColors.interactive200,
+              borderColor: 'transparent',
+              color: fdsColors.brandWhite,
+            },
+          },
+        },
+        {
+          props: { variant: 'text', color: 'primary' },
+          style: {
+            color: fdsColors.brandBlack,
+            '&:hover': {
+              backgroundColor: fdsColors.interactive200,
+              color: fdsColors.brandWhite,
+            },
+          },
+        },
+      ],
     },
     MuiIconButton: {
       styleOverrides: {

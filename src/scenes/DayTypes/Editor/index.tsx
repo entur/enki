@@ -116,8 +116,10 @@ const DayTypeEditor = () => {
               <Stack
                 direction="row"
                 spacing={2}
-                justifyContent="flex-end"
-                sx={{ mt: 4 }}
+                sx={{
+                  justifyContent: 'flex-end',
+                  mt: 4,
+                }}
               >
                 {params.id && (
                   <Button

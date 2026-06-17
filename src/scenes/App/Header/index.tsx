@@ -10,7 +10,7 @@ import Popover from '@mui/material/Popover';
 import Button from '@mui/material/Button';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Menu from '@mui/icons-material/Menu';
-import PersonOutline from '@mui/icons-material/PersonOutline';
+import PersonOutlined from '@mui/icons-material/PersonOutlined';
 import Logout from '@mui/icons-material/Logout';
 import { useTheme } from '@mui/material/styles';
 import { ComponentToggle } from '@entur/react-component-toggle';
@@ -122,7 +122,7 @@ const Header = () => {
                   onClick={(e) => setUserAnchorEl(e.currentTarget)}
                   aria-label={preferredName || 'User'}
                 >
-                  <PersonOutline />
+                  <PersonOutlined />
                 </IconButton>
                 <Popover
                   open={Boolean(userAnchorEl)}
