@@ -78,9 +78,9 @@
     "@types/react-leaflet": "3.0.0",
     "@types/supercluster": "7.1.3",
     "@types/uuid": "11.0.0",
-    "@vitejs/plugin-react": "6.0.1",
-    "@vitest/coverage-v8": "4.1.5",
-    "@vitest/ui": "4.1.5",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitest/coverage-v8": "4.1.8",
+    "@vitest/ui": "4.1.8",
     "check-node-version": "4.2.1",
     "husky": "9.1.7",
     "identity-obj-proxy": "3.0.0",
@@ -95,7 +95,7 @@
     "typescript": "5.9.3",
     "vite": "8.0.16",
     "vite-plugin-svgr": "5.2.0",
-    "vitest": "4.1.5",
+    "vitest": "4.1.8",
     "vitest-sonar-reporter": "3.0.0"
   },
   "prettier": {
