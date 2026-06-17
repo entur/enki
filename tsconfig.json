@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "paths": {
+      "*": ["./src/*"]
+    },
     "target": "ESNext",
     "lib": [
       "dom",
@@ -12,13 +14,12 @@
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "downlevelIteration": true,
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "noEmit": true,
     "jsx": "react-jsx",
