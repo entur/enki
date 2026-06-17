@@ -1,4 +1,4 @@
-import HelpOutline from '@mui/icons-material/HelpOutline';
+import HelpOutlined from '@mui/icons-material/HelpOutlined';
 import {
   Alert,
   Box,
@@ -79,7 +79,7 @@ export const DayTypeForm = ({
           placement="right"
         >
           <Box component="span" sx={{ ml: 0.5, cursor: 'help' }}>
-            <HelpOutline />
+            <HelpOutlined />
           </Box>
         </Tooltip>
       </Typography>

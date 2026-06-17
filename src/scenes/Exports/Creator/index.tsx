@@ -1,4 +1,4 @@
-import HelpOutline from '@mui/icons-material/HelpOutline';
+import HelpOutlined from '@mui/icons-material/HelpOutlined';
 import {
   Button,
   Checkbox,
@@ -121,7 +121,7 @@ const ExportsCreator = () => {
                 })}
               >
                 <Box component="span" sx={{ ml: 2, cursor: 'help' }}>
-                  <HelpOutline />
+                  <HelpOutlined />
                 </Box>
               </Tooltip>
             </Box>
@@ -151,7 +151,7 @@ const ExportsCreator = () => {
               })}
             >
               <Box component="span" sx={{ ml: 2, cursor: 'help' }}>
-                <HelpOutline />
+                <HelpOutlined />
               </Box>
             </Tooltip>
           </Box>
@@ -183,7 +183,7 @@ const ExportsCreator = () => {
               })}
             >
               <Box component="span" sx={{ ml: 2, cursor: 'help' }}>
-                <HelpOutline />
+                <HelpOutlined />
               </Box>
             </Tooltip>
           </Box>

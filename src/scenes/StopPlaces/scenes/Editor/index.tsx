@@ -338,8 +338,10 @@ const FlexibleStopPlaceEditor = () => {
                 <Stack
                   direction="row"
                   spacing={2}
-                  justifyContent="space-between"
-                  sx={{ mt: 4 }}
+                  sx={{
+                    justifyContent: 'space-between',
+                    mt: 4,
+                  }}
                 >
                   {params.id && (
                     <Button

@@ -48,8 +48,9 @@ export default ({ value, onChange, disabled = false }: Props) => {
           {...params}
           label={formatMessage({ id: 'passingTimesDayOffset' })}
           slotProps={{
+            ...params.slotProps,
             input: {
-              ...params.InputProps,
+              ...params.slotProps.input,
               startAdornment: (
                 <InputAdornment position="start">
                   <DarkMode fontSize="small" />

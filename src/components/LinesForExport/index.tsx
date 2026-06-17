@@ -257,8 +257,9 @@ export default ({ onChange }: Props) => {
                 <Typography
                   variant="body2"
                   component="strong"
-                  fontWeight="bold"
                   sx={{
+                    fontWeight: 'bold',
+
                     color:
                       line.status === 'negative' ? 'text.disabled' : 'inherit',
                   }}

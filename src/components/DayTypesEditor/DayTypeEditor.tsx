@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import Save from '@mui/icons-material/Save';
 import Delete from '@mui/icons-material/Delete';
-import HelpOutline from '@mui/icons-material/HelpOutline';
+import HelpOutlined from '@mui/icons-material/HelpOutlined';
 import { DELETE_DAY_TYPE, MUTATE_DAY_TYPE } from 'api/uttu/mutations';
 import WeekdayPicker from 'components/WeekdayPicker';
 import { getErrorFeedback } from 'helpers/errorHandling';
@@ -93,7 +93,7 @@ export const DayTypeEditor = ({
           placement="right"
         >
           <Box component="span" sx={{ ml: 0.5, cursor: 'help' }}>
-            <HelpOutline />
+            <HelpOutlined />
           </Box>
         </Tooltip>
       </Typography>
