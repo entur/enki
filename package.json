@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@apollo/client": "4.2.3",
-    "@azure/msal-browser": "4.30.0",
-    "@azure/msal-react": "3.0.29",
+    "@azure/msal-browser": "5.14.0",
+    "@azure/msal-react": "5.4.5",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@entur/react-component-toggle": "1.1.2",
