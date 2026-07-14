@@ -239,6 +239,8 @@ export const messages: MessagesKey = {
   generalPublicCodeInputLabelTooltip:
     'Julkinen tunnus on se, mikä tunnistaa linjan ulkoisesti matkustajille',
   generalTypeFormGroupTitle: 'Joustavan linjan tyyppi *',
+  generalVehicleTypeTooltip: 'Ajoneuvotyyppi, viittaus ajoneuvotyyppiin ajoneuvorekisterissä',
+  generalVehicleType: 'Ajoneuvotyyppi',
   typeFormGroupTitleTooltip: 'Lue lisää linjatyypeistä',
   editorGeneralTabLabel: 'Yleinen',
   generalDrawer: 'Alla on lyhyt kuvaus kustakin linjatyypistä.',

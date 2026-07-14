@@ -235,6 +235,8 @@ export const messages = {
   generalDescriptionFormGroupTitle: 'Описание',
   generalDescriptionLabel: 'Описание',
   generalDescription: 'Описание',
+  generalVehicleTypeTooltip: 'Тип на превозното средство, препратка към тип превозно средство в регистъра на превозните средства',
+  generalVehicleType: 'Тип на превозното средство',
   editorNetworkDescriptionLabelText: 'Описание',
   brandingsDescriptionTableHeaderLabel: 'Описание',
   editorBrandingDescriptionLabelText: 'Описание',
