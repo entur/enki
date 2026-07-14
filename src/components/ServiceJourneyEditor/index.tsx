@@ -43,7 +43,7 @@ const ServiceJourneyEditor = (props: Props) => {
     copyServiceJourney,
     flexibleLineType,
   } = props;
-  const { name, description, privateCode, publicCode, passingTimes } =
+  const { name, description, privateCode, publicCode, passingTimes, vehicleTypeRef } =
     serviceJourney;
 
   const [operatorSelection, setOperatorSelection] = useState(
@@ -164,6 +164,20 @@ const ServiceJourneyEditor = (props: Props) => {
                 />
               )}
             />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <Tooltip title={formatMessage({ id: 'generalVehicleTypeTooltip' })}>
+              <TextField
+                fullWidth
+                label={formatMessage({ id: 'generalVehicleType' })}
+                value={vehicleTypeRef || ''}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onFieldChange('vehicleTypeRef', e.target.value || null);
+                }}
+                variant="outlined"
+              />
+            </Tooltip>
+
           </Grid>
         </Grid>
 
