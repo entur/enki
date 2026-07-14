@@ -44,8 +44,14 @@ const ServiceJourneyEditor = (props: Props) => {
     copyServiceJourney,
     flexibleLineType,
   } = props;
-  const { name, description, privateCode, publicCode, passingTimes, vehicleTypeRef } =
-    serviceJourney;
+  const {
+    name,
+    description,
+    privateCode,
+    publicCode,
+    passingTimes,
+    vehicleTypeRef,
+  } = serviceJourney;
 
   const [operatorSelection, setOperatorSelection] = useState(
     serviceJourney.operatorRef,
@@ -55,7 +61,8 @@ const ServiceJourneyEditor = (props: Props) => {
   const organisations = useAppSelector((state) => state.organisations);
   const { formatMessage } = useIntl();
   const config = useConfig();
-  const isVehicleTypeEnabled = config.enableServiceJourneyVehicleTypeRef ?? false;
+  const isVehicleTypeEnabled =
+    config.enableServiceJourneyVehicleTypeRef ?? false;
 
   const handleOperatorSelectionChange = (
     newOperatorSelection: string | undefined,
@@ -170,7 +177,9 @@ const ServiceJourneyEditor = (props: Props) => {
           </Grid>
           {isVehicleTypeEnabled && (
             <Grid size={{ xs: 12, sm: 6 }}>
-              <Tooltip title={formatMessage({ id: 'generalVehicleTypeTooltip' })}>
+              <Tooltip
+                title={formatMessage({ id: 'generalVehicleTypeTooltip' })}
+              >
                 <TextField
                   fullWidth
                   label={formatMessage({ id: 'generalVehicleType' })}
