@@ -232,7 +232,8 @@ export const messages: MessagesKey = {
   generalNameFormGroupTitle: 'Name *',
   generalNetworkFormGroupTitle: 'Network *',
   generalOperatorFormGroupTitle: 'Operator *',
-  generalVehicleTypeTooltip: 'Vehicle type, reference to a vehicle type in the vehicle registry',
+  generalVehicleTypeTooltip:
+    'Vehicle type, reference to a vehicle type in the vehicle registry',
   generalVehicleType: 'Vehicle type',
   transportModeTitle: 'Transport mode *',
   transportSubModeTitle: 'Transport submode *',

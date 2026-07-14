@@ -229,7 +229,8 @@ export const messages = {
   generalNameFormGroupTitle: 'Navn *',
   generalNetworkFormGroupTitle: 'Nettverk *',
   generalOperatorFormGroupTitle: 'Operatør *',
-  generalVehicleTypeTooltip: 'Kjøretøytype, referanse til en kjøretøytype i materiellregisteret',
+  generalVehicleTypeTooltip:
+    'Kjøretøytype, referanse til en kjøretøytype i materiellregisteret',
   generalVehicleType: 'Kjøretøytype',
   transportModeTitle: 'Transportgruppe *',
   transportSubModeTitle: 'Transportundergruppe *',

@@ -232,7 +232,8 @@ export const messages: MessagesKey = {
   generalOperatorFormGroupTitle: 'Operatör *',
   transportModeTitle: 'Transportgrupp *',
   transportSubModeTitle: 'Transportundergrupp *',
-  generalVehicleTypeTooltip: 'Fordonstyp, referens till en fordonstyp i fordonsregistret',
+  generalVehicleTypeTooltip:
+    'Fordonstyp, referens till en fordonstyp i fordonsregistret',
   generalVehicleType: 'Fordonstyp',
   generalPrivateCodeFormGroupTitle: 'Privat kod',
   generalPrivateCodeInputLabelTooltip:
