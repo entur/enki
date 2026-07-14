@@ -15,7 +15,13 @@ const dayTypesMock = {
 
 const renderEditor = (
   props = {},
-  { preloadedState }: { preloadedState?: Record<string, unknown> } = {},
+  {
+    preloadedState,
+    config,
+  }: {
+    preloadedState?: Record<string, unknown>;
+    config?: Record<string, unknown>;
+  } = {},
 ) => {
   const defaultProps = {
     serviceJourney: createServiceJourney({
@@ -40,7 +46,7 @@ const renderEditor = (
         <ServiceJourneyEditor {...defaultProps} />
       </LocalizationProvider>
     </MockedProvider>,
-    { preloadedState: preloadedState as any },
+    { preloadedState: preloadedState as any, config: config as any },
   );
 };
 
@@ -61,6 +67,51 @@ describe('ServiceJourneyEditor', () => {
     renderEditor();
     expect(screen.getByLabelText('Public code')).toHaveValue('M1');
     expect(screen.getByLabelText('Private code')).toHaveValue('PRV-M1');
+  });
+
+  it('does not render vehicle type field when feature flag is disabled', () => {
+    renderEditor();
+    expect(screen.queryByLabelText('Vehicle type')).not.toBeInTheDocument();
+  });
+
+  it('renders vehicle type field when feature flag is enabled', () => {
+    renderEditor(
+      {
+        serviceJourney: createServiceJourney({
+          name: 'Route with Vehicle Type',
+          vehicleTypeRef: 'bus',
+          passingTimes: [{}, {}],
+        }),
+      },
+      {
+        config: { enableServiceJourneyVehicleTypeRef: true },
+      },
+    );
+    expect(screen.getByLabelText('Vehicle type')).toHaveValue('bus');
+  });
+
+  it('calls onChange when vehicle type is changed and feature flag is enabled', async () => {
+    const onChange = vi.fn();
+    renderEditor(
+      {
+        onChange,
+        serviceJourney: createServiceJourney({
+          name: 'Route with Vehicle Type',
+          vehicleTypeRef: 'bus',
+          passingTimes: [{}, {}],
+        }),
+      },
+      {
+        config: { enableServiceJourneyVehicleTypeRef: true },
+      },
+    );
+
+    const vehicleTypeInput = screen.getByLabelText('Vehicle type');
+    await userEvent.type(vehicleTypeInput, '1');
+
+    expect(onChange).toHaveBeenCalled();
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+    expect(lastCall.vehicleTypeRef).toBe('bus1');
   });
 
   it('renders operator dropdown', () => {
