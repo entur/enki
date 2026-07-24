@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.0
-      - uses: actions/setup-node@v6.4.0
+      - uses: actions/setup-node@v6.5.0
         with:
-          node-version: 24.16.0
+          node-version: 24.18.0
       - name: Cache node modules
         id: cache-npm
         uses: actions/cache@v6.1.0
