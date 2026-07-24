@@ -200,17 +200,17 @@ export default class FdsNavigation extends LitElement {
                   html`<li
                     class="${opt.isCheckable && !opt.icon && 'checkable'}"
                     @click=${(): void => {
-                    this.handleSelect(opt);
-                    this.handleDropdownItemClick(opt);
-                  }}
+                      this.handleSelect(opt);
+                      this.handleDropdownItemClick(opt);
+                    }}
                   >
                     ${
-                    opt.icon &&
-                    html`<fds-icon
-                      class="item__icon"
-                      icon="${opt.icon}"
-                    ></fds-icon>`
-                  }
+                      opt.icon &&
+                      html`<fds-icon
+                        class="item__icon"
+                        icon="${opt.icon}"
+                      ></fds-icon>`
+                    }
                     ${opt.label}
                   </li>`,
               )}
