@@ -387,16 +387,14 @@ const LineMigration = () => {
 
             <Autocomplete
               disableClearable
-              value={
-                getInit(
-                  [
-                    { id: 'RENAME', name: 'Rename conflicting entities' },
-                    { id: 'FAIL', name: 'Fail on conflicts' },
-                    { id: 'SKIP', name: 'Skip conflicting entities' },
-                  ],
-                  conflictResolution,
-                )!
-              }
+              value={getInit(
+                [
+                  { id: 'RENAME', name: 'Rename conflicting entities' },
+                  { id: 'FAIL', name: 'Fail on conflicts' },
+                  { id: 'SKIP', name: 'Skip conflicting entities' },
+                ],
+                conflictResolution,
+              )!}
               onChange={(_event, newValue) =>
                 setConflictResolution(
                   (newValue?.value ?? 'RENAME') as 'FAIL' | 'RENAME' | 'SKIP',

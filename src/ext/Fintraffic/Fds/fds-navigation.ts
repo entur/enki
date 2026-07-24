@@ -83,11 +83,13 @@ export default class FdsNavigation extends LitElement {
     return html`<div
       class="navigation navigation--${this.variant} ui-label-text"
     >
-      ${this.variant === FdsNavigationVariant.primary
-        ? html`<div class="navigation__header">
-            <slot></slot>
-          </div>`
-        : nothing}
+      ${
+        this.variant === FdsNavigationVariant.primary
+          ? html`<div class="navigation__header">
+              <slot></slot>
+            </div>`
+          : nothing
+      }
       <ul class="navigation__body ${this._open ? 'navigation__open' : ''}">
         ${itemsOnLeft
           .map((item) => this.renderItem(item))
@@ -173,40 +175,48 @@ export default class FdsNavigation extends LitElement {
       style=${styleMap({ order: mobileOrder })}
     >
       <div class=" item__label ${item.bold ? 'item__label--bold' : ''}">
-        ${item.icon &&
-        html`<fds-icon class="item__icon" icon="${item.icon}"></fds-icon>`}
+        ${
+          item.icon &&
+          html`<fds-icon class="item__icon" icon="${item.icon}"></fds-icon>`
+        }
         <span>${item.label}</span>
-        ${item.dropDownItems &&
-        item.dropDownItems.length > 0 &&
-        html`<fds-icon
-          class="item__icon--dropdown"
-          icon=${dropdownItemIcon}
-        />`}
+        ${
+          item.dropDownItems &&
+          item.dropDownItems.length > 0 &&
+          html`<fds-icon
+            class="item__icon--dropdown"
+            icon=${dropdownItemIcon}
+          />`
+        }
       </div>
-      ${item.dropDownItems &&
-      item.dropDownItems.length > 0 &&
-      this._dropdownItemOpen &&
-      this._selectedDropdownItem === item.label
-        ? html`<ul class="navigation__dropdown">
-            ${item.dropDownItems.map(
-              (opt: FdsNavigationItem) =>
-                html`<li
-                  class="${opt.isCheckable && !opt.icon && 'checkable'}"
-                  @click=${(): void => {
+      ${
+        item.dropDownItems &&
+        item.dropDownItems.length > 0 &&
+        this._dropdownItemOpen &&
+        this._selectedDropdownItem === item.label
+          ? html`<ul class="navigation__dropdown">
+              ${item.dropDownItems.map(
+                (opt: FdsNavigationItem) =>
+                  html`<li
+                    class="${opt.isCheckable && !opt.icon && 'checkable'}"
+                    @click=${(): void => {
                     this.handleSelect(opt);
                     this.handleDropdownItemClick(opt);
                   }}
-                >
-                  ${opt.icon &&
-                  html`<fds-icon
-                    class="item__icon"
-                    icon="${opt.icon}"
-                  ></fds-icon>`}
-                  ${opt.label}
-                </li>`,
-            )}
-          </ul>`
-        : ''}
+                  >
+                    ${
+                    opt.icon &&
+                    html`<fds-icon
+                      class="item__icon"
+                      icon="${opt.icon}"
+                    ></fds-icon>`
+                  }
+                    ${opt.label}
+                  </li>`,
+              )}
+            </ul>`
+          : ''
+      }
     </li> `;
   }
 

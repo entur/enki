@@ -44,8 +44,7 @@ export const getInternationalizedUttuError = (intl: IntlShape, e: Error) => {
   if (error?.extensions?.code) {
     const { code, subCode } = error.extensions;
     const messageCode = (subCode ? `${code}_${subCode}` : code) as
-      | UttuCode
-      | CombinedUttuCode;
+      UttuCode | CombinedUttuCode;
 
     const errorMessage = messages[messageCode] ?? messages[UttuCode.UNKNOWN];
 

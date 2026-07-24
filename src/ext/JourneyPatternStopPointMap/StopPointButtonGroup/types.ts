@@ -6,7 +6,6 @@ export interface StopPointButtonGroupProps {
   canDelete: boolean | undefined;
   stopPoint: StopPoint;
   onFocusedQuayIdUpdate?:
-    | ((quayId: string | undefined | null) => void)
-    | undefined;
+    ((quayId: string | undefined | null) => void) | undefined;
   onDeleteDialogOpen: (isOpen: boolean) => void;
 }
