@@ -11,7 +11,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: actions/setup-node@v6.5.0
+      - uses: actions/setup-node@v7.0.0
         with:
           node-version: 24.18.0
       - name: Configure git user
