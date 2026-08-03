@@ -165,6 +165,7 @@ export const getFlexibleLineByIdQuery = `
           privateCode,
           publicCode,
           operatorRef,
+          vehicleTypeRef,
           notices { text }
           bookingArrangement { ...bookingArrangementFields },
           passingTimes {
@@ -261,6 +262,7 @@ export const getlineByIdQuery = `
           privateCode,
           publicCode,
           operatorRef,
+          vehicleTypeRef,
           notices { text }
           passingTimes {
             id,
@@ -454,6 +456,7 @@ const LineEditorPage = {
             privateCode
             publicCode
             operatorRef
+            vehicleTypeRef
             notices {
               text
             }
