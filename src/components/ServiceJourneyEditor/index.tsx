@@ -22,6 +22,7 @@ import CopyDialog from './CopyDialog';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { useConfig } from '../../config/ConfigContext';
 
 type Props = {
   serviceJourney: ServiceJourney;
@@ -43,8 +44,14 @@ const ServiceJourneyEditor = (props: Props) => {
     copyServiceJourney,
     flexibleLineType,
   } = props;
-  const { name, description, privateCode, publicCode, passingTimes } =
-    serviceJourney;
+  const {
+    name,
+    description,
+    privateCode,
+    publicCode,
+    passingTimes,
+    vehicleTypeRef,
+  } = serviceJourney;
 
   const [operatorSelection, setOperatorSelection] = useState(
     serviceJourney.operatorRef,
@@ -53,6 +60,9 @@ const ServiceJourneyEditor = (props: Props) => {
   const [showCopyDialog, setShowCopyDialog] = useState<boolean>(false);
   const organisations = useAppSelector((state) => state.organisations);
   const { formatMessage } = useIntl();
+  const config = useConfig();
+  const isVehicleTypeEnabled =
+    config.enableServiceJourneyVehicleTypeRef ?? false;
 
   const handleOperatorSelectionChange = (
     newOperatorSelection: string | undefined,
@@ -165,6 +175,23 @@ const ServiceJourneyEditor = (props: Props) => {
               )}
             />
           </Grid>
+          {isVehicleTypeEnabled && (
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Tooltip
+                title={formatMessage({ id: 'generalVehicleTypeTooltip' })}
+              >
+                <TextField
+                  fullWidth
+                  label={formatMessage({ id: 'generalVehicleType' })}
+                  value={vehicleTypeRef || ''}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onFieldChange('vehicleTypeRef', e.target.value || null);
+                  }}
+                  variant="outlined"
+                />
+              </Tooltip>
+            </Grid>
+          )}
         </Grid>
 
         <Notices

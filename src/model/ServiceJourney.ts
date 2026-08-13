@@ -10,6 +10,7 @@ type ServiceJourney = VersionedType & {
   privateCode?: string | null;
   publicCode?: string | null;
   operatorRef?: string | null;
+  vehicleTypeRef?: string | null;
   bookingArrangement?: BookingArrangement | null;
   passingTimes: PassingTime[];
   dayTypes?: DayType[];
@@ -28,6 +29,7 @@ export const serviceJourneyToPayload = (sj: ServiceJourney) => {
       passingTimeToPayload(pt, i, sj.passingTimes.length),
     ),
     dayTypes: undefined,
+    vehicleTypeRef: sj.vehicleTypeRef || null,
     dayTypesRefs: sj.dayTypes?.map((dt) => dt.id!),
     notices: sj.notices?.filter(
       (notice) => notice && notice.text && notice.text !== '',

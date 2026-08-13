@@ -142,6 +142,12 @@ export interface Config {
    * Enable line migration feature for moving lines between providers
    */
   enableLineMigration?: boolean;
+
+  /**
+   * Enable vehicle type field in service journey editor.
+   * Defaults to false when omitted.
+   */
+  enableServiceJourneyVehicleTypeRef?: boolean;
 }
 
 export interface MapConfig {
