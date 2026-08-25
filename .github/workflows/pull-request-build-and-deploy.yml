@@ -78,7 +78,7 @@ jobs:
       contents: read
       pull-requests: write
       id-token: write
-    uses: entur/gha-firebase/.github/workflows/firebase-hosting-preview.yml@v1.2.7
+    uses: entur/gha-firebase/.github/workflows/firebase-hosting-preview.yml@v1.2.9
     with:
       gcp_project_id: ent-enki-dev
       environment: dev
