@@ -1,0 +1,68 @@
+# publiccode.yml metadata, see https://yml.publiccode.tools/
+publiccodeYmlVersion: "0.7.0"
+
+name: Enki
+url: https://github.com/entur/enki
+
+platforms:
+  - web
+
+categories:
+  - data-collection
+  - geographic-information-systems
+
+developmentStatus: stable
+softwareType: standalone/web
+
+organisation:
+  name: Entur AS
+  uri: https://entur.no
+
+usedBy:
+  - Norway (nationwide), Entur AS
+
+intendedAudience:
+  scope:
+    - transportation
+  countries:
+    - "NO"
+
+description:
+  en:
+    localisedName: Enki
+    shortDescription: Web front-end for Nplan, a simple timetable editor for public transport.
+    longDescription: >
+      Enki is the web front-end of Nplan, a simple editor for public transport timetables. It lets small transport
+      operators and authorities create and maintain lines, journey patterns, service journeys, stop points and day
+      types without a full scheduling system, and it is designed in particular for flexible and on-demand
+      transport. The resulting data is exported as NeTEx by the Uttu backend and published to the Norwegian
+      national journey planner.
+      Enki is a React single-page app that talks to Uttu over GraphQL, authenticates with OIDC and reads its
+      environment-specific settings from a bootstrap.json file deployed with the static build.
+    documentation: https://github.com/entur/enki/blob/master/README.md
+    features:
+      - Editor for lines, journey patterns and service journeys
+      - Support for flexible and on-demand transport
+      - Journey pattern and stop point editing on a map
+      - GraphQL client for the Uttu backend
+      - OIDC authentication, provider agnostic
+      - Deployment-time configuration through bootstrap.json
+
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: Entur AS
+
+maintenance:
+  type: internal
+  contacts:
+    - name: Entur ROR (Open Data and Journey Planning)
+      email: kollektivdata@entur.org
+
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - en
+    - nb
+    - sv
+    - fi
+    - bg
