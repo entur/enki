@@ -11,9 +11,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
-          node-version: 24.20.0
+          node-version: 24.21.0
       - name: Configure git user
         run: |
           git config --global user.name 'Latest version bot'
@@ -46,7 +46,7 @@ jobs:
       - name: Run E2E tests
         run: npm run test:e2e
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v8.2.1
+        uses: sonarsource/sonarqube-scan-action@v8.3.0
         env:
           SONAR_TOKEN: ${{ secrets.ENTUR_SONAR_PASSWORD }}
           SONAR_HOST_URL: https://sonarcloud.io
@@ -69,7 +69,7 @@ jobs:
         env:
           REACT_APP_VERSION: ${{ env.VERSION }}
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: build
           path: |
